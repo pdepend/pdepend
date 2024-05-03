@@ -65,11 +65,11 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsOnSimpleTraitReturnsExpectedResult()
+    public function testGetAllMethodsOnSimpleTraitReturnsExpectedResult(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals(
-            array('foo', 'bar', 'baz'),
+            ['foo', 'bar', 'baz'],
             array_keys($trait->getAllMethods())
         );
     }
@@ -79,11 +79,11 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult()
+    public function testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals(
-            array('foo', 'bar', 'baz'),
+            ['foo', 'bar', 'baz'],
             array_keys($trait->getAllMethods())
         );
     }
@@ -93,7 +93,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance()
+    public function testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance(): void
     {
         $trait   = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
@@ -106,11 +106,11 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsWithAliasedMethodCollision()
+    public function testGetAllMethodsWithAliasedMethodCollision(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals(
-            array('foo', 'bar'),
+            ['foo', 'bar'],
             array_keys($trait->getAllMethods())
         );
     }
@@ -120,11 +120,11 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsWithAliasedMethodTwice()
+    public function testGetAllMethodsWithAliasedMethodTwice(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals(
-            array('foo', 'bar'),
+            ['foo', 'bar'],
             array_keys($trait->getAllMethods())
         );
     }
@@ -134,7 +134,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsWithVisibilityChangedToPublic()
+    public function testGetAllMethodsWithVisibilityChangedToPublic(): void
     {
         $trait   = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
@@ -150,7 +150,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsWithVisibilityChangedToProtected()
+    public function testGetAllMethodsWithVisibilityChangedToProtected(): void
     {
         $trait   = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
@@ -166,7 +166,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsWithVisibilityChangedToPrivate()
+    public function testGetAllMethodsWithVisibilityChangedToPrivate(): void
     {
         $trait   = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
@@ -182,7 +182,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier()
+    public function testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier(): void
     {
         $trait   = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
@@ -198,7 +198,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsWithVisibilityChangedKeepsStaticModifier()
+    public function testGetAllMethodsWithVisibilityChangedKeepsStaticModifier(): void
     {
         $trait   = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
@@ -214,7 +214,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsHandlesTraitMethodPrecedence()
+    public function testGetAllMethodsHandlesTraitMethodPrecedence(): void
     {
         $trait   = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
@@ -230,7 +230,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetAllMethodsExcludeTraitMethodWithPrecedence()
+    public function testGetAllMethodsExcludeTraitMethodWithPrecedence(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertCount(1, $trait->getAllMethods());
@@ -244,7 +244,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @group issue-154
      */
-    public function testGetAllMethodsWithMethodCollisionThrowsExpectedException()
+    public function testGetAllMethodsWithMethodCollisionThrowsExpectedException(): void
     {
         $this->expectException(\PDepend\Source\AST\ASTTraitMethodCollisionException::class);
 
@@ -263,7 +263,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @group issue-154
      */
-    public function testGetAllMethodsWithAbstractMethods()
+    public function testGetAllMethodsWithAbstractMethods(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertCount(1, $trait->getAllMethods());
@@ -275,10 +275,10 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testGetAllChildrenReturnsAnEmptyArrayByDefault()
+    public function testGetAllChildrenReturnsAnEmptyArrayByDefault(): void
     {
         $trait = new ASTTrait(__CLASS__);
-        $this->assertSame(array(), $trait->getChildren());
+        $this->assertSame([], $trait->getChildren());
     }
 
     /**
@@ -287,7 +287,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes()
+    public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertCount(2, $trait->getChildren());
@@ -298,7 +298,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testTraitHasExpectedStartLine()
+    public function testTraitHasExpectedStartLine(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals(5, $trait->getStartLine());
@@ -309,7 +309,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testTraitHasExpectedEndLine()
+    public function testTraitHasExpectedEndLine(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals(11, $trait->getEndLine());
@@ -320,7 +320,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testTraitHasExpectedPackage()
+    public function testTraitHasExpectedPackage(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals('org.pdepend', $trait->getNamespace()->getName());
@@ -331,7 +331,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testTraitHasExpectedNamespace()
+    public function testTraitHasExpectedNamespace(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals('org\pdepend\code', $trait->getNamespace()->getName());
@@ -342,7 +342,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetNamespaceNameReturnsExpectedName()
+    public function testGetNamespaceNameReturnsExpectedName(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertEquals('org\pdepend\code', $trait->getNamespaceName());
@@ -353,7 +353,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetMethodsReturnsExpectedNumberOfMethods()
+    public function testGetMethodsReturnsExpectedNumberOfMethods(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertCount(3, $trait->getMethods());
@@ -364,7 +364,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testTraitCanUseParentKeywordInMethodBody()
+    public function testTraitCanUseParentKeywordInMethodBody(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertNotNull($trait);
@@ -375,7 +375,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testTraitCanUseParentKeywordAsMethodTypeHint()
+    public function testTraitCanUseParentKeywordAsMethodTypeHint(): void
     {
         $trait = $this->getFirstTraitForTest();
         $this->assertNotNull($trait);
@@ -384,7 +384,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     /**
      * @return void
      */
-    public function testGetNamespacedName()
+    public function testGetNamespacedName(): void
     {
         $trait = new ASTTrait('MyTrait');
         $this->assertSame('MyTrait', $trait->getNamespacedName());
@@ -393,7 +393,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     /**
      * @return void
      */
-    public function testGetNamespacedNameWithNamespaceDeclaration()
+    public function testGetNamespacedNameWithNamespaceDeclaration(): void
     {
         $trait = new ASTTrait('MyTrait');
         $trait->setNamespace(new ASTNamespace('My\\Namespace'));
@@ -404,7 +404,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     /**
      * @return void
      */
-    public function testGetNamespacedNameWithPackageAnnotation()
+    public function testGetNamespacedNameWithPackageAnnotation(): void
     {
         $namespace = new ASTNamespace('My\\Namespace');
         $namespace->setPackageAnnotation(true);
@@ -420,7 +420,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testAcceptInvokesVisitTraitOnGivenVisitor()
+    public function testAcceptInvokesVisitTraitOnGivenVisitor(): void
     {
         $visitor = $this->getMockBuilder('PDepend\\Source\\ASTVisitor\\ASTVisitor')
             ->disableOriginalClone()
@@ -438,7 +438,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testMagicWakeupCallsRegisterTraitOnBuilderContext()
+    public function testMagicWakeupCallsRegisterTraitOnBuilderContext(): void
     {
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->disableOriginalClone()

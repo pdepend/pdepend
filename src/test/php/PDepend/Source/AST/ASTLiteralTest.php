@@ -59,7 +59,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLiteralWithBooleanTrueExpression()
+    public function testLiteralWithBooleanTrueExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('True', $literal->getImage());
@@ -70,7 +70,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLiteralWithBooleanFalseExpression()
+    public function testLiteralWithBooleanFalseExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('False', $literal->getImage());
@@ -81,7 +81,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLiteralWithIntegerExpression()
+    public function testLiteralWithIntegerExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('42', $literal->getImage());
@@ -92,7 +92,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLiteralWithSignedIntegerExpression()
+    public function testLiteralWithSignedIntegerExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('42', $literal->getImage());
@@ -103,7 +103,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLiteralWithFloatExpression()
+    public function testLiteralWithFloatExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('42.23', $literal->getImage());
@@ -114,7 +114,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLiteralWithSignedFloatExpression()
+    public function testLiteralWithSignedFloatExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('42.23', $literal->getImage());
@@ -125,7 +125,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testLiteralWithNullExpression()
+    public function testLiteralWithNullExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('NULL', $literal->getImage());
@@ -137,7 +137,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testLiteralWithZeroIntegerValue()
+    public function testLiteralWithZeroIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('0', $literal->getImage());
@@ -149,7 +149,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testLiteralWithZeroOctalIntegerValue()
+    public function testLiteralWithZeroOctalIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('00', $literal->getImage());
@@ -161,7 +161,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testLiteralWithZeroHexIntegerValue()
+    public function testLiteralWithZeroHexIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('0x0', $literal->getImage());
@@ -174,7 +174,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      * @since 1.0.0
      * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
      */
-    public function testLiteralWithZeroBinaryIntegerValue()
+    public function testLiteralWithZeroBinaryIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('0b0', $literal->getImage());
@@ -186,7 +186,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testLiteralWithNonZeroOctalIntegerValue()
+    public function testLiteralWithNonZeroOctalIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('02342', $literal->getImage());
@@ -198,7 +198,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testLiteralWithNonZeroHexIntegerValue()
+    public function testLiteralWithNonZeroHexIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('0x926', $literal->getImage());
@@ -211,7 +211,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      * @since 1.0.0
      * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
      */
-    public function testLiteralWithNonZeroBinaryIntegerValue()
+    public function testLiteralWithNonZeroBinaryIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('0b100100100110', $literal->getImage());
@@ -224,7 +224,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      * @since 2.16.0
      * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
      */
-    public function testLiteralWithZeroFloatValue()
+    public function testLiteralWithZeroFloatValue(): void
     {
         $class = $this->getFirstClassForTestCase();
         $properties = $class->getProperties();
@@ -240,7 +240,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testLiteralWithCurlyBraceFollowedByCompoundExpression()
+    public function testLiteralWithCurlyBraceFollowedByCompoundExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
         $this->assertEquals('{', $literal->getImage());
@@ -251,7 +251,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testUnclosedDoubleQuoteStringResultsInExpectedException()
+    public function testUnclosedDoubleQuoteStringResultsInExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
 

@@ -59,7 +59,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testYield()
+    public function testYield(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTYieldStatement', $stmt);
@@ -70,7 +70,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testYieldAssignment()
+    public function testYieldAssignment(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
 
@@ -79,9 +79,9 @@ class ASTYieldStatementTest extends ASTNodeTestCase
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $assignment);
         $this->assertSame('$result', $assignment->getChild(0)->getImage());
 
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\\Source\\AST\\ASTLiteral',
-        ), array_map('get_class', $stmt->getChildren()));
+        ], array_map('get_class', $stmt->getChildren()));
         $this->assertSame('23', $stmt->getChild(0)->getImage());
     }
 
@@ -90,7 +90,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testYieldWithLiteral()
+    public function testYieldWithLiteral(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $stmt->getChild(0));
@@ -101,7 +101,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testYieldWithVariable()
+    public function testYieldWithVariable(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $stmt->getChild(0));
@@ -112,7 +112,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testYieldWithKeyValue()
+    public function testYieldWithKeyValue(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $stmt->getChild(0));
@@ -124,7 +124,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testYieldWithFunctionCalls()
+    public function testYieldWithFunctionCalls(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $stmt->getChild(0));
@@ -136,7 +136,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testYieldInsideForeach()
+    public function testYieldInsideForeach(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForeachStatement', $stmt->getParent()->getParent());
@@ -164,7 +164,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testYieldKeyValue
      */
-    public function testYieldKeyValueChildNodes(array $nodes)
+    public function testYieldKeyValueChildNodes(array $nodes): void
     {
         $this->assertEquals('$id', $nodes[0]->getImage());
         $this->assertEquals('$line', $nodes[1]->getImage());
@@ -192,7 +192,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testYieldValueAssignmentSimple
      */
-    public function testYieldValueAssignmentSimpleParent(ASTStatement $yield)
+    public function testYieldValueAssignmentSimpleParent(ASTStatement $yield): void
     {
         $this->assertInstanceOf(
             'PDepend\\Source\\AST\\ASTAssignmentExpression',
@@ -222,7 +222,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testYieldValueAssignmentKeyValue
      */
-    public function testYieldValueAssignmentKeyValueParent(ASTYieldStatement $yield)
+    public function testYieldValueAssignmentKeyValueParent(ASTYieldStatement $yield): void
     {
         $this->assertInstanceOf(
             'PDepend\\Source\\AST\\ASTAssignmentExpression',
@@ -237,7 +237,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testYieldValueAssignmentKeyValue
      */
-    public function testYieldValueAssignmentKeyValueChildren(ASTYieldStatement $yield)
+    public function testYieldValueAssignmentKeyValueChildren(ASTYieldStatement $yield): void
     {
         $nodes = $yield->getChildren();
 

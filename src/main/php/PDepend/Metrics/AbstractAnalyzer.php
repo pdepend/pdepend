@@ -57,14 +57,14 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      *
      * @var array<string, mixed>
      */
-    protected $options = array();
+    protected $options = [];
 
     /**
      * List or registered listeners.
      *
      * @var AnalyzerListener[]
      */
-    private $listeners = array();
+    private $listeners = [];
 
     /**
      * Constructs a new analyzer instance.
@@ -72,7 +72,7 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      * @param array<string, mixed> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         $this->options = $options;
     }
@@ -82,10 +82,8 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      *
      * @param array<string, mixed> $options Global option array, every analyzer
      *                                      can extract the required options.
-     *
-     * @return void
      */
-    public function setOptions(array $options = array())
+    public function setOptions(array $options = []): void
     {
         $this->options = $options;
     }
@@ -94,10 +92,8 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      * Adds a listener to this analyzer.
      *
      * @param AnalyzerListener $listener The listener instance.
-     *
-     * @return void
      */
-    public function addAnalyzeListener(AnalyzerListener $listener)
+    public function addAnalyzeListener(AnalyzerListener $listener): void
     {
         if (in_array($listener, $this->listeners, true) === false) {
             $this->listeners[] = $listener;
@@ -125,10 +121,8 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      * The analyzer implementation should call this method when it starts the
      * code processing. This method will send an analyzer start event to all
      * registered listeners.
-     *
-     * @return void
      */
-    protected function fireStartAnalyzer()
+    protected function fireStartAnalyzer(): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startAnalyzer($this);
@@ -139,10 +133,8 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      * The analyzer implementation should call this method when it has finished
      * the code processing. This method will send an analyzer end event to all
      * registered listeners.
-     *
-     * @return void
      */
-    protected function fireEndAnalyzer()
+    protected function fireEndAnalyzer(): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endAnalyzer($this);

@@ -63,8 +63,6 @@ interface AggregateAnalyzer extends Analyzer
      * Adds a required sub analyzer.
      *
      * @param Analyzer $analyzer The sub analyzer instance.
-     *
-     * @return void
      */
-    public function addAnalyzer(Analyzer $analyzer);
+    public function addAnalyzer(Analyzer $analyzer): void;
 }

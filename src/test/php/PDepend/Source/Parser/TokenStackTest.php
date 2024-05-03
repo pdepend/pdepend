@@ -62,7 +62,7 @@ class TokenStackTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testAddReturnsGivenTokenInstance()
+    public function testAddReturnsGivenTokenInstance(): void
     {
         $stack = new TokenStack();
         $token = $this->createToken();
@@ -75,16 +75,16 @@ class TokenStackTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testPopReturnsExpectedTokenArray()
+    public function testPopReturnsExpectedTokenArray(): void
     {
         $stack = new TokenStack();
         $stack->push();
 
-        $expected = array(
+        $expected = [
             $stack->add($this->createToken()),
             $stack->add($this->createToken()),
             $stack->add($this->createToken())
-        );
+        ];
 
         $this->assertSame($expected, $stack->pop());
     }
@@ -94,7 +94,7 @@ class TokenStackTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testPopOnlyReturnsExpectedTokenArrayInCurrentScope()
+    public function testPopOnlyReturnsExpectedTokenArrayInCurrentScope(): void
     {
         $stack = new TokenStack();
         $stack->push();
@@ -102,10 +102,10 @@ class TokenStackTest extends AbstractParserTestCase
         $stack->add($this->createToken());
         $stack->push();
 
-        $expected = array(
+        $expected = [
             $stack->add($this->createToken()),
             $stack->add($this->createToken())
-        );
+        ];
 
         $this->assertSame($expected, $stack->pop());
     }
@@ -115,15 +115,15 @@ class TokenStackTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testPopOnRootReturnsExpectedTokenArrayWithAllTokens()
+    public function testPopOnRootReturnsExpectedTokenArrayWithAllTokens(): void
     {
         $stack = new TokenStack();
         $stack->push();
 
-        $expected = array(
+        $expected = [
             $stack->add($this->createToken()),
             $stack->add($this->createToken())
-        );
+        ];
 
         $stack->push();
         $expected[] = $stack->add($this->createToken());

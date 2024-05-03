@@ -77,14 +77,14 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
                      )$/x';
 
     /** @var array<int, int> */
-    protected $possiblePropertyTypes = array(
+    protected $possiblePropertyTypes = [
         Tokens::T_STRING,
         Tokens::T_ARRAY,
         Tokens::T_QUESTION_MARK,
         Tokens::T_BACKSLASH,
         Tokens::T_CALLABLE,
         Tokens::T_SELF,
-    );
+    ];
 
     protected function parseUnknownDeclaration($tokenType, $modifiers)
     {
@@ -132,10 +132,8 @@ abstract class PHPParserVersion74 extends PHPParserVersion73
     /**
      * Override PHP 7.3 checkEllipsisInExpressionSupport to stop throwing the
      * parsing exception.
-     *
-     * @return void
      */
-    protected function checkEllipsisInExpressionSupport()
+    protected function checkEllipsisInExpressionSupport(): void
     {
         // Do not throw the exception from parent PHP 7.3
     }

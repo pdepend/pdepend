@@ -60,7 +60,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
      *
      * @return void
      */
-    public function testParserHandlesSimpleCommaSeparatedPropertyDeclaration()
+    public function testParserHandlesSimpleCommaSeparatedPropertyDeclaration(): void
     {
         $properties = $this->parseCodeResourceForTest()
             ->current()
@@ -76,7 +76,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
      *
      * @return void
      */
-    public function testParserSetsSameVisibilityForAllPropertyDeclarations()
+    public function testParserSetsSameVisibilityForAllPropertyDeclarations(): void
     {
         $properties = $this->parseCodeResourceForTest()
             ->current()
@@ -84,21 +84,21 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
             ->current()
             ->getProperties();
 
-        $actual = array();
+        $actual = [];
         foreach ($properties as $property) {
-            $actual[] = array(
+            $actual[] = [
                 'private'  =>  $property->isPrivate(),
                 'public'   =>  $property->isPublic()
-            );
+            ];
         }
 
         $this->assertEquals(
-            array(
-                array('private' => false, 'public' => true),
-                array('private' => false, 'public' => true),
-                array('private' => true, 'public' => false),
-                array('private' => true, 'public' => false),
-            ),
+            [
+                ['private' => false, 'public' => true],
+                ['private' => false, 'public' => true],
+                ['private' => true, 'public' => false],
+                ['private' => true, 'public' => false],
+            ],
             $actual
         );
     }
@@ -108,7 +108,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
      *
      * @return void
      */
-    public function testParserSetsExpectedStaticModifierForAllPropertyDeclarations()
+    public function testParserSetsExpectedStaticModifierForAllPropertyDeclarations(): void
     {
         $properties = $this->parseCodeResourceForTest()
             ->current()
@@ -116,11 +116,11 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
             ->current()
             ->getProperties();
 
-        $actual = array();
+        $actual = [];
         foreach ($properties as $property) {
             $actual[] = $property->isStatic();
         }
 
-        $this->assertEquals(array(true, true), $actual);
+        $this->assertEquals([true, true], $actual);
     }
 }

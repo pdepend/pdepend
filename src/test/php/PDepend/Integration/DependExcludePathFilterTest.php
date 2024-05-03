@@ -61,7 +61,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPDependFiltersSingleFileWithPattern()
+    public function testPDependFiltersSingleFileWithPattern(): void
     {
         $this->changeWorkingDirectory();
 
@@ -71,7 +71,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pdepend = $this->createEngineFixture();
         $pdepend->addFile($this->createCodeResourceUriForTest().'/Integration/FilteredClass.php');
         $pdepend->addFileFilter(
-            new \PDepend\Input\ExcludePathFilter(array($pattern))
+            new \PDepend\Input\ExcludePathFilter([$pattern])
         );
 
         $this->assertCount(0, $pdepend->analyze());
@@ -83,7 +83,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPDependFiltersByRelativePath()
+    public function testPDependFiltersByRelativePath(): void
     {
         $this->changeWorkingDirectory();
 
@@ -93,7 +93,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
-            new \PDepend\Input\ExcludePathFilter(array($pattern))
+            new \PDepend\Input\ExcludePathFilter([$pattern])
         );
 
         $this->assertCount(0, $pdepend->analyze());
@@ -104,7 +104,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPDependFiltersByAbsolutePath()
+    public function testPDependFiltersByAbsolutePath(): void
     {
         $this->changeWorkingDirectory();
 
@@ -118,7 +118,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
-            new \PDepend\Input\ExcludePathFilter(array($pattern))
+            new \PDepend\Input\ExcludePathFilter([$pattern])
         );
 
         $this->assertCount(
@@ -137,7 +137,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPDependNotFiltersByOverlappingPathMatch()
+    public function testPDependNotFiltersByOverlappingPathMatch(): void
     {
         $this->changeWorkingDirectory();
 
@@ -147,7 +147,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);
         $pdepend->addFileFilter(
-            new \PDepend\Input\ExcludePathFilter(array($pattern))
+            new \PDepend\Input\ExcludePathFilter([$pattern])
         );
 
         $this->assertCount(1, $pdepend->analyze());

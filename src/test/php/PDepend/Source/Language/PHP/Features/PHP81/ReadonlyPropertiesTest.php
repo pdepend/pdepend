@@ -54,7 +54,7 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testReadonlyProperty()
+    public function testReadonlyProperty(): void
     {
         $class = $this->getFirstClassForTestCase();
         $property = $class->getChild(0);
@@ -69,7 +69,7 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testReadonlyPropertyInConstructor()
+    public function testReadonlyPropertyInConstructor(): void
     {
         $class = $this->getFirstClassForTestCase();
         $constructor = $class->getMethods()->offsetGet(0);
@@ -96,7 +96,7 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testReadonlyNameUsedElsewhere()
+    public function testReadonlyNameUsedElsewhere(): void
     {
         $class = $this->getFirstClassForTestCase();
 

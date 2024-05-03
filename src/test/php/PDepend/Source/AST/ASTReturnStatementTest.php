@@ -76,7 +76,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedStartLine($stmt)
+    public function testReturnStatementHasExpectedStartLine($stmt): void
     {
         $this->assertEquals(4, $stmt->getStartLine());
     }
@@ -89,7 +89,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedStartColumn($stmt)
+    public function testReturnStatementHasExpectedStartColumn($stmt): void
     {
         $this->assertEquals(5, $stmt->getStartColumn());
     }
@@ -102,7 +102,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedEndLine($stmt)
+    public function testReturnStatementHasExpectedEndLine($stmt): void
     {
         $this->assertEquals(7, $stmt->getEndLine());
     }
@@ -115,7 +115,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedEndColumn($stmt)
+    public function testReturnStatementHasExpectedEndColumn($stmt): void
     {
         $this->assertEquals(6, $stmt->getEndColumn());
     }
@@ -125,7 +125,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParserHandlesEmptyReturnStatement()
+    public function testParserHandlesEmptyReturnStatement(): void
     {
         $stmt = $this->getFirstReturnStatementInFunction();
         $this->assertEquals(12, $stmt->getEndColumn());
@@ -136,7 +136,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParserHandlesReturnStatementWithSimpleBoolean()
+    public function testParserHandlesReturnStatementWithSimpleBoolean(): void
     {
         $stmt = $this->getFirstReturnStatementInFunction();
         $this->assertEquals(17, $stmt->getEndColumn());

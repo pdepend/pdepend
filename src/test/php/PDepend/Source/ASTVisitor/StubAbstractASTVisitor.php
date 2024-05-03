@@ -63,7 +63,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      *
      * @var array<string, integer>
      */
-    public $visits = array();
+    public $visits = [];
 
     /**
      * Visits a class node.
@@ -71,7 +71,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      * @param \PDepend\Source\AST\ASTClass $class
      * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         $this->visits[] = $class->getName();
 
@@ -84,9 +84,9 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
      * @return void
      */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit): void
     {
-        $this->visits[] = get_class($compilationUnit);
+        $this->visits[] = $compilationUnit::class;
 
         parent::visitCompilationUnit($compilationUnit);
     }
@@ -97,7 +97,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      * @param \PDepend\Source\AST\ASTFunction $function
      * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->visits[] = $function->getName();
 
@@ -110,7 +110,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      * @param \PDepend\Source\AST\ASTInterface $interface
      * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         $this->visits[] = $interface->getName();
 
@@ -123,7 +123,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      * @param \PDepend\Source\AST\ASTMethod $method
      * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->visits[] = $method->getName();
 
@@ -136,7 +136,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      * @param \PDepend\Source\AST\ASTNamespace $namespace The package class node.
      * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace): void
     {
         $this->visits[] = $namespace->getName();
 
@@ -149,7 +149,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      * @param \PDepend\Source\AST\ASTProperty $property
      * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property): void
     {
         $this->visits[] = $property->getName();
 

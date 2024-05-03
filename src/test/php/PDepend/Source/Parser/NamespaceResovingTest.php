@@ -61,24 +61,24 @@ class NamespaceResovingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testNamespacesAreCorrectlyLookedUp()
+    public function testNamespacesAreCorrectlyLookedUp(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
 
-        $actual = array();
+        $actual = [];
         foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference') as $reference) {
             $actual[] = $reference->getImage();
         }
 
         $this->assertEquals(
-            array(
+            [
                 'Foo\Bar\Bar',
                 '\Bar\Baz',
                 '\Something',
                 '\Test',
                 'Foo\Bar\Other',
                 '\Baz\Foo\Bar',
-            ),
+            ],
             $actual
         );
     }
@@ -88,24 +88,24 @@ class NamespaceResovingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testNamespacesAreLookedUpCorrectlyInFirstOfMultipleNamespaces()
+    public function testNamespacesAreLookedUpCorrectlyInFirstOfMultipleNamespaces(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
 
-        $actual = array();
+        $actual = [];
         foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference') as $reference) {
             $actual[] = $reference->getImage();
         }
 
         $this->assertEquals(
-            array(
+            [
                 'Foo\Bar\Bar',
                 '\Bar\Baz',
                 '\Something',
                 '\Test',
                 'Foo\Bar\Other',
                 '\Baz\Foo\Bar',
-            ),
+            ],
             $actual
         );
     }
@@ -115,7 +115,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testNamespacesAreLookedUpCorrectlyInSecondOfMultipleNamespaces()
+    public function testNamespacesAreLookedUpCorrectlyInSecondOfMultipleNamespaces(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $namespaces->next();
@@ -126,13 +126,13 @@ class NamespaceResovingTest extends AbstractParserTestCase
             ->getMethods()
             ->current();
 
-        $actual = array();
+        $actual = [];
         foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference') as $reference) {
             $actual[] = $reference->getImage();
         }
 
         $this->assertEquals(
-            array(
+            [
                 'Bar\Baz\Bar',
                 'Bar\Baz\Baz',
                 'Bar\Baz\Something',
@@ -140,7 +140,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
                 'Bar\Baz\Other',
                 'Bar\Baz\Foo\Bar',
                 '\Foo\Bar\Abc',
-            ),
+            ],
             $actual
         );
     }
@@ -150,7 +150,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testNamespacesAreLookedUpCorrectlyInThirdOfMultipleNamespaces()
+    public function testNamespacesAreLookedUpCorrectlyInThirdOfMultipleNamespaces(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $namespaces->next();
@@ -162,17 +162,17 @@ class NamespaceResovingTest extends AbstractParserTestCase
             ->getMethods()
             ->current();
 
-        $actual = array();
+        $actual = [];
         foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference') as $reference) {
             $actual[] = $reference->getImage();
         }
 
         $this->assertEquals(
-            array(
+            [
                 '\Bar',
                 '\Foo\Bar',
                 '\Foo\Bar\Xyz',
-            ),
+            ],
             $actual
         );
     }

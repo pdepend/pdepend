@@ -73,10 +73,8 @@ class ASTRequireExpression extends ASTExpression
 
     /**
      * Flags this node as a <b>require_once</b>-expression.
-     *
-     * @return void
      */
-    public function setOnce()
+    public function setOnce(): void
     {
         $this->once = true;
     }
@@ -92,6 +90,6 @@ class ASTRequireExpression extends ASTExpression
      */
     public function __sleep()
     {
-        return array_merge(array('once'), parent::__sleep());
+        return array_merge(['once'], parent::__sleep());
     }
 }

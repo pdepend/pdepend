@@ -63,7 +63,7 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @var AbstractASTClassOrInterface[]
      */
-    protected $types = array();
+    protected $types = [];
 
     /**
      * List of all standalone {@link ASTFunction} objects
@@ -71,7 +71,7 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @var ASTFunction[]
      */
-    protected $functions = array();
+    protected $functions = [];
 
     /**
      * Does this namespace contain user defined functions, classes or interfaces?
@@ -202,9 +202,9 @@ class ASTNamespace extends AbstractASTArtifact
      */
     private function getTypesOfType($className)
     {
-        $types = array();
+        $types = [];
         foreach ($this->types as $type) {
-            if ($type instanceof $className && get_class($type) === $className) {
+            if ($type instanceof $className && $type::class === $className) {
                 $types[] = $type;
             }
         }
@@ -252,10 +252,8 @@ class ASTNamespace extends AbstractASTArtifact
      * Removes the given type instance from this namespace.
      *
      * @param AbstractASTClassOrInterface $type
-     *
-     * @return void
      */
-    public function removeType(AbstractASTType $type)
+    public function removeType(AbstractASTType $type): void
     {
         if (($index = array_search($type, $this->types, true)) !== false) {
             // Remove class from internal list
@@ -296,10 +294,8 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Removes the given function from this namespace.
-     *
-     * @return void
      */
-    public function removeFunction(ASTFunction $function)
+    public function removeFunction(ASTFunction $function): void
     {
         if (($index = array_search($function, $this->functions, true)) !== false) {
             // Remove function from internal list
@@ -319,10 +315,8 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * @param bool $packageAnnotation
-     *
-     * @return void
      */
-    public function setPackageAnnotation($packageAnnotation)
+    public function setPackageAnnotation($packageAnnotation): void
     {
         $this->packageAnnotation = $packageAnnotation;
     }

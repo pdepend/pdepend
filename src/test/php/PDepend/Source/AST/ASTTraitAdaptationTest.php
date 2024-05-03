@@ -78,7 +78,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptation
      */
-    public function testTraitAdaptationHasExpectedStartLine($scope)
+    public function testTraitAdaptationHasExpectedStartLine($scope): void
     {
         $this->assertEquals(5, $scope->getStartLine());
     }
@@ -91,7 +91,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptation
      */
-    public function testTraitAdaptationHasExpectedStartColumn($scope)
+    public function testTraitAdaptationHasExpectedStartColumn($scope): void
     {
         $this->assertEquals(32, $scope->getStartColumn());
     }
@@ -104,7 +104,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptation
      */
-    public function testTraitAdaptationHasExpectedEndLine($scope)
+    public function testTraitAdaptationHasExpectedEndLine($scope): void
     {
         $this->assertEquals(9, $scope->getEndLine());
     }
@@ -117,7 +117,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptation
      */
-    public function testTraitAdaptationHasExpectedEndColumn($scope)
+    public function testTraitAdaptationHasExpectedEndColumn($scope): void
     {
         $this->assertEquals(5, $scope->getEndColumn());
     }

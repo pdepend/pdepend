@@ -61,7 +61,7 @@ class ParserRegressionTest extends AbstractTestCase
      * @return void
      * @dataProvider dataProviderSourceFiles
      */
-    public function testParserHandlesSourceFileWithoutException($pathName)
+    public function testParserHandlesSourceFileWithoutException($pathName): void
     {
         $this->parseSource($pathName);
     }
@@ -73,10 +73,10 @@ class ParserRegressionTest extends AbstractTestCase
      */
     public static function dataProviderSourceFiles()
     {
-        $files = array();
+        $files = [];
         foreach (new \DirectoryIterator(self::createCodeResourceURI('parser_regression')) as $file) {
             if ($file->isFile()) {
-                $files[] = array(realpath($file->getPathname()));
+                $files[] = [realpath($file->getPathname())];
             }
         }
         return $files;

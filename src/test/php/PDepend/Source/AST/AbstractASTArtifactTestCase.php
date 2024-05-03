@@ -61,7 +61,7 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testSetNameChangesPreviousName()
+    public function testSetNameChangesPreviousName(): void
     {
         $item = $this->createItem();
         $item->setName(__METHOD__);

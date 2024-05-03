@@ -83,10 +83,8 @@ interface CacheDriver
      * @param string $key  The cache key for the given data.
      * @param mixed  $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
-     *
-     * @return void
      */
-    public function store($key, $data, $hash = null);
+    public function store($key, $data, $hash = null): void;
 
     /**
      * This method tries to restore an existing cache entry for the given
@@ -107,8 +105,6 @@ interface CacheDriver
      * nothing.
      *
      * @param string $pattern The cache key pattern.
-     *
-     * @return void
      */
-    public function remove($pattern);
+    public function remove($pattern): void;
 }

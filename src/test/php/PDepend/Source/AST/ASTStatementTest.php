@@ -76,7 +76,7 @@ class ASTStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testStatement
      */
-    public function testStatementHasExpectedStartLine($stmt)
+    public function testStatementHasExpectedStartLine($stmt): void
     {
         $this->assertEquals(4, $stmt->getStartLine());
     }
@@ -89,7 +89,7 @@ class ASTStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testStatement
      */
-    public function testStatementHasExpectedStartColumn($stmt)
+    public function testStatementHasExpectedStartColumn($stmt): void
     {
         $this->assertEquals(5, $stmt->getStartColumn());
     }
@@ -102,7 +102,7 @@ class ASTStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testStatement
      */
-    public function testStatementHasExpectedEndLine($stmt)
+    public function testStatementHasExpectedEndLine($stmt): void
     {
         $this->assertEquals(8, $stmt->getEndLine());
     }
@@ -115,7 +115,7 @@ class ASTStatementTest extends ASTNodeTestCase
      * @return void
      * @depends testStatement
      */
-    public function testStatementHasExpectedEndColumn($stmt)
+    public function testStatementHasExpectedEndColumn($stmt): void
     {
         $this->assertEquals(6, $stmt->getEndColumn());
     }

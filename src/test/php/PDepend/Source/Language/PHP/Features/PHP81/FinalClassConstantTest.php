@@ -54,7 +54,7 @@ class FinalClassConstantTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testFinalClassConstant()
+    public function testFinalClassConstant(): void
     {
         $class = $this->getFirstClassForTestCase();
         $constantDeclarators = $class->getConstantDeclarators();

@@ -57,7 +57,7 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testTypedProperties()
+    public function testTypedProperties(): void
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
@@ -67,16 +67,16 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
         $declarations = array_map(function (ASTFieldDeclaration $child) {
             $childChildren = $child->getChildren();
 
-            return array(
+            return [
                 $child->hasType() ? $child->getType() : null,
                 $childChildren[1],
-            );
+            ];
         }, $children);
 
-        foreach (array(
-            array('null', '$nullish'),
-            array('false', '$falsy'),
-        ) as $index => $expected) {
+        foreach ([
+            ['null', '$nullish'],
+            ['false', '$falsy'],
+        ] as $index => $expected) {
             [$expectedType, $expectedVariable] = $expected;
             $expectedTypeClass = $expected[2] ?? 'PDepend\\Source\\AST\\ASTScalarType';
             [$type, $variable] = $declarations[$index];
@@ -99,7 +99,7 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testReturnTypes()
+    public function testReturnTypes(): void
     {
         $class = $this->getFirstClassForTestCase();
         /** @var ASTMethod[] $methods */
@@ -117,7 +117,7 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
     /**
      * @return void
      */
-    public function testParameters()
+    public function testParameters(): void
     {
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTParameter[] $methods */

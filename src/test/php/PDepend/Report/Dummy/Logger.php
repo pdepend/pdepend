@@ -66,10 +66,10 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      *
      * @var array<string, mixed>
      */
-    private $input = array(
+    private $input = [
         'code'       =>  null,
-        'analyzers'  =>  array()
-    );
+        'analyzers'  =>  []
+    ];
 
     /**
      * Constructs a new logger for the given output file.
@@ -85,7 +85,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      *
      * @return void
      */
-    public function setLogFile($logFile)
+    public function setLogFile($logFile): void
     {
         $this->logFile = $logFile;
     }
@@ -98,7 +98,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      */
     public function getAcceptedAnalyzers()
     {
-        return array(
+        return [
             'pdepend.analyzer.cyclomatic_complexity',
             'pdepend.analyzer.node_loc',
             'pdepend.analyzer.npath_complexity',
@@ -110,7 +110,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
             'pdepend.analyzer.coupling',
             'pdepend.analyzer.class_level',
             'pdepend.analyzer.cohesion',
-        );
+        ];
     }
 
     /**
@@ -119,7 +119,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      * @param \PDepend\Source\AST\ASTArtifactList $artifacts
      * @return void
      */
-    public function setArtifacts(ASTArtifactList $artifacts)
+    public function setArtifacts(ASTArtifactList $artifacts): void
     {
         $this->input['code'] = $artifacts;
     }
@@ -142,7 +142,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      *
      * @return void
      */
-    public function close()
+    public function close(): void
     {
         if ($this->logFile) {
             file_put_contents($this->logFile, serialize($this->input));

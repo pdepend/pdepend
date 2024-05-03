@@ -60,7 +60,7 @@ class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractRegressionTe
      *
      * @return void
      */
-    public function testParserHandlesNamespaceKeywordInFunctionParameterTypeHint()
+    public function testParserHandlesNamespaceKeywordInFunctionParameterTypeHint(): void
     {
         $parameters = $this->getFirstFunctionForTestCase()
             ->getParameters();
@@ -73,7 +73,7 @@ class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractRegressionTe
      *
      * @return void
      */
-    public function testParserHandlesNamespaceKeywordInMethodParameterTypeHint()
+    public function testParserHandlesNamespaceKeywordInMethodParameterTypeHint(): void
     {
         $parameters = $this->getFirstClassMethodForTestCase()
             ->getParameters();

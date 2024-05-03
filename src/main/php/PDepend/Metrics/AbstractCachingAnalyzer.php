@@ -75,7 +75,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      *
      * @var array<string, mixed>
      */
-    private $metricsCached = array();
+    private $metricsCached = [];
 
     /**
      * Injected cache driver.
@@ -86,10 +86,8 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
 
     /**
      * Setter method for the system wide used cache.
-     *
-     * @return void
      */
-    public function setCache(CacheDriver $cache)
+    public function setCache(CacheDriver $cache): void
     {
         $this->cache = $cache;
     }
@@ -125,10 +123,8 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
 
     /**
      * Initializes the previously calculated metrics from the cache.
-     *
-     * @return void
      */
-    protected function loadCache()
+    protected function loadCache(): void
     {
         $this->metricsCached = (array) $this->cache
             ->type('metrics')
@@ -138,15 +134,13 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     /**
      * Unloads the metrics cache and stores the current set of metrics in the
      * cache.
-     *
-     * @return void
      */
-    protected function unloadCache()
+    protected function unloadCache(): void
     {
         $this->cache
             ->type('metrics')
             ->store(get_class($this), $this->metrics);
 
-        $this->metricsCached = array();
+        $this->metricsCached = [];
     }
 }

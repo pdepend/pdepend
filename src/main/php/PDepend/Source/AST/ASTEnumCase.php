@@ -69,10 +69,8 @@ class ASTEnumCase extends AbstractASTNode implements ASTArtifact
 
     /**
      * Sets the parent node of this node.
-     *
-     * @return void
      */
-    public function setEnum(ASTEnum $enum)
+    public function setEnum(ASTEnum $enum): void
     {
         $this->enum = $enum;
     }

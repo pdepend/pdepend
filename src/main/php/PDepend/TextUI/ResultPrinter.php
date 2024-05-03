@@ -73,10 +73,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      * Is called when PDepend starts the file parsing process.
      *
      * @param Builder<mixed> $builder
-     *
-     * @return void
      */
-    public function startParseProcess(Builder $builder)
+    public function startParseProcess(Builder $builder): void
     {
         $this->count = 0;
 
@@ -87,72 +85,56 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      * Is called when PDepend has finished the file parsing process.
      *
      * @param Builder<mixed> $builder
-     *
-     * @return void
      */
-    public function endParseProcess(Builder $builder)
+    public function endParseProcess(Builder $builder): void
     {
         $this->finish();
     }
 
     /**
      * Is called when PDepend starts parsing of a new file.
-     *
-     * @return void
      */
-    public function startFileParsing(Tokenizer $tokenizer)
+    public function startFileParsing(Tokenizer $tokenizer): void
     {
         $this->step();
     }
 
     /**
      * Is called when PDepend has finished a file.
-     *
-     * @return void
      */
-    public function endFileParsing(Tokenizer $tokenizer) {}
+    public function endFileParsing(Tokenizer $tokenizer): void {}
 
     /**
      * Is called when PDepend starts the analyzing process.
-     *
-     * @return void
      */
-    public function startAnalyzeProcess() {}
+    public function startAnalyzeProcess(): void {}
 
     /**
      * Is called when PDepend has finished the analyzing process.
-     *
-     * @return void
      */
-    public function endAnalyzeProcess() {}
+    public function endAnalyzeProcess(): void {}
 
     /**
      * Is called when PDepend starts the logging process.
-     *
-     * @return void
      */
-    public function startLogProcess()
+    public function startLogProcess(): void
     {
         echo "Generating pdepend log files, this may take a moment.\n";
     }
 
     /**
      * Is called when PDepend has finished the logging process.
-     *
-     * @return void
      */
-    public function endLogProcess() {}
+    public function endLogProcess(): void {}
 
     /**
      * Is called when PDepend starts a new analyzer.
-     *
-     * @return void
      */
-    public function startAnalyzer(Analyzer $analyzer)
+    public function startAnalyzer(Analyzer $analyzer): void
     {
         $this->count = 0;
 
-        $parts = explode('\\', get_class($analyzer));
+        $parts = explode('\\', $analyzer::class);
 
         $name = preg_replace('(Analyzer$)', '', end($parts));
         $name = preg_replace('/([a-zA-Z])([a-z])(?=[A-Z])/', '$1$2 ', $name);
@@ -162,20 +144,16 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
 
     /**
      * Is called when PDepend has finished one analyzing process.
-     *
-     * @return void
      */
-    public function endAnalyzer(Analyzer $analyzer)
+    public function endAnalyzer(Analyzer $analyzer): void
     {
         $this->finish(self::STEP_SIZE);
     }
 
     /**
      * Generic notification method that is called for every node start.
-     *
-     * @return void
      */
-    public function startVisitNode(AbstractASTArtifact $node)
+    public function startVisitNode(AbstractASTArtifact $node): void
     {
         $this->step(self::STEP_SIZE);
     }
@@ -184,10 +162,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      * Prints a single dot for the current step.
      *
      * @param int $size
-     *
-     * @return void
      */
-    protected function step($size = 1)
+    protected function step($size = 1): void
     {
         if ($this->count > 0 && $this->count % $size === 0) {
             echo '.';
@@ -202,10 +178,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      * Closes the current dot line.
      *
      * @param int $size
-     *
-     * @return void
      */
-    protected function finish($size = 1)
+    protected function finish($size = 1): void
     {
         $diff = ($this->count % ($size * 60));
 

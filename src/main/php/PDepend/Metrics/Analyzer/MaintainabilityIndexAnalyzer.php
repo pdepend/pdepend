@@ -88,7 +88,7 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
      *
      * @param array<string, mixed> $options
      */
-    public function __construct(array $options = array())
+    public function __construct(array $options = [])
     {
         parent::__construct($options);
 
@@ -99,10 +99,8 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         $this->analyzersCCN->setCache($this->getCache());
         $this->analyzersCCN->analyze($namespaces);
@@ -118,7 +116,7 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
             $this->fireStartAnalyzer();
 
             // Init node metrics
-            $this->metrics = array();
+            $this->metrics = [];
 
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
@@ -142,15 +140,13 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
             return $this->metrics[$artifact->getId()];
         }
 
-        return array();
+        return [];
     }
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
 
@@ -163,20 +159,16 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         // Empty visit method, we don't want interface metrics
     }
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -189,10 +181,8 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
 
     /**
      * @see http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx
-     *
-     * @return void
      */
-    public function calculateMaintainabilityIndex(AbstractASTCallable $callable)
+    public function calculateMaintainabilityIndex(AbstractASTCallable $callable): void
     {
         $cyclomaticComplexity = $this->analyzersCCN->getCcn2($callable);
 
@@ -204,6 +194,6 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
 
         $maintainabilityIndex = 171 - 5.2 * log($halsteadVolume) - 0.23 * $cyclomaticComplexity - 16.2 * log($eloc);
         $maintainabilityIndex = min(100, max(0, $maintainabilityIndex * 100 / 171));
-        $this->metrics[$callable->getId()] = array(self::M_MAINTAINABILITY_INDEX => $maintainabilityIndex);
+        $this->metrics[$callable->getId()] = [self::M_MAINTAINABILITY_INDEX => $maintainabilityIndex];
     }
 }

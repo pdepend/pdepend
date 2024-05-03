@@ -61,7 +61,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testTraitAdaptationPrecedenceHasExpectedNumberOfTraitReferences()
+    public function testTraitAdaptationPrecedenceHasExpectedNumberOfTraitReferences(): void
     {
         $stmt = $this->getFirstTraitAdaptationPrecedenceInClass();
         $this->assertCount(
@@ -77,7 +77,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException()
+    public function testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
 
@@ -106,7 +106,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptationPrecedence
      */
-    public function testTraitAdaptationPrecedenceHasExpectedStartLine($precedence)
+    public function testTraitAdaptationPrecedenceHasExpectedStartLine($precedence): void
     {
         $this->assertEquals(6, $precedence->getStartLine());
     }
@@ -119,7 +119,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptationPrecedence
      */
-    public function testTraitAdaptationPrecedenceHasExpectedStartColumn($precedence)
+    public function testTraitAdaptationPrecedenceHasExpectedStartColumn($precedence): void
     {
         $this->assertEquals(9, $precedence->getStartColumn());
     }
@@ -132,7 +132,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptationPrecedence
      */
-    public function testTraitAdaptationPrecedenceHasExpectedEndLine($precedence)
+    public function testTraitAdaptationPrecedenceHasExpectedEndLine($precedence): void
     {
         $this->assertEquals(8, $precedence->getEndLine());
     }
@@ -145,7 +145,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitAdaptationPrecedence
      */
-    public function testTraitAdaptationPrecedenceHasExpectedEndColumn($precedence)
+    public function testTraitAdaptationPrecedenceHasExpectedEndColumn($precedence): void
     {
         $this->assertEquals(56, $precedence->getEndColumn());
     }
@@ -185,7 +185,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartLine($reference)
+    public function testTraitReferenceHasExpectedStartLine($reference): void
     {
         $this->assertEquals(6, $reference->getStartLine());
     }
@@ -198,7 +198,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartColumn($reference)
+    public function testTraitReferenceHasExpectedStartColumn($reference): void
     {
         $this->assertEquals(9, $reference->getStartColumn());
     }
@@ -211,7 +211,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndLine($reference)
+    public function testTraitReferenceHasExpectedEndLine($reference): void
     {
         $this->assertEquals(6, $reference->getEndLine());
     }
@@ -224,7 +224,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      * @return void
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndColumn($reference)
+    public function testTraitReferenceHasExpectedEndColumn($reference): void
     {
         $this->assertEquals(36, $reference->getEndColumn());
     }

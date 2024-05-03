@@ -60,18 +60,18 @@ class ASTArgumentsTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testArgumentsGraphWithMagicClassConstant()
+    public function testArgumentsGraphWithMagicClassConstant(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertGraph(
             $arguments,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTConstant'         . ' (__CLASS__)',
                 'PDepend\\Source\\AST\\ASTLiteral'          . ' ("run")',
-                'PDepend\\Source\\AST\\ASTArray'            . ' ()', array(
-                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', array(
-                        'PDepend\\Source\\AST\\ASTVariable' . ' ($count)'))
-            )
+                'PDepend\\Source\\AST\\ASTArray'            . ' ()', [
+                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
+                        'PDepend\\Source\\AST\\ASTVariable' . ' ($count)']]
+            ]
         );
     }
 
@@ -80,7 +80,7 @@ class ASTArgumentsTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArgumentsHasExpectedStartLine()
+    public function testArgumentsHasExpectedStartLine(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertEquals(5, $arguments->getStartLine());
@@ -91,7 +91,7 @@ class ASTArgumentsTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArgumentsHasExpectedStartColumn()
+    public function testArgumentsHasExpectedStartColumn(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertEquals(8, $arguments->getStartColumn());
@@ -102,7 +102,7 @@ class ASTArgumentsTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArgumentsHasExpectedEndLine()
+    public function testArgumentsHasExpectedEndLine(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertEquals(7, $arguments->getEndLine());
@@ -113,7 +113,7 @@ class ASTArgumentsTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArgumentsHasExpectedEndColumn()
+    public function testArgumentsHasExpectedEndColumn(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
         $this->assertEquals(21, $arguments->getEndColumn());
@@ -124,7 +124,7 @@ class ASTArgumentsTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testArgumentsIsVariadicPlaceholder()
+    public function testArgumentsIsVariadicPlaceholder(): void
     {
         $arguments = new ASTArguments();
         static::assertFalse($arguments->isVariadicPlaceholder());

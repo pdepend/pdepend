@@ -59,17 +59,17 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionOnStaticClassMember()
+    public function testIncrementPostfixExpressionOnStaticClassMember(): void
     {
         $expr = $this->getFirstPostfixExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -78,17 +78,17 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionOnSelfClassMember()
+    public function testIncrementPostfixExpressionOnSelfClassMember(): void
     {
         $expr = $this->getFirstPostfixExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTSelfReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -97,17 +97,17 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionOnParentClassMember()
+    public function testIncrementPostfixExpressionOnParentClassMember(): void
     {
         $expr = $this->getFirstPostfixExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTParentReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -116,17 +116,17 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionOnThisObjectMember()
+    public function testIncrementPostfixExpressionOnThisObjectMember(): void
     {
         $expr = $this->getFirstPostfixExpressionInClass(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier'
-            )
+            ]
         );
     }
 
@@ -135,17 +135,17 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionOnFunctionPostfix()
+    public function testIncrementPostfixExpressionOnFunctionPostfix(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTFunctionPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -154,16 +154,16 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionOnVariableVariable()
+    public function testIncrementPostfixExpressionOnVariableVariable(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTVariableVariable',
                 'PDepend\\Source\\AST\\ASTVariableVariable',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -172,15 +172,15 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionOnCompoundVariable()
+    public function testIncrementPostfixExpressionOnCompoundVariable(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTCompoundVariable',
                 'PDepend\\Source\\AST\\ASTConstant'
-            )
+            ]
         );
     }
 
@@ -189,19 +189,19 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionOnObjectMethodPostfix()
+    public function testIncrementPostfixExpressionOnObjectMethodPostfix(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -210,18 +210,18 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionOnStaticMethodPostfix()
+    public function testIncrementPostfixExpressionOnStaticMethodPostfix(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments'
-            )
+            ]
         );
     }
 
@@ -230,12 +230,12 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionArrayPropertyPostfix()
+    public function testIncrementPostfixExpressionArrayPropertyPostfix(): void
     {
         $expr = $this->getFirstPostfixExpressionInClass(__METHOD__)->getParent();
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTPostfixExpression',
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
@@ -243,7 +243,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTArrayIndexExpression',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
     
@@ -252,7 +252,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionHasExpectedStartLine()
+    public function testIncrementPostfixExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getStartLine());
@@ -263,7 +263,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionHasExpectedStartColumn()
+    public function testIncrementPostfixExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertEquals(9, $expr->getStartColumn());
@@ -274,7 +274,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionHasExpectedEndLine()
+    public function testIncrementPostfixExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertEquals(7, $expr->getEndLine());
@@ -285,7 +285,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIncrementPostfixExpressionHasExpectedEndColumn()
+    public function testIncrementPostfixExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertEquals(14, $expr->getEndColumn());
@@ -296,12 +296,12 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDecrementPostfixExpressionArrayPropertyPostfix()
+    public function testDecrementPostfixExpressionArrayPropertyPostfix(): void
     {
         $expr = $this->getFirstPostfixExpressionInClass(__METHOD__)->getParent();
         $this->assertGraphEquals(
             $expr,
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTPostfixExpression',
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
@@ -309,7 +309,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTArrayIndexExpression',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
     
@@ -318,7 +318,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDecrementPostfixExpressionHasExpectedStartLine()
+    public function testDecrementPostfixExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertEquals(7, $expr->getStartLine());
@@ -329,7 +329,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDecrementPostfixExpressionHasExpectedStartColumn()
+    public function testDecrementPostfixExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertEquals(17, $expr->getStartColumn());
@@ -340,7 +340,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDecrementPostfixExpressionHasExpectedEndLine()
+    public function testDecrementPostfixExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertEquals(9, $expr->getEndLine());
@@ -351,7 +351,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testDecrementPostfixExpressionHasExpectedEndColumn()
+    public function testDecrementPostfixExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
         $this->assertEquals(10, $expr->getEndColumn());

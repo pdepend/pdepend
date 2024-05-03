@@ -62,7 +62,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @return void
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
-    public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers)
+    public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers): void
     {
         $definition = new ASTConstantDefinition();
 
@@ -79,7 +79,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @return void
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
-    public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers)
+    public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers): void
     {
         $definition = new ASTConstantDefinition();
 
@@ -99,7 +99,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsPublicReturnsFalseByDefault()
+    public function testIsPublicReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
         $this->assertFalse($declaration->isPublic());
@@ -110,7 +110,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet()
+    public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
         $declaration->setModifiers(State::IS_PUBLIC);
@@ -123,7 +123,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsProtectedReturnsFalseByDefault()
+    public function testIsProtectedReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
         $this->assertFalse($declaration->isProtected());
@@ -135,7 +135,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet()
+    public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
         $declaration->setModifiers(State::IS_PROTECTED);
@@ -148,7 +148,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsPrivateReturnsFalseByDefault()
+    public function testIsPrivateReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
         $this->assertFalse($declaration->isPrivate());
@@ -159,7 +159,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet()
+    public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
         $declaration->setModifiers(State::IS_PRIVATE);
@@ -172,7 +172,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testConstantDefinitionHasExpectedDocComment()
+    public function testConstantDefinitionHasExpectedDocComment(): void
     {
         $constant = $this->getFirstConstantDefinitionInClass();
         $this->assertEquals(
@@ -188,7 +188,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween()
+    public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween(): void
     {
         $constant = $this->getFirstConstantDefinitionInClass();
         $this->assertEquals(
@@ -221,7 +221,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @return void
      * @depends testConstantDefinition
      */
-    public function testConstantDefinitionHasExpectedStartLine($constant)
+    public function testConstantDefinitionHasExpectedStartLine($constant): void
     {
         $this->assertEquals(4, $constant->getStartLine());
     }
@@ -234,7 +234,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @return void
      * @depends testConstantDefinition
      */
-    public function testConstantDefinitionHasExpectedStartColumn($constant)
+    public function testConstantDefinitionHasExpectedStartColumn($constant): void
     {
         $this->assertEquals(5, $constant->getStartColumn());
     }
@@ -247,7 +247,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @return void
      * @depends testConstantDefinition
      */
-    public function testConstantDefinitionHasExpectedEndLine($constant)
+    public function testConstantDefinitionHasExpectedEndLine($constant): void
     {
         $this->assertEquals(7, $constant->getEndLine());
     }
@@ -260,7 +260,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @return void
      * @depends testConstantDefinition
      */
-    public function testConstantDefinitionHasExpectedEndColumn($constant)
+    public function testConstantDefinitionHasExpectedEndColumn($constant): void
     {
         $this->assertEquals(12, $constant->getEndColumn());
     }
@@ -288,7 +288,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @since 1.0.2
      * @depends testConstantDefinitionWithDeclarators
      */
-    public function testConstantDefinitionWithDeclaratorsHasExpectedStartLine($constant)
+    public function testConstantDefinitionWithDeclaratorsHasExpectedStartLine($constant): void
     {
         $this->assertEquals(4, $constant->getStartLine());
     }
@@ -302,7 +302,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @since 1.0.2
      * @depends testConstantDefinitionWithDeclarators
      */
-    public function testConstantDefinitionWithDeclaratorsHasExpectedStartColumn($constant)
+    public function testConstantDefinitionWithDeclaratorsHasExpectedStartColumn($constant): void
     {
         $this->assertEquals(5, $constant->getStartColumn());
     }
@@ -316,7 +316,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @since 1.0.2
      * @depends testConstantDefinitionWithDeclarators
      */
-    public function testConstantDefinitionWithDeclaratorsHasExpectedEndLine($constant)
+    public function testConstantDefinitionWithDeclaratorsHasExpectedEndLine($constant): void
     {
         $this->assertEquals(6, $constant->getEndLine());
     }
@@ -330,7 +330,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @since 1.0.2
      * @depends testConstantDefinitionWithDeclarators
      */
-    public function testConstantDefinitionWithDeclaratorsHasExpectedEndColumn($constant)
+    public function testConstantDefinitionWithDeclaratorsHasExpectedEndColumn($constant): void
     {
         $this->assertEquals(18, $constant->getEndColumn());
     }
@@ -341,7 +341,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.2
      */
-    public function testConstantDefinitionInGlobalScope()
+    public function testConstantDefinitionInGlobalScope(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -352,7 +352,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.2
      */
-    public function testConstantDefinitionInNamespaceScope()
+    public function testConstantDefinitionInNamespaceScope(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -377,11 +377,11 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      */
     public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations()
     {
-        return array(
-            array(State::IS_PRIVATE),
-            array(State::IS_PROTECTED),
-            array(State::IS_PUBLIC),
-        );
+        return [
+            [State::IS_PRIVATE],
+            [State::IS_PROTECTED],
+            [State::IS_PUBLIC],
+        ];
     }
 
     /**
@@ -391,29 +391,29 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      */
     public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers()
     {
-        return array(
-            array(State::IS_ABSTRACT),
-            array(State::IS_STATIC),
-            array(
+        return [
+            [State::IS_ABSTRACT],
+            [State::IS_STATIC],
+            [
                 State::IS_PRIVATE |
                 State::IS_ABSTRACT
-            ),
-            array(
+            ],
+            [
                 State::IS_PROTECTED |
                 State::IS_ABSTRACT
-            ),
-            array(
+            ],
+            [
                 State::IS_PUBLIC |
                 State::IS_STATIC
-            ),
-            array(
+            ],
+            [
                 State::IS_PROTECTED |
                 State::IS_STATIC
-            ),
-            array(
+            ],
+            [
                 State::IS_PRIVATE |
                 State::IS_STATIC
-            ),
-        );
+            ],
+        ];
     }
 }

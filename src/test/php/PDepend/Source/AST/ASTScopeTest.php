@@ -76,7 +76,7 @@ class ASTScopeTest extends ASTNodeTestCase
      * @return void
      * @depends testScope
      */
-    public function testScopeHasExpectedStartLine($scope)
+    public function testScopeHasExpectedStartLine($scope): void
     {
         $this->assertEquals(3, $scope->getStartLine());
     }
@@ -89,7 +89,7 @@ class ASTScopeTest extends ASTNodeTestCase
      * @return void
      * @depends testScope
      */
-    public function testScopeHasExpectedStartColumn($scope)
+    public function testScopeHasExpectedStartColumn($scope): void
     {
         $this->assertEquals(1, $scope->getStartColumn());
     }
@@ -102,7 +102,7 @@ class ASTScopeTest extends ASTNodeTestCase
      * @return void
      * @depends testScope
      */
-    public function testScopeHasExpectedEndLine($scope)
+    public function testScopeHasExpectedEndLine($scope): void
     {
         $this->assertEquals(8, $scope->getEndLine());
     }
@@ -115,7 +115,7 @@ class ASTScopeTest extends ASTNodeTestCase
      * @return void
      * @depends testScope
      */
-    public function testScopeHasExpectedEndColumn($scope)
+    public function testScopeHasExpectedEndColumn($scope): void
     {
         $this->assertEquals(1, $scope->getEndColumn());
     }

@@ -118,7 +118,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
         if (isset($this->metrics[$artifact->getId()])) {
             return $this->metrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
@@ -129,27 +129,23 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     public function getRequiredAnalyzers()
     {
-        return array('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer');
+        return ['PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'];
     }
 
     /**
      * Adds an analyzer that this analyzer depends on.
      *
      * @param CyclomaticComplexityAnalyzer $analyzer
-     *
-     * @return void
      */
-    public function addAnalyzer(Analyzer $analyzer)
+    public function addAnalyzer(Analyzer $analyzer): void
     {
         $this->ccnAnalyzer = $analyzer;
     }
 
     /**
      * Performs the crap index analysis.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->isEnabled() && $this->metrics === null) {
             $this->doAnalyze($namespaces);
@@ -160,12 +156,10 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      * Performs the crap index analysis.
      *
      * @param ASTArtifactList<ASTNamespace> $namespaces
-     *
-     * @return void
      */
-    private function doAnalyze($namespaces)
+    private function doAnalyze($namespaces): void
     {
-        $this->metrics = array();
+        $this->metrics = [];
 
         $this->ccnAnalyzer->analyze($namespaces);
 
@@ -180,10 +174,8 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
 
     /**
      * Visits the given method.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         if ($method->isAbstract() === false) {
             $this->visitCallable($method);
@@ -192,25 +184,21 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
 
     /**
      * Visits the given function.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->visitCallable($function);
     }
 
     /**
      * Visits the given callable instance.
-     *
-     * @return void
      */
-    private function visitCallable(AbstractASTCallable $callable)
+    private function visitCallable(AbstractASTCallable $callable): void
     {
-        $this->metrics[$callable->getId()] = array(
+        $this->metrics[$callable->getId()] = [
             self::M_CRAP_INDEX => $this->calculateCrapIndex($callable),
             self::M_COVERAGE   => $this->calculateCoverage($callable),
-        );
+        ];
     }
 
     /**

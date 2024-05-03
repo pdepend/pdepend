@@ -64,82 +64,60 @@ interface ASTVisitor
 {
     /**
      * Adds a new listener to this node visitor.
-     *
-     * @return void
      */
-    public function addVisitListener(ASTVisitListener $listener);
+    public function addVisitListener(ASTVisitListener $listener): void;
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class);
+    public function visitClass(ASTClass $class): void;
 
     /**
      * Visits an enum node.
-     *
-     * @return void
      */
-    public function visitEnum(ASTEnum $enum);
+    public function visitEnum(ASTEnum $enum): void;
 
     /**
      * Visits a trait node.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function visitTrait(ASTTrait $trait);
+    public function visitTrait(ASTTrait $trait): void;
 
     /**
      * Visits a file node.
-     *
-     * @return void
      */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit);
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit): void;
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function);
+    public function visitFunction(ASTFunction $function): void;
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface);
+    public function visitInterface(ASTInterface $interface): void;
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method);
+    public function visitMethod(ASTMethod $method): void;
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace);
+    public function visitNamespace(ASTNamespace $namespace): void;
 
     /**
      * Visits a parameter node.
-     *
-     * @return void
      */
-    public function visitParameter(ASTParameter $parameter);
+    public function visitParameter(ASTParameter $parameter): void;
 
     /**
      * Visits a property node.
-     *
-     * @return void
      */
-    public function visitProperty(ASTProperty $property);
+    public function visitProperty(ASTProperty $property): void;
 
     /**
      * Magic call method used to provide simplified visitor implementations.

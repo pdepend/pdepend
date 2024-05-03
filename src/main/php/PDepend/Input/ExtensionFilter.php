@@ -55,7 +55,7 @@ class ExtensionFilter implements Filter
      *
      * @var array<string>
      */
-    protected $extensions = array();
+    protected $extensions = [];
 
     /**
      * Constructs a new file extension filter instance with the given list of

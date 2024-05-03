@@ -76,33 +76,31 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * @var array<string, ASTNamespace>
      */
-    protected $nodeSet = array();
+    protected $nodeSet = [];
 
     /**
      * Nodes in which the current analyzed class is used.
      *
      * @var array<string, array<int, AbstractASTType>>
      */
-    private $efferentNodes = array();
+    private $efferentNodes = [];
 
     /**
      * Nodes that is used by the current analyzed class.
      *
      * @var array<string, array<int, AbstractASTType>>
      */
-    private $afferentNodes = array();
+    private $afferentNodes = [];
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->nodeMetrics === null) {
             $this->fireStartAnalyzer();
 
-            $this->nodeMetrics = array();
+            $this->nodeMetrics = [];
 
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
@@ -121,7 +119,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      */
     public function getAfferents(AbstractASTArtifact $node)
     {
-        $afferents = array();
+        $afferents = [];
         if (isset($this->afferentNodes[$node->getId()])) {
             $afferents = $this->afferentNodes[$node->getId()];
         }
@@ -135,7 +133,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      */
     public function getEfferents(AbstractASTArtifact $node)
     {
-        $efferents = array();
+        $efferents = [];
         if (isset($this->efferentNodes[$node->getId()])) {
             $efferents = $this->efferentNodes[$node->getId()];
         }
@@ -144,10 +142,8 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -161,10 +157,8 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace): void
     {
         $this->fireStartNamespace($namespace);
 
@@ -179,10 +173,8 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         $this->fireStartClass($class);
         $this->visitType($class);
@@ -191,10 +183,8 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Visits an interface node.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);
@@ -204,10 +194,8 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Generic visit method for classes and interfaces. Both visit methods
      * delegate calls to this method.
-     *
-     * @return void
      */
-    protected function visitType(AbstractASTClassOrInterface $type)
+    protected function visitType(AbstractASTClassOrInterface $type): void
     {
         $id = $type->getId();
 
@@ -222,10 +210,8 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Collects the dependencies between the two given classes.
-     *
-     * @return void
      */
-    private function collectDependencies(AbstractASTClassOrInterface $typeA, AbstractASTClassOrInterface $typeB)
+    private function collectDependencies(AbstractASTClassOrInterface $typeA, AbstractASTClassOrInterface $typeB): void
     {
         $idA = $typeA->getId();
         $idB = $typeB->getId();
@@ -246,37 +232,33 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Initializes the node metric record for the given <b>$type</b>.
-     *
-     * @return void
      */
-    protected function initTypeMetric(AbstractASTClassOrInterface $type)
+    protected function initTypeMetric(AbstractASTClassOrInterface $type): void
     {
         $id = $type->getId();
 
         if (!isset($this->nodeMetrics[$id])) {
             $this->nodeSet[$id] = $type;
 
-            $this->nodeMetrics[$id] = array(
-                self::M_AFFERENT_COUPLING =>  array(),
-                self::M_EFFERENT_COUPLING =>  array(),
-            );
+            $this->nodeMetrics[$id] = [
+                self::M_AFFERENT_COUPLING =>  [],
+                self::M_EFFERENT_COUPLING =>  [],
+            ];
         }
     }
 
     /**
      * Post processes all analyzed nodes.
-     *
-     * @return void
      */
-    protected function postProcess()
+    protected function postProcess(): void
     {
         foreach ($this->nodeMetrics as $id => $metrics) {
-            $this->afferentNodes[$id] = array();
+            $this->afferentNodes[$id] = [];
             foreach ($metrics[self::M_AFFERENT_COUPLING] as $caId) {
                 $this->afferentNodes[$id][] = $this->nodeSet[$caId];
             }
 
-            $this->efferentNodes[$id] = array();
+            $this->efferentNodes[$id] = [];
             foreach ($metrics[self::M_EFFERENT_COUPLING] as $ceId) {
                 $this->efferentNodes[$id][] = $this->nodeSet[$ceId];
             }

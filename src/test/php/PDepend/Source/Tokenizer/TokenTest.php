@@ -60,7 +60,7 @@ class TokenTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConstructorSetsTypeProperty()
+    public function testConstructorSetsTypeProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
         $this->assertEquals(1, $token->type);
@@ -71,7 +71,7 @@ class TokenTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConstructorSetsImageProperty()
+    public function testConstructorSetsImageProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
         $this->assertEquals(2, $token->image);
@@ -82,7 +82,7 @@ class TokenTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConstructorSetsStartLineProperty()
+    public function testConstructorSetsStartLineProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
         $this->assertEquals(4, $token->startLine);
@@ -93,7 +93,7 @@ class TokenTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConstructorSetsEndLineProperty()
+    public function testConstructorSetsEndLineProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
         $this->assertEquals(8, $token->endLine);
@@ -104,7 +104,7 @@ class TokenTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConstructorSetsStartColumnProperty()
+    public function testConstructorSetsStartColumnProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
         $this->assertEquals(16, $token->startColumn);
@@ -115,7 +115,7 @@ class TokenTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testConstructorSetsEndColumnProperty()
+    public function testConstructorSetsEndColumnProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
         $this->assertEquals(32, $token->endColumn);

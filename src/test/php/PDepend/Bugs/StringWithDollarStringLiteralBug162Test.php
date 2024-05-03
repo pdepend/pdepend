@@ -57,7 +57,7 @@ class StringWithDollarStringLiteralBug162Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserDoesNotHandleDollarStringLiteralInDoubleQuoteString()
+    public function testParserDoesNotHandleDollarStringLiteralInDoubleQuoteString(): void
     {
         $this->parseCodeResourceForTest();
     }

@@ -69,7 +69,7 @@ class NullArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAcceptsReturnsTrueForClass()
+    public function testAcceptsReturnsTrueForClass(): void
     {
         $filter = new NullArtifactFilter();
         $this->assertTrue($filter->accept(new ASTClass(__CLASS__)));
@@ -80,7 +80,7 @@ class NullArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAcceptsReturnsTrueForFile()
+    public function testAcceptsReturnsTrueForFile(): void
     {
         $filter = new NullArtifactFilter();
         $this->assertTrue($filter->accept(new ASTCompilationUnit(__FILE__)));
@@ -91,7 +91,7 @@ class NullArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAcceptsReturnsTrueForFunction()
+    public function testAcceptsReturnsTrueForFunction(): void
     {
         $filter = new NullArtifactFilter();
         $this->assertTrue($filter->accept(new ASTFunction(__CLASS__)));
@@ -102,7 +102,7 @@ class NullArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAcceptsReturnsTrueForInterface()
+    public function testAcceptsReturnsTrueForInterface(): void
     {
         $filter = new NullArtifactFilter();
         $this->assertTrue($filter->accept(new ASTInterface(__CLASS__)));
@@ -113,7 +113,7 @@ class NullArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAcceptsReturnsTrueForMethod()
+    public function testAcceptsReturnsTrueForMethod(): void
     {
         $filter = new NullArtifactFilter();
         $this->assertTrue($filter->accept(new ASTMethod(__CLASS__)));
@@ -124,7 +124,7 @@ class NullArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAcceptsReturnsTrueForPackage()
+    public function testAcceptsReturnsTrueForPackage(): void
     {
         $filter = new NullArtifactFilter();
         $this->assertTrue($filter->accept(new ASTNamespace(__CLASS__)));
@@ -135,7 +135,7 @@ class NullArtifactFilterTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testAcceptsReturnsTrueForTrait()
+    public function testAcceptsReturnsTrueForTrait(): void
     {
         $filter = new NullArtifactFilter();
         $this->assertTrue($filter->accept(new ASTTrait(__CLASS__)));

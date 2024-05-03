@@ -59,7 +59,7 @@ class TreeBuilderFactory
     /**
      * @var array<Extension>
      */
-    private $extensions = array();
+    private $extensions = [];
 
     /**
      * @param array<Extension> $extensions
@@ -92,7 +92,7 @@ class TreeBuilderFactory
         $nodes = $rootNode->children();
 
         $cacheNode = $nodes->arrayNode('cache')->addDefaultsIfNotSet()->children();
-        $cacheNode->enumNode('driver')->defaultValue($defaultCacheDriver)->values(array('file', 'memory'));
+        $cacheNode->enumNode('driver')->defaultValue($defaultCacheDriver)->values(['file', 'memory']);
         $cacheNode->scalarNode('location')->info('This value is only used for the file cache.')->defaultValue($home . '/.pdepend');
         $cacheNode->integerNode('ttl')->info('This value is only used for the file cache. Value in seconds.')->defaultValue(self::DEFAULT_TTL);
 

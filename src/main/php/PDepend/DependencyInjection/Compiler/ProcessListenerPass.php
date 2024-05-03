@@ -56,17 +56,14 @@ use Symfony\Component\DependencyInjection\Reference;
  */
 class ProcessListenerPass implements CompilerPassInterface
 {
-    /**
-     * @return void
-     */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $engineDefinition = $container->findDefinition('pdepend.engine');
 
         $processListenerTags = $container->findTaggedServiceIds('pdepend.process_listener');
 
         foreach ($processListenerTags as $id => $tags) {
-            $engineDefinition->addMethodCall('addProcessListener', array(new Reference($id)));
+            $engineDefinition->addMethodCall('addProcessListener', [new Reference($id)]);
         }
     }
 }

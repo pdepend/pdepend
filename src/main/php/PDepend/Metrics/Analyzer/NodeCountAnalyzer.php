@@ -131,7 +131,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        $metrics = array();
+        $metrics = [];
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             $metrics = $this->nodeMetrics[$artifact->getId()];
         }
@@ -155,27 +155,25 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      */
     public function getProjectMetrics()
     {
-        return array(
+        return [
             self::M_NUMBER_OF_PACKAGES    =>  $this->nop,
             self::M_NUMBER_OF_CLASSES     =>  $this->noc,
             self::M_NUMBER_OF_INTERFACES  =>  $this->noi,
             self::M_NUMBER_OF_METHODS     =>  $this->nom,
             self::M_NUMBER_OF_FUNCTIONS   =>  $this->nof,
-        );
+        ];
     }
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         // Check for previous run
         if ($this->nodeMetrics === null) {
             $this->fireStartAnalyzer();
 
-            $this->nodeMetrics = array();
+            $this->nodeMetrics = [];
 
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
@@ -187,10 +185,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         if (false === $class->isUserDefined()) {
             return;
@@ -204,9 +200,9 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         $id = $class->getNamespace()->getId();
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CLASSES];
 
-        $this->nodeMetrics[$class->getId()] = array(
+        $this->nodeMetrics[$class->getId()] = [
             self::M_NUMBER_OF_METHODS  =>  0,
-        );
+        ];
 
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
@@ -217,10 +213,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
 
@@ -235,10 +229,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         if (false === $interface->isUserDefined()) {
             return;
@@ -252,9 +244,9 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         $id = $interface->getNamespace()->getId();
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_INTERFACES];
 
-        $this->nodeMetrics[$interface->getId()] = array(
+        $this->nodeMetrics[$interface->getId()] = [
             self::M_NUMBER_OF_METHODS  =>  0,
-        );
+        ];
 
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);
@@ -265,10 +257,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -289,21 +279,19 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace): void
     {
         $this->fireStartNamespace($namespace);
 
         ++$this->nop;
 
-        $this->nodeMetrics[$namespace->getId()] = array(
+        $this->nodeMetrics[$namespace->getId()] = [
             self::M_NUMBER_OF_CLASSES     =>  0,
             self::M_NUMBER_OF_INTERFACES  =>  0,
             self::M_NUMBER_OF_METHODS     =>  0,
             self::M_NUMBER_OF_FUNCTIONS   =>  0,
-        );
+        ];
 
 
         foreach ($namespace->getClasses() as $class) {

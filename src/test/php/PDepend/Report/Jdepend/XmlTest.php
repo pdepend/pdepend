@@ -107,11 +107,11 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReturnsExceptedAnalyzers()
+    public function testReturnsExceptedAnalyzers(): void
     {
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
-        $expected =  array('pdepend.analyzer.dependency');
+        $expected =  ['pdepend.analyzer.dependency'];
 
         $this->assertEquals($expected, $actual);
     }
@@ -122,7 +122,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testThrowsExceptionForInvalidLogTarget()
+    public function testThrowsExceptionForInvalidLogTarget(): void
     {
         $this->expectException(
             '\\PDepend\\Report\\NoLogOutputException'
@@ -140,7 +140,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testXmlLogAcceptsOnlyTheCorrectAnalyzer()
+    public function testXmlLogAcceptsOnlyTheCorrectAnalyzer(): void
     {
         $logger = new Xml();
 

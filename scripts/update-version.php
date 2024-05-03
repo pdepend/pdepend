@@ -63,10 +63,10 @@ class CacheVersionUpdater
      *
      * @var array(string)
      */
-    private $localPaths = array(
+    private $localPaths = [
         '/Source',
         '/Metrics',
-    );
+    ];
 
     /**
      * The target file, where this script will persist the new cache version.
@@ -97,7 +97,7 @@ class CacheVersionUpdater
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $checksum = '';
 
@@ -137,9 +137,9 @@ class CacheVersionUpdater
     protected function readFiles($path)
     {
         if ($this->accept($path)) {
-            return array($path);
+            return [$path];
         }
-        $files = array();
+        $files = [];
         foreach ($this->createFileIterator($path) as $file) {
             if ($this->accept($file)) {
                 $files[] = (string) $file;
@@ -178,7 +178,7 @@ class CacheVersionUpdater
      * @param array $args Cli arguments.
      * @return void
      */
-    public static function main(array $args)
+    public static function main(array $args): void
     {
         $updater = new CacheVersionUpdater();
         $updater->run();

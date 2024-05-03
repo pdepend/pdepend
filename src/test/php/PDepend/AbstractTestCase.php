@@ -92,7 +92,7 @@ abstract class AbstractTestCase extends TestCase
 
         $run = __DIR__ . '/_run';
         if (file_exists($run) === false) {
-            mkdir($run, 0755);
+            mkdir($run, 0o755);
         }
 
         $this->clearRunResources($run);
@@ -130,7 +130,7 @@ abstract class AbstractTestCase extends TestCase
      * @return void
      * @since 0.10.0
      */
-    protected function changeWorkingDirectory($directory = null)
+    protected function changeWorkingDirectory($directory = null): void
     {
         if (null === $directory) {
             $directory = $this->getTestWorkingDirectory();
@@ -161,7 +161,7 @@ abstract class AbstractTestCase extends TestCase
      * @return void
      * @since 0.10.0
      */
-    protected function resetWorkingDirectory()
+    protected function resetWorkingDirectory(): void
     {
         if ($this->workingDirectory) {
             chdir($this->workingDirectory);
@@ -392,10 +392,10 @@ abstract class AbstractTestCase extends TestCase
      *
      * @return array<string>
      */
-    protected static function collectChildNodes(ASTNode $node, array $actual = array())
+    protected static function collectChildNodes(ASTNode $node, array $actual = [])
     {
         foreach ($node->getChildren() as $child) {
-            $actual[] = get_class($child);
+            $actual[] = $child::class;
             $actual   = self::collectChildNodes($child, $actual);
         }
         return $actual;
@@ -410,7 +410,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @return void
      */
-    protected static function assertGraphEquals(ASTNode $node, array $expected)
+    protected static function assertGraphEquals(ASTNode $node, array $expected): void
     {
         self::assertEquals($expected, self::collectChildNodes($node));
     }
@@ -424,9 +424,9 @@ abstract class AbstractTestCase extends TestCase
      */
     protected static function collectGraph(ASTNode $node)
     {
-        $graph = array();
+        $graph = [];
         foreach ($node->getChildren() as $child) {
-            $graph[] = get_class($child) . ' (' . $child->getImage() . ')';
+            $graph[] = $child::class . ' (' . $child->getImage() . ')';
             if (0 < count($child->getChildren())) {
                 $graph[] = self::collectGraph($child);
             }
@@ -443,7 +443,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @return void
      */
-    protected static function assertGraph(ASTNode $node, $graph)
+    protected static function assertGraph(ASTNode $node, $graph): void
     {
         $actual = self::collectGraph($node);
         self::assertEquals($graph, $actual);
@@ -460,7 +460,7 @@ abstract class AbstractTestCase extends TestCase
     protected function getMockWithoutConstructor($className)
     {
         $mock = $this->getMockBuilder($className)
-            ->onlyMethods(array('__construct'))
+            ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -473,7 +473,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $dir
      * @return void
      */
-    private function clearRunResources($dir = null)
+    private function clearRunResources($dir = null): void
     {
         if ($dir === null) {
             $dir = __DIR__ . '/_run';
@@ -714,7 +714,7 @@ abstract class AbstractTestCase extends TestCase
             array_unshift($parts, strtolower(array_shift($parts)));
         }
 
-        $fileName = substr(join(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
+        $fileName = substr(implode(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
         try {
             return self::createCodeResourceURI($fileName);
         } catch (\ErrorException $e) {
@@ -742,10 +742,10 @@ abstract class AbstractTestCase extends TestCase
      *
      * @return void
      */
-    public static function init()
+    public static function init(): void
     {
         // First register autoloader
-        spl_autoload_register(array(__CLASS__, 'autoload'));
+        spl_autoload_register([__CLASS__, 'autoload']);
 
         // Is it not installed?
         if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
@@ -766,7 +766,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $className Name of the missing class.
      * @return void
      */
-    public static function autoload($className)
+    public static function autoload($className): void
     {
         $file = strtr($className, '\\', DIRECTORY_SEPARATOR) . '.php';
         if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
@@ -834,13 +834,13 @@ abstract class AbstractTestCase extends TestCase
                 new \RecursiveIteratorIterator(
                     new \RecursiveDirectoryIterator($fileOrDirectory)
                 ),
-                new ExcludePathFilter(array('.svn'))
+                new ExcludePathFilter(['.svn'])
             );
         } else {
-            $it = new \ArrayIterator(array($fileOrDirectory));
+            $it = new \ArrayIterator([$fileOrDirectory]);
         }
 
-        $files = array();
+        $files = [];
         foreach ($it as $file) {
             if (is_object($file)) {
                 $files[] = realpath($file->getPathname());
@@ -882,7 +882,7 @@ abstract class AbstractTestCase extends TestCase
         );
     }
 
-    protected function getAbstractClassMock($originalClassName, array $arguments = array(), $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = array(), $cloneArguments = false)
+    protected function getAbstractClassMock($originalClassName, array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = [], $cloneArguments = false)
     {
         return $this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
     }
@@ -891,7 +891,7 @@ abstract class AbstractTestCase extends TestCase
      * @param array<int, string> $requiredFormats
      * @return void
      */
-    protected function requireImagick(array $requiredFormats = array('PNG', 'SVG'))
+    protected function requireImagick(array $requiredFormats = ['PNG', 'SVG']): void
     {
         if (extension_loaded('imagick') === false) {
             $this->markTestSkipped('No pecl/imagick extension.');

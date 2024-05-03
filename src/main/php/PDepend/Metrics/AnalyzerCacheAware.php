@@ -60,8 +60,6 @@ interface AnalyzerCacheAware extends Analyzer
 {
     /**
      * Setter method for the system wide used cache.
-     *
-     * @return void
      */
-    public function setCache(CacheDriver $cache);
+    public function setCache(CacheDriver $cache): void;
 }

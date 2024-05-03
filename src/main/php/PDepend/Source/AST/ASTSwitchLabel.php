@@ -73,10 +73,8 @@ class ASTSwitchLabel extends AbstractASTNode
 
     /**
      * Flags this node instance as the default switch label.
-     *
-     * @return void
      */
-    public function setDefault()
+    public function setDefault(): void
     {
         $this->default = true;
     }
@@ -92,6 +90,6 @@ class ASTSwitchLabel extends AbstractASTNode
      */
     public function __sleep()
     {
-        return array_merge(array('default'), parent::__sleep());
+        return array_merge(['default'], parent::__sleep());
     }
 }

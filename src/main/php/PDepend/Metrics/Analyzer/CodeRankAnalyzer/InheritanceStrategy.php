@@ -61,7 +61,7 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
      *
      * @var array<string, array<string, array<int, string>>>
      */
-    private $nodes = array();
+    private $nodes = [];
 
     /**
      * Returns the collected nodes.
@@ -75,10 +75,8 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
 
     /**
      * Visits a code class object.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         $this->fireStartClass($class);
         $this->visitType($class);
@@ -87,10 +85,8 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         $this->fireStartInterface($interface);
         $this->visitType($interface);
@@ -100,10 +96,8 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     /**
      * Generic visitor method for classes and interfaces. Both visit methods
      * delegate calls to this method.
-     *
-     * @return void
      */
-    protected function visitType(AbstractASTClassOrInterface $type)
+    protected function visitType(AbstractASTClassOrInterface $type): void
     {
         $namespace = $type->getNamespace();
 
@@ -129,18 +123,16 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
 
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
-     *
-     * @return void
      */
-    protected function initNode(AbstractASTArtifact $node)
+    protected function initNode(AbstractASTArtifact $node): void
     {
         if (!isset($this->nodes[$node->getId()])) {
-            $this->nodes[$node->getId()] = array(
-                'in'    =>  array(),
-                'out'   =>  array(),
+            $this->nodes[$node->getId()] = [
+                'in'    =>  [],
+                'out'   =>  [],
                 'name'  =>  $node->getName(),
-                'type'  =>  get_class($node),
-            );
+                'type'  =>  $node::class,
+            ];
         }
     }
 }

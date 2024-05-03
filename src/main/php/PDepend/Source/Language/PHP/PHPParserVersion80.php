@@ -71,7 +71,7 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion80 extends PHPParserVersion74
 {
-    protected $possiblePropertyTypes = array(
+    protected $possiblePropertyTypes = [
         Tokens::T_STRING,
         Tokens::T_ARRAY,
         Tokens::T_QUESTION_MARK,
@@ -80,7 +80,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
         Tokens::T_SELF,
         Tokens::T_NULL,
         Tokens::T_FALSE,
-    );
+    ];
 
     /**
      * Will return <b>true</b> if the given <b>$tokenType</b> is a valid class
@@ -199,11 +199,11 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function parseConstructFormalParameterModifiers()
     {
-        static $states = array(
+        static $states = [
             Tokens::T_PUBLIC    => State::IS_PUBLIC,
             Tokens::T_PROTECTED => State::IS_PROTECTED,
             Tokens::T_PRIVATE   => State::IS_PRIVATE,
-        );
+        ];
 
         $modifier = 0;
         $token = $this->tokenizer->peek();
@@ -352,7 +352,7 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function parseUnionTypeHint($firstType)
     {
-        $types = array($firstType);
+        $types = [$firstType];
 
         while ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
             $token = $this->tokenizer->next();
@@ -419,10 +419,8 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * This method parses assigned variable in catch statement.
      *
      * @param ASTCatchStatement $stmt The owning catch statement.
-     *
-     * @return void
      */
-    protected function parseCatchVariable(ASTCatchStatement $stmt)
+    protected function parseCatchVariable(ASTCatchStatement $stmt): void
     {
         if ($this->tokenizer->peek() === Tokens::T_VARIABLE) {
             parent::parseCatchVariable($stmt);
@@ -450,10 +448,10 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      */
     protected function isNextTokenObjectOperator()
     {
-        return in_array($this->tokenizer->peek(), array(
+        return in_array($this->tokenizer->peek(), [
             Tokens::T_OBJECT_OPERATOR,
             Tokens::T_NULLSAFE_OBJECT_OPERATOR,
-        ), true);
+        ], true);
     }
 
     protected function consumeObjectOperatorToken()
@@ -468,13 +466,13 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     protected function parseThrowExpression()
     {
         if ($this->tokenizer->peek() === Tokens::T_THROW) {
-            return $this->parseThrowStatement(array(
+            return $this->parseThrowStatement([
                 Tokens::T_SEMICOLON,
                 Tokens::T_COMMA,
                 Tokens::T_COLON,
                 Tokens::T_PARENTHESIS_CLOSE,
                 Tokens::T_SQUARED_BRACKET_CLOSE,
-            ));
+            ]);
         }
 
         throw $this->getUnexpectedNextTokenException();

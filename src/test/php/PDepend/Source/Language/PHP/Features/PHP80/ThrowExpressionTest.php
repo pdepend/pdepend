@@ -56,7 +56,7 @@ class ThrowExpressionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testNullcoalescingThrow()
+    public function testNullcoalescingThrow(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -83,7 +83,7 @@ class ThrowExpressionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testShorthandTernaryOperator()
+    public function testShorthandTernaryOperator(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -111,7 +111,7 @@ class ThrowExpressionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testTernaryOperator()
+    public function testTernaryOperator(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -144,7 +144,7 @@ class ThrowExpressionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testThrowFromArrowFunction()
+    public function testThrowFromArrowFunction(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
@@ -167,7 +167,7 @@ class ThrowExpressionTest extends PHPParserVersion80TestCase
     /**
      * @return void
      */
-    public function testThrowFromArrowFunctionAsParameter()
+    public function testThrowFromArrowFunctionAsParameter(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();

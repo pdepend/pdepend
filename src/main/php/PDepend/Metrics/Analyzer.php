@@ -59,25 +59,21 @@ interface Analyzer
      * @param array<string, mixed> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
-    public function __construct(array $options = array());
+    public function __construct(array $options = []);
 
     /**
      * Adds a listener to this analyzer.
      *
      * @param AnalyzerListener $listener The listener instance.
-     *
-     * @return void
      */
-    public function addAnalyzeListener(AnalyzerListener $listener);
+    public function addAnalyzeListener(AnalyzerListener $listener): void;
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
      *
      * @param ASTArtifactList<ASTNamespace> $namespaces
-     *
-     * @return void
      */
-    public function analyze($namespaces);
+    public function analyze($namespaces): void;
 
     /**
      * An analyzer that is active must return <b>true</b> to recognized by
@@ -95,9 +91,7 @@ interface Analyzer
      *
      * @param array<string, mixed> $options
      *
-     * @return void
-     *
      * @since 2.0.1
      */
-    public function setOptions(array $options = array());
+    public function setOptions(array $options = []): void;
 }

@@ -60,7 +60,7 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
     /**
      * @return void
      */
-    public function testEnumConst()
+    public function testEnumConst(): void
     {
         $enums = $this->parseCodeResourceForTest()
             ->current()
@@ -83,7 +83,7 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
         $this->assertSame('self::B', $this->constructImage($children[1]));
     }
 
-    public function testVariousUsages()
+    public function testVariousUsages(): void
     {
         $classes = $this->parseCodeResourceForTest()
             ->current()

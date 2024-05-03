@@ -42,7 +42,7 @@
 
 namespace PDepend;
 
-spl_autoload_register(function ($class) {
+spl_autoload_register(function ($class): void {
     if (substr($class, 0, strlen(__NAMESPACE__)) !== __NAMESPACE__) {
         return;
     }

@@ -61,14 +61,14 @@ class ASTArtifactListTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCreateIteratorWidthValidInput()
+    public function testCreateIteratorWidthValidInput(): void
     {
-        $nodes = array(
+        $nodes = [
             new ASTClass('clazz', 0, 'clazz.php'),
             new ASTNamespace('pkg'),
             new ASTMethod('method', 0),
             new ASTFunction('func', 0),
-        );
+        ];
         
         $it = new ASTArtifactList($nodes);
         
@@ -80,18 +80,18 @@ class ASTArtifactListTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testNodeIteratorReturnsObjectsInUnmodifiedOrder()
+    public function testNodeIteratorReturnsObjectsInUnmodifiedOrder(): void
     {
-        $expected = array(
+        $expected = [
             new ASTClass('clazz', 0, 'clazz.php'),
             new ASTFunction('func', 0),
             new ASTMethod('method', 0),
             new ASTNamespace('pkg'),
-        );
+        ];
         
         $iterator = new ASTArtifactList($expected);
 
-        $actual = array();
+        $actual = [];
         foreach ($iterator as $codeNode) {
             $actual[] = $codeNode;
         }
@@ -104,21 +104,21 @@ class ASTArtifactListTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testNodeIteratorReturnsObjectsUnique()
+    public function testNodeIteratorReturnsObjectsUnique(): void
     {
         $iterator = new ASTArtifactList(
-            array(
+            [
                 $object2 = new ASTClass('o2', 0, 'o2.php'),
                 $object1 = new ASTClass('o1', 0, 'o1.php'),
                 $object3 = new ASTClass('o3', 0, 'o3.php'),
                 $object1,
                 $object2,
                 $object3
-            )
+            ]
         );
 
-        $expected = array($object2, $object1, $object3);
-        $actual   = array();
+        $expected = [$object2, $object1, $object3];
+        $actual   = [];
         foreach ($iterator as $codeNode) {
             $actual[] = $codeNode;
         }
@@ -131,19 +131,19 @@ class ASTArtifactListTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorUsesNodeNameAsItsIterationKey()
+    public function testIteratorUsesNodeNameAsItsIterationKey(): void
     {
-        $nodes = array(
+        $nodes = [
             new ASTClass('clazz', 0, 'clazz.php'),
             new ASTFunction('func', 0),
             new ASTMethod('method', 0),
             new ASTNamespace('pkg'),
-        );
+        ];
 
         $iterator = new ASTArtifactList($nodes);
 
-        $expected = array('clazz', 'func', 'method', 'pkg');
-        $actual   = array();
+        $expected = ['clazz', 'func', 'method', 'pkg'];
+        $actual   = [];
         foreach ($iterator as $codeNode) {
             $actual[] = $iterator->key();
         }
@@ -156,11 +156,11 @@ class ASTArtifactListTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCurrentThrowsOutOfBoundsExceptionWhenNoMoreElementExists()
+    public function testCurrentThrowsOutOfBoundsExceptionWhenNoMoreElementExists(): void
     {
         $this->expectException(\OutOfBoundsException::class);
 
-        $iterator = new ASTArtifactList(array());
+        $iterator = new ASTArtifactList([]);
         $this->assertFalse($iterator->valid());
         $iterator->current();
     }
@@ -171,9 +171,9 @@ class ASTArtifactListTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testArrayBehaviorOffsetExistsReturnsFalse()
+    public function testArrayBehaviorOffsetExistsReturnsFalse(): void
     {
-        $iterator = new ASTArtifactList(array());
+        $iterator = new ASTArtifactList([]);
         $this->assertFalse(isset($iterator[1]));
     }
 
@@ -183,14 +183,14 @@ class ASTArtifactListTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testArrayBehaviorOffsetExistsReturnsTrue()
+    public function testArrayBehaviorOffsetExistsReturnsTrue(): void
     {
         $iterator = new ASTArtifactList(
-            array(
+            [
                 new ASTClass('Class'),
                 new ASTInterface('Interface'),
                 new ASTTrait('Trait')
-            )
+            ]
         );
         $this->assertTrue(isset($iterator[1]));
     }
@@ -201,14 +201,14 @@ class ASTArtifactListTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testArrayBehaviorOffsetGetReturnsExpectedNode()
+    public function testArrayBehaviorOffsetGetReturnsExpectedNode(): void
     {
         $iterator = new ASTArtifactList(
-            array(
+            [
                 $class     = new ASTClass('Class'),
                 $interface = new ASTInterface('Interface'),
                 $trait     = new ASTTrait('Trait')
-            )
+            ]
         );
         $this->assertSame($interface, $iterator[1]);
     }
@@ -219,11 +219,11 @@ class ASTArtifactListTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testArrayBehaviorOffsetGetThrowsExpectedOutOfBoundsException()
+    public function testArrayBehaviorOffsetGetThrowsExpectedOutOfBoundsException(): void
     {
         $this->expectException(\OutOfBoundsException::class);
 
-        $iterator = new ASTArtifactList(array());
+        $iterator = new ASTArtifactList([]);
         $iterator[0]->getName();
     }
 
@@ -233,11 +233,11 @@ class ASTArtifactListTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testArrayBehaviorOffsetSetThrowsExpectedBadMethodCallException()
+    public function testArrayBehaviorOffsetSetThrowsExpectedBadMethodCallException(): void
     {
         $this->expectException(\BadMethodCallException::class);
 
-        $iterator    = new ASTArtifactList(array());
+        $iterator    = new ASTArtifactList([]);
         $iterator[0] = new ASTClass('Class');
     }
 
@@ -247,11 +247,11 @@ class ASTArtifactListTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testArrayBehaviorOffsetUnsetThrowsExpectedBadMethodCallException()
+    public function testArrayBehaviorOffsetUnsetThrowsExpectedBadMethodCallException(): void
     {
         $this->expectException(\BadMethodCallException::class);
 
-        $iterator = new ASTArtifactList(array());
+        $iterator = new ASTArtifactList([]);
         unset($iterator[0]);
     }
 }

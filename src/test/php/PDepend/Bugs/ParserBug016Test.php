@@ -66,7 +66,7 @@ class ParserBug016Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserDetectsTypeWithinInstanceOfOperator()
+    public function testParserDetectsTypeWithinInstanceOfOperator(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
@@ -92,7 +92,7 @@ class ParserBug016Test extends AbstractRegressionTestCase
      *             combinations (T_VARIABLE = T_CONSTANT_ENCAPSED_STRING with
      *             T_INSTANCEOF + T_VARIABLE).
      */
-    public function testParserIgnoresDynamicInstanceOfOperator()
+    public function testParserIgnoresDynamicInstanceOfOperator(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();

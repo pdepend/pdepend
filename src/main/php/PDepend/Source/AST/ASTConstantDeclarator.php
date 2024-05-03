@@ -105,10 +105,8 @@ class ASTConstantDeclarator extends AbstractASTNode
 
     /**
      * Set the explicitly specified type of the constant.
-     *
-     * @return void
      */
-    public function setType(?ASTType $type = null)
+    public function setType(?ASTType $type = null): void
     {
         $this->type = $type;
     }
@@ -125,10 +123,8 @@ class ASTConstantDeclarator extends AbstractASTNode
 
     /**
      * Sets the declared default value for this constant node.
-     *
-     * @return void
      */
-    public function setValue(?ASTValue $value = null)
+    public function setValue(?ASTValue $value = null): void
     {
         $this->value = $value;
     }
@@ -141,6 +137,6 @@ class ASTConstantDeclarator extends AbstractASTNode
      */
     public function __sleep()
     {
-        return array_merge(array('value'), parent::__sleep());
+        return array_merge(['value'], parent::__sleep());
     }
 }

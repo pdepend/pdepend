@@ -63,7 +63,7 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorReturnsExpectedClasses()
+    public function testIteratorReturnsExpectedClasses(): void
     {
         $class1 = new ASTClass('c1');
         $class1->setId(md5(23));
@@ -85,15 +85,15 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
             ->method('getType')
             ->will($this->returnValue($class2));
 
-        $references = array($reference1, $reference2);
+        $references = [$reference1, $reference2];
 
         $refs  = new ASTClassOrInterfaceReferenceIterator($references);
-        $types = array();
+        $types = [];
         foreach ($refs as $type) {
             $types[] = $type->getId();
         }
 
-        $this->assertEquals(array($class1->getId(), $class2->getId()), $types);
+        $this->assertEquals([$class1->getId(), $class2->getId()], $types);
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorReturnsSameClassOnlyOnce()
+    public function testIteratorReturnsSameClassOnlyOnce(): void
     {
         $class1 = new ASTClass('c1');
         $class1->setId(md5(23));
@@ -123,14 +123,14 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
             ->method('getType')
             ->will($this->returnValue($class2));
 
-        $references = array($reference1, $reference2);
+        $references = [$reference1, $reference2];
 
         $refs  = new ASTClassOrInterfaceReferenceIterator($references);
-        $types = array();
+        $types = [];
         foreach ($refs as $type) {
             $types[] = $type->getId();
         }
 
-        $this->assertEquals(array($class1->getId()), $types);
+        $this->assertEquals([$class1->getId()], $types);
     }
 }

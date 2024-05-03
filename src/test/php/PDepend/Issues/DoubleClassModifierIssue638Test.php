@@ -62,17 +62,17 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testReadonlyClass()
+    public function testReadonlyClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_READONLY, 'readonly', 2, 2, 1, 8),
             new Token(Tokens::T_CLASS, 'class', 2, 2, 10, 14),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 16, 18),
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $class->getTokens());
         $this->assertSame(0, (~State::IS_READONLY & $class->getModifiers()));
@@ -84,17 +84,17 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testAbstractClass()
+    public function testAbstractClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_ABSTRACT, 'abstract', 2, 2, 1, 8),
             new Token(Tokens::T_CLASS, 'class', 2, 2, 10, 14),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 16, 18),
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $class->getTokens());
         $this->assertSame(0, (~State::IS_EXPLICIT_ABSTRACT & $class->getModifiers()));
@@ -106,17 +106,17 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testFinalClass()
+    public function testFinalClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_FINAL, 'final', 2, 2, 1, 5),
             new Token(Tokens::T_CLASS, 'class', 2, 2, 7, 11),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 13, 15),
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $class->getTokens());
         $this->assertSame(0, (~State::IS_FINAL & $class->getModifiers()));
@@ -128,18 +128,18 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testAbstractReadonlyClass()
+    public function testAbstractReadonlyClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_ABSTRACT, 'abstract', 2, 2, 1, 8),
             new Token(Tokens::T_READONLY, 'readonly', 2, 2, 10, 17),
             new Token(Tokens::T_CLASS, 'class', 2, 2, 19, 23),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 25, 27),
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $class->getTokens());
 
@@ -155,18 +155,18 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testReadonlyAbstractClass()
+    public function testReadonlyAbstractClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_READONLY, 'readonly', 2, 2, 1, 8),
             new Token(Tokens::T_ABSTRACT, 'abstract', 2, 2, 10, 17),
             new Token(Tokens::T_CLASS, 'class', 2, 2, 19, 23),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 25, 27),
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $class->getTokens());
 
@@ -182,18 +182,18 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testFinalReadonlyClass()
+    public function testFinalReadonlyClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_FINAL, 'final', 2, 2, 1, 5),
             new Token(Tokens::T_READONLY, 'readonly', 2, 2, 7, 14),
             new Token(Tokens::T_CLASS, 'class', 2, 2, 16, 20),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 22, 24),
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $class->getTokens());
 
@@ -209,18 +209,18 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testReadonlyFinalClass()
+    public function testReadonlyFinalClass(): void
     {
         $class = $this->getFirstClassForTestCase();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_READONLY, 'readonly', 2, 2, 1, 8),
             new Token(Tokens::T_FINAL, 'final', 2, 2, 10, 14),
             new Token(Tokens::T_CLASS, 'class', 2, 2, 16, 20),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 22, 24),
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $class->getTokens());
 
@@ -236,7 +236,7 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      *
      * @return void
      */
-    public function testAbstractFinalReadonlyClass()
+    public function testAbstractFinalReadonlyClass(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 

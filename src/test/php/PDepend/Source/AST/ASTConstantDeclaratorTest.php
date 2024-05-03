@@ -59,16 +59,16 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testReturnValueOfMagicSleepContainsValueProperty()
+    public function testReturnValueOfMagicSleepContainsValueProperty(): void
     {
         $node = new \PDepend\Source\AST\ASTConstantDeclarator();
         $this->assertEquals(
-            array(
+            [
                 'value',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $node->__sleep()
         );
     }
@@ -78,7 +78,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParserInjectsValueObjectIntoConstantDeclarator()
+    public function testParserInjectsValueObjectIntoConstantDeclarator(): void
     {
         $declarator = $this->getFirstConstantDeclaratorInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $declarator->getValue());
@@ -89,7 +89,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testParserInjectsExpectedScalarValueIntoConstantDeclarator()
+    public function testParserInjectsExpectedScalarValueIntoConstantDeclarator(): void
     {
         $declarator = $this->getFirstConstantDeclaratorInClass();
         $this->assertEquals(42, $declarator->getValue()->getValue());
@@ -101,7 +101,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
      * @return void
      * @since 0.10.9
      */
-    public function testParserInjectsExpectedHeredocValueIntoConstantDeclarator()
+    public function testParserInjectsExpectedHeredocValueIntoConstantDeclarator(): void
     {
         $declarator = $this->getFirstConstantDeclaratorInClass();
         $this->assertEquals('Testing!', $declarator->getValue()->getValue());
@@ -129,7 +129,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
      * @return void
      * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedStartLine($declarator)
+    public function testConstantDeclaratorHasExpectedStartLine($declarator): void
     {
         $this->assertEquals(5, $declarator->getStartLine());
     }
@@ -142,7 +142,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
      * @return void
      * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedStartColumn($declarator)
+    public function testConstantDeclaratorHasExpectedStartColumn($declarator): void
     {
         $this->assertEquals(7, $declarator->getStartColumn());
     }
@@ -155,7 +155,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
      * @return void
      * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedEndLine($declarator)
+    public function testConstantDeclaratorHasExpectedEndLine($declarator): void
     {
         $this->assertEquals(7, $declarator->getEndLine());
     }
@@ -168,7 +168,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
      * @return void
      * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedEndColumn($declarator)
+    public function testConstantDeclaratorHasExpectedEndColumn($declarator): void
     {
         $this->assertEquals(14, $declarator->getEndColumn());
     }

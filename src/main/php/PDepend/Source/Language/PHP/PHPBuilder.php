@@ -223,28 +223,28 @@ class PHPBuilder implements Builder
      *
      * @var array<string, array<string, array<string, ASTTrait>>>
      */
-    private $traits = array();
+    private $traits = [];
 
     /**
      * All generated {@link ASTClass} objects
      *
      * @var array<string, array<string, array<string, ASTClass|ASTEnum>>>
      */
-    private $classes = array();
+    private $classes = [];
 
     /**
      * All generated {@link ASTInterface} instances.
      *
      * @var array<string, array<string, array<string, ASTInterface>>>
      */
-    private $interfaces = array();
+    private $interfaces = [];
 
     /**
      * All generated {@link ASTNamespace} objects
      *
      * @var ASTNamespace[]
      */
-    private $namespaces = array();
+    private $namespaces = [];
 
     /**
      * Internal status flag used to check that a build request is internal.
@@ -265,21 +265,21 @@ class PHPBuilder implements Builder
      *
      * @var array<string, array<string, array<string, ASTTrait>>>
      */
-    private $frozenTraits = array();
+    private $frozenTraits = [];
 
     /**
      * Cache of all classes created during the regular parsing process.
      *
      * @var array<string, array<string, array<string, ASTClass|ASTEnum>>>
      */
-    private $frozenClasses = array();
+    private $frozenClasses = [];
 
     /**
      * Cache of all interfaces created during the regular parsing process.
      *
      * @var array<string, array<string, array<string, ASTInterface>>>
      */
-    private $frozenInterfaces = array();
+    private $frozenInterfaces = [];
 
     /**
      * Constructs a new builder instance.
@@ -2457,11 +2457,9 @@ class PHPBuilder implements Builder
      * This method will freeze the actual builder state and create a second
      * runtime scope.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    protected function freeze()
+    protected function freeze(): void
     {
         if ($this->frozen === true) {
             return;
@@ -2473,9 +2471,9 @@ class PHPBuilder implements Builder
         $this->frozenClasses    = $this->copyTypesWithPackage($this->classes);
         $this->frozenInterfaces = $this->copyTypesWithPackage($this->interfaces);
 
-        $this->traits     = array();
-        $this->classes    = array();
-        $this->interfaces = array();
+        $this->traits     = [];
+        $this->classes    = [];
+        $this->interfaces = [];
     }
 
     /**
@@ -2491,7 +2489,7 @@ class PHPBuilder implements Builder
      */
     private function copyTypesWithPackage(array $originalTypes)
     {
-        $copiedTypes = array();
+        $copiedTypes = [];
         foreach ($originalTypes as $typeName => $namespaces) {
             foreach ($namespaces as $namespaceName => $types) {
                 foreach ($types as $index => $type) {
@@ -2505,11 +2503,9 @@ class PHPBuilder implements Builder
     /**
      * Restores a function within the internal type scope.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function restoreFunction(ASTFunction $function)
+    public function restoreFunction(ASTFunction $function): void
     {
         $this->buildNamespace($function->getNamespaceName())
             ->addFunction($function);
@@ -2518,11 +2514,9 @@ class PHPBuilder implements Builder
     /**
      * Restores a trait within the internal type scope.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function restoreTrait(ASTTrait $trait)
+    public function restoreTrait(ASTTrait $trait): void
     {
         $this->storeTrait(
             $trait->getName(),
@@ -2534,11 +2528,9 @@ class PHPBuilder implements Builder
     /**
      * Restores a class within the internal type scope.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function restoreClass(ASTClass $class)
+    public function restoreClass(ASTClass $class): void
     {
         $this->storeClass(
             $class->getName(),
@@ -2550,11 +2542,9 @@ class PHPBuilder implements Builder
     /**
      * Restores an enum within the internal type scope.
      *
-     * @return void
-     *
      * @since  2.11.0
      */
-    public function restoreEnum(ASTEnum $enum)
+    public function restoreEnum(ASTEnum $enum): void
     {
         $this->storeEnum(
             $enum->getName(),
@@ -2566,11 +2556,9 @@ class PHPBuilder implements Builder
     /**
      * Restores an interface within the internal type scope.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function restoreInterface(ASTInterface $interface)
+    public function restoreInterface(ASTInterface $interface): void
     {
         $this->storeInterface(
             $interface->getName(),
@@ -2626,15 +2614,13 @@ class PHPBuilder implements Builder
      * @param string $traitName
      * @param string $namespaceName
      *
-     * @return void
-     *
      * @since 1.0.0
      */
-    protected function storeTrait($traitName, $namespaceName, ASTTrait $trait)
+    protected function storeTrait($traitName, $namespaceName, ASTTrait $trait): void
     {
         $traitName = strtolower($traitName);
         if (!isset($this->traits[$traitName][$namespaceName])) {
-            $this->traits[$traitName][$namespaceName] = array();
+            $this->traits[$traitName][$namespaceName] = [];
         }
         $this->traits[$traitName][$namespaceName][$trait->getId()] = $trait;
 
@@ -2648,15 +2634,13 @@ class PHPBuilder implements Builder
      * @param string $className
      * @param string $namespaceName
      *
-     * @return void
-     *
      * @since 0.9.5
      */
-    protected function storeClass($className, $namespaceName, ASTClass $class)
+    protected function storeClass($className, $namespaceName, ASTClass $class): void
     {
         $className = strtolower($className);
         if (!isset($this->classes[$className][$namespaceName])) {
-            $this->classes[$className][$namespaceName] = array();
+            $this->classes[$className][$namespaceName] = [];
         }
         $this->classes[$className][$namespaceName][$class->getId()] = $class;
 
@@ -2670,15 +2654,13 @@ class PHPBuilder implements Builder
      * @param string $enumName
      * @param string $namespaceName
      *
-     * @return void
-     *
      * @since 2.11.0
      */
-    protected function storeEnum($enumName, $namespaceName, ASTEnum $enum)
+    protected function storeEnum($enumName, $namespaceName, ASTEnum $enum): void
     {
         $enumName = strtolower($enumName);
         if (!isset($this->classes[$enumName][$namespaceName])) {
-            $this->classes[$enumName][$namespaceName] = array();
+            $this->classes[$enumName][$namespaceName] = [];
         }
         $this->classes[$enumName][$namespaceName][$enum->getId()] = $enum;
 
@@ -2692,15 +2674,13 @@ class PHPBuilder implements Builder
      * @param string $interfaceName
      * @param string $namespaceName
      *
-     * @return void
-     *
      * @since 0.9.5
      */
-    protected function storeInterface($interfaceName, $namespaceName, ASTInterface $interface)
+    protected function storeInterface($interfaceName, $namespaceName, ASTInterface $interface): void
     {
         $interfaceName = strtolower($interfaceName);
         if (!isset($this->interfaces[$interfaceName][$namespaceName])) {
-            $this->interfaces[$interfaceName][$namespaceName] = array();
+            $this->interfaces[$interfaceName][$namespaceName] = [];
         }
         $this->interfaces[$interfaceName][$namespaceName][$interface->getId()]
             = $interface;
@@ -2716,11 +2696,9 @@ class PHPBuilder implements Builder
      *
      * @throws BadMethodCallException
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    protected function checkBuilderState($internal = false)
+    protected function checkBuilderState($internal = false): void
     {
         if ($this->frozen === true && $this->internal === false) {
             throw new BadMethodCallException(

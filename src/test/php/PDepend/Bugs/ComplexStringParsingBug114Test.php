@@ -60,7 +60,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesStringWithEmbeddedBacktickExpression()
+    public function testParserHandlesStringWithEmbeddedBacktickExpression(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -70,7 +70,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesStringWithEmbeddedExpression()
+    public function testParserHandlesStringWithEmbeddedExpression(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -80,7 +80,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesBacktickExpressionWithEmbeddedStringExpression()
+    public function testParserHandlesBacktickExpressionWithEmbeddedStringExpression(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -90,7 +90,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesStringWithEscapedVariable()
+    public function testParserHandlesStringWithEscapedVariable(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -100,7 +100,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesBacktickExpressionWithEscapedVariable()
+    public function testParserHandlesBacktickExpressionWithEscapedVariable(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -110,7 +110,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesStringWithVariableAndAssignment()
+    public function testParserHandlesStringWithVariableAndAssignment(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -120,7 +120,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesStringWithVariableNotAsFunctionCall()
+    public function testParserHandlesStringWithVariableNotAsFunctionCall(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -130,7 +130,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator()
+    public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $method   = $namespaces->current()

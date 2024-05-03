@@ -64,7 +64,7 @@ class UnexpectedTokenAsciiChar39Bug181Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testUnexpectedTokenDoesNotQuitPDepend()
+    public function testUnexpectedTokenDoesNotQuitPDepend(): void
     {
         $this->parseCodeResourceForTest();
     }

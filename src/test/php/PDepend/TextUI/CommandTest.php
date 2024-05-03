@@ -89,7 +89,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPrintVersion()
+    public function testPrintVersion(): void
     {
         [, $actual] = $this->executeCommand(['--version']);
         $this->assertEquals($this->versionOutput, $actual);
@@ -100,7 +100,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPrintVersionReturnsExitCodeSuccess()
+    public function testPrintVersionReturnsExitCodeSuccess(): void
     {
         [$exitCode, ] = $this->executeCommand(['--version']);
         $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
@@ -111,7 +111,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPrintUsage()
+    public function testPrintUsage(): void
     {
         [, $actual] = $this->executeCommand(['--usage']);
         $this->assertEquals($this->versionOutput . $this->usageOutput, $actual);
@@ -122,7 +122,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPrintUsageReturnsExitCodeSuccess()
+    public function testPrintUsageReturnsExitCodeSuccess(): void
     {
         [$exitCode, ] = $this->executeCommand(['--usage']);
         $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
@@ -133,7 +133,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPrintHelp()
+    public function testPrintHelp(): void
     {
         [, $actual] = $this->executeCommand(['--help']);
         $this->assertHelpOutput($actual);
@@ -144,7 +144,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testPrintHelpReturnsExitCodeSuccess()
+    public function testPrintHelpReturnsExitCodeSuccess(): void
     {
         [$exitCode, ] = $this->executeCommand(['--help']);
         $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
@@ -155,7 +155,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandCliReturnsErrorExitCodeIfNoArgvArrayExists()
+    public function testCommandCliReturnsErrorExitCodeIfNoArgvArrayExists(): void
     {
         [$exitCode, ] = $this->executeCommand();
         $this->assertEquals(Command::CLI_ERROR, $exitCode);
@@ -166,7 +166,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandCliErrorMessageIfNoArgvArrayExists()
+    public function testCommandCliErrorMessageIfNoArgvArrayExists(): void
     {
         [, $actual] = $this->executeCommand();
         $startsWith = 'Unknown error, no $argv array available.' . PHP_EOL . PHP_EOL;
@@ -178,7 +178,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandDisplaysHelpIfNoOptionsWereSpecified()
+    public function testCommandDisplaysHelpIfNoOptionsWereSpecified(): void
     {
         [, $actual] = $this->executeCommand([]);
         $this->assertHelpOutput($actual);
@@ -189,7 +189,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandReturnsErrorExitCodeIfNoOptionsWereSpecified()
+    public function testCommandReturnsErrorExitCodeIfNoOptionsWereSpecified(): void
     {
         [$exitCode, ] = $this->executeCommand([]);
         $this->assertEquals(Command::CLI_ERROR, $exitCode);
@@ -200,21 +200,21 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandStartsProcessWithDummyLogger()
+    public function testCommandStartsProcessWithDummyLogger(): void
     {
         $logFile  = $this->createRunResourceURI();
         $resource = $this->createCodeResourceUriForTest();
 
         set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__);
 
-        $argv = array(
+        $argv = [
             '--suffix=inc',
             '--ignore=code-5.2.x',
             '--exclude=pdepend.test2',
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             '--dummy-logger=' . $logFile,
             $resource
-        );
+        ];
 
         [$exitCode, ] = $this->executeCommand($argv);
 
@@ -227,19 +227,19 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandReturnsExitCodeSuccessByDefault()
+    public function testCommandReturnsExitCodeSuccessByDefault(): void
     {
         $logFile  = $this->createRunResourceURI();
         $resource = $this->createCodeResourceUriForTest();
 
         set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__);
 
-        $argv = array(
+        $argv = [
             '--suffix=inc',
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             '--dummy-logger=' . $logFile,
             $resource
-        );
+        ];
 
         [$exitCode, ] = $this->executeCommand($argv);
         $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
@@ -250,7 +250,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandExitsWithCliErrorForUnknownOption()
+    public function testCommandExitsWithCliErrorForUnknownOption(): void
     {
         [$exitCode, ] = $this->executeCommand(['--unknown']);
         $this->assertEquals(Command::CLI_ERROR, $exitCode);
@@ -262,29 +262,29 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandHandlesWithoutAnnotationsOptionCorrect()
+    public function testCommandHandlesWithoutAnnotationsOptionCorrect(): void
     {
-        $expected = array(
-            'pdepend.test'  =>  array(
-                'functions'   =>  array('foo'),
-                'classes'     =>  array('MyException'),
-                'interfaces'  =>  array(),
-                'exceptions'  =>  array()
-            ),
-            'pdepend.test2'  =>  array(
-                'functions'   =>  array(),
-                'classes'     =>  array('YourException'),
-                'interfaces'  =>  array(),
-                'exceptions'  =>  array()
-            )
-        );
+        $expected = [
+            'pdepend.test'  =>  [
+                'functions'   =>  ['foo'],
+                'classes'     =>  ['MyException'],
+                'interfaces'  =>  [],
+                'exceptions'  =>  []
+            ],
+            'pdepend.test2'  =>  [
+                'functions'   =>  [],
+                'classes'     =>  ['YourException'],
+                'interfaces'  =>  [],
+                'exceptions'  =>  []
+            ]
+        ];
 
         $actual = $this->runCommandAndReturnStatistics(
-            array(
+            [
                 '--suffix=inc',
                 '--without-annotations',
                 '--coderank-mode=property'
-            ),
+            ],
             $this->createCodeResourceUriForTest()
         );
 
@@ -296,12 +296,12 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandHandlesBadDocumentedSourceCode()
+    public function testCommandHandlesBadDocumentedSourceCode(): void
     {
-        $expected = array(
-            '+global'  =>  array(
-                'functions'   =>  array('pkg3_foo'),
-                'classes'     =>  array(
+        $expected = [
+            '+global'  =>  [
+                'functions'   =>  ['pkg3_foo'],
+                'classes'     =>  [
                     'Bar',
                     'pkg1Bar',
                     'pkg1Barfoo',
@@ -310,18 +310,18 @@ class CommandTest extends AbstractTestCase
                     'pkg2Bar',
                     'pkg2Barfoo',
                     'pkg2Foobar',
-                ),
-                'interfaces'  =>  array(
+                ],
+                'interfaces'  =>  [
                     'pkg1FooI',
                     'pkg2FooI',
                     'pkg3FooI'
-                ),
-                'exceptions'  =>  array()
-            )
-        );
+                ],
+                'exceptions'  =>  []
+            ]
+        ];
 
         $actual = $this->runCommandAndReturnStatistics(
-            array(),
+            [],
             $this->createCodeResourceUriForTest()
         );
         $this->assertEquals($expected, $actual);
@@ -351,14 +351,14 @@ class CommandTest extends AbstractTestCase
         $data = unserialize(file_get_contents($logFile));
         $code = $data['code'];
 
-        $actual = array();
+        $actual = [];
         foreach ($code as $namespace) {
-            $statistics = array(
-                'functions'   =>  array(),
-                'classes'     =>  array(),
-                'interfaces'  =>  array(),
-                'exceptions'  =>  array()
-            );
+            $statistics = [
+                'functions'   =>  [],
+                'classes'     =>  [],
+                'interfaces'  =>  [],
+                'exceptions'  =>  []
+            ];
             foreach ($namespace->getFunctions() as $function) {
                 $statistics['functions'][] = $function->getName();
                 foreach ($function->getExceptionClasses() as $exception) {
@@ -391,7 +391,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandHandlesIniOptionWithoutValueToON()
+    public function testCommandHandlesIniOptionWithoutValueToON(): void
     {
         // Get backup
         if (($backup = ini_set('html_errors', 'off')) === false) {
@@ -399,12 +399,12 @@ class CommandTest extends AbstractTestCase
         }
 
         $this->executeCommand(
-            array(
+            [
                 '-d',
                 'html_errors',
                 '--dummy-logger=' . $this->createRunResourceURI(),
                 __FILE__
-            )
+            ]
         );
 
         $this->assertEquals('on', ini_get('html_errors'));
@@ -417,7 +417,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandHandlesIniOptionWithValue()
+    public function testCommandHandlesIniOptionWithValue(): void
     {
         // Get backup
         if (($backup = ini_set('html_errors', 'on')) === false) {
@@ -425,12 +425,12 @@ class CommandTest extends AbstractTestCase
         }
 
         $this->executeCommand(
-            array(
+            [
                 '-d',
                 'html_errors=off',
                 '--dummy-logger=' . $this->createRunResourceURI(),
                 __FILE__
-            )
+            ]
         );
 
         $this->assertEquals('off', ini_get('html_errors'));
@@ -444,7 +444,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandHandlesConfigurationFileCorrect()
+    public function testCommandHandlesConfigurationFileCorrect(): void
     {
         // Sample config file
         $configFile = $this->createRunResourceURI('config.xml');
@@ -464,11 +464,11 @@ class CommandTest extends AbstractTestCase
              </symfony:container>'
         );
 
-        $argv = array(
+        $argv = [
             '--configuration=' . $configFile,
             '--dummy-logger=' . $this->createRunResourceURI(),
             __FILE__
-        );
+        ];
 
         // Result previous instance
         ConfigurationInstance::set(null);
@@ -484,7 +484,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testTextUiCommandOutputContainsExpectedCoverageReportOption()
+    public function testTextUiCommandOutputContainsExpectedCoverageReportOption(): void
     {
         [, $actual] = $this->executeCommand([]);
         $this->assertStringContainsString('--coverage-report=<file>', $actual);
@@ -495,15 +495,15 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testTextUiCommandFailesWithExpectedErrorCodeWhenCoverageReportFileDoesNotExist()
+    public function testTextUiCommandFailesWithExpectedErrorCodeWhenCoverageReportFileDoesNotExist(): void
     {
         $filePath = $this->createRunResourceURI('foobar');
         unlink($filePath);
-        $argv = array(
+        $argv = [
             '--coverage-report=' . $filePath,
             '--dummy-logger=' . $this->createRunResourceURI(),
             __FILE__,
-        );
+        ];
 
         [$exitCode, ] = $this->executeCommand($argv);
 
@@ -515,14 +515,14 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testTextUiCommandAcceptsExistingFileForCoverageReportOption()
+    public function testTextUiCommandAcceptsExistingFileForCoverageReportOption(): void
     {
-        $argv = array(
+        $argv = [
             '--coverage-report=' . __DIR__ . '/_files/clover.xml',
             '--dummy-logger=' . $this->createRunResourceURI(),
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             __FILE__,
-        );
+        ];
 
         [$exitCode, ] = $this->executeCommand($argv);
 
@@ -534,11 +534,11 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testCommandFailsIfAnInvalidConfigFileWasSpecified()
+    public function testCommandFailsIfAnInvalidConfigFileWasSpecified(): void
     {
         $configFile = $this->createRunResourceURI('config') . '.xml';
 
-        $argv = array('--configuration=' . $configFile, __FILE__);
+        $argv = ['--configuration=' . $configFile, __FILE__];
 
         [$exitCode, $actual] = $this->executeCommand($argv);
 
@@ -549,15 +549,15 @@ class CommandTest extends AbstractTestCase
         );
     }
 
-    public function testQuietModeWillSuppressVersionAndStatistics()
+    public function testQuietModeWillSuppressVersionAndStatistics(): void
     {
-        $argv = array(
+        $argv = [
             '--quiet',
             '--coverage-report=' . __DIR__ . '/_files/clover.xml',
             '--dummy-logger=' . $this->createRunResourceURI(),
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             __FILE__,
-        );
+        ];
 
         [$exitCode, $actual] = $this->executeCommand($argv);
 
@@ -565,7 +565,7 @@ class CommandTest extends AbstractTestCase
         $this->assertEmpty('', $actual);
     }
 
-    public function testErrorDisplay()
+    public function testErrorDisplay(): void
     {
         ob_start();
         $exitCode = MockCommand::main();
@@ -576,7 +576,7 @@ class CommandTest extends AbstractTestCase
         $this->assertSame(42, $exitCode);
     }
 
-    public function testDebugErrorDisplay()
+    public function testDebugErrorDisplay(): void
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
         $streamProperty = new ReflectionClass('PDepend\\Util\\Log');
@@ -616,7 +616,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    protected function assertHelpOutput($actual, $prologText = '')
+    protected function assertHelpOutput($actual, $prologText = ''): void
     {
         $startsWith = $prologText . $this->versionOutput . $this->usageOutput;
         $startsWith = '/^' . preg_quote($startsWith) . '/';
@@ -650,7 +650,7 @@ class CommandTest extends AbstractTestCase
         $output   = ob_get_contents();
         ob_end_clean();
 
-        return array($exitCode, $output);
+        return [$exitCode, $output];
     }
 
     /**
@@ -660,7 +660,7 @@ class CommandTest extends AbstractTestCase
      *
      * @return void
      */
-    private function prepareArgv(?array $argv = null)
+    private function prepareArgv(?array $argv = null): void
     {
         unset($_SERVER['argv']);
 

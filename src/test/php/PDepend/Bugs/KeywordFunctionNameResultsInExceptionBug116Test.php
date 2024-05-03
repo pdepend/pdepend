@@ -57,7 +57,7 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
      *
      * @return void
      */
-    public function testParserNotThrowsAnExceptionForKeywordUse()
+    public function testParserNotThrowsAnExceptionForKeywordUse(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -67,7 +67,7 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
      *
      * @return void
      */
-    public function testParserNotThrowsAnExceptionForKeywordGoto()
+    public function testParserNotThrowsAnExceptionForKeywordGoto(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -77,7 +77,7 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
      *
      * @return void
      */
-    public function testParserNotThrowsAnExceptionForKeywordNamespace()
+    public function testParserNotThrowsAnExceptionForKeywordNamespace(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -87,7 +87,7 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
      *
      * @return void
      */
-    public function testParserNotThrowsAnExceptionForMagicNamespaceConstant()
+    public function testParserNotThrowsAnExceptionForMagicNamespaceConstant(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -97,7 +97,7 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
      *
      * @return void
      */
-    public function testParserNotThrowsAnExceptionForKeywordParent()
+    public function testParserNotThrowsAnExceptionForKeywordParent(): void
     {
         $this->parseCodeResourceForTest();
     }

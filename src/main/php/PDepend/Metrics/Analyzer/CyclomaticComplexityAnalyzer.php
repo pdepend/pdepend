@@ -86,17 +86,15 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->metrics === null) {
             $this->loadCache();
             $this->fireStartAnalyzer();
 
             // Init node metrics
-            $this->metrics = array();
+            $this->metrics = [];
 
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
@@ -148,7 +146,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         if (isset($this->metrics[$artifact->getId()])) {
             return $this->metrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
@@ -158,18 +156,16 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function getProjectMetrics()
     {
-        return array(
+        return [
             self::M_CYCLOMATIC_COMPLEXITY_1  =>  $this->ccn,
             self::M_CYCLOMATIC_COMPLEXITY_2  =>  $this->ccn2,
-        );
+        ];
     }
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
 
@@ -183,20 +179,16 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         // Empty visit method, we don't want interface metrics
     }
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -211,16 +203,14 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Visits methods, functions or closures and calculated their complexity.
      *
-     * @return void
-     *
      * @since  0.9.8
      */
-    public function calculateComplexity(AbstractASTCallable $callable)
+    public function calculateComplexity(AbstractASTCallable $callable): void
     {
-        $data = array(
+        $data = [
             self::M_CYCLOMATIC_COMPLEXITY_1 => 1,
             self::M_CYCLOMATIC_COMPLEXITY_2 => 1,
-        );
+        ];
 
         foreach ($callable->getChildren() as $child) {
             $data = $child->accept($this, $data);
@@ -235,11 +225,9 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      *
      * @param string $nodeId Identifier of the analyzed item.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    private function updateProjectMetrics($nodeId)
+    private function updateProjectMetrics($nodeId): void
     {
         $this->ccn  += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_1];
         $this->ccn2 += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_2];

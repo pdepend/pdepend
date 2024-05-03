@@ -99,13 +99,13 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testReturnsExceptedAnalyzers()
+    public function testReturnsExceptedAnalyzers(): void
     {
         $logger    = new Xml();
         $actual    = $logger->getAcceptedAnalyzers();
-        $expected = array(
+        $expected = [
             'pdepend.analyzer.class_dependency',
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -116,7 +116,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testThrowsExceptionForInvalidLogTarget()
+    public function testThrowsExceptionForInvalidLogTarget(): void
     {
         $this->expectException(
             '\\PDepend\\Report\\NoLogOutputException'
@@ -134,7 +134,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testLogMethodReturnsFalseForWrongAnalyzer()
+    public function testLogMethodReturnsFalseForWrongAnalyzer(): void
     {
         $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\AnalyzerNodeAware')
             ->getMock();
@@ -150,7 +150,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testLogMethodReturnsTrueForAnalyzerOfTypeClassDepenendecyAnalyzer()
+    public function testLogMethodReturnsTrueForAnalyzerOfTypeClassDepenendecyAnalyzer(): void
     {
         $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\ClassDependencyAnalyzer')
             ->getMock();
@@ -168,7 +168,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testXmlLogWithoutMetrics()
+    public function testXmlLogWithoutMetrics(): void
     {
         $this->namespaces = self::parseCodeResourceForTest();
 
@@ -190,7 +190,7 @@ class XmlTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testXmlLogWithMetrics()
+    public function testXmlLogWithMetrics(): void
     {
         $this->namespaces = self::parseCodeResourceForTest();
 
@@ -211,11 +211,11 @@ class XmlTest extends AbstractTestCase
         $analyzer
             ->expects($this->any())
             ->method('getEfferents')
-            ->will($this->returnValue(array($type)));
+            ->will($this->returnValue([$type]));
         $analyzer
             ->expects($this->any())
             ->method('getAfferents')
-            ->will($this->returnValue(array($type, $type)));
+            ->will($this->returnValue([$type, $type]));
 
         $log = new Xml();
         $log->log($analyzer);
@@ -233,8 +233,8 @@ class XmlTest extends AbstractTestCase
     protected function getNormalizedPathXml($fileName)
     {
         return preg_replace(
-            array('(file\s+name="[^"]+")', '(generated="[^"]*")'),
-            array('file name="' . __FILE__ . '"', 'generated=""'),
+            ['(file\s+name="[^"]+")', '(generated="[^"]*")'],
+            ['file name="' . __FILE__ . '"', 'generated=""'],
             file_get_contents($fileName)
         );
     }

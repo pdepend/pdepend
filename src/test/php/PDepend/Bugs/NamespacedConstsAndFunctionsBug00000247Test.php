@@ -64,21 +64,21 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
      *
      * @return void
      */
-    public function testUseConst()
+    public function testUseConst(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
 
-        $actual = array();
+        $actual = [];
         foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTConstant') as $reference) {
             $actual[] = $reference->getImage();
         }
 
         $this->assertEquals(
-            array(
+            [
                 '\Bar\BAZ',
                 '\SOMETHING',
                 '\TEST',
-            ),
+            ],
             $actual
         );
     }
@@ -88,21 +88,21 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
      *
      * @return void
      */
-    public function testUseFunction()
+    public function testUseFunction(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
 
-        $actual = array();
+        $actual = [];
         foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTFunctionPostfix') as $reference) {
             $actual[] = $reference->getImage();
         }
 
         $this->assertEquals(
-            array(
+            [
                 '\Bar\baz',
                 '\something',
                 '\test',
-            ),
+            ],
             $actual
         );
     }
@@ -117,7 +117,7 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion72',
-            array($tokenizer, $builder, $cache)
+            [$tokenizer, $builder, $cache]
         );
     }
 }

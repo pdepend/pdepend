@@ -66,7 +66,7 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
      *
      * @return void
      */
-    public function testParserSetsDependencyDefinedInInlineCommentWithWhitespace()
+    public function testParserSetsDependencyDefinedInInlineCommentWithWhitespace(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $dependency = $function->getDependencies()->current();
@@ -87,7 +87,7 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
      *
      * @return void
      */
-    public function testParserSetsDependencyDefinedInInlineCommentWithoutWhitespace()
+    public function testParserSetsDependencyDefinedInInlineCommentWithoutWhitespace(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $dependency = $function->getDependencies()->current();
@@ -111,7 +111,7 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
      *
      * @return void
      */
-    public function testParserIgnoresDependencyDefinedInMultilineComment()
+    public function testParserIgnoresDependencyDefinedInMultilineComment(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
@@ -133,7 +133,7 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
      *
      * @return void
      */
-    public function testParserIgnoresDependencyDefinedWithinAnotherComment()
+    public function testParserIgnoresDependencyDefinedWithinAnotherComment(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();

@@ -64,7 +64,7 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTestCase
      * @return void
      * @dataProvider dataProviderReservedKeywordAsTypeConstantName
      */
-    public function testReservedKeywordAsTypeConstantName($sourceFile, $constantName)
+    public function testReservedKeywordAsTypeConstantName($sourceFile, $constantName): void
     {
         $namespaces = $this->parseSource($sourceFile);
 
@@ -83,47 +83,47 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTestCase
      */
     public static function dataProviderReservedKeywordAsTypeConstantName()
     {
-        return array(
-            array(
+        return [
+            [
                 'bugs/076-022-tokenizer-keyword-substitution.php',
                 'null'
-            ),
-            array(
+            ],
+            [
                 'bugs/076-023-tokenizer-keyword-substitution.php',
                 'use'
-            ),
-            array(
+            ],
+            [
                 'bugs/076-024-tokenizer-keyword-substitution.php',
                 'goto'
-            ),
-            array(
+            ],
+            [
                 'bugs/076-025-tokenizer-keyword-substitution.php',
                 'self'
-            ),
-            array(
+            ],
+            [
                 'bugs/076-026-tokenizer-keyword-substitution.php',
                 'true'
-            ),
-            array(
+            ],
+            [
                 'bugs/076-027-tokenizer-keyword-substitution.php',
                 'false'
-            ),
-            array(
+            ],
+            [
                 'bugs/076-028-tokenizer-keyword-substitution.php',
                 'parent'
-            ),
-            array(
+            ],
+            [
                 'bugs/076-029-tokenizer-keyword-substitution.php',
                 'namespace'
-            ),
-            array(
+            ],
+            [
                 'bugs/076-030-tokenizer-keyword-substitution.php',
                 '__dir__'
-            ),
-            array(
+            ],
+            [
                 'bugs/076-031-tokenizer-keyword-substitution.php',
                 '__NaMeSpAcE__'
-            ),
-        );
+            ],
+        ];
     }
 }

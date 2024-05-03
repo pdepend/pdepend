@@ -62,7 +62,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @var ASTNode[]
      */
-    protected $nodes = array();
+    protected $nodes = [];
 
     /**
      * The parent node of this node or <b>null</b> when this node is the root
@@ -100,7 +100,7 @@ abstract class AbstractASTNode implements ASTNode
     public function accept(ASTVisitor $visitor, $data = null)
     {
         $methodName = 'visit' . substr(get_class($this), 22);
-        $callable = array($visitor, $methodName);
+        $callable = [$visitor, $methodName];
         assert(is_callable($callable));
 
         return call_user_func($callable, $this, $data);
@@ -122,10 +122,8 @@ abstract class AbstractASTNode implements ASTNode
      * Sets the image for this ast node.
      *
      * @param string $image
-     *
-     * @return void
      */
-    public function setImage($image)
+    public function setImage($image): void
     {
         $this->setMetadata(4, $image);
     }
@@ -201,8 +199,6 @@ abstract class AbstractASTNode implements ASTNode
      * @param int $startColumn
      * @param int $endColumn
      *
-     * @return void
-     *
      * @since 0.9.10
      */
     public function configureLinesAndColumns(
@@ -210,7 +206,7 @@ abstract class AbstractASTNode implements ASTNode
         $endLine,
         $startColumn,
         $endColumn,
-    ) {
+    ): void {
         $this->setMetadataInteger(0, $startLine);
         $this->setMetadataInteger(1, $endLine);
         $this->setMetadataInteger(2, $startColumn);
@@ -238,11 +234,9 @@ abstract class AbstractASTNode implements ASTNode
      * @param int $index
      * @param int $value
      *
-     * @return void
-     *
      * @since 0.10.4
      */
-    protected function setMetadataInteger($index, $value)
+    protected function setMetadataInteger($index, $value): void
     {
         $this->setMetadata($index, (string) $value);
     }
@@ -268,11 +262,9 @@ abstract class AbstractASTNode implements ASTNode
      * @param int  $index
      * @param bool $value
      *
-     * @return void
-     *
      * @since 0.10.4
      */
-    protected function setMetadataBoolean($index, $value)
+    protected function setMetadataBoolean($index, $value): void
     {
         $this->setMetadata($index, $value ? '1' : '0');
     }
@@ -299,16 +291,14 @@ abstract class AbstractASTNode implements ASTNode
      * @param int    $index
      * @param string $value
      *
-     * @return void
-     *
      * @since 0.10.4
      */
-    protected function setMetadata($index, $value)
+    protected function setMetadata($index, $value): void
     {
         $metadata         = explode(':', $this->metadata, $this->getMetadataSize());
         $metadata[$index] = $value;
 
-        $this->metadata = join(':', $metadata);
+        $this->metadata = implode(':', $metadata);
     }
 
     /**
@@ -394,7 +384,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @return T[]
      */
-    public function findChildrenOfType($targetType, array &$results = array())
+    public function findChildrenOfType($targetType, array &$results = [])
     {
         foreach ($this->nodes as $node) {
             if ($node instanceof $targetType) {
@@ -407,10 +397,8 @@ abstract class AbstractASTNode implements ASTNode
 
     /**
      * This method adds a new child node at the first position of the children.
-     *
-     * @return void
      */
-    public function prependChild(ASTNode $node)
+    public function prependChild(ASTNode $node): void
     {
         array_unshift($this->nodes, $node);
         $node->setParent($this);
@@ -418,10 +406,8 @@ abstract class AbstractASTNode implements ASTNode
 
     /**
      * This method adds a new child node to this node instance.
-     *
-     * @return void
      */
-    public function addChild(ASTNode $node)
+    public function addChild(ASTNode $node): void
     {
         $this->nodes[] = $node;
         $node->setParent($this);
@@ -448,7 +434,7 @@ abstract class AbstractASTNode implements ASTNode
      */
     public function getParentsOfType($parentType)
     {
-        $parents = array();
+        $parents = [];
 
         $parentNode = $this->parent;
         while (is_object($parentNode)) {
@@ -462,10 +448,8 @@ abstract class AbstractASTNode implements ASTNode
 
     /**
      * Sets the parent node of this node.
-     *
-     * @return void
      */
-    public function setParent(ASTNode $node)
+    public function setParent(ASTNode $node): void
     {
         $this->parent = $node;
     }
@@ -485,10 +469,8 @@ abstract class AbstractASTNode implements ASTNode
      * Sets the raw doc comment for this node.
      *
      * @param string $comment The doc comment block for this node.
-     *
-     * @return void
      */
-    public function setComment($comment)
+    public function setComment($comment): void
     {
         $this->comment = $comment;
     }
@@ -504,11 +486,11 @@ abstract class AbstractASTNode implements ASTNode
      */
     public function __sleep()
     {
-        return array(
+        return [
             'comment',
             'metadata',
             'nodes',
-        );
+        ];
     }
 
     /**
@@ -517,11 +499,9 @@ abstract class AbstractASTNode implements ASTNode
      * the wakeup method restores the dependencies between an ast node and the
      * node's children.
      *
-     * @return void
-     *
      * @since 0.10.0
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         foreach ($this->nodes as $node) {
             $node->setParent($this);

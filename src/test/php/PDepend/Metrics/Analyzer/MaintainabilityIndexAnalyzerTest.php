@@ -80,12 +80,12 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testGetNodeMetricsReturnsNothingForUnknownNode()
+    public function testGetNodeMetricsReturnsNothingForUnknownNode(): void
     {
         $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
             ->getMock();
-        $this->assertEquals(array(), $analyzer->getNodeMetrics($astArtifact));
+        $this->assertEquals([], $analyzer->getNodeMetrics($astArtifact));
     }
 
     /**
@@ -94,18 +94,18 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateFunctionMaintainabilityIndex()
+    public function testCalculateFunctionMaintainabilityIndex(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $actual   = array();
-        $expected = array(
-            'pdepend1' => array('mi' => 76.389359628780454),
-            'pdepend2' => array('mi' => 81.120955834208331),
-        );
+        $actual   = [];
+        $expected = [
+            'pdepend1' => ['mi' => 76.389359628780454],
+            'pdepend2' => ['mi' => 81.120955834208331],
+        ];
 
         foreach ($namespaces[0]->getFunctions() as $function) {
             $actual[$function->getName()] = $analyzer->getNodeMetrics($function);
@@ -123,7 +123,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateMethodMaintainabilityIndex()
+    public function testCalculateMethodMaintainabilityIndex(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -133,12 +133,12 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
         $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
-        $actual   = array();
-        $expected = array(
-            'pdepend1' => array('mi' => 76.389359628780454),
-            'pdepend2' => array('mi' => 81.120955834208331),
-            'pdepend3' => array('mi' => 100),
-        );
+        $actual   = [];
+        $expected = [
+            'pdepend1' => ['mi' => 76.389359628780454],
+            'pdepend2' => ['mi' => 81.120955834208331],
+            'pdepend3' => ['mi' => 100],
+        ];
 
         foreach ($methods as $method) {
             $actual[$method->getName()] = $analyzer->getNodeMetrics($method);
@@ -156,7 +156,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedFunctionMetricsFromCache()
+    public function testAnalyzerRestoresExpectedFunctionMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $functions = $namespaces[0]->getFunctions();
@@ -180,7 +180,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testAnalyzerRestoresExpectedMethodMetricsFromCache()
+    public function testAnalyzerRestoresExpectedMethodMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         $classes = $namespaces[0]->getClasses();

@@ -109,7 +109,7 @@ class ASTClass extends AbstractASTClassOrInterface
     public function getProperties()
     {
         if ($this->properties === null) {
-            $this->properties = array();
+            $this->properties = [];
 
             $declarations = $this->findChildrenOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
             foreach ($declarations as $declaration) {
@@ -176,11 +176,9 @@ class ASTClass extends AbstractASTClassOrInterface
      * @throws BadMethodCallException
      * @throws InvalidArgumentException
      *
-     * @return void
-     *
      * @since  0.9.4
      */
-    public function setModifiers($modifiers)
+    public function setModifiers($modifiers): void
     {
         if ($this->modifiers !== 0) {
             throw new BadMethodCallException(
@@ -207,11 +205,9 @@ class ASTClass extends AbstractASTClassOrInterface
      * of the wakeup method will register this object in the the global class
      * context.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         parent::__wakeup();
 

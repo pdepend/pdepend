@@ -99,7 +99,7 @@ class BuilderParserCacheTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testUnchangedSourceFileGetsRestored()
+    public function testUnchangedSourceFileGetsRestored(): void
     {
         $builder0 = $this->parseSourceAndReturnBuilder('fileA.php');
         $builder1 = $this->parseSourceAndReturnBuilder('fileA.php');
@@ -115,7 +115,7 @@ class BuilderParserCacheTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testChangedSourceFileGetsProcessed()
+    public function testChangedSourceFileGetsProcessed(): void
     {
         $builder0 = $this->parseSourceAndReturnBuilder('fileA.php');
         $builder1 = $this->parseSourceAndReturnBuilder('fileB.php');

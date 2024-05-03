@@ -60,7 +60,7 @@ class ASTArtifactTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetNameReturnsValueOfFirstConstructorArgument()
+    public function testGetNameReturnsValueOfFirstConstructorArgument(): void
     {
         $item = $this->getItemMock();
         $this->assertEquals(__CLASS__, $item->getName());
@@ -71,7 +71,7 @@ class ASTArtifactTest extends AbstractTestCase
      *
      * @since 1.0.0
      */
-    public function testSetNameOverridesPreviousItemName()
+    public function testSetNameOverridesPreviousItemName(): void
     {
         $item = $this->getItemMock();
         $item->setName(__FUNCTION__);
@@ -84,7 +84,7 @@ class ASTArtifactTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetIdReturnsMd5HashByDefault()
+    public function testGetIdReturnsMd5HashByDefault(): void
     {
         $item = $this->getItemMock();
         $this->assertMatchesRegularExpression('(^[a-f0-9]{32}$)', $item->getId());
@@ -95,7 +95,7 @@ class ASTArtifactTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetIdReturnsInjectedIdValue()
+    public function testGetIdReturnsInjectedIdValue(): void
     {
         $item = $this->getItemMock();
         $item->setId(__METHOD__);
@@ -108,7 +108,7 @@ class ASTArtifactTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetSourceFileReturnsNullByDefault()
+    public function testGetSourceFileReturnsNullByDefault(): void
     {
         $item = $this->getItemMock();
         $this->assertNull($item->getCompilationUnit());
@@ -119,7 +119,7 @@ class ASTArtifactTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetSourceFileReturnsInjectedFileInstance()
+    public function testGetSourceFileReturnsInjectedFileInstance(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
 
@@ -134,7 +134,7 @@ class ASTArtifactTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetDocCommentReturnsNullByDefault()
+    public function testGetDocCommentReturnsNullByDefault(): void
     {
         $item = $this->getItemMock();
         $this->assertNull($item->getComment());
@@ -145,7 +145,7 @@ class ASTArtifactTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetDocCommentReturnsInjectedDocCommentValue()
+    public function testGetDocCommentReturnsInjectedDocCommentValue(): void
     {
         $item = $this->getItemMock();
         $item->setComment('/** Manuel */');
@@ -162,7 +162,7 @@ class ASTArtifactTest extends AbstractTestCase
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\AST\\AbstractASTArtifact',
-            array(__CLASS__)
+            [__CLASS__]
         );
     }
 }

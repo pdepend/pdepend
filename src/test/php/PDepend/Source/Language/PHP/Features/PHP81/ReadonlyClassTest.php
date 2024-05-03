@@ -52,7 +52,7 @@ class ReadonlyClassTest extends PHPParserVersion81TestCase
     /**
      * @return void
      */
-    public function testReadonlyClass()
+    public function testReadonlyClass(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'

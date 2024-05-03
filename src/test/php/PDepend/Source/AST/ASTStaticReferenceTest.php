@@ -61,11 +61,11 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetTypeReturnsInjectedConstructorTargetArgument()
+    public function testGetTypeReturnsInjectedConstructorTargetArgument(): void
     {
         $target  = $this->getAbstractClassMock(
             '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
-            array(__CLASS__)
+            [__CLASS__]
         );
         $context = $this->getMockBuilder('\\PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
@@ -79,11 +79,11 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull()
+    public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull(): void
     {
         $target = $this->getAbstractClassMock(
             '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
-            array(__CLASS__)
+            [__CLASS__]
         );
 
         $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
@@ -103,7 +103,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testStaticReferenceAllocationOutsideOfClassScopeThrowsExpectedException()
+    public function testStaticReferenceAllocationOutsideOfClassScopeThrowsExpectedException(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\InvalidStateException'
@@ -120,7 +120,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException()
+    public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\InvalidStateException'
@@ -137,17 +137,17 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMagicSelfReturnsExpectedSetOfPropertyNames()
+    public function testMagicSelfReturnsExpectedSetOfPropertyNames(): void
     {
         $reference = $this->createNodeInstance();
         $this->assertEquals(
-            array(
+            [
                 'qualifiedName',
                 'context',
                 'comment',
                 'metadata',
                 'nodes'
-            ),
+            ],
             $reference->__sleep()
         );
     }
@@ -158,7 +158,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testGetImageReturnsExpectedValue()
+    public function testGetImageReturnsExpectedValue(): void
     {
         $reference = $this->createNodeInstance();
         $this->assertEquals('static', $reference->getImage());
@@ -186,7 +186,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      * @return void
      * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedStartLine($reference)
+    public function testStaticReferenceHasExpectedStartLine($reference): void
     {
         $this->assertEquals(5, $reference->getStartLine());
     }
@@ -199,7 +199,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      * @return void
      * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedStartColumn($reference)
+    public function testStaticReferenceHasExpectedStartColumn($reference): void
     {
         $this->assertEquals(13, $reference->getStartColumn());
     }
@@ -212,7 +212,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      * @return void
      * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedEndLine($reference)
+    public function testStaticReferenceHasExpectedEndLine($reference): void
     {
         $this->assertEquals(5, $reference->getEndLine());
     }
@@ -225,7 +225,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      * @return void
      * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedEndColumn($reference)
+    public function testStaticReferenceHasExpectedEndColumn($reference): void
     {
         $this->assertEquals(18, $reference->getEndColumn());
     }
@@ -244,7 +244,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
             $context,
             $this->getAbstractClassMock(
                 '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
-                array(__CLASS__)
+                [__CLASS__]
             )
         );
     }

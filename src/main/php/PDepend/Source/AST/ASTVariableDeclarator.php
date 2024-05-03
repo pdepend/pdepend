@@ -76,10 +76,8 @@ class ASTVariableDeclarator extends ASTExpression
 
     /**
      * Sets the declared default value for this variable node.
-     *
-     * @return void
      */
-    public function setValue(ASTValue $value)
+    public function setValue(ASTValue $value): void
     {
         $this->value = $value;
     }
@@ -95,6 +93,6 @@ class ASTVariableDeclarator extends ASTExpression
      */
     public function __sleep()
     {
-        return array_merge(array('value'), parent::__sleep());
+        return array_merge(['value'], parent::__sleep());
     }
 }

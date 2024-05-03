@@ -61,7 +61,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testWithParentTypeHint()
+    public function testWithParentTypeHint(): void
     {
         $typeHint = $this->getFirstMethodFormalParameter()->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParentReference', $typeHint);
@@ -72,7 +72,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testWithParentTypeHintInFunctionThrowsExpectedException()
+    public function testWithParentTypeHintInFunctionThrowsExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
 
@@ -84,7 +84,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testWithParentTypeHintInRootClassThrowsExpectedException()
+    public function testWithParentTypeHintInRootClassThrowsExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
 

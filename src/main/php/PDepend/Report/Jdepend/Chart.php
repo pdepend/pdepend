@@ -90,10 +90,8 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     *
-     * @return void
      */
-    public function setLogFile($logFile)
+    public function setLogFile($logFile): void
     {
         $this->logFile = $logFile;
     }
@@ -106,17 +104,15 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      */
     public function getAcceptedAnalyzers()
     {
-        return array('pdepend.analyzer.dependency');
+        return ['pdepend.analyzer.dependency'];
     }
 
     /**
      * Sets the context code nodes.
      *
      * @param ASTArtifactList<ASTNamespace> $artifacts
-     *
-     * @return void
      */
-    public function setArtifacts(ASTArtifactList $artifacts)
+    public function setArtifacts(ASTArtifactList $artifacts): void
     {
         $this->code = $artifacts;
     }
@@ -143,10 +139,8 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * Closes the logger process and writes the output file.
      *
      * @throws NoLogOutputException If the no log target exists.
-     *
-     * @return void
      */
-    public function close()
+    public function close(): void
     {
         // Check for configured log file
         if ($this->logFile === null) {
@@ -225,7 +219,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      */
     private function getItems()
     {
-        $items = array();
+        $items = [];
         foreach ($this->code as $namespace) {
             if (!$namespace->isUserDefined()) {
                 continue;
@@ -237,21 +231,19 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 continue;
             }
 
-            $items[] = array(
+            $items[] = [
                 'size'         =>  $metrics['cc'] + $metrics['ac'],
                 'abstraction'  =>  $metrics['a'],
                 'instability'  =>  $metrics['i'],
                 'distance'     =>  $metrics['d'],
                 'name'         =>  Utf8Util::ensureEncoding($namespace->getName()),
-            );
+            ];
         }
 
         // Sort items by size
         usort(
             $items,
-            function ($a, $b) {
-                return ($a['size'] - $b['size']);
-            },
+            static fn (array $a, array $b) => $a['size'] <=> $b['size'],
         );
 
         if ($items) {

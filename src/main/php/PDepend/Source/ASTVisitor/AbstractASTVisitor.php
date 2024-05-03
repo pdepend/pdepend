@@ -70,7 +70,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
      *
      * @var ASTVisitListener[]
      */
-    private $listeners = array();
+    private $listeners = [];
 
     /**
      * Returns an iterator with all registered visit listeners.
@@ -84,10 +84,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Adds a new listener to this node visitor.
-     *
-     * @return void
      */
-    public function addVisitListener(ASTVisitListener $listener)
+    public function addVisitListener(ASTVisitListener $listener): void
     {
         if (in_array($listener, $this->listeners, true) === false) {
             $this->listeners[] = $listener;
@@ -96,10 +94,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         $this->fireStartClass($class);
 
@@ -117,10 +113,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitEnum(ASTEnum $enum)
+    public function visitEnum(ASTEnum $enum): void
     {
         $this->fireStartEnum($enum);
 
@@ -139,11 +133,9 @@ abstract class AbstractASTVisitor implements ASTVisitor
     /**
      * Visits a trait node.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function visitTrait(ASTTrait $trait)
+    public function visitTrait(ASTTrait $trait): void
     {
         $this->fireStartTrait($trait);
 
@@ -158,10 +150,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Visits a file node.
-     *
-     * @return void
      */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit)
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit): void
     {
         $this->fireStartFile($compilationUnit);
         $this->fireEndFile($compilationUnit);
@@ -169,10 +159,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
 
@@ -187,10 +175,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         $this->fireStartInterface($interface);
 
@@ -205,10 +191,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -221,10 +205,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Visits a namespace node.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace): void
     {
         $this->fireStartNamespace($namespace);
 
@@ -249,10 +231,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Visits a parameter node.
-     *
-     * @return void
      */
-    public function visitParameter(ASTParameter $parameter)
+    public function visitParameter(ASTParameter $parameter): void
     {
         $this->fireStartParameter($parameter);
         $this->fireEndParameter($parameter);
@@ -260,10 +240,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Visits a property node.
-     *
-     * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property): void
     {
         $this->fireStartProperty($property);
         $this->fireEndProperty($property);
@@ -311,10 +289,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a start class event.
-     *
-     * @return void
      */
-    protected function fireStartClass(ASTClass $class)
+    protected function fireStartClass(ASTClass $class): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitClass($class);
@@ -323,10 +299,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends an end class event.
-     *
-     * @return void
      */
-    protected function fireEndClass(ASTClass $class)
+    protected function fireEndClass(ASTClass $class): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitClass($class);
@@ -335,10 +309,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a start enum event.
-     *
-     * @return void
      */
-    protected function fireStartEnum(ASTEnum $enum)
+    protected function fireStartEnum(ASTEnum $enum): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitEnum($enum);
@@ -347,10 +319,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends an end enum event.
-     *
-     * @return void
      */
-    protected function fireEndEnum(ASTEnum $enum)
+    protected function fireEndEnum(ASTEnum $enum): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitEnum($enum);
@@ -359,10 +329,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a start trait event.
-     *
-     * @return void
      */
-    protected function fireStartTrait(ASTTrait $trait)
+    protected function fireStartTrait(ASTTrait $trait): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitTrait($trait);
@@ -371,10 +339,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends an end trait event.
-     *
-     * @return void
      */
-    protected function fireEndTrait(ASTTrait $trait)
+    protected function fireEndTrait(ASTTrait $trait): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitTrait($trait);
@@ -383,10 +349,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a start file event.
-     *
-     * @return void
      */
-    protected function fireStartFile(ASTCompilationUnit $compilationUnit)
+    protected function fireStartFile(ASTCompilationUnit $compilationUnit): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitFile($compilationUnit);
@@ -395,10 +359,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends an end file event.
-     *
-     * @return void
      */
-    protected function fireEndFile(ASTCompilationUnit $compilationUnit)
+    protected function fireEndFile(ASTCompilationUnit $compilationUnit): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitFile($compilationUnit);
@@ -407,10 +369,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a start function event.
-     *
-     * @return void
      */
-    protected function fireStartFunction(ASTFunction $function)
+    protected function fireStartFunction(ASTFunction $function): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitFunction($function);
@@ -419,10 +379,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends an end function event.
-     *
-     * @return void
      */
-    protected function fireEndFunction(ASTFunction $function)
+    protected function fireEndFunction(ASTFunction $function): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitFunction($function);
@@ -431,10 +389,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a start interface event.
-     *
-     * @return void
      */
-    protected function fireStartInterface(ASTInterface $interface)
+    protected function fireStartInterface(ASTInterface $interface): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitInterface($interface);
@@ -443,10 +399,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends an end interface event.
-     *
-     * @return void
      */
-    protected function fireEndInterface(ASTInterface $interface)
+    protected function fireEndInterface(ASTInterface $interface): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitInterface($interface);
@@ -455,10 +409,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a start method event.
-     *
-     * @return void
      */
-    protected function fireStartMethod(ASTMethod $method)
+    protected function fireStartMethod(ASTMethod $method): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitMethod($method);
@@ -467,10 +419,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends an end method event.
-     *
-     * @return void
      */
-    protected function fireEndMethod(ASTMethod $method)
+    protected function fireEndMethod(ASTMethod $method): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitMethod($method);
@@ -479,10 +429,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a start namespace event.
-     *
-     * @return void
      */
-    protected function fireStartNamespace(ASTNamespace $namespace)
+    protected function fireStartNamespace(ASTNamespace $namespace): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitNamespace($namespace);
@@ -491,10 +439,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends an end namespace event.
-     *
-     * @return void
      */
-    protected function fireEndNamespace(ASTNamespace $namespace)
+    protected function fireEndNamespace(ASTNamespace $namespace): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitNamespace($namespace);
@@ -503,10 +449,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a start parameter event.
-     *
-     * @return void
      */
-    protected function fireStartParameter(ASTParameter $parameter)
+    protected function fireStartParameter(ASTParameter $parameter): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitParameter($parameter);
@@ -515,10 +459,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a end parameter event.
-     *
-     * @return void
      */
-    protected function fireEndParameter(ASTParameter $parameter)
+    protected function fireEndParameter(ASTParameter $parameter): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitParameter($parameter);
@@ -527,10 +469,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends a start property event.
-     *
-     * @return void
      */
-    protected function fireStartProperty(ASTProperty $property)
+    protected function fireStartProperty(ASTProperty $property): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startVisitProperty($property);
@@ -539,10 +479,8 @@ abstract class AbstractASTVisitor implements ASTVisitor
 
     /**
      * Sends an end property event.
-     *
-     * @return void
      */
-    protected function fireEndProperty(ASTProperty $property)
+    protected function fireEndProperty(ASTProperty $property): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endVisitProperty($property);

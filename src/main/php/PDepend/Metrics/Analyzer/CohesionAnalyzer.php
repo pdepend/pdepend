@@ -67,7 +67,7 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      *
      * @var array<string, array<string, int>>
      */
-    private $nodeMetrics = array();
+    private $nodeMetrics = [];
 
     /**
      * This method will return an <b>array</b> with all generated metric values
@@ -89,15 +89,13 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         $this->fireStartAnalyzer();
 

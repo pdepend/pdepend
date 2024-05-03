@@ -58,7 +58,7 @@ class ParserSetsIncorrectStartLineBug101Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedStartLineNumber()
+    public function testParserSetsExpectedStartLineNumber(): void
     {
         $class = $this->parseCodeResourceForTest()
             ->current()
@@ -73,7 +73,7 @@ class ParserSetsIncorrectStartLineBug101Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserSetsExpectedEndLineNumber()
+    public function testParserSetsExpectedEndLineNumber(): void
     {
         $class = $this->parseCodeResourceForTest()
             ->current()

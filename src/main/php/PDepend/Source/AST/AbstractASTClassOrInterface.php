@@ -66,7 +66,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @var ASTClassOrInterfaceReference[]
      */
-    protected $interfaceReferences = array();
+    protected $interfaceReferences = [];
 
     /**
      * An <b>array</b> with all constants defined in this class or interface.
@@ -127,7 +127,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      */
     public function getParentClasses()
     {
-        $parents = array();
+        $parents = [];
         $parent  = $this;
 
         while ($parent = $parent->getParentClass()) {
@@ -158,11 +158,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @param ASTClassReference $classReference Reference to the declared parent class.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    public function setParentClassReference(ASTClassReference $classReference)
+    public function setParentClassReference(ASTClassReference $classReference): void
     {
         $this->nodes[]              = $classReference;
         $this->parentClassReference = $classReference;
@@ -195,11 +193,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Adds a interface reference node.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    public function addInterfaceReference(ASTClassOrInterfaceReference $interfaceReference)
+    public function addInterfaceReference(ASTClassOrInterfaceReference $interfaceReference): void
     {
         $this->nodes[] = $interfaceReference;
         $this->interfaceReferences[] = $interfaceReference;
@@ -275,7 +271,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      */
     public function getAllMethods()
     {
-        $methods = array();
+        $methods = [];
         foreach ($this->getInterfaces() as $interface) {
             foreach ($interface->getAllMethods() as $method) {
                 $methods[strtolower($method->getName())] = $method;
@@ -339,7 +335,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         $stack = $this->getParentClasses();
         array_unshift($stack, $this);
 
-        $interfaces = array();
+        $interfaces = [];
 
         while (($top = array_pop($stack)) !== null) {
             foreach ($top->interfaceReferences as $interfaceReference) {
@@ -360,13 +356,11 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * This method initializes the constants defined in this class or interface.
      *
-     * @return void
-     *
      * @since  0.9.6
      */
-    private function initConstants()
+    private function initConstants(): void
     {
-        $this->constants = array();
+        $this->constants = [];
         $declarators = $this->getConstantDeclarators();
 
         foreach ($declarators as $declarator) {
@@ -380,13 +374,11 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * This method initializes the constants defined in this class or interface.
      *
-     * @return void
-     *
      * @since  0.9.6
      */
-    private function initConstantDeclarators()
+    private function initConstantDeclarators(): void
     {
-        $this->constantDeclarators = array();
+        $this->constantDeclarators = [];
         if (($parentClass = $this->getParentClass()) !== null) {
             $this->constantDeclarators = $parentClass->getConstantDeclarators();
         }
@@ -424,7 +416,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     public function __sleep()
     {
         return array_merge(
-            array('constants', 'interfaceReferences', 'parentClassReference'),
+            ['constants', 'interfaceReferences', 'parentClassReference'],
             parent::__sleep(),
         );
     }

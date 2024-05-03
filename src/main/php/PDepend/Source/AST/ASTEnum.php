@@ -145,7 +145,7 @@ class ASTEnum extends AbstractASTClassOrInterface
     public function getProperties()
     {
         /** @var ASTProperty[] $list */
-        $list = array();
+        $list = [];
 
         return new ASTArtifactList($list);
     }
@@ -163,15 +163,15 @@ class ASTEnum extends AbstractASTClassOrInterface
         $cases->addChild(new ASTTypeArray());
         $unitEnum->addMethod($cases);
 
-        $interfaces = array($unitEnum);
+        $interfaces = [$unitEnum];
 
         if ($this->isBacked()) {
             $backedEnum = new ASTInterface('BackedEnum');
 
-            $methods = array(
+            $methods = [
                 'from' => false, // from(int|string $value): static
                 'tryFrom' => true, // tryFrom(int|string $value): ?static
-            );
+            ];
 
             foreach ($methods as $name => $nullable) {
                 $from = new ASTMethod($name);
@@ -240,11 +240,9 @@ class ASTEnum extends AbstractASTClassOrInterface
      * @throws BadMethodCallException
      * @throws InvalidArgumentException
      *
-     * @return void
-     *
      * @since  0.9.4
      */
-    public function setModifiers($modifiers)
+    public function setModifiers($modifiers): void
     {
         if ($this->modifiers !== 0) {
             throw new BadMethodCallException(
@@ -269,11 +267,9 @@ class ASTEnum extends AbstractASTClassOrInterface
      * of the wakeup method will register this object in the the global class
      * context.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function __wakeup()
+    public function __wakeup(): void
     {
         parent::__wakeup();
 
@@ -291,7 +287,7 @@ class ASTEnum extends AbstractASTClassOrInterface
     public function __sleep()
     {
         return array_merge(
-            array('type'),
+            ['type'],
             parent::__sleep(),
         );
     }

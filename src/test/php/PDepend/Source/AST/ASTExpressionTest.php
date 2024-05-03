@@ -59,7 +59,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testExpressionHasExpectedNumberOfChildNodes()
+    public function testExpressionHasExpectedNumberOfChildNodes(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertCount(5, $expr->getChild(0)->getChildren());
@@ -70,17 +70,17 @@ class ASTExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testExpressionGraphWithBooleanExpressions()
+    public function testExpressionGraphWithBooleanExpressions(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
-        $expected   = array(
+        $expected   = [
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTBooleanAndExpression',
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTBooleanOrExpression',
             'PDepend\\Source\\AST\\ASTVariable',
-        );
+        ];
 
         $this->assertGraphEquals($expr, $expected);
     }
@@ -90,7 +90,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testExpressionHasExpectedStartLine()
+    public function testExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
@@ -101,7 +101,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testExpressionHasExpectedStartColumn()
+    public function testExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertEquals(8, $expr->getStartColumn());
@@ -112,7 +112,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testExpressionHasExpectedEndLine()
+    public function testExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertEquals(6, $expr->getEndLine());
@@ -123,7 +123,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testExpressionHasExpectedEndColumn()
+    public function testExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertEquals(14, $expr->getEndColumn());

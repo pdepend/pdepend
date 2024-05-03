@@ -62,7 +62,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testVisitClassIgnoresClassesThatAreNotUserDefined()
+    public function testVisitClassIgnoresClassesThatAreNotUserDefined(): void
     {
         $notUserDefined = $this->createClassFixture();
 
@@ -70,7 +70,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $namespace->addType($notUserDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($namespace)));
+        $analyzer->analyze(new ASTArtifactList([$namespace]));
 
         $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(0, $metrics['noc']);
@@ -81,7 +81,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testVisitClassCountsClassesThatAreNotUserDefined()
+    public function testVisitClassCountsClassesThatAreNotUserDefined(): void
     {
         $userDefined = $this->createClassFixture();
         $userDefined->setUserDefined();
@@ -90,7 +90,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $namespace->addType($userDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($namespace)));
+        $analyzer->analyze(new ASTArtifactList([$namespace]));
 
         $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(1, $metrics['noc']);
@@ -101,7 +101,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testVisitClassIgnoresInterfacesThatAreNotUserDefined()
+    public function testVisitClassIgnoresInterfacesThatAreNotUserDefined(): void
     {
         $notUserDefined = $this->createInterfaceFixture();
 
@@ -109,7 +109,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $namespace->addType($notUserDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($namespace)));
+        $analyzer->analyze(new ASTArtifactList([$namespace]));
 
         $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(0, $metrics['noi']);
@@ -120,7 +120,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testVisitClassCountsInterfacesThatAreNotUserDefined()
+    public function testVisitClassCountsInterfacesThatAreNotUserDefined(): void
     {
         $userDefined = $this->createInterfaceFixture();
         $userDefined->setUserDefined();
@@ -129,7 +129,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         $namespace->addType($userDefined);
 
         $analyzer = $this->createAnalyzer();
-        $analyzer->analyze(new ASTArtifactList(array($namespace)));
+        $analyzer->analyze(new ASTArtifactList([$namespace]));
 
         $metrics = $analyzer->getNodeMetrics($namespace);
         $this->assertEquals(1, $metrics['noi']);
@@ -140,7 +140,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfPackages()
+    public function testCalculatesExpectedNumberOfPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -155,7 +155,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfClassesInProject()
+    public function testCalculatesExpectedNumberOfClassesInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -170,23 +170,23 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfClassesInPackages()
+    public function testCalculatesExpectedNumberOfClassesInPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $metrics = array();
+        $metrics = [];
         foreach ($namespaces as $namespace) {
             $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
-            array(
-                'A' => array('noc' => 3, 'noi' => 0, 'nom' => 0, 'nof' => 0),
-                'B' => array('noc' => 2, 'noi' => 0, 'nom' => 0, 'nof' => 0),
-                'C' => array('noc' => 1, 'noi' => 0, 'nom' => 0, 'nof' => 0),
-            ),
+            [
+                'A' => ['noc' => 3, 'noi' => 0, 'nom' => 0, 'nof' => 0],
+                'B' => ['noc' => 2, 'noi' => 0, 'nom' => 0, 'nof' => 0],
+                'C' => ['noc' => 1, 'noi' => 0, 'nom' => 0, 'nof' => 0],
+            ],
             $metrics
         );
     }
@@ -196,7 +196,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfInterfacesInProject()
+    public function testCalculatesExpectedNumberOfInterfacesInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -211,23 +211,23 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfInterfacesInPackages()
+    public function testCalculatesExpectedNumberOfInterfacesInPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $metrics = array();
+        $metrics = [];
         foreach ($namespaces as $namespace) {
             $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
-            array(
-                'A' => array('noc' => 0, 'noi' => 1, 'nom' => 0, 'nof' => 0),
-                'B' => array('noc' => 0, 'noi' => 2, 'nom' => 0, 'nof' => 0),
-                'C' => array('noc' => 0, 'noi' => 3, 'nom' => 0, 'nof' => 0),
-            ),
+            [
+                'A' => ['noc' => 0, 'noi' => 1, 'nom' => 0, 'nof' => 0],
+                'B' => ['noc' => 0, 'noi' => 2, 'nom' => 0, 'nof' => 0],
+                'C' => ['noc' => 0, 'noi' => 3, 'nom' => 0, 'nof' => 0],
+            ],
             $metrics
         );
     }
@@ -237,7 +237,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfMethodsInProject()
+    public function testCalculatesExpectedNumberOfMethodsInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -252,23 +252,23 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfMethodsInPackages()
+    public function testCalculatesExpectedNumberOfMethodsInPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $metrics = array();
+        $metrics = [];
         foreach ($namespaces as $namespace) {
             $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
-            array(
-                'A' => array('noc' => 2, 'noi' => 1, 'nom' => 4, 'nof' => 0),
-                'B' => array('noc' => 0, 'noi' => 2, 'nom' => 3, 'nof' => 0),
-                'C' => array('noc' => 0, 'noi' => 1, 'nom' => 2, 'nof' => 0),
-            ),
+            [
+                'A' => ['noc' => 2, 'noi' => 1, 'nom' => 4, 'nof' => 0],
+                'B' => ['noc' => 0, 'noi' => 2, 'nom' => 3, 'nof' => 0],
+                'C' => ['noc' => 0, 'noi' => 1, 'nom' => 2, 'nof' => 0],
+            ],
             $metrics
         );
     }
@@ -278,7 +278,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfFunctionsInProject()
+    public function testCalculatesExpectedNumberOfFunctionsInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -293,23 +293,23 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNumberOfFunctionsInPackages()
+    public function testCalculatesExpectedNumberOfFunctionsInPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $metrics = array();
+        $metrics = [];
         foreach ($namespaces as $namespace) {
             $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
         }
 
         $this->assertEquals(
-            array(
-                'A' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 3),
-                'B' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 2),
-                'C' => array('noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 1),
-            ),
+            [
+                'A' => ['noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 3],
+                'B' => ['noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 2],
+                'C' => ['noc' => 0, 'noi' => 0, 'nom' => 0, 'nof' => 1],
+            ],
             $metrics
         );
     }

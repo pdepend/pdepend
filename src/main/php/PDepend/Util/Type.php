@@ -151,7 +151,7 @@ final class Type
      *
      * @var array<string, bool>
      */
-    private static $scalarTypes = array(
+    private static $scalarTypes = [
         self::IMAGE_ARRAY                   =>  true,
         self::IMAGE_BOOL                    =>  true,
         self::IMAGE_BOOLEAN                 =>  true,
@@ -200,14 +200,14 @@ final class Type
         self::IMAGE_SOUNDEX_STRING          =>  true,
         self::IMAGE_SOUNDEX_STDCLASS        =>  true,
         self::IMAGE_SOUNDEX_UNKNOWN         =>  true,
-    );
+    ];
 
     /**
      * List of primitive php types.
      *
      * @var array<string, string>
      */
-    private static $primitiveTypes = array(
+    private static $primitiveTypes = [
         self::IMAGE_BOOL               =>  self::PHP_TYPE_BOOLEAN,
         self::IMAGE_BOOLEAN            =>  self::PHP_TYPE_BOOLEAN,
         self::IMAGE_SOUNDEX_BOOL       =>  self::PHP_TYPE_BOOLEAN,
@@ -234,7 +234,7 @@ final class Type
         self::IMAGE_STRING             =>  self::PHP_TYPE_STRING,
         self::IMAGE_METAPHONE_STRING   =>  self::PHP_TYPE_STRING,
         self::IMAGE_SOUNDEX_STRING     =>  self::PHP_TYPE_STRING,
-    );
+    ];
 
     /**
      * Returns <b>true</b> if the given type is internal or part of an
@@ -282,7 +282,7 @@ final class Type
     public static function getInternalNamespaces()
     {
         if (self::$internalNamespaces === null) {
-            self::$internalNamespaces = array();
+            self::$internalNamespaces = [];
             foreach (self::initTypeToExtension() as $namespace) {
                 self::$internalNamespaces[$namespace] = $namespace;
             }
@@ -396,7 +396,7 @@ final class Type
             return self::$typeNameToExtension;
         }
 
-        self::$typeNameToExtension = array('iterator' => '+standard');
+        self::$typeNameToExtension = ['iterator' => '+standard'];
 
         $extensionNames = get_loaded_extensions();
         $extensionNames = array_map('strtolower', $extensionNames);

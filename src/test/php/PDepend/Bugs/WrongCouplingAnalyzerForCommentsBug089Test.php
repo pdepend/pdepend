@@ -62,7 +62,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testAnalyzerDetectsIdenticalMethodCallWithFunctionComment()
+    public function testAnalyzerDetectsIdenticalMethodCallWithFunctionComment(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -78,7 +78,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testAnalyzerDetectsFunctionCallWithCommentBetweenParenthesisAndIdentifier()
+    public function testAnalyzerDetectsFunctionCallWithCommentBetweenParenthesisAndIdentifier(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -94,7 +94,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTestC
      *
      * @return void
      */
-    public function testAnalyzerDetectsObjectAllocation()
+    public function testAnalyzerDetectsObjectAllocation(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 

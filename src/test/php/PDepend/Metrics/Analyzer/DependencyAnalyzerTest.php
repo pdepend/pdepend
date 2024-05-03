@@ -67,8 +67,8 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @var array<string, array>
      */
-    private $input = array(
-        '+global'  =>  array(
+    private $input = [
+        '+global'  =>  [
             'tc'  =>  0,
             'cc'  =>  0,
             'ac'  =>  0,
@@ -77,8 +77,8 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
             'a'   =>  0,
             'i'   =>  0,
             'd'   =>  1
-        ),
-        'pkg1'  =>  array(
+        ],
+        'pkg1'  =>  [
             'tc'  =>  1,
             'cc'  =>  1,
             'ac'  =>  0,
@@ -87,8 +87,8 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
             'a'   =>  0,
             'i'   =>  1,
             'd'   =>  0
-        ),
-        'pkg2'  =>  array(
+        ],
+        'pkg2'  =>  [
             'tc'  =>  1,
             'cc'  =>  0,
             'ac'  =>  1,
@@ -97,8 +97,8 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
             'a'   =>  1,
             'i'   =>  0,
             'd'   =>  0
-        ),
-        'pkg3'  =>  array(
+        ],
+        'pkg3'  =>  [
             'tc'  =>  1,
             'cc'  =>  0,
             'ac'  =>  1,
@@ -107,22 +107,22 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
             'a'   =>  1,
             'i'   =>  0.5,
             'd'   =>  0.5,
-        ),
-    );
+        ],
+    ];
 
     /**
      * Tests the generated package metrics.
      *
      * @return void
      */
-    public function testGenerateMetrics()
+    public function testGenerateMetrics(): void
     {
         $visitor = new DependencyAnalyzer();
 
         $namespaces = $this->parseCodeResourceForTest();
         $visitor->analyze($namespaces);
 
-        $actual = array();
+        $actual = [];
         foreach ($namespaces as $namespace) {
             $actual[$namespace->getName()] = $visitor->getStats($namespace);
         }

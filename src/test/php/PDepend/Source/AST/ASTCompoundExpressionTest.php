@@ -59,7 +59,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testExpressionHasExpectedStartLine()
+    public function testExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertSame(4, $expr->getStartLine());
@@ -70,7 +70,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testExpressionHasExpectedStartColumn()
+    public function testExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertSame(19, $expr->getStartColumn());
@@ -81,7 +81,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testExpressionHasExpectedEndLine()
+    public function testExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertSame(5, $expr->getEndLine());
@@ -92,7 +92,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testExpressionHasExpectedEndColumn()
+    public function testExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
         $this->assertSame(13, $expr->getEndColumn());

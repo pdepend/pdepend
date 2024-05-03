@@ -60,7 +60,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
      *
      * @return void
      */
-    public function testParserHandlesSimpleCommaSeparatedConstantDefinition()
+    public function testParserHandlesSimpleCommaSeparatedConstantDefinition(): void
     {
         $constants = $this->parseCodeResourceForTest()
             ->current()
@@ -77,7 +77,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
      *
      * @return void
      */
-    public function testParserHandlesCommaSeparatedConstantDefinitionWithInlineComments()
+    public function testParserHandlesCommaSeparatedConstantDefinitionWithInlineComments(): void
     {
         $constants = $this->parseCodeResourceForTest()
             ->current()
@@ -94,7 +94,7 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
      *
      * @return void
      */
-    public function testParserHandlesMultipleCommaSeparatedConstantDefinitions()
+    public function testParserHandlesMultipleCommaSeparatedConstantDefinitions(): void
     {
         $constants = $this->parseCodeResourceForTest()
             ->current()

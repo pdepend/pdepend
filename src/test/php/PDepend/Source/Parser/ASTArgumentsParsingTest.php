@@ -60,17 +60,17 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsStaticMethodPostfixExpression()
+    public function testArgumentsContainsStaticMethodPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments'
-            )
+            ]
         );
     }
 
@@ -79,17 +79,17 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsMethodPostfixExpression()
+    public function testArgumentsContainsMethodPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments'
-            )
+            ]
         );
     }
 
@@ -98,16 +98,16 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsConstantsPostfixExpression()
+    public function testArgumentsContainsConstantsPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTConstantPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier'
-            )
+            ]
         );
     }
 
@@ -116,16 +116,16 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsPropertyPostfixExpression()
+    public function testArgumentsContainsPropertyPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfFunction(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -134,16 +134,16 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsSelfPropertyPostfixExpression()
+    public function testArgumentsContainsSelfPropertyPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfMethod(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTSelfReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTVariable'
-            )
+            ]
         );
     }
 
@@ -152,17 +152,17 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsParentMethodPostfixExpression()
+    public function testArgumentsContainsParentMethodPostfixExpression(): void
     {
         $this->assertGraphEquals(
             $this->getFirstArgumentsOfMethod(),
-            array(
+            [
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTParentReference',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments'
-            )
+            ]
         );
     }
 
@@ -171,7 +171,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsContainsAllocationExpression()
+    public function testArgumentsContainsAllocationExpression(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
 
@@ -184,7 +184,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsWithSeveralParameters()
+    public function testArgumentsWithSeveralParameters(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
 
@@ -199,7 +199,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsWithInlineComments()
+    public function testArgumentsWithInlineComments(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
 
@@ -212,7 +212,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testArgumentsWithInlineConcatExpression()
+    public function testArgumentsWithInlineConcatExpression(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
 
@@ -228,7 +228,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
      *
      * @return void
      */
-    public function testUnclosedArgumentsExpressionThrowsExpectedException()
+    public function testUnclosedArgumentsExpressionThrowsExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 

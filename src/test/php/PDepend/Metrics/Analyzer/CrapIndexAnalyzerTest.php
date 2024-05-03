@@ -60,11 +60,11 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerReturnsExpectedDependencies()
+    public function testAnalyzerReturnsExpectedDependencies(): void
     {
         $analyzer = new CrapIndexAnalyzer();
         $actual   = $analyzer->getRequiredAnalyzers();
-        $expected = array('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer');
+        $expected = ['PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'];
 
         $this->assertEquals($expected, $actual);
     }
@@ -74,7 +74,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerIsEnabledReturnsFalseWhenNoCoverageReportFileWasSupplied()
+    public function testAnalyzerIsEnabledReturnsFalseWhenNoCoverageReportFileWasSupplied(): void
     {
         $analyzer = new CrapIndexAnalyzer();
 
@@ -86,9 +86,9 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerIsEnabledReturnsTrueWhenCoverageReportFileWasSupplied()
+    public function testAnalyzerIsEnabledReturnsTrueWhenCoverageReportFileWasSupplied(): void
     {
-        $options  = array('coverage-report' => $this->createCloverReportFile());
+        $options  = ['coverage-report' => $this->createCloverReportFile()];
         $analyzer = new CrapIndexAnalyzer($options);
 
         $this->assertTrue($analyzer->isEnabled());
@@ -99,10 +99,10 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerIgnoresAbstractMethods()
+    public function testAnalyzerIgnoresAbstractMethods(): void
     {
         $metrics = $this->calculateCrapIndex(__METHOD__, 42);
-        $this->assertSame(array(), $metrics);
+        $this->assertSame([], $metrics);
     }
 
     /**
@@ -110,10 +110,10 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerIgnoresInterfaceMethods()
+    public function testAnalyzerIgnoresInterfaceMethods(): void
     {
         $metrics = $this->calculateCrapIndex(__METHOD__, 42);
-        $this->assertSame(array(), $metrics);
+        $this->assertSame([], $metrics);
     }
 
     /**
@@ -121,7 +121,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerReturnsExpectedResultForMethodWithoutCoverage()
+    public function testAnalyzerReturnsExpectedResultForMethodWithoutCoverage(): void
     {
         $this->doTestCrapIndexCalculation(__METHOD__, 12, 156);
     }
@@ -131,7 +131,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerReturnsExpectedResultForMethodWith100PercentCoverage()
+    public function testAnalyzerReturnsExpectedResultForMethodWith100PercentCoverage(): void
     {
         $this->doTestCrapIndexCalculation(__METHOD__, 12, 12);
     }
@@ -141,7 +141,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerReturnsExpectedResultForMethodWith50PercentCoverage()
+    public function testAnalyzerReturnsExpectedResultForMethodWith50PercentCoverage(): void
     {
         $this->doTestCrapIndexCalculation(__METHOD__, 12, 30);
     }
@@ -151,7 +151,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyterReturnsExpectedResultForMethodWithoutCoverageData()
+    public function testAnalyterReturnsExpectedResultForMethodWithoutCoverageData(): void
     {
         $this->doTestCrapIndexCalculation(__METHOD__, 12, 156);
     }
@@ -161,7 +161,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyterReturnsExpectedResultForFunctionWithoutCoverageData()
+    public function testAnalyterReturnsExpectedResultForFunctionWithoutCoverageData(): void
     {
         $this->doTestCrapIndexCalculation(__METHOD__, 12, 156);
     }
@@ -175,7 +175,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    private function doTestCrapIndexCalculation($testCase, $ccn, $crapIndex)
+    private function doTestCrapIndexCalculation($testCase, $ccn, $crapIndex): void
     {
         $metrics = $this->calculateCrapIndex($testCase, $ccn);
         $this->assertEqualsWithDelta($crapIndex, $metrics['crap'], 0.005);
@@ -193,7 +193,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $options  = array('coverage-report' => $this->createCloverReportFile());
+        $options  = ['coverage-report' => $this->createCloverReportFile()];
         $analyzer = new CrapIndexAnalyzer($options);
         $analyzer->addAnalyzer($this->createCyclomaticComplexityAnalyzerMock($ccn));
         $analyzer->analyze($namespaces);

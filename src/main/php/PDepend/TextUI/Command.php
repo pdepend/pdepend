@@ -73,14 +73,14 @@ class Command
      *
      * @var array<string, mixed>
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * The directories/files to be analyzed
      *
      * @var array<int, string>
      */
-    private $source = array();
+    private $source = [];
 
     /**
      * The used text ui runner.
@@ -332,10 +332,8 @@ class Command
 
     /**
      * Assign CLI arguments to current runner instance
-     *
-     * @return void
      */
-    protected function assignArguments()
+    protected function assignArguments(): void
     {
         if ($this->source) {
             $this->runner->setSourceArguments($this->source);
@@ -392,10 +390,8 @@ class Command
 
     /**
      * Outputs the current PDepend version.
-     *
-     * @return void
      */
-    protected function printVersion()
+    protected function printVersion(): void
     {
         $build = __DIR__ . '/../../../../../build.properties';
 
@@ -412,10 +408,8 @@ class Command
 
     /**
      * Outputs the base usage of PDepend.
-     *
-     * @return void
      */
-    protected function printUsage()
+    protected function printUsage(): void
     {
         $this->printVersion();
         echo 'Usage: pdepend [options] [logger] <dir[,dir[,...]]>', PHP_EOL, PHP_EOL;
@@ -423,10 +417,8 @@ class Command
 
     /**
      * Outputs the main help of PDepend.
-     *
-     * @return void
      */
-    protected function printHelp()
+    protected function printHelp(): void
     {
         $this->printUsage();
 
@@ -484,7 +476,7 @@ class Command
     protected function printLogOptions()
     {
         $maxLength = 0;
-        $options   = array();
+        $options   = [];
         $logOptions = $this->application->getAvailableLoggerOptions();
         foreach ($logOptions as $option => $info) {
             // Build log option identifier
@@ -553,10 +545,8 @@ class Command
      * @param string $option  The option identifier.
      * @param string $message The option help message.
      * @param int    $length  The length of the longest option.
-     *
-     * @return void
      */
-    private function printOption($option, $message, $length)
+    private function printOption($option, $message, $length): void
     {
         // Ignore the phpunit xml option
         if (str_starts_with($option, '--phpunit-xml=')) {
@@ -583,10 +573,8 @@ class Command
      * is loaded.
      *
      * @param int $length Padding length for the option.
-     *
-     * @return void
      */
-    private function printDbusOption($length)
+    private function printDbusOption($length): void
     {
         if (extension_loaded("dbus") === false) {
             return;
@@ -612,10 +600,8 @@ class Command
 
     /**
      * @param int $startTime
-     *
-     * @return void
      */
-    private function printStatistics($startTime)
+    private function printStatistics($startTime): void
     {
         $duration = time() - $startTime;
         $hours = intval($duration / 3600);
@@ -636,7 +622,7 @@ class Command
      */
     private function getErrorTrace($exception)
     {
-        return get_class($exception) . '(' . $exception->getMessage() . ')' . PHP_EOL .
+        return $exception::class . '(' . $exception->getMessage() . ')' . PHP_EOL .
             '## ' . $exception->getFile() . '(' . $exception->getLine() . ')' . PHP_EOL .
             $exception->getTraceAsString();
     }

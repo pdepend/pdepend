@@ -60,10 +60,10 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorWithOneFileExtension()
+    public function testIteratorWithOneFileExtension(): void
     {
-        $actual   = $this->createFilteredFileList(array('php4'));
-        $expected = array('file4.php4');
+        $actual   = $this->createFilteredFileList(['php4']);
+        $expected = ['file4.php4'];
 
         $this->assertEquals($expected, $actual);
     }
@@ -73,10 +73,10 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorWithMultipleFileExtensions()
+    public function testIteratorWithMultipleFileExtensions(): void
     {
-        $actual   = $this->createFilteredFileList(array('inc', 'php'));
-        $expected = array('file1.inc', 'file2.php');
+        $actual   = $this->createFilteredFileList(['inc', 'php']);
+        $expected = ['file1.inc', 'file2.php'];
 
         $this->assertEquals($expected, $actual);
     }
@@ -86,23 +86,23 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorReturnsOnlyFiles()
+    public function testIteratorReturnsOnlyFiles(): void
     {
         $directory=$this->createCodeResourceUriForTest();
         $pattern = $directory . DIRECTORY_SEPARATOR . 'Ignored';
 
         $files  = new Iterator(
             new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory)),
-            new ExcludePathFilter(array($pattern))
+            new ExcludePathFilter([$pattern])
         );
 
-        $actual = array();
+        $actual = [];
         foreach ($files as $file) {
             $actual[] = $file->getFilename();
         }
         sort($actual);
 
-        $expected = array('file.php', 'file_process.php');
+        $expected = ['file.php', 'file_process.php'];
         
         $this->assertEquals($expected, $actual);
     }
@@ -112,7 +112,7 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorPassesLocalPathToFilterWhenRootIsPresent()
+    public function testIteratorPassesLocalPathToFilterWhenRootIsPresent(): void
     {
         $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
             ->getMock();
@@ -121,7 +121,7 @@ class IteratorTest extends AbstractTestCase
             ->with($this->equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
         
         $iterator = new Iterator(
-            new \ArrayIterator(array(new \SplFileInfo(__FILE__))),
+            new \ArrayIterator([new \SplFileInfo(__FILE__)]),
             $filter,
             __DIR__
         );
@@ -133,9 +133,9 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent()
+    public function testIteratorPassesAbsolutePathToFilterWhenNoRootIsPresent(): void
     {
-        $files = new \ArrayIterator(array(new \SplFileInfo(__FILE__)));
+        $files = new \ArrayIterator([new \SplFileInfo(__FILE__)]);
 
         $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
             ->getMock();
@@ -152,9 +152,9 @@ class IteratorTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testIteratorPassesAbsolutePathToFilterWhenRootNotMatches()
+    public function testIteratorPassesAbsolutePathToFilterWhenRootNotMatches(): void
     {
-        $files = new \ArrayIterator(array(new \SplFileInfo(__FILE__)));
+        $files = new \ArrayIterator([new \SplFileInfo(__FILE__)]);
 
         $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
             ->getMock();
@@ -180,7 +180,7 @@ class IteratorTest extends AbstractTestCase
             new ExtensionFilter($extensions)
         );
 
-        $actual = array();
+        $actual = [];
         foreach ($files as $file) {
             $actual[] = $file->getFilename();
         }

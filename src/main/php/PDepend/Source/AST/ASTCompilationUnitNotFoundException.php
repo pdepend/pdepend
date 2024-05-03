@@ -65,7 +65,7 @@ class ASTCompilationUnitNotFoundException extends RuntimeException
         parent::__construct(
             sprintf(
                 'The mandatory parent was not defined for the %s named %s.',
-                get_class($owner),
+                $owner::class,
                 $owner->getName(),
             ),
         );

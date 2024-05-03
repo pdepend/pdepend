@@ -57,7 +57,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      *
      * @return void
      */
-    public function testParserHandlesObjectPropertyAsForeachLoopKey()
+    public function testParserHandlesObjectPropertyAsForeachLoopKey(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -67,7 +67,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      *
      * @return void
      */
-    public function testParserHandlesObjectPropertyAsForeachLoopValue()
+    public function testParserHandlesObjectPropertyAsForeachLoopValue(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -77,7 +77,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      *
      * @return void
      */
-    public function testParserHandlesObjectPropertyAsForeachLoopKeyAndValue()
+    public function testParserHandlesObjectPropertyAsForeachLoopKeyAndValue(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -87,7 +87,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      *
      * @return void
      */
-    public function testParserHandlesClassPropertyAsForeachLoopKey()
+    public function testParserHandlesClassPropertyAsForeachLoopKey(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -97,7 +97,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      *
      * @return void
      */
-    public function testParserHandlesClassPropertyAsForeachLoopValue()
+    public function testParserHandlesClassPropertyAsForeachLoopValue(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -107,7 +107,7 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
      *
      * @return void
      */
-    public function testParserHandlesClassPropertyAsForeachLoopKeyAndValue()
+    public function testParserHandlesClassPropertyAsForeachLoopKeyAndValue(): void
     {
         $this->parseCodeResourceForTest();
     }

@@ -59,7 +59,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCompoundVariableGraphWithInlineLiteral()
+    public function testCompoundVariableGraphWithInlineLiteral(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
 
@@ -72,7 +72,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCompoundVariableGraphWithInlineConstantEscapedLiteral()
+    public function testCompoundVariableGraphWithInlineConstantEscapedLiteral(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
 
@@ -85,7 +85,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCompoundVariableGraphWithInlineBacktickLiteral()
+    public function testCompoundVariableGraphWithInlineBacktickLiteral(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
 
@@ -98,16 +98,16 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCompoundVariableGraphWithMemberPrimaryPrefix()
+    public function testCompoundVariableGraphWithMemberPrimaryPrefix(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
-        $expected = array(
+        $expected = [
             'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTMethodPostfix',
             'PDepend\\Source\\AST\\ASTIdentifier',
             'PDepend\\Source\\AST\\ASTArguments'
-        );
+        ];
 
         $this->assertGraphEquals($variable, $expected);
     }
@@ -117,7 +117,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testUnclosedCompoundVariableThrowsExpectedException()
+    public function testUnclosedCompoundVariableThrowsExpectedException(): void
     {
         $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
 
@@ -129,7 +129,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCompoundVariableHasExpectedStartLine()
+    public function testCompoundVariableHasExpectedStartLine(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
         $this->assertSame(4, $variable->getStartLine());
@@ -140,7 +140,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCompoundVariableHasExpectedStartColumn()
+    public function testCompoundVariableHasExpectedStartColumn(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
         $this->assertSame(5, $variable->getStartColumn());
@@ -151,7 +151,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCompoundVariableHasExpectedEndLine()
+    public function testCompoundVariableHasExpectedEndLine(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
         $this->assertSame(7, $variable->getEndLine());
@@ -162,7 +162,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testCompoundVariableHasExpectedEndColumn()
+    public function testCompoundVariableHasExpectedEndColumn(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
         $this->assertSame(11, $variable->getEndColumn());

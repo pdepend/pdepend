@@ -51,33 +51,35 @@ use PDepend\Source\AST\ASTFunction;
  */
 class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
 {
-    public function testFunctionDocBlockCanBeRead()
+    public function testFunctionDocBlockCanBeRead(): void
     {
         /** @var ASTFunction $function */
         $function = $this->getFirstFunctionForTestCase();
 
-        $lines = array_map(function ($line) {
-            return trim($line, " \t\n\r\0\x0B/*");
-        }, explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")));
+        $lines = array_map(
+            static fn (string $line) => trim($line, " \t\n\r\0\x0B/*"),
+            explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")),
+        );
 
-        $this->assertSame(array(
+        $this->assertSame([
             '@SuppressWarnings(PHPMD.CyclomaticComplexity)',
             '@SuppressWarnings(PHPMD.NPathComplexity)',
-        ), $lines);
+        ], $lines);
     }
 
-    public function testMethodDocBlockCanBeRead()
+    public function testMethodDocBlockCanBeRead(): void
     {
         /** @var ASTFunction $function */
         $function = $this->getFirstClassMethodForTestCase();
 
-        $lines = array_map(function ($line) {
-            return trim($line, " \t\n\r\0\x0B/*");
-        }, explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")));
+        $lines = array_map(
+            static fn ($line) => trim($line, " \t\n\r\0\x0B/*"),
+            explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")),
+        );
 
-        $this->assertSame(array(
+        $this->assertSame([
             '@SuppressWarnings(PHPMD.CyclomaticComplexity)',
             '@SuppressWarnings(PHPMD.NPathComplexity)',
-        ), $lines);
+        ], $lines);
     }
 }

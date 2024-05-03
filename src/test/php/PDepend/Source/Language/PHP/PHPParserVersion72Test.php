@@ -76,7 +76,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserAllowsKeywordCallableAsPropertyName()
+    public function testParserAllowsKeywordCallableAsPropertyName(): void
     {
         $method = $this->getFirstClassMethodForTestCase();
         $this->assertNotNull($method);
@@ -102,7 +102,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsUnexpectedTokenExceptionForArrayWithEOF()
+    public function testParserThrowsUnexpectedTokenExceptionForArrayWithEOF(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\TokenStreamEndException'
@@ -133,7 +133,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesBinaryIntegerLiteral()
+    public function testParserHandlesBinaryIntegerLiteral(): void
     {
         $method  = $this->getFirstMethodForTestCase();
         $literal = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTLiteral');
@@ -146,7 +146,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserHandlesStaticMemberExpressionSyntax()
+    public function testParserHandlesStaticMemberExpressionSyntax(): void
     {
         $function = $this->getFirstFunctionForTestCase();
         $expr = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTCompoundExpression');
@@ -159,7 +159,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForTraitAsClassName()
+    public function testParserThrowsExpectedExceptionForTraitAsClassName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -171,7 +171,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForTraitAsFunctionName()
+    public function testParserThrowsExpectedExceptionForTraitAsFunctionName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -183,7 +183,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForTraitAsInterfaceName()
+    public function testParserThrowsExpectedExceptionForTraitAsInterfaceName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -195,7 +195,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForTraitAsNamespaceName()
+    public function testParserThrowsExpectedExceptionForTraitAsNamespaceName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -207,7 +207,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForTraitAsCalledFunction()
+    public function testParserThrowsExpectedExceptionForTraitAsCalledFunction(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -219,7 +219,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForInsteadOfAsClassName()
+    public function testParserThrowsExpectedExceptionForInsteadOfAsClassName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -231,7 +231,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForInsteadOfAsFunctionName()
+    public function testParserThrowsExpectedExceptionForInsteadOfAsFunctionName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -243,7 +243,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName()
+    public function testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -255,7 +255,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForInsteadOfAsNamespaceName()
+    public function testParserThrowsExpectedExceptionForInsteadOfAsNamespaceName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -267,7 +267,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForInsteadOfAsCalledFunction()
+    public function testParserThrowsExpectedExceptionForInsteadOfAsCalledFunction(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -279,7 +279,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForCallableAsClassName()
+    public function testParserThrowsExpectedExceptionForCallableAsClassName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -291,7 +291,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForCallableAsFunctionName()
+    public function testParserThrowsExpectedExceptionForCallableAsFunctionName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -303,7 +303,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForCallableAsInterfaceName()
+    public function testParserThrowsExpectedExceptionForCallableAsInterfaceName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -315,7 +315,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForCallableAsNamespaceName()
+    public function testParserThrowsExpectedExceptionForCallableAsNamespaceName(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -327,7 +327,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsExpectedExceptionForCallableAsCalledFunction()
+    public function testParserThrowsExpectedExceptionForCallableAsCalledFunction(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -337,7 +337,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testMagicTraitConstantInString()
+    public function testMagicTraitConstantInString(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -347,7 +347,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testDoubleColonClass()
+    public function testDoubleColonClass(): void
     {
         $this->assertInstanceOf('PDepend\Source\AST\ASTArtifactList', $this->parseCodeResourceForTest());
     }
@@ -357,7 +357,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testComplexExpressionInParameterInitializer()
+    public function testComplexExpressionInParameterInitializer(): void
     {
         $node = $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
@@ -370,7 +370,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testComplexExpressionInConstantDeclarator()
+    public function testComplexExpressionInConstantDeclarator(): void
     {
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
@@ -383,7 +383,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testComplexExpressionInFieldDeclaration()
+    public function testComplexExpressionInFieldDeclaration(): void
     {
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
@@ -396,7 +396,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testPowExpressionInMethodBody()
+    public function testPowExpressionInMethodBody(): void
     {
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTReturnStatement');
@@ -409,7 +409,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testPowExpressionInFieldDeclaration()
+    public function testPowExpressionInFieldDeclaration(): void
     {
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
@@ -420,7 +420,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testUseStatement()
+    public function testUseStatement(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -428,7 +428,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testEllipsisOperatorInFunctionCall()
+    public function testEllipsisOperatorInFunctionCall(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -438,7 +438,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testStaticArrayProperty()
+    public function testStaticArrayProperty(): void
     {
         /** @var ASTReturnStatement[] $returnStatements */
         $returnStatements = $this
@@ -467,7 +467,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testConstantArrayConcatenation()
+    public function testConstantArrayConcatenation(): void
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
@@ -508,7 +508,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testParserThrowsUnexpectedTokenExceptionForOF()
+    public function testParserThrowsUnexpectedTokenExceptionForOF(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -539,7 +539,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFormalParameterScalarTypeHintInt()
+    public function testFormalParameterScalarTypeHintInt(): void
     {
         $type = $this->getFirstFormalParameterForTestCase()->getType();
 
@@ -552,7 +552,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFormalParameterScalarTypeHintString()
+    public function testFormalParameterScalarTypeHintString(): void
     {
         $type = $this->getFirstFormalParameterForTestCase()->getType();
 
@@ -565,7 +565,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFormalParameterScalarTypeHintFloat()
+    public function testFormalParameterScalarTypeHintFloat(): void
     {
         $type = $this->getFirstFormalParameterForTestCase()->getType();
 
@@ -578,7 +578,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFormalParameterScalarTypeHintBool()
+    public function testFormalParameterScalarTypeHintBool(): void
     {
         $type = $this->getFirstFormalParameterForTestCase()->getType();
 
@@ -591,7 +591,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFormalParameterStillWorksWithTypeHintArray()
+    public function testFormalParameterStillWorksWithTypeHintArray(): void
     {
         $type = $this->getFirstFormalParameterForTestCase()->getChild(0);
 
@@ -603,7 +603,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionReturnTypeHintInt()
+    public function testFunctionReturnTypeHintInt(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -616,7 +616,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionReturnTypeHintFloat()
+    public function testFunctionReturnTypeHintFloat(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -629,7 +629,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionReturnTypeHintString()
+    public function testFunctionReturnTypeHintString(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -642,7 +642,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionReturnTypeHintBool()
+    public function testFunctionReturnTypeHintBool(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -655,7 +655,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionReturnTypeHintArray()
+    public function testFunctionReturnTypeHintArray(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -668,7 +668,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionReturnTypeHintCallable()
+    public function testFunctionReturnTypeHintCallable(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -683,7 +683,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testFunctionReturnTypeHintClass()
+    public function testFunctionReturnTypeHintClass(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -698,7 +698,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testClosureReturnTypeHintInt()
+    public function testClosureReturnTypeHintInt(): void
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
@@ -711,7 +711,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testClosureReturnTypeHintFloat()
+    public function testClosureReturnTypeHintFloat(): void
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
@@ -724,7 +724,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testClosureReturnTypeHintString()
+    public function testClosureReturnTypeHintString(): void
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
@@ -737,7 +737,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testClosureReturnTypeHintBool()
+    public function testClosureReturnTypeHintBool(): void
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
@@ -750,7 +750,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testClosureReturnTypeHintArray()
+    public function testClosureReturnTypeHintArray(): void
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
@@ -763,7 +763,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testClosureReturnTypeHintCallable()
+    public function testClosureReturnTypeHintCallable(): void
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
@@ -778,7 +778,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testClosureReturnTypeHintClass()
+    public function testClosureReturnTypeHintClass(): void
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
@@ -793,7 +793,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testSpaceshipOperatorWithStrings()
+    public function testSpaceshipOperatorWithStrings(): void
     {
         $expr = $this->getFirstClassMethodForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
@@ -807,7 +807,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testSpaceshipOperatorWithNumbers()
+    public function testSpaceshipOperatorWithNumbers(): void
     {
         $expr = $this->getFirstClassMethodForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
@@ -837,7 +837,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      * @return void
      * @depends testSpaceshipOperatorWithArrays
      */
-    public function testSpaceshipOperatorHasExpectedStartLine(ASTExpression $expr)
+    public function testSpaceshipOperatorHasExpectedStartLine(ASTExpression $expr): void
     {
         $this->assertSame(6, $expr->getStartLine());
     }
@@ -847,7 +847,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      * @return void
      * @depends testSpaceshipOperatorWithArrays
      */
-    public function testSpaceshipOperatorHasExpectedEndLine(ASTExpression $expr)
+    public function testSpaceshipOperatorHasExpectedEndLine(ASTExpression $expr): void
     {
         $this->assertSame(6, $expr->getEndLine());
     }
@@ -857,7 +857,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      * @return void
      * @depends testSpaceshipOperatorWithArrays
      */
-    public function testSpaceshipOperatorHasExpectedStartColumn(ASTExpression $expr)
+    public function testSpaceshipOperatorHasExpectedStartColumn(ASTExpression $expr): void
     {
         $this->assertSame(27, $expr->getStartColumn());
     }
@@ -867,7 +867,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      * @return void
      * @depends testSpaceshipOperatorWithArrays
      */
-    public function testSpaceshipOperatorHasExpectedEndColumn(ASTExpression $expr)
+    public function testSpaceshipOperatorHasExpectedEndColumn(ASTExpression $expr): void
     {
         $this->assertSame(29, $expr->getEndColumn());
     }
@@ -877,7 +877,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testNullCoalesceOperator()
+    public function testNullCoalesceOperator(): void
     {
         $expr = $this->getFirstClassMethodForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
@@ -889,7 +889,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testListKeywordAsMethodName()
+    public function testListKeywordAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $this->assertNotNull($method);
@@ -898,7 +898,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testListKeywordAsFunctionNameThrowsException()
+    public function testListKeywordAsFunctionNameThrowsException(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -921,7 +921,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      * @return void
      * @depends testGroupUseStatement
      */
-    public function testGroupUseStatementClassNameResolution(ASTNamespace $namespace)
+    public function testGroupUseStatementClassNameResolution(ASTNamespace $namespace): void
     {
         $classes = $namespace->getClasses();
         $class = $classes[0];
@@ -937,7 +937,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      * @return void
      * @depends testGroupUseStatement
      */
-    public function testGroupUseStatementAliasResolution(ASTNamespace $namespace)
+    public function testGroupUseStatementAliasResolution(ASTNamespace $namespace): void
     {
         $classes = $namespace->getClasses();
         $class = $classes[1];
@@ -951,7 +951,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testUniformVariableSyntax()
+    public function testUniformVariableSyntax(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -959,7 +959,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testConstantNameArray()
+    public function testConstantNameArray(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -967,7 +967,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testClassConstantNames()
+    public function testClassConstantNames(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -975,7 +975,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testClassConstantNamesAccessed()
+    public function testClassConstantNamesAccessed(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -983,7 +983,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testClassMethodNames()
+    public function testClassMethodNames(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -991,7 +991,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testClassMethodNamesInvoked()
+    public function testClassMethodNamesInvoked(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -999,7 +999,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testYieldFrom()
+    public function testYieldFrom(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -1007,17 +1007,17 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testParseList()
+    public function testParseList(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    public function testParenthesisAroundCallableParsesArguments()
+    public function testParenthesisAroundCallableParsesArguments(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    public function testKeywordsAsMethodNames()
+    public function testKeywordsAsMethodNames(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -1029,7 +1029,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         $this->assertSame('insteadof', $methods[2]->getName());
     }
 
-    public function testKeywordsAsConstants()
+    public function testKeywordsAsConstants(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -1042,7 +1042,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         $this->assertSame('insteadof', $constants[2]->getImage());
     }
 
-    public function testCallableKeywordAsClassName()
+    public function testCallableKeywordAsClassName(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -1054,7 +1054,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    public function testTraitKeywordAsClassName()
+    public function testTraitKeywordAsClassName(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -1066,7 +1066,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    public function testInsteadofKeywordAsClassName()
+    public function testInsteadofKeywordAsClassName(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -1078,7 +1078,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    public function testCallableKeywordAsInterfaceName()
+    public function testCallableKeywordAsInterfaceName(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -1090,7 +1090,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    public function testTraitKeywordAsInterfaceName()
+    public function testTraitKeywordAsInterfaceName(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -1102,7 +1102,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    public function testInsteadofKeywordAsInterfaceName()
+    public function testInsteadofKeywordAsInterfaceName(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -1120,7 +1120,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testReservedKeyword()
+    public function testReservedKeyword(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -1128,7 +1128,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testConstVisibility()
+    public function testConstVisibility(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -1136,7 +1136,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testConstVisibilityInInterfacePublic()
+    public function testConstVisibilityInInterfacePublic(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -1144,7 +1144,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testConstVisibilityInInterfaceProtected()
+    public function testConstVisibilityInInterfaceProtected(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\InvalidStateException'
@@ -1159,7 +1159,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testConstVisibilityInInterfacePrivate()
+    public function testConstVisibilityInInterfacePrivate(): void
     {
         $this->expectException(
             '\\PDepend\\Source\\Parser\\InvalidStateException'
@@ -1174,7 +1174,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testCatchMultipleExceptionClasses()
+    public function testCatchMultipleExceptionClasses(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -1182,7 +1182,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testNullableTypeHintParameter()
+    public function testNullableTypeHintParameter(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -1190,7 +1190,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testNullableTypeHintReturn()
+    public function testNullableTypeHintReturn(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -1198,7 +1198,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testParseListWithVariableKey()
+    public function testParseListWithVariableKey(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
@@ -1206,7 +1206,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testIterableTypeHintParameter()
+    public function testIterableTypeHintParameter(): void
     {
         $type = $this->getFirstFormalParameterForTestCase()->getType();
 
@@ -1218,7 +1218,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testIterableTypeHintReturn()
+    public function testIterableTypeHintReturn(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -1230,7 +1230,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testVoidTypeHintReturn()
+    public function testVoidTypeHintReturn(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -1242,7 +1242,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testVoidTypeHintReturnNamespaced()
+    public function testVoidTypeHintReturnNamespaced(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
         $this->assertTrue($type->isScalar());
@@ -1255,7 +1255,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testSymmetricArrayDestructuringEmptySlot()
+    public function testSymmetricArrayDestructuringEmptySlot(): void
     {
         /** @var ASTArray $expr */
         $array = $this->getFirstNodeOfTypeInFunction(
@@ -1269,7 +1269,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testClassStartLine()
+    public function testClassStartLine(): void
     {
         $this->assertSame(6, $this->getFirstClassForTestCase()->getStartLine());
     }
@@ -1277,7 +1277,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testObjectTypeHintReturn()
+    public function testObjectTypeHintReturn(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
@@ -1289,7 +1289,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testObjectTypeHintParameter()
+    public function testObjectTypeHintParameter(): void
     {
         $type = $this->getFirstFormalParameterForTestCase()->getType();
 
@@ -1298,7 +1298,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         $this->assertSame('object', $type->getImage());
     }
 
-    public function testAbstractMethodOverriding()
+    public function testAbstractMethodOverriding(): void
     {
         /** @var ASTArtifactList $classes */
         $classes = $this->parseCodeResourceForTest()->current()->getClasses();
@@ -1338,13 +1338,13 @@ class PHPParserVersion72Test extends AbstractTestCase
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion72',
-            array($tokenizer, $builder, $cache)
+            [$tokenizer, $builder, $cache]
         );
     }
 
     /**
      */
-    public function testTrailingCommasInUnsetCall()
+    public function testTrailingCommasInUnsetCall(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
         $this->expectExceptionMessage('Unexpected token: ), line: 4, col: 14');

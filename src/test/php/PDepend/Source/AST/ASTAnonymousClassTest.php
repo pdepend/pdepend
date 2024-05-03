@@ -60,7 +60,7 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
     /**
      * @return void
      */
-    public function testAnonymousClassHasExpectedStartLine()
+    public function testAnonymousClassHasExpectedStartLine(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
@@ -69,7 +69,7 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
     /**
      * @return void
      */
-    public function testAnonymousClassHasExpectedStartColumn()
+    public function testAnonymousClassHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
         $this->assertEquals(16, $expr->getStartColumn());
@@ -78,7 +78,7 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
     /**
      * @return void
      */
-    public function testAnonymousClassHasExpectedEndLine()
+    public function testAnonymousClassHasExpectedEndLine(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
         $this->assertEquals(9, $expr->getEndLine());
@@ -87,7 +87,7 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
     /**
      * @return void
      */
-    public function testAnonymousClassHasExpectedEndColumn()
+    public function testAnonymousClassHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
         $this->assertEquals(5, $expr->getEndColumn());
@@ -98,13 +98,13 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
      *
      * @return void
      */
-    public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames()
+    public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames(): void
     {
         $class = new ASTAnonymousClass(__CLASS__);
         $class->setCache(new MemoryCacheDriver());
 
         $this->assertEquals(
-            array(
+            [
                 'metadata',
                 'constants',
                 'interfaceReferences',
@@ -120,7 +120,7 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
                 'startLine',
                 'userDefined',
                 'id'
-            ),
+            ],
             $class->__sleep()
         );
     }

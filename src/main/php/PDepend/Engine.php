@@ -107,14 +107,14 @@ class Engine
      *
      * @var array<string>
      */
-    private $directories = array();
+    private $directories = [];
 
     /**
      * List of source code file names.
      *
      * @var array<string>
      */
-    private $files = array();
+    private $files = [];
 
     /**
      * The used code node builder.
@@ -135,7 +135,7 @@ class Engine
      *
      * @var ReportGenerator[]
      */
-    private $generators = array();
+    private $generators = [];
 
     /**
      * A composite filter for input files.
@@ -163,14 +163,14 @@ class Engine
      *
      * @var ProcessListener[]
      */
-    private $listeners = array();
+    private $listeners = [];
 
     /**
      * List of analyzer options.
      *
      * @var array<string, mixed>
      */
-    private $options = array();
+    private $options = [];
 
     /**
      * List of all {@link ParserException} that were caught during
@@ -178,7 +178,7 @@ class Engine
      *
      * @var ParserException[]
      */
-    private $parseExceptions = array();
+    private $parseExceptions = [];
 
     /**
      * The configured cache factory.
@@ -217,10 +217,8 @@ class Engine
      * Adds the specified directory to the list of directories to be analyzed.
      *
      * @param string $directory The php source directory.
-     *
-     * @return void
      */
-    public function addDirectory($directory)
+    public function addDirectory($directory): void
     {
         $dir = realpath($directory);
 
@@ -235,10 +233,8 @@ class Engine
      * Adds a single source code file to the list of files to be analysed.
      *
      * @param string $file The source file name.
-     *
-     * @return void
      */
-    public function addFile($file)
+    public function addFile($file): void
     {
         if ($file === '-') {
             $file = $this->phpStreamPrefix . 'stdin';
@@ -262,10 +258,8 @@ class Engine
      * Adds a logger to the output list.
      *
      * @param ReportGenerator $generator The logger instance.
-     *
-     * @return void
      */
-    public function addReportGenerator(ReportGenerator $generator)
+    public function addReportGenerator(ReportGenerator $generator): void
     {
         $this->generators[] = $generator;
     }
@@ -274,10 +268,8 @@ class Engine
      * Adds a new input/file filter.
      *
      * @param Filter $filter New input/file filter instance.
-     *
-     * @return void
      */
-    public function addFileFilter(Filter $filter)
+    public function addFileFilter(Filter $filter): void
     {
         $this->fileFilter->append($filter);
     }
@@ -285,10 +277,8 @@ class Engine
     /**
      * Sets an additional code filter. These filters could be used to hide
      * external libraries and global stuff from the PDepend output.
-     *
-     * @return void
      */
-    public function setCodeFilter(ArtifactFilter $filter)
+    public function setCodeFilter(ArtifactFilter $filter): void
     {
         $this->codeFilter = $filter;
     }
@@ -297,20 +287,16 @@ class Engine
      * Sets analyzer options.
      *
      * @param array<string, mixed> $options The analyzer options.
-     *
-     * @return void
      */
-    public function setOptions(array $options = array())
+    public function setOptions(array $options = []): void
     {
         $this->options = $options;
     }
 
     /**
      * Should the parse ignore doc comment annotations?
-     *
-     * @return void
      */
-    public function setWithoutAnnotations()
+    public function setWithoutAnnotations(): void
     {
         $this->withoutAnnotations = true;
     }
@@ -319,10 +305,8 @@ class Engine
      * Adds a process listener.
      *
      * @param ProcessListener $listener The listener instance.
-     *
-     * @return void
      */
-    public function addProcessListener(ProcessListener $listener)
+    public function addProcessListener(ProcessListener $listener): void
     {
         if (in_array($listener, $this->listeners, true) === false) {
             $this->listeners[] = $listener;
@@ -464,10 +448,8 @@ class Engine
      * Send the start parsing process event.
      *
      * @param Builder<ASTNamespace> $builder The used node builder instance.
-     *
-     * @return void
      */
-    protected function fireStartParseProcess(Builder $builder)
+    protected function fireStartParseProcess(Builder $builder): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startParseProcess($builder);
@@ -478,10 +460,8 @@ class Engine
      * Send the end parsing process event.
      *
      * @param Builder<ASTNamespace> $builder The used node builder instance.
-     *
-     * @return void
      */
-    protected function fireEndParseProcess(Builder $builder)
+    protected function fireEndParseProcess(Builder $builder): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endParseProcess($builder);
@@ -490,10 +470,8 @@ class Engine
 
     /**
      * Sends the start file parsing event.
-     *
-     * @return void
      */
-    protected function fireStartFileParsing(Tokenizer $tokenizer)
+    protected function fireStartFileParsing(Tokenizer $tokenizer): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startFileParsing($tokenizer);
@@ -502,10 +480,8 @@ class Engine
 
     /**
      * Sends the end file parsing event.
-     *
-     * @return void
      */
-    protected function fireEndFileParsing(Tokenizer $tokenizer)
+    protected function fireEndFileParsing(Tokenizer $tokenizer): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endFileParsing($tokenizer);
@@ -514,10 +490,8 @@ class Engine
 
     /**
      * Sends the start analyzing process event.
-     *
-     * @return void
      */
-    protected function fireStartAnalyzeProcess()
+    protected function fireStartAnalyzeProcess(): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startAnalyzeProcess();
@@ -526,10 +500,8 @@ class Engine
 
     /**
      * Sends the end analyzing process event.
-     *
-     * @return void
      */
-    protected function fireEndAnalyzeProcess()
+    protected function fireEndAnalyzeProcess(): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endAnalyzeProcess();
@@ -538,10 +510,8 @@ class Engine
 
     /**
      * Sends the start log process event.
-     *
-     * @return void
      */
-    protected function fireStartLogProcess()
+    protected function fireStartLogProcess(): void
     {
         foreach ($this->listeners as $listener) {
             $listener->startLogProcess();
@@ -550,10 +520,8 @@ class Engine
 
     /**
      * Sends the end log process event.
-     *
-     * @return void
      */
-    protected function fireEndLogProcess()
+    protected function fireEndLogProcess(): void
     {
         foreach ($this->listeners as $listener) {
             $listener->endLogProcess();
@@ -564,13 +532,11 @@ class Engine
      * This method performs the parsing process of all source files. It expects
      * that the <b>$_builder</b> property was initialized with a concrete builder
      * implementation.
-     *
-     * @return void
      */
-    private function performParseProcess()
+    private function performParseProcess(): void
     {
         // Reset list of thrown exceptions
-        $this->parseExceptions = array();
+        $this->parseExceptions = [];
 
         $tokenizer = new PHPTokenizerInternal();
 
@@ -609,10 +575,8 @@ class Engine
      * This method performs the analysing process of the parsed source files. It
      * creates the required analyzers for the registered listeners and then
      * applies them to the source tree.
-     *
-     * @return void
      */
-    private function performAnalyzeProcess()
+    private function performAnalyzeProcess(): void
     {
         $analyzerLoader = $this->createAnalyzers($this->options);
 
@@ -660,7 +624,7 @@ class Engine
         foreach ($this->files as $file) {
             $fileIterator->append(
                 $this->isPhpStream($file)
-                    ? new ArrayIterator(array(new SplFileObject($file)))
+                    ? new ArrayIterator([new SplFileObject($file)])
                     : new Iterator(new GlobIterator($file), $this->fileFilter),
             );
         }
@@ -683,7 +647,7 @@ class Engine
         // TODO: It's important to validate this behavior, imho there is something
         //       wrong in the iterator code used above.
         // Strange: why is the iterator not unique and why does this loop fix it?
-        $files = array();
+        $files = [];
         foreach ($fileIterator as $file) {
             if (is_string($file)) {
                 $files[$file] = $file;

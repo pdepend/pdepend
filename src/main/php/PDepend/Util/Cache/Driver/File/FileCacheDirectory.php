@@ -110,7 +110,7 @@ class FileCacheDirectory
     {
         $path = $this->getCacheDir() . '/' . substr($key, 0, 2);
         if (false === file_exists($path)) {
-            @mkdir($path, 0775, true);
+            @mkdir($path, 0o775, true);
         }
         return $path;
     }
@@ -125,7 +125,7 @@ class FileCacheDirectory
     protected function ensureExists($cacheDir)
     {
         if (false === file_exists($cacheDir)) {
-            @mkdir($cacheDir, 0775, true);
+            @mkdir($cacheDir, 0o775, true);
         }
         return $cacheDir;
     }
@@ -157,10 +157,8 @@ class FileCacheDirectory
     /**
      * Writes the current software cache version into a file in the cache root
      * directory.
-     *
-     * @return void
      */
-    protected function writeVersion()
+    protected function writeVersion(): void
     {
         file_put_contents($this->getVersionFile(), self::VERSION, LOCK_EX);
     }
@@ -188,10 +186,8 @@ class FileCacheDirectory
     /**
      * Flushes all contents below the configured cache root directory and writes
      * a version file with the current software version.
-     *
-     * @return void
      */
-    protected function flush()
+    protected function flush(): void
     {
         $this->flushDirectory($this->getCacheDir());
         $this->writeVersion();
@@ -201,10 +197,8 @@ class FileCacheDirectory
      * Deletes all files and directories below the given <b>$cacheDir</b>.
      *
      * @param string $cacheDir A cache directory.
-     *
-     * @return void
      */
-    protected function flushDirectory($cacheDir)
+    protected function flushDirectory($cacheDir): void
     {
         foreach (new DirectoryIterator($cacheDir) as $child) {
             $this->flushEntry($child);
@@ -216,10 +210,8 @@ class FileCacheDirectory
      * it is a file, directory or symlink.
      *
      * @param DirectoryIterator $file
-     *
-     * @return void
      */
-    protected function flushEntry(SplFileInfo $file)
+    protected function flushEntry(SplFileInfo $file): void
     {
         $path = $file->getRealPath();
         if ($file->isDot()) {

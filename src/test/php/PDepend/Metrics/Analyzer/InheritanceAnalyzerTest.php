@@ -64,10 +64,10 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesCorrectANDCValue()
+    public function testAnalyzerCalculatesCorrectANDCValue(): void
     {
         $filter = CollectionArtifactFilter::getInstance();
-        $filter->setFilter(new PackageArtifactFilter(array('library')));
+        $filter->setFilter(new PackageArtifactFilter(['library']));
 
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -83,10 +83,10 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerCalculatesCorrectAHHValue()
+    public function testAnalyzerCalculatesCorrectAHHValue(): void
     {
         $filter = CollectionArtifactFilter::getInstance();
-        $filter->setFilter(new PackageArtifactFilter(array('library')));
+        $filter->setFilter(new PackageArtifactFilter(['library']));
 
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
@@ -102,7 +102,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNoccMetricForClassWithoutChildren()
+    public function testCalculatesExpectedNoccMetricForClassWithoutChildren(): void
     {
         $this->assertEquals(0, $this->getCalculatedMetric(__METHOD__, 'nocc'));
     }
@@ -112,7 +112,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNoccMetricForClassWithDirectChildren()
+    public function testCalculatesExpectedNoccMetricForClassWithDirectChildren(): void
     {
         $this->assertEquals(3, $this->getCalculatedMetric(__METHOD__, 'nocc'));
     }
@@ -122,7 +122,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNoccMetricForClassWithDirectAndIndirectChildren()
+    public function testCalculatesExpectedNoccMetricForClassWithDirectAndIndirectChildren(): void
     {
         $this->assertEquals(1, $this->getCalculatedMetric(__METHOD__, 'nocc'));
     }
@@ -132,7 +132,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateDITMetricNoInheritance()
+    public function testCalculateDITMetricNoInheritance(): void
     {
         $this->assertEquals(0, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
@@ -142,7 +142,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateDITMetricOneLevelInheritance()
+    public function testCalculateDITMetricOneLevelInheritance(): void
     {
         $this->assertEquals(1, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
@@ -152,7 +152,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateDITMetricTwoLevelNoInheritance()
+    public function testCalculateDITMetricTwoLevelNoInheritance(): void
     {
         $this->assertEquals(2, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
@@ -162,7 +162,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateDITMetricThreeLevelNoInheritance()
+    public function testCalculateDITMetricThreeLevelNoInheritance(): void
     {
         $this->assertEquals(3, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
@@ -172,7 +172,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateDITMetricFourLevelNoInheritance()
+    public function testCalculateDITMetricFourLevelNoInheritance(): void
     {
         $this->assertEquals(4, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
@@ -182,7 +182,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateDITMetricForUnknownParentIncrementsMetricWithTwo()
+    public function testCalculateDITMetricForUnknownParentIncrementsMetricWithTwo(): void
     {
         $this->assertEquals(3, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
@@ -192,7 +192,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateDITMetricForInternalParentIncrementsMetricWithTwo()
+    public function testCalculateDITMetricForInternalParentIncrementsMetricWithTwo(): void
     {
         $this->assertEquals(3, $this->getCalculatedMetric(__METHOD__, 'dit'));
     }
@@ -203,14 +203,14 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculateDepthOfInheritanceForSeveralClasses()
+    public function testCalculateDepthOfInheritanceForSeveralClasses(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
 
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $actual = array();
+        $actual = [];
         foreach ($namespaces[0]->getClasses() as $class) {
             $metrics = $analyzer->getNodeMetrics($class);
 
@@ -218,13 +218,13 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
         }
         ksort($actual);
 
-        $expected = array(
+        $expected = [
             'A' => 0,
             'B' => 1,
             'C' => 1,
             'D' => 2,
             'E' => 3,
-        );
+        ];
 
         $this->assertEquals($expected, $actual);
     }
@@ -234,7 +234,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedMaxDepthOfInheritanceTreeMetric()
+    public function testCalculatesExpectedMaxDepthOfInheritanceTreeMetric(): void
     {
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
@@ -248,7 +248,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNoamMetricForClassWithoutParent()
+    public function testCalculatesExpectedNoamMetricForClassWithoutParent(): void
     {
         $this->assertEquals(0, $this->getCalculatedMetric(__METHOD__, 'noam'));
     }
@@ -258,7 +258,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNoamMetricForClassWithDirectParent()
+    public function testCalculatesExpectedNoamMetricForClassWithDirectParent(): void
     {
         $this->assertEquals(2, $this->getCalculatedMetric(__METHOD__, 'noam'));
     }
@@ -268,7 +268,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNoamMetricForClassWithIndirectParent()
+    public function testCalculatesExpectedNoamMetricForClassWithIndirectParent(): void
     {
         $this->assertEquals(2, $this->getCalculatedMetric(__METHOD__, 'noam'));
     }
@@ -278,7 +278,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNoomMetricForClassWithoutParent()
+    public function testCalculatesExpectedNoomMetricForClassWithoutParent(): void
     {
         $this->assertEquals(0, $this->getCalculatedMetric(__METHOD__, 'noom'));
     }
@@ -288,7 +288,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNoomMetricForClassWithParent()
+    public function testCalculatesExpectedNoomMetricForClassWithParent(): void
     {
         $this->assertEquals(2, $this->getCalculatedMetric(__METHOD__, 'noom'));
     }
@@ -298,7 +298,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testCalculatesExpectedNoomMetricForClassWithParentPrivateMethods()
+    public function testCalculatesExpectedNoomMetricForClassWithParentPrivateMethods(): void
     {
         $this->assertEquals(1, $this->getCalculatedMetric(__METHOD__, 'noom'));
     }
@@ -308,7 +308,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return void
      */
-    public function testAnalyzerIgnoresClassesThatAreNotUserDefined()
+    public function testAnalyzerIgnoresClassesThatAreNotUserDefined(): void
     {
         $class = new ASTClass(null);
 
@@ -316,7 +316,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->visitClass($class);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(array(), $metrics);
+        $this->assertEquals([], $metrics);
     }
 
     /**

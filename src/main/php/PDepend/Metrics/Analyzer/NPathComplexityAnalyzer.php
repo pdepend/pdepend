@@ -82,16 +82,14 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->metrics === null) {
             $this->loadCache();
             $this->fireStartAnalyzer();
 
-            $this->metrics = array();
+            $this->metrics = [];
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
             }
@@ -116,29 +114,25 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        $metric = array();
+        $metric = [];
         if (isset($this->metrics[$artifact->getId()])) {
-            $metric = array(self::M_NPATH_COMPLEXITY  =>  $this->metrics[$artifact->getId()]);
+            $metric = [self::M_NPATH_COMPLEXITY  =>  $this->metrics[$artifact->getId()]];
         }
         return $metric;
     }
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         // Empty visit method, we don't want interface metrics
     }
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
 
@@ -151,10 +145,8 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -169,11 +161,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * This method will calculate the NPath complexity for the given callable
      * instance.
      *
-     * @return void
-     *
      * @since  0.9.12
      */
-    protected function calculateComplexity(AbstractASTCallable $callable)
+    protected function calculateComplexity(AbstractASTCallable $callable): void
     {
         $npath = '1';
         foreach ($callable->getChildren() as $child) {

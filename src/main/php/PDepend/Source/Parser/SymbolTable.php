@@ -55,21 +55,19 @@ class SymbolTable
      *
      * @var array<array<string, string>>
      */
-    private $scopeStack = array();
+    private $scopeStack = [];
 
     /**
      * The currently active scope.
      *
      * @var array<string, string>|null
      */
-    private $scope = array();
+    private $scope = [];
 
     /**
      * This method creates a new scope.
-     *
-     * @return void
      */
-    public function createScope()
+    public function createScope(): void
     {
         // Add copy of last scope as new scope
         array_push($this->scopeStack, $this->scope);
@@ -79,10 +77,8 @@ class SymbolTable
      * This method destroys the top most scope.
      *
      * @throws NoActiveScopeException
-     *
-     * @return void
      */
-    public function destroyScope()
+    public function destroyScope(): void
     {
         $this->ensureActiveScopeExists();
 
@@ -102,10 +98,8 @@ class SymbolTable
      * @param mixed  $value A new scope value.
      *
      * @throws NoActiveScopeException
-     *
-     * @return void
      */
-    public function add($key, $value)
+    public function add($key, $value): void
     {
         $this->ensureActiveScopeExists();
         $this->scope[$this->normalizeKey($key)] = $value;
@@ -115,13 +109,11 @@ class SymbolTable
      * Resets the current scope
      *
      * @throws NoActiveScopeException
-     *
-     * @return void
      */
-    public function resetScope()
+    public function resetScope(): void
     {
         $this->ensureActiveScopeExists();
-        $this->scope = array();
+        $this->scope = [];
     }
 
     /**
@@ -148,10 +140,8 @@ class SymbolTable
      * Checks if there is an active scope.
      *
      * @throws NoActiveScopeException if no active scope exists.
-     *
-     * @return void
      */
-    private function ensureActiveScopeExists()
+    private function ensureActiveScopeExists(): void
     {
         if (null === $this->scope) {
             throw new NoActiveScopeException();

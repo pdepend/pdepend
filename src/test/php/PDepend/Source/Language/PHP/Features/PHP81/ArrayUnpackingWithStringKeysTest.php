@@ -53,7 +53,7 @@ class ArrayUnpackingWithStringKeysTest extends PHPParserVersion81TestCase
      * @return void
      * @group y
      */
-    public function testArrayUnpackingWithStringKeys()
+    public function testArrayUnpackingWithStringKeys(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();

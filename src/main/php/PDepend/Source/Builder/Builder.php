@@ -185,11 +185,9 @@ interface Builder extends IteratorAggregate
     /**
      * Restores a function within the internal type scope.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function restoreFunction(ASTFunction $function);
+    public function restoreFunction(ASTFunction $function): void;
 
     /**
      * This method will try to find an already existing instance for the given
@@ -229,11 +227,9 @@ interface Builder extends IteratorAggregate
     /**
      * Restores an existing trait instance within the context of this builder.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function restoreTrait(ASTTrait $trait);
+    public function restoreTrait(ASTTrait $trait): void;
 
     /**
      * This method will try to find an already existing instance for the given
@@ -280,20 +276,16 @@ interface Builder extends IteratorAggregate
     /**
      * Restores an existing class instance within the context of this builder.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function restoreClass(ASTClass $class);
+    public function restoreClass(ASTClass $class): void;
 
     /**
      * Restores an enum within the internal type scope.
      *
-     * @return void
-     *
      * @since  2.11.0
      */
-    public function restoreEnum(ASTEnum $enum);
+    public function restoreEnum(ASTEnum $enum): void;
 
     /**
      * Builds a new code type reference instance.
@@ -318,11 +310,9 @@ interface Builder extends IteratorAggregate
     /**
      * Restores an existing interface instance within the context of this builder.
      *
-     * @return void
-     *
      * @since  0.10.0
      */
-    public function restoreInterface(ASTInterface $interface);
+    public function restoreInterface(ASTInterface $interface): void;
 
     /**
      * This method will try to find an already existing instance for the given

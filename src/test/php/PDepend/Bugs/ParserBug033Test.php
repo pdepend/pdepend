@@ -61,7 +61,7 @@ class ParserBug033Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserDetectsOnlyTypeHintsWithinTheFunctionSignature()
+    public function testParserDetectsOnlyTypeHintsWithinTheFunctionSignature(): void
     {
         $function = $this->parseCodeResourceForTest()
             ->current()
@@ -79,7 +79,7 @@ class ParserBug033Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserDetectsOnlyTypeHintsWithinTheMethodSignature()
+    public function testParserDetectsOnlyTypeHintsWithinTheMethodSignature(): void
     {
         $method = $this->parseCodeResourceForTest()
             ->current()

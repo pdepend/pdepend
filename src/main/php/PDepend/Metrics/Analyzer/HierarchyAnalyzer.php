@@ -120,14 +120,14 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      *
      * @var array<string, bool>
      */
-    private $roots = array();
+    private $roots = [];
 
     /**
      * Number of all none leaf classes within the analyzed source code
      *
      * @var array<string, bool>
      */
-    private $noneLeafs = array();
+    private $noneLeafs = [];
 
     /**
      * Hash with all calculated node metrics.
@@ -153,16 +153,14 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->nodeMetrics === null) {
             $this->fireStartAnalyzer();
 
             // Init node metrics
-            $this->nodeMetrics = array();
+            $this->nodeMetrics = [];
 
             // Visit all nodes
             foreach ($namespaces as $namespace) {
@@ -183,12 +181,12 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Count none leaf classes
         $noneLeafs = count($this->noneLeafs);
 
-        return array(
+        return [
             self::M_NUMBER_OF_ABSTRACT_CLASSES  =>  $this->clsa,
             self::M_NUMBER_OF_CONCRETE_CLASSES  =>  $this->cls - $this->clsa,
             self::M_NUMBER_OF_ROOT_CLASSES      =>  count($this->roots),
             self::M_NUMBER_OF_LEAF_CLASSES      =>  $this->cls - $noneLeafs,
-        );
+        ];
     }
 
     /**
@@ -203,15 +201,13 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
      * Calculates metrics for the given <b>$class</b> instance.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         if (false === $class->isUserDefined()) {
             return;
@@ -234,7 +230,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         }
 
         // Store node metric
-        $this->nodeMetrics[$class->getId()] = array();
+        $this->nodeMetrics[$class->getId()] = [];
 
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
@@ -248,10 +244,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Calculates metrics for the given <b>$function</b> instance.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
         ++$this->fcs;
@@ -260,10 +254,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Calculates metrics for the given <b>$interface</b> instance.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         $this->fireStartInterface($interface);
 
@@ -278,10 +270,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
         ++$this->mts;
@@ -290,10 +280,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
     /**
      * Calculates metrics for the given <b>$namespace</b> instance.
-     *
-     * @return void
      */
-    public function visitNamespace(ASTNamespace $namespace)
+    public function visitNamespace(ASTNamespace $namespace): void
     {
         $this->fireStartNamespace($namespace);
 

@@ -58,7 +58,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesLambdaFunctionOnFileLevelBug70()
+    public function testParserHandlesLambdaFunctionOnFileLevelBug70(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -68,7 +68,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesLambdaFunctionWithParametersBug70()
+    public function testParserHandlesLambdaFunctionWithParametersBug70(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -78,7 +78,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesClosureFunctionWithBoundVariableBug70()
+    public function testParserHandlesClosureFunctionWithBoundVariableBug70(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -88,7 +88,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesClosureFunctionWithBoundVariableByRefBug70()
+    public function testParserHandlesClosureFunctionWithBoundVariableByRefBug70(): void
     {
         $this->parseCodeResourceForTest();
     }
@@ -98,7 +98,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserThrowsExceptionForInvalidBoundClosureVariableBug70()
+    public function testParserThrowsExceptionForInvalidBoundClosureVariableBug70(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
 
@@ -110,7 +110,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesFunctionDeclarationWithinFunctionDeclarationBug70()
+    public function testParserHandlesFunctionDeclarationWithinFunctionDeclarationBug70(): void
     {
         $functions = $this->parseCodeResourceForTest()
             ->current()
@@ -126,7 +126,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesClosureWithinFunctionDeclarationBug70()
+    public function testParserHandlesClosureWithinFunctionDeclarationBug70(): void
     {
         $function = $this->parseCodeResourceForTest()
             ->current()

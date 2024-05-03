@@ -66,12 +66,12 @@ class RunnerTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory()
+    public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory(): void
     {
         $this->expectException(\RuntimeException::class);
 
         $runner = $this->createTextUiRunner();
-        $runner->setSourceArguments(array('foo/bar'));
+        $runner->setSourceArguments(['foo/bar']);
         $runner->run();
     }
 
@@ -80,12 +80,12 @@ class RunnerTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified()
+    public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified(): void
     {
         $this->expectException(\RuntimeException::class);
 
         $runner = $this->createTextUiRunner();
-        $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
+        $runner->setSourceArguments([$this->createCodeResourceUriForTest()]);
         $runner->run();
     }
 
@@ -94,26 +94,26 @@ class RunnerTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRunnerUsesCorrectFileFilter()
+    public function testRunnerUsesCorrectFileFilter(): void
     {
-        $expected = array(
-            'pdepend.test'  =>  array(
-                'functions'   =>  array('foo'),
-                'classes'     =>  array('MyException'),
-                'interfaces'  =>  array(),
-                'exceptions'  =>  array()
-            ),
-            'pdepend.test2'  =>  array(
-                'functions'   =>  array(),
-                'classes'     =>  array('YourException'),
-                'interfaces'  =>  array(),
-                'exceptions'  =>  array()
-            )
-        );
+        $expected = [
+            'pdepend.test'  =>  [
+                'functions'   =>  ['foo'],
+                'classes'     =>  ['MyException'],
+                'interfaces'  =>  [],
+                'exceptions'  =>  []
+            ],
+            'pdepend.test2'  =>  [
+                'functions'   =>  [],
+                'classes'     =>  ['YourException'],
+                'interfaces'  =>  [],
+                'exceptions'  =>  []
+            ]
+        ];
 
         $runner = $this->createTextUiRunner();
         $runner->setWithoutAnnotations();
-        $runner->setFileExtensions(array('inc'));
+        $runner->setFileExtensions(['inc']);
 
         $actual = $this->runRunnerAndReturnStatistics(
             $runner,
@@ -126,16 +126,16 @@ class RunnerTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function testSetExcludeDirectories()
+    public function testSetExcludeDirectories(): void
     {
         /** @var Filter[] $record */
-        $record = array();
+        $record = [];
         $engine = $this->getMockBuilder('PDepend\\Engine')
             ->disableOriginalConstructor()
             ->getMock();
         $engine->expects($this->exactly(2))
             ->method('addFileFilter')
-            ->willReturnCallback(function (Filter $excludePathFilter) use (&$record) {
+            ->willReturnCallback(function (Filter $excludePathFilter) use (&$record): void {
                 $record[] = $excludePathFilter;
             });
         $engine->expects($this->exactly(0))
@@ -143,7 +143,7 @@ class RunnerTest extends AbstractTestCase
         $container = new Container();
 
         $runner = new Runner(new ReportGeneratorFactory($container), $engine);
-        $runner->setExcludeDirectories(array(dirname(__DIR__)));
+        $runner->setExcludeDirectories([dirname(__DIR__)]);
 
         try {
             $this->silentRun($runner);
@@ -159,27 +159,27 @@ class RunnerTest extends AbstractTestCase
     /**
      * @return void
      */
-    public function testSetExcludeNamespaces()
+    public function testSetExcludeNamespaces(): void
     {
         /** @var object[] $record */
-        $record = array();
+        $record = [];
         $engine = $this->getMockBuilder('PDepend\\Engine')
             ->disableOriginalConstructor()
             ->getMock();
         $engine->expects($this->exactly(2))
             ->method('addFileFilter')
-            ->willReturnCallback(function (Filter $excludePathFilter) use (&$record) {
+            ->willReturnCallback(function (Filter $excludePathFilter) use (&$record): void {
                 $record[] = $excludePathFilter;
             });
         $engine->expects($this->once())
             ->method('setCodeFilter')
-            ->willReturnCallback(function (PackageArtifactFilter $excludePathFilter) use (&$record) {
+            ->willReturnCallback(function (PackageArtifactFilter $excludePathFilter) use (&$record): void {
                 $record[] = $excludePathFilter;
             });
         $container = new Container();
 
         $runner = new Runner(new ReportGeneratorFactory($container), $engine);
-        $runner->setExcludeNamespaces(array('PDepend'));
+        $runner->setExcludeNamespaces(['PDepend']);
 
         try {
             $this->silentRun($runner);
@@ -199,22 +199,22 @@ class RunnerTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRunnerHandlesWithoutAnnotationsOptionCorrect()
+    public function testRunnerHandlesWithoutAnnotationsOptionCorrect(): void
     {
-        $expected = array(
-            'pdepend.test'  =>  array(
-                'functions'   =>  array('foo'),
-                'classes'     =>  array('MyException'),
-                'interfaces'  =>  array(),
-                'exceptions'  =>  array()
-            ),
-            'pdepend.test2'  =>  array(
-                'functions'   =>  array(),
-                'classes'     =>  array('YourException'),
-                'interfaces'  =>  array(),
-                'exceptions'  =>  array()
-            )
-        );
+        $expected = [
+            'pdepend.test'  =>  [
+                'functions'   =>  ['foo'],
+                'classes'     =>  ['MyException'],
+                'interfaces'  =>  [],
+                'exceptions'  =>  []
+            ],
+            'pdepend.test2'  =>  [
+                'functions'   =>  [],
+                'classes'     =>  ['YourException'],
+                'interfaces'  =>  [],
+                'exceptions'  =>  []
+            ]
+        ];
 
         $runner = $this->createTextUiRunner();
         $runner->setWithoutAnnotations();
@@ -232,12 +232,12 @@ class RunnerTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSupportBadDocumentation()
+    public function testSupportBadDocumentation(): void
     {
-        $expected = array(
-            '+global'  =>  array(
-                'functions'   =>  array('pkg3_foo'),
-                'classes'     =>  array(
+        $expected = [
+            '+global'  =>  [
+                'functions'   =>  ['pkg3_foo'],
+                'classes'     =>  [
                     'Bar',
                     'pkg1Bar',
                     'pkg1Barfoo',
@@ -246,15 +246,15 @@ class RunnerTest extends AbstractTestCase
                     'pkg2Bar',
                     'pkg2Barfoo',
                     'pkg2Foobar',
-                ),
-                'interfaces'  =>  array(
+                ],
+                'interfaces'  =>  [
                     'pkg1FooI',
                     'pkg2FooI',
                     'pkg3FooI'
-                ),
-                'exceptions'  =>  array()
-            )
-        );
+                ],
+                'exceptions'  =>  []
+            ]
+        ];
 
         $runner = $this->createTextUiRunner();
         $actual = $this->runRunnerAndReturnStatistics(
@@ -270,11 +270,11 @@ class RunnerTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRunnerHasParseErrorsReturnsFalseForValidSource()
+    public function testRunnerHasParseErrorsReturnsFalseForValidSource(): void
     {
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI());
-        $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
+        $runner->setSourceArguments([$this->createCodeResourceUriForTest()]);
 
         $this->silentRun($runner);
 
@@ -286,11 +286,11 @@ class RunnerTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRunnerHasParseErrorsReturnsTrueForInvalidSource()
+    public function testRunnerHasParseErrorsReturnsTrueForInvalidSource(): void
     {
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI());
-        $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
+        $runner->setSourceArguments([$this->createCodeResourceUriForTest()]);
 
         $this->silentRun($runner);
 
@@ -302,11 +302,11 @@ class RunnerTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages()
+    public function testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages(): void
     {
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('dummy-logger', $this->createRunResourceURI());
-        $runner->setSourceArguments(array($this->createCodeResourceUriForTest()));
+        $runner->setSourceArguments([$this->createCodeResourceUriForTest()]);
 
         ob_start();
         $runner->run();
@@ -321,7 +321,7 @@ class RunnerTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testRunnerThrowsExceptionForUndefinedLoggerClass()
+    public function testRunnerThrowsExceptionForUndefinedLoggerClass(): void
     {
         $this->expectException(\RuntimeException::class);
 
@@ -341,7 +341,7 @@ class RunnerTest extends AbstractTestCase
     {
         $logFile = $this->createRunResourceURI();
 
-        $runner->setSourceArguments(array($pathName));
+        $runner->setSourceArguments([$pathName]);
         $runner->addReportGenerator('dummy-logger', $logFile);
 
         $this->silentRun($runner);
@@ -349,14 +349,14 @@ class RunnerTest extends AbstractTestCase
         $data = unserialize(file_get_contents($logFile));
         $code = $data['code'];
 
-        $actual = array();
+        $actual = [];
         foreach ($code as $namespace) {
-            $statistics = array(
-                'functions'   =>  array(),
-                'classes'     =>  array(),
-                'interfaces'  =>  array(),
-                'exceptions'  =>  array()
-            );
+            $statistics = [
+                'functions'   =>  [],
+                'classes'     =>  [],
+                'interfaces'  =>  [],
+                'exceptions'  =>  []
+            ];
             foreach ($namespace->getFunctions() as $function) {
                 $statistics['functions'][] = $function->getName();
                 foreach ($function->getExceptionClasses() as $exception) {

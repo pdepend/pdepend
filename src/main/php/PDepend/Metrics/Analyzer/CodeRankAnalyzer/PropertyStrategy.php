@@ -59,7 +59,7 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
      *
      * @var array<string, array<string, array<int, string>>>
      */
-    private $nodes = array();
+    private $nodes = [];
 
     /**
      * Returns the collected nodes.
@@ -73,10 +73,8 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 
     /**
      * Visits a property node.
-     *
-     * @return void
      */
-    public function visitProperty(ASTProperty $property)
+    public function visitProperty(ASTProperty $property): void
     {
         $this->fireStartProperty($property);
 
@@ -111,18 +109,16 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
-     *
-     * @return void
      */
-    protected function initNode(AbstractASTArtifact $node)
+    protected function initNode(AbstractASTArtifact $node): void
     {
         if (!isset($this->nodes[$node->getId()])) {
-            $this->nodes[$node->getId()] = array(
-                'in'   =>  array(),
-                'out'  =>  array(),
+            $this->nodes[$node->getId()] = [
+                'in'   =>  [],
+                'out'  =>  [],
                 'name'  =>  $node->getName(),
-                'type'  =>  get_class($node),
-            );
+                'type'  =>  $node::class,
+            ];
         }
     }
 }

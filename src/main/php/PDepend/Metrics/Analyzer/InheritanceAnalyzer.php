@@ -88,7 +88,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      *
      * @var array<int>
      */
-    private $rootClasses = array();
+    private $rootClasses = [];
 
     /**
      * The maximum depth of inheritance tree value within the analyzed source code.
@@ -144,7 +144,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
-        return array();
+        return [];
     }
 
     /**
@@ -161,22 +161,20 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      */
     public function getProjectMetrics()
     {
-        return array(
+        return [
             self::M_AVERAGE_NUMBER_DERIVED_CLASSES  =>  $this->andc,
             self::M_AVERAGE_HIERARCHY_HEIGHT        =>  $this->ahh,
             self::M_MAXIMUM_INHERITANCE_DEPTH       =>  $this->maxDIT,
-        );
+        ];
     }
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->nodeMetrics === null) {
-            $this->nodeMetrics = array();
+            $this->nodeMetrics = [];
 
             $this->fireStartAnalyzer();
             $this->doAnalyze($namespaces);
@@ -190,11 +188,9 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      *
      * @param ASTArtifactList<ASTNamespace> $namespaces
      *
-     * @return void
-     *
      * @since  0.9.10
      */
-    private function doAnalyze($namespaces)
+    private function doAnalyze($namespaces): void
     {
         foreach ($namespaces as $namespace) {
             $namespace->accept($this);
@@ -210,10 +206,8 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
 
     /**
      * Visits a class node.
-     *
-     * @return void
      */
-    public function visitClass(ASTClass $class)
+    public function visitClass(ASTClass $class): void
     {
         if (!$class->isUserDefined()) {
             return;
@@ -233,11 +227,9 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     /**
      * Calculates the number of derived classes.
      *
-     * @return void
-     *
      * @since  0.9.5
      */
-    private function calculateNumberOfDerivedClasses(ASTClass $class)
+    private function calculateNumberOfDerivedClasses(ASTClass $class): void
     {
         $id = $class->getId();
         $parentClass = $class->getParentClass();
@@ -252,11 +244,9 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     /**
      * Calculates the maximum HIT for the given class.
      *
-     * @return void
-     *
      * @since  0.9.10
      */
-    private function calculateDepthOfInheritanceTree(ASTClass $class)
+    private function calculateDepthOfInheritanceTree(ASTClass $class): void
     {
         $dit  = 0;
         $id = $class->getId();
@@ -283,18 +273,16 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      * Calculates two metrics. The number of added methods and the number of
      * overwritten methods.
      *
-     * @return void
-     *
      * @since  0.9.10
      */
-    private function calculateNumberOfAddedAndOverwrittenMethods(ASTClass $class)
+    private function calculateNumberOfAddedAndOverwrittenMethods(ASTClass $class): void
     {
         $parentClass = $class->getParentClass();
         if ($parentClass === null) {
             return;
         }
 
-        $parentMethodNames = array();
+        $parentMethodNames = [];
         foreach ($parentClass->getAllMethods() as $method) {
             $parentMethodNames[$method->getName()] = $method->isAbstract();
         }
@@ -325,11 +313,9 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     /**
      * Initializes a empty metric container for the given class node.
      *
-     * @return void
-     *
      * @since  0.9.10
      */
-    private function initNodeMetricsForClass(ASTClass $class)
+    private function initNodeMetricsForClass(ASTClass $class): void
     {
         $id = $class->getId();
         if (isset($this->nodeMetrics[$id])) {
@@ -338,12 +324,12 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
 
         ++$this->numberOfClasses;
 
-        $this->nodeMetrics[$id] = array(
+        $this->nodeMetrics[$id] = [
             self::M_DEPTH_OF_INHERITANCE_TREE     => 0,
             self::M_NUMBER_OF_ADDED_METHODS       => 0,
             self::M_NUMBER_OF_DERIVED_CLASSES     => 0,
             self::M_NUMBER_OF_OVERWRITTEN_METHODS => 0,
-        );
+        ];
 
         foreach ($class->getParentClasses() as $parent) {
             $this->initNodeMetricsForClass($parent);

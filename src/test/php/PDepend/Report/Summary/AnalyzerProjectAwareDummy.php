@@ -65,7 +65,7 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
      *
      * @param array<string, mixed> $projectMetrics Dummy project metrics.
      */
-    public function __construct(array $projectMetrics = array())
+    public function __construct(array $projectMetrics = [])
     {
         $this->projectMetrics = $projectMetrics;
     }
@@ -76,7 +76,7 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function addAnalyzeListener(AnalyzerListener $listener)
+    public function addAnalyzeListener(AnalyzerListener $listener): void
     {
     }
 
@@ -86,7 +86,7 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
      * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
      * @return void
      */
-    public function removeAnalyzeListener(AnalyzerListener $listener)
+    public function removeAnalyzeListener(AnalyzerListener $listener): void
     {
     }
 
@@ -95,7 +95,7 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
      *
      * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
     }
 
@@ -127,7 +127,7 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
      * @param array<string, mixed> $options
      * @since 2.0.1
      */
-    public function setOptions(array $options = array())
+    public function setOptions(array $options = []): void
     {
     }
 }

@@ -64,17 +64,17 @@ class ParserBug124Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testClassNameScalarKeyword()
+    public function testClassNameScalarKeyword(): void
     {
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(self::createCodeResourceURI('bugs/124/testClassNameScalarKeyword.php'));
 
-        $actual = array();
+        $actual = [];
         while (is_object($token = $tokenizer->next())) {
             $actual[] = $token->type;
         }
 
-        $tokenTypes = array(
+        $tokenTypes = [
             Tokens::T_OPEN_TAG,
             Tokens::T_VARIABLE,
             Tokens::T_EQUAL,
@@ -82,7 +82,7 @@ class ParserBug124Test extends AbstractRegressionTestCase
             Tokens::T_DOUBLE_COLON,
             Tokens::T_CLASS_FQN,
             Tokens::T_SEMICOLON
-        );
+        ];
 
         $this->assertEquals($tokenTypes, $actual);
     }

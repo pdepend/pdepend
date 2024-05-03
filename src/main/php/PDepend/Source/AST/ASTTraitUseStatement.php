@@ -67,7 +67,7 @@ class ASTTraitUseStatement extends ASTStatement
     public function getAllMethods()
     {
         if ($this->allMethods === null) {
-            $this->allMethods = array();
+            $this->allMethods = [];
 
             foreach ($this->nodes as $node) {
                 if ($node instanceof ASTTraitReference) {
@@ -118,10 +118,8 @@ class ASTTraitUseStatement extends ASTStatement
      * {@link ASTTraitReference}
      *
      * @param ASTTraitReference $reference Context trait reference.
-     *
-     * @return void
      */
-    private function collectMethods(ASTTraitReference $reference)
+    private function collectMethods(ASTTraitReference $reference): void
     {
         foreach ($reference->getType()->getAllMethods() as $method) {
             foreach ($this->getAliasesFor($method) as $alias) {
@@ -141,7 +139,7 @@ class ASTTraitUseStatement extends ASTStatement
     {
         $name = strtolower($method->getName());
 
-        $newNames = array();
+        $newNames = [];
         foreach ($this->getAliases() as $alias) {
             $name2 = strtolower($alias->getImage());
             if ($name2 !== $name) {
@@ -189,7 +187,7 @@ class ASTTraitUseStatement extends ASTStatement
         if (count($newNames) > 0) {
             return $newNames;
         }
-        return array($method);
+        return [$method];
     }
 
     /**

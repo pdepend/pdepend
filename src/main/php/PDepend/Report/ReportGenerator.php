@@ -66,10 +66,8 @@ interface ReportGenerator
      * Closes the logger process and writes the output file.
      *
      * @throws NoLogOutputException If the no log target exists.
-     *
-     * @return void
      */
-    public function close();
+    public function close(): void;
 
     /**
      * Returns an <b>array</b> with accepted analyzer types. These types can be

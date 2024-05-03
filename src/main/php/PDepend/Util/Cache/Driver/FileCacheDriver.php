@@ -145,13 +145,11 @@ class FileCacheDriver implements CacheDriver
      * @param string $key  The cache key for the given data.
      * @param mixed  $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
-     *
-     * @return void
      */
-    public function store($key, $data, $hash = null)
+    public function store($key, $data, $hash = null): void
     {
         $file = $this->getCacheFile($key);
-        $this->write($file, serialize(array('hash' => $hash, 'data' => $data)));
+        $this->write($file, serialize(['hash' => $hash, 'data' => $data]));
     }
 
     /**
@@ -159,10 +157,8 @@ class FileCacheDriver implements CacheDriver
      *
      * @param string $file The cache file name.
      * @param string $data Serialized cache data.
-     *
-     * @return void
      */
-    protected function write($file, $data)
+    protected function write($file, $data): void
     {
         $handle = fopen($file, 'wb');
         if (!$handle) {
@@ -245,16 +241,14 @@ class FileCacheDriver implements CacheDriver
      * nothing.
      *
      * @param string $pattern The cache key pattern.
-     *
-     * @return void
      */
-    public function remove($pattern)
+    public function remove($pattern): void
     {
         $file = $this->getCacheFileWithoutExtension($pattern);
         $glob = glob("{$file}*.*");
         // avoid error if we dont find files
         if ($glob !== false) {
-            foreach (glob("{$file}*.*") ?: array() as $f) {
+            foreach (glob("{$file}*.*") ?: [] as $f) {
                 @unlink($f);
             }
         }
@@ -305,10 +299,8 @@ class FileCacheDriver implements CacheDriver
      *
      * @param string $root
      * @param int    $ttl
-     *
-     * @return void
      */
-    protected function garbageCollect($root, $ttl)
+    protected function garbageCollect($root, $ttl): void
     {
         $garbageCollector = new FileCacheGarbageCollector($root, $ttl);
         $garbageCollector->garbageCollect();

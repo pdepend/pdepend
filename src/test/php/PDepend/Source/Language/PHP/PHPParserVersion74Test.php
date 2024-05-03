@@ -72,7 +72,7 @@ class PHPParserVersion74Test extends AbstractTestCase
     /**
      * @return void
      */
-    public function testTypedProperties()
+    public function testTypedProperties(): void
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
@@ -96,36 +96,36 @@ class PHPParserVersion74Test extends AbstractTestCase
         $declarations = array_map(function (ASTFieldDeclaration $child) {
             $childChildren = $child->getChildren();
 
-            return array(
+            return [
                 $child->hasType() ? $child->getType() : null,
                 $childChildren[1],
-            );
+            ];
         }, $children);
 
-        foreach (array(
-            array('int', '$id'),
-            array('float', '$money'),
-            array('bool', '$active'),
-            array('string', '$name'),
-            array('array', '$list', 'PDepend\\Source\\AST\\ASTTypeArray'),
-            array('self', '$parent', 'PDepend\\Source\\AST\\ASTSelfReference'),
-            array('callable', '$event', 'PDepend\\Source\\AST\\ASTTypeCallable'),
-            array('\Closure', '$fqn', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-            array('iterable', '$actions', 'PDepend\\Source\\AST\\ASTTypeIterable'),
-            array('object', '$bag', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-            array('Role', '$role', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-            array('?int', '$idN'),
-            array('?float', '$moneyN'),
-            array('?bool', '$activeN'),
-            array('?string', '$nameN'),
-            array('?array', '$listN', 'PDepend\\Source\\AST\\ASTTypeArray'),
-            array('?self', '$parentN', 'PDepend\\Source\\AST\\ASTSelfReference'),
-            array('?callable', '$eventN', 'PDepend\\Source\\AST\\ASTTypeCallable'),
-            array('?\Closure', '$fqnN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-            array('?iterable', '$actionsN', 'PDepend\\Source\\AST\\ASTTypeIterable'),
-            array('?object', '$bagN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-            array('?Role', '$roleN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'),
-        ) as $index => $expected) {
+        foreach ([
+            ['int', '$id'],
+            ['float', '$money'],
+            ['bool', '$active'],
+            ['string', '$name'],
+            ['array', '$list', 'PDepend\\Source\\AST\\ASTTypeArray'],
+            ['self', '$parent', 'PDepend\\Source\\AST\\ASTSelfReference'],
+            ['callable', '$event', 'PDepend\\Source\\AST\\ASTTypeCallable'],
+            ['\Closure', '$fqn', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['iterable', '$actions', 'PDepend\\Source\\AST\\ASTTypeIterable'],
+            ['object', '$bag', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['Role', '$role', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['?int', '$idN'],
+            ['?float', '$moneyN'],
+            ['?bool', '$activeN'],
+            ['?string', '$nameN'],
+            ['?array', '$listN', 'PDepend\\Source\\AST\\ASTTypeArray'],
+            ['?self', '$parentN', 'PDepend\\Source\\AST\\ASTSelfReference'],
+            ['?callable', '$eventN', 'PDepend\\Source\\AST\\ASTTypeCallable'],
+            ['?\Closure', '$fqnN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['?iterable', '$actionsN', 'PDepend\\Source\\AST\\ASTTypeIterable'],
+            ['?object', '$bagN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['?Role', '$roleN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+        ] as $index => $expected) {
             [$expectedType, $expectedVariable] = $expected;
             $expectedTypeClass = $expected[2] ?? 'PDepend\\Source\\AST\\ASTScalarType';
             [$type, $variable] = $declarations[$index];
@@ -145,7 +145,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         }
     }
 
-    public function testSingleTypedProperty()
+    public function testSingleTypedProperty(): void
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
@@ -158,7 +158,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->assertFalse($field->isPublic());
     }
 
-    public function testTypedPropertiesSyntaxError()
+    public function testTypedPropertiesSyntaxError(): void
     {
         $this->expectException(
             'PDepend\\Source\\Parser\\UnexpectedTokenException'
@@ -170,7 +170,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    public function testArrowFunctions()
+    public function testArrowFunctions(): void
     {
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
@@ -198,21 +198,22 @@ class PHPParserVersion74Test extends AbstractTestCase
         /** @var ASTExpression $expression */
         $expression = $return->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTLiteral',
-        ), array_map('get_class', $expression->getChildren()));
-        $this->assertSame(array(
+        ], array_map('get_class', $expression->getChildren()));
+        $this->assertSame([
             '$number',
             '*',
             '2',
-        ), array_map(function (ASTNode $node) {
-            return $node->getImage();
-        }, $expression->getChildren()));
+        ], array_map(
+            static fn (ASTNode $node) => $node->getImage(),
+            $expression->getChildren(),
+        ));
     }
 
-    public function testArrowFunctionsWithReturnType()
+    public function testArrowFunctionsWithReturnType(): void
     {
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
@@ -244,26 +245,27 @@ class PHPParserVersion74Test extends AbstractTestCase
         /** @var ASTExpression $expression */
         $expression = $return->getChild(0);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTLiteral',
-        ), array_map('get_class', $expression->getChildren()));
-        $this->assertSame(array(
+        ], array_map('get_class', $expression->getChildren()));
+        $this->assertSame([
             '$number',
             '*',
             '2',
-        ), array_map(function (ASTNode $node) {
-            return $node->getImage();
-        }, $expression->getChildren()));
+        ], array_map(
+            static fn (ASTNode $node) => $node->getImage(),
+            $expression->getChildren(),
+        ));
     }
 
-    public function testTypeCovarianceAndArgumentTypeContravariance()
+    public function testTypeCovarianceAndArgumentTypeContravariance(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    public function testNullCoalescingAssignmentOperator()
+    public function testNullCoalescingAssignmentOperator(): void
     {
         /** @var ASTAssignmentExpression $assignment */
         $assignment = $this->getFirstNodeOfTypeInFunction(
@@ -274,47 +276,49 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->assertSame('??=', $assignment->getImage());
     }
 
-    public function testUnpackingInsideArrays()
+    public function testUnpackingInsideArrays(): void
     {
         $expression = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTArray'
         );
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\\Source\\AST\\ASTArrayElement',
             'PDepend\\Source\\AST\\ASTArrayElement',
             'PDepend\\Source\\AST\\ASTArrayElement',
             'PDepend\\Source\\AST\\ASTArrayElement',
             'PDepend\\Source\\AST\\ASTArrayElement',
-        ), array_map('get_class', $expression->getChildren()));
+        ], array_map('get_class', $expression->getChildren()));
         /** @var ASTNode[] $elements */
-        $elements = array_map(function ($node) {
-            return $node->getChild(0);
-        }, $expression->getChildren());
-        $this->assertSame(array(
+        $elements = array_map(
+            static fn ($node) => $node->getChild(0),
+            $expression->getChildren(),
+        );
+        $this->assertSame([
             'PDepend\Source\AST\ASTLiteral',
             'PDepend\Source\AST\ASTLiteral',
             'PDepend\Source\AST\ASTExpression',
             'PDepend\Source\AST\ASTLiteral',
             'PDepend\Source\AST\ASTLiteral',
-        ), array_map('get_class', $elements));
+        ], array_map('get_class', $elements));
         /** @var ASTExpression $expression */
         $expression = $elements[2];
-        $this->assertSame(array(
+        $this->assertSame([
             '...',
             '$numbers',
-        ), array_map(function (ASTNode $node) {
-            return $node->getImage();
-        }, $expression->getChildren()));
+        ], array_map(
+            static fn (ASTNode $node) => $node->getImage(),
+            $expression->getChildren(),
+        ));
     }
 
-    public function testNumericLiteralSeparator()
+    public function testNumericLiteralSeparator(): void
     {
         $expression = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTExpression'
         );
-        $this->assertSame(array(
+        $this->assertSame([
             'PDepend\\Source\\AST\\ASTLiteral',
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTLiteral',
@@ -322,7 +326,7 @@ class PHPParserVersion74Test extends AbstractTestCase
             'PDepend\\Source\\AST\\ASTLiteral',
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTLiteral',
-        ), array_map('get_class', $expression->getChildren()));
+        ], array_map('get_class', $expression->getChildren()));
 
         $this->assertSame('6.674_083e-11', $expression->getChild(0)->getImage());
         $this->assertSame('299_792_458', $expression->getChild(2)->getImage());
@@ -339,7 +343,7 @@ class PHPParserVersion74Test extends AbstractTestCase
      *
      * @return void
      */
-    public function testConstantArrayConcatenation()
+    public function testConstantArrayConcatenation(): void
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
@@ -374,7 +378,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->assertSame('A', $nodes[1]->getImage());
     }
 
-    public function testReadOnlyNamedImport()
+    public function testReadOnlyNamedImport(): void
     {
         $this->expectException(\OutOfBoundsException::class);
 
@@ -383,7 +387,7 @@ class PHPParserVersion74Test extends AbstractTestCase
 
     /**
      */
-    public function testCatchWithoutVariable()
+    public function testCatchWithoutVariable(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
         $this->expectExceptionMessage('Unexpected token: ), line: 8, col: 27');
@@ -393,7 +397,7 @@ class PHPParserVersion74Test extends AbstractTestCase
 
     /**
      */
-    public function testTrailingCommaInClosureUseListError()
+    public function testTrailingCommaInClosureUseListError(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
         $this->expectExceptionMessage('Unexpected token: ), line: 5, col: 32');
@@ -403,7 +407,7 @@ class PHPParserVersion74Test extends AbstractTestCase
 
     /**
      */
-    public function testTrailingCommaInParameterList()
+    public function testTrailingCommaInParameterList(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
         $this->expectExceptionMessage('Unexpected token: ), line: 4, col: 43');
@@ -421,7 +425,7 @@ class PHPParserVersion74Test extends AbstractTestCase
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion74',
-            array($tokenizer, $builder, $cache)
+            [$tokenizer, $builder, $cache]
         );
     }
 }

@@ -64,7 +64,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testReturnsReferenceReturnsExpectedTrue()
+    public function testReturnsReferenceReturnsExpectedTrue(): void
     {
         $function = $this->getFirstFunctionForTestCaseInternal();
         $this->assertTrue($function->returnsReference());
@@ -75,7 +75,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testReturnsReferenceReturnsExpectedFalse()
+    public function testReturnsReferenceReturnsExpectedFalse(): void
     {
         $function = $this->getFirstFunctionForTestCaseInternal();
         $this->assertFalse($function->returnsReference());
@@ -86,10 +86,10 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetStaticVariablesReturnsEmptyArrayByDefault()
+    public function testGetStaticVariablesReturnsEmptyArrayByDefault(): void
     {
         $function = $this->createItem();
-        $this->assertEquals(array(), $function->getStaticVariables());
+        $this->assertEquals([], $function->getStaticVariables());
     }
 
     /**
@@ -97,10 +97,10 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetStaticVariablesReturnsFirstSetOfStaticVariables()
+    public function testGetStaticVariablesReturnsFirstSetOfStaticVariables(): void
     {
         $this->assertEquals(
-            array('a' => 42, 'b' => 23),
+            ['a' => 42, 'b' => 23],
             $this->getFirstFunctionForTestCaseInternal()->getStaticVariables()
         );
     }
@@ -110,10 +110,10 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetStaticVariablesReturnsMergeOfAllStaticVariables()
+    public function testGetStaticVariablesReturnsMergeOfAllStaticVariables(): void
     {
         $this->assertEquals(
-            array('a' => 42, 'b' => 23, 'c' => 17),
+            ['a' => 42, 'b' => 23, 'c' => 17],
             $this->getFirstFunctionForTestCaseInternal()->getStaticVariables()
         );
     }
@@ -123,7 +123,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testCreateNewFunctionInstance()
+    public function testCreateNewFunctionInstance(): void
     {
         $function = $this->createItem();
         $this->assertEquals('createItem', $function->getName());
@@ -134,7 +134,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetNamespaceReturnsNullByDefault()
+    public function testGetNamespaceReturnsNullByDefault(): void
     {
         $function = $this->createItem();
         $this->assertNull($function->getNamespace());
@@ -145,7 +145,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnsetNamespaceWithNullWillResetPreviousPackage()
+    public function testUnsetNamespaceWithNullWillResetPreviousPackage(): void
     {
         $namespace  = new ASTNamespace('nspace');
         $function = $this->createItem();
@@ -161,7 +161,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnsetNamespaceWithNullWillResetNamespaceNameProperty()
+    public function testUnsetNamespaceWithNullWillResetNamespaceNameProperty(): void
     {
         $function = $this->createItem();
         $function->setNamespace(new ASTNamespace(__FUNCTION__));
@@ -190,7 +190,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
      * @return void
      */
-    public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type)
+    public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type): void
     {
         $this->assertEquals('Java\\Style', $type->getNamespaceName());
     }
@@ -200,10 +200,10 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testSetNamespaceNotEstablishesBackReference()
+    public function testSetNamespaceNotEstablishesBackReference(): void
     {
         $namespace = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNamespace')
-            ->setConstructorArgs(array(__FUNCTION__))
+            ->setConstructorArgs([__FUNCTION__])
             ->getMock();
         $namespace->expects($this->never())
             ->method('addFunction');
@@ -218,7 +218,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetSetNamespace()
+    public function testGetSetNamespace(): void
     {
         $namespace  = new ASTNamespace('nspace');
         $function = $this->createItem();
@@ -232,7 +232,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetNamespaceNameReturnsNullByDefault()
+    public function testGetNamespaceNameReturnsNullByDefault(): void
     {
         $this->assertNull($this->createItem()->getNamespaceName());
     }
@@ -242,7 +242,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetNamespaceNameReturnsNameOfInjectedPackage()
+    public function testGetNamespaceNameReturnsNameOfInjectedPackage(): void
     {
         $function = $this->createItem();
         $function->setNamespace(new ASTNamespace(__FUNCTION__));
@@ -255,7 +255,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testIsCachedReturnsFalseByDefault()
+    public function testIsCachedReturnsFalseByDefault(): void
     {
         $function = $this->createItem();
         $this->assertFalse($function->isCached());
@@ -266,7 +266,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testIsCachedReturnsFalseWhenObjectGetsSerialized()
+    public function testIsCachedReturnsFalseWhenObjectGetsSerialized(): void
     {
         $function = $this->createItem();
         serialize($function);
@@ -279,11 +279,11 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testMagicSleepReturnsExpectedSetOfPropertyNames()
+    public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $function = $this->createItem();
         $this->assertEquals(
-            array(
+            [
                 'context',
                 'namespaceName',
                 'cache',
@@ -296,7 +296,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
                 'returnsReference',
                 'returnClassReference',
                 'exceptionClassReferences'
-            ),
+            ],
             $function->__sleep()
         );
     }
@@ -306,9 +306,9 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testSetTokensDelegatesToCacheStoreMethod()
+    public function testSetTokensDelegatesToCacheStoreMethod(): void
     {
-        $tokens = array(new Token(1, '$foo', 3, 3, 0, 0));
+        $tokens = [new Token(1, '$foo', 3, 3, 0, 0)];
 
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -328,7 +328,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetTokensDelegatesToCacheRestoreMethod()
+    public function testGetTokensDelegatesToCacheRestoreMethod(): void
     {
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -337,7 +337,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $cache->expects($this->once())
             ->method('restore')
             ->with($this->isType('string'))
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue([]));
 
         $function = $this->createItem();
         $function->setCache($cache)
@@ -349,7 +349,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetTokensReturnsArrayEvenWhenCacheReturnsNull()
+    public function testGetTokensReturnsArrayEvenWhenCacheReturnsNull(): void
     {
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -363,7 +363,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function = $this->createItem();
         $function->setCache($cache);
 
-        $this->assertSame(array(), $function->getTokens());
+        $this->assertSame([], $function->getTokens());
     }
 
     /**
@@ -371,7 +371,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch()
+    public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch(): void
     {
         $node1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
@@ -391,7 +391,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function->addChild($node1);
         $function->addChild($node2);
 
-        $child = $function->getFirstChildOfType(get_class($node2));
+        $child = $function->getFirstChildOfType($node2::class);
         $this->assertSame($node2, $child);
     }
 
@@ -400,7 +400,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch()
+    public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch(): void
     {
         $node1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
@@ -426,7 +426,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function->addChild($node2);
         $function->addChild($node3);
 
-        $child = $function->getFirstChildOfType(get_class($node1));
+        $child = $function->getFirstChildOfType($node1::class);
         $this->assertSame($node1, $child);
     }
 
@@ -435,7 +435,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testGetFirstChildOfTypeReturnsTheExpectedNull()
+    public function testGetFirstChildOfTypeReturnsTheExpectedNull(): void
     {
         $node1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
@@ -464,28 +464,28 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testFindChildrenOfTypeReturnsExpectedResult()
+    public function testFindChildrenOfTypeReturnsExpectedResult(): void
     {
         $node1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node1->expects($this->once())
             ->method('findChildrenOfType')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue([]));
 
         $node2 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTNode')
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node2->expects($this->once())
             ->method('findChildrenOfType')
-            ->will($this->returnValue(array()));
+            ->will($this->returnValue([]));
 
         $function = $this->createItem();
         $function->addChild($node1);
         $function->addChild($node2);
 
-        $children = $function->findChildrenOfType(get_class($node2));
-        $this->assertSame(array($node2), $children);
+        $children = $function->findChildrenOfType($node2::class);
+        $this->assertSame([$node2], $children);
     }
 
     /**
@@ -493,7 +493,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnserializedFunctionStillReferencesSameDependency()
+    public function testUnserializedFunctionStillReferencesSameDependency(): void
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
@@ -509,7 +509,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnserializedFunctionStillReferencesSameReturnClass()
+    public function testUnserializedFunctionStillReferencesSameReturnClass(): void
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
@@ -525,7 +525,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnserializedFunctionStillReferencesSameParameterClass()
+    public function testUnserializedFunctionStillReferencesSameParameterClass(): void
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
@@ -541,7 +541,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnserializedFunctionStillReferencesSameExceptionClass()
+    public function testUnserializedFunctionStillReferencesSameExceptionClass(): void
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
@@ -557,7 +557,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnserializedFunctionStillReferencesSameDependencyInterface()
+    public function testUnserializedFunctionStillReferencesSameDependencyInterface(): void
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
@@ -573,7 +573,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnserializedFunctionStillReferencesSamePackage()
+    public function testUnserializedFunctionStillReferencesSamePackage(): void
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
@@ -586,7 +586,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnserializedFunctionIsInSameNamespace()
+    public function testUnserializedFunctionIsInSameNamespace(): void
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
@@ -602,7 +602,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnserializedFunctionNotAddsDublicateToPackage()
+    public function testUnserializedFunctionNotAddsDublicateToPackage(): void
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
@@ -615,7 +615,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testUnserializedFunctionIsChildOfParentPackage()
+    public function testUnserializedFunctionIsChildOfParentPackage(): void
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
@@ -628,7 +628,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      *
      * @return void
      */
-    public function testVisitorAccept()
+    public function testVisitorAccept(): void
     {
         $function = $this->createItem();
         $visitor  = new StubASTVisitor();
@@ -660,7 +660,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $function = new ASTFunction(__FUNCTION__);
         $function->setCompilationUnit(new ASTCompilationUnit(__FILE__));
-        
+
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
         $function->setContext($context);

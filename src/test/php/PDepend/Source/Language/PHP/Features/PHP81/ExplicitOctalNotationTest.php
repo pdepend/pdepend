@@ -52,24 +52,22 @@ use PDepend\Source\AST\ASTConstantDeclarator;
  */
 class ExplicitOctalNotationTest extends PHPParserVersion81TestCase
 {
-    public function testExplicitOctalNotation()
+    public function testExplicitOctalNotation(): void
     {
         $class = $this->getFirstClassForTestCase();
 
         $values = array_map(
-            function (ASTConstantDeclarator $constantDeclarator) {
-                return $constantDeclarator->getValue()->getValue();
-            },
+            static fn (ASTConstantDeclarator $constantDeclarator) => $constantDeclarator->getValue()->getValue(),
             $class->getConstantDeclarators()
         );
 
-        $this->assertSame(array(
+        $this->assertSame([
             'THOUSAND' => 1000,
             'HEXADECIMAL' => 15,
             'IMPLICIT_OCTAL' => 14,
             'EXPLICIT_OCTAL' => 14,
             'BINARY' => 6,
-        ), $values);
+        ], $values);
 
         $this->assertSame(
             '0o170',

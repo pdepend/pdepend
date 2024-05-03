@@ -61,10 +61,10 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetParametersReturnsEmptyArrayByDefault()
+    public function testGetParametersReturnsEmptyArrayByDefault(): void
     {
         $callable = $this->getFirstCallableForTest();
-        $this->assertEquals(array(), $callable->getParameters());
+        $this->assertEquals([], $callable->getParameters());
     }
 
     /**
@@ -72,7 +72,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetParametersReturnsArrayWithOneElement()
+    public function testGetParametersReturnsArrayWithOneElement(): void
     {
         $callable = $this->getFirstCallableForTest();
         $this->assertCount(1, $callable->getParameters());
@@ -83,7 +83,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetParametersReturnsArrayWithThreeElements()
+    public function testGetParametersReturnsArrayWithThreeElements(): void
     {
         $callable = $this->getFirstCallableForTest();
         $this->assertCount(3, $callable->getParameters());
@@ -94,7 +94,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetParametersReturnsArrayWithObjectsOfTypeParameter()
+    public function testGetParametersReturnsArrayWithObjectsOfTypeParameter(): void
     {
         $parameters = $this->getFirstCallableForTest()->getParameters();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParameter', $parameters[0]);
@@ -105,7 +105,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetParametersNotSetsOptionalOnParameterWithoutDefaultValue()
+    public function testGetParametersNotSetsOptionalOnParameterWithoutDefaultValue(): void
     {
         $parameters = $this->getFirstCallableForTest()->getParameters();
         $this->assertFalse($parameters[0]->isOptional());
@@ -116,7 +116,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetParametersNotSetsOptionalOnParameterWithFollowingParameterWithoutDefaultValue()
+    public function testGetParametersNotSetsOptionalOnParameterWithFollowingParameterWithoutDefaultValue(): void
     {
         $parameters = $this->getFirstCallableForTest()->getParameters();
         $this->assertFalse($parameters[0]->isOptional());
@@ -127,7 +127,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetParametersSetsOptionalOnParameterWithDefaultValue()
+    public function testGetParametersSetsOptionalOnParameterWithDefaultValue(): void
     {
         $parameters = $this->getFirstCallableForTest()->getParameters();
         $this->assertTrue($parameters[0]->isOptional());
@@ -138,7 +138,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetParametersSetsOptionalOnLastParameterWithDefaultValue()
+    public function testGetParametersSetsOptionalOnLastParameterWithDefaultValue(): void
     {
         $parameters = $this->getFirstCallableForTest()->getParameters();
         $this->assertTrue($parameters[2]->isOptional());
@@ -150,7 +150,7 @@ class ASTCallableTest extends AbstractTestCase
      * @return void
      * @since 1.0.0
      */
-    public function testGetChildrenReturnsExpectedNumberOfNodes()
+    public function testGetChildrenReturnsExpectedNumberOfNodes(): void
     {
         $children = $this->getFirstCallableForTest()
             ->getChildren();
@@ -163,7 +163,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetTokensDelegatesCallToCacheRestore()
+    public function testGetTokensDelegatesCallToCacheRestore(): void
     {
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -183,9 +183,9 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testSetTokensDelegatesCallToCacheStore()
+    public function testSetTokensDelegatesCallToCacheStore(): void
     {
-        $tokens = array(new Token(1, 'a', 23, 42, 13, 17));
+        $tokens = [new Token(1, 'a', 23, 42, 13, 17)];
 
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -205,7 +205,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetStartLineReturnsZeroByDefault()
+    public function testGetStartLineReturnsZeroByDefault(): void
     {
         $callable = $this->getCallableMock();
         $this->assertSame(0, $callable->getStartLine());
@@ -216,12 +216,12 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetStartLineReturnsStartLineOfFirstToken()
+    public function testGetStartLineReturnsStartLineOfFirstToken(): void
     {
-        $tokens = array(
+        $tokens = [
             new Token(1, 'a', 13, 17, 0, 0),
             new Token(2, 'b', 23, 42, 0, 0)
-        );
+        ];
 
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -240,7 +240,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetEndLineReturnsZeroByDefault()
+    public function testGetEndLineReturnsZeroByDefault(): void
     {
         $callable = $this->getCallableMock();
         $this->assertSame(0, $callable->getEndLine());
@@ -251,12 +251,12 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetEndLineReturnsEndLineOfLastToken()
+    public function testGetEndLineReturnsEndLineOfLastToken(): void
     {
-        $tokens = array(
+        $tokens = [
             new Token(1, 'a', 13, 17, 0, 0),
             new Token(2, 'b', 23, 42, 0, 0)
-        );
+        ];
 
         $cache = $this->createCacheFixture();
         $cache->expects($this->once())
@@ -275,7 +275,7 @@ class ASTCallableTest extends AbstractTestCase
      *
      * @return void
      */
-    public function testGetReturnClassReturnsNullByDefault()
+    public function testGetReturnClassReturnsNullByDefault(): void
     {
         $callable = $this->getCallableMock();
         $this->assertNull($callable->getReturnClass());
@@ -302,7 +302,7 @@ class ASTCallableTest extends AbstractTestCase
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\AST\\AbstractASTCallable',
-            array(__CLASS__)
+            [__CLASS__]
         );
     }
 }

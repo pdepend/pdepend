@@ -55,7 +55,7 @@ class ExtensionManager
     /**
      * @var array<Extension>
      */
-    private $extensions = array();
+    private $extensions = [];
 
     /**
      * Activate an extension based on a class name.
@@ -63,10 +63,8 @@ class ExtensionManager
      * @param class-string<Extension> $className
      *
      * @throws RuntimeException
-     *
-     * @return void
      */
-    public function activateExtension($className)
+    public function activateExtension($className): void
     {
         if (!class_exists($className)) {
             throw new RuntimeException(

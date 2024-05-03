@@ -82,10 +82,8 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      * This method can be used to flag this closure as returns by reference.
      *
      * @param bool $returnsReference Does this closure return by reference?
-     *
-     * @return void
      */
-    public function setReturnsByReference($returnsReference)
+    public function setReturnsByReference($returnsReference): void
     {
         $this->setMetadataBoolean(5, (bool) $returnsReference);
     }
@@ -124,11 +122,9 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      *
      * @param bool $static Whether this closure is static or not.
      *
-     * @return void
-     *
      * @since  1.0.0
      */
-    public function setStatic($static)
+    public function setStatic($static): void
     {
         $this->setMetadataBoolean(6, (bool) $static);
     }

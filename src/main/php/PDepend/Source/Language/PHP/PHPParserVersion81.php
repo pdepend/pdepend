@@ -169,7 +169,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
     protected function parseIntersectionTypeHint($firstType)
     {
         $token = $this->tokenizer->currentToken();
-        $types = array($firstType);
+        $types = [$firstType];
 
         while ($this->tokenizer->peekNext() !== Tokens::T_VARIABLE && $this->addTokenToStackIfType(Tokens::T_BITWISE_AND)) {
             $types[] = $this->parseSingleTypeHint();

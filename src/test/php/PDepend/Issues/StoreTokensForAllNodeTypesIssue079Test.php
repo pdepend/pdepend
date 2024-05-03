@@ -65,7 +65,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTParameter
      */
-    public function testParameterContainsStartLineOfFirstToken()
+    public function testParameterContainsStartLineOfFirstToken(): void
     {
         $parameters = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -82,7 +82,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTParameter
      */
-    public function testParameterContainsEndLineOfLastToken()
+    public function testParameterContainsEndLineOfLastToken(): void
     {
         $parameters = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -99,14 +99,14 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTFunction
      */
-    public function testParserStoresExpectedFunctionTokens()
+    public function testParserStoresExpectedFunctionTokens(): void
     {
         $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_FUNCTION, 'function', 7, 7, 1, 8),
             new Token(Tokens::T_STRING, 'foo', 7, 7, 10, 12),
             new Token(Tokens::T_PARENTHESIS_OPEN, '(', 7, 7, 13, 13),
@@ -116,7 +116,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_FALSE, 'false', 9, 9, 12, 16),
             new Token(Tokens::T_SEMICOLON, ';', 9, 9, 17, 17),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $function->getTokens());
     }
@@ -127,14 +127,14 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTFunction
      */
-    public function testParserStoresExpectedFunctionTokensWithParameters()
+    public function testParserStoresExpectedFunctionTokensWithParameters(): void
     {
         $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getFunctions()
             ->current();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_FUNCTION, 'function', 7, 7, 1, 8),
             new Token(Tokens::T_STRING, 'foo', 7, 7, 10, 12),
             new Token(Tokens::T_PARENTHESIS_OPEN, '(', 7, 7, 13, 13),
@@ -153,7 +153,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_FALSE, 'false', 9, 9, 12, 16),
             new Token(Tokens::T_SEMICOLON, ';', 9, 9, 17, 17),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $function->getTokens());
     }
@@ -164,7 +164,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTFunction
      */
-    public function testFunctionContainsStartLineOfFirstToken()
+    public function testFunctionContainsStartLineOfFirstToken(): void
     {
         $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -183,7 +183,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTFunction
      */
-    public function testFunctionContainsEndLineOfLastToken()
+    public function testFunctionContainsEndLineOfLastToken(): void
     {
         $function = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -202,7 +202,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTMethod
      */
-    public function testParserStoresExpectedMethodTokens()
+    public function testParserStoresExpectedMethodTokens(): void
     {
         $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -211,7 +211,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             ->getMethods()
             ->current();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_PUBLIC, 'public', 7, 7, 5, 10),
             new Token(Tokens::T_FUNCTION, 'function', 7, 7, 12, 19),
             new Token(Tokens::T_STRING, 'foo', 7, 7, 21, 23),
@@ -222,7 +222,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_FALSE, 'false', 9, 9, 16, 20),
             new Token(Tokens::T_SEMICOLON, ';', 9, 9, 21, 21),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
-        );
+        ];
 
         $this->assertEquals($expected, $method->getTokens());
     }
@@ -233,7 +233,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTMethod
      */
-    public function testParserStoresExpectedMethodTokensWithStaticModifier()
+    public function testParserStoresExpectedMethodTokensWithStaticModifier(): void
     {
         $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -242,7 +242,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             ->getMethods()
             ->current();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_STATIC, 'static', 7, 7, 5, 10),
             new Token(Tokens::T_PUBLIC, 'public', 7, 7, 12, 17),
             new Token(Tokens::T_FUNCTION, 'function', 7, 7, 19, 26),
@@ -254,7 +254,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_FALSE, 'false', 9, 9, 16, 20),
             new Token(Tokens::T_SEMICOLON, ';', 9, 9, 21, 21),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
-        );
+        ];
 
         $this->assertEquals($expected, $method->getTokens());
     }
@@ -265,7 +265,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTMethod
      */
-    public function testParserStoresExpectedMethodTokensWithStaticAndFinalModifiers()
+    public function testParserStoresExpectedMethodTokensWithStaticAndFinalModifiers(): void
     {
         $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -274,7 +274,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             ->getMethods()
             ->current();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_STATIC, 'static', 7, 7, 5, 10),
             new Token(Tokens::T_PUBLIC, 'public', 7, 7, 12, 17),
             new Token(Tokens::T_FINAL, 'final', 7, 7, 19, 23),
@@ -287,7 +287,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_FALSE, 'false', 9, 9, 16, 20),
             new Token(Tokens::T_SEMICOLON, ';', 9, 9, 21, 21),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
-        );
+        ];
 
         $this->assertEquals($expected, $method->getTokens());
     }
@@ -298,7 +298,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTMethod
      */
-    public function testMethodContainsStartLineOfFirstToken()
+    public function testMethodContainsStartLineOfFirstToken(): void
     {
         $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -319,7 +319,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTMethod
      */
-    public function testMethodContainsEndLineOfLastToken()
+    public function testMethodContainsEndLineOfLastToken(): void
     {
         $method = $this->parseTestCaseSource(__METHOD__)
             ->current()
@@ -340,14 +340,14 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTClass
      */
-    public function testParserStoresExpectedClassTokens()
+    public function testParserStoresExpectedClassTokens(): void
     {
         $class = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_CLASS, 'class', 2, 2, 1, 5),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 7, 9),
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
@@ -359,7 +359,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $class->getTokens());
     }
@@ -370,14 +370,14 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTClass
      */
-    public function testParserStoresExpectedClassTokensWithFinalModifier()
+    public function testParserStoresExpectedClassTokensWithFinalModifier(): void
     {
         $class = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_FINAL, 'final', 2, 2, 1, 5),
             new Token(Tokens::T_CLASS, 'class', 2, 2, 7, 11),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 13, 15),
@@ -390,7 +390,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $class->getTokens());
     }
@@ -401,14 +401,14 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTClass
      */
-    public function testParserStoresExpectedClassTokensWithAbstractModifier()
+    public function testParserStoresExpectedClassTokensWithAbstractModifier(): void
     {
         $class = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getClasses()
             ->current();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_ABSTRACT, 'abstract', 2, 2, 1, 8),
             new Token(Tokens::T_CLASS, 'class', 2, 2, 10, 14),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 16, 18),
@@ -421,7 +421,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 4, 4, 27, 27),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 28, 28),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $class->getTokens());
     }
@@ -432,14 +432,14 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
      * @return void
      * @covers \PDepend\Source\AST\ASTInterface
      */
-    public function testParserStoresExpectedInterfaceTokens()
+    public function testParserStoresExpectedInterfaceTokens(): void
     {
         $interface = $this->parseTestCaseSource(__METHOD__)
             ->current()
             ->getInterfaces()
             ->current();
 
-        $expected = array(
+        $expected = [
             new Token(Tokens::T_INTERFACE, 'interface', 2, 2, 1, 9),
             new Token(Tokens::T_STRING, 'Foo', 2, 2, 11, 13),
             new Token(Tokens::T_CURLY_BRACE_OPEN, '{', 3, 3, 1, 1),
@@ -450,7 +450,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_PARENTHESIS_CLOSE, ')', 4, 4, 25, 25),
             new Token(Tokens::T_SEMICOLON, ';', 4, 4, 26, 26),
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
-        );
+        ];
 
         $this->assertEquals($expected, $interface->getTokens());
     }

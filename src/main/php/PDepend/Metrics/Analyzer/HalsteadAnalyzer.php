@@ -78,17 +78,15 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
-     *
-     * @return void
      */
-    public function analyze($namespaces)
+    public function analyze($namespaces): void
     {
         if ($this->metrics === null) {
             $this->loadCache();
             $this->fireStartAnalyzer();
 
             // Init node metrics
-            $this->metrics = array();
+            $this->metrics = [];
 
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
@@ -112,7 +110,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
             return $this->metrics[$artifact->getId()];
         }
 
-        return array();
+        return [];
     }
 
     /**
@@ -129,15 +127,13 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
             return $this->calculateHalsteadMeasures($basis);
         }
 
-        return array();
+        return [];
     }
 
     /**
      * Visits a function node.
-     *
-     * @return void
      */
-    public function visitFunction(ASTFunction $function)
+    public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
 
@@ -150,20 +146,16 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
 
     /**
      * Visits a code interface object.
-     *
-     * @return void
      */
-    public function visitInterface(ASTInterface $interface)
+    public function visitInterface(ASTInterface $interface): void
     {
         // Empty visit method, we don't want interface metrics
     }
 
     /**
      * Visits a method node.
-     *
-     * @return void
      */
-    public function visitMethod(ASTMethod $method)
+    public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
@@ -176,13 +168,11 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
 
     /**
      * @see http://www.scribd.com/doc/99533/Halstead-s-Operators-and-Operands-in-C-C-JAVA-by-Indranil-Nandy
-     *
-     * @return void
      */
-    public function calculateHalsteadBasis(AbstractASTCallable $callable)
+    public function calculateHalsteadBasis(AbstractASTCallable $callable): void
     {
-        $operators = array();
-        $operands = array();
+        $operators = [];
+        $operands = [];
 
         $skipUntil = null;
 
@@ -359,12 +349,12 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
             }
         }
 
-        $this->metrics[$callable->getId()] = array(
+        $this->metrics[$callable->getId()] = [
             'n1' => count(array_unique($operators)),
             'n2' => count(array_unique($operands)),
             'N1' => count($operators),
             'N2' => count($operands),
-        );
+        ];
     }
 
     /**
@@ -379,7 +369,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      */
     public function calculateHalsteadMeasures(array $basis)
     {
-        $measures = array();
+        $measures = [];
         $measures[self::M_HALSTEAD_LENGTH] = $basis['N1'] + $basis['N2'];
         $measures[self::M_HALSTEAD_VOCABULARY] = $basis['n1'] + $basis['n2'];
         $measures[self::M_HALSTEAD_VOLUME] =

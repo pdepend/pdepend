@@ -55,7 +55,7 @@ use PDepend\Metrics\Analyzer\CrapIndexAnalyzer;
  */
 class ApplicationTest extends AbstractTestCase
 {
-    public function testGetRunner()
+    public function testGetRunner(): void
     {
         $application = $this->createTestApplication();
         $runner = $application->getRunner();
@@ -63,21 +63,21 @@ class ApplicationTest extends AbstractTestCase
         $this->assertInstanceOf('PDepend\\TextUI\\Runner', $runner);
     }
 
-    public function testAnalyzerFactory()
+    public function testAnalyzerFactory(): void
     {
         $application = $this->createTestApplication();
 
         $this->assertInstanceOf('PDepend\\Metrics\\AnalyzerFactory', $application->getAnalyzerFactory());
     }
 
-    public function testReportGeneratorFactory()
+    public function testReportGeneratorFactory(): void
     {
         $application = $this->createTestApplication();
 
         $this->assertInstanceOf('PDepend\\Report\\ReportGeneratorFactory', $application->getReportGeneratorFactory());
     }
 
-    public function testBinCanReadInput()
+    public function testBinCanReadInput(): void
     {
         $cwd = getcwd();
         chdir(__DIR__ . '/../../../..');
@@ -94,7 +94,7 @@ class ApplicationTest extends AbstractTestCase
 
     /**
      */
-    public function testSetConfigurationFileAndThrowInvalidArgumentException()
+    public function testSetConfigurationFileAndThrowInvalidArgumentException(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('(^The configuration file ".*fileThatDoesNotExists\\.txt" doesn\\\'t exist\\.$)');
@@ -105,7 +105,7 @@ class ApplicationTest extends AbstractTestCase
         $application->setConfigurationFile($filename);
     }
 
-    public function testGetConfiguration()
+    public function testGetConfiguration(): void
     {
         $application = $this->createTestApplication();
         $config = $application->getConfiguration();
@@ -113,7 +113,7 @@ class ApplicationTest extends AbstractTestCase
         $this->assertInstanceOf('PDepend\\Util\\Configuration', $config);
     }
 
-    public function testGetEngine()
+    public function testGetEngine(): void
     {
         $application = $this->createTestApplication();
         $config = $application->getEngine();
@@ -121,25 +121,25 @@ class ApplicationTest extends AbstractTestCase
         $this->assertInstanceOf('PDepend\\Engine', $config);
     }
 
-    public function testGetAvailableLoggerOptions()
+    public function testGetAvailableLoggerOptions(): void
     {
         $application = $this->createTestApplication();
         $options = $application->getAvailableLoggerOptions();
 
-        $this->assertSame(array(
+        $this->assertSame([
             'message' => 'Dummy logger for tests',
             'value' => 'file',
-        ), $options['--dummy-logger']);
+        ], $options['--dummy-logger']);
     }
 
-    public function testGetAvailableAnalyzerOptions()
+    public function testGetAvailableAnalyzerOptions(): void
     {
         $application = $this->createTestApplication();
         $options = $application->getAvailableAnalyzerOptions();
 
-        $this->assertSame(array(
+        $this->assertSame([
             'message' => "Clover style CodeCoverage report, as produced by PHPUnit's --coverage-clover option.",
             'value' => 'file',
-        ), $options['--' . CrapIndexAnalyzer::REPORT_OPTION]);
+        ], $options['--' . CrapIndexAnalyzer::REPORT_OPTION]);
     }
 }

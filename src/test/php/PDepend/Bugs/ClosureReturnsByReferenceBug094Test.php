@@ -58,7 +58,7 @@ class ClosureReturnsByReferenceBug094Test extends AbstractRegressionTestCase
      *
      * @return void
      */
-    public function testParserHandlesClosureThatReturnsReference()
+    public function testParserHandlesClosureThatReturnsReference(): void
     {
         $this->parseCodeResourceForTest()
             ->current()
