@@ -56,6 +56,7 @@ jobs:
           ./pdepend.phar --version;
 
       - name: Sign phar
+        if: github.repository == 'pdepend/pdepend' && github.event_name == 'release'
         env:
           PASSPHRASE: ${{ secrets.PASSPHRASE }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
