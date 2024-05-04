@@ -47,6 +47,8 @@ namespace PDepend\Source\Language\PHP;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTType;
+use PDepend\Source\Parser\TokenStreamEndException;
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -104,6 +106,9 @@ abstract class PHPParserVersion82 extends PHPParserVersion81
     }
 
     /**
+     * @throws UnexpectedTokenException
+     * @throws TokenStreamEndException
+     *
      * @return ASTType
      */
     protected function parseSingleTypeHint()

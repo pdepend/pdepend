@@ -43,6 +43,7 @@
 namespace PDepend\Util;
 
 use Imagick;
+use ImagickException;
 use InvalidArgumentException;
 
 /**
@@ -60,6 +61,9 @@ class ImageConvert
      *
      * @param string $input  The input file.
      * @param string $output The output file.
+     *
+     * @throws ImagickException
+     * @throws InvalidArgumentException
      */
     public static function convert($input, $output): void
     {

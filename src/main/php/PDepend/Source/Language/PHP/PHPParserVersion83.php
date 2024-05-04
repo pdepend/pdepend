@@ -45,6 +45,8 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\ASTConstantDeclarator;
+use PDepend\Source\Parser\TokenStreamEndException;
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -59,6 +61,9 @@ abstract class PHPParserVersion83 extends PHPParserVersion82
 {
     /**
      * Parse a typed constant (PHP >= 8.3).
+     *
+     * @throws UnexpectedTokenException
+     * @throws TokenStreamEndException
      *
      * @return ASTConstantDeclarator
      *

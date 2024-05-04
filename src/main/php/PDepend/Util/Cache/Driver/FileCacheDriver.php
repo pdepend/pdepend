@@ -47,6 +47,7 @@ namespace PDepend\Util\Cache\Driver;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\File\FileCacheDirectory;
 use PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector;
+use RuntimeException;
 
 /**
  * A file system based cache implementation.
@@ -106,6 +107,8 @@ class FileCacheDriver implements CacheDriver
      * @param string      $root     The cache root directory.
      * @param int         $ttl      The cache TTL.
      * @param string|null $cacheKey Unique key for this cache instance.
+     *
+     * @throws RuntimeException
      */
     public function __construct($root, $ttl = self::DEFAULT_TTL, $cacheKey = null)
     {

@@ -46,6 +46,7 @@ namespace PDepend\Util\Cache\Driver\File;
 
 use DirectoryIterator;
 use PDepend\Util\Cache\CacheDriver;
+use RuntimeException;
 use SplFileInfo;
 
 /**
@@ -74,6 +75,8 @@ class FileCacheDirectory
      * Constructs a new cache directory helper instance.
      *
      * @param string $cacheDir The cache root directory.
+     *
+     * @throws RuntimeException
      */
     public function __construct($cacheDir)
     {
@@ -186,6 +189,8 @@ class FileCacheDirectory
     /**
      * Flushes all contents below the configured cache root directory and writes
      * a version file with the current software version.
+     *
+     * @throws RuntimeException
      */
     protected function flush(): void
     {
@@ -197,6 +202,8 @@ class FileCacheDirectory
      * Deletes all files and directories below the given <b>$cacheDir</b>.
      *
      * @param string $cacheDir A cache directory.
+     *
+     * @throws RuntimeException
      */
     protected function flushDirectory($cacheDir): void
     {
@@ -210,6 +217,8 @@ class FileCacheDirectory
      * it is a file, directory or symlink.
      *
      * @param DirectoryIterator $file
+     *
+     * @throws RuntimeException
      */
     protected function flushEntry(SplFileInfo $file): void
     {
