@@ -332,6 +332,8 @@ class Command
 
     /**
      * Assign CLI arguments to current runner instance
+     *
+     * @throws Exception
      */
     protected function assignArguments(): void
     {
@@ -417,6 +419,8 @@ class Command
 
     /**
      * Outputs the main help of PDepend.
+     *
+     * @throws Exception
      */
     protected function printHelp(): void
     {
@@ -471,6 +475,8 @@ class Command
      * Prints all available log options and returns the length of the longest
      * option.
      *
+     * @throws Exception
+     *
      * @return int
      */
     protected function printLogOptions()
@@ -512,6 +518,8 @@ class Command
      * Prints the analyzer options.
      *
      * @param int $length Length of the longest option.
+     *
+     * @throws Exception
      *
      * @return int
      */

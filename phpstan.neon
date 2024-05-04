@@ -7,3 +7,8 @@ parameters:
     universalObjectCratesClasses:
         - PDepend\Util\Configuration
     level: 6
+    exceptions:
+        reportUncheckedExceptionDeadCatch: true
+        implicitThrows: false
+        check:
+            tooWideThrowType: true

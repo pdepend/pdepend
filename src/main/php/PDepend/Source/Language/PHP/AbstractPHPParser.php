@@ -451,6 +451,8 @@ abstract class AbstractPHPParser
     /**
      * Parses the contents of the tokenizer and generates a node tree based on
      * the found tokens.
+     *
+     * @throws ParserException
      */
     public function parse(): void
     {
@@ -1721,6 +1723,8 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
+     * @throws ParserException
+     *
      * @return ASTAllocationExpression
      *
      * @since 0.9.6
@@ -1745,6 +1749,8 @@ abstract class AbstractPHPParser
      *
      * @param T $allocation
      *
+     * @throws ParserException
+     *
      * @return T
      *
      * @since 2.3
@@ -1756,6 +1762,8 @@ abstract class AbstractPHPParser
 
     /**
      * Parse the instanciation for new keyword without arguments.
+     *
+     * @throws ParserException
      *
      * @return ASTAllocationExpression
      */
@@ -2516,6 +2524,8 @@ abstract class AbstractPHPParser
     /**
      * @param bool $classRef
      *
+     * @throws ParserException
+     *
      * @return ASTNode
      */
     private function parseStandAloneExpressionType($classRef)
@@ -2547,6 +2557,8 @@ abstract class AbstractPHPParser
      *
      * @param T    $expr
      * @param bool $classRef
+     *
+     * @throws ParserException
      *
      * @return T
      */
@@ -2859,6 +2871,8 @@ abstract class AbstractPHPParser
     /**
      * Parse a scope enclosed by curly braces.
      *
+     * @throws ParserException
+     *
      * @return ASTScopeStatement
      *
      * @since 0.9.12
@@ -2898,6 +2912,8 @@ abstract class AbstractPHPParser
     /**
      * Parses all statements that exist in a scope an adds them to a scope
      * instance.
+     *
+     * @throws ParserException
      *
      * @return ASTScopeStatement
      *
@@ -3401,6 +3417,8 @@ abstract class AbstractPHPParser
     /**
      * This method parses a switch statement.
      *
+     * @throws ParserException
+     *
      * @return ASTSwitchStatement
      *
      * @since 0.9.8
@@ -3421,6 +3439,8 @@ abstract class AbstractPHPParser
      * Parses the body of a switch statement.
      *
      * @param ASTSwitchStatement $switch The parent switch stmt.
+     *
+     * @throws ParserException
      *
      * @return ASTSwitchStatement
      *
@@ -3466,6 +3486,8 @@ abstract class AbstractPHPParser
 
     /**
      * This method parses a case label of a switch statement.
+     *
+     * @throws ParserException
      *
      * @return ASTSwitchLabel
      *
@@ -3521,6 +3543,8 @@ abstract class AbstractPHPParser
      * Parses the body of an switch label node.
      *
      * @param ASTSwitchLabel $label The context switch label.
+     *
+     * @throws ParserException
      *
      * @return ASTSwitchLabel
      */
@@ -3591,6 +3615,8 @@ abstract class AbstractPHPParser
 
     /**
      * This method parses a try-statement + associated catch-statements.
+     *
+     * @throws ParserException
      *
      * @return ASTTryStatement
      *
@@ -3886,6 +3912,8 @@ abstract class AbstractPHPParser
     /**
      * This method parses a single for-statement node.
      *
+     * @throws ParserException
+     *
      * @return ASTForStatement
      *
      * @since 0.9.8
@@ -3949,6 +3977,8 @@ abstract class AbstractPHPParser
 
     /**
      * Parses the expression part of a for-statement.
+     *
+     * @throws ParserException
      *
      * @return ASTNode|null
      *
@@ -4700,8 +4730,6 @@ abstract class AbstractPHPParser
     /**
      * This method parses a method- or constant-postfix expression. This expression
      * will contain an identifier node as nested child.
-     *
-     * @throws ParserException
      *
      * @return ASTNode
      *
@@ -6300,8 +6328,6 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
-     * @throws InvalidStateException
-     *
      * @return ASTFormalParameter
      *
      * @since 0.9.6
@@ -6558,6 +6584,8 @@ abstract class AbstractPHPParser
 
     /**
      * Parses an optional statement or returns <b>null</b>.
+     *
+     * @throws ParserException
      *
      * @return AbstractASTClassOrInterface|ASTCallable|ASTNode|null
      *

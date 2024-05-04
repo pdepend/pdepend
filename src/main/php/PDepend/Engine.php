@@ -217,6 +217,8 @@ class Engine
      * Adds the specified directory to the list of directories to be analyzed.
      *
      * @param string $directory The php source directory.
+     *
+     * @throws InvalidArgumentException
      */
     public function addDirectory($directory): void
     {
@@ -233,6 +235,8 @@ class Engine
      * Adds a single source code file to the list of files to be analysed.
      *
      * @param string $file The source file name.
+     *
+     * @throws InvalidArgumentException
      */
     public function addFile($file): void
     {
@@ -317,6 +321,8 @@ class Engine
      * Analyzes the registered directories and returns the collection of
      * analyzed namespace.
      *
+     * @throws InvalidArgumentException
+     *
      * @return ASTArtifactList<ASTNamespace>
      */
     public function analyze()
@@ -356,6 +362,8 @@ class Engine
     /**
      * Returns the number of analyzed php classes and interfaces.
      *
+     * @throws RuntimeException
+     *
      * @return int
      */
     public function countClasses()
@@ -384,7 +392,9 @@ class Engine
     }
 
     /**
-     *  Returns the number of analyzed namespaces.
+     * Returns the number of analyzed namespaces.
+     *
+     * @throws RuntimeException
      *
      * @return int
      */
@@ -575,6 +585,8 @@ class Engine
      * This method performs the analysing process of the parsed source files. It
      * creates the required analyzers for the registered listeners and then
      * applies them to the source tree.
+     *
+     * @throws InvalidArgumentException
      */
     private function performAnalyzeProcess(): void
     {
@@ -610,6 +622,8 @@ class Engine
     /**
      * This method will create an iterator instance which contains all files
      * that are part of the parsing process.
+     *
+     * @throws RuntimeException
      *
      * @return ArrayIterator<int, string>
      */
@@ -671,6 +685,8 @@ class Engine
 
     /**
      * @param array<string, mixed> $options
+     *
+     * @throws InvalidArgumentException
      *
      * @return Analyzer[]
      */

@@ -42,6 +42,7 @@
 
 namespace PDepend;
 
+use Exception;
 use InvalidArgumentException;
 use PDepend\DependencyInjection\PdependExtension;
 use PDepend\Metrics\AnalyzerFactory;
@@ -74,6 +75,8 @@ class Application
 
     /**
      * @param string $configurationFile
+     *
+     * @throws InvalidArgumentException
      */
     public function setConfigurationFile($configurationFile): void
     {
@@ -87,6 +90,8 @@ class Application
     }
 
     /**
+     * @throws Exception
+     *
      * @return Configuration
      */
     public function getConfiguration()
@@ -98,6 +103,8 @@ class Application
     }
 
     /**
+     * @throws Exception
+     *
      * @return Engine
      */
     public function getEngine()
@@ -109,6 +116,8 @@ class Application
     }
 
     /**
+     * @throws Exception
+     *
      * @return Runner
      */
     public function getRunner()
@@ -120,6 +129,8 @@ class Application
     }
 
     /**
+     * @throws Exception
+     *
      * @return ReportGeneratorFactory
      */
     public function getReportGeneratorFactory()
@@ -131,6 +142,8 @@ class Application
     }
 
     /**
+     * @throws Exception
+     *
      * @return AnalyzerFactory
      */
     public function getAnalyzerFactory()
@@ -142,6 +155,8 @@ class Application
     }
 
     /**
+     * @throws Exception
+     *
      * @return TaggedContainerInterface
      */
     private function getContainer()
@@ -154,6 +169,8 @@ class Application
     }
 
     /**
+     * @throws Exception
+     *
      * @return TaggedContainerInterface
      */
     private function createContainer()
@@ -182,6 +199,8 @@ class Application
     /**
      * Returns available logger options and documentation messages.
      *
+     * @throws Exception
+     *
      * @return array<string, array<string, string>>
      */
     public function getAvailableLoggerOptions()
@@ -192,6 +211,8 @@ class Application
     /**
      * Returns available analyzer options and documentation messages.
      *
+     * @throws Exception
+     *
      * @return array<string, array<string, string>>
      */
     public function getAvailableAnalyzerOptions()
@@ -201,6 +222,8 @@ class Application
 
     /**
      * @param string $serviceTag
+     *
+     * @throws Exception
      *
      * @return array<string, array<string, string>>
      */
