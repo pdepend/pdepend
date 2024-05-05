@@ -111,7 +111,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * )
      * </code>
      *
-     * @var array<string, array<string, int>>
+     * @var array<string, array<string, float>>
      */
     private $nodeMetrics = null;
 
@@ -211,19 +211,19 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         $ranks = [];
 
         foreach (array_keys($this->nodes) as $name) {
-            $ranks[$name] = 1;
+            $ranks[$name] = 1.0;
         }
 
         for ($i = 0; $i < self::ALGORITHM_LOOPS; $i++) {
             foreach ($this->nodes as $name => $info) {
-                $rank = 0;
+                $rank = 0.0;
                 foreach ($info[$id1] as $ref) {
                     $previousRank = $ranks[$ref];
                     $refCount = count($this->nodes[$ref][$id2]);
 
                     $rank += ($previousRank / $refCount);
                 }
-                $ranks[$name] = ((1 - $dampingFactory)) + $dampingFactory * $rank;
+                $ranks[$name] = ((1.0 - $dampingFactory)) + $dampingFactory * $rank;
             }
         }
         return $ranks;

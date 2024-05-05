@@ -74,7 +74,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * @var array<string, ASTNamespace>
      */
-    protected $nodeSet = [];
+    private $nodeSet = [];
     /**
      * Hash with all calculated node metrics.
      *

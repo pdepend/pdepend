@@ -94,6 +94,13 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         M_NON_COMMENT_LINES_OF_CODE = 'ncloc';
 
     /**
+     * Collected node metrics
+     *
+     * @var array<string, array<string, int>>
+     */
+    protected $metrics = null;
+
+    /**
      * Collected project metrics.
      *
      * @var array<string, int>

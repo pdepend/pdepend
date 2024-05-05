@@ -73,7 +73,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     /**
      * Metrics restored from the cache. This property is only used temporary.
      *
-     * @var array<string, mixed>
+     * @var array<string, array<string, int>>
      */
     private $metricsCached = [];
 
