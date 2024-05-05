@@ -290,7 +290,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertCount(2, $trait->getChildren());
+        $this->assertCount(3, $trait->getChildren());
     }
 
     /**

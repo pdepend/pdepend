@@ -191,59 +191,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     }
 
     /**
-     * This method will search recursive for the first child node that is an
-     * instance of the given <b>$targetType</b>. The returned value will be
-     * <b>null</b> if no child exists for that.
-     *
-     * @template T of ASTNode
-     *
-     * @param class-string<T> $targetType Searched class or interface type.
-     *
-     * @return T|null
-     *
-     * @access private
-     *
-     * @since  0.9.6
-     */
-    public function getFirstChildOfType($targetType)
-    {
-        foreach ($this->nodes as $node) {
-            if ($node instanceof $targetType) {
-                return $node;
-            }
-            if (($child = $node->getFirstChildOfType($targetType)) !== null) {
-                return $child;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Will find all children for the given type.
-     *
-     * @template T of ASTNode
-     *
-     * @param class-string<T> $targetType Searched class or interface type.
-     * @param T[]             $results    The found children.
-     *
-     * @return T[]
-     *
-     * @access private
-     *
-     * @since  0.9.6
-     */
-    public function findChildrenOfType($targetType, array &$results = [])
-    {
-        foreach ($this->nodes as $node) {
-            if ($node instanceof $targetType) {
-                $results[] = $node;
-            }
-            $node->findChildrenOfType($targetType, $results);
-        }
-        return $results;
-    }
-
-    /**
      * Returns the tokens found in the function body.
      *
      * @return array<mixed>

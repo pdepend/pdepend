@@ -44,7 +44,6 @@ namespace PDepend\Source\Language\PHP;
 
 use BadMethodCallException;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
-use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTAnonymousClass;
@@ -2590,12 +2589,12 @@ class PHPBuilder implements Builder
     /**
      * Builds an enum definition.
      *
-     * @param string           $name  The enum case name.
-     * @param ?AbstractASTNode $value The enum case value if backed.
+     * @param string   $name  The enum case name.
+     * @param ?ASTNode $value The enum case value if backed.
      *
      * @return ASTEnumCase The created class object.
      */
-    public function buildEnumCase($name, ?AbstractASTNode $value = null)
+    public function buildEnumCase($name, ?ASTNode $value = null)
     {
         $this->checkBuilderState();
 

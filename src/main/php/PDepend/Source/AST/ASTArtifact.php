@@ -42,15 +42,13 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
-
 /**
  * Abstract base class for code item.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface ASTArtifact /* extends ASTNode */
+interface ASTArtifact extends ASTNode
 {
     /**
      * Returns the artifact name.
@@ -67,15 +65,4 @@ interface ASTArtifact /* extends ASTNode */
      * @return string
      */
     public function getId();
-
-    /**
-     * ASTVisitor method for node tree traversal.
-     *
-     * @template T of array<string, mixed>|string|null
-     *
-     * @param T $data
-     *
-     * @return T
-     */
-    public function accept(ASTVisitor $visitor, $data = null);
 }

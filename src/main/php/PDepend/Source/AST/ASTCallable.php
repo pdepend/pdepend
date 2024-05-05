@@ -48,7 +48,7 @@ namespace PDepend\Source\AST;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface ASTCallable
+interface ASTCallable extends ASTNode
 {
     /**
      * @return ASTType

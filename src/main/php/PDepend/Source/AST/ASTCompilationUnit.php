@@ -291,6 +291,11 @@ class ASTCompilationUnit extends AbstractASTArtifact
         $this->childNodes[$artifact->getId()] = $artifact;
     }
 
+    public function getChildren()
+    {
+        return $this->childNodes;
+    }
+
     /**
      * Returns the start line number for this source file. For an existing file
      * this value must always be <em>1</em>, while it can be <em>0</em> for a
