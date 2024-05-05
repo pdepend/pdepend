@@ -45,29 +45,28 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTConstantDeclarator} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTConstantDeclarator
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTConstantDeclarator
  * @group unittest
  */
 class ASTConstantDeclaratorTest extends ASTNodeTestCase
 {
     /**
      * testReturnValueOfMagicSleepContainsValueProperty
-     *
-     * @return void
      */
     public function testReturnValueOfMagicSleepContainsValueProperty(): void
     {
-        $node = new \PDepend\Source\AST\ASTConstantDeclarator();
+        $node = new ASTConstantDeclarator();
         $this->assertEquals(
             [
                 'value',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $node->__sleep()
         );
@@ -75,8 +74,6 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
 
     /**
      * testParserInjectsValueObjectIntoConstantDeclarator
-     *
-     * @return void
      */
     public function testParserInjectsValueObjectIntoConstantDeclarator(): void
     {
@@ -86,8 +83,6 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
 
     /**
      * testParserInjectsExpectedScalarValueIntoConstantDeclarator
-     *
-     * @return void
      */
     public function testParserInjectsExpectedScalarValueIntoConstantDeclarator(): void
     {
@@ -98,7 +93,6 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testParserInjectsExpectedHeredocValueIntoConstantDeclarator
      *
-     * @return void
      * @since 0.10.9
      */
     public function testParserInjectsExpectedHeredocValueIntoConstantDeclarator(): void
@@ -110,7 +104,8 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testConstantDeclarator
      *
-     * @return \PDepend\Source\AST\ASTConstantDeclarator
+     * @return ASTConstantDeclarator
+     *
      * @since 1.0.2
      */
     public function testConstantDeclarator()
@@ -124,9 +119,8 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testConstantDeclaratorHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTConstantDeclarator $declarator
+     * @param ASTConstantDeclarator $declarator
      *
-     * @return void
      * @depends testConstantDeclarator
      */
     public function testConstantDeclaratorHasExpectedStartLine($declarator): void
@@ -137,9 +131,8 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testConstantDeclaratorHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTConstantDeclarator $declarator
+     * @param ASTConstantDeclarator $declarator
      *
-     * @return void
      * @depends testConstantDeclarator
      */
     public function testConstantDeclaratorHasExpectedStartColumn($declarator): void
@@ -150,9 +143,8 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testConstantDeclaratorHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTConstantDeclarator $declarator
+     * @param ASTConstantDeclarator $declarator
      *
-     * @return void
      * @depends testConstantDeclarator
      */
     public function testConstantDeclaratorHasExpectedEndLine($declarator): void
@@ -163,9 +155,8 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testConstantDeclaratorHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTConstantDeclarator $declarator
+     * @param ASTConstantDeclarator $declarator
      *
-     * @return void
      * @depends testConstantDeclarator
      */
     public function testConstantDeclaratorHasExpectedEndColumn($declarator): void
@@ -176,7 +167,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTConstantDeclarator
+     * @return ASTConstantDeclarator
      */
     private function getFirstConstantDeclaratorInClass()
     {

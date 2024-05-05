@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
  * @since 0.10.0
  */
@@ -52,6 +53,7 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
  * @since 0.10.0
  *
@@ -61,8 +63,6 @@ class UnexpectedTokenAsciiChar39Bug181Test extends AbstractRegressionTestCase
 {
     /**
      * testUnexpectedTokenDoesNotQuitPDepend
-     *
-     * @return void
      */
     public function testUnexpectedTokenDoesNotQuitPDepend(): void
     {

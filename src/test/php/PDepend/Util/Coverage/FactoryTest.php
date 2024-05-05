@@ -43,22 +43,22 @@
 namespace PDepend\Util\Coverage;
 
 use PDepend\AbstractTestCase;
+use RuntimeException;
 
 /**
  * Test case for the {@link \PDepend\Util\Coverage\Factory} class.
  *
+ * @covers \PDepend\Util\Coverage\Factory
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Util\Coverage\Factory
  * @group unittest
  */
 class FactoryTest extends AbstractTestCase
 {
     /**
      * testCreateReturnsCloverReportInstanceForCloverInputFile
-     *
-     * @return void
      */
     public function testCreateReturnsCloverReportInstanceForCloverInputFile(): void
     {
@@ -70,12 +70,10 @@ class FactoryTest extends AbstractTestCase
 
     /**
      * testCreateMethodThrowsExceptionWhenFileDoesNotExist
-     *
-     * @return void
      */
     public function testCreateMethodThrowsExceptionWhenFileDoesNotExist(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $factory = new Factory();
         $factory->create(__FUNCTION__);
@@ -83,12 +81,10 @@ class FactoryTest extends AbstractTestCase
 
     /**
      * testCreateMethodThrowsExceptionWhenFileIsNotValidXml
-     *
-     * @return void
      */
     public function testCreateMethodThrowsExceptionWhenFileIsNotValidXml(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $factory = new Factory();
         $factory->create(__FILE__);
@@ -96,12 +92,10 @@ class FactoryTest extends AbstractTestCase
 
     /**
      * testCreateMethodThrowsExceptionForUnsupportedReportFormat
-     *
-     * @return void
      */
     public function testCreateMethodThrowsExceptionForUnsupportedReportFormat(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $factory = new Factory();
         $factory->create(__DIR__ . '/_files/fail.xml');

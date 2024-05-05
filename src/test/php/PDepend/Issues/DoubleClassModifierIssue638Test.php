@@ -49,18 +49,17 @@ use PDepend\Source\Tokenizer\Tokens;
 /**
  * Test case for issue #638, php 8.2 readonly allows double class modifiers.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
 class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that a class can have a readonly modifier
-     *
-     * @return void
      */
     public function testReadonlyClass(): void
     {
@@ -81,8 +80,6 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
 
     /**
      * Tests that a class can have an abstract modifier
-     *
-     * @return void
      */
     public function testAbstractClass(): void
     {
@@ -103,8 +100,6 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
 
     /**
      * Tests that a class can have a final modifier
-     *
-     * @return void
      */
     public function testFinalClass(): void
     {
@@ -125,8 +120,6 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
 
     /**
      * Tests that a class can have an abstract and readonly modifier
-     *
-     * @return void
      */
     public function testAbstractReadonlyClass(): void
     {
@@ -152,8 +145,6 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
 
     /**
      * Tests that a class can have a readonly and abstract modifier
-     *
-     * @return void
      */
     public function testReadonlyAbstractClass(): void
     {
@@ -179,8 +170,6 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
 
     /**
      * Tests that a class can have a final and readonly modifier
-     *
-     * @return void
      */
     public function testFinalReadonlyClass(): void
     {
@@ -206,8 +195,6 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
 
     /**
      * Tests that a class can have a readonly and final modifier
-     *
-     * @return void
      */
     public function testReadonlyFinalClass(): void
     {
@@ -233,8 +220,6 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
 
     /**
      * Tests that a class can have a readonly and final modifier
-     *
-     * @return void
      */
     public function testAbstractFinalReadonlyClass(): void
     {

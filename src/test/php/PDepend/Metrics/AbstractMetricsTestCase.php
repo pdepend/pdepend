@@ -42,6 +42,7 @@
 
 namespace PDepend\Metrics;
 
+use Exception;
 use PDepend\AbstractTestCase;
 
 /**
@@ -56,8 +57,9 @@ abstract class AbstractMetricsTestCase extends AbstractTestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string  $testCase
-     * @param boolean $ignoreAnnotations
+     * @param string $testCase
+     * @param bool   $ignoreAnnotations
+     *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
@@ -76,9 +78,9 @@ abstract class AbstractMetricsTestCase extends AbstractTestCase
                 ),
                 $ignoreAnnotations
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
         }
-        
+
         return parent::parseSource(
             sprintf(
                 'Metrics/%s/%s/%s',

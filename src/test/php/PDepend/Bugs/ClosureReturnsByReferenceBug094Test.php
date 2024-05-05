@@ -55,8 +55,6 @@ class ClosureReturnsByReferenceBug094Test extends AbstractRegressionTestCase
 {
     /**
      * testParserHandlesClosureThatReturnsReference
-     *
-     * @return void
      */
     public function testParserHandlesClosureThatReturnsReference(): void
     {

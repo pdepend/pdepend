@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTBooleanOrExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTBooleanOrExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTBooleanOrExpression
  * @group unittest
  */
 class ASTBooleanOrExpressionTest extends ASTNodeTestCase
 {
     /**
      * testBooleanOrExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testBooleanOrExpressionHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTBooleanOrExpressionTest extends ASTNodeTestCase
 
     /**
      * testBooleanOrExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testBooleanOrExpressionHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTBooleanOrExpressionTest extends ASTNodeTestCase
 
     /**
      * testBooleanOrExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testBooleanOrExpressionHasExpectedEndLine(): void
     {
@@ -89,21 +84,19 @@ class ASTBooleanOrExpressionTest extends ASTNodeTestCase
 
     /**
      * testBooleanOrExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testBooleanOrExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstBooleanOrExpressionInFunction(__METHOD__);
         $this->assertEquals(19, $expr->getEndColumn());
     }
-    
+
     /**
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTBooleanOrExpression
+     * @return ASTBooleanOrExpression
      */
     private function getFirstBooleanOrExpressionInFunction($testCase)
     {

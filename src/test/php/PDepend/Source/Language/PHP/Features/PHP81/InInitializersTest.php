@@ -49,16 +49,15 @@ use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  * @group php8.1
  */
 class InInitializersTest extends PHPParserVersion81TestCase
 {
-    /**
-     * @return void
-     */
     public function testInInitializers(): void
     {
         $method = $this->getFirstMethodForTestCase();
@@ -96,9 +95,6 @@ class InInitializersTest extends PHPParserVersion81TestCase
         $this->assertSame('Bar', $expression->getChild(0)->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testInInitializersMultipleProperties(): void
     {
         $method = $this->getFirstMethodForTestCase();

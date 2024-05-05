@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://github.com/pdepend/pdepend/issues/95
  * @link       https://github.com/pdepend/pdepend/issues/104
  * @since 1.1.1
@@ -50,20 +51,20 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://github.com/pdepend/pdepend/issues/95
  * @link       https://github.com/pdepend/pdepend/issues/104
  * @since 1.1.1
  *
  * @ticket 104
  * @ticket 95
+ *
  * @group regressiontest
  */
 class ShortArraySyntaxInitializerBug00000104Test extends AbstractRegressionTestCase
 {
     /**
      * testPropertyDefaultValue
-     *
-     * @return void
      */
     public function testPropertyDefaultValue(): void
     {
@@ -72,8 +73,6 @@ class ShortArraySyntaxInitializerBug00000104Test extends AbstractRegressionTestC
 
     /**
      * testPropertyDefaultValue
-     *
-     * @return void
      */
     public function testParameterDefaultValue(): void
     {

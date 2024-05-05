@@ -42,24 +42,24 @@
 
 namespace PDepend\Report\Overview;
 
+use DOMDocument;
 use PDepend\AbstractTestCase;
 use PDepend\Report\DummyAnalyzer;
 
 /**
  * Test case for the overview pyramid logger.
  *
+ * @covers \PDepend\Report\Overview\Pyramid
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Report\Overview\Pyramid
  * @group unittest
  */
 class PyramidTest extends AbstractTestCase
 {
     /**
      * Tests that the logger returns the expected set of analyzers.
-     *
-     * @return void
      */
     public function testReturnsExceptedAnalyzers(): void
     {
@@ -81,8 +81,6 @@ class PyramidTest extends AbstractTestCase
      * configured.
      *
      * @covers \PDepend\Report\NoLogOutputException
-     *
-     * @return void
      */
     public function testThrowsExceptionForInvalidLogTarget(): void
     {
@@ -99,8 +97,6 @@ class PyramidTest extends AbstractTestCase
 
     /**
      * Tests that the log method returns <b>false</b> for an invalid logger.
-     *
-     * @return void
      */
     public function testPyramidDoesntAcceptInvalidAnalyzer(): void
     {
@@ -110,8 +106,6 @@ class PyramidTest extends AbstractTestCase
 
     /**
      * Tests that the logger checks for the required analyzer.
-     *
-     * @return void
      */
     public function testCloseThrowsAnExceptionIfNoCouplingAnalyzerWasSet(): void
     {
@@ -133,8 +127,6 @@ class PyramidTest extends AbstractTestCase
 
     /**
      * Tests that the logger checks for the required analyzer.
-     *
-     * @return void
      */
     public function testCloseThrowsAnExceptionIfNoCyclomaticComplexityAnalyzerWasSet(): void
     {
@@ -156,8 +148,6 @@ class PyramidTest extends AbstractTestCase
 
     /**
      * Tests that the logger checks for the required analyzer.
-     *
-     * @return void
      */
     public function testCloseThrowsAnExceptionIfNoInheritanceAnalyzerWasSet(): void
     {
@@ -179,8 +169,6 @@ class PyramidTest extends AbstractTestCase
 
     /**
      * Tests that the logger checks for the required analyzer.
-     *
-     * @return void
      */
     public function testCloseThrowsAnExceptionIfNoNodeCountAnalyzerWasSet(): void
     {
@@ -202,8 +190,6 @@ class PyramidTest extends AbstractTestCase
 
     /**
      * Tests that the logger checks for the required analyzer.
-     *
-     * @return void
      */
     public function testCloseThrowsAnExceptionIfNoNodeLOCAnalyzerWasSet(): void
     {
@@ -225,8 +211,6 @@ class PyramidTest extends AbstractTestCase
 
     /**
      * testCollectedAndComputedValuesInOutputSVG
-     *
-     * @return void
      */
     public function testCollectedAndComputedValuesInOutputSVG(): void
     {
@@ -261,10 +245,10 @@ class PyramidTest extends AbstractTestCase
             'nom-noc'       =>  9.42,
             'noc-nop'       =>  20.21,
             'fanout-calls'  =>  0.56,
-            'calls-nom'     =>  4.18
+            'calls-nom'     =>  4.18,
         ];
 
-        $svg = new \DOMDocument();
+        $svg = new DOMDocument();
         $svg->load($output, LIBXML_NOWARNING);
 
         // TODO: Replace this loop assertion
@@ -286,7 +270,7 @@ class PyramidTest extends AbstractTestCase
             ->will($this->returnValue(
                 [
                     'fanout'  =>  8590,
-                    'calls'   =>  15128
+                    'calls'   =>  15128,
                 ]
             ));
 
@@ -301,7 +285,7 @@ class PyramidTest extends AbstractTestCase
             ->method('getProjectMetrics')
             ->will($this->returnValue(
                 [
-                    'ccn2'  =>  5579
+                    'ccn2'  =>  5579,
                 ]
             ));
 
@@ -317,7 +301,7 @@ class PyramidTest extends AbstractTestCase
             ->will($this->returnValue(
                 [
                     'andc'  =>  0.31,
-                    'ahh'   =>  0.12
+                    'ahh'   =>  0.12,
                 ]
             ));
 
@@ -335,7 +319,7 @@ class PyramidTest extends AbstractTestCase
                     'nop'  =>  19,
                     'noc'  =>  384,
                     'nom'  =>  2018,
-                    'nof'  =>  1600
+                    'nof'  =>  1600,
                 ]
             ));
 
@@ -350,7 +334,7 @@ class PyramidTest extends AbstractTestCase
             ->method('getProjectMetrics')
             ->will($this->returnValue(
                 [
-                    'eloc'  =>  35175
+                    'eloc'  =>  35175,
                 ]
             ));
 

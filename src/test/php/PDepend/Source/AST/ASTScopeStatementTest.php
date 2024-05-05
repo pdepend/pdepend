@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTScopeStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTScopeStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTScopeStatement
  * @group unittest
  */
 class ASTScopeStatementTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testParserHandlesInlineScopeStatement
      *
-     * @return \PDepend\Source\AST\ASTScopeStatement
+     * @return ASTScopeStatement
+     *
      * @since 1.0.0
      */
     public function testParserHandlesInlineScopeStatement()
@@ -71,10 +73,12 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return \PDepend\Source\AST\ASTScopeStatement
+     * @return ASTScopeStatement
+     *
      * @since 1.0.0
+     *
      * @depends testParserHandlesInlineScopeStatement
      */
     public function testInlineScopeStatementHasExpectedStartLine($stmt)
@@ -87,10 +91,12 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return \PDepend\Source\AST\ASTScopeStatement
+     * @return ASTScopeStatement
+     *
      * @since 1.0.0
+     *
      * @depends testInlineScopeStatementHasExpectedStartLine
      */
     public function testInlineScopeStatementHasExpectedStartColumn($stmt)
@@ -103,10 +109,12 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return \PDepend\Source\AST\ASTScopeStatement
+     * @return ASTScopeStatement
+     *
      * @since 1.0.0
+     *
      * @depends testInlineScopeStatementHasExpectedStartColumn
      */
     public function testInlineScopeStatementHasExpectedEndLine($stmt)
@@ -119,10 +127,12 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return \PDepend\Source\AST\ASTScopeStatement
+     * @return ASTScopeStatement
+     *
      * @since 1.0.0
+     *
      * @depends testInlineScopeStatementHasExpectedEndLine
      */
     public function testInlineScopeStatementHasExpectedEndColumn($stmt)
@@ -133,7 +143,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatement
      *
-     * @return \PDepend\Source\AST\ASTScopeStatement
+     * @return ASTScopeStatement
+     *
      * @since 1.0.2
      */
     public function testScopeStatement()
@@ -143,13 +154,12 @@ class ASTScopeStatementTest extends ASTNodeTestCase
 
         return $stmt;
     }
-    
+
     /**
      * Tests that the scope-statement has the expected start line value.
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return void
      * @depends testScopeStatement
      */
     public function testScopeStatementHasExpectedStartLine($stmt): void
@@ -160,9 +170,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected start column value.
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return void
      * @depends testScopeStatement
      */
     public function testScopeStatementHasExpectedStartColumn($stmt): void
@@ -173,9 +182,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected end line value.
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return void
      * @depends testScopeStatement
      */
     public function testScopeStatementHasExpectedEndLine($stmt): void
@@ -186,9 +194,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected end column value.
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return void
      * @depends testScopeStatement
      */
     public function testScopeStatementHasExpectedEndColumn($stmt): void
@@ -199,7 +206,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatementWithAlternative
      *
-     * @return \PDepend\Source\AST\ASTScopeStatement
+     * @return ASTScopeStatement
+     *
      * @since 1.0.2
      */
     public function testScopeStatementWithAlternative()
@@ -213,9 +221,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatementWithAlternativeHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return void
      * @depends testScopeStatementWithAlternative
      */
     public function testScopeStatementWithAlternativeHasExpectedStartLine($stmt): void
@@ -226,9 +233,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatementWithAlternativeHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return void
      * @depends testScopeStatementWithAlternative
      */
     public function testScopeStatementWithAlternativeHasExpectedStartColumn($stmt): void
@@ -239,9 +245,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatementWithAlternativeHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return void
      * @depends testScopeStatementWithAlternative
      */
     public function testScopeStatementWithAlternativeHasExpectedEndLine($stmt): void
@@ -252,9 +257,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatementWithAlternativeHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTScopeStatement $stmt
+     * @param ASTScopeStatement $stmt
      *
-     * @return void
      * @depends testScopeStatementWithAlternative
      */
     public function testScopeStatementWithAlternativeHasExpectedEndColumn($stmt): void
@@ -265,7 +269,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTScopeStatement
+     * @return ASTScopeStatement
      */
     private function getFirstScopeStatementInFunction()
     {

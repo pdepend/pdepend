@@ -45,41 +45,36 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTDoWhileStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTDoWhileStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTDoWhileStatement
  * @group unittest
  */
 class ASTDoWhileStatementTest extends ASTNodeTestCase
 {
     /**
      * testDoWhileStatementHasExpectedNumberOfChildNodes
-     *
-     * @return void
      */
     public function testDoWhileStatementHasExpectedNumberOfChildNodes(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertCount(2, $stmt->getChildren());
     }
-    
+
     /**
      * testFirstChildOfDoWhileStatementIsInstanceOfScopeStatement
-     *
-     * @return void
      */
     public function testFirstChildOfDoWhileStatementIsInstanceOfScopeStatement(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(0));
     }
-    
+
     /**
      * testSecondChildOfDoWhileStatementIsInstanceOfExpression
-     *
-     * @return void
      */
     public function testSecondChildOfDoWhileStatementIsInstanceOfExpression(): void
     {
@@ -89,8 +84,6 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start line value.
-     *
-     * @return void
      */
     public function testDoWhileStatementHasExpectedStartLine(): void
     {
@@ -100,8 +93,6 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value.
-     *
-     * @return void
      */
     public function testDoWhileStatementHasExpectedStartColumn(): void
     {
@@ -111,8 +102,6 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value.
-     *
-     * @return void
      */
     public function testDoWhileStatementHasExpectedEndLine(): void
     {
@@ -122,19 +111,15 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value.
-     *
-     * @return void
      */
     public function testDoWhileStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstDoWhileStatementInFunction(__METHOD__);
         $this->assertEquals(31, $stmt->getEndColumn());
     }
-    
+
     /**
      * testDoWhileStatementWithoutScopeStatementChild
-     *
-     * @return void
      */
     public function testDoWhileStatementWithoutScopeStatementChild(): void
     {
@@ -147,7 +132,7 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTDoWhileStatement
+     * @return ASTDoWhileStatement
      */
     private function getFirstDoWhileStatementInFunction($testCase)
     {

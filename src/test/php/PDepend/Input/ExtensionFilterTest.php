@@ -43,22 +43,23 @@
 namespace PDepend\Input;
 
 use PDepend\AbstractTestCase;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * Test case for the file extension filter.
  *
+ * @covers \PDepend\Input\ExtensionFilter
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Input\ExtensionFilter
  * @group unittest
  */
 class ExtensionFilterTest extends AbstractTestCase
 {
     /**
      * testExtensionFilterAcceptsOneFileExtension
-     *
-     * @return void
      */
     public function testExtensionFilterAcceptsOneFileExtension(): void
     {
@@ -70,8 +71,6 @@ class ExtensionFilterTest extends AbstractTestCase
 
     /**
      * testExtensionFilterAcceptsMultipleFileExtensions
-     *
-     * @return void
      */
     public function testExtensionFilterAcceptsMultipleFileExtensions(): void
     {
@@ -81,9 +80,6 @@ class ExtensionFilterTest extends AbstractTestCase
         $this->assertEquals($expected, $actual);
     }
 
-    /**
-     * @return void
-     */
     public function testExtensionFilterAcceptsPhpProtocol(): void
     {
         $filter = new ExtensionFilter(['abc']);
@@ -103,8 +99,8 @@ class ExtensionFilterTest extends AbstractTestCase
     {
         $filter = new ExtensionFilter($includes);
 
-        $files = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator(
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
                 $this->createCodeResourceUriForTest()
             )
         );

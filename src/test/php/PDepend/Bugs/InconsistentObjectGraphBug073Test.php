@@ -61,8 +61,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      * class Bar extends Foo {}
      * interface Foo {}
      * </code>
-     *
-     * @return void
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithPackage(): void
     {
@@ -85,8 +83,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      * class Bar extends Foo {}
      * interface Foo {}
      * </code>
-     *
-     * @return void
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithoutPackage(): void
     {
@@ -106,8 +102,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      * class Bar implements Foo {}
      * class Foo {}
      * </code>
-     *
-     * @return void
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithPackage(): void
     {
@@ -132,8 +126,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      * class Bar implements Foo {}
      * class Foo {}
      * </code>
-     *
-     * @return void
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithoutPackage(): void
     {
@@ -153,8 +145,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      * class Bar extends Foo {}
      * class Foo {}
      * </code>
-     *
-     * @return void
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeClassWithPackage(): void
     {
@@ -178,8 +168,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      * interface Bar extends Foo {}
      * interface Foo {}
      * </code>
-     *
-     * @return void
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeInterfaceWithPackage(): void
     {
@@ -207,8 +195,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *     interface Foo {}
      * }
      * </code>
-     *
-     * @return void
      */
     public function testParserCreatesExpectedObjectGraphClassDeclaredBeforeInterfaceWithNamespace(): void
     {
@@ -236,8 +222,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
      *     class Foo {}
      * }
      * </code>
-     *
-     * @return void
      */
     public function testParserCreatesExpectedObjectGraphInterfaceDeclaredBeforeClassWithNamespace(): void
     {
@@ -256,8 +240,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
 
     /**
      * Tests that pdepend does not die with a fatal error.
-     *
-     * @return void
      */
     public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithPackage(): void
     {
@@ -266,8 +248,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
 
     /**
      * Tests that pdepend does not die with a fatal error.
-     *
-     * @return void
      */
     public function testPHPDependDoesNotDieWithErrorClassDeclaredBeforeInterfaceWithoutPackage(): void
     {
@@ -276,8 +256,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
 
     /**
      * Tests that pdepend does not die with a fatal error.
-     *
-     * @return void
      */
     public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithPackage(): void
     {
@@ -286,8 +264,6 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
 
     /**
      * Tests that pdepend does not die with a fatal error.
-     *
-     * @return void
      */
     public function testPHPDependDoesNotDieWithErrorInterfaceDeclaredBeforeClassWithoutPackage(): void
     {

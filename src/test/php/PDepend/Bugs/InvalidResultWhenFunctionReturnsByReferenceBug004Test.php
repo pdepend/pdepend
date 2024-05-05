@@ -55,8 +55,6 @@ class InvalidResultWhenFunctionReturnsByReferenceBug004Test extends AbstractRegr
     /**
      * Tests that the parser handles function with reference return values
      * correct.
-     *
-     * @return void
      */
     public function testParserCreatesInvalidFunctionWhenReturnsByReference(): void
     {
@@ -71,8 +69,6 @@ class InvalidResultWhenFunctionReturnsByReferenceBug004Test extends AbstractRegr
     /**
      * Tests that the parser handles function with reference return values
      * correct.
-     *
-     * @return void
      */
     public function testParserCreatesInvalidMethodWhenReturnsByReference(): void
     {

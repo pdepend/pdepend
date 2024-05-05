@@ -60,8 +60,6 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
 {
     /**
      * Tests that the analyzer calculates the expected result.
-     *
-     * @return void
      */
     public function testAnalyzerIgnoresObjectAllocation(): void
     {
@@ -76,8 +74,6 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
 
     /**
      * Tests that the analyzer calculates the expected result.
-     *
-     * @return void
      */
     public function testAnalyzerDetectsIdenticalFunctionCalls(): void
     {
@@ -92,8 +88,6 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
 
     /**
      * Tests that the analyzer calculates the expected result.
-     *
-     * @return void
      */
     public function testAnalyzerDetectsDifferentFunctionCalls(): void
     {
@@ -108,8 +102,6 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
 
     /**
      * Tests that the analyzer calculates the expected result.
-     *
-     * @return void
      */
     public function testAnalyzerDetectsIdenticalMethodCalls(): void
     {
@@ -124,8 +116,6 @@ class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends Abstr
 
     /**
      * Tests that the analyzer calculates the expected result.
-     *
-     * @return void
      */
     public function testAnalyzerDetectsDifferentMethodCalls(): void
     {

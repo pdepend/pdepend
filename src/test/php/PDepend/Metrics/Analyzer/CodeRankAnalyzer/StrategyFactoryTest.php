@@ -43,15 +43,15 @@
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
 use PDepend\AbstractTestCase;
-use PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory;
 
 /**
  * Test case for the code rank property strategy.
  *
+ * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory
  * @group unittest
  */
 class StrategyFactoryTest extends AbstractTestCase
@@ -59,8 +59,6 @@ class StrategyFactoryTest extends AbstractTestCase
     /**
      * Tests that the factory throws the expected exception for an invalid
      * strategy identifier.
-     *
-     * @return void
      */
     public function testFactoryMethodThrowsExceptionForInvalidStrategyIdentifier(): void
     {

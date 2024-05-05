@@ -45,29 +45,28 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTSwitchLabel} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTSwitchLabel
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTSwitchLabel
  * @group unittest
  */
 class ASTSwitchLabelTest extends ASTNodeTestCase
 {
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
-        $label = new \PDepend\Source\AST\ASTSwitchLabel();
+        $label = new ASTSwitchLabel();
         $this->assertEquals(
             [
                 'default',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $label->__sleep()
         );
@@ -76,8 +75,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests that the default flag is set to <b>true</b> on the default switch
      * label.
-     *
-     * @return void
      */
     public function testDefaultFlagIsSetOnDefaultLabel(): void
     {
@@ -88,8 +85,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests that the default flag is set to <b>false</b> on a regular case
      * label.
-     *
-     * @return void
      */
     public function testDefaultFlagIsNotSetOnCaseLabel(): void
     {
@@ -100,7 +95,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabel
      *
-     * @return \PDepend\Source\AST\ASTSwitchLabel
+     * @return ASTSwitchLabel
+     *
      * @since 1.0.2
      */
     public function testSwitchLabel()
@@ -114,9 +110,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the start line value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @param ASTSwitchLabel $label
      *
-     * @return void
      * @depends testSwitchLabel
      */
     public function testSwitchLabelHasExpectedStartLine($label): void
@@ -127,9 +122,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the start column value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @param ASTSwitchLabel $label
      *
-     * @return void
      * @depends testSwitchLabel
      */
     public function testSwitchLabelHasExpectedStartColumn($label): void
@@ -140,9 +134,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the end line value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @param ASTSwitchLabel $label
      *
-     * @return void
      * @depends testSwitchLabel
      */
     public function testSwitchLabelHasExpectedEndLine($label): void
@@ -153,9 +146,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the end column value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @param ASTSwitchLabel $label
      *
-     * @return void
      * @depends testSwitchLabel
      */
     public function testSwitchLabelHasExpectedEndColumn($label): void
@@ -165,8 +157,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
 
     /**
      * testSwitchLabelCanBeTerminatedWithSemicolon
-     *
-     * @return void
      */
     public function testSwitchLabelCanBeTerminatedWithSemicolon(): void
     {
@@ -175,8 +165,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
 
     /**
      * testSwitchLabelWithNestedSwitchStatementHasExpectedChildren
-     *
-     * @return void
      */
     public function testSwitchLabelWithNestedSwitchStatementHasExpectedChildren(): void
     {
@@ -190,7 +178,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
         $expected = [
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTSwitchStatement',
-            'PDepend\\Source\\AST\\ASTBreakStatement'
+            'PDepend\\Source\\AST\\ASTBreakStatement',
         ];
 
         $this->assertEquals($expected, $actual);
@@ -199,7 +187,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCode
      *
-     * @return \PDepend\Source\AST\ASTSwitchLabel
+     * @return ASTSwitchLabel
+     *
      * @since 2.1.0
      */
     public function testSwitchLabelWithNestedNonePhpCode()
@@ -213,9 +202,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCodeStartLine
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchLabelWithNestedNonePhpCode
      */
     public function testSwitchLabelWithNestedNonePhpCodeStartLine(ASTSwitchLabel $label): void
@@ -226,9 +214,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCodeEndLine
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchLabelWithNestedNonePhpCode
      */
     public function testSwitchLabelWithNestedNonePhpCodeEndLine(ASTSwitchLabel $label): void
@@ -239,9 +226,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCodeStartColumn
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchLabelWithNestedNonePhpCode
      */
     public function testSwitchLabelWithNestedNonePhpCodeStartColumn(ASTSwitchLabel $label): void
@@ -252,9 +238,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCodeEndColumn
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchLabelWithNestedNonePhpCode
      */
     public function testSwitchLabelWithNestedNonePhpCodeEndColumn(ASTSwitchLabel $label): void
@@ -265,7 +250,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelDefault
      *
-     * @return \PDepend\Source\AST\ASTSwitchLabel
+     * @return ASTSwitchLabel
+     *
      * @since 1.0.2
      */
     public function testSwitchLabelDefault()
@@ -279,9 +265,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the start line value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @param ASTSwitchLabel $label
      *
-     * @return void
      * @depends testSwitchLabelDefault
      */
     public function testSwitchLabelDefaultHasExpectedStartLine($label): void
@@ -292,9 +277,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the start column value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @param ASTSwitchLabel $label
      *
-     * @return void
      * @depends testSwitchLabelDefault
      */
     public function testSwitchLabelDefaultHasExpectedStartColumn($label): void
@@ -305,9 +289,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the end line value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @param ASTSwitchLabel $label
      *
-     * @return void
      * @depends testSwitchLabelDefault
      */
     public function testSwitchLabelDefaultHasExpectedEndLine($label): void
@@ -318,9 +301,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the end column value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
+     * @param ASTSwitchLabel $label
      *
-     * @return void
      * @depends testSwitchLabelDefault
      */
     public function testSwitchLabelDefaultHasExpectedEndColumn($label): void
@@ -330,8 +312,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
 
     /**
      * testSwitchDefaultLabelCanBeTerminatedWithSemicolon
-     *
-     * @return void
      */
     public function testSwitchDefaultLabelCanBeTerminatedWithSemicolon(): void
     {
@@ -340,8 +320,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
 
     /**
      * testSwitchLabelDefaultWithNestedSwitchStatementHasExpectedChildren
-     *
-     * @return void
      */
     public function testSwitchLabelDefaultWithNestedSwitchStatementHasExpectedChildren(): void
     {
@@ -354,7 +332,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
 
         $expected = [
             'PDepend\\Source\\AST\\ASTSwitchStatement',
-            'PDepend\\Source\\AST\\ASTBreakStatement'
+            'PDepend\\Source\\AST\\ASTBreakStatement',
         ];
 
         $this->assertEquals($expected, $actual);
@@ -363,7 +341,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCode
      *
-     * @return \PDepend\Source\AST\ASTSwitchLabel
+     * @return ASTSwitchLabel
+     *
      * @since 2.1.0
      */
     public function testSwitchLabelDefaultWithNestedNonePhpCode()
@@ -377,9 +356,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCodeStartLine
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchLabelWithNestedNonePhpCode
      */
     public function testSwitchLabelDefaultDefaultWithNestedNonePhpCodeStartLine(ASTSwitchLabel $label): void
@@ -390,9 +368,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCodeEndLine
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchLabelDefaultWithNestedNonePhpCode
      */
     public function testSwitchLabelDefaultWithNestedNonePhpCodeEndLine(ASTSwitchLabel $label): void
@@ -403,9 +380,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCodeStartColumn
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchLabelDefaultWithNestedNonePhpCode
      */
     public function testSwitchLabelDefaultWithNestedNonePhpCodeStartColumn(ASTSwitchLabel $label): void
@@ -416,9 +392,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCodeEndColumn
      *
-     * @param \PDepend\Source\AST\ASTSwitchLabel $label
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchLabelDefaultWithNestedNonePhpCode
      */
     public function testSwitchLabelDefaultWithNestedNonePhpCodeEndColumn(ASTSwitchLabel $label): void
@@ -428,8 +403,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
 
     /**
      * testParserHandlesSwitchLabelWithNestedScopeStatement
-     *
-     * @return void
      */
     public function testParserHandlesSwitchLabelWithNestedScopeStatement(): void
     {
@@ -438,8 +411,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
 
     /**
      * testParserThrowsExceptionForUnclosedSwitchLabelBody
-     *
-     * @return void
      */
     public function testParserThrowsExceptionForUnclosedSwitchLabelBody(): void
     {
@@ -451,7 +422,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTSwitchLabel
+     * @return ASTSwitchLabel
      */
     private function getFirstSwitchLabelInFunction()
     {

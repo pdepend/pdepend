@@ -47,18 +47,17 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for type utility class.
  *
+ * @covers \PDepend\Util\Type
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Util\Type
  * @group unittest
  */
 class TypeTest extends AbstractTestCase
 {
     /**
      * testIsInternalTypeDetectsInternalClassPrefixedWithBackslash
-     *
-     * @return void
      */
     public function testIsInternalTypeDetectsInternalClassPrefixedWithBackslash(): void
     {
@@ -67,8 +66,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testGetTypePackageReturnsNullWhenGivenClassIsNotExtensionClass
-     *
-     * @return void
      */
     public function testGetTypePackageReturnsNullWhenGivenClassIsNotExtensionClass(): void
     {
@@ -77,8 +74,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testIsScalarTypeReturnsTrueCaseInsensitive
-     *
-     * @return void
      */
     public function testIsScalarTypeReturnsTrueCaseInsensitive(): void
     {
@@ -87,8 +82,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testIsScalarTypeReturnsTrueMetaphone
-     *
-     * @return void
      */
     public function testIsScalarTypeReturnsTrueMetaphone(): void
     {
@@ -97,8 +90,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testIsScalarTypeReturnsTrueSoundex
-     *
-     * @return void
      */
     public function testIsScalarTypeReturnsTrueSoundex(): void
     {
@@ -107,8 +98,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testGetPrimitiveTypeReturnsExpectedValueForExactMatch
-     *
-     * @return void
      */
     public function testIsPrimitiveTypeReturnsTrueForMatchingInput(): void
     {
@@ -117,8 +106,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testIsPrimitiveTypeReturnsFalseForNotMatchingInput
-     *
-     * @return void
      */
     public function testIsPrimitiveTypeReturnsFalseForNotMatchingInput(): void
     {
@@ -127,8 +114,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testGetPrimitiveTypeReturnsExpectedValueForExactMatch
-     *
-     * @return void
      */
     public function testGetPrimitiveTypeReturnsExpectedValueForExactMatch(): void
     {
@@ -138,8 +123,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testGetPrimitiveTypeWorksCaseInsensitive
-     *
-     * @return void
      */
     public function testGetPrimitiveTypeWorksCaseInsensitive(): void
     {
@@ -149,8 +132,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testGetPrimitiveTypeReturnsNullForNonPrimitive
-     *
-     * @return void
      */
     public function testGetPrimitiveTypeReturnsNullForNonPrimitive(): void
     {
@@ -159,8 +140,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testGetPrimitiveTypeFindsTypeByMetaphone
-     *
-     * @return void
      */
     public function testGetPrimitiveTypeFindsTypeByMetaphone(): void
     {
@@ -170,8 +149,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testGetPrimitiveTypeFindsTypeBySoundex
-     *
-     * @return void
      */
     public function testGetPrimitiveTypeFindsTypeBySoundex(): void
     {
@@ -181,8 +158,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testIsInternalPackageReturnsTrueForPhpStandardLibrary
-     *
-     * @return void
      */
     public function testIsInternalPackageReturnsTrueForPhpStandardLibrary(): void
     {
@@ -194,19 +169,15 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testGetTypePackageReturnsExpectedExtensionNameForClassPrefixedWithBackslash
-     *
-     * @return void
      */
     public function testGetTypePackageReturnsExpectedExtensionNameForClassPrefixedWithBackslash(): void
     {
         $extensionName = Type::getTypePackage('\LogicException');
         $this->assertEquals('+spl', $extensionName);
     }
-    
+
     /**
      * testIsArrayReturnsFalseForNonArrayString
-     *
-     * @return void
      */
     public function testIsArrayReturnsFalseForNonArrayString(): void
     {
@@ -215,8 +186,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testIsArrayReturnsTrueForLowerCaseArrayString
-     *
-     * @return void
      */
     public function testIsArrayReturnsTrueForLowerCaseArrayString(): void
     {
@@ -225,8 +194,6 @@ class TypeTest extends AbstractTestCase
 
     /**
      * testIsArrayPerformsCheckCaseInsensitive
-     *
-     * @return void
      */
     public function testIsArrayPerformsCheckCaseInsensitive(): void
     {

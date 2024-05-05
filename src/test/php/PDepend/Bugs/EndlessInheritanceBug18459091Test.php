@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://www.pivotaltracker.com/story/show/18459091
  * @since 1.0.0
  */
@@ -54,18 +55,18 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @link https://www.pivotaltracker.com/story/show/18459091
  * @since 1.0.0
  *
  * @ticket 18459091
+ *
  * @group regressiontest
  */
 class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 {
     /**
      * Resets the execution time to -1.
-     *
-     * @return void
      */
     protected function tearDown(): void
     {
@@ -76,8 +77,6 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 
     /**
      * testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
-     *
-     * @return void
      */
     public function testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy(): void
     {
@@ -96,8 +95,6 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 
     /**
      * testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy
-     *
-     * @return void
      */
     public function testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy(): void
     {
@@ -116,8 +113,6 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 
     /**
      * testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy
-     *
-     * @return void
      */
     public function testClassLevelAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy(): void
     {
@@ -134,8 +129,6 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 
     /**
      * testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy
-     *
-     * @return void
      */
     public function testClassLevelAnalyzerNotRunsEndlessForDeepInterfaceHierarchy(): void
     {
@@ -152,8 +145,6 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 
     /**
      * testInheritanceAnalyzerNotRunsEndlessForTwoLevelClassHierarchy
-     *
-     * @return void
      */
     public function testInheritanceAnalyzerNotRunsEndlessForTwoLevelClassHierarchy(): void
     {
@@ -167,8 +158,6 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 
     /**
      * testInheritanceAnalyzerNotRunsEndlessForDeepClassHierarchy
-     *
-     * @return void
      */
     public function testInheritanceAnalyzerNotRunsEndlessForDeepClassHierarchy(): void
     {
@@ -182,8 +171,6 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 
     /**
      * testInheritanceAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy
-     *
-     * @return void
      */
     public function testInheritanceAnalyzerNotRunsEndlessForTwoLevelInterfaceHierarchy(): void
     {
@@ -195,8 +182,6 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 
     /**
      * testInheritanceAnalyzerNotRunsEndlessForDeepInterfaceHierarchy
-     *
-     * @return void
      */
     public function testInheritanceAnalyzerNotRunsEndlessForDeepInterfaceHierarchy(): void
     {
@@ -208,8 +193,6 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 
     /**
      * testFullStackNotRunsEndless
-     *
-     * @return void
      */
     public function testFullStackNotRunsEndless(): void
     {
@@ -219,7 +202,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
             __FILE__,
             '--summary-xml=' . $this->createRunResourceURI('jdepend.xml'),
             '--jdepend-xml=' . $this->createRunResourceURI('summary.xml'),
-            $this->createCodeResourceUriForTest()
+            $this->createCodeResourceUriForTest(),
         ];
 
         ob_start();

@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTElseIfStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTElseIfStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTElseIfStatement
  * @group unittest
  */
 class ASTElseIfStatementTest extends ASTNodeTestCase
 {
     /**
      * testHasElseMethodReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testHasElseMethodReturnsFalseByDefault(): void
     {
@@ -67,8 +66,6 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * testHasElseMethodReturnsTrueWhenElseIfBranchExists
-     *
-     * @return void
      */
     public function testHasElseMethodReturnsTrueWhenElseIfBranchExists(): void
     {
@@ -78,8 +75,6 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * testHasElseMethodReturnsTrueWhenElseBranchWithIfExists
-     *
-     * @return void
      */
     public function testHasElseMethodReturnsTrueWhenElseBranchWithIfExists(): void
     {
@@ -89,8 +84,6 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * testHasElseMethodReturnsTrueWhenElseBranchExists
-     *
-     * @return void
      */
     public function testHasElseMethodReturnsTrueWhenElseBranchExists(): void
     {
@@ -100,30 +93,24 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the generated object graph of an elseif statement.
-     *
-     * @return void
      */
     public function testElseIfStatementGraphWithBooleanExpressions(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
         $this->assertCount(2, $stmt->getChildren());
     }
-    
+
     /**
      * testFirstChildOfElseIfStatementIsInstanceOfExpression
-     *
-     * @return void
      */
     public function testFirstChildOfElseIfStatementIsInstanceOfExpression(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
     }
-    
+
     /**
      * testSecondChildOfElseIfStatementIsInstanceOfScopeStatement
-     *
-     * @return void
      */
     public function testSecondChildOfElseIfStatementIsInstanceOfScopeStatement(): void
     {
@@ -133,8 +120,6 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start line value.
-     *
-     * @return void
      */
     public function testElseIfStatementHasExpectedStartLine(): void
     {
@@ -144,8 +129,6 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value.
-     *
-     * @return void
      */
     public function testElseIfStatementHasExpectedStartColumn(): void
     {
@@ -155,8 +138,6 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value.
-     *
-     * @return void
      */
     public function testElseIfStatementHasExpectedEndLine(): void
     {
@@ -166,19 +147,15 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value.
-     *
-     * @return void
      */
     public function testElseIfStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
         $this->assertEquals(5, $stmt->getEndColumn());
     }
-    
+
     /**
      * testElseIfStatementWithoutScopeStatementBody
-     *
-     * @return void
      */
     public function testElseIfStatementWithoutScopeStatementBody(): void
     {
@@ -188,8 +165,6 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * testElseIfStatementAlternativeScopeHasExpectedStartLine
-     *
-     * @return void
      */
     public function testElseIfStatementAlternativeScopeHasExpectedStartLine(): void
     {
@@ -199,8 +174,6 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * testElseIfStatementAlternativeScopeHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testElseIfStatementAlternativeScopeHasExpectedStartColumn(): void
     {
@@ -210,8 +183,6 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * testElseIfStatementAlternativeScopeHasExpectedEndLine
-     *
-     * @return void
      */
     public function testElseIfStatementAlternativeScopeHasExpectedEndLine(): void
     {
@@ -221,8 +192,6 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * testElseIfStatementAlternativeScopeHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testElseIfStatementAlternativeScopeHasExpectedEndColumn(): void
     {
@@ -235,7 +204,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTElseIfStatement
+     * @return ASTElseIfStatement
      */
     private function getFirstElseIfStatementInFunction($testCase)
     {

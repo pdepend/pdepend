@@ -38,29 +38,24 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.2
  */
 
 namespace PDepend\Source\Parser;
 
 use PDepend\Source\AST\ASTAllocationExpression;
-use PDepend\Source\AST\ASTClassReference;
-use PDepend\Source\AST\ASTFunctionPostfix;
-use PDepend\Source\AST\ASTMemberPrimaryPrefix;
-use PDepend\Source\AST\ASTParentReference;
-use PDepend\Source\AST\ASTSelfReference;
-use PDepend\Source\AST\ASTStaticReference;
-use PDepend\Source\AST\ASTVariable;
-use PDepend\Source\AST\ASTVariableVariable;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.2
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
 class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
@@ -68,7 +63,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     /**
      * testAllocationExpressionForSelfProperty
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAllocationExpressionForSelfProperty(): void
@@ -80,7 +74,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     /**
      * testAllocationExpressionForParentProperty
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAllocationExpressionForParentProperty(): void
@@ -92,7 +85,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     /**
      * testAllocationExpressionForStaticProperty
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAllocationExpressionForStaticProperty(): void
@@ -104,7 +96,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     /**
      * testAllocationExpressionForThisProperty
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAllocationExpressionForThisProperty(): void
@@ -116,7 +107,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     /**
      * testAllocationExpressionForObjectProperty
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAllocationExpressionForObjectProperty(): void
@@ -127,8 +117,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the allocation object graph contains the expected objects
-     *
-     * @return void
      */
     public function testAllocationExpressionGraphForSimpleIdentifier(): void
     {
@@ -142,8 +130,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the allocation object graph contains the expected objects
-     *
-     * @return void
      */
     public function testAllocationExpressionGraphForSelfKeyword(): void
     {
@@ -158,8 +144,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the allocation object graph contains the expected objects
-     *
-     * @return void
      */
     public function testAllocationExpressionGraphForParentKeyword(): void
     {
@@ -173,8 +157,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the allocation object graph contains the expected objects
-     *
-     * @return void
      */
     public function testAllocationExpressionGraphForLocalNamespaceIdentifier(): void
     {
@@ -188,8 +170,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the allocation object graph contains the expected objects
-     *
-     * @return void
      */
     public function testAllocationExpressionGraphForAbsoluteNamespaceIdentifier(): void
     {
@@ -203,8 +183,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the allocation object graph contains the expected objects
-     *
-     * @return void
      */
     public function testAllocationExpressionGraphForAbsoluteNamespacedNamespaceIdentifier(): void
     {
@@ -218,8 +196,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the allocation object graph contains the expected objects
-     *
-     * @return void
      */
     public function testAllocationExpressionGraphForVariableIdentifier(): void
     {
@@ -233,8 +209,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the allocation object graph contains the expected objects
-     *
-     * @return void
      */
     public function testAllocationExpressionGraphForVariableVariableIdentifier(): void
     {
@@ -252,8 +226,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the allocation object graph contains the expected objects
-     *
-     * @return void
      */
     public function testAllocationExpressionGraphForStaticReference(): void
     {
@@ -268,8 +240,6 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     /**
      * Tests that invalid allocation expression results in the expected
      * exception.
-     *
-     * @return void
      */
     public function testInvalidAllocationExpressionResultsInExpectedException(): void
     {
@@ -287,6 +257,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      * with the calling test method.
      *
      * @return ASTAllocationExpression
+     *
      * @since 1.0.1
      */
     private function getFirstAllocationInClass()

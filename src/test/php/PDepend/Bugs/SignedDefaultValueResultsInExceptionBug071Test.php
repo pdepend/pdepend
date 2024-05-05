@@ -54,8 +54,6 @@ class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionT
 {
     /**
      * Tests that the parser handles a parameter with a signed default value.
-     *
-     * @return void
      */
     public function testParserHandlesSimpleSignedDefaultValue(): void
     {
@@ -69,8 +67,6 @@ class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionT
 
     /**
      * Tests that the parser handles a parameter with a signed default value.
-     *
-     * @return void
      */
     public function testParserHandlesMultipleSignedDefaultValue(): void
     {
@@ -84,8 +80,6 @@ class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionT
 
     /**
      * Tests that the parser handles a parameter with a signed default value.
-     *
-     * @return void
      */
     public function testParserHandlesComplexSignedDefaultValue(): void
     {

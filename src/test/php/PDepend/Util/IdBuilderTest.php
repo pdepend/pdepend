@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.12
  */
 
@@ -53,19 +54,19 @@ use PDepend\Source\AST\ASTMethod;
 /**
  * Test case for the {@link \PDepend\Util\IdBuilder} class.
  *
+ * @covers \PDepend\Util\IdBuilder
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @since 0.9.12
  *
- * @covers \PDepend\Util\IdBuilder
  * @group unittest
  */
 class IdBuilderTest extends AbstractTestCase
 {
     /**
      * testBuilderCreatesExpectedIdentifierForFile
-     *
-     * @return void
      */
     public function testBuilderCreatesExpectedIdentifierForFile(): void
     {
@@ -77,8 +78,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesCaseSensitiveFileIdentifiers
-     *
-     * @return void
      */
     public function testBuilderCreatesCaseSensitiveFileIdentifiers(): void
     {
@@ -103,8 +102,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesExpectedIdentifierForClass
-     *
-     * @return void
      */
     public function testBuilderCreatesExpectedIdentifierForClass(): void
     {
@@ -121,8 +118,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesExpectedIdentifierForSecondIdenticalClass
-     *
-     * @return void
      */
     public function testBuilderCreatesExpectedIdentifierForSecondIdenticalClass(): void
     {
@@ -140,8 +135,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesExpectedIdentifierForSecondClass
-     *
-     * @return void
      */
     public function testBuilderCreatesExpectedIdentifierForSecondClass(): void
     {
@@ -162,8 +155,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesCaseInSensitiveClassIdentifiers
-     *
-     * @return void
      */
     public function testBuilderCreatesCaseInSensitiveClassIdentifiers(): void
     {
@@ -187,8 +178,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesCaseInSensitiveInterfaceIdentifiers
-     *
-     * @return void
      */
     public function testBuilderCreatesCaseInSensitiveInterfaceIdentifiers(): void
     {
@@ -212,8 +201,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesExpectedIdentifierForFunction
-     *
-     * @return void
      */
     public function testBuilderCreatesExpectedIdentifierForFunction(): void
     {
@@ -230,8 +217,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesCaseInSensitiveFunctionIdentifiers
-     *
-     * @return void
      */
     public function testBuilderCreatesCaseInSensitiveFunctionIdentifiers(): void
     {
@@ -255,8 +240,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesExpectedIdentifierForMethod
-     *
-     * @return void
      */
     public function testBuilderCreatesExpectedIdentifierForMethod(): void
     {
@@ -273,8 +256,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesExpectedIdentifierForSecondIdenticalFunction
-     *
-     * @return void
      */
     public function testBuilderCreatesExpectedIdentifierForSecondIdenticalFunction(): void
     {
@@ -292,8 +273,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesExpectedIdentifierForSecondFunction
-     *
-     * @return void
      */
     public function testBuilderCreatesExpectedIdentifierForSecondFunction(): void
     {
@@ -314,8 +293,6 @@ class IdBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderCreatesCaseInSensitiveMethodIdentifiers
-     *
-     * @return void
      */
     public function testBuilderCreatesCaseInSensitiveMethodIdentifiers(): void
     {

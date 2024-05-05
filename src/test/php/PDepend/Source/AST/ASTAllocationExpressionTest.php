@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTAllocationExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTAllocationExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTAllocationExpression
  * @group unittest
  */
 class ASTAllocationExpressionTest extends ASTNodeTestCase
 {
     /**
      * Tests the implementation with an allocation expression without arguments.
-     *
-     * @return void
      */
     public function testAllocationExpressionWithoutArguments(): void
     {
@@ -69,8 +68,6 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests the implementation with an allocation expression with arguments.
-     *
-     * @return void
      */
     public function testAllocationExpressionWithArguments(): void
     {
@@ -83,8 +80,6 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
     /**
      * Tests the implementation with an allocation expression with nested
      * expressions that have arguments.
-     *
-     * @return void
      */
     public function testAllocationExpressionWithNestedArguments(): void
     {
@@ -96,8 +91,6 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests the start line of an allocation expression.
-     *
-     * @return void
      */
     public function testAllocationExpressionHasExpectedStartLine(): void
     {
@@ -107,8 +100,6 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests the start column of an allocation expression.
-     *
-     * @return void
      */
     public function testAllocationExpressionHasExpectedStartColumn(): void
     {
@@ -118,8 +109,6 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests the end line of an allocation expression.
-     *
-     * @return void
      */
     public function testAllocationExpressionHasExpectedEndLine(): void
     {
@@ -129,8 +118,6 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests the end column of an allocation expression.
-     *
-     * @return void
      */
     public function testAllocationExpressionHasExpectedEndColumn(): void
     {
@@ -143,7 +130,7 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase The calling test case.
      *
-     * @return \PDepend\Source\AST\ASTAllocationExpression
+     * @return ASTAllocationExpression
      */
     private function getFirstAllocationExpressionInFunction($testCase)
     {

@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTWhileStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTWhileStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTWhileStatement
  * @group unittest
  */
 class ASTWhileStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the generated object graph of a while statement.
-     *
-     * @return void
      */
     public function testWhileStatementGraphWithBooleanExpressions(): void
     {
@@ -67,8 +66,6 @@ class ASTWhileStatementTest extends ASTNodeTestCase
 
     /**
      * testFirstChildOfWhileStatementIsASTExpression
-     *
-     * @return void
      */
     public function testFirstChildOfWhileStatementIsASTExpression(): void
     {
@@ -78,8 +75,6 @@ class ASTWhileStatementTest extends ASTNodeTestCase
 
     /**
      * testSecondChildOfWhileStatementIsASTScopeStatement
-     *
-     * @return void
      */
     public function testSecondChildOfWhileStatementIsASTScopeStatement(): void
     {
@@ -90,7 +85,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatement
      *
-     * @return \PDepend\Source\AST\ASTWhileStatement
+     * @return ASTWhileStatement
+     *
      * @since 1.0.2
      */
     public function testWhileStatement()
@@ -104,9 +100,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTWhileStatement $stmt
+     * @param ASTWhileStatement $stmt
      *
-     * @return void
      * @depends testWhileStatement
      */
     public function testWhileStatementHasExpectedStartLine($stmt): void
@@ -117,9 +112,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTWhileStatement $stmt
+     * @param ASTWhileStatement $stmt
      *
-     * @return void
      * @depends testWhileStatement
      */
     public function testWhileStatementHasExpectedStartColumn($stmt): void
@@ -130,9 +124,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTWhileStatement $stmt
+     * @param ASTWhileStatement $stmt
      *
-     * @return void
      * @depends testWhileStatement
      */
     public function testWhileStatementHasExpectedEndLine($stmt): void
@@ -143,9 +136,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTWhileStatement $stmt
+     * @param ASTWhileStatement $stmt
      *
-     * @return void
      * @depends testWhileStatement
      */
     public function testWhileStatementHasExpectedEndColumn($stmt): void
@@ -156,7 +148,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementWithAlternativeScope
      *
-     * @return \PDepend\Source\AST\ASTWhileStatement
+     * @return ASTWhileStatement
+     *
      * @since 1.0.2
      */
     public function testWhileStatementWithAlternativeScope()
@@ -170,9 +163,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementAlternativeScopeHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTWhileStatement $stmt
+     * @param ASTWhileStatement $stmt
      *
-     * @return void
      * @depends testWhileStatementWithAlternativeScope
      */
     public function testWhileStatementAlternativeScopeHasExpectedStartLine($stmt): void
@@ -183,9 +175,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementAlternativeScopeHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTWhileStatement $stmt
+     * @param ASTWhileStatement $stmt
      *
-     * @return void
      * @depends testWhileStatementWithAlternativeScope
      */
     public function testWhileStatementAlternativeScopeHasExpectedStartColumn($stmt): void
@@ -196,9 +187,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementAlternativeScopeHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTWhileStatement $stmt
+     * @param ASTWhileStatement $stmt
      *
-     * @return void
      * @depends testWhileStatementWithAlternativeScope
      */
     public function testWhileStatementAlternativeScopeHasExpectedEndLine($stmt): void
@@ -209,9 +199,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementAlternativeScopeHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTWhileStatement $stmt
+     * @param ASTWhileStatement $stmt
      *
-     * @return void
      * @depends testWhileStatementWithAlternativeScope
      */
     public function testWhileStatementAlternativeScopeHasExpectedEndColumn($stmt): void
@@ -221,8 +210,6 @@ class ASTWhileStatementTest extends ASTNodeTestCase
 
     /**
      * testWhileStatementTerminatedByPhpCloseTag
-     *
-     * @return void
      */
     public function testWhileStatementTerminatedByPhpCloseTag(): void
     {
@@ -233,7 +220,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTWhileStatement
+     * @return ASTWhileStatement
      */
     private function getFirstWhileStatementInFunction()
     {

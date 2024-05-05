@@ -47,19 +47,18 @@ use PDepend\Source\Builder\BuilderContext;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTClassReference} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTClassReference
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTClassReference
  * @group unittest
  */
 class ASTClassReferenceTest extends ASTNodeTestCase
 {
     /**
      * testGetTypeDelegatesToBuilderContextGetClass
-     *
-     * @return void
      */
     public function testGetTypeDelegatesToBuilderContextGetClass(): void
     {
@@ -69,14 +68,12 @@ class ASTClassReferenceTest extends ASTNodeTestCase
             ->with($this->equalTo(__CLASS__))
             ->will($this->returnValue($this));
 
-        $reference = new \PDepend\Source\AST\ASTClassReference($context, __CLASS__);
+        $reference = new ASTClassReference($context, __CLASS__);
         $reference->getType();
     }
 
     /**
      * testGetTypeCachesReturnValueOfBuilderContextGetClass
-     *
-     * @return void
      */
     public function testGetTypeCachesReturnValueOfBuilderContextGetClass(): void
     {
@@ -86,14 +83,12 @@ class ASTClassReferenceTest extends ASTNodeTestCase
             ->with($this->equalTo(__CLASS__))
             ->will($this->returnValue($this));
 
-        $reference = new \PDepend\Source\AST\ASTClassReference($context, __CLASS__);
+        $reference = new ASTClassReference($context, __CLASS__);
         $reference->getType();
     }
 
     /**
      * testReturnValueOfMagicSleepContainsContextProperty
-     *
-     * @return void
      */
     public function testReturnValueOfMagicSleepContainsContextProperty(): void
     {
@@ -102,7 +97,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
                 'context',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $this->createNodeInstance()->__sleep()
         );
@@ -110,8 +105,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
 
     /**
      * testClassReferenceHasExpectedStartLine
-     *
-     * @return void
      */
     public function testClassReferenceHasExpectedStartLine(): void
     {
@@ -121,8 +114,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
 
     /**
      * testClassReferenceHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testClassReferenceHasExpectedStartColumn(): void
     {
@@ -132,8 +123,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
 
     /**
      * testClassReferenceHasExpectedEndLine
-     *
-     * @return void
      */
     public function testClassReferenceHasExpectedEndLine(): void
     {
@@ -143,8 +132,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
 
     /**
      * testClassReferenceHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testClassReferenceHasExpectedEndColumn(): void
     {
@@ -155,7 +142,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInClassExtendsHasExpectedStartLine
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInClassExtendsHasExpectedStartLine(): void
@@ -167,7 +153,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInClassExtendsHasExpectedStartColumn
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInClassExtendsHasExpectedStartColumn(): void
@@ -179,7 +164,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInClassExtendsHasExpectedEndLine
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInClassExtendsHasExpectedEndLine(): void
@@ -191,7 +175,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInClassExtendsHasExpectedEndColumn
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInClassExtendsHasExpectedEndColumn(): void
@@ -205,7 +188,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTClassReference
+     * @return ASTClassReference
      */
     private function getFirstReferenceInFunction($testCase)
     {
@@ -218,7 +201,8 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     /**
      * Returns the first reference node for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTClassReference
+     * @return ASTClassReference
+     *
      * @since 0.10.5
      */
     private function getFirstReferenceInClass()
@@ -232,11 +216,11 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     /**
      * Creates a concrete node implementation.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     protected function createNodeInstance()
     {
-        return new \PDepend\Source\AST\ASTClassReference(
+        return new ASTClassReference(
             $this->getBuilderContextMock(),
             __CLASS__
         );
@@ -245,13 +229,13 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     /**
      * Returns a mocked builder context instance.
      *
-     * @return \PDepend\Source\Builder\BuilderContext
+     * @return BuilderContext
      */
     protected function getBuilderContextMock()
     {
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
-        
+
         return $context;
     }
 }

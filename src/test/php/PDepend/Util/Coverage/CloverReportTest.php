@@ -47,18 +47,17 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the {@link \PDepend\Util\Coverage\CloverReport} class.
  *
+ * @covers \PDepend\Util\Coverage\CloverReport
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Util\Coverage\CloverReport
  * @group unittest
  */
 class CloverReportTest extends AbstractTestCase
 {
     /**
      * testReportReturnsExpected0PercentCoverage
-     *
-     * @return void
      */
     public function testReportReturnsExpected0PercentCoverage(): void
     {
@@ -70,8 +69,6 @@ class CloverReportTest extends AbstractTestCase
 
     /**
      * testReportReturnsExpected50PercentCoverage
-     *
-     * @return void
      */
     public function testReportReturnsExpected50PercentCoverage(): void
     {
@@ -83,8 +80,6 @@ class CloverReportTest extends AbstractTestCase
 
     /**
      * testReportReturnsExpected100PercentCoverage
-     *
-     * @return void
      */
     public function testReportReturnsExpected100PercentCoverage(): void
     {
@@ -96,8 +91,6 @@ class CloverReportTest extends AbstractTestCase
 
     /**
      * testReportReturnsExpected100PercentCoverageWithCoverageIgnore
-     *
-     * @return void
      */
     public function testReportReturnsExpected100PercentCoverageWithCoverageIgnore(): void
     {
@@ -109,8 +102,6 @@ class CloverReportTest extends AbstractTestCase
 
     /**
      * testReportReturnsExpected0PercentCoverageForOneLineMethod
-     *
-     * @return void
      */
     public function testReportReturnsExpected0PercentCoverageForOneLineMethod(): void
     {
@@ -122,8 +113,6 @@ class CloverReportTest extends AbstractTestCase
 
     /**
      * testNamespacedReportReturnsExpected0PercentCoverage
-     *
-     * @return void
      */
     public function testNamespacedReportReturnsExpected0PercentCoverage(): void
     {
@@ -135,8 +124,6 @@ class CloverReportTest extends AbstractTestCase
 
     /**
      * testNamespacedReportReturnsExpected50PercentCoverage
-     *
-     * @return void
      */
     public function testNamespacedReportReturnsExpected50PercentCoverage(): void
     {
@@ -148,8 +135,6 @@ class CloverReportTest extends AbstractTestCase
 
     /**
      * testNamespacedReportReturnsExpected100PercentCoverage
-     *
-     * @return void
      */
     public function testNamespacedReportReturnsExpected100PercentCoverage(): void
     {
@@ -161,8 +146,6 @@ class CloverReportTest extends AbstractTestCase
 
     /**
      * testGetCoverageReturnsZeroCoverageWhenNoMatchingEntryExists
-     *
-     * @return void
      */
     public function testGetCoverageReturnsZeroCoverageWhenNoMatchingEntryExists(): void
     {
@@ -175,7 +158,7 @@ class CloverReportTest extends AbstractTestCase
     /**
      * Creates a clover coverage report instance.
      *
-     * @return \PDepend\Util\Coverage\CloverReport
+     * @return CloverReport
      */
     private function createCloverReport()
     {
@@ -186,7 +169,7 @@ class CloverReportTest extends AbstractTestCase
     /**
      * Creates a clover coverage report instance.
      *
-     * @return \PDepend\Util\Coverage\CloverReport
+     * @return CloverReport
      */
     private function createNamespacedCloverReport()
     {
@@ -197,9 +180,10 @@ class CloverReportTest extends AbstractTestCase
     /**
      * Creates a mocked method instance.
      *
-     * @param string $name Name of the mock method.
-     * @param int $startLine
-     * @param int $endLine
+     * @param string $name      Name of the mock method.
+     * @param int    $startLine
+     * @param int    $endLine
+     *
      * @return \PDepend\Source\AST\ASTMethod
      */
     private function createMethodMock($name, $startLine = 1, $endLine = 4)

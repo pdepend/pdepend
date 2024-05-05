@@ -49,12 +49,13 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * Test cases for the {@link \PDepend\Application} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PDepend\DependencyInjection\ExtensionManager
  * @covers \PDepend\DependencyInjection\Extension
  * @covers \PDepend\DependencyInjection\TreeBuilder
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  */
 class ExtensionManagerTest extends AbstractTestCase

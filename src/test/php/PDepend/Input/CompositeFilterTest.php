@@ -47,18 +47,17 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the composite filter.
  *
+ * @covers \PDepend\Input\CompositeFilter
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Input\CompositeFilter
  * @group unittest
  */
 class CompositeFilterTest extends AbstractTestCase
 {
     /**
      * testCompositeInvokesFirstAcceptInFilterChain
-     *
-     * @return void
      */
     public function testCompositeInvokesFirstAcceptInFilterChain(): void
     {
@@ -74,8 +73,6 @@ class CompositeFilterTest extends AbstractTestCase
 
     /**
      * testCompositeInvokesNextAcceptIfPreviousAcceptReturnsTrue
-     *
-     * @return void
      */
     public function testCompositeInvokesNextAcceptIfPreviousAcceptReturnsTrue(): void
     {
@@ -93,8 +90,6 @@ class CompositeFilterTest extends AbstractTestCase
 
     /**
      * testCompositeNotInvokesNextAcceptIfPreviousAcceptReturnsTrue
-     *
-     * @return void
      */
     public function testCompositeNotInvokesNextAcceptIfPreviousAcceptReturnsTrue(): void
     {

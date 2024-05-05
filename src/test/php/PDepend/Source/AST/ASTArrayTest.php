@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -46,12 +47,14 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArray} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 1.0.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTArray
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 1.0.0
+ *
  * @group unittest
  */
 class ASTArrayTest extends ASTNodeTestCase
@@ -68,8 +71,6 @@ class ASTArrayTest extends ASTNodeTestCase
      * <code>
      * - ASTArray
      * </code>
-     *
-     * @return void
      */
     public function testArrayGraphForEmptyArrayDefinition(): void
     {
@@ -91,8 +92,6 @@ class ASTArrayTest extends ASTNodeTestCase
      * <code>
      * - ASTArray
      * </code>
-     *
-     * @return void
      */
     public function testArrayGraphForEmptyShortArrayDefinition(): void
     {
@@ -104,8 +103,6 @@ class ASTArrayTest extends ASTNodeTestCase
 
     /**
      * Tests the start line value of an array instance.
-     *
-     * @return void
      */
     public function testArrayHasExpectedStartLine(): void
     {
@@ -115,8 +112,6 @@ class ASTArrayTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value of an array instance.
-     *
-     * @return void
      */
     public function testArrayHasExpectedStartColumn(): void
     {
@@ -126,8 +121,6 @@ class ASTArrayTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value of an array instance.
-     *
-     * @return void
      */
     public function testArrayHasExpectedEndLine(): void
     {
@@ -137,8 +130,6 @@ class ASTArrayTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value of an array instance.
-     *
-     * @return void
      */
     public function testArrayHasExpectedEndColumn(): void
     {
@@ -149,7 +140,7 @@ class ASTArrayTest extends ASTNodeTestCase
     /**
      * Returns an array instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTArray
+     * @return ASTArray
      */
     private function getFirstArrayInFunction()
     {

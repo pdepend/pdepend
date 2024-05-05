@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTEchoStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTEchoStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTEchoStatement
  * @group unittest
  */
 class ASTEchoStatementTest extends ASTNodeTestCase
 {
     /**
      * testEchoStatementHasExpectedStartLine
-     *
-     * @return void
      */
     public function testEchoStatementHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTEchoStatementTest extends ASTNodeTestCase
 
     /**
      * testEchoStatementHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testEchoStatementHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTEchoStatementTest extends ASTNodeTestCase
 
     /**
      * testEchoStatementHasExpectedEndLine
-     *
-     * @return void
      */
     public function testEchoStatementHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTEchoStatementTest extends ASTNodeTestCase
 
     /**
      * testEchoStatementHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testEchoStatementHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTEchoStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTEchoStatement
+     * @return ASTEchoStatement
      */
     private function getFirstEchoStatementInFunction($testCase)
     {

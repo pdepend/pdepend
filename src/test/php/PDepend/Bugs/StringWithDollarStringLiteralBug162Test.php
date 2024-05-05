@@ -54,8 +54,6 @@ class StringWithDollarStringLiteralBug162Test extends AbstractRegressionTestCase
 {
     /**
      * testParserDoesNotHandleDollarStringLiteralInDoubleQuoteString
-     *
-     * @return void
      */
     public function testParserDoesNotHandleDollarStringLiteralInDoubleQuoteString(): void
     {

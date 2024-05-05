@@ -43,10 +43,12 @@ namespace PDepend\Source\Language\PHP\Features\PHP81;
 use PDepend\Source\AST\ASTConstantDeclarator;
 
 /**
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  * @group php8.1
  */
@@ -57,7 +59,7 @@ class ExplicitOctalNotationTest extends PHPParserVersion81TestCase
         $class = $this->getFirstClassForTestCase();
 
         $values = array_map(
-            static fn (ASTConstantDeclarator $constantDeclarator) => $constantDeclarator->getValue()->getValue(),
+            static fn(ASTConstantDeclarator $constantDeclarator) => $constantDeclarator->getValue()->getValue(),
             $class->getConstantDeclarators()
         );
 

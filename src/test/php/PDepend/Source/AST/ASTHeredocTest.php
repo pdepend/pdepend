@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTHeredoc} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTHeredoc
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTHeredoc
  * @group unittest
  */
 class ASTHeredocTest extends ASTNodeTestCase
@@ -57,7 +58,6 @@ class ASTHeredocTest extends ASTNodeTestCase
     /**
      * testHeredocAsArrayInitializeValue
      *
-     * @return void
      * @since 1.0.0
      */
     public function testHeredocAsArrayInitializeValue(): void
@@ -70,8 +70,6 @@ class ASTHeredocTest extends ASTNodeTestCase
 
     /**
      * testHeredocHasExpectedStartLine
-     *
-     * @return void
      */
     public function testHeredocHasExpectedStartLine(): void
     {
@@ -81,8 +79,6 @@ class ASTHeredocTest extends ASTNodeTestCase
 
     /**
      * testHeredocHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testHeredocHasExpectedStartColumn(): void
     {
@@ -92,8 +88,6 @@ class ASTHeredocTest extends ASTNodeTestCase
 
     /**
      * testHeredocHasExpectedEndLine
-     *
-     * @return void
      */
     public function testHeredocHasExpectedEndLine(): void
     {
@@ -103,8 +97,6 @@ class ASTHeredocTest extends ASTNodeTestCase
 
     /**
      * testHeredocHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testHeredocHasExpectedEndColumn(): void
     {
@@ -115,7 +107,7 @@ class ASTHeredocTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTHeredoc
+     * @return ASTHeredoc
      */
     private function getFirstHeredocInFunction()
     {
@@ -128,7 +120,7 @@ class ASTHeredocTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTHeredoc
+     * @return ASTHeredoc
      */
     private function getFirstHeredocInClass()
     {

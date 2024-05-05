@@ -49,6 +49,7 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 15
+ *
  * @group regressiontest
  */
 class ParserBug015Test extends AbstractRegressionTestCase
@@ -57,8 +58,6 @@ class ParserBug015Test extends AbstractRegressionTestCase
      * Tests that the parser ignores backtick expressions.
      *
      * http://bugs.xplib.de/index.php?do=details&task_id=15&project=3
-     *
-     * @return void
      */
     public function testParserBacktickExpression(): void
     {

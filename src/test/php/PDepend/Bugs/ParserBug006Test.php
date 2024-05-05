@@ -49,14 +49,13 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 006
+ *
  * @group regressiontest
  */
 class ParserBug006Test extends AbstractRegressionTestCase
 {
     /**
      * testParserNotSetsReferenceForVariableObjectInstantiation
-     *
-     * @return void
      */
     public function testParserNotSetsReferenceForVariableObjectInstantiation(): void
     {

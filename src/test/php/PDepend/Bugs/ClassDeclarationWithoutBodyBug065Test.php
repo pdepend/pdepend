@@ -55,8 +55,6 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
     /**
      * Tests that the parser does not end in an endless loop when it detects an
      * interface without a body.
-     *
-     * @return void
      */
     public function testInterfaceDeclarationWithoutBody(): void
     {
@@ -73,8 +71,6 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
     /**
      * Tests that the parser does not end in an endless loop when it detects an
      * interface declaration with extend but without a body.
-     *
-     * @return void
      */
     public function testInterfaceDeclarationWithExtendWithoutBody(): void
     {
@@ -91,8 +87,6 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
     /**
      * Tests that the parser does not end in an endless loop when it detects an
      * interface declaration with extend with invalid end of interface list.
-     *
-     * @return void
      */
     public function testInterfaceDeclarationWithInvalidInterfaceList(): void
     {
@@ -105,12 +99,10 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
 
         $this->parseCodeResourceForTest();
     }
-    
+
     /**
      * Tests that the parser does not end in an endless loop when it detects a
      * class declaration without a body.
-     *
-     * @return void
      */
     public function testClassDeclarationWithoutBody(): void
     {
@@ -127,8 +119,6 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
     /**
      * Tests that the parser does not end in an endless loop when it detects a
      * class declaration with extend but without a parent class name and a body.
-     *
-     * @return void
      */
     public function testClassDeclarationWithExtendsWithoutClassName(): void
     {
@@ -145,8 +135,6 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
     /**
      * Tests that the parser does not end in an endless loop when it detects a
      * class declaration with implements but without a interface name and a body.
-     *
-     * @return void
      */
     public function testClassDeclarationWithExtendsWithoutInterfaceName(): void
     {
@@ -163,8 +151,6 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
     /**
      * Tests that the parser does not end in an endless loop when it detects a
      * class declaration with parent interface but without a body.
-     *
-     * @return void
      */
     public function testClassDeclarationWithParentInterfaceWithoutBody(): void
     {
@@ -181,8 +167,6 @@ class ClassDeclarationWithoutBodyBug065Test extends AbstractRegressionTestCase
     /**
      * Tests that the parser does not end in an endless loop when it detects a
      * class declaration with an incomplete parent interface list and without a body.
-     *
-     * @return void
      */
     public function testClassDeclarationWithIncompleteParentInterfaceWithoutBody(): void
     {

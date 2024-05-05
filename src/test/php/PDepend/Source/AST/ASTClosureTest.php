@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTClosure} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTClosure
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTClosure
  * @group unittest
  */
 class ASTClosureTest extends ASTNodeTestCase
 {
     /**
      * testReturnsByReferenceReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testReturnsByReferenceReturnsFalseByDefault(): void
     {
@@ -67,8 +66,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * testReturnsByReferenceReturnsFalseByDefaultForStaticClosure
-     *
-     * @return void
      */
     public function testReturnsByReferenceReturnsFalseByDefaultForStaticClosure(): void
     {
@@ -78,8 +75,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * testReturnsByReferenceReturnsTrueForClosure
-     *
-     * @return void
      */
     public function testReturnsByReferenceReturnsTrueForClosure(): void
     {
@@ -89,8 +84,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * testReturnsByReferenceReturnsTrueForStaticClosure
-     *
-     * @return void
      */
     public function testReturnsByReferenceReturnsTrueForStaticClosure(): void
     {
@@ -100,8 +93,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * testReturnsByReferenceReturnsTrueForAssignedClosure
-     *
-     * @return void
      */
     public function testReturnsByReferenceReturnsTrueForAssignedClosure(): void
     {
@@ -112,7 +103,6 @@ class ASTClosureTest extends ASTNodeTestCase
     /**
      * testParserHandlesPureClosureStatementWithoutAssignment
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserHandlesPureClosureStatementWithoutAssignment(): void
@@ -123,36 +113,30 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * testIsStaticReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsStaticReturnsFalseByDefault(): void
     {
-        $closure = new \PDepend\Source\AST\ASTClosure();
+        $closure = new ASTClosure();
         $this->assertFalse($closure->isStatic());
     }
 
     /**
      * testIsStaticReturnsTrueWhenSetToTrue
-     *
-     * @return void
      */
     public function testIsStaticReturnsTrueWhenSetToTrue(): void
     {
-        $closure = new \PDepend\Source\AST\ASTClosure();
+        $closure = new ASTClosure();
         $closure->setStatic(true);
-        
+
         $this->assertTrue($closure->isStatic());
     }
 
     /**
      * testIsStaticReturnsFalseWhenSetToFalse
-     *
-     * @return void
      */
     public function testIsStaticReturnsFalseWhenSetToFalse(): void
     {
-        $closure = new \PDepend\Source\AST\ASTClosure();
+        $closure = new ASTClosure();
         $closure->setStatic(false);
 
         $this->assertFalse($closure->isStatic());
@@ -167,8 +151,6 @@ class ASTClosureTest extends ASTNodeTestCase
      *     return pow($x, $y);
      * }
      * </code>
-     *
-     * @return void
      */
     public function testIsStaticReturnsFalseForNonStaticClosure(): void
     {
@@ -185,8 +167,6 @@ class ASTClosureTest extends ASTNodeTestCase
      *     return pow($x, $y);
      * }
      * </code>
-     *
-     * @return void
      */
     public function testIsStaticReturnsTrueForStaticClosure(): void
     {
@@ -196,8 +176,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * testClosureContainsExpectedNumberChildNodes
-     *
-     * @return void
      */
     public function testClosureContainsExpectedNumberChildNodes(): void
     {
@@ -207,8 +185,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * Tests the start line value.
-     *
-     * @return void
      */
     public function testClosureHasExpectedStartLine(): void
     {
@@ -218,8 +194,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value.
-     *
-     * @return void
      */
     public function testClosureHasExpectedStartColumn(): void
     {
@@ -229,8 +203,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value.
-     *
-     * @return void
      */
     public function testClosureHasExpectedEndLine(): void
     {
@@ -240,8 +212,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value.
-     *
-     * @return void
      */
     public function testClosureHasExpectedEndColumn(): void
     {
@@ -251,8 +221,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * testStaticClosureHasExpectedStartLine
-     *
-     * @return void
      */
     public function testStaticClosureHasExpectedStartLine(): void
     {
@@ -262,8 +230,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * testStaticClosureHasExpectedEndLine
-     *
-     * @return void
      */
     public function testStaticClosureHasExpectedEndLine(): void
     {
@@ -273,8 +239,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * testStaticClosureHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testStaticClosureHasExpectedStartColumn(): void
     {
@@ -284,8 +248,6 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * testStaticClosureHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testStaticClosureHasExpectedEndColumn(): void
     {
@@ -296,7 +258,7 @@ class ASTClosureTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTClosure
+     * @return ASTClosure
      */
     private function getFirstClosureInFunction()
     {

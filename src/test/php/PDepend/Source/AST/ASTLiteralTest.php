@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTLiteral} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTLiteral
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTLiteral
  * @group unittest
  */
 class ASTLiteralTest extends ASTNodeTestCase
 {
     /**
      * testLiteralWithBooleanTrueExpression
-     *
-     * @return void
      */
     public function testLiteralWithBooleanTrueExpression(): void
     {
@@ -67,8 +66,6 @@ class ASTLiteralTest extends ASTNodeTestCase
 
     /**
      * testLiteralWithBooleanFalseExpression
-     *
-     * @return void
      */
     public function testLiteralWithBooleanFalseExpression(): void
     {
@@ -78,8 +75,6 @@ class ASTLiteralTest extends ASTNodeTestCase
 
     /**
      * testLiteralWithIntegerExpression
-     *
-     * @return void
      */
     public function testLiteralWithIntegerExpression(): void
     {
@@ -89,8 +84,6 @@ class ASTLiteralTest extends ASTNodeTestCase
 
     /**
      * testLiteralWithSignedIntegerExpression
-     *
-     * @return void
      */
     public function testLiteralWithSignedIntegerExpression(): void
     {
@@ -100,8 +93,6 @@ class ASTLiteralTest extends ASTNodeTestCase
 
     /**
      * testLiteralWithFloatExpression
-     *
-     * @return void
      */
     public function testLiteralWithFloatExpression(): void
     {
@@ -111,8 +102,6 @@ class ASTLiteralTest extends ASTNodeTestCase
 
     /**
      * testLiteralWithSignedFloatExpression
-     *
-     * @return void
      */
     public function testLiteralWithSignedFloatExpression(): void
     {
@@ -122,8 +111,6 @@ class ASTLiteralTest extends ASTNodeTestCase
 
     /**
      * testLiteralWithNullExpression
-     *
-     * @return void
      */
     public function testLiteralWithNullExpression(): void
     {
@@ -134,7 +121,6 @@ class ASTLiteralTest extends ASTNodeTestCase
     /**
      * testLiteralWithZeroIntegerValue
      *
-     * @return void
      * @since 1.0.0
      */
     public function testLiteralWithZeroIntegerValue(): void
@@ -146,7 +132,6 @@ class ASTLiteralTest extends ASTNodeTestCase
     /**
      * testLiteralWithZeroOctalIntegerValue
      *
-     * @return void
      * @since 1.0.0
      */
     public function testLiteralWithZeroOctalIntegerValue(): void
@@ -158,7 +143,6 @@ class ASTLiteralTest extends ASTNodeTestCase
     /**
      * testLiteralWithZeroHexIntegerValue
      *
-     * @return void
      * @since 1.0.0
      */
     public function testLiteralWithZeroHexIntegerValue(): void
@@ -170,9 +154,9 @@ class ASTLiteralTest extends ASTNodeTestCase
     /**
      * testLiteralWithZeroBinaryIntegerValue
      *
-     * @return void
-     * @since 1.0.0
      * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
+     *
+     * @since 1.0.0
      */
     public function testLiteralWithZeroBinaryIntegerValue(): void
     {
@@ -183,7 +167,6 @@ class ASTLiteralTest extends ASTNodeTestCase
     /**
      * testLiteralWithNonZeroOctalIntegerValue
      *
-     * @return void
      * @since 1.0.0
      */
     public function testLiteralWithNonZeroOctalIntegerValue(): void
@@ -195,7 +178,6 @@ class ASTLiteralTest extends ASTNodeTestCase
     /**
      * testLiteralWithNonZeroHexIntegerValue
      *
-     * @return void
      * @since 1.0.0
      */
     public function testLiteralWithNonZeroHexIntegerValue(): void
@@ -207,9 +189,9 @@ class ASTLiteralTest extends ASTNodeTestCase
     /**
      * testLiteralWithNonZeroBinaryIntegerValue
      *
-     * @return void
-     * @since 1.0.0
      * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
+     *
+     * @since 1.0.0
      */
     public function testLiteralWithNonZeroBinaryIntegerValue(): void
     {
@@ -220,9 +202,9 @@ class ASTLiteralTest extends ASTNodeTestCase
     /**
      * testLiteralWithZeroFloatValue
      *
-     * @return void
-     * @since 2.16.0
      * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+     *
+     * @since 2.16.0
      */
     public function testLiteralWithZeroFloatValue(): void
     {
@@ -237,7 +219,6 @@ class ASTLiteralTest extends ASTNodeTestCase
     /**
      * testLiteralWithCurlyBraceFollowedByCompoundExpression
      *
-     * @return void
      * @since 1.0.0
      */
     public function testLiteralWithCurlyBraceFollowedByCompoundExpression(): void
@@ -248,8 +229,6 @@ class ASTLiteralTest extends ASTNodeTestCase
 
     /**
      * Tests that an invalid literal results in the expected exception.
-     *
-     * @return void
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException(): void
     {
@@ -261,17 +240,17 @@ class ASTLiteralTest extends ASTNodeTestCase
     /**
      * Creates a literal node.
      *
-     * @return \PDepend\Source\AST\ASTLiteral
+     * @return ASTLiteral
      */
     protected function createNodeInstance()
     {
-        return new \PDepend\Source\AST\ASTLiteral("'" . __METHOD__ . "'");
+        return new ASTLiteral("'" . __METHOD__ . "'");
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTLiteral
+     * @return ASTLiteral
      */
     private function getFirstLiteralInFunction()
     {

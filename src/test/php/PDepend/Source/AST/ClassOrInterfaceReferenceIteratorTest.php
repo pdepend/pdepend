@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
   * @since 1.0.0
  */
 
@@ -49,19 +50,19 @@ use PDepend\AbstractTestCase;
  * Test case for the {@link \PDepend\Source\AST\ASTClassOrInterfaceReferenceIterator}
  * class.
  *
+ * @covers \PDepend\Source\AST\ASTClassOrInterfaceReferenceIterator
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @since 1.0.0
  *
- * @covers \PDepend\Source\AST\ASTClassOrInterfaceReferenceIterator
  * @group unittest
  */
 class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
 {
     /**
      * testIteratorReturnsExpectedClasses
-     *
-     * @return void
      */
     public function testIteratorReturnsExpectedClasses(): void
     {
@@ -98,8 +99,6 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
 
     /**
      * testIteratorReturnsSameClassOnlyOnce
-     *
-     * @return void
      */
     public function testIteratorReturnsSameClassOnlyOnce(): void
     {

@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTForeachStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTForeachStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTForeachStatement
  * @group unittest
  */
 class ASTForeachStatementTest extends ASTNodeTestCase
 {
     /**
      * testThirdChildOfForeachStatementIsASTScopeStatement
-     *
-     * @return void
      */
     public function testThirdChildOfForeachStatementIsASTScopeStatement(): void
     {
@@ -67,8 +66,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start line value.
-     *
-     * @return void
      */
     public function testForeachStatementHasExpectedStartLine(): void
     {
@@ -78,8 +75,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value.
-     *
-     * @return void
      */
     public function testForeachStatementHasExpectedStartColumn(): void
     {
@@ -89,8 +84,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value.
-     *
-     * @return void
      */
     public function testForeachStatementHasExpectedEndLine(): void
     {
@@ -100,8 +93,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value.
-     *
-     * @return void
      */
     public function testForeachStatementHasExpectedEndColumn(): void
     {
@@ -111,8 +102,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementContainsListExpressionAsFirstChild
-     *
-     * @return void
      */
     public function testForeachStatementContainsExpressionAsFirstChild(): void
     {
@@ -122,8 +111,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithoutKeyAndWithValue
-     *
-     * @return void
      */
     public function testForeachStatementWithoutKeyAndWithValue(): void
     {
@@ -133,8 +120,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithoutKeyAndWithValueByReference
-     *
-     * @return void
      */
     public function testForeachStatementWithoutKeyAndWithValueByReference(): void
     {
@@ -144,8 +129,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithKeyAndValue
-     *
-     * @return void
      */
     public function testForeachStatementWithKeyAndValue(): void
     {
@@ -155,8 +138,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithKeyAndValueByReference
-     *
-     * @return void
      */
     public function testForeachStatementWithKeyAndValueByReference(): void
     {
@@ -166,8 +147,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithObjectPropertyByReference
-     *
-     * @return void
      */
     public function testForeachStatementWithObjectPropertyByReference(): void
     {
@@ -177,8 +156,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithKeyAndObjectPropertyByReference
-     *
-     * @return void
      */
     public function testForeachStatementWithKeyAndObjectPropertyByReference(): void
     {
@@ -188,8 +165,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithObjectPropertyAsKey
-     *
-     * @return void
      */
     public function testForeachStatementWithObjectPropertyAsKey(): void
     {
@@ -199,8 +174,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithObjectPropertyAsValue
-     *
-     * @return void
      */
     public function testForeachStatementWithObjectPropertyAsValue(): void
     {
@@ -210,8 +183,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithObjectPropertyAsKeyAndValue
-     *
-     * @return void
      */
     public function testForeachStatementWithObjectPropertyAsKeyAndValue(): void
     {
@@ -221,8 +192,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementThrowsExpectedExceptionForKeyByReference
-     *
-     * @return void
      */
     public function testForeachStatementThrowsExpectedExceptionForKeyByReference(): void
     {
@@ -233,8 +202,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithCommentBeforeClosingParenthesis
-     *
-     * @return void
      */
     public function testForeachStatementWithCommentBeforeClosingParenthesis(): void
     {
@@ -243,8 +210,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementAlternativeScopeHasExpectedStartLine
-     *
-     * @return void
      */
     public function testForeachStatementAlternativeScopeHasExpectedStartLine(): void
     {
@@ -254,8 +219,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementAlternativeScopeHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testForeachStatementAlternativeScopeHasExpectedStartColumn(): void
     {
@@ -265,8 +228,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementAlternativeScopeHasExpectedEndLine
-     *
-     * @return void
      */
     public function testForeachStatementAlternativeScopeHasExpectedEndLine(): void
     {
@@ -276,8 +237,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementAlternativeScopeHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testForeachStatementAlternativeScopeHasExpectedEndColumn(): void
     {
@@ -287,8 +246,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementTerminatedByPhpCloseTag
-     *
-     * @return void
      */
     public function testForeachStatementTerminatedByPhpCloseTag(): void
     {
@@ -298,8 +255,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithList
-     *
-     * @return void
      */
     public function testForeachStatementWithList(): void
     {
@@ -309,8 +264,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithKeyAndList
-     *
-     * @return void
      */
     public function testForeachStatementWithKeyAndList(): void
     {
@@ -320,8 +273,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithList
-     *
-     * @return void
      */
     public function testForeachStatementWithShortList(): void
     {
@@ -331,8 +282,6 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * testForeachStatementWithList
-     *
-     * @return void
      */
     public function testForeachStatementWithKeyAndShortList(): void
     {
@@ -345,7 +294,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTForeachStatement
+     * @return ASTForeachStatement
      */
     private function getFirstForeachStatementInFunction($testCase)
     {

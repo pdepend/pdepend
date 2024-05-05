@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTLogicalXorExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTLogicalXorExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTLogicalXorExpression
  * @group unittest
  */
 class ASTLogicalXorExpressionTest extends ASTNodeTestCase
 {
     /**
      * testLogicalXorExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testLogicalXorExpressionHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
 
     /**
      * testLogicalXorExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testLogicalXorExpressionHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
 
     /**
      * testLogicalXorExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testLogicalXorExpressionHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
 
     /**
      * testLogicalXorExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testLogicalXorExpressionHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTLogicalXorExpression
+     * @return ASTLogicalXorExpression
      */
     private function getFirstLogicalXorExpressionInFunction($testCase)
     {

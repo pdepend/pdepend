@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.1
  */
 
@@ -46,31 +47,31 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTShiftRightExpression} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 1.0.1
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTShiftRightExpression
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 1.0.1
+ *
  * @group unittest
  */
 class ASTShiftRightExpressionTest extends ASTNodeTestCase
 {
     /**
      * testShiftRightExpressionReturnsExpectedImage
-     *
-     * @return void
      */
     public function testShiftRightExpressionReturnsExpectedImage(): void
     {
-        $expr = new \PDepend\Source\AST\ASTShiftRightExpression();
+        $expr = new ASTShiftRightExpression();
         $this->assertEquals('>>', $expr->getImage());
     }
 
     /**
      * testShiftRightExpression
      *
-     * @return \PDepend\Source\AST\ASTShiftRightExpression
+     * @return ASTShiftRightExpression
      */
     public function testShiftRightExpression()
     {
@@ -83,9 +84,8 @@ class ASTShiftRightExpressionTest extends ASTNodeTestCase
     /**
      * testShiftRightExpressionHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTShiftRightExpression $expr
+     * @param ASTShiftRightExpression $expr
      *
-     * @return void
      * @depends testShiftRightExpression
      */
     public function testShiftRightExpressionHasExpectedStartLine($expr): void
@@ -96,9 +96,8 @@ class ASTShiftRightExpressionTest extends ASTNodeTestCase
     /**
      * testShiftRightExpressionHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTShiftRightExpression $expr
+     * @param ASTShiftRightExpression $expr
      *
-     * @return void
      * @depends testShiftRightExpression
      */
     public function testShiftRightExpressionHasExpectedStartColumn($expr): void
@@ -109,9 +108,8 @@ class ASTShiftRightExpressionTest extends ASTNodeTestCase
     /**
      * testShiftRightExpressionHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTShiftRightExpression $expr
+     * @param ASTShiftRightExpression $expr
      *
-     * @return void
      * @depends testShiftRightExpression
      */
     public function testShiftRightExpressionHasExpectedEndLine($expr): void
@@ -122,9 +120,8 @@ class ASTShiftRightExpressionTest extends ASTNodeTestCase
     /**
      * testShiftRightExpressionHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTShiftRightExpression $expr
+     * @param ASTShiftRightExpression $expr
      *
-     * @return void
      * @depends testShiftRightExpression
      */
     public function testShiftRightExpressionHasExpectedEndColumn($expr): void
@@ -135,7 +132,7 @@ class ASTShiftRightExpressionTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTShiftRightExpression
+     * @return ASTShiftRightExpression
      */
     private function getFirstShiftRightExpressionInFunction()
     {

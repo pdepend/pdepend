@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCompoundExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTCompoundExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTCompoundExpression
  * @group unittest
  */
 class ASTCompoundExpressionTest extends ASTNodeTestCase
 {
     /**
      * testExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testExpressionHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
 
     /**
      * testExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testExpressionHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
 
     /**
      * testExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testExpressionHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
 
     /**
      * testExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testExpressionHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTCompoundExpression
+     * @return ASTCompoundExpression
      */
     private function getFirstExpressionInFunction($testCase)
     {

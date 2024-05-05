@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTryStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTTryStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTTryStatement
  * @group unittest
  */
 class ASTTryStatementTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * testTryStatement
      *
-     * @return \PDepend\Source\AST\ASTTryStatement
+     * @return ASTTryStatement
+     *
      * @since 1.0.2
      */
     public function testTryStatement()
@@ -71,9 +73,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * Tests that the try-statement has the expected start line value.
      *
-     * @param \PDepend\Source\AST\ASTTryStatement $stmt
+     * @param ASTTryStatement $stmt
      *
-     * @return void
      * @depends testTryStatement
      */
     public function testTryStatementHasExpectedStartLine($stmt): void
@@ -84,9 +85,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * Tests that the try-statement has the expected start column value.
      *
-     * @param \PDepend\Source\AST\ASTTryStatement $stmt
+     * @param ASTTryStatement $stmt
      *
-     * @return void
      * @depends testTryStatement
      */
     public function testTryStatementHasExpectedStartColumn($stmt): void
@@ -97,9 +97,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * Tests that the try-statement has the expected end line value.
      *
-     * @param \PDepend\Source\AST\ASTTryStatement $stmt
+     * @param ASTTryStatement $stmt
      *
-     * @return void
      * @depends testTryStatement
      */
     public function testTryStatementHasExpectedEndLine($stmt): void
@@ -110,9 +109,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * Tests that the try-statement has the expected end column value.
      *
-     * @param \PDepend\Source\AST\ASTTryStatement $stmt
+     * @param ASTTryStatement $stmt
      *
-     * @return void
      * @depends testTryStatement
      */
     public function testTryStatementHasExpectedEndColumn($stmt): void
@@ -123,9 +121,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * testFirstChildOfTryStatementIsInstanceOfScopeStatement
      *
-     * @param \PDepend\Source\AST\ASTTryStatement $stmt
+     * @param ASTTryStatement $stmt
      *
-     * @return void
      * @depends testTryStatement
      */
     public function testFirstChildOfTryStatementIsInstanceOfScopeStatement($stmt): void
@@ -136,9 +133,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * testSecondChildOfTryStatementIsInstanceOfCatchStatement
      *
-     * @param \PDepend\Source\AST\ASTTryStatement $stmt
+     * @param ASTTryStatement $stmt
      *
-     * @return void
      * @depends testTryStatement
      */
     public function testSecondChildOfTryStatementIsInstanceOfCatchStatement($stmt): void
@@ -148,8 +144,6 @@ class ASTTryStatementTest extends ASTNodeTestCase
 
     /**
      * testTryStatementContainsMultipleChildInstancesOfCatchStatement
-     *
-     * @return void
      */
     public function testTryStatementContainsMultipleChildInstancesOfCatchStatement(): void
     {
@@ -171,8 +165,6 @@ class ASTTryStatementTest extends ASTNodeTestCase
 
     /**
      * testParserThrowsExceptionWhenNoCatchStatementFollows
-     *
-     * @return void
      */
     public function testParserThrowsExceptionWhenNoCatchStatementFollows(): void
     {
@@ -184,7 +176,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTryStatement
+     * @return ASTTryStatement
      */
     private function getFirstTryStatementInFunction()
     {

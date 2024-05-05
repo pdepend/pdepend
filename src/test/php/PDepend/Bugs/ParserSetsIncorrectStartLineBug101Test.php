@@ -55,8 +55,6 @@ class ParserSetsIncorrectStartLineBug101Test extends AbstractRegressionTestCase
 {
     /**
      * testParserSetsExpectedStartLineNumber
-     *
-     * @return void
      */
     public function testParserSetsExpectedStartLineNumber(): void
     {
@@ -70,8 +68,6 @@ class ParserSetsIncorrectStartLineBug101Test extends AbstractRegressionTestCase
 
     /**
      * testParserSetsExpectedEndLineNumber
-     *
-     * @return void
      */
     public function testParserSetsExpectedEndLineNumber(): void
     {

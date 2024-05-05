@@ -47,10 +47,11 @@ use PDepend\Util\Cache\AbstractDriverTestCase;
 /**
  * Test case for the {@link \PDepend\Util\Cache\Driver\MemoryCacheDriver} class.
  *
+ * @covers \PDepend\Util\Cache\Driver\MemoryCacheDriver
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Util\Cache\Driver\MemoryCacheDriver
  * @group unittest
  */
 class MemoryCacheDriverTest extends AbstractDriverTestCase

@@ -46,7 +46,6 @@ use PDepend\Metrics\AnalyzerListener;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Metrics\AnalyzerProjectAware;
 use PDepend\Source\AST\ASTArtifact;
-use PDepend\Source\AST\ASTArtifactList;
 
 /**
  * Simple dummy analyzer.
@@ -93,7 +92,6 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     /**
      * Returns the node metrics.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
      * @return array
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -107,8 +105,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     /**
      * Adds a listener to this analyzer.
      *
-     * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
-     * @return void
+     * @param AnalyzerListener $listener The listener instance.
      */
     public function addAnalyzeListener(AnalyzerListener $listener): void
     {
@@ -117,8 +114,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     /**
      * Removes the listener from this analyzer.
      *
-     * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
-     * @return void
+     * @param AnalyzerListener $listener The listener instance.
      */
     public function removeAnalyzeListener(AnalyzerListener $listener): void
     {
@@ -126,8 +122,6 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
-     *
-     * @return void
      */
     public function analyze($namespaces): void
     {
@@ -137,7 +131,8 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * By default all analyzers are enabled. Overwrite this method to provide
      * state based disabling/enabling.
      *
-     * @return boolean
+     * @return bool
+     *
      * @since 0.9.10
      */
     public function isEnabled()
@@ -149,6 +144,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * Set global options
      *
      * @param array<string, mixed> $options
+     *
      * @since 2.0.1
      */
     public function setOptions(array $options = []): void

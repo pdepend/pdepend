@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTConstantPostfix} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTConstantPostfix
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTConstantPostfix
  * @group unittest
  */
 class ASTConstantPostfixTest extends ASTNodeTestCase
 {
     /**
      * Tests that a parsed constant postfix has the expected object structure.
-     *
-     * @return void
      */
     public function testConstantPostfixStructureForSimpleStaticAccess(): void
     {
@@ -67,8 +66,6 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
 
     /**
      * Tests that a parsed method postfix has the expected object structure.
-     *
-     * @return void
      */
     public function testConstantPostfixStructureForStaticAccessOnVariable(): void
     {
@@ -78,8 +75,6 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
 
     /**
      * testConstantPostfixHasExpectedStartLine
-     *
-     * @return void
      */
     public function testConstantPostfixHasExpectedStartLine(): void
     {
@@ -89,8 +84,6 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
 
     /**
      * testConstantPostfixHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testConstantPostfixHasExpectedStartColumn(): void
     {
@@ -100,8 +93,6 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
 
     /**
      * testConstantPostfixHasExpectedEndLine
-     *
-     * @return void
      */
     public function testConstantPostfixHasExpectedEndLine(): void
     {
@@ -111,8 +102,6 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
 
     /**
      * testConstantPostfixHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testConstantPostfixHasExpectedEndColumn(): void
     {
@@ -125,7 +114,7 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTConstantPostfix
+     * @return ASTConstantPostfix
      */
     private function getFirstConstantPostfixInFunction($testCase)
     {

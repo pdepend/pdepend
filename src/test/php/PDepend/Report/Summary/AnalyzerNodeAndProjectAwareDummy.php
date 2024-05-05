@@ -85,7 +85,6 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * Adds a listener to this analyzer.
      *
      * @param AnalyzerListener $listener The listener instance.
-     * @return void
      */
     public function addAnalyzeListener(AnalyzerListener $listener): void
     {
@@ -94,8 +93,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
     /**
      * Removes the listener from this analyzer.
      *
-     * @param \PDepend\Metrics\AnalyzerListener $listener The listener instance.
-     * @return void
+     * @param AnalyzerListener $listener The listener instance.
      */
     public function removeAnalyzeListener(AnalyzerListener $listener): void
     {
@@ -103,8 +101,6 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
 
     /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
-     *
-     * @return void
      */
     public function analyze($namespaces): void
     {
@@ -114,7 +110,8 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * By default all analyzers are enabled. Overwrite this method to provide
      * state based disabling/enabling.
      *
-     * @return boolean
+     * @return bool
+     *
      * @since 0.9.10
      */
     public function isEnabled()
@@ -135,7 +132,6 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
     /**
      * Returns an array with metrics for the requested node.
      *
-     * @param \PDepend\Source\AST\ASTArtifact $artifact
      * @return array<string, mixed>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
@@ -147,6 +143,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * Set global options
      *
      * @param array<string, mixed> $options
+     *
      * @since 2.0.1
      */
     public function setOptions(array $options = []): void

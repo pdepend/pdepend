@@ -47,25 +47,24 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the {@link \PDepend\Source\AST\AbstractASTArtifact} class.
  *
+ * @covers \PDepend\Source\AST\AbstractASTArtifact
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\AST\AbstractASTArtifact
  * @group unittest
  */
 class ASTArtifactTest extends AbstractTestCase
 {
     /**
      * testGetNameReturnsValueOfFirstConstructorArgument
-     *
-     * @return void
      */
     public function testGetNameReturnsValueOfFirstConstructorArgument(): void
     {
         $item = $this->getItemMock();
         $this->assertEquals(__CLASS__, $item->getName());
     }
-    
+
     /**
      * testSetNameOverridesPreviousItemName
      *
@@ -75,14 +74,12 @@ class ASTArtifactTest extends AbstractTestCase
     {
         $item = $this->getItemMock();
         $item->setName(__FUNCTION__);
-        
+
         $this->assertEquals(__FUNCTION__, $item->getName());
     }
 
     /**
      * testGetIdReturnsMd5HashByDefault
-     *
-     * @return void
      */
     public function testGetIdReturnsMd5HashByDefault(): void
     {
@@ -92,8 +89,6 @@ class ASTArtifactTest extends AbstractTestCase
 
     /**
      * testGetIdReturnsInjectedIdValue
-     *
-     * @return void
      */
     public function testGetIdReturnsInjectedIdValue(): void
     {
@@ -105,8 +100,6 @@ class ASTArtifactTest extends AbstractTestCase
 
     /**
      * testGetSourceFileReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetSourceFileReturnsNullByDefault(): void
     {
@@ -116,8 +109,6 @@ class ASTArtifactTest extends AbstractTestCase
 
     /**
      * testGetSourceFileReturnsInjectedFileInstance
-     *
-     * @return void
      */
     public function testGetSourceFileReturnsInjectedFileInstance(): void
     {
@@ -131,8 +122,6 @@ class ASTArtifactTest extends AbstractTestCase
 
     /**
      * testGetDocCommentReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetDocCommentReturnsNullByDefault(): void
     {
@@ -142,8 +131,6 @@ class ASTArtifactTest extends AbstractTestCase
 
     /**
      * testGetDocCommentReturnsInjectedDocCommentValue
-     *
-     * @return void
      */
     public function testGetDocCommentReturnsInjectedDocCommentValue(): void
     {
@@ -156,7 +143,7 @@ class ASTArtifactTest extends AbstractTestCase
     /**
      * Returns a mocked item instance.
      *
-     * @return \PDepend\Source\AST\AbstractASTArtifact
+     * @return AbstractASTArtifact
      */
     protected function getItemMock()
     {

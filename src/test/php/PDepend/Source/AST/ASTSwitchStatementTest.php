@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTSwitchStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTSwitchStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTSwitchStatement
  * @group unittest
  */
 class ASTSwitchStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the generated object graph of a switch statement.
-     *
-     * @return void
      */
     public function testSwitchStatementGraphWithBooleanExpressions(): void
     {
@@ -69,8 +68,6 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the generated object graph of a switch statement.
-     *
-     * @return void
      */
     public function testSwitchStatementGraphWithLabels(): void
     {
@@ -84,7 +81,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatement
      *
-     * @return \PDepend\Source\AST\ASTSwitchStatement
+     * @return ASTSwitchStatement
+     *
      * @since 1.0.2
      */
     public function testSwitchStatement()
@@ -98,9 +96,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * Tests the start line value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $stmt
+     * @param ASTSwitchStatement $stmt
      *
-     * @return void
      * @depends testSwitchStatement
      */
     public function testSwitchStatementHasExpectedStartLine($stmt): void
@@ -111,9 +108,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * Tests the start column value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $stmt
+     * @param ASTSwitchStatement $stmt
      *
-     * @return void
      * @depends testSwitchStatement
      */
     public function testSwitchStatementHasExpectedStartColumn($stmt): void
@@ -124,9 +120,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * Tests the end line value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $stmt
+     * @param ASTSwitchStatement $stmt
      *
-     * @return void
      * @depends testSwitchStatement
      */
     public function testSwitchStatementHasExpectedEndLine($stmt): void
@@ -137,9 +132,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * Tests the end column value.
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $stmt
+     * @param ASTSwitchStatement $stmt
      *
-     * @return void
      * @depends testSwitchStatement
      */
     public function testSwitchStatementHasExpectedEndColumn($stmt): void
@@ -149,8 +143,6 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
 
     /**
      * testParserIgnoresDocCommentInSwitchStatement
-     *
-     * @return void
      */
     public function testParserIgnoresDocCommentInSwitchStatement(): void
     {
@@ -159,8 +151,6 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
 
     /**
      * testParserIgnoresCommentInSwitchStatement
-     *
-     * @return void
      */
     public function testParserIgnoresCommentInSwitchStatement(): void
     {
@@ -169,8 +159,6 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
 
     /**
      * testInvalidStatementInSwitchStatementResultsInExpectedException
-     *
-     * @return void
      */
     public function testInvalidStatementInSwitchStatementResultsInExpectedException(): void
     {
@@ -181,8 +169,6 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
 
     /**
      * testUnclosedSwitchStatementResultsInExpectedException
-     *
-     * @return void
      */
     public function testUnclosedSwitchStatementResultsInExpectedException(): void
     {
@@ -194,7 +180,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementWithAlternativeScope
      *
-     * @return \PDepend\Source\AST\ASTSwitchStatement
+     * @return ASTSwitchStatement
+     *
      * @since 1.0.2
      */
     public function testSwitchStatementWithAlternativeScope()
@@ -208,9 +195,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementAlternativeScopeHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $stmt
+     * @param ASTSwitchStatement $stmt
      *
-     * @return void
      * @depends testSwitchStatementWithAlternativeScope
      */
     public function testSwitchStatementAlternativeScopeHasExpectedStartLine($stmt): void
@@ -221,9 +207,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementAlternativeScopeHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $stmt
+     * @param ASTSwitchStatement $stmt
      *
-     * @return void
      * @depends testSwitchStatementWithAlternativeScope
      */
     public function testSwitchStatementAlternativeScopeHasExpectedStartColumn($stmt): void
@@ -234,9 +219,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementAlternativeScopeHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $stmt
+     * @param ASTSwitchStatement $stmt
      *
-     * @return void
      * @depends testSwitchStatementWithAlternativeScope
      */
     public function testSwitchStatementAlternativeScopeHasExpectedEndLine($stmt): void
@@ -247,9 +231,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementAlternativeScopeHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $stmt
+     * @param ASTSwitchStatement $stmt
      *
-     * @return void
      * @depends testSwitchStatementWithAlternativeScope
      */
     public function testSwitchStatementAlternativeScopeHasExpectedEndColumn($stmt): void
@@ -259,8 +242,6 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
 
     /**
      * testSwitchStatementTerminatedByPhpCloseTag
-     *
-     * @return void
      */
     public function testSwitchStatementTerminatedByPhpCloseTag(): void
     {
@@ -271,7 +252,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementWithNestedNonePhpCode
      *
-     * @return \PDepend\Source\AST\ASTSwitch
+     * @return ASTSwitch
+     *
      * @since 2.1.0
      */
     public function testSwitchStatementWithNestedNonePhpCode()
@@ -285,9 +267,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementWithNestedNonePhpCodeStartLine
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $switch
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchStatementWithNestedNonePhpCode
      */
     public function testSwitchStatementWithNestedNonePhpCodeStartLine(ASTSwitchStatement $switch): void
@@ -298,9 +279,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementWithNestedNonePhpCodeEndLine
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $switch
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchStatementWithNestedNonePhpCode
      */
     public function testSwitchStatementWithNestedNonePhpCodeEndLine(ASTSwitchStatement $switch): void
@@ -311,9 +291,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementWithNestedNonePhpCodeStartColumn
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $switch
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchStatementWithNestedNonePhpCode
      */
     public function testSwitchStatementWithNestedNonePhpCodeStartColumn(ASTSwitchStatement $switch): void
@@ -324,9 +303,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementWithNestedNonePhpCodeEndColumn
      *
-     * @param \PDepend\Source\AST\ASTSwitchStatement $switch
-     * @return void
      * @since 2.1.0
+     *
      * @depends testSwitchStatementWithNestedNonePhpCode
      */
     public function testSwitchStatementWithNestedNonePhpCodeEndColumn(ASTSwitchStatement $switch): void
@@ -337,7 +315,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTSwitchStatement
+     * @return ASTSwitchStatement
      */
     private function getFirstSwitchStatementInFunction()
     {

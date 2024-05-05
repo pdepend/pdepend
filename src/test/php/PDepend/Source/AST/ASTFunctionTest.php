@@ -42,27 +42,25 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\Builder\BuilderContext;
-use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\ASTVisitor\StubASTVisitor;
+use PDepend\Source\Tokenizer\Token;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTFunction class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\AbstractASTCallable
  * @covers \PDepend\Source\AST\ASTFunction
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  */
 class ASTFunctionTest extends AbstractASTArtifactTestCase
 {
     /**
      * testReturnsReferenceReturnsExpectedTrue
-     *
-     * @return void
      */
     public function testReturnsReferenceReturnsExpectedTrue(): void
     {
@@ -72,8 +70,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testReturnsReferenceReturnsExpectedFalse
-     *
-     * @return void
      */
     public function testReturnsReferenceReturnsExpectedFalse(): void
     {
@@ -83,8 +79,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStaticVariablesReturnsEmptyArrayByDefault
-     *
-     * @return void
      */
     public function testGetStaticVariablesReturnsEmptyArrayByDefault(): void
     {
@@ -94,8 +88,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStaticVariablesReturnsFirstSetOfStaticVariables
-     *
-     * @return void
      */
     public function testGetStaticVariablesReturnsFirstSetOfStaticVariables(): void
     {
@@ -107,8 +99,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStaticVariablesReturnsMergeOfAllStaticVariables
-     *
-     * @return void
      */
     public function testGetStaticVariablesReturnsMergeOfAllStaticVariables(): void
     {
@@ -120,8 +110,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the ctor and the {@link \PDepend\Source\AST\ASTFunction::getName()} method.
-     *
-     * @return void
      */
     public function testCreateNewFunctionInstance(): void
     {
@@ -131,8 +119,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStaticVariablesReturnsMergeOfAllStaticVariables
-     *
-     * @return void
      */
     public function testGetNamespaceReturnsNullByDefault(): void
     {
@@ -142,8 +128,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnsetNamespaceWithNullWillResetPreviousPackage
-     *
-     * @return void
      */
     public function testUnsetNamespaceWithNullWillResetPreviousPackage(): void
     {
@@ -158,8 +142,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnsetNamespaceWithNullWillResetNamespaceNameProperty
-     *
-     * @return void
      */
     public function testUnsetNamespaceWithNullWillResetNamespaceNameProperty(): void
     {
@@ -173,7 +155,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     /**
      * testClassReferenceForJavaStyleArrayNotation
      *
-     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @return ASTClassOrInterfaceReference
      */
     public function testClassReferenceForJavaStyleArrayNotation()
     {
@@ -187,8 +169,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * @depends testClassReferenceForJavaStyleArrayNotation
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
-     * @return void
      */
     public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type): void
     {
@@ -197,8 +177,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testSetNamespaceNotEstablishesBackReference
-     *
-     * @return void
      */
     public function testSetNamespaceNotEstablishesBackReference(): void
     {
@@ -215,8 +193,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTFunction::getNamespace()} returns as
      * default value <b>null</b> and that the namespace could be set and unset.
-     *
-     * @return void
      */
     public function testGetSetNamespace(): void
     {
@@ -229,8 +205,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetNamespaceNameReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetNamespaceNameReturnsNullByDefault(): void
     {
@@ -239,8 +213,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetNamespaceNameReturnsNameOfInjectedPackage
-     *
-     * @return void
      */
     public function testGetNamespaceNameReturnsNameOfInjectedPackage(): void
     {
@@ -252,8 +224,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsCachedReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsCachedReturnsFalseByDefault(): void
     {
@@ -263,8 +233,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsCachedReturnsFalseWhenObjectGetsSerialized
-     *
-     * @return void
      */
     public function testIsCachedReturnsFalseWhenObjectGetsSerialized(): void
     {
@@ -276,8 +244,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
@@ -295,7 +261,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
                 'comment',
                 'returnsReference',
                 'returnClassReference',
-                'exceptionClassReferences'
+                'exceptionClassReferences',
             ],
             $function->__sleep()
         );
@@ -303,8 +269,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testSetTokensDelegatesToCacheStoreMethod
-     *
-     * @return void
      */
     public function testSetTokensDelegatesToCacheStoreMethod(): void
     {
@@ -325,8 +289,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetTokensDelegatesToCacheRestoreMethod
-     *
-     * @return void
      */
     public function testGetTokensDelegatesToCacheRestoreMethod(): void
     {
@@ -346,8 +308,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetTokensReturnsArrayEvenWhenCacheReturnsNull
-     *
-     * @return void
      */
     public function testGetTokensReturnsArrayEvenWhenCacheReturnsNull(): void
     {
@@ -368,8 +328,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTFunction::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch(): void
     {
@@ -397,8 +355,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTFunction::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch(): void
     {
@@ -432,8 +388,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTFunction::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull(): void
     {
@@ -461,8 +415,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTFunction::findChildrenOfType()}.
-     *
-     * @return void
      */
     public function testFindChildrenOfTypeReturnsExpectedResult(): void
     {
@@ -490,8 +442,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedFunctionStillReferencesSameDependency
-     *
-     * @return void
      */
     public function testUnserializedFunctionStillReferencesSameDependency(): void
     {
@@ -506,8 +456,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedFunctionStillReferencesSameReturnClass
-     *
-     * @return void
      */
     public function testUnserializedFunctionStillReferencesSameReturnClass(): void
     {
@@ -522,8 +470,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedFunctionStillReferencesSameParameterClass
-     *
-     * @return void
      */
     public function testUnserializedFunctionStillReferencesSameParameterClass(): void
     {
@@ -538,8 +484,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedFunctionStillReferencesSameExceptionClass
-     *
-     * @return void
      */
     public function testUnserializedFunctionStillReferencesSameExceptionClass(): void
     {
@@ -554,8 +498,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedFunctionStillReferencesSameDependencyInterface
-     *
-     * @return void
      */
     public function testUnserializedFunctionStillReferencesSameDependencyInterface(): void
     {
@@ -570,8 +512,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedFunctionStillReferencesSamePackage
-     *
-     * @return void
      */
     public function testUnserializedFunctionStillReferencesSamePackage(): void
     {
@@ -583,8 +523,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedFunctionIsInSameNamespace
-     *
-     * @return void
      */
     public function testUnserializedFunctionIsInSameNamespace(): void
     {
@@ -599,8 +537,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedFunctionNotAddsDublicateToPackage
-     *
-     * @return void
      */
     public function testUnserializedFunctionNotAddsDublicateToPackage(): void
     {
@@ -612,8 +548,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedFunctionIsChildOfParentPackage
-     *
-     * @return void
      */
     public function testUnserializedFunctionIsChildOfParentPackage(): void
     {
@@ -625,8 +559,6 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the visitor accept method.
-     *
-     * @return void
      */
     public function testVisitorAccept(): void
     {
@@ -654,7 +586,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     /**
      * Creates an abstract item instance.
      *
-     * @return \PDepend\Source\AST\AbstractASTArtifact
+     * @return AbstractASTArtifact
      */
     protected function createItem()
     {

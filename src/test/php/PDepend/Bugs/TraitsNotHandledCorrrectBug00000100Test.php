@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://github.com/pdepend/pdepend/issues/100
  */
 
@@ -48,6 +49,7 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://github.com/pdepend/pdepend/issues/100
  *
  * @group regressiontest
@@ -56,8 +58,6 @@ class TraitsNotHandledCorrrectBug00000100Test extends AbstractRegressionTestCase
 {
     /**
      * testHandlingOfSelfReferenceInTrait
-     *
-     * @return void
      */
     public function testHandlingOfSelfReferenceInTrait(): void
     {

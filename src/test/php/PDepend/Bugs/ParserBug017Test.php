@@ -49,6 +49,7 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 17
+ *
  * @group regressiontest
  */
 class ParserBug017Test extends AbstractRegressionTestCase
@@ -63,8 +64,6 @@ class ParserBug017Test extends AbstractRegressionTestCase
      * </code>
      *
      * http://bugs.pdepend.org/index.php?do=details&task_id=17
-     *
-     * @return void
      */
     public function testDetectsTypeWithinCatchBlock(): void
     {

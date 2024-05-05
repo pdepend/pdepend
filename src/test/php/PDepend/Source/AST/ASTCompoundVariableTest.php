@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCompoundVariable} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTCompoundVariable
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTCompoundVariable
  * @group unittest
  */
 class ASTCompoundVariableTest extends ASTNodeTestCase
 {
     /**
      * Tests that a parsed compound variable has the expected object graph.
-     *
-     * @return void
      */
     public function testCompoundVariableGraphWithInlineLiteral(): void
     {
@@ -69,8 +68,6 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
 
     /**
      * Tests that a parsed compound variable has the expected object graph.
-     *
-     * @return void
      */
     public function testCompoundVariableGraphWithInlineConstantEscapedLiteral(): void
     {
@@ -82,8 +79,6 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
 
     /**
      * Tests that a parsed compound variable has the expected object graph.
-     *
-     * @return void
      */
     public function testCompoundVariableGraphWithInlineBacktickLiteral(): void
     {
@@ -95,8 +90,6 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
 
     /**
      * Tests that a parsed compound variable has the expected object graph.
-     *
-     * @return void
      */
     public function testCompoundVariableGraphWithMemberPrimaryPrefix(): void
     {
@@ -106,7 +99,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTMethodPostfix',
             'PDepend\\Source\\AST\\ASTIdentifier',
-            'PDepend\\Source\\AST\\ASTArguments'
+            'PDepend\\Source\\AST\\ASTArguments',
         ];
 
         $this->assertGraphEquals($variable, $expected);
@@ -114,8 +107,6 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
 
     /**
      * Tests that an invalid compound variable results in the expected exception.
-     *
-     * @return void
      */
     public function testUnclosedCompoundVariableThrowsExpectedException(): void
     {
@@ -123,11 +114,9 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
 
         $this->parseCodeResourceForTest();
     }
-    
+
     /**
      * Tests the start line value.
-     *
-     * @return void
      */
     public function testCompoundVariableHasExpectedStartLine(): void
     {
@@ -137,8 +126,6 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value.
-     *
-     * @return void
      */
     public function testCompoundVariableHasExpectedStartColumn(): void
     {
@@ -148,8 +135,6 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value.
-     *
-     * @return void
      */
     public function testCompoundVariableHasExpectedEndLine(): void
     {
@@ -159,8 +144,6 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value.
-     *
-     * @return void
      */
     public function testCompoundVariableHasExpectedEndColumn(): void
     {
@@ -173,7 +156,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTCompoundVariable
+     * @return ASTCompoundVariable
      */
     private function getFirstVariableInFunction($testCase)
     {

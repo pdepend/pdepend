@@ -47,18 +47,17 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the {@link \PDepend\Source\Tokenizer\Token} class.
  *
+ * @covers \PDepend\Source\Tokenizer\Token
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Tokenizer\Token
  * @group unittest
  */
 class TokenTest extends AbstractTestCase
 {
     /**
      * testConstructorSetsTypeProperty
-     *
-     * @return void
      */
     public function testConstructorSetsTypeProperty(): void
     {
@@ -68,8 +67,6 @@ class TokenTest extends AbstractTestCase
 
     /**
      * testConstructorSetsImageProperty
-     *
-     * @return void
      */
     public function testConstructorSetsImageProperty(): void
     {
@@ -79,8 +76,6 @@ class TokenTest extends AbstractTestCase
 
     /**
      * testConstructorSetsStartLineProperty
-     *
-     * @return void
      */
     public function testConstructorSetsStartLineProperty(): void
     {
@@ -90,8 +85,6 @@ class TokenTest extends AbstractTestCase
 
     /**
      * testConstructorSetsEndLineProperty
-     *
-     * @return void
      */
     public function testConstructorSetsEndLineProperty(): void
     {
@@ -101,8 +94,6 @@ class TokenTest extends AbstractTestCase
 
     /**
      * testConstructorSetsStartColumnProperty
-     *
-     * @return void
      */
     public function testConstructorSetsStartColumnProperty(): void
     {
@@ -112,8 +103,6 @@ class TokenTest extends AbstractTestCase
 
     /**
      * testConstructorSetsEndColumnProperty
-     *
-     * @return void
      */
     public function testConstructorSetsEndColumnProperty(): void
     {

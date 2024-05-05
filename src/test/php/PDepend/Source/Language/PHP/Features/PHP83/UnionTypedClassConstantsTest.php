@@ -52,18 +52,17 @@ use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTValue;
 
 /**
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion83
  * @covers \PDepend\Source\AST\ASTConstantDeclarator
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  * @group php8.3
  */
 class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
 {
-    /**
-     * @return void
-     */
     public function testInterface(): void
     {
         /** @var ASTInterface $interface */
@@ -98,9 +97,6 @@ class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
         $this->assertSame('TEST', $children[1]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testEnum(): void
     {
         /** @var ASTEnum $enum */
@@ -132,9 +128,6 @@ class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
         $this->assertSame('"Test1"', $constant->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testTrait(): void
     {
         /** @var ASTTrait $trait */
@@ -170,9 +163,6 @@ class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
         $this->assertSame('TEST', $children[1]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testClass(): void
     {
         $classes = $this->parseCodeResourceForTest()
@@ -224,9 +214,6 @@ class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
         $this->assertSame('"Test2"', $constant->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testBroken(): void
     {
         $this->expectException(

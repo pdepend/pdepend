@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTVariableDeclarator} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTVariableDeclarator
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTVariableDeclarator
  * @group unittest
  */
 class ASTVariableDeclaratorTest extends ASTNodeTestCase
 {
     /**
      * testGetValueReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetValueReturnsNullByDefault(): void
     {
@@ -67,8 +66,6 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
 
     /**
      * testGetValueReturnsInjectedValueInstance
-     *
-     * @return void
      */
     public function testGetValueReturnsInjectedValueInstance(): void
     {
@@ -80,8 +77,6 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
 
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
@@ -91,7 +86,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
                 'value',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $declarator->__sleep()
         );
@@ -101,6 +96,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
      * testVariableDeclarator
      *
      * @return ASTVariableDeclarator
+     *
      * @since 1.0.2
      */
     public function testVariableDeclarator()
@@ -114,8 +110,6 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     /**
      * testVariableDeclaratorHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTVariableDeclarator $declarator
-     * @return void
      * @depends testVariableDeclarator
      */
     public function testVariableDeclaratorHasExpectedStartLine(ASTVariableDeclarator $declarator): void
@@ -126,8 +120,6 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     /**
      * testVariableDeclaratorHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTVariableDeclarator $declarator
-     * @return void
      * @depends testVariableDeclarator
      */
     public function testVariableDeclaratorHasExpectedStartColumn(ASTVariableDeclarator $declarator): void
@@ -138,8 +130,6 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     /**
      * testVariableDeclaratorHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTVariableDeclarator $declarator
-     * @return void
      * @depends testVariableDeclarator
      */
     public function testVariableDeclaratorHasExpectedEndLine(ASTVariableDeclarator $declarator): void
@@ -150,8 +140,6 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     /**
      * testVariableDeclaratorHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTVariableDeclarator $declarator
-     * @return void
      * @depends testVariableDeclarator
      */
     public function testVariableDeclaratorHasExpectedEndColumn(ASTVariableDeclarator $declarator): void
@@ -162,7 +150,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTVariableDeclarator
+     * @return ASTVariableDeclarator
      */
     private function getFirstVariableDeclaratorInFunction()
     {

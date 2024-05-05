@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTGlobalStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTGlobalStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTGlobalStatement
  * @group unittest
  */
 class ASTGlobalStatementTest extends ASTNodeTestCase
 {
     /**
      * testGlobalStatementHasExpectedStartLine
-     *
-     * @return void
      */
     public function testGlobalStatementHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
 
     /**
      * testGlobalStatementHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testGlobalStatementHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
 
     /**
      * testGlobalStatementHasExpectedEndLine
-     *
-     * @return void
      */
     public function testGlobalStatementHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
 
     /**
      * testGlobalStatementHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testGlobalStatementHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTGlobalStatement
+     * @return ASTGlobalStatement
      */
     private function getFirstGlobalStatementInFunction($testCase)
     {

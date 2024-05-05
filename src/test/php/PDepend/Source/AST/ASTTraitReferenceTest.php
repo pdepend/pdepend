@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -48,20 +49,20 @@ use PDepend\Source\Builder\BuilderContext;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitReference} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 1.0.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTraitReference
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 1.0.0
+ *
  * @group unittest
  */
 class ASTTraitReferenceTest extends ASTNodeTestCase
 {
     /**
      * testGetTraitDelegatesToContextGetTraitMethod
-     *
-     * @return void
      */
     public function testGetTraitDelegatesToContextGetTraitMethod(): void
     {
@@ -71,30 +72,30 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
             ->method('getTrait')
             ->with($this->equalTo(__CLASS__));
 
-        $reference = new \PDepend\Source\AST\ASTTraitReference($context, __CLASS__);
+        $reference = new ASTTraitReference($context, __CLASS__);
         $reference->getType();
     }
-    
+
     /**
      * testTraitReference
      *
-     * @return \PDepend\Source\AST\ASTTraitReference
+     * @return ASTTraitReference
+     *
      * @since 1.0.2
      */
     public function testTraitReference()
     {
         $reference = $this->getFirstTraitReferenceInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitReference', $reference);
-        
+
         return $reference;
     }
 
     /**
      * testTraitReferenceHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedStartLine($reference): void
@@ -105,9 +106,8 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedStartColumn($reference): void
@@ -118,9 +118,8 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedEndLine($reference): void
@@ -131,9 +130,8 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedEndColumn($reference): void
@@ -144,7 +142,7 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTraitReference
+     * @return ASTTraitReference
      */
     private function getFirstTraitReferenceInClass()
     {
@@ -157,11 +155,11 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * Creates a concrete node implementation.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     protected function createNodeInstance()
     {
-        return new \PDepend\Source\AST\ASTTraitReference(
+        return new ASTTraitReference(
             $this->getBuilderContextMock(),
             __CLASS__
         );
@@ -170,13 +168,13 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * Returns a mocked builder context instance.
      *
-     * @return \PDepend\Source\Builder\BuilderContext
+     * @return BuilderContext
      */
     protected function getBuilderContextMock()
     {
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
-        
+
         return $context;
     }
 }

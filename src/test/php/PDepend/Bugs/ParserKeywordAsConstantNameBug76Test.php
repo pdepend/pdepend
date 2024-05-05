@@ -58,10 +58,9 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTestCase
      * This method tests that the parser handles reserved keywords in type
      * constant names correct.
      *
-     * @param string         $sourceFile   Name of the test file.
-     * @param array<integer> $constantName Name of the expected constant
+     * @param string     $sourceFile   Name of the test file.
+     * @param array<int> $constantName Name of the expected constant
      *
-     * @return void
      * @dataProvider dataProviderReservedKeywordAsTypeConstantName
      */
     public function testReservedKeywordAsTypeConstantName($sourceFile, $constantName): void
@@ -86,43 +85,43 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTestCase
         return [
             [
                 'bugs/076-022-tokenizer-keyword-substitution.php',
-                'null'
+                'null',
             ],
             [
                 'bugs/076-023-tokenizer-keyword-substitution.php',
-                'use'
+                'use',
             ],
             [
                 'bugs/076-024-tokenizer-keyword-substitution.php',
-                'goto'
+                'goto',
             ],
             [
                 'bugs/076-025-tokenizer-keyword-substitution.php',
-                'self'
+                'self',
             ],
             [
                 'bugs/076-026-tokenizer-keyword-substitution.php',
-                'true'
+                'true',
             ],
             [
                 'bugs/076-027-tokenizer-keyword-substitution.php',
-                'false'
+                'false',
             ],
             [
                 'bugs/076-028-tokenizer-keyword-substitution.php',
-                'parent'
+                'parent',
             ],
             [
                 'bugs/076-029-tokenizer-keyword-substitution.php',
-                'namespace'
+                'namespace',
             ],
             [
                 'bugs/076-030-tokenizer-keyword-substitution.php',
-                '__dir__'
+                '__dir__',
             ],
             [
                 'bugs/076-031-tokenizer-keyword-substitution.php',
-                '__NaMeSpAcE__'
+                '__NaMeSpAcE__',
             ],
         ];
     }

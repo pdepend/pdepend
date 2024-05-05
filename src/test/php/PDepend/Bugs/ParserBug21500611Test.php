@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://www.pivotaltracker.com/story/show/21500611
  * @since 1.0.0
  */
@@ -51,18 +52,18 @@ use PDepend\Source\AST\ASTHeredoc;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @link https://www.pivotaltracker.com/story/show/21500611
  * @since 1.0.0
  *
  * @ticket 21500611
+ *
  * @group regressiontest
  */
 class ParserBug21500611Test extends AbstractRegressionTestCase
 {
     /**
      * testParserHandlesNowdocInPropertyDeclaration
-     *
-     * @return void
      */
     public function testParserHandlesNowdocInPropertyDeclaration(): void
     {
@@ -71,8 +72,6 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesNowdocInStaticVariableDeclaration
-     *
-     * @return void
      */
     public function testParserHandlesNowdocInStaticVariableDeclaration(): void
     {
@@ -81,8 +80,6 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesNowdocForMultipleStaticVariableDeclarations
-     *
-     * @return void
      */
     public function testParserHandlesNowdocForMultipleStaticVariableDeclarations(): void
     {
@@ -91,8 +88,6 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesNowdocInParameterDefaultValue
-     *
-     * @return void
      */
     public function testParserHandlesNowdocInParameterDefaultValue(): void
     {
@@ -101,8 +96,6 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesNowdocForMultipleParametersDefaultValue
-     *
-     * @return void
      */
     public function testParserHandlesNowdocForMultipleParametersDefaultValue(): void
     {
@@ -112,7 +105,7 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
     /**
      * Returns the first heredoc found in a class.
      *
-     * @return \PDepend\Source\AST\ASTHeredoc
+     * @return ASTHeredoc
      */
     protected function getFirstHeredocInClass()
     {

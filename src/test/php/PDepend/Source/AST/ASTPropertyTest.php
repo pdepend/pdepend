@@ -47,10 +47,11 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the code property class.
  *
+ * @covers \PDepend\Source\AST\ASTProperty
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\AST\ASTProperty
  * @group unittest
  */
 class ASTPropertyTest extends AbstractTestCase
@@ -58,7 +59,6 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * testGetDeclaringClass
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetDeclaringClass(): void
@@ -69,8 +69,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetClassForPropertyWithNamespacedInternalType
-     *
-     * @return void
      */
     public function testGetClassForPropertyWithNamespacedRootType(): void
     {
@@ -80,8 +78,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetClassForPropertyWithNamespacedType
-     *
-     * @return void
      */
     public function testGetClassForPropertyWithNamespacedType(): void
     {
@@ -91,8 +87,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetClassForPropertyWithNamespacedArrayRootType
-     *
-     * @return void
      */
     public function testGetClassForPropertyWithNamespacedArrayRootType(): void
     {
@@ -102,8 +96,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetClassForPropertyWithNamespacedArrayType
-     *
-     * @return void
      */
     public function testGetClassForPropertyWithNamespacedArrayType(): void
     {
@@ -113,8 +105,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetClassReturnsNullForPropertyWithScalarType
-     *
-     * @return void
      */
     public function testGetClassReturnsNullForPropertyWithScalarType(): void
     {
@@ -124,8 +114,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetClassReturnsNullForPropertyWithoutTypeHint
-     *
-     * @return void
      */
     public function testGetClassReturnsNullForPropertyWithoutTypeHint(): void
     {
@@ -135,8 +123,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetClassReturnsNullForPropertyWithoutDocComment
-     *
-     * @return void
      */
     public function testGetClassReturnsNullForPropertyWithoutDocComment(): void
     {
@@ -146,8 +132,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetSourceFileReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetCompilationUnitReturnsNullByDefault(): void
     {
@@ -157,8 +141,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetSourceFileReturnsInjectedFileInstance
-     *
-     * @return void
      */
     public function testGetCompilationUnitReturnsInjectedFileInstance(): void
     {
@@ -172,8 +154,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetDocCommentReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetDocCommentReturnsNullByDefault(): void
     {
@@ -183,8 +163,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetDocCommentReturnsExpectedPropertyComment
-     *
-     * @return void
      */
     public function testGetDocCommentReturnsExpectedPropertyComment(): void
     {
@@ -195,8 +173,6 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * Tests that the <b>isDefaultValueAvailable()</b> method returns the
      * expected result.
-     *
-     * @return void
      */
     public function testPropertyIsDefaultValueAvailableReturnsFalseWhenNoValueExists(): void
     {
@@ -207,8 +183,6 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * Tests that the <b>isDefaultValueAvailable()</b> method returns the
      * expected result.
-     *
-     * @return void
      */
     public function testPropertyIsDefaultValueAvailableReturnsTrueWhenValueExists(): void
     {
@@ -218,8 +192,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsExpectedTrueForNullValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsExpectedTrueForNullValue(): void
     {
@@ -229,8 +201,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetDefaultValueReturnsByDefaultExpectedNull
-     *
-     * @return void
      */
     public function testGetDefaultValueReturnsByDefaultExpectedNull(): void
     {
@@ -240,8 +210,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testGetDefaultValueReturnsExpectedNullForNullDefaultValue
-     *
-     * @return void
      */
     public function testGetDefaultValueReturnsExpectedNullForNullDefaultValue(): void
     {
@@ -251,8 +219,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * Tests that the property default value matches the expected PHP type.
-     *
-     * @return void
      */
     public function testPropertyContainsExpectDefaultValueBooleanTrue(): void
     {
@@ -262,8 +228,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * Tests that the property default value matches the expected PHP type.
-     *
-     * @return void
      */
     public function testPropertyContainsExpectDefaultValueBooleanFalse(): void
     {
@@ -273,8 +237,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * Tests that the property default value matches the expected PHP type.
-     *
-     * @return void
      */
     public function testPropertyContainsExpectDefaultValueArray(): void
     {
@@ -284,8 +246,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * Tests that the property default value matches the expected PHP type.
-     *
-     * @return void
      */
     public function testPropertyContainsExpectedDefaultValueFloat(): void
     {
@@ -296,8 +256,6 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTProperty::isArray()} method
      * returns <b>true</b> for an as array annotated property.
-     *
-     * @return void
      */
     public function testIsArrayReturnsExpectedValueTrueForVarAnnotationWithArray(): void
     {
@@ -308,8 +266,6 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTProperty::isArray()} method
      * returns <b>false</b> for an as class/interface annotated property.
-     *
-     * @return void
      */
     public function testIsArrayReturnsExpectedValueFalseForVarAnnotationWithClassType(): void
     {
@@ -320,8 +276,6 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTProperty::isArray()} method
      * returns <b>false</b> for an property without var annotation.
-     *
-     * @return void
      */
     public function testIsArrayReturnsExpectedValueFalseForPropertyWithoutVarAnnotation(): void
     {
@@ -332,8 +286,6 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTProperty::isScalar()}
      * method returns <b>true</b> for an as integer annotated property.
-     *
-     * @return void
      */
     public function testIsPrimitiveReturnsExpectedValueTrueForVarAnnotationWithIntegerTypeHint(): void
     {
@@ -344,8 +296,6 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTProperty::isScalar()} method
      * returns <b>false</b> for an as class/interface annotated property.
-     *
-     * @return void
      */
     public function testIsPrimitiveReturnsExpectedValueFalseForVarAnnotationWithClassType(): void
     {
@@ -356,7 +306,6 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * testGetDefaultValueReturnsExpectedStringFromHeredoc
      *
-     * @return void
      * @since 0.10.9
      */
     public function testGetDefaultValueReturnsExpectedStringFromHeredoc(): void
@@ -368,8 +317,6 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTProperty::isScalar()} method
      * returns <b>false</b> for an property without var annotation.
-     *
-     * @return void
      */
     public function testIsPrimitiveReturnsExpectedValueFalseForPropertyWithoutVarAnnotation(): void
     {
@@ -379,8 +326,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testIsPublicReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsPublicReturnsFalseByDefault(): void
     {
@@ -390,8 +335,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testIsPublicReturnsTrueForPublicProperty
-     *
-     * @return void
      */
     public function testIsPublicReturnsTrueForPublicProperty(): void
     {
@@ -401,8 +344,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testIsProtectedReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsProtectedReturnsFalseByDefault(): void
     {
@@ -412,8 +353,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testIsProtectedReturnsTrueForProtectedProperty
-     *
-     * @return void
      */
     public function testIsProtectedReturnsTrueForProtectedProperty(): void
     {
@@ -423,8 +362,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testIsPrivateReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsPrivateReturnsFalseByDefault(): void
     {
@@ -434,8 +371,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testIsPrivateReturnsTrueForPrivateProperty
-     *
-     * @return void
      */
     public function testIsPrivateReturnsTrueForPrivateProperty(): void
     {
@@ -445,8 +380,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testIsStaticReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsStaticReturnsFalseByDefault(): void
     {
@@ -456,8 +389,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testIsStaticReturnsTrueForStaticProperty
-     *
-     * @return void
      */
     public function testIsStaticReturnsTrueForStaticProperty(): void
     {
@@ -467,8 +398,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * testAcceptCallsVisitorMethodVisitProperty
-     *
-     * @return void
      */
     public function testAcceptCallsVisitorMethodVisitProperty(): void
     {
@@ -487,8 +416,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * Tests that a property node has the expected start line.
-     *
-     * @return void
      */
     public function testPropertyHasExpectedStartLine(): void
     {
@@ -498,8 +425,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * Tests that a property node has the expected start column.
-     *
-     * @return void
      */
     public function testPropertyHasExpectedStartColumn(): void
     {
@@ -509,8 +434,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * Tests that a property node has the expected end line.
-     *
-     * @return void
      */
     public function testPropertyHasExpectedEndLine(): void
     {
@@ -520,8 +443,6 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * Tests that a property node has the expected end column.
-     *
-     * @return void
      */
     public function testPropertyHasExpectedEndColumn(): void
     {
@@ -532,7 +453,7 @@ class ASTPropertyTest extends AbstractTestCase
     /**
      * Returns the first property found in the corresponding test file.
      *
-     * @return \PDepend\Source\AST\ASTProperty
+     * @return ASTProperty
      */
     private function getFirstPropertyInClass()
     {

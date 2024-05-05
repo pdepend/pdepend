@@ -47,19 +47,18 @@ use PDepend\Source\Builder\BuilderContext;
 /**
  * description
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTClassOrInterfaceReference
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTClassOrInterfaceReference
  * @group unittest
  */
 class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
 {
     /**
      * testReturnValueOfMagicSleepContainsContextProperty
-     *
-     * @return void
      */
     public function testReturnValueOfMagicSleepContainsContextProperty(): void
     {
@@ -73,7 +72,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
                 'context',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $reference->__sleep()
         );
@@ -81,8 +80,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
 
     /**
      * testGetTypeDelegatesToBuilderContextGetClassOrInterface
-     *
-     * @return void
      */
     public function testGetTypeDelegatesToBuilderContextGetClassOrInterface(): void
     {
@@ -102,8 +99,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
 
     /**
      * testGetTypeCachesReturnValueOfBuilderContextGetClassOrInterface
-     *
-     * @return void
      */
     public function testGetTypeCachesReturnValueOfBuilderContextGetClassOrInterface(): void
     {
@@ -123,8 +118,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
 
     /**
      * testReferenceHasExpectedStartLine
-     *
-     * @return void
      */
     public function testReferenceHasExpectedStartLine(): void
     {
@@ -134,8 +127,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
 
     /**
      * testReferenceHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testReferenceHasExpectedStartColumn(): void
     {
@@ -145,8 +136,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
 
     /**
      * testReferenceHasExpectedEndLine
-     *
-     * @return void
      */
     public function testReferenceHasExpectedEndLine(): void
     {
@@ -156,8 +145,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
 
     /**
      * testReferenceHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testReferenceHasExpectedEndColumn(): void
     {
@@ -168,7 +155,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInInterfaceExtendsHasExpectedStartLine
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInInterfaceExtendsHasExpectedStartLine(): void
@@ -180,7 +166,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInInterfaceExtendsHasExpectedStartColumn
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInInterfaceExtendsHasExpectedStartColumn(): void
@@ -192,7 +177,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInInterfaceExtendsHasExpectedEndLine
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInInterfaceExtendsHasExpectedEndLine(): void
@@ -204,7 +188,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInInterfaceExtendsHasExpectedEndColumn
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInInterfaceExtendsHasExpectedEndColumn(): void
@@ -216,7 +199,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInClassImplementsHasExpectedStartLine
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInClassImplementsHasExpectedStartLine(): void
@@ -228,7 +210,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInClassImplementsHasExpectedStartColumn
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInClassImplementsHasExpectedStartColumn(): void
@@ -240,7 +221,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInClassImplementsHasExpectedEndLine
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInClassImplementsHasExpectedEndLine(): void
@@ -252,7 +232,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * testReferenceInClassImplementsHasExpectedEndColumn
      *
-     * @return void
      * @since 0.10.5
      */
     public function testReferenceInClassImplementsHasExpectedEndColumn(): void
@@ -266,7 +245,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @return ASTClassOrInterfaceReference
      */
     private function getFirstReferenceInFunction($testCase)
     {
@@ -279,7 +258,8 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * Returns the first reference node for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @return ASTClassOrInterfaceReference
+     *
      * @since 0.10.5
      */
     private function getFirstReferenceInClass()
@@ -293,7 +273,8 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * Returns the first reference node for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @return ASTClassOrInterfaceReference
+     *
      * @since 0.10.5
      */
     private function getFirstReferenceInInterface()
@@ -307,7 +288,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * Creates a concrete node implementation.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     protected function createNodeInstance()
     {
@@ -320,7 +301,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * Returns a mocked builder context instance.
      *
-     * @return \PDepend\Source\Builder\BuilderContext
+     * @return BuilderContext
      */
     protected function getBuilderContextMock()
     {

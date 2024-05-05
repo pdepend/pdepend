@@ -57,8 +57,6 @@ class ClassConstantAsArrayExpressionBug299Test extends AbstractRegressionTestCas
 {
     /**
      * Tests that the parser does not throw an exception.
-     *
-     * @return void
      */
     public function testConstantArrayConcatenation(): void
     {

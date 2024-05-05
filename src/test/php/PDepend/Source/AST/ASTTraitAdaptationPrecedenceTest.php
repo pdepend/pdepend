@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -46,20 +47,20 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitAdaptationPrecedence} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 1.0.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTraitAdaptationPrecedence
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 1.0.0
+ *
  * @group unittest
  */
 class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 {
     /**
      * testTraitAdaptationPrecedenceHasExpectedNumberOfTraitReferences
-     *
-     * @return void
      */
     public function testTraitAdaptationPrecedenceHasExpectedNumberOfTraitReferences(): void
     {
@@ -74,8 +75,6 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException
-     *
-     * @return void
      */
     public function testTraitAdaptationPrecedenceWithoutQualifiedReferenceThrowsExpectedException(): void
     {
@@ -87,7 +86,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationPrecedence
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptationPrecedence
+     * @return ASTTraitAdaptationPrecedence
+     *
      * @since 1.0.2
      */
     public function testTraitAdaptationPrecedence()
@@ -101,9 +101,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationPrecedenceHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptationPrecedence $precedence
+     * @param ASTTraitAdaptationPrecedence $precedence
      *
-     * @return void
      * @depends testTraitAdaptationPrecedence
      */
     public function testTraitAdaptationPrecedenceHasExpectedStartLine($precedence): void
@@ -114,9 +113,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationPrecedenceHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptationPrecedence $precedence
+     * @param ASTTraitAdaptationPrecedence $precedence
      *
-     * @return void
      * @depends testTraitAdaptationPrecedence
      */
     public function testTraitAdaptationPrecedenceHasExpectedStartColumn($precedence): void
@@ -127,9 +125,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationPrecedenceHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptationPrecedence $precedence
+     * @param ASTTraitAdaptationPrecedence $precedence
      *
-     * @return void
      * @depends testTraitAdaptationPrecedence
      */
     public function testTraitAdaptationPrecedenceHasExpectedEndLine($precedence): void
@@ -140,9 +137,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationPrecedenceHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptationPrecedence $precedence
+     * @param ASTTraitAdaptationPrecedence $precedence
      *
-     * @return void
      * @depends testTraitAdaptationPrecedence
      */
     public function testTraitAdaptationPrecedenceHasExpectedEndColumn($precedence): void
@@ -153,7 +149,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptationPrecedence
+     * @return ASTTraitAdaptationPrecedence
      */
     private function getFirstTraitAdaptationPrecedenceInClass()
     {
@@ -166,7 +162,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * testTraitReference
      *
-     * @return \PDepend\Source\AST\ASTTraitReference
+     * @return ASTTraitReference
+     *
      * @since 1.0.2
      */
     public function testTraitReference()
@@ -180,9 +177,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedStartLine($reference): void
@@ -193,9 +189,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedStartColumn($reference): void
@@ -206,9 +201,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedEndLine($reference): void
@@ -219,9 +213,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedEndColumn($reference): void
@@ -232,7 +225,7 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTraitReference
+     * @return ASTTraitReference
      */
     private function getFirstTraitReferenceInClass()
     {

@@ -42,27 +42,27 @@
 
 namespace PDepend\Source\AST;
 
+use BadMethodCallException;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
  * Test case for the code interface class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PDepend\Source\AST\AbstractASTClassOrInterface
  * @covers \PDepend\Source\AST\AbstractASTType
  * @covers \PDepend\Source\AST\ASTInterface
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  */
 class ASTInterfaceTest extends AbstractASTArtifactTestCase
 {
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch(): void
     {
@@ -90,8 +90,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch(): void
     {
@@ -125,8 +123,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull(): void
     {
@@ -156,8 +152,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the result of the <b>getInterfaces()</b> method.
-     *
-     * @return void
      */
     public function testGetInterfacesZeroInheritance(): void
     {
@@ -171,8 +165,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the result of the <b>getInterfaces()</b> method.
-     *
-     * @return void
      */
     public function testGetInterfacesOneLevelInheritance(): void
     {
@@ -187,8 +179,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the result of the <b>getInterfaces()</b> method.
-     *
-     * @return void
      */
     public function testGetInterfacesTwoLevelInheritance(): void
     {
@@ -201,8 +191,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the result of the <b>getInterfaces()</b> method.
-     *
-     * @return void
      */
     public function testGetInterfacesComplexInheritance(): void
     {
@@ -216,8 +204,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * Tests that {@link \PDepend\Source\AST\ASTInterface::isSubtypeOf()}
      * returns <b>false</b> for an input class.
-     *
-     * @return void
      */
     public function testIsSubtypeOfReturnsFalseForNonParents(): void
     {
@@ -230,8 +216,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * Checks the {@link \PDepend\Source\AST\ASTInterface::isSubtypeOf()}
      * method.
-     *
-     * @return void
      */
     public function testIsSubtypeOnInheritanceHierarchy(): void
     {
@@ -242,15 +226,13 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
                 'C' => false,
                 'D' => false,
                 'E' => false,
-                'F' => true
+                'F' => true,
             ]
         );
     }
 
     /**
      * Checks the {@link \PDepend\Source\AST\ASTInterface::isSubtypeOf()} method.
-     *
-     * @return void
      */
     public function testIsSubtypeOnInheritanceHierarchy1(): void
     {
@@ -261,15 +243,13 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
                 'C' => true,
                 'D' => true,
                 'E' => true,
-                'F' => true
+                'F' => true,
             ]
         );
     }
 
     /**
      * Checks the {@link \PDepend\Source\AST\ASTInterface::isSubtypeOf()} method.
-     *
-     * @return void
      */
     public function testIsSubtypeOnInheritanceHierarchy2(): void
     {
@@ -280,15 +260,13 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
                 'A' => true,
                 'D' => true,
                 'E' => true,
-                'F' => false
+                'F' => false,
             ]
         );
     }
 
     /**
      * Checks the {@link \PDepend\Source\AST\ASTInterface::isSubtypeOf()} method.
-     *
-     * @return void
      */
     public function testIsSubtypeOnInheritanceHierarchy3(): void
     {
@@ -299,7 +277,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
                 'D' => false,
                 'A' => true,
                 'E' => false,
-                'F' => false
+                'F' => false,
             ]
         );
     }
@@ -307,9 +285,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * _testIsSubtypeOnInheritanceHierarchy
      *
-     * @param array<string, boolean> $expected Expected result.
-     *
-     * @return void
+     * @param array<string, bool> $expected Expected result.
      */
     private function doTestIsSubtypeOnInheritanceHierarchy(array $expected): void
     {
@@ -330,8 +306,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration(): void
     {
@@ -349,8 +323,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration
-     *
-     * @return void
      */
     public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations(): void
     {
@@ -368,12 +340,10 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * Tests that the interface implementation overwrites the
      * setParentClassReference() method and throws an exception.
-     *
-     * @return void
      */
     public function testInterfaceThrowsExpectedExceptionOnSetParentClassReference(): void
     {
-        $this->expectException(\BadMethodCallException::class);
+        $this->expectException(BadMethodCallException::class);
 
         $interface = $this->createItem();
 
@@ -385,8 +355,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the returned modifiers of an interface.
-     *
-     * @return void
      */
     public function testInterfaceReturnsExpectedModifiers(): void
     {
@@ -399,8 +367,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedInterfaceStillIsParentOfChildMethods
-     *
-     * @return void
      */
     public function testUnserializedInterfaceStillIsParentOfChildMethods(): void
     {
@@ -412,8 +378,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedInterfaceAndChildMethodsStillReferenceTheSameFile
-     *
-     * @return void
      */
     public function testUnserializedInterfaceAndChildMethodsStillReferenceTheSameFile(): void
     {
@@ -428,8 +392,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedInterfaceStillReferencesSameParentInterface
-     *
-     * @return void
      */
     public function testUnserializedInterfaceStillReferencesSameParentInterface(): void
     {
@@ -444,8 +406,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedInterfaceIsReturnedByMethodAsReturnClass
-     *
-     * @return void
      */
     public function testUnserializedInterfaceIsReturnedByMethodAsReturnClass(): void
     {
@@ -462,8 +422,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedInterfaceStillReferencesSamePackage
-     *
-     * @return void
      */
     public function testUnserializedInterfaceStillReferencesSamePackage(): void
     {
@@ -478,8 +436,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedInterfaceRegistersToPackage
-     *
-     * @return void
      */
     public function testUnserializedInterfaceRegistersToPackage(): void
     {
@@ -491,8 +447,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedInterfaceNotAddsDublicateClassToPackage
-     *
-     * @return void
      */
     public function testUnserializedInterfaceNotAddsDublicateClassToPackage(): void
     {
@@ -504,8 +458,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetTokensDelegatesCallToCacheRestore
-     *
-     * @return void
      */
     public function testGetTokensDelegatesCallToCacheRestore(): void
     {
@@ -524,8 +476,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testSetTokensDelegatesCallToCacheStore
-     *
-     * @return void
      */
     public function testSetTokensDelegatesCallToCacheStore(): void
     {
@@ -547,8 +497,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStartLineReturnsZeroByDefault
-     *
-     * @return void
      */
     public function testGetStartLineReturnsZeroByDefault(): void
     {
@@ -558,8 +506,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStartLineReturnsStartLineOfFirstToken
-     *
-     * @return void
      */
     public function testGetStartLineReturnsStartLineOfFirstToken(): void
     {
@@ -582,8 +528,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetEndLineReturnsZeroByDefault
-     *
-     * @return void
      */
     public function testGetEndLineReturnsZeroByDefault(): void
     {
@@ -593,8 +537,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetParentClassReferenceReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetParentClassReferenceReturnsNullByDefault(): void
     {
@@ -604,8 +546,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetParentClassesReturnsEmptyArrayByDefault
-     *
-     * @return void
      */
     public function testGetParentClassesReturnsEmptyArrayByDefault(): void
     {
@@ -615,8 +555,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetParentClassesReturnsEmptyArray
-     *
-     * @return void
      */
     public function testGetParentClassesReturnsEmptyArray(): void
     {
@@ -630,8 +568,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetInterfaceReferencesReturnsEmptyArrayByDefault
-     *
-     * @return void
      */
     public function testGetInterfaceReferencesReturnsEmptyArrayByDefault(): void
     {
@@ -641,8 +577,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces
-     *
-     * @return void
      */
     public function testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces(): void
     {
@@ -653,7 +587,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllChildrenReturnsAnEmptyArrayByDefault
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllChildrenReturnsAnEmptyArrayByDefault(): void
@@ -665,7 +598,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes(): void
@@ -677,7 +609,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * testGetDependenciesReturnsEmptyResultByDefault
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetDependenciesReturnsEmptyResultByDefault(): void
@@ -689,7 +620,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * testGetDependenciesContainsExtendedInterface
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetDependenciesContainsExtendedInterface(): void
@@ -701,7 +631,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * testGetDependenciesContainsExtendedInterfaces
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetDependenciesContainsExtendedInterfaces(): void
@@ -712,8 +641,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetEndLineReturnsEndLineOfLastToken
-     *
-     * @return void
      */
     public function testGetEndLineReturnsEndLineOfLastToken(): void
     {
@@ -736,8 +663,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsAbstractReturnsAlwaysTrue
-     *
-     * @return void
      */
     public function testIsAbstractReturnsAlwaysTrue(): void
     {
@@ -747,8 +672,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsUserDefinedReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsUserDefinedReturnsFalseByDefault(): void
     {
@@ -758,8 +681,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsUserDefinedReturnsTrueAfterSetUserDefinedCall
-     *
-     * @return void
      */
     public function testIsUserDefinedReturnsTrueAfterSetUserDefinedCall(): void
     {
@@ -772,7 +693,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * testGetConstantsReturnsExpectedInterfaceConstants
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetConstantsReturnsExpectedInterfaceConstants(): void
@@ -783,8 +703,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsCachedReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsCachedReturnsFalseByDefault(): void
     {
@@ -794,8 +712,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsCachedReturnsFalseWhenObjectGetsSerialized
-     *
-     * @return void
      */
     public function testIsCachedReturnsFalseWhenObjectGetsSerialized(): void
     {
@@ -805,18 +721,12 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $this->assertFalse($interface->isCached());
     }
 
-    /**
-     * @return void
-     */
     public function testGetNamespacedName(): void
     {
         $interface = new ASTInterface('MyInterface');
         $this->assertSame('MyInterface', $interface->getNamespacedName());
     }
 
-    /**
-     * @return void
-     */
     public function testGetNamespacedNameWithNamespaceDeclaration(): void
     {
         $interface = new ASTInterface('MyInterface');
@@ -825,9 +735,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $this->assertSame('My\\Namespace\\MyInterface', $interface->getNamespacedName());
     }
 
-    /**
-     * @return void
-     */
     public function testGetNamespacedNameWithPackageAnnotation(): void
     {
         $namespace = new ASTNamespace('My\\Namespace');
@@ -841,8 +748,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames(): void
     {
@@ -864,7 +769,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
                 'namespaceName',
                 'startLine',
                 'userDefined',
-                'id'
+                'id',
             ],
             $interface->__sleep()
         );
@@ -872,8 +777,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testMagicWakeupSetsSourceFileOnChildMethods
-     *
-     * @return void
      */
     public function testMagicWakeupSetsSourceFileOnChildMethods(): void
     {
@@ -888,8 +791,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testMagicWakeupCallsRegisterInterfaceOnBuilderContext
-     *
-     * @return void
      */
     public function testMagicWakeupCallsRegisterInterfaceOnBuilderContext(): void
     {
@@ -906,8 +807,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * testAcceptInvokesVisitInterfaceOnGivenVisitor
-     *
-     * @return void
      */
     public function testAcceptInvokesVisitInterfaceOnGivenVisitor(): void
     {
@@ -924,14 +823,14 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     /**
      * Creates an abstract item instance.
      *
-     * @return \PDepend\Source\AST\ASTInterface
+     * @return ASTInterface
      */
     protected function createItem()
     {
         $interface = new ASTInterface(__CLASS__);
         $interface->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $interface->setCache(new MemoryCacheDriver());
-        
+
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
         $interface->setContext($context);

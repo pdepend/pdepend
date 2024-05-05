@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since     0.9.20
  */
 
@@ -50,18 +51,18 @@ use PDepend\Source\AST\ASTNamespace;
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
+ *
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  */
 class PHPParserGenericVersion70Test extends AbstractTestCase
 {
     /**
      * testFormalParameterScalarTypeHintInt
-     *
-     * @return void
      */
     public function testFormalParameterScalarTypeHintInt(): void
     {
@@ -73,8 +74,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFormalParameterScalarTypeHintString
-     *
-     * @return void
      */
     public function testFormalParameterScalarTypeHintString(): void
     {
@@ -86,8 +85,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFormalParameterScalarTypeHintFloat
-     *
-     * @return void
      */
     public function testFormalParameterScalarTypeHintFloat(): void
     {
@@ -99,8 +96,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFormalParameterScalarTypeHintBool
-     *
-     * @return void
      */
     public function testFormalParameterScalarTypeHintBool(): void
     {
@@ -112,8 +107,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFormalParameterStillWorksWithTypeHintArray
-     *
-     * @return void
      */
     public function testFormalParameterStillWorksWithTypeHintArray(): void
     {
@@ -124,8 +117,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintInt
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintInt(): void
     {
@@ -137,8 +128,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintSelf
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintSelf(): void
     {
@@ -150,8 +139,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintParent
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintParent(): void
     {
@@ -163,8 +150,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintFloat
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintFloat(): void
     {
@@ -176,8 +161,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintString
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintString(): void
     {
@@ -189,8 +172,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintBool
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintBool(): void
     {
@@ -202,8 +183,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintArray
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintArray(): void
     {
@@ -215,8 +194,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintCallable
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintCallable(): void
     {
@@ -230,8 +207,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintClass
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintClass(): void
     {
@@ -245,8 +220,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testClosureReturnTypeHintInt
-     *
-     * @return void
      */
     public function testClosureReturnTypeHintInt(): void
     {
@@ -258,8 +231,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testClosureReturnTypeHintFloat
-     *
-     * @return void
      */
     public function testClosureReturnTypeHintFloat(): void
     {
@@ -271,8 +242,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testClosureReturnTypeHintString
-     *
-     * @return void
      */
     public function testClosureReturnTypeHintString(): void
     {
@@ -284,8 +253,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testClosureReturnTypeHintBool
-     *
-     * @return void
      */
     public function testClosureReturnTypeHintBool(): void
     {
@@ -297,8 +264,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testClosureReturnTypeHintArray
-     *
-     * @return void
      */
     public function testClosureReturnTypeHintArray(): void
     {
@@ -310,8 +275,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testClosureReturnTypeHintCallable
-     *
-     * @return void
      */
     public function testClosureReturnTypeHintCallable(): void
     {
@@ -325,8 +288,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testClosureReturnTypeHintClass
-     *
-     * @return void
      */
     public function testClosureReturnTypeHintClass(): void
     {
@@ -340,8 +301,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testSpaceshipOperatorWithStrings
-     *
-     * @return void
      */
     public function testSpaceshipOperatorWithStrings(): void
     {
@@ -354,8 +313,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testSpaceshipOperatorWithNumbers
-     *
-     * @return void
      */
     public function testSpaceshipOperatorWithNumbers(): void
     {
@@ -383,8 +340,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTExpression $expr
-     * @return void
      * @depends testSpaceshipOperatorWithArrays
      */
     public function testSpaceshipOperatorHasExpectedStartLine(ASTExpression $expr): void
@@ -393,8 +348,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTExpression $expr
-     * @return void
      * @depends testSpaceshipOperatorWithArrays
      */
     public function testSpaceshipOperatorHasExpectedEndLine(ASTExpression $expr): void
@@ -403,8 +356,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTExpression $expr
-     * @return void
      * @depends testSpaceshipOperatorWithArrays
      */
     public function testSpaceshipOperatorHasExpectedStartColumn(ASTExpression $expr): void
@@ -413,8 +364,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTExpression $expr
-     * @return void
      * @depends testSpaceshipOperatorWithArrays
      */
     public function testSpaceshipOperatorHasExpectedEndColumn(ASTExpression $expr): void
@@ -424,8 +373,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     /**
      * testNullCoalesceOperator
-     *
-     * @return void
      */
     public function testNullCoalesceOperator(): void
     {
@@ -436,18 +383,12 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
         $this->assertSame('??', $expr->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testListKeywordAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $this->assertNotNull($method);
     }
 
-    /**
-     * @return void
-     */
     public function testListKeywordAsFunctionNameThrowsException(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
@@ -456,7 +397,7 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTNamespace
+     * @return ASTNamespace
      */
     public function testGroupUseStatement()
     {
@@ -467,8 +408,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
-     * @return void
      * @depends testGroupUseStatement
      */
     public function testGroupUseStatementClassNameResolution(ASTNamespace $namespace): void
@@ -483,8 +422,6 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
-     * @return void
      * @depends testGroupUseStatement
      */
     public function testGroupUseStatementAliasResolution(ASTNamespace $namespace): void
@@ -498,65 +435,41 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUniformVariableSyntax(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    /**
-     * @return void
-     */
     public function testConstantNameArray(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    /**
-     * @return void
-     */
     public function testClassConstantNames(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    /**
-     * @return void
-     */
     public function testClassConstantNamesAccessed(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    /**
-     * @return void
-     */
     public function testClassMethodNames(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    /**
-     * @return void
-     */
     public function testClassMethodNamesInvoked(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    /**
-     * @return void
-     */
     public function testMethodsCanBeCallOnInstancesReturnedByInvokableObject(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    /**
-     * @return void
-     */
     public function testMultipleArgumentsInInvocation(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());

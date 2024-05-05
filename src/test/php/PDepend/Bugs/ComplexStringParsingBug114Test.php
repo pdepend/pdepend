@@ -42,9 +42,6 @@
 
 namespace PDepend\Bugs;
 
-use PDepend\Source\AST\ASTLiteral;
-use PDepend\Source\AST\ASTString;
-
 /**
  * Test case for ticket #114.
  *
@@ -57,8 +54,6 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
 {
     /**
      * testParserHandlesStringWithEmbeddedBacktickExpression
-     *
-     * @return void
      */
     public function testParserHandlesStringWithEmbeddedBacktickExpression(): void
     {
@@ -67,8 +62,6 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesStringWithEmbeddedExpression
-     *
-     * @return void
      */
     public function testParserHandlesStringWithEmbeddedExpression(): void
     {
@@ -77,8 +70,6 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesBacktickExpressionWithEmbeddedStringExpression
-     *
-     * @return void
      */
     public function testParserHandlesBacktickExpressionWithEmbeddedStringExpression(): void
     {
@@ -87,8 +78,6 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesStringWithEscapedVariable
-     *
-     * @return void
      */
     public function testParserHandlesStringWithEscapedVariable(): void
     {
@@ -97,8 +86,6 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesBacktickExpressionWithEscapedVariable
-     *
-     * @return void
      */
     public function testParserHandlesBacktickExpressionWithEscapedVariable(): void
     {
@@ -107,8 +94,6 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesStringWithVariableAndAssignment
-     *
-     * @return void
      */
     public function testParserHandlesStringWithVariableAndAssignment(): void
     {
@@ -117,8 +102,6 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesStringWithVariableNotAsFunctionCall
-     *
-     * @return void
      */
     public function testParserHandlesStringWithVariableNotAsFunctionCall(): void
     {
@@ -127,8 +110,6 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesStringWithQuestionMarkNotAsTernaryOperator
-     *
-     * @return void
      */
     public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator(): void
     {

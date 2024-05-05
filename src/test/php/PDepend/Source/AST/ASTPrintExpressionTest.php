@@ -45,17 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTPrintExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTPrintExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTPrintExpression
  * @group unittest
  */
 class ASTPrintExpressionTest extends ASTNodeTestCase
 {
     /**
-     * @return \PDepend\Source\AST\ASTPrintExpression
+     * @return ASTPrintExpression
      */
     public function testSimplePrintExpression()
     {
@@ -66,8 +67,6 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTPrintExpression $expr
-     * @return void
      * @depends testSimplePrintExpression
      */
     public function testSimplePrintExpressionHasExpectedStartLine(ASTPrintExpression $expr): void
@@ -76,8 +75,6 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTPrintExpression $expr
-     * @return void
      * @depends testSimplePrintExpression
      */
     public function testSimplePrintExpressionHasExpectedEndLine(ASTPrintExpression $expr): void
@@ -86,8 +83,6 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTPrintExpression $expr
-     * @return void
      * @depends testSimplePrintExpression
      */
     public function testSimplePrintExpressionHasExpectedStartColumn(ASTPrintExpression $expr): void
@@ -96,8 +91,6 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTPrintExpression $expr
-     * @return void
      * @depends testSimplePrintExpression
      */
     public function testSimplePrintExpressionHasExpectedEndColumn(ASTPrintExpression $expr): void
@@ -106,7 +99,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTPrintExpression
+     * @return ASTPrintExpression
      */
     private function getFirstPrintInFunction()
     {

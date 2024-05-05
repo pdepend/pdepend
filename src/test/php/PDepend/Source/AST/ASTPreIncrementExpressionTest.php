@@ -45,20 +45,19 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTPreIncrementExpression} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @covers \PDepend\Source\AST\ASTPreIncrementExpression
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  */
 class ASTPreIncrementExpressionTest extends ASTNodeTestCase
 {
     /**
      * testPreIncrementExpressionOnStaticClassMember
-     *
-     * @return void
      */
     public function testPreIncrementExpressionOnStaticClassMember(): void
     {
@@ -69,15 +68,13 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testPreIncrementExpressionOnSelfClassMember
-     *
-     * @return void
      */
     public function testPreIncrementExpressionOnSelfClassMember(): void
     {
@@ -88,15 +85,13 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTSelfReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testPreIncrementExpressionOnParentClassMember
-     *
-     * @return void
      */
     public function testPreIncrementExpressionOnParentClassMember(): void
     {
@@ -107,15 +102,13 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTParentReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testPreIncrementExpressionOnFunctionPostfix
-     *
-     * @return void
      */
     public function testPreIncrementExpressionOnFunctionPostfix(): void
     {
@@ -125,15 +118,13 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
             [
                 'PDepend\\Source\\AST\\ASTFunctionPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
-                'PDepend\\Source\\AST\\ASTArguments'
+                'PDepend\\Source\\AST\\ASTArguments',
             ]
         );
     }
 
     /**
      * testPreIncrementExpressionOnStaticVariableMember
-     *
-     * @return void
      */
     public function testPreIncrementExpressionOnStaticVariableMember(): void
     {
@@ -144,15 +135,13 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testPreIncrementExpressionsInArithmeticOperation
-     *
-     * @return void
      */
     public function testPreIncrementExpressionsInArithmeticOperation(): void
     {
@@ -166,8 +155,6 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
 
     /**
      * testPreIncrementExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testPreIncrementExpressionHasExpectedStartLine(): void
     {
@@ -177,8 +164,6 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
 
     /**
      * testPreIncrementExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testPreIncrementExpressionHasExpectedStartColumn(): void
     {
@@ -188,8 +173,6 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
 
     /**
      * testPreIncrementExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testPreIncrementExpressionHasExpectedEndLine(): void
     {
@@ -199,8 +182,6 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
 
     /**
      * testPreIncrementExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testPreIncrementExpressionHasExpectedEndColumn(): void
     {
@@ -212,7 +193,8 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
-     * @return \PDepend\Source\AST\ASTPreIncrementExpression
+     *
+     * @return ASTPreIncrementExpression
      */
     private function getFirstPreIncrementExpressionInClass($testCase)
     {
@@ -226,7 +208,8 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
-     * @return \PDepend\Source\AST\ASTPreIncrementExpression
+     *
+     * @return ASTPreIncrementExpression
      */
     private function getFirstPreIncrementExpressionInFunction($testCase)
     {

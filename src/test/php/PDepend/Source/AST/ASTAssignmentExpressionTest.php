@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTAssignmentExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTAssignmentExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTAssignmentExpression
  * @group unittest
  */
 class ASTAssignmentExpressionTest extends ASTNodeTestCase
 {
     /**
      * testAssignmentExpressionFromMethodInvocation
-     *
-     * @return void
      */
     public function testAssignmentExpressionFromMethodInvocation(): void
     {
@@ -69,15 +68,13 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
-                'PDepend\\Source\\AST\\ASTArguments'
+                'PDepend\\Source\\AST\\ASTArguments',
             ]
         );
     }
 
     /**
      * testAssignmentExpressionFromPropertyAccess
-     *
-     * @return void
      */
     public function testAssignmentExpressionFromPropertyAccess(): void
     {
@@ -88,15 +85,13 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTIdentifier'
+                'PDepend\\Source\\AST\\ASTIdentifier',
             ]
         );
     }
 
     /**
      * testAssignmentExpressionFromFunctionReturnValue
-     *
-     * @return void
      */
     public function testAssignmentExpressionFromFunctionReturnValue(): void
     {
@@ -109,15 +104,13 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTIdentifier'
+                'PDepend\\Source\\AST\\ASTIdentifier',
             ]
         );
     }
 
     /**
      * Tests the resulting object graph.
-     *
-     * @return void
      */
     public function testAssignmentExpressionGraphForIntegerLiteral(): void
     {
@@ -125,15 +118,13 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
             $this->getFirstAssignmentExpressionInFunction(),
             [
                 'PDepend\\Source\\AST\\ASTVariable',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
 
     /**
      * Tests the resulting object graph.
-     *
-     * @return void
      */
     public function testAssignmentExpressionGraphForFloatLiteral(): void
     {
@@ -141,7 +132,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
             $this->getFirstAssignmentExpressionInFunction(),
             [
                 'PDepend\\Source\\AST\\ASTVariable',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
@@ -149,7 +140,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithEqual(): void
@@ -161,7 +151,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithAndEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithAndEqual(): void
@@ -173,7 +162,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithConcatEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithConcatEqual(): void
@@ -185,7 +173,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithDivEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithDivEqual(): void
@@ -197,7 +184,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithMinusEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithMinusEqual(): void
@@ -209,7 +195,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithModEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithModEqual(): void
@@ -221,7 +206,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithMulEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithMulEqual(): void
@@ -233,7 +217,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithOrEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithOrEqual(): void
@@ -245,7 +228,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithPlusEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithPlusEqual(): void
@@ -257,7 +239,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithXorEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithXorEqual(): void
@@ -269,7 +250,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithShiftLeftEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithShiftLeftEqual(): void
@@ -281,7 +261,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testAssignmentExpressionWithShiftRightEqual
      *
-     * @return void
      * @since 1.0.1
      */
     public function testAssignmentExpressionWithShiftRightEqual(): void
@@ -293,7 +272,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testVariableAssignmentExpression
      *
-     * @return \PDepend\Source\AST\ASTAssignmentExpression
+     * @return ASTAssignmentExpression
+     *
      * @since 1.0.1
      */
     public function testVariableAssignmentExpression()
@@ -307,9 +287,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start line of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testVariableAssignmentExpression
      */
     public function testVariableAssignmentExpressionHasExpectedStartLine($expr): void
@@ -320,9 +299,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start column of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testVariableAssignmentExpression
      */
     public function testVariableAssignmentExpressionHasExpectedStartColumn($expr): void
@@ -333,9 +311,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end line of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testVariableAssignmentExpression
      */
     public function testVariableAssignmentExpressionHasExpectedEndLine($expr): void
@@ -346,9 +323,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end column of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testVariableAssignmentExpression
      */
     public function testVariableAssignmentExpressionHasExpectedEndColumn($expr): void
@@ -359,7 +335,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testStaticPropertyAssignmentExpression
      *
-     * @return \PDepend\Source\AST\ASTAssignmentExpression
+     * @return ASTAssignmentExpression
+     *
      * @since 1.0.1
      */
     public function testStaticPropertyAssignmentExpression()
@@ -373,9 +350,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start line of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testStaticPropertyAssignmentExpression
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedStartLine($expr): void
@@ -386,9 +362,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start column of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testStaticPropertyAssignmentExpression
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedStartColumn($expr): void
@@ -399,9 +374,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end line of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testStaticPropertyAssignmentExpression
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedEndLine($expr): void
@@ -412,9 +386,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end column of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testStaticPropertyAssignmentExpression
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedEndColumn($expr): void
@@ -425,7 +398,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testObjectPropertyAssignmentExpression
      *
-     * @return \PDepend\Source\AST\ASTAssignmentExpression
+     * @return ASTAssignmentExpression
+     *
      * @since 1.0.1
      */
     public function testObjectPropertyAssignmentExpression()
@@ -439,9 +413,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start line of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testObjectPropertyAssignmentExpression
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedStartLine($expr): void
@@ -452,9 +425,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start column of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testObjectPropertyAssignmentExpression
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedStartColumn($expr): void
@@ -465,9 +437,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end line of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testObjectPropertyAssignmentExpression
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedEndLine($expr): void
@@ -478,9 +449,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end column of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testObjectPropertyAssignmentExpression
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedEndColumn($expr): void
@@ -491,7 +461,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testChainedPropertyAssignmentExpression
      *
-     * @return \PDepend\Source\AST\ASTAssignmentExpression
+     * @return ASTAssignmentExpression
+     *
      * @since 1.0.1
      */
     public function testChainedPropertyAssignmentExpression()
@@ -505,9 +476,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start line of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testChainedPropertyAssignmentExpression
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedStartLine($expr): void
@@ -518,9 +488,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start column of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testChainedPropertyAssignmentExpression
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedStartColumn($expr): void
@@ -531,9 +500,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end column of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testChainedPropertyAssignmentExpression
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedEndColumn($expr): void
@@ -544,9 +512,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end line of an assignment-expression.
      *
-     * @param \PDepend\Source\AST\ASTAssignmentExpression $expr
+     * @param ASTAssignmentExpression $expr
      *
-     * @return void
      * @depends testChainedPropertyAssignmentExpression
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedEndLine($expr): void
@@ -557,7 +524,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Returns a test assignment-expression.
      *
-     * @return \PDepend\Source\AST\ASTAssignmentExpression
+     * @return ASTAssignmentExpression
      */
     private function getFirstAssignmentExpressionInFunction()
     {

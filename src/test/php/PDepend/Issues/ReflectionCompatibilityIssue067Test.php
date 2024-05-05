@@ -47,19 +47,18 @@ use PDepend\Source\AST\ASTNode;
 /**
  * Test case for the Reflection API compatibility ticket #67.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTParameter
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTParameter
  * @group unittest
  */
 class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that the parser sets the parameter flag by reference.
-     *
-     * @return void
      */
     public function testParserSetsFunctionParameterByReference(): void
     {
@@ -69,8 +68,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser sets the parameter flag by reference.
-     *
-     * @return void
      */
     public function testParserSetsMultipleFunctionParameterByReference(): void
     {
@@ -86,8 +83,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser sets the parameter flag by reference.
-     *
-     * @return void
      */
     public function testParserSetsFunctionParameterByReferenceWithTypeHint(): void
     {
@@ -99,8 +94,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser sets the parameter flag by reference.
-     *
-     * @return void
      */
     public function testParserSetsMultipleFunctionParameterByReferenceWithTypeHint(): void
     {
@@ -115,8 +108,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser sets the is array flag when the parameter contains
      * the array type hint.
-     *
-     * @return void
      */
     public function testParserSetsParameterArrayFlag(): void
     {
@@ -127,8 +118,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser does not set the array flag when the parameter is
      * scalar without type hint.
-     *
-     * @return void
      */
     public function testParserDoesNotSetParameterArrayFlagForScalar(): void
     {
@@ -139,8 +128,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser does not set the array flag when the parameter has
      * a class type hint.
-     *
-     * @return void
      */
     public function testParserDoesNotSetParameterArrayFlagForType(): void
     {
@@ -150,8 +137,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the boolean flag has default value is <b>false</b>.
-     *
-     * @return void
      */
     public function testParserHandlesParameterWithoutDefaultValue(): void
     {
@@ -162,8 +147,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag has default value is <b>true</b> and the
      * default value is <b>null</b>.
-     *
-     * @return void
      */
     public function testParserHandlesParameterDefaultValueNull(): void
     {
@@ -173,8 +156,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForNullDefaultValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForNullDefaultValue(): void
     {
@@ -185,8 +166,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag has default value is <b>true</b> and the
      * default value is <b>false</b>.
-     *
-     * @return void
      */
     public function testParserHandlesParameterDefaultValueBooleanFalse(): void
     {
@@ -196,8 +175,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForFalseDefaultValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForFalseDefaultValue(): void
     {
@@ -208,8 +185,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag has default value is <b>true</b> and the
      * default value is also <b>true</b>.
-     *
-     * @return void
      */
     public function testParserHandlesParameterDefaultValueBooleanTrue(): void
     {
@@ -219,8 +194,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForTrueDefaultValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForTrueDefaultValue(): void
     {
@@ -231,8 +204,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag has default value is <b>true</b> and the
      * default value is a <b>float</b>.
-     *
-     * @return void
      */
     public function testParserHandlesParameterDefaultValueFloat(): void
     {
@@ -242,8 +213,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForFloatDefaultValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForFloatDefaultValue(): void
     {
@@ -254,8 +223,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag has default value is <b>true</b> and the
      * default value is an <b>integer</b>.
-     *
-     * @return void
      */
     public function testParserHandlesParameterDefaultValueInteger(): void
     {
@@ -265,8 +232,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForIntegerDefaultValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForIntegerDefaultValue(): void
     {
@@ -277,8 +242,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag has default value is <b>true</b> and the
      * default value is a <b>string</b>.
-     *
-     * @return void
      */
     public function testParserHandlesParameterDefaultValueString(): void
     {
@@ -288,8 +251,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForStringDefaultValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForStringDefaultValue(): void
     {
@@ -300,8 +261,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag has default value is <b>true</b> and the
      * default value is an <b>array</b>.
-     *
-     * @return void
      */
     public function testParserHandlesParameterDefaultValueArray(): void
     {
@@ -311,8 +270,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForArrayDefaultValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForArrayDefaultValue(): void
     {
@@ -323,8 +280,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag has default value is <b>true</b> and the
      * default value is an <b>array</b>.
-     *
-     * @return void
      */
     public function testParserHandlesDefaultParameterValueNestedArray(): void
     {
@@ -334,8 +289,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForArrayDefaultValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForNestedArrayDefaultValue(): void
     {
@@ -346,8 +299,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag has default value is <b>true</b> and the
      * default value is <b>null</b>.
-     *
-     * @return void
      */
     public function testParserHandlesParameterDefaultValueConstant(): void
     {
@@ -357,8 +308,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForConstantDefaultValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForConstantDefaultValue(): void
     {
@@ -369,8 +318,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag has default value is <b>true</b> and the
      * default value is <b>null</b>.
-     *
-     * @return void
      */
     public function testParserHandlesParameterDefaultValueClassConstant(): void
     {
@@ -381,15 +328,13 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $node = $parameters[0]->getDefaultValue()->getChild(0);
         $image = implode(
             $node->getImage(),
-            array_map(static fn (ASTNode $node) => $node->getImage(), $node->getChildren()),
+            array_map(static fn(ASTNode $node) => $node->getImage(), $node->getChildren()),
         );
         $this->assertSame('\\PDepend\\Code::CONSTANT', $image);
     }
 
     /**
      * testIsDefaultValueAvailableReturnsTrueForClassConstantDefaultValue
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsTrueForClassConstantDefaultValue(): void
     {
@@ -400,8 +345,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parameter returns the expected result for a parameter
      * without default value.
-     *
-     * @return void
      */
     public function testParserHandlesParameterWithoutDefaultValueReturnsNull(): void
     {
@@ -411,8 +354,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * testIsDefaultValueAvailableReturnsFalseWhenNoDefaultValueExists
-     *
-     * @return void
      */
     public function testIsDefaultValueAvailableReturnsFalseWhenNoDefaultValueExists(): void
     {
@@ -423,8 +364,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag for optional parameters is set to <b>false</b>
      * for all parameters.
-     *
-     * @return void
      */
     public function testParserHandlesParameterOptionalIsFalseForAllParameters(): void
     {
@@ -439,8 +378,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag for optional parameters is set to <b>false</b>
      * for all parameters.
-     *
-     * @return void
      */
     public function testParserHandlesParameterOptionalIsFalseForAllParametersEvenADefaultValueExists(): void
     {
@@ -455,8 +392,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag for optional parameters is set to <b>false</b>
      * for the first two parameters.
-     *
-     * @return void
      */
     public function testParserHandlesParameterOptionalIsFalseForFirstTwoParameters(): void
     {
@@ -471,8 +406,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the boolean flag for optional parameters is set to <b>true</b>
      * for all parameters.
-     *
-     * @return void
      */
     public function testParserHandlesParameterOptionalIsTrueForAllParameters(): void
     {
@@ -486,8 +419,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser sets the user-defined flag for an analyzed class.
-     *
-     * @return void
      */
     public function testParserSetsUserDefinedFlagForClass(): void
     {
@@ -498,8 +429,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser does not set the user-defined flag for an unknown
      * class.
-     *
-     * @return void
      */
     public function testParserNotSetsUserDefinedFlagForUnknownClass(): void
     {
@@ -511,8 +440,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser sets the user-defined flag for an analyzed interface.
-     *
-     * @return void
      */
     public function testParserSetsUserDefinedFlagForInterface(): void
     {
@@ -522,8 +449,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser does not sets the user-defined flag for an unknown
      * interface.
-     *
-     * @return void
      */
     public function testParserNotSetsUserDefinedFlagForUnknownInterface(): void
     {
@@ -534,8 +459,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser flag a function with returns reference when its
      * declaraction contains an amphersand.
-     *
-     * @return void
      */
     public function testParserFlagsFunctionWithReturnsReference(): void
     {
@@ -545,8 +468,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser does not set the returns reference flag when the
      * function declaration does not contain an amphersand.
-     *
-     * @return void
      */
     public function testParserDoesNotFlagFunctionWithReturnsReference(): void
     {
@@ -556,8 +477,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser sets the returns reference flag when a method
      * declaration contains an amphersand.
-     *
-     * @return void
      */
     public function testParserFlagsClassMethodWithReturnsReferences(): void
     {
@@ -568,8 +487,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser does not set the returns reference flag when a
      * method declaration does not contain an amphersand.
-     *
-     * @return void
      */
     public function testParserDoesNotFlagClassMethodWithReturnsReferences(): void
     {
@@ -580,8 +497,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the <b>getStaticVariables()</b> method returns the expected
      * result.
-     *
-     * @return void
      */
     public function testParserSetsFunctionStaticVariableSingleUninitialized(): void
     {
@@ -594,8 +509,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the <b>getStaticVariables()</b> method returns the expected
      * result.
-     *
-     * @return void
      */
     public function testParserSetsFunctionStaticVariableSingleInitialized(): void
     {
@@ -608,8 +521,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the <b>getStaticVariables()</b> method returns the expected
      * result.
-     *
-     * @return void
      */
     public function testParserSetsFunctionStaticVariablesInSingleDeclaration(): void
     {
@@ -622,8 +533,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the <b>getStaticVariables()</b> method returns the expected
      * result.
-     *
-     * @return void
      */
     public function testParserSetsFunctionStaticVariablesInMultipleDeclarations(): void
     {
@@ -635,8 +544,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser handles a static invoke as expected.
-     *
-     * @return void
      */
     public function testParserStaticVariablesDoNotConflictWithStaticInvoke(): void
     {
@@ -648,8 +555,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser handles a static object allocation as expected.
-     *
-     * @return void
      */
     public function testParserStaticVariablesDoNotConflictWithStaticAllocation(): void
     {
@@ -663,7 +568,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
      * Tests that the parser throws the expected exception when no default value
      * was defined.
      *
-     * @return void
      * @covers \PDepend\Source\Parser\MissingValueException
      */
     public function testParserThrowsExpectedExceptionForMissingDefaultValue(): void
@@ -677,7 +581,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
      * Tests that the parser throws the expected exception when it reaches the
      * end of file while it parses a parameter default value.
      *
-     * @return void
      * @covers \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionWhenReachesEofWhileParsingDefaultValue(): void

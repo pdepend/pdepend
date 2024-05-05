@@ -43,15 +43,15 @@
 namespace PDepend\Report\Dependencies;
 
 use PDepend\AbstractTestCase;
-use PDepend\Source\AST\ASTArtifactList;
 
 /**
  * Test case for the xml summary log.
  *
+ * @covers \PDepend\Report\Dependencies\Xml
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Report\Dependencies\Xml
  * @group unittest
  */
 class XmlTest extends AbstractTestCase
@@ -72,8 +72,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * Creates the package structure from a test source file.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -84,8 +82,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * Removes the temporary log files.
-     *
-     * @return void
      */
     protected function tearDown(): void
     {
@@ -96,8 +92,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * Tests that the logger returns the expected set of analyzers.
-     *
-     * @return void
      */
     public function testReturnsExceptedAnalyzers(): void
     {
@@ -113,8 +107,6 @@ class XmlTest extends AbstractTestCase
     /**
      * Tests that the logger throws an exception if the log target wasn't
      * configured.
-     *
-     * @return void
      */
     public function testThrowsExceptionForInvalidLogTarget(): void
     {
@@ -131,8 +123,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * testLogMethodReturnsFalseForWrongAnalyzer
-     *
-     * @return void
      */
     public function testLogMethodReturnsFalseForWrongAnalyzer(): void
     {
@@ -147,8 +137,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * testLogMethodReturnsTrueForAnalyzerOfTypeClassDepenendecyAnalyzer
-     *
-     * @return void
      */
     public function testLogMethodReturnsTrueForAnalyzerOfTypeClassDepenendecyAnalyzer(): void
     {
@@ -165,8 +153,6 @@ class XmlTest extends AbstractTestCase
      * Tests that {@link \PDepend\Report\Dependencies\Xml::write()} generates the
      * expected document structure for the source, but without any applied
      * metrics.
-     *
-     * @return void
      */
     public function testXmlLogWithoutMetrics(): void
     {
@@ -187,8 +173,6 @@ class XmlTest extends AbstractTestCase
     /**
      * Tests that {@link \PDepend\Report\Dependencies\Xml::write()} generates the
      * expected document structure for the source, with applied metrics.
-     *
-     * @return void
      */
     public function testXmlLogWithMetrics(): void
     {

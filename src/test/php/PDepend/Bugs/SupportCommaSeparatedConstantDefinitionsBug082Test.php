@@ -57,8 +57,6 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
 {
     /**
      * Tests that the parser handles a comma separated constant definition.
-     *
-     * @return void
      */
     public function testParserHandlesSimpleCommaSeparatedConstantDefinition(): void
     {
@@ -74,8 +72,6 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
     /**
      * Tests that the parser handles a comma separated constant definition with
      * inline comments.
-     *
-     * @return void
      */
     public function testParserHandlesCommaSeparatedConstantDefinitionWithInlineComments(): void
     {
@@ -91,8 +87,6 @@ class SupportCommaSeparatedConstantDefinitionsBug082Test extends AbstractRegress
     /**
      * Tests that the parser handles multiple comma separated constant
      * definitions as expected.
-     *
-     * @return void
      */
     public function testParserHandlesMultipleCommaSeparatedConstantDefinitions(): void
     {

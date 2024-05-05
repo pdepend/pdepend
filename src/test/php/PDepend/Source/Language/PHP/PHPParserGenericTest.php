@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.20
  */
 
@@ -48,19 +49,19 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
  *
+ * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.20
  *
- * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
  * @group unittest
  */
 class PHPParserGenericTest extends AbstractTestCase
 {
     /**
      * testParserAcceptsStringAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsStringAsClassName(): void
     {
@@ -70,8 +71,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsStringAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsStringAsInterfaceName(): void
     {
@@ -81,8 +80,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsNullAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsNullAsClassName(): void
     {
@@ -92,8 +89,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsNullAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsNullAsInterfaceName(): void
     {
@@ -103,8 +98,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsTrueAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsTrueAsClassName(): void
     {
@@ -114,8 +107,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsTrueAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsTrueAsInterfaceName(): void
     {
@@ -125,8 +116,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsFalseAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsFalseAsClassName(): void
     {
@@ -136,8 +125,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsFalseAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsFalseAsInterfaceName(): void
     {
@@ -147,8 +134,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsInsteadofAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsInsteadofAsClassName(): void
     {
@@ -158,8 +143,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsInsteadofAsFunctionName
-     *
-     * @return void
      */
     public function testParserAcceptsInsteadofAsFunctionName(): void
     {
@@ -169,8 +152,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsInsteadofAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsInsteadofAsInterfaceName(): void
     {
@@ -180,8 +161,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsInsteadofAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsInsteadofAsMethodName(): void
     {
@@ -191,8 +170,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsInsteadofAsNamespaceName
-     *
-     * @return void
      */
     public function testParserAcceptsInsteadofAsNamespaceName(): void
     {
@@ -202,8 +179,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsUseAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsUseAsClassName(): void
     {
@@ -213,8 +188,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsUseAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsUseAsInterfaceName(): void
     {
@@ -225,7 +198,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsNamespaceAsClassName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsNamespaceAsClassName(): void
@@ -237,7 +209,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsNamespaceAsInterfaceName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsNamespaceAsInterfaceName(): void
@@ -249,7 +220,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsNamespaceConstantAsClassName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsNamespaceConstantAsClassName(): void
@@ -261,7 +231,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsNamespaceConstantAsInterfaceName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsNamespaceConstantAsInterfaceName(): void
@@ -273,7 +242,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsTraitAsClassName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsTraitAsClassName(): void
@@ -285,7 +253,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsTraitAsInterfaceName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsTraitAsInterfaceName(): void
@@ -297,7 +264,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsTraitConstantAsClassName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsTraitConstantAsClassName(): void
@@ -309,7 +275,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsTraitConstantAsInterfaceName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsTraitConstantAsInterfaceName(): void
@@ -320,8 +285,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsGotoKeywordAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsGotoKeywordAsClassName(): void
     {
@@ -331,8 +294,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsGotoKeywordAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsGotoKeywordAsInterfaceName(): void
     {
@@ -343,7 +304,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsDirConstantAsClassName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsDirConstantAsClassName(): void
@@ -355,7 +315,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsDirConstantAsInterfaceName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsDirConstantAsInterfaceName(): void
@@ -367,7 +326,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserThrowsExpectedExceptionOnTokenStreamEnd
      *
-     * @return void
      * @covers \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionOnTokenStreamEnd(): void
@@ -380,7 +338,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserThrowsExpectedExceptionForUnexpectedTokenType
      *
-     * @return void
      * @covers \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForUnexpectedTokenType(): void
@@ -392,8 +349,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsStringAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsStringAsMethodName(): void
     {
@@ -403,8 +358,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsUseKeywordAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsUseKeywordAsMethodName(): void
     {
@@ -414,8 +367,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsGotoKeywordAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsGotoKeywordAsMethodName(): void
     {
@@ -425,8 +376,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsSelfKeywordAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsSelfKeywordAsMethodName(): void
     {
@@ -436,8 +385,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsNullAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsNullAsMethodName(): void
     {
@@ -447,8 +394,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsTrueAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsTrueAsMethodName(): void
     {
@@ -458,8 +403,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsFalseAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsFalseAsMethodName(): void
     {
@@ -469,8 +412,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsDirConstantAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsDirConstantAsMethodName(): void
     {
@@ -481,7 +422,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsNamespaceKeywordAsMethodName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsNamespaceKeywordAsMethodName(): void
@@ -493,7 +433,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsNamespaceConstantAsMethodName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsNamespaceConstantAsMethodName(): void
@@ -504,8 +443,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsParentKeywordAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsParentKeywordAsMethodName(): void
     {
@@ -516,7 +453,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserHandlesCallableTypeHint
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserHandlesCallableTypeHint(): void
@@ -530,7 +466,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserHandlesNamespaceTypeHint
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserHandlesNamespaceTypeHint(): void
@@ -544,7 +479,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserHandlesArrayTypeHint
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserHandlesArrayTypeHint(): void
@@ -558,7 +492,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserHandlesSelfTypeHint
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserHandlesSelfTypeHint(): void
@@ -572,7 +505,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserHandlesCompoundStaticMethodInvocation
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserHandlesCompoundStaticMethodInvocation(): void
@@ -586,7 +518,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserHandlesVariableStaticMethodInvocation
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserHandlesVariableStaticMethodInvocation(): void
@@ -599,8 +530,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserThrowsExpectedExceptionForInvalidToken
-     *
-     * @return void
      */
     public function testParserThrowsExpectedExceptionForInvalidToken(): void
     {
@@ -611,8 +540,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserThrowsExpectedExceptionForTokenStreamEnd
-     *
-     * @return void
      */
     public function testParserThrowsExpectedExceptionForTokenStreamEnd(): void
     {
@@ -624,7 +551,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserHandlesRegularArraySyntax
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserHandlesRegularArraySyntax(): void
@@ -639,7 +565,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserHandlesShortArraySyntax
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserHandlesShortArraySyntax(): void
@@ -652,7 +577,6 @@ class PHPParserGenericTest extends AbstractTestCase
     }
 
     /**
-     * @return void
      * @since 1.1.1
      */
     public function testParserHandlesShortArraySyntaxForFormalParameter(): void
@@ -661,7 +585,6 @@ class PHPParserGenericTest extends AbstractTestCase
     }
 
     /**
-     * @return void
      * @since 1.1.1
      */
     public function testParserHandlesShortArraySyntaxForFieldDeclaration(): void
@@ -672,7 +595,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsGotoAsFunctionName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsGotoAsFunctionName(): void
@@ -684,7 +606,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsDirConstantAsFunctionName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsDirConstantAsFunctionName(): void
@@ -696,7 +617,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsNamespaceKeywordAsFunctionName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsNamespaceKeywordAsFunctionName(): void
@@ -708,7 +628,6 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testParserAcceptsNamespaceConstantAsFunctionName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testParserAcceptsNamespaceConstantAsFunctionName(): void
@@ -719,8 +638,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsTraitAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsTraitAsMethodName(): void
     {
@@ -730,8 +647,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsTraitConstantAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsTraitConstantAsMethodName(): void
     {
@@ -741,8 +656,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsTraitAsFunctionName
-     *
-     * @return void
      */
     public function testParserAcceptsTraitAsFunctionName(): void
     {
@@ -752,8 +665,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAcceptsTraitConstantAsFunctionName
-     *
-     * @return void
      */
     public function testParserAcceptsTraitConstantAsFunctionName(): void
     {
@@ -763,8 +674,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserAllowsKeywordCallableAsPropertyName
-     *
-     * @return void
      */
     public function testParserAllowsKeywordCallableAsPropertyName(): void
     {
@@ -772,9 +681,6 @@ class PHPParserGenericTest extends AbstractTestCase
         $this->assertNotNull($method);
     }
 
-    /**
-     * @return void
-     */
     public function testParserHandlesExtraParenthesisForIsset(): void
     {
         $this->assertEmpty($this->parseCodeResourceForTest());

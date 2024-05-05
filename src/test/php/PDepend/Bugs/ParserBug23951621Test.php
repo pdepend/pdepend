@@ -38,32 +38,30 @@
  *
  * @copyright 2008-2011 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://www.pivotaltracker.com/story/show/23951621
  * @since 0.10.9
  */
 
 namespace PDepend\Bugs;
 
-use PDepend\Source\AST\ASTClass;
-use PDepend\Source\AST\ASTInterface;
-
 /**
  * Test case for bug #23951621.
  *
  * @copyright 2008-2011 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @link https://www.pivotaltracker.com/story/show/23951621
  * @since 0.10.9
  *
  * @ticket 23951621
+ *
  * @group regressiontest
  */
 class ParserBug23951621Test extends AbstractRegressionTestCase
 {
     /**
      * testParserHandlesHeredocAsPropertyDefaultValue
-     *
-     * @return void
      */
     public function testParserHandlesHeredocAsPropertyDefaultValue(): void
     {
@@ -73,8 +71,6 @@ class ParserBug23951621Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesHeredocAsParameterDefaultValue
-     *
-     * @return void
      */
     public function testParserHandlesHeredocAsParameterDefaultValue(): void
     {
@@ -84,8 +80,6 @@ class ParserBug23951621Test extends AbstractRegressionTestCase
 
     /**
      * testParserHandlesHeredocAsClassConstantValue
-     *
-     * @return void
      */
     public function testParserHandlesHeredocAsClassConstantValue(): void
     {

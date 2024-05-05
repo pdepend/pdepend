@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTLabelStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTLabelStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTLabelStatement
  * @group unittest
  */
 class ASTLabelStatementTest extends ASTNodeTestCase
 {
     /**
      * testLabelStatementHasExpectedStartLine
-     *
-     * @return void
      */
     public function testLabelStatementHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTLabelStatementTest extends ASTNodeTestCase
 
     /**
      * testLabelStatementHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testLabelStatementHasExpectedStartColumn(): void
     {
@@ -78,9 +75,6 @@ class ASTLabelStatementTest extends ASTNodeTestCase
 
     /**
      * testLabelStatementHasExpectedEndLine
-     *
-     * @return void
-     *
      */
     public function testLabelStatementHasExpectedEndLine(): void
     {
@@ -90,8 +84,6 @@ class ASTLabelStatementTest extends ASTNodeTestCase
 
     /**
      * testLabelStatementHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testLabelStatementHasExpectedEndColumn(): void
     {
@@ -104,7 +96,7 @@ class ASTLabelStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTLabelStatement
+     * @return ASTLabelStatement
      */
     private function getFirstLabelStatementInFunction($testCase)
     {

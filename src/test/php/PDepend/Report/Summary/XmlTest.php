@@ -48,10 +48,11 @@ use PDepend\Source\AST\ASTArtifactList;
 /**
  * Test case for the xml summary log.
  *
+ * @covers \PDepend\Report\Summary\Xml
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Report\Summary\Xml
  * @group unittest
  */
 class XmlTest extends AbstractTestCase
@@ -72,8 +73,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * Creates the package structure from a test source file.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -84,8 +83,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * Removes the temporary log files.
-     *
-     * @return void
      */
     protected function tearDown(): void
     {
@@ -96,8 +93,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * Tests that the logger returns the expected set of analyzers.
-     *
-     * @return void
      */
     public function testReturnsExceptedAnalyzers(): void
     {
@@ -125,8 +120,6 @@ class XmlTest extends AbstractTestCase
     /**
      * Tests that the logger throws an exception if the log target wasn't
      * configured.
-     *
-     * @return void
      */
     public function testThrowsExceptionForInvalidLogTarget(): void
     {
@@ -143,8 +136,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware
-     *
-     * @return void
      */
     public function testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware(): void
     {
@@ -159,8 +150,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware
-     *
-     * @return void
      */
     public function testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware(): void
     {
@@ -177,8 +166,6 @@ class XmlTest extends AbstractTestCase
      * Tests that {@link \PDepend\Report\Summary\Xml::write()} generates the
      * expected document structure for the source, but without any applied
      * metrics.
-     *
-     * @return void
      */
     public function testXmlLogWithoutMetrics(): void
     {
@@ -199,8 +186,6 @@ class XmlTest extends AbstractTestCase
     /**
      * Tests that the xml logger generates the expected xml document for an
      * empty source code structure.
-     *
-     * @return void
      */
     public function testProjectAwareAnalyzerWithoutCode(): void
     {
@@ -227,8 +212,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * testAnalyzersThatImplementProjectAndNodeAwareAsExpected
-     *
-     * @return void
      */
     public function testAnalyzersThatImplementProjectAndNodeAwareAsExpected(): void
     {
@@ -256,7 +239,7 @@ class XmlTest extends AbstractTestCase
     /**
      * @param string $fixture
      * @param string $expectation
-     * @return void
+     *
      * @dataProvider dataProviderNodeAware
      */
     public function testNodeAwareAnalyzer($fixture, $expectation): void

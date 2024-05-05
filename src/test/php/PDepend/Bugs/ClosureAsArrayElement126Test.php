@@ -54,8 +54,6 @@ class ClosureAsArrayElement126Test extends AbstractRegressionTestCase
 {
     /**
      * testParserHandlesClosureAsArrayElement
-     *
-     * @return void
      */
     public function testParserHandlesClosureAsArrayElement(): void
     {

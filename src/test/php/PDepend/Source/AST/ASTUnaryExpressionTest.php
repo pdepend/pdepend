@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTUnaryExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTUnaryExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTUnaryExpression
  * @group unittest
  */
 class ASTUnaryExpressionTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * testUnaryExpression
      *
-     * @return \PDepend\Source\AST\ASTUnaryExpression
+     * @return ASTUnaryExpression
+     *
      * @since 1.0.2
      */
     public function testUnaryExpression()
@@ -71,9 +73,8 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * testUnaryExpressionHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
+     * @param ASTUnaryExpression $expr
      *
-     * @return void
      * @depends testUnaryExpression
      */
     public function testUnaryExpressionHasExpectedStartLine($expr): void
@@ -84,9 +85,8 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * testUnaryExpressionHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
+     * @param ASTUnaryExpression $expr
      *
-     * @return void
      * @depends testUnaryExpression
      */
     public function testUnaryExpressionHasExpectedEndLine($expr): void
@@ -97,9 +97,8 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * testUnaryExpressionHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
+     * @param ASTUnaryExpression $expr
      *
-     * @return void
      * @depends testUnaryExpression
      */
     public function testUnaryExpressionHasExpectedStartColumn($expr): void
@@ -110,9 +109,8 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * testUnaryExpressionHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
+     * @param ASTUnaryExpression $expr
      *
-     * @return void
      * @depends testUnaryExpression
      */
     public function testUnaryExpressionHasExpectedEndColumn($expr): void
@@ -121,7 +119,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTUnaryExpression
+     * @return ASTUnaryExpression
      */
     public function testUnaryExpressionNot()
     {
@@ -132,8 +130,6 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     * @return void
      * @depends testUnaryExpressionNot
      */
     public function testUnaryExpressionNotHasExpectedStartLine(ASTUnaryExpression $expr): void
@@ -142,8 +138,6 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     * @return void
      * @depends testUnaryExpressionNot
      */
     public function testUnaryExpressionNotHasExpectedEndLine(ASTUnaryExpression $expr): void
@@ -152,8 +146,6 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     * @return void
      * @depends testUnaryExpressionNot
      */
     public function testUnaryExpressionNotHasExpectedStartColumn(ASTUnaryExpression $expr): void
@@ -162,8 +154,6 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     * @return void
      * @depends testUnaryExpressionNot
      */
     public function testUnaryExpressionNotHasExpectedEndColumn(ASTUnaryExpression $expr): void
@@ -172,7 +162,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTUnaryExpression
+     * @return ASTUnaryExpression
      */
     public function testUnaryExpressionSuppressWarning()
     {
@@ -183,8 +173,6 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     * @return void
      * @depends testUnaryExpressionSuppressWarning
      */
     public function testUnaryExpressionSuppressWarningHasExpectedStartLine(ASTUnaryExpression $expr): void
@@ -193,8 +181,6 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     * @return void
      * @depends testUnaryExpressionSuppressWarning
      */
     public function testUnaryExpressionSuppressWarningHasExpectedEndLine(ASTUnaryExpression $expr): void
@@ -203,8 +189,6 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     * @return void
      * @depends testUnaryExpressionSuppressWarning
      */
     public function testUnaryExpressionSuppressWarningHasExpectedStartColumn(ASTUnaryExpression $expr): void
@@ -213,8 +197,6 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTUnaryExpression $expr
-     * @return void
      * @depends testUnaryExpressionSuppressWarning
      */
     public function testUnaryExpressionSuppressWarningHasExpectedEndColumn(ASTUnaryExpression $expr): void
@@ -225,7 +207,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTUnaryExpression
+     * @return ASTUnaryExpression
      */
     private function getFirstUnaryExpressionInFunction()
     {

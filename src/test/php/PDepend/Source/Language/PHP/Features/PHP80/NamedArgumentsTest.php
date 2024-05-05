@@ -47,17 +47,16 @@ use PDepend\Source\AST\ASTNamedArgument;
 use PDepend\Source\AST\ASTVariable;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @group unittest
  * @group php8
  */
 class NamedArgumentsTest extends PHPParserVersion80TestCase
 {
-    /**
-     * @return void
-     */
     public function testNamedArguments(): void
     {
         /** @var ASTMethod $method */

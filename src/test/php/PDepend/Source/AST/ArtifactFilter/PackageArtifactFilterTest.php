@@ -52,18 +52,17 @@ use PDepend\Source\AST\ASTNamespace;
  * Test case for the {@link \PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter}
  * class.
  *
+ * @covers \PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter
  * @group unittest
  */
 class PackageArtifactFilterTest extends AbstractTestCase
 {
     /**
      * Tests that the package filter accepts valid packages.
-     *
-     * @return void
      */
     public function testFilterAcceptsPackage(): void
     {
@@ -73,8 +72,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
 
     /**
      * Tests that the package filter not accepts invalid packages.
-     *
-     * @return void
      */
     public function testFilterNotAcceptsPackage(): void
     {
@@ -84,8 +81,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
 
     /**
      * Tests that the package filter accepts and rejects the expected package.
-     *
-     * @return void
      */
     public function testFilterAcceptsAndNotAcceptsExpectedPackage(): void
     {
@@ -96,8 +91,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
 
     /**
      * Tests that the filter accepts a class with a valid package.
-     *
-     * @return void
      */
     public function testFilterAcceptsClass(): void
     {
@@ -110,8 +103,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
 
     /**
      * Tests that the filter rejects a class with an invalid package.
-     *
-     * @return void
      */
     public function testFilterNotAcceptsClass(): void
     {
@@ -124,8 +115,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
 
     /**
      * Tests that the filter accepts an interface with a valid package.
-     *
-     * @return void
      */
     public function testFilterAcceptsInterface(): void
     {
@@ -138,8 +127,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
 
     /**
      * Tests that the filter not accepts an interface with an invalid package.
-     *
-     * @return void
      */
     public function testFilterNotAcceptsInterface(): void
     {
@@ -152,8 +139,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
 
     /**
      * Tests that the filter accepts a function with a valid package.
-     *
-     * @return void
      */
     public function testFilterAcceptsFunction(): void
     {
@@ -166,8 +151,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
 
     /**
      * Tests that the filter not accepts a function with an invalid package.
-     *
-     * @return void
      */
     public function testFilterNotAcceptsFunction(): void
     {
@@ -180,8 +163,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
 
     /**
      * Tests that the package filter works with wild cards.
-     *
-     * @return void
      */
     public function testFilterAcceptsPackageWithWildcard(): void
     {
@@ -193,8 +174,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
 
     /**
      * Tests that the package filter rejects unmatching packages.
-     *
-     * @return void
      */
     public function testFilterNotAcceptsPackageWithWildcard(): void
     {
@@ -207,8 +186,6 @@ class PackageArtifactFilterTest extends AbstractTestCase
     /**
      * Tests that the package filter selects the accepts and rejects the expected
      * packages.
-     *
-     * @return void
      */
     public function testFilterAcceptsAndNotAcceptsPackageWithWildcard(): void
     {

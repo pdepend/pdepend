@@ -44,18 +44,17 @@ use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTScope;
 
 /**
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  * @group php8.3
  */
 class DynamicClassConstantFetchTest extends PHPParserVersion83TestCase
 {
-    /**
-     * @return void
-     */
     public function testFetch(): void
     {
         $method = $this->getFirstClassMethodForTestCase();

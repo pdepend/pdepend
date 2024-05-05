@@ -62,16 +62,15 @@ use PDepend\Util\Cache\CacheDriver;
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion74} class.
  *
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion74
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion74
+ *
  * @group unittest
  */
 class PHPParserVersion74Test extends AbstractTestCase
 {
-    /**
-     * @return void
-     */
     public function testTypedProperties(): void
     {
         /** @var ASTClass $class */
@@ -208,7 +207,7 @@ class PHPParserVersion74Test extends AbstractTestCase
             '*',
             '2',
         ], array_map(
-            static fn (ASTNode $node) => $node->getImage(),
+            static fn(ASTNode $node) => $node->getImage(),
             $expression->getChildren(),
         ));
     }
@@ -255,7 +254,7 @@ class PHPParserVersion74Test extends AbstractTestCase
             '*',
             '2',
         ], array_map(
-            static fn (ASTNode $node) => $node->getImage(),
+            static fn(ASTNode $node) => $node->getImage(),
             $expression->getChildren(),
         ));
     }
@@ -291,7 +290,7 @@ class PHPParserVersion74Test extends AbstractTestCase
         ], array_map('get_class', $expression->getChildren()));
         /** @var ASTNode[] $elements */
         $elements = array_map(
-            static fn ($node) => $node->getChild(0),
+            static fn($node) => $node->getChild(0),
             $expression->getChildren(),
         );
         $this->assertSame([
@@ -307,7 +306,7 @@ class PHPParserVersion74Test extends AbstractTestCase
             '...',
             '$numbers',
         ], array_map(
-            static fn (ASTNode $node) => $node->getImage(),
+            static fn(ASTNode $node) => $node->getImage(),
             $expression->getChildren(),
         ));
     }
@@ -340,8 +339,6 @@ class PHPParserVersion74Test extends AbstractTestCase
      *
      * Already checked in PHPParserVersion56Test, the level it belongs.
      * Here we ensure it's still working in 7.4 parser.
-     *
-     * @return void
      */
     public function testConstantArrayConcatenation(): void
     {
@@ -380,13 +377,11 @@ class PHPParserVersion74Test extends AbstractTestCase
 
     public function testReadOnlyNamedImport(): void
     {
-        $this->expectException(\OutOfBoundsException::class);
+        $this->expectException(OutOfBoundsException::class);
 
         $this->parseCodeResourceForTest()->current();
     }
 
-    /**
-     */
     public function testCatchWithoutVariable(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
@@ -395,8 +390,6 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->getFirstClassForTestCase();
     }
 
-    /**
-     */
     public function testTrailingCommaInClosureUseListError(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
@@ -405,8 +398,6 @@ class PHPParserVersion74Test extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    /**
-     */
     public function testTrailingCommaInParameterList(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
@@ -416,10 +407,7 @@ class PHPParserVersion74Test extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
-     * @param \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     * @return AbstractPHPParser
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {

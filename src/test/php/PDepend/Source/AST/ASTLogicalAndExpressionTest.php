@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.8
  */
 
@@ -46,20 +47,20 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTLogicalAndExpression} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.8
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTLogicalAndExpression
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 0.9.8
+ *
  * @group unittest
  */
 class ASTLogicalAndExpressionTest extends ASTNodeTestCase
 {
     /**
      * testLogicalAndExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testLogicalAndExpressionHasExpectedStartLine(): void
     {
@@ -69,8 +70,6 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
 
     /**
      * testLogicalAndExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testLogicalAndExpressionHasExpectedStartColumn(): void
     {
@@ -80,8 +79,6 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
 
     /**
      * testLogicalAndExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testLogicalAndExpressionHasExpectedEndLine(): void
     {
@@ -91,8 +88,6 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
 
     /**
      * testLogicalAndExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testLogicalAndExpressionHasExpectedEndColumn(): void
     {
@@ -105,7 +100,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTLogicalAndExpression
+     * @return ASTLogicalAndExpression
      */
     private function getFirstLogicalAndExpressionInFunction($testCase)
     {

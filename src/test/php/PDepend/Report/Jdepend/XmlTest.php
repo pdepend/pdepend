@@ -49,10 +49,11 @@ use PDepend\Report\DummyAnalyzer;
 /**
  * Test case for the jdepend xml logger.
  *
+ * @covers \PDepend\Report\Jdepend\Xml
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Report\Jdepend\Xml
  * @group unittest
  */
 class XmlTest extends AbstractTestCase
@@ -67,7 +68,7 @@ class XmlTest extends AbstractTestCase
     /**
      * Test dependency analyzer.
      *
-     * @var \PDepend\Metrics\Analyzer\DependencyAnalyzer
+     * @var DependencyAnalyzer
      */
     protected $analyzer = null;
 
@@ -80,8 +81,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * Creates the package structure from a test source file.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -92,8 +91,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * Removes the temporary log files.
-     *
-     * @return void
      */
     protected function tearDown(): void
     {
@@ -104,8 +101,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * Tests that the logger returns the expected set of analyzers.
-     *
-     * @return void
      */
     public function testReturnsExceptedAnalyzers(): void
     {
@@ -119,8 +114,6 @@ class XmlTest extends AbstractTestCase
     /**
      * Tests that the logger throws an exception if the log target wasn't
      * configured.
-     *
-     * @return void
      */
     public function testThrowsExceptionForInvalidLogTarget(): void
     {
@@ -137,8 +130,6 @@ class XmlTest extends AbstractTestCase
 
     /**
      * testXmlLogAcceptsOnlyTheCorrectAnalyzer
-     *
-     * @return void
      */
     public function testXmlLogAcceptsOnlyTheCorrectAnalyzer(): void
     {
@@ -152,6 +143,7 @@ class XmlTest extends AbstractTestCase
      * Normalizes the file references within the expected result document.
      *
      * @param string $fileName File name of the expected result document.
+     *
      * @return string The prepared xml document
      */
     protected function getNormalizedPathXml($fileName)

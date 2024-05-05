@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTIfStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTIfStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTIfStatement
  * @group unittest
  */
 class ASTIfStatementTest extends ASTNodeTestCase
 {
     /**
      * testHasElseMethodReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testHasElseMethodReturnsFalseByDefault(): void
     {
@@ -67,8 +66,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testHasElseMethodReturnsTrueWhenElseIfBranchExists
-     *
-     * @return void
      */
     public function testHasElseMethodReturnsTrueWhenElseIfBranchExists(): void
     {
@@ -78,8 +75,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testHasElseMethodReturnsTrueWhenElseBranchWithIfExists
-     *
-     * @return void
      */
     public function testHasElseMethodReturnsTrueWhenElseBranchWithIfExists(): void
     {
@@ -89,19 +84,15 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testHasElseMethodReturnsTrueWhenElseBranchExists
-     *
-     * @return void
      */
     public function testHasElseMethodReturnsTrueWhenElseBranchExists(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
         $this->assertTrue($stmt->hasElse());
     }
-    
+
     /**
      * Tests the generated object graph of an if statement.
-     *
-     * @return void
      */
     public function testIfStatementGraphWithBooleanExpressions(): void
     {
@@ -111,8 +102,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testFirstChildOfIfStatementIsInstanceOfExpression
-     *
-     * @return void
      */
     public function testFirstChildOfIfStatementIsInstanceOfExpression(): void
     {
@@ -122,8 +111,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testSecondChildOfIfStatementIsInstanceOfScopeStatement
-     *
-     * @return void
      */
     public function testSecondChildOfIfStatementIsInstanceOfScopeStatement(): void
     {
@@ -133,8 +120,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testParserThrowsExpectedExceptionWhenIfStatementHasNoBody
-     *
-     * @return void
      */
     public function testParserThrowsExpectedExceptionWhenIfStatementHasNoBody(): void
     {
@@ -145,8 +130,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start line value.
-     *
-     * @return void
      */
     public function testIfStatementHasExpectedStartLine(): void
     {
@@ -156,8 +139,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value.
-     *
-     * @return void
      */
     public function testIfStatementHasExpectedStartColumn(): void
     {
@@ -167,8 +148,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value.
-     *
-     * @return void
      */
     public function testIfStatementHasExpectedEndLine(): void
     {
@@ -178,8 +157,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value.
-     *
-     * @return void
      */
     public function testIfStatementHasExpectedEndColumn(): void
     {
@@ -189,8 +166,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testIfStatementAlternativeScopeHasExpectedStartLine
-     *
-     * @return void
      */
     public function testIfStatementAlternativeScopeHasExpectedStartLine(): void
     {
@@ -200,8 +175,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testIfStatementAlternativeScopeHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testIfStatementAlternativeScopeHasExpectedStartColumn(): void
     {
@@ -211,8 +184,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testIfStatementAlternativeScopeHasExpectedEndLine
-     *
-     * @return void
      */
     public function testIfStatementAlternativeScopeHasExpectedEndLine(): void
     {
@@ -222,8 +193,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testIfStatementAlternativeScopeHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testIfStatementAlternativeScopeHasExpectedEndColumn(): void
     {
@@ -233,8 +202,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testIfElseStatementAlternativeScopeHasExpectedStartLine
-     *
-     * @return void
      */
     public function testIfElseStatementAlternativeScopeHasExpectedStartLine(): void
     {
@@ -244,8 +211,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testIfElseStatementAlternativeScopeHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testIfElseStatementAlternativeScopeHasExpectedStartColumn(): void
     {
@@ -255,8 +220,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testIfElseStatementAlternativeScopeHasExpectedEndLine
-     *
-     * @return void
      */
     public function testIfElseStatementAlternativeScopeHasExpectedEndLine(): void
     {
@@ -266,8 +229,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testIfElseStatementAlternativeScopeHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testIfElseStatementAlternativeScopeHasExpectedEndColumn(): void
     {
@@ -277,8 +238,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testElseStatementAlternativeScopeHasExpectedStartLine
-     *
-     * @return void
      */
     public function testElseStatementAlternativeScopeHasExpectedStartLine(): void
     {
@@ -288,8 +247,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testElseStatementAlternativeScopeHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testElseStatementAlternativeScopeHasExpectedStartColumn(): void
     {
@@ -299,8 +256,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testElseStatementAlternativeScopeHasExpectedEndLine
-     *
-     * @return void
      */
     public function testElseStatementAlternativeScopeHasExpectedEndLine(): void
     {
@@ -310,8 +265,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testElseStatementAlternativeScopeHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testElseStatementAlternativeScopeHasExpectedEndColumn(): void
     {
@@ -321,8 +274,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testIfStatementTerminatedByPhpCloseTag
-     *
-     * @return void
      */
     public function testIfStatementTerminatedByPhpCloseTag(): void
     {
@@ -332,8 +283,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testIfStatementWithElseContainsExpectedNumberOfChildNodes
-     *
-     * @return void
      */
     public function testIfStatementWithElseContainsExpectedNumberOfChildNodes(): void
     {
@@ -343,8 +292,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testThirdChildOfIfStatementIsInstanceOfScopeStatementForElse
-     *
-     * @return void
      */
     public function testThirdChildOfIfStatementIsInstanceOfScopeStatementForElse(): void
     {
@@ -354,8 +301,6 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * testThirdChildOfIfStatementIsInstanceOfExpressionForElseIf
-     *
-     * @return void
      */
     public function testThirdChildOfIfStatementIsInstanceOfIfStatementForElseIf(): void
     {
@@ -368,7 +313,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTIfStatement
+     * @return ASTIfStatement
      */
     private function getFirstIfStatementInFunction($testCase)
     {

@@ -42,12 +42,14 @@
 
 namespace PDepend\Bugs;
 
+use ReflectionClass;
+
 class ConflictingImportTest extends AbstractRegressionTestCase
 {
     public function testSymfonyExtension(): void
     {
         // force compilation of both conflicting files
-        new \ReflectionClass('PDepend\DependencyInjection\Extension');
-        new \ReflectionClass('PDepend\DependencyInjection\PdependExtension');
+        new ReflectionClass('PDepend\DependencyInjection\Extension');
+        new ReflectionClass('PDepend\DependencyInjection\PdependExtension');
     }
 }

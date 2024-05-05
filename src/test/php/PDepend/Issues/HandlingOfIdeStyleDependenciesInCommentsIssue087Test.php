@@ -45,10 +45,11 @@ namespace PDepend\Issues;
 /**
  * Test case for issue #87. Handling of dependencies declared in inline comments.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
 class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatureTestCase
@@ -59,12 +60,11 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
      *
      * <code>
      * function foo() {
-     *     /* @var $bar Bar * /
+     *
+     *     /* @var Bar $bar * /
      *     $bar = bar();
      * }
      * </code>
-     *
-     * @return void
      */
     public function testParserSetsDependencyDefinedInInlineCommentWithWhitespace(): void
     {
@@ -80,12 +80,11 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
      *
      * <code>
      * function foo() {
-     *     /*@var $bar Bar* /
+     *
+     *     /*@var Bar* $bar /
      *     $bar = bar();
      * }
      * </code>
-     *
-     * @return void
      */
     public function testParserSetsDependencyDefinedInInlineCommentWithoutWhitespace(): void
     {
@@ -103,13 +102,11 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
      * <code>
      * function foo() {
      *     /*
-     *      * @var $bar Bar
+     *      * @var Bar $bar
      *      * /
      *     $bar = bar();
      * }
      * </code>
-     *
-     * @return void
      */
     public function testParserIgnoresDependencyDefinedInMultilineComment(): void
     {
@@ -126,12 +123,11 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
      *
      * <code>
      * function foo() {
-     *     // A comment line... /* @var $bar Bar * /
+     *
+     *     // A comment line... /* @var Bar $bar * /
      *     $bar = bar();
      * }
      * </code>
-     *
-     * @return void
      */
     public function testParserIgnoresDependencyDefinedWithinAnotherComment(): void
     {

@@ -54,8 +54,6 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
 {
     /**
      * testParserHandlesObjectPropertyAsForeachLoopKey
-     *
-     * @return void
      */
     public function testParserHandlesObjectPropertyAsForeachLoopKey(): void
     {
@@ -64,8 +62,6 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
 
     /**
      * testParserHandlesObjectPropertyAsForeachLoopValue
-     *
-     * @return void
      */
     public function testParserHandlesObjectPropertyAsForeachLoopValue(): void
     {
@@ -74,8 +70,6 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
 
     /**
      * testParserHandlesObjectPropertyAsForeachLoopKeyAndValue
-     *
-     * @return void
      */
     public function testParserHandlesObjectPropertyAsForeachLoopKeyAndValue(): void
     {
@@ -84,8 +78,6 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
 
     /**
      * testParserHandlesClassPropertyAsForeachLoopKey
-     *
-     * @return void
      */
     public function testParserHandlesClassPropertyAsForeachLoopKey(): void
     {
@@ -94,8 +86,6 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
 
     /**
      * testParserHandlesClassPropertyAsForeachLoopValue
-     *
-     * @return void
      */
     public function testParserHandlesClassPropertyAsForeachLoopValue(): void
     {
@@ -104,8 +94,6 @@ class InvalidTokenObjectOperatorInForeachLoopBug161Test extends AbstractRegressi
 
     /**
      * testParserHandlesClassPropertyAsForeachLoopKeyAndValue
-     *
-     * @return void
      */
     public function testParserHandlesClassPropertyAsForeachLoopKeyAndValue(): void
     {

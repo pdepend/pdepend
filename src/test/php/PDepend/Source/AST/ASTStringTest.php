@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTString} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTString
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTString
  * @group unittest
  */
 class ASTStringTest extends ASTNodeTestCase
 {
     /**
      * testDoubleQuoteStringContainsTwoChildNodes
-     *
-     * @return void
      */
     public function testDoubleQuoteStringContainsTwoChildNodes(): void
     {
@@ -67,8 +66,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testDoubleQuoteStringContainsExpectedTextContent
-     *
-     * @return void
      */
     public function testDoubleQuoteStringContainsExpectedTextContent(): void
     {
@@ -78,8 +75,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testBacktickExpressionContainsTwoChildNodes
-     *
-     * @return void
      */
     public function testBacktickExpressionContainsTwoChildNodes(): void
     {
@@ -89,8 +84,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testBacktickExpressionContainsExpectedCompoundVariable
-     *
-     * @return void
      */
     public function testBacktickExpressionContainsExpectedCompoundVariable(): void
     {
@@ -100,8 +93,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testDoubleQuoteStringWithEmbeddedComplexBacktickExpression
-     *
-     * @return void
      */
     public function testDoubleQuoteStringWithEmbeddedComplexBacktickExpression(): void
     {
@@ -117,8 +108,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testBacktickExpressionWithEmbeddedComplexDoubleQuoteString
-     *
-     * @return void
      */
     public function testBacktickExpressionWithEmbeddedComplexDoubleQuoteString(): void
     {
@@ -134,8 +123,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testDoubleQuoteStringContainsVariable
-     *
-     * @return void
      */
     public function testDoubleQuoteStringContainsVariable(): void
     {
@@ -145,8 +132,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testDoubleQuoteStringContainsVariableAfterNotOperator
-     *
-     * @return void
      */
     public function testDoubleQuoteStringContainsVariableAfterNotOperator(): void
     {
@@ -156,8 +141,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testDoubleQuoteStringContainsVariableAfterSilenceOperator
-     *
-     * @return void
      */
     public function testDoubleQuoteStringContainsVariableAfterSilenceOperator(): void
     {
@@ -167,8 +150,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testDoubleQuoteStringContainsCompoundVariable
-     *
-     * @return void
      */
     public function testDoubleQuoteStringContainsCompoundVariable(): void
     {
@@ -178,8 +159,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testDoubleQuoteStringContainsCompoundExpressionAfterLiteral
-     *
-     * @return void
      */
     public function testDoubleQuoteStringContainsCompoundExpressionAfterLiteral(): void
     {
@@ -189,8 +168,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testDoubleQuoteStringContainsVariableAfterDollarTwoLiterals
-     *
-     * @return void
      */
     public function testDoubleQuoteStringContainsVariableAfterDollarTwoLiterals(): void
     {
@@ -200,8 +177,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testDoubleQuoteStringContainsDollarLiteralForVariableVariable
-     *
-     * @return void
      */
     public function testDoubleQuoteStringContainsDollarLiteralForVariableVariable(): void
     {
@@ -211,8 +186,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * Tests that an invalid literal results in the expected exception.
-     *
-     * @return void
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException(): void
     {
@@ -223,8 +196,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testStringStartLine
-     *
-     * @return void
      */
     public function testStringStartLine(): void
     {
@@ -234,8 +205,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testStringEndLine
-     *
-     * @return void
      */
     public function testStringEndLine(): void
     {
@@ -245,8 +214,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testStringStartColumn
-     *
-     * @return void
      */
     public function testStringStartColumn(): void
     {
@@ -256,8 +223,6 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * testStringEndColumn
-     *
-     * @return void
      */
     public function testStringEndColumn(): void
     {
@@ -268,11 +233,11 @@ class ASTStringTest extends ASTNodeTestCase
     /**
      * Creates a string node.
      *
-     * @return \PDepend\Source\AST\ASTString
+     * @return ASTString
      */
     protected function createNodeInstance()
     {
-        return new \PDepend\Source\AST\ASTString();
+        return new ASTString();
     }
 
     /**
@@ -280,7 +245,7 @@ class ASTStringTest extends ASTNodeTestCase
      *
      * @param string $testCase The calling test case.
      *
-     * @return \PDepend\Source\AST\ASTString
+     * @return ASTString
      */
     private function getFirstStringInFunction($testCase)
     {

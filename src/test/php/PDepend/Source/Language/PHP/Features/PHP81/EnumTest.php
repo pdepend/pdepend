@@ -47,17 +47,16 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTParameter;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
  * @group unittest
  * @group php8.1
  */
 class EnumTest extends PHPParserVersion81TestCase
 {
-    /**
-     * @return void
-     */
     public function testEnum(): void
     {
         $types = $this->parseCodeResourceForTest()
@@ -108,7 +107,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 'HasColor' => 'HasColor',
             ],
             array_map(
-                static fn (ASTInterface $interface) => $interface->getName(),
+                static fn(ASTInterface $interface) => $interface->getName(),
                 iterator_to_array($enum->getInterfaces())
             )
         );
@@ -120,7 +119,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 'getcolor' => 'getColor',
             ],
             array_map(
-                static fn (ASTMethod $interface) => $interface->getName(),
+                static fn(ASTMethod $interface) => $interface->getName(),
                 $enum->getAllMethods()
             )
         );
@@ -134,7 +133,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 'SPADES' => "'spades'",
             ],
             array_map(
-                static fn (ASTEnumCase $case) => $case->getValue()->getImage(),
+                static fn(ASTEnumCase $case) => $case->getValue()->getImage(),
                 iterator_to_array($cases)
             )
         );

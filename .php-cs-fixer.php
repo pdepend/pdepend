@@ -97,6 +97,9 @@ return $config
     ])
     ->setFinder(PhpCsFixer\Finder::create()
         ->exclude('vendor')
-        ->in(__DIR__ . '/src/main/php/PDepend')
+        ->in([
+            __DIR__ . '/src/main/php/PDepend',
+            __DIR__ . '/src/test/php',
+        ])
     )
 ;

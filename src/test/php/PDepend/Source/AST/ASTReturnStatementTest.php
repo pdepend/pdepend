@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTReturnStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTReturnStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTReturnStatement
  * @group unittest
  */
 class ASTReturnStatementTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * testReturnStatement
      *
-     * @return \PDepend\Source\AST\ASTReturnStatement
+     * @return ASTReturnStatement
+     *
      * @since 1.0.2
      */
     public function testReturnStatement()
@@ -71,9 +73,8 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * testReturnStatementHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTReturnStatement $stmt
+     * @param ASTReturnStatement $stmt
      *
-     * @return void
      * @depends testReturnStatement
      */
     public function testReturnStatementHasExpectedStartLine($stmt): void
@@ -84,9 +85,8 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * testReturnStatementHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTReturnStatement $stmt
+     * @param ASTReturnStatement $stmt
      *
-     * @return void
      * @depends testReturnStatement
      */
     public function testReturnStatementHasExpectedStartColumn($stmt): void
@@ -97,9 +97,8 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * testReturnStatementHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTReturnStatement $stmt
+     * @param ASTReturnStatement $stmt
      *
-     * @return void
      * @depends testReturnStatement
      */
     public function testReturnStatementHasExpectedEndLine($stmt): void
@@ -110,9 +109,8 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * testReturnStatementHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTReturnStatement $stmt
+     * @param ASTReturnStatement $stmt
      *
-     * @return void
      * @depends testReturnStatement
      */
     public function testReturnStatementHasExpectedEndColumn($stmt): void
@@ -122,8 +120,6 @@ class ASTReturnStatementTest extends ASTNodeTestCase
 
     /**
      * testParserHandlesEmptyReturnStatement
-     *
-     * @return void
      */
     public function testParserHandlesEmptyReturnStatement(): void
     {
@@ -133,8 +129,6 @@ class ASTReturnStatementTest extends ASTNodeTestCase
 
     /**
      * testParserHandlesReturnStatementWithSimpleBoolean
-     *
-     * @return void
      */
     public function testParserHandlesReturnStatementWithSimpleBoolean(): void
     {
@@ -145,7 +139,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTReturnStatement
+     * @return ASTReturnStatement
      */
     private function getFirstReturnStatementInFunction()
     {

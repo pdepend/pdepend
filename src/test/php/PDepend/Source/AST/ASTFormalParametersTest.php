@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 
@@ -46,20 +47,20 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFormalParameterss} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.10.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTFormalParameters
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 0.10.0
+ *
  * @group unittest
  */
 class ASTFormalParametersTest extends ASTNodeTestCase
 {
     /**
      * testFormalParametersHasExpectedStartLine
-     *
-     * @return void
      */
     public function testFormalParametersHasExpectedStartLine(): void
     {
@@ -69,8 +70,6 @@ class ASTFormalParametersTest extends ASTNodeTestCase
 
     /**
      * testFormalParametersHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testFormalParametersHasExpectedStartColumn(): void
     {
@@ -80,8 +79,6 @@ class ASTFormalParametersTest extends ASTNodeTestCase
 
     /**
      * testFormalParametersHasExpectedEndLine
-     *
-     * @return void
      */
     public function testFormalParametersHasExpectedEndLine(): void
     {
@@ -91,8 +88,6 @@ class ASTFormalParametersTest extends ASTNodeTestCase
 
     /**
      * testFormalParametersHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testFormalParametersHasExpectedEndColumn(): void
     {
@@ -105,7 +100,7 @@ class ASTFormalParametersTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTFormalParameters
+     * @return ASTFormalParameters
      */
     private function getFirstFormalParametersInFunction($testCase)
     {

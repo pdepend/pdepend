@@ -42,17 +42,15 @@
 
 namespace PDepend\Issues;
 
-use PDepend\Source\AST\ASTFieldDeclaration;
-use PDepend\Source\AST\ASTType;
-
 /**
  * Test case for issue #84, where the object model should keep information about
  * primitive property and parameter types.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
 class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCase
@@ -63,7 +61,6 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
      * @param string $actual   The actual used type identifier.
      * @param string $expected The expected primitive type image.
      *
-     * @return void
      * @dataProvider dataProviderParserSetsExpectedPrimitivePropertyType
      */
     public function testParserSetsExpectedPrimitivePropertyType($actual, $expected): void
@@ -80,8 +77,6 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
 
     /**
      * Tests that the parser sets the expected array type information.
-     *
-     * @return void
      */
     public function testParserSetsExpectedArrayPropertyType(): void
     {
@@ -94,8 +89,6 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
 
     /**
      * Tests that the parser sets the expected array type information.
-     *
-     * @return void
      */
     public function testParserSetsExpectedArrayWithParenthesisPropertyType(): void
     {

@@ -55,8 +55,6 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
     /**
      * Tests that the parser does not throw an exception when it detects a
      * lambda function on file level.
-     *
-     * @return void
      */
     public function testParserHandlesLambdaFunctionOnFileLevelBug70(): void
     {
@@ -65,8 +63,6 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser handles a lambda function with parameters.
-     *
-     * @return void
      */
     public function testParserHandlesLambdaFunctionWithParametersBug70(): void
     {
@@ -75,8 +71,6 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser handles a closure function with bound variables.
-     *
-     * @return void
      */
     public function testParserHandlesClosureFunctionWithBoundVariableBug70(): void
     {
@@ -85,8 +79,6 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser handles a closure function with bound variables.
-     *
-     * @return void
      */
     public function testParserHandlesClosureFunctionWithBoundVariableByRefBug70(): void
     {
@@ -95,8 +87,6 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser handles a closure function with bound variables.
-     *
-     * @return void
      */
     public function testParserThrowsExceptionForInvalidBoundClosureVariableBug70(): void
     {
@@ -107,8 +97,6 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser handles a nested function within a function.
-     *
-     * @return void
      */
     public function testParserHandlesFunctionDeclarationWithinFunctionDeclarationBug70(): void
     {
@@ -123,8 +111,6 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser handles a nested closure within a function declaration.
-     *
-     * @return void
      */
     public function testParserHandlesClosureWithinFunctionDeclarationBug70(): void
     {

@@ -49,10 +49,11 @@ use PDepend\Source\Tokenizer\Tokens;
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPTokenizerInternal} class.
  *
+ * @covers \PDepend\Source\Language\PHP\PHPTokenizerInternal
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\PHPTokenizerInternal
  * @group unittest
  */
 class PHPTokenizerInternalTest extends AbstractTestCase
@@ -60,7 +61,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
     /**
      * testTokenizerReturnsExpectedConstantForTraitKeyword
      *
-     * @return void
      * @since 1.0.0
      */
     public function testTokenizerReturnsExpectedConstantForTraitKeyword(): void
@@ -90,7 +90,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
     /**
      * testTokenizerReturnsExpectedConstantForTraitMagicConstant
      *
-     * @return void
      * @since 1.0.0
      */
     public function testTokenizerReturnsExpectedConstantForTraitMagicConstant(): void
@@ -119,8 +118,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
     /**
      * Tests the tokenizer with a source file that contains only classes.
-     *
-     * @return void
      */
     public function testInternalWithClasses(): void
     {
@@ -158,7 +155,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_TRUE,
             Tokens::T_SEMICOLON,
             Tokens::T_CURLY_BRACE_CLOSE,
-            Tokens::T_CURLY_BRACE_CLOSE
+            Tokens::T_CURLY_BRACE_CLOSE,
         ];
 
         $this->assertEquals($expected, $this->getTokenTypesForTest());
@@ -167,8 +164,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
     /**
      * Tests the tokenizer with a source file that contains mixed content of
      * classes and functions.
-     *
-     * @return void
      */
     public function testInternalWithMixedContent(): void
     {
@@ -201,7 +196,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             [Tokens::T_CURLY_BRACE_OPEN, 13],
             [Tokens::T_COMMENT, 14],
             [Tokens::T_CURLY_BRACE_CLOSE, 15],
-            [Tokens::T_CLOSE_TAG, 16]
+            [Tokens::T_CLOSE_TAG, 16],
         ];
 
         $actual = [];
@@ -215,8 +210,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
     /**
      * Tests that the tokenizer returns <b>T_BOF</b> if there is no previous
      * token.
-     *
-     * @return void
      */
     public function testInternalReturnsBOFTokenForPrevCall(): void
     {
@@ -228,8 +221,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
     /**
      * Tests the tokenizer with a combination of procedural code and functions.
-     *
-     * @return void
      */
     public function testInternalWithProceduralCodeAndFunction(): void
     {
@@ -266,7 +257,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_PARENTHESIS_CLOSE,
             Tokens::T_PARENTHESIS_CLOSE,
             Tokens::T_SEMICOLON,
-            Tokens::T_CLOSE_TAG
+            Tokens::T_CLOSE_TAG,
         ];
 
         $this->assertEquals($expected, $this->getTokenTypesForTest());
@@ -274,8 +265,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
     /**
      * Test case for undetected static method call added.
-     *
-     * @return void
      */
     public function testInternalStaticCallBug01(): void
     {
@@ -316,8 +305,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      * </code>
      *
      * http://bugs.xplib.de/index.php?do=details&task_id=9&project=3
-     *
-     * @return void
      */
     public function testInternalDollarSyntaxBug09(): void
     {
@@ -350,8 +337,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
     /**
      * Test case for the inline html bug.
-     *
-     * @return void
      */
     public function testTokenizerWithInlineHtmlBug24(): void
     {
@@ -409,8 +394,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
     /**
      * Tests the tokenizer's column calculation implementation.
-     *
-     * @return void
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88(): void
     {
@@ -444,7 +427,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
                 $token->startLine,
                 $token->endLine,
                 $token->startColumn,
-                $token->endColumn
+                $token->endColumn,
             ];
         }
 
@@ -453,8 +436,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
     /**
      * Tests the tokenizer support short-echo-tags with multiple variables separated by comas.
-     *
-     * @return void
      */
     public function testTokenizingShortTagsWithMultipleVariables(): void
     {
@@ -477,7 +458,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
                 $token->startLine,
                 $token->endLine,
                 $token->startColumn,
-                $token->endColumn
+                $token->endColumn,
             ];
         }
 
@@ -490,8 +471,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
     /**
      * Tests the tokenizer's column calculation implementation.
-     *
-     * @return void
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpInTextIssue88(): void
     {
@@ -522,7 +501,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
                 $token->startLine,
                 $token->endLine,
                 $token->startColumn,
-                $token->endColumn
+                $token->endColumn,
             ];
         }
 
@@ -531,8 +510,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
     /**
      * testTokenizerSubstitutesDollarCurlyOpenWithTwoSeparateTokens
-     *
-     * @return void
      */
     public function testTokenizerSubstitutesDollarCurlyOpenWithTwoSeparateTokens(): void
     {
@@ -560,8 +537,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
     /**
      * testReturnsExpectedTokensForStringWithEmbeddedBacktickExpression
-     *
-     * @return void
      */
     public function testReturnsExpectedTokensForStringWithEmbeddedBacktickExpression(): void
     {
@@ -588,8 +563,6 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
     /**
      * testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString
-     *
-     * @return void
      */
     public function testReturnsExpectedTokensForBacktickExpressionWithEmbeddedString(): void
     {
@@ -610,7 +583,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      * Returns an array with the token types found in a file associated with
      * the currently running test.
      *
-     * @return array<integer>
+     * @return array<int>
      */
     private function getTokenTypesForTest()
     {

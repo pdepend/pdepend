@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTPreDecrementExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTPreDecrementExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTPreDecrementExpression
  * @group unittest
  */
 class ASTPreDecrementExpressionTest extends ASTNodeTestCase
 {
     /**
      * testPreDecrementExpressionOnStaticClassMember
-     *
-     * @return void
      */
     public function testPreDecrementExpressionOnStaticClassMember(): void
     {
@@ -68,15 +67,13 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testPreDecrementExpressionOnSelfClassMember
-     *
-     * @return void
      */
     public function testPreDecrementExpressionOnSelfClassMember(): void
     {
@@ -87,15 +84,13 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTSelfReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testPreDecrementExpressionOnParentClassMember
-     *
-     * @return void
      */
     public function testPreDecrementExpressionOnParentClassMember(): void
     {
@@ -106,15 +101,13 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTParentReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testPreDecrementExpressionOnFunctionPostfix
-     *
-     * @return void
      */
     public function testPreDecrementExpressionOnFunctionPostfix(): void
     {
@@ -124,15 +117,13 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
             [
                 'PDepend\\Source\\AST\\ASTFunctionPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
-                'PDepend\\Source\\AST\\ASTArguments'
+                'PDepend\\Source\\AST\\ASTArguments',
             ]
         );
     }
 
     /**
      * testPreDecrementExpressionOnStaticVariableMember
-     *
-     * @return void
      */
     public function testPreDecrementExpressionOnStaticVariableMember(): void
     {
@@ -143,15 +134,13 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testPreDecrementExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testPreDecrementExpressionHasExpectedStartLine(): void
     {
@@ -161,8 +150,6 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
 
     /**
      * testPreDecrementExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testPreDecrementExpressionHasExpectedStartColumn(): void
     {
@@ -172,8 +159,6 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
 
     /**
      * testPreDecrementExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testPreDecrementExpressionHasExpectedEndLine(): void
     {
@@ -183,8 +168,6 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
 
     /**
      * testPreDecrementExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testPreDecrementExpressionHasExpectedEndColumn(): void
     {
@@ -196,7 +179,8 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
-     * @return \PDepend\Source\AST\ASTPreDecrementExpression
+     *
+     * @return ASTPreDecrementExpression
      */
     private function getFirstPreDecrementExpressionInClass($testCase)
     {
@@ -211,7 +195,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTPreDecrementExpression
+     * @return ASTPreDecrementExpression
      */
     private function getFirstPreDecrementExpressionInFunction($testCase)
     {

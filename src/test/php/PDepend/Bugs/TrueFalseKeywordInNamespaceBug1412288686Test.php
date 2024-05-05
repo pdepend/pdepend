@@ -54,8 +54,6 @@ class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTes
 {
     /**
      * testTrueKeywordInNamespace
-     *
-     * @return void
      */
     public function testTrueKeywordInNamespace(): void
     {
@@ -64,8 +62,6 @@ class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTes
 
     /**
      * testFalseKeywordInNamespace
-     *
-     * @return void
      */
     public function testFalseKeywordInNamespace(): void
     {

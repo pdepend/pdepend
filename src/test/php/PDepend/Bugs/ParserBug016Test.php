@@ -49,6 +49,7 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 16
+ *
  * @group regressiontest
  */
 class ParserBug016Test extends AbstractRegressionTestCase
@@ -63,8 +64,6 @@ class ParserBug016Test extends AbstractRegressionTestCase
      * </code>
      *
      * http://bugs.pdepend.org/index.php?do=details&task_id=16
-     *
-     * @return void
      */
     public function testParserDetectsTypeWithinInstanceOfOperator(): void
     {
@@ -87,7 +86,6 @@ class ParserBug016Test extends AbstractRegressionTestCase
      *
      * http://bugs.pdepend.org/index.php?do=details&task_id=16
      *
-     * @return void
      * @todo TODO: It would be a cool feature if PDepend would replace such
      *             combinations (T_VARIABLE = T_CONSTANT_ENCAPSED_STRING with
      *             T_INSTANCEOF + T_VARIABLE).

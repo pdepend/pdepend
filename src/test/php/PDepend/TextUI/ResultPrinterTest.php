@@ -52,18 +52,17 @@ use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 /**
  * Test case for the default text ui result printer.
  *
+ * @covers \PDepend\TextUI\ResultPrinter
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\TextUI\ResultPrinter
  * @group unittest
  */
 class ResultPrinterTest extends AbstractTestCase
 {
     /**
      * Tests the output for a single file entry.
-     *
-     * @return void
      */
     public function testResultPrinterOutputForSingleEntry(): void
     {
@@ -87,8 +86,6 @@ class ResultPrinterTest extends AbstractTestCase
 
     /**
      * Tests the result printer with multiple entries.
-     *
-     * @return void
      */
     public function testResultPrinterOutputForMultipleEntries(): void
     {
@@ -115,8 +112,6 @@ class ResultPrinterTest extends AbstractTestCase
 
     /**
      * Tests the result printer with multiple entries.
-     *
-     * @return void
      */
     public function testResultPrinterForMultipleEntries(): void
     {
@@ -142,8 +137,6 @@ class ResultPrinterTest extends AbstractTestCase
 
     /**
      * Tests the result printer with multiple entries.
-     *
-     * @return void
      */
     public function testResultPrinterForCompleteLine(): void
     {

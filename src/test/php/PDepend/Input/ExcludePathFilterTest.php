@@ -43,22 +43,23 @@
 namespace PDepend\Input;
 
 use PDepend\AbstractTestCase;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * Test case for the exclude path filter.
  *
+ * @covers \PDepend\Input\ExcludePathFilter
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Input\ExcludePathFilter
  * @group unittest
  */
 class ExcludePathFilterTest extends AbstractTestCase
 {
     /**
      * testAbsoluteUnixPathAsFilterPatternMatches
-     *
-     * @return void
      */
     public function testAbsoluteUnixPathAsFilterPatternMatches(): void
     {
@@ -68,8 +69,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testAbsoluteUnixPathAsFilterPatternNotMatches
-     *
-     * @return void
      */
     public function testAbsoluteUnixPathAsFilterPatternNotMatches(): void
     {
@@ -77,9 +76,6 @@ class ExcludePathFilterTest extends AbstractTestCase
         $this->assertTrue($filter->accept('/foo/baz/bar', '/foo/baz/bar'));
     }
 
-    /**
-     * @return void
-     */
     public function testRelativePathMatchOrNot(): void
     {
         $filter = new ExcludePathFilter(['link-to/bar']);
@@ -92,8 +88,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testUnixPathAsFilterPatternNotMatchesPartial
-     *
-     * @return void
      */
     public function testUnixPathAsFilterPatternNotMatchesPartial(): void
     {
@@ -107,8 +101,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testAbsoluteWindowsPathAsFilterPatternMatches
-     *
-     * @return void
      */
     public function testAbsoluteWindowsPathAsFilterPatternMatches(): void
     {
@@ -118,8 +110,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testAbsoluteWindowsPathAsFilterPatternNotMatches
-     *
-     * @return void
      */
     public function testAbsoluteWindowsPathAsFilterPatternNotMatches(): void
     {
@@ -129,8 +119,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testWindowsPathAsFilterPatternNotMatchesPartial
-     *
-     * @return void
      */
     public function testWindowsPathAsFilterPatternNotMatchesPartial(): void
     {
@@ -144,8 +132,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testExcludePathFilterRejectsFile
-     *
-     * @return void
      */
     public function testExcludePathFilterRejectsFile(): void
     {
@@ -157,8 +143,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testExcludePathFilterRejectsFiles
-     *
-     * @return void
      */
     public function testExcludePathFilterRejectsFiles(): void
     {
@@ -170,8 +154,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testExcludePathFilterRejectsDirectory
-     *
-     * @return void
      */
     public function testExcludePathFilterRejectsDirectory(): void
     {
@@ -183,8 +165,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testExcludePathFilterRejectsDirectories
-     *
-     * @return void
      */
     public function testExcludePathFilterRejectsDirectories(): void
     {
@@ -196,8 +176,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testExcludePathFilterRejectsFilesAndDirectories
-     *
-     * @return void
      */
     public function testExcludePathFilterRejectsFilesAndDirectories(): void
     {
@@ -221,8 +199,8 @@ class ExcludePathFilterTest extends AbstractTestCase
     {
         $filter = new ExcludePathFilter($excludes);
 
-        $files = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator(
+        $files = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator(
                 $this->createCodeResourceUriForTest()
             )
         );

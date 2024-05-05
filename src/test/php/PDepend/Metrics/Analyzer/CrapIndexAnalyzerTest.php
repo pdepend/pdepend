@@ -47,18 +47,17 @@ use PDepend\Metrics\AbstractMetricsTestCase;
 /**
  * Test cases for the {@link  \PDepend\Metrics\Analyzer\CrapIndexAnalyzer} class.
  *
+ * @covers \PDepend\Metrics\Analyzer\CrapIndexAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Metrics\Analyzer\CrapIndexAnalyzer
  * @group unittest
  */
 class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * testAnalyzerReturnsExpectedDependencies
-     *
-     * @return void
      */
     public function testAnalyzerReturnsExpectedDependencies(): void
     {
@@ -71,8 +70,6 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerIsEnabledReturnsFalseWhenNoCoverageReportFileWasSupplied
-     *
-     * @return void
      */
     public function testAnalyzerIsEnabledReturnsFalseWhenNoCoverageReportFileWasSupplied(): void
     {
@@ -83,8 +80,6 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerIsEnabledReturnsTrueWhenCoverageReportFileWasSupplied
-     *
-     * @return void
      */
     public function testAnalyzerIsEnabledReturnsTrueWhenCoverageReportFileWasSupplied(): void
     {
@@ -96,8 +91,6 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerIgnoresAbstractMethods
-     *
-     * @return void
      */
     public function testAnalyzerIgnoresAbstractMethods(): void
     {
@@ -107,8 +100,6 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerIgnoresInterfaceMethods
-     *
-     * @return void
      */
     public function testAnalyzerIgnoresInterfaceMethods(): void
     {
@@ -118,8 +109,6 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerReturnsExpectedResultForMethodWithoutCoverage
-     *
-     * @return void
      */
     public function testAnalyzerReturnsExpectedResultForMethodWithoutCoverage(): void
     {
@@ -128,8 +117,6 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerReturnsExpectedResultForMethodWith100PercentCoverage
-     *
-     * @return void
      */
     public function testAnalyzerReturnsExpectedResultForMethodWith100PercentCoverage(): void
     {
@@ -138,8 +125,6 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerReturnsExpectedResultForMethodWith50PercentCoverage
-     *
-     * @return void
      */
     public function testAnalyzerReturnsExpectedResultForMethodWith50PercentCoverage(): void
     {
@@ -148,8 +133,6 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyterReturnsExpectedResultForMethodWithoutCoverageData
-     *
-     * @return void
      */
     public function testAnalyterReturnsExpectedResultForMethodWithoutCoverageData(): void
     {
@@ -158,8 +141,6 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyterReturnsExpectedResultForFunctionWithoutCoverageData
-     *
-     * @return void
      */
     public function testAnalyterReturnsExpectedResultForFunctionWithoutCoverageData(): void
     {
@@ -169,11 +150,9 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests the crap index algorithm implementation.
      *
-     * @param string  $testCase  Name of the calling test case.
-     * @param integer $ccn       The entire cyclomatic complexity number.
-     * @param integer $crapIndex The expected crap index.
-     *
-     * @return void
+     * @param string $testCase  Name of the calling test case.
+     * @param int    $ccn       The entire cyclomatic complexity number.
+     * @param int    $crapIndex The expected crap index.
      */
     private function doTestCrapIndexCalculation($testCase, $ccn, $crapIndex): void
     {
@@ -184,8 +163,8 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Calculates the crap index.
      *
-     * @param string  $testCase Name of the calling test case.
-     * @param integer $ccn      The entire cyclomatic complexity number.
+     * @param string $testCase Name of the calling test case.
+     * @param int    $ccn      The entire cyclomatic complexity number.
      *
      * @return array
      */
@@ -236,8 +215,9 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Creates a mocked instance of the cyclomatic complexity analyzer.
      *
-     * @param integer $ccn
-     * @return \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
+     * @param int $ccn
+     *
+     * @return CyclomaticComplexityAnalyzer
      */
     private function createCyclomaticComplexityAnalyzerMock($ccn = 42)
     {

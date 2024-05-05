@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTYieldStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTForeachStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTForeachStatement
  * @group unittest
  */
 class ASTYieldStatementTest extends ASTNodeTestCase
 {
     /**
      * testYield
-     *
-     * @return void
      */
     public function testYield(): void
     {
@@ -67,8 +66,6 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldAssignment
-     *
-     * @return void
      */
     public function testYieldAssignment(): void
     {
@@ -87,8 +84,6 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldWithLiteral
-     *
-     * @return void
      */
     public function testYieldWithLiteral(): void
     {
@@ -98,8 +93,6 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldWithVariable
-     *
-     * @return void
      */
     public function testYieldWithVariable(): void
     {
@@ -109,8 +102,6 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldWithKeyValue
-     *
-     * @return void
      */
     public function testYieldWithKeyValue(): void
     {
@@ -121,8 +112,6 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldWithFunctionCalls
-     *
-     * @return void
      */
     public function testYieldWithFunctionCalls(): void
     {
@@ -133,8 +122,6 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldInsideForeach
-     *
-     * @return void
      */
     public function testYieldInsideForeach(): void
     {
@@ -161,7 +148,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      * testYieldKeyValueChildNodes
      *
      * @param \PDepend\Source\AST\ASTExpression[] $nodes
-     * @return void
+     *
      * @depends testYieldKeyValue
      */
     public function testYieldKeyValueChildNodes(array $nodes): void
@@ -173,7 +160,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     /**
      * testYieldValueAssignmentSimple
      *
-     * @return \PDepend\Source\AST\ASTYieldStatement
+     * @return ASTYieldStatement
      */
     public function testYieldValueAssignmentSimple()
     {
@@ -188,8 +175,6 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     /**
      * testYieldValueAssignmentSimpleParent
      *
-     * @param \PDepend\Source\AST\ASTStatement $yield
-     * @return void
      * @depends testYieldValueAssignmentSimple
      */
     public function testYieldValueAssignmentSimpleParent(ASTStatement $yield): void
@@ -203,7 +188,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     /**
      * testYieldValueAssignmentKeyValue
      *
-     * @return \PDepend\Source\AST\ASTYieldStatement
+     * @return ASTYieldStatement
      */
     public function testYieldValueAssignmentKeyValue()
     {
@@ -218,8 +203,6 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     /**
      * testYieldValueAssignmentKeyValueParent
      *
-     * @param \PDepend\Source\AST\ASTYieldStatement $yield
-     * @return void
      * @depends testYieldValueAssignmentKeyValue
      */
     public function testYieldValueAssignmentKeyValueParent(ASTYieldStatement $yield): void
@@ -233,8 +216,6 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     /**
      * testYieldValueAssignmentKeyValueChildren
      *
-     * @param \PDepend\Source\AST\ASTYieldStatement $yield
-     * @return void
      * @depends testYieldValueAssignmentKeyValue
      */
     public function testYieldValueAssignmentKeyValueChildren(ASTYieldStatement $yield): void
@@ -249,7 +230,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
-     * @return \PDepend\Source\AST\ASTYieldStatement
+     *
+     * @return ASTYieldStatement
      */
     private function getFirstYieldStatementInFunction($testCase)
     {

@@ -61,15 +61,12 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
     /**
      * Collected visit order.
      *
-     * @var array<string, integer>
+     * @var array<string, int>
      */
     public $visits = [];
 
     /**
      * Visits a class node.
-     *
-     * @param \PDepend\Source\AST\ASTClass $class
-     * @return void
      */
     public function visitClass(ASTClass $class): void
     {
@@ -80,9 +77,6 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
 
     /**
      * Visits a file node.
-     *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
-     * @return void
      */
     public function visitCompilationUnit(ASTCompilationUnit $compilationUnit): void
     {
@@ -93,9 +87,6 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
 
     /**
      * Visits a function node.
-     *
-     * @param \PDepend\Source\AST\ASTFunction $function
-     * @return void
      */
     public function visitFunction(ASTFunction $function): void
     {
@@ -106,9 +97,6 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
 
     /**
      * Visits a code interface object.
-     *
-     * @param \PDepend\Source\AST\ASTInterface $interface
-     * @return void
      */
     public function visitInterface(ASTInterface $interface): void
     {
@@ -119,9 +107,6 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
 
     /**
      * Visits a method node.
-     *
-     * @param \PDepend\Source\AST\ASTMethod $method
-     * @return void
      */
     public function visitMethod(ASTMethod $method): void
     {
@@ -133,8 +118,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
     /**
      * Visits a package node.
      *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace The package class node.
-     * @return void
+     * @param ASTNamespace $namespace The package class node.
      */
     public function visitNamespace(ASTNamespace $namespace): void
     {
@@ -145,9 +129,6 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
 
     /**
      * Visits a property node.
-     *
-     * @param \PDepend\Source\AST\ASTProperty $property
-     * @return void
      */
     public function visitProperty(ASTProperty $property): void
     {

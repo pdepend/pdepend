@@ -49,25 +49,25 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 /**
  * Test case for the node lines of code analyzer.
  *
+ * @covers \PDepend\Metrics\AbstractCachingAnalyzer
+ * @covers \PDepend\Metrics\Analyzer\NodeLocAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Metrics\AbstractCachingAnalyzer
- * @covers \PDepend\Metrics\Analyzer\NodeLocAnalyzer
  * @group unittest
  */
 class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
+     *
      * @since 1.0.0
      */
     private $cache;
 
     /**
      * Initializes a in memory cache.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -78,8 +78,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerCalculatesCorrectFunctionMetrics
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectFunctionMetrics(): void
     {
@@ -96,7 +94,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
                 'cloc'   =>  3,
                 'eloc'   =>  2,
                 'lloc'   =>  0,
-                'ncloc'  =>  3
+                'ncloc'  =>  3,
             ],
             'func_without_comment'  =>  [
                 'loc'    =>  7,
@@ -134,8 +132,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerCalculatesCorrectFunctionFileMetrics
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectFunctionFileMetrics(): void
     {
@@ -154,7 +150,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'cloc'   =>  15,
             'eloc'   =>  13,
             'lloc'   =>  4,
-            'ncloc'  =>  16
+            'ncloc'  =>  16,
         ];
         $this->assertEquals($expected, $actual);
     }
@@ -162,8 +158,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct class, method and file
      * loc values.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesClassMethodsIntoNcloc(): void
     {
@@ -181,8 +175,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerCalculatesClassPropertiesIntoNcloc
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesClassPropertiesIntoNcloc(): void
     {
@@ -200,8 +192,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerNotCalculatesClassPropertiesIntoEloc
-     *
-     * @return void
      */
     public function testAnalyzerNotCalculatesClassPropertiesIntoEloc(): void
     {
@@ -219,8 +209,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct class file metrics.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectClassFileMetrics(): void
     {
@@ -239,15 +227,13 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'cloc'   =>  10,
             'eloc'   =>  8,
             'lloc'   =>  4,
-            'ncloc'  =>  11
+            'ncloc'  =>  11,
         ];
         $this->assertEquals($expected, $actual);
     }
 
     /**
      * testAnalyzerCalculatesCorrectClassMetrics
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectClassMetrics(): void
     {
@@ -265,15 +251,13 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'cloc'   =>  7,
             'eloc'   =>  3,
             'lloc'   =>  1,
-            'ncloc'  =>  15
+            'ncloc'  =>  15,
         ];
         $this->assertEquals($expected, $actual);
     }
 
     /**
      * Tests that the analyzer calculates the correct interface file value.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectInterfaceFileLoc(): void
     {
@@ -292,15 +276,13 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'cloc'   =>  10,
             'eloc'   =>  8,
             'lloc'   =>  4,
-            'ncloc'  =>  11
+            'ncloc'  =>  11,
         ];
         $this->assertEquals($expected, $actual);
     }
 
     /**
      * testAnalyzerCalculatesCorrectInterfaceLoc
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectInterfaceLoc(): void
     {
@@ -318,15 +300,13 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'cloc'   =>  7,
             'eloc'   =>  0,
             'lloc'   =>  0,
-            'ncloc'  =>  10
+            'ncloc'  =>  10,
         ];
         $this->assertEquals($expected, $actual);
     }
 
     /**
      * Tests that the analyzer aggregates the expected project values.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectProjectMetrics(): void
     {
@@ -341,7 +321,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'cloc'   =>  144,
             'eloc'   =>  89,
             'lloc'   =>  40,
-            'ncloc'  =>  117
+            'ncloc'  =>  117,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -349,8 +329,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerCalculatesElocOfZeroForAbstractMethod
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesElocOfZeroForAbstractMethod(): void
     {
@@ -370,8 +348,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerCalculatesElocOfZeroForInterfaceMethod
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesElocOfZeroForInterfaceMethod(): void
     {
@@ -391,8 +367,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerCalculatesClassConstantsIntoNcloc
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesClassConstantsIntoNcloc(): void
     {
@@ -410,8 +384,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerNotCalculatesClassConstantsIntoEloc
-     *
-     * @return void
      */
     public function testAnalyzerNotCalculatesClassConstantsIntoEloc(): void
     {
@@ -429,8 +401,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedProjectLLocForFileWithInterfaces
-     *
-     * @return void
      */
     public function testCalculatesExpectedProjectLLocForFileWithInterfaces(): void
     {
@@ -444,7 +414,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedFileMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedFileMetricsFromCache(): void
@@ -471,7 +440,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedClassMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedClassMetricsFromCache(): void
@@ -497,7 +465,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedInterfaceMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedInterfaceMetricsFromCache(): void
@@ -523,7 +490,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedMethodMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedMethodMetricsFromCache(): void
@@ -551,7 +517,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedFunctionMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedFunctionMetricsFromCache(): void
@@ -577,7 +542,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedProjectMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedProjectMetricsFromCache(): void
@@ -599,8 +563,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedLLocForReturnStatement
-     *
-     * @return void
      */
     public function testCalculatesExpectedLLocForReturnStatement(): void
     {
@@ -609,8 +571,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedLLocForIfAndElseIfStatement
-     *
-     * @return void
      */
     public function testCalculatesExpectedLLocForIfAndElseIfStatement(): void
     {
@@ -619,8 +579,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedLLocForForStatement
-     *
-     * @return void
      */
     public function testCalculatesExpectedLLocForForStatement(): void
     {
@@ -629,8 +587,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedLLocForSwitchStatement
-     *
-     * @return void
      */
     public function testCalculatesExpectedLLocForSwitchStatement(): void
     {
@@ -639,8 +595,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedLLocForTryCatchStatement
-     *
-     * @return void
      */
     public function testCalculatesExpectedLLocForTryCatchStatement(): void
     {
@@ -649,8 +603,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedLLocForForeachStatement
-     *
-     * @return void
      */
     public function testCalculatesExpectedLLocForForeachStatement(): void
     {
@@ -659,8 +611,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedLLocForWhileStatement
-     *
-     * @return void
      */
     public function testCalculatesExpectedLLocForWhileStatement(): void
     {
@@ -669,8 +619,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedLLocForDoWhileStatement
-     *
-     * @return void
      */
     public function testCalculatesExpectedLLocForDoWhileStatement(): void
     {
@@ -679,8 +627,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerIgnoresFilesWithoutFileName
-     *
-     * @return void
      */
     public function testAnalyzerIgnoresFilesWithoutFileName(): void
     {
@@ -719,7 +665,8 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Creates a ready to use node loc analyzer.
      *
-     * @return \PDepend\Metrics\Analyzer\NodeLocAnalyzer
+     * @return NodeLocAnalyzer
+     *
      * @since 1.0.0
      */
     private function createAnalyzer()

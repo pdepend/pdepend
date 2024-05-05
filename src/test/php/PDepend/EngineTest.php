@@ -42,15 +42,17 @@
 
 namespace PDepend;
 
+use InvalidArgumentException;
 use PDepend\Source\AST\ASTNamespace;
 
 /**
  * Test case for \PDepend\Engine facade.
  *
+ * @covers \PDepend\Engine
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Engine
  * @group unittest
  */
 class EngineTest extends AbstractTestCase
@@ -58,8 +60,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Engine::addDirectory()} method
      * fails with an exception for an invalid directory.
-     *
-     * @return void
      */
     public function testAddInvalidDirectoryFail(): void
     {
@@ -75,8 +75,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Engine::addDirectory()} method
      * with an existing directory.
-     *
-     * @return void
      */
     public function testAddDirectory(): void
     {
@@ -86,8 +84,6 @@ class EngineTest extends AbstractTestCase
 
     /**
      * testAnalyzeMethodReturnsAnIterator
-     *
-     * @return void
      */
     public function testAnalyzeMethodReturnsAnIterator(): void
     {
@@ -101,8 +97,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests the {@link \PDepend\Engine::analyze()} method and the return
      * value.
-     *
-     * @return void
      */
     public function testAnalyze(): void
     {
@@ -115,7 +109,7 @@ class EngineTest extends AbstractTestCase
         $expected = [
             'package1'  =>  true,
             'package2'  =>  true,
-            'package3'  =>  true
+            'package3'  =>  true,
         ];
 
         foreach ($metrics as $metric) {
@@ -128,8 +122,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that {@link \PDepend\Engine::analyze()} throws an exception
      * if no source directory was set.
-     *
-     * @return void
      */
     public function testAnalyzeThrowsAnExceptionForNoSourceDirectory(): void
     {
@@ -141,8 +133,6 @@ class EngineTest extends AbstractTestCase
 
     /**
      * testAnalyzeReturnsEmptyIteratorWhenNoPackageExists
-     *
-     * @return void
      */
     public function testAnalyzeReturnsEmptyIteratorWhenNoPackageExists(): void
     {
@@ -156,8 +146,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that {@link \PDepend\Engine::analyze()} configures the
      * ignore annotations option correct.
-     *
-     * @return void
      */
     public function testAnalyzeSetsWithoutAnnotations(): void
     {
@@ -180,8 +168,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Engine::countClasses()} method
      * returns the expected number of classes.
-     *
-     * @return void
      */
     public function testCountClasses(): void
     {
@@ -196,8 +182,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Engine::countClasses()} method fails
      * with an exception if the code was not analyzed before.
-     *
-     * @return void
      */
     public function testCountClassesWithoutAnalyzeFail(): void
     {
@@ -216,8 +200,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Engine::countNamespaces()} method
      * returns the expected number of namespaces.
-     *
-     * @return void
      */
     public function testCountNamespaces(): void
     {
@@ -231,8 +213,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Engine::countNamespaces()} method
      * fails with an exception if the code was not analyzed before.
-     *
-     * @return void
      */
     public function testCountNamespacesWithoutAnalyzeFail(): void
     {
@@ -251,8 +231,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Engine::getNamespace()} method
      * returns the expected {@link \PDepend\Source\AST\ASTNamespace} objects.
-     *
-     * @return void
      */
     public function testGetNamespace(): void
     {
@@ -263,7 +241,7 @@ class EngineTest extends AbstractTestCase
         $namespaces = [
             'package1',
             'package2',
-            'package3'
+            'package3',
         ];
 
         $className = '\\PDepend\\Source\\AST\\ASTNamespace';
@@ -276,8 +254,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Engine::getNamespace()} method fails
      * with an exception if the code was not analyzed before.
-     *
-     * @return void
      */
     public function testGetNamespaceWithoutAnalyzeFail(): void
     {
@@ -296,8 +272,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Engine::getNamespace()} method fails
      * with an exception if you request an invalid package.
-     *
-     * @return void
      */
     public function testGetNamespacesWithUnknownPackageFail(): void
     {
@@ -318,8 +292,6 @@ class EngineTest extends AbstractTestCase
      * Tests that the {@link \PDepend\Engine::getNamespaces()} method
      * returns the expected {@link \PDepend\Source\AST\ASTNamespace} objects
      * and reuses the result of {@link \PDepend\Engine::analyze()}.
-     *
-     * @return void
      */
     public function testGetNamespaces(): void
     {
@@ -337,8 +309,6 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the {@link \PDepend\Engine::getNamespaces()} method
      * fails with an exception if the code was not analyzed before.
-     *
-     * @return void
      */
     public function testGetNamespacesWithoutAnalyzeFail(): void
     {
@@ -357,7 +327,7 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests the newly added support for single file handling.
      *
-     * @return \PDepend\Source\AST\ASTNamespace
+     * @return ASTNamespace
      */
     public function testSupportForSingleFileIssue90()
     {
@@ -372,8 +342,6 @@ class EngineTest extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
-     * @return void
      * @depends testSupportForSingleFileIssue90
      */
     public function testSupportForSingleFileIssue90ExpectedNumberOfClasses(ASTNamespace $namespace): void
@@ -382,8 +350,6 @@ class EngineTest extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTNamespace $namespace
-     * @return void
      * @depends testSupportForSingleFileIssue90
      */
     public function testSupportForSingleFileIssue90ExpectedNumberOfInterfaces(ASTNamespace $namespace): void
@@ -394,12 +360,10 @@ class EngineTest extends AbstractTestCase
     /**
      * Tests that the addFile() method throws the expected exception when an
      * added file does not exist.
-     *
-     * @return void
      */
     public function testAddFileMethodThrowsExpectedExceptionForFileThatNotExists(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $filePath = $this->createRunResourceURI('pdepend_');
         unlink($filePath);
 

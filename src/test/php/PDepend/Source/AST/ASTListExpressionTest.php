@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTListExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTListExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTListExpression
  * @group unittest
  */
 class ASTListExpressionTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpression
      *
-     * @return \PDepend\Source\AST\ASTListExpression
+     * @return ASTListExpression
+     *
      * @since 1.0.2
      */
     public function testListExpression()
@@ -71,9 +73,8 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start line value.
      *
-     * @param \PDepend\Source\AST\ASTListExpression $expr
+     * @param ASTListExpression $expr
      *
-     * @return void
      * @depends testListExpression
      */
     public function testListExpressionHasExpectedStartLine($expr): void
@@ -84,9 +85,8 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start column value.
      *
-     * @param \PDepend\Source\AST\ASTListExpression $expr
+     * @param ASTListExpression $expr
      *
-     * @return void
      * @depends testListExpression
      */
     public function testListExpressionHasExpectedStartColumn($expr): void
@@ -97,9 +97,8 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end line value.
      *
-     * @param \PDepend\Source\AST\ASTListExpression $expr
+     * @param ASTListExpression $expr
      *
-     * @return void
      * @depends testListExpression
      */
     public function testListExpressionHasExpectedEndLine($expr): void
@@ -110,9 +109,8 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end column value.
      *
-     * @param \PDepend\Source\AST\ASTListExpression $expr
+     * @param ASTListExpression $expr
      *
-     * @return void
      * @depends testListExpression
      */
     public function testListExpressionHasExpectedEndColumn($expr): void
@@ -123,7 +121,8 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithNestedList
      *
-     * @return \PDepend\Source\AST\ASTListExpression
+     * @return ASTListExpression
+     *
      * @since 1.0.2
      */
     public function testListExpressionWithNestedList()
@@ -137,52 +136,52 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithNestedListHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTListExpression $expr
+     * @param ASTListExpression $expr
      *
-     * @return void
      * @since 1.0.2
+     *
      * @depends testListExpressionWithNestedList
      */
     public function testListExpressionWithNestedListHasExpectedStartLine($expr): void
     {
         $this->assertEquals(4, $expr->getStartLine());
     }
-    
+
     /**
      * testListExpressionWithNestedListHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTListExpression $expr
+     * @param ASTListExpression $expr
      *
-     * @return void
      * @since 1.0.2
+     *
      * @depends testListExpressionWithNestedList
      */
     public function testListExpressionWithNestedListHasExpectedStartColumn($expr): void
     {
         $this->assertEquals(5, $expr->getStartColumn());
     }
-    
+
     /**
      * testListExpressionWithNestedListHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTListExpression $expr
+     * @param ASTListExpression $expr
      *
-     * @return void
      * @since 1.0.2
+     *
      * @depends testListExpressionWithNestedList
      */
     public function testListExpressionWithNestedListHasExpectedEndLine($expr): void
     {
         $this->assertEquals(4, $expr->getEndLine());
     }
-    
+
     /**
      * testListExpressionWithNestedListHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTListExpression $expr
+     * @param ASTListExpression $expr
      *
-     * @return void
      * @since 1.0.2
+     *
      * @depends testListExpressionWithNestedList
      */
     public function testListExpressionWithNestedListHasExpectedEndColumn($expr): void
@@ -192,8 +191,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests the list supports many variables in it
-     *
-     * @return void
      */
     public function testListExpressionSupportsManyVariables(): void
     {
@@ -204,8 +201,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests the list supports a single variable
-     *
-     * @return void
      */
     public function testListExpressionSupportsSingleVariable(): void
     {
@@ -216,8 +211,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests the list supports commas without variables
-     *
-     * @return void
      */
     public function testListExpressionSupportsExtraCommas(): void
     {
@@ -228,8 +221,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testListExpressionWithComments
-     *
-     * @return void
      */
     public function testListExpressionWithComments(): void
     {
@@ -240,8 +231,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testListExpressionWithoutChildExpression
-     *
-     * @return void
      */
     public function testListExpressionWithoutChildExpression(): void
     {
@@ -252,8 +241,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testListExpressionWithVariableVariable
-     *
-     * @return void
      */
     public function testListExpressionWithVariableVariable(): void
     {
@@ -265,8 +252,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testListExpressionWithSquaredBrackets
-     *
-     * @return void
      */
     public function testListExpressionWithSquaredBrackets(): void
     {
@@ -280,8 +265,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testListExpressionWithSquaredBracketsAndEmptySlot
-     *
-     * @return void
      */
     public function testListExpressionWithSquaredBracketsAndEmptySlot(): void
     {
@@ -295,8 +278,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testListExpressionWithArrayAndEmptySlot
-     *
-     * @return void
      */
     public function testListExpressionWithArrayAndEmptySlot(): void
     {
@@ -312,8 +293,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testSymmetricArrayDestructuringEmptySlot
-     *
-     * @return void
      */
     public function testSymmetricArrayDestructuringEmptySlot(): void
     {
@@ -328,8 +307,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testFunctionVoidReturnType
-     *
-     * @return void
      */
     public function testFunctionVoidReturnType(): void
     {
@@ -344,8 +321,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testListExpressionWithCompoundVariable
-     *
-     * @return void
      */
     public function testListExpressionWithCompoundVariable(): void
     {
@@ -357,8 +332,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testListExpressionWithArrayElement
-     *
-     * @return void
      */
     public function testListExpressionWithArrayElement(): void
     {
@@ -370,8 +343,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * testListExpressionWithObjectProperty
-     *
-     * @return void
      */
     public function testListExpressionWithObjectProperty(): void
     {
@@ -384,7 +355,8 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithKeys
      *
-     * @return \PDepend\Source\AST\ASTListExpression
+     * @return ASTListExpression
+     *
      * @since 1.0.2
      */
     public function testListExpressionWithKeys()
@@ -398,7 +370,8 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithKeysAndNestedList
      *
-     * @return \PDepend\Source\AST\ASTListExpression
+     * @return ASTListExpression
+     *
      * @since 1.0.2
      */
     public function testListExpressionWithKeysAndNestedList()
@@ -412,7 +385,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTListExpression
+     * @return ASTListExpression
      */
     private function getFirstListExpressionInFunction()
     {

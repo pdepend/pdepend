@@ -42,25 +42,25 @@
 
 namespace PDepend\Source\AST;
 
+use InvalidArgumentException;
 use PDepend\Source\ASTVisitor\StubASTVisitor;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTMethod class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\AbstractASTCallable
  * @covers \PDepend\Source\AST\ASTMethod
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  */
 class ASTMethodTest extends AbstractASTArtifactTestCase
 {
     /**
      * testIsCachedReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsCachedReturnsFalseByDefault(): void
     {
@@ -70,8 +70,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsCachedReturnsFalseWhenObjectGetsSerialized
-     *
-     * @return void
      */
     public function testIsCachedReturnsFalseWhenObjectGetsSerialized(): void
     {
@@ -83,8 +81,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testReturnValueOfMagicSleepContainsContextProperty
-     *
-     * @return void
      */
     public function testReturnValueOfMagicSleepContainsContextProperty(): void
     {
@@ -101,7 +97,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
                 'comment',
                 'returnsReference',
                 'returnClassReference',
-                'exceptionClassReferences'
+                'exceptionClassReferences',
             ],
             $method->__sleep()
         );
@@ -109,8 +105,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testParserSetsAbstractFlagOnMethod
-     *
-     * @return void
      */
     public function testParserNotSetsAbstractFlagOnMethod(): void
     {
@@ -120,8 +114,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testParserSetsAbstractFlagOnMethod
-     *
-     * @return void
      */
     public function testParserSetsAbstractFlagOnMethod(): void
     {
@@ -131,8 +123,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetReturnClassForMethodWithNamespacedRootClass
-     *
-     * @return void
      */
     public function testGetReturnClassForMethodWithNamespacedRootClass(): void
     {
@@ -142,8 +132,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetReturnClassForMethodWithNamespacedClass
-     *
-     * @return void
      */
     public function testGetReturnClassForMethodWithNamespacedClass(): void
     {
@@ -153,8 +141,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetReturnClassForMethodWithNamespacedArrayRootClass
-     *
-     * @return void
      */
     public function testGetReturnClassForMethodWithNamespacedArrayRootClass(): void
     {
@@ -164,8 +150,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetReturnClassForMethodWithNamespacedArrayClass
-     *
-     * @return void
      */
     public function testGetReturnClassForMethodWithNamespacedArrayClass(): void
     {
@@ -175,8 +159,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetExceptionsForMethodWithNamespacedRootClass
-     *
-     * @return void
      */
     public function testGetExceptionsForMethodWithNamespacedRootClass(): void
     {
@@ -189,8 +171,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetExceptionsForMethodWithNamespacedClass
-     *
-     * @return void
      */
     public function testGetExceptionsForMethodWithNamespacedClass(): void
     {
@@ -203,8 +183,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testInlineDependencyForMethodWithNamespacedRootClass
-     *
-     * @return void
      */
     public function testInlineDependencyForMethodWithNamespacedRootClass(): void
     {
@@ -217,8 +195,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testInlineDependencyForMethodWithNamespacedClass
-     *
-     * @return void
      */
     public function testInlineDependencyForMethodWithNamespacedClass(): void
     {
@@ -231,8 +207,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testReturnsReferenceReturnsExpectedTrue
-     *
-     * @return void
      */
     public function testReturnsReferenceReturnsExpectedTrue(): void
     {
@@ -242,8 +216,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testReturnsReferenceReturnsExpectedFalse
-     *
-     * @return void
      */
     public function testReturnsReferenceReturnsExpectedFalse(): void
     {
@@ -253,8 +225,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStaticVariablesReturnsEmptyArrayByDefault
-     *
-     * @return void
      */
     public function testGetStaticVariablesReturnsEmptyArrayByDefault(): void
     {
@@ -264,8 +234,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStaticVariablesReturnsFirstSetOfStaticVariables
-     *
-     * @return void
      */
     public function testGetStaticVariablesReturnsFirstSetOfStaticVariables(): void
     {
@@ -279,8 +247,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStaticVariablesReturnsMergeOfAllStaticVariables
-     *
-     * @return void
      */
     public function testGetStaticVariablesReturnsMergeOfAllStaticVariables(): void
     {
@@ -295,12 +261,11 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined
      *
-     * @return void
      * @covers \PDepend\Source\AST\ASTCompilationUnitNotFoundException
      */
     public function testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined(): void
     {
-        $this->expectException(\PDepend\Source\AST\ASTCompilationUnitNotFoundException::class);
+        $this->expectException(ASTCompilationUnitNotFoundException::class);
 
         $method = new ASTMethod('method');
         $method->getCompilationUnit();
@@ -309,8 +274,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Tests that build interface updates the source file information for null
      * values.
-     *
-     * @return void
      */
     public function testSetSourceFileInformationForNullValue(): void
     {
@@ -327,8 +290,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testByDefaultGetParentReturnsNull
-     *
-     * @return void
      */
     public function testByDefaultGetParentReturnsNull(): void
     {
@@ -338,8 +299,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testSetParentWithNullResetsPreviousParentToNull
-     *
-     * @return void
      */
     public function testSetParentWithNullResetsPreviousParentToNull(): void
     {
@@ -354,8 +313,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTMethod::getParent()} returns as
      * default value <b>null</b> and that the package could be set and unset.
-     *
-     * @return void
      */
     public function testGetSetParent(): void
     {
@@ -368,8 +325,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the visitor accept method.
-     *
-     * @return void
      */
     public function testVisitorAccept(): void
     {
@@ -383,8 +338,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTMethod::setModifiers()} method
      * fails with an exception for an invalid modifier value.
-     *
-     * @return void
      */
     public function testSetInvalidModifierFail(): void
     {
@@ -397,8 +350,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTMethod::setModifiers()} method
      * accepts the defined visibility value.
-     *
-     * @return void
      */
     public function testSetModifiersAcceptsPublicValue(): void
     {
@@ -415,7 +366,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * testGetModifiersReturnsZeroByDefault
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetModifiersReturnsZeroByDefault(): void
@@ -427,7 +377,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * testGetModifiersReturnsPreviousSetValue
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetModifiersReturnsPreviousSetValue(): void
@@ -443,8 +392,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsStaticDefaultByReturnsFalse
-     *
-     * @return void
      */
     public function testIsStaticDefaultByReturnsFalse(): void
     {
@@ -455,8 +402,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTMethod::setModifiers()} method marks
      * a method as static.
-     *
-     * @return void
      */
     public function testSetModifiersMarksMethodAsStatic(): void
     {
@@ -471,8 +416,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsFinalByDefaultReturnsFalse
-     *
-     * @return void
      */
     public function testIsFinalByDefaultReturnsFalse(): void
     {
@@ -483,8 +426,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTMethod::setModifiers()} method marks
      * a method as final.
-     *
-     * @return void
      */
     public function testSetModifiersMarksMethodAsFinal(): void
     {
@@ -500,8 +441,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTMethod::setModifiers()} method marks
      * a method as static+final.
-     *
-     * @return void
      */
     public function testSetModifiersMarksMethodAsStaticFinal(): void
     {
@@ -518,8 +457,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTMethod::setModifiers()} method
      * accepts the defined visibility value.
-     *
-     * @return void
      */
     public function testSetModifiersAcceptsProtectedValue(): void
     {
@@ -536,8 +473,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Tests that the {@link \PDepend\Source\AST\ASTMethod::setModifiers()} method
      * accepts the defined visibility value.
-     *
-     * @return void
      */
     public function testSetModifiersAcceptsPrivateValue(): void
     {
@@ -553,8 +488,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsPublicByDefaultReturnsFalse
-     *
-     * @return void
      */
     public function testIsPublicByDefaultReturnsFalse(): void
     {
@@ -564,8 +497,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch(): void
     {
@@ -593,8 +524,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch(): void
     {
@@ -628,8 +557,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull(): void
     {
@@ -659,8 +586,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::findChildrenOfType()}.
-     *
-     * @return void
      */
     public function testFindChildrenOfTypeReturnsExpectedResult(): void
     {
@@ -688,8 +613,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedMethodStillReferencesSameDependency
-     *
-     * @return void
      */
     public function testUnserializedMethodStillReferencesSameDependency(): void
     {
@@ -704,8 +627,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedMethodStillReferencesSameReturnClass
-     *
-     * @return void
      */
     public function testUnserializedMethodStillReferencesSameReturnClass(): void
     {
@@ -720,8 +641,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedMethodStillReferencesSameParameterClass
-     *
-     * @return void
      */
     public function testUnserializedMethodStillReferencesSameParameterClass(): void
     {
@@ -736,8 +655,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedMethodStillReferencesSameExceptionClass
-     *
-     * @return void
      */
     public function testUnserializedMethodStillReferencesSameExceptionClass(): void
     {
@@ -752,8 +669,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedMethodStillReferencesSameDependencyInterface
-     *
-     * @return void
      */
     public function testUnserializedMethodStillReferencesSameDependencyInterface(): void
     {
@@ -770,7 +685,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
      * Returns the first method defined in a source file associated with the
      * given test case.
      *
-     * @return \PDepend\Source\AST\ASTMethod
+     * @return ASTMethod
      */
     protected function getFirstMethodInClass()
     {
@@ -785,7 +700,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Creates an abstract item instance.
      *
-     * @return \PDepend\Source\AST\AbstractASTArtifact
+     * @return AbstractASTArtifact
      */
     protected function createItem()
     {
@@ -795,11 +710,9 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         return $method;
     }
 
-    /**
-     */
     public function testSetTokensWithEmptyArray(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('An AST node should contain at least one token');
 
         $method = new ASTMethod('FooBar');

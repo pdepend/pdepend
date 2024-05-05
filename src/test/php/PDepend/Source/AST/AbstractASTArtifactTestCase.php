@@ -47,10 +47,11 @@ use PDepend\AbstractTestCase;
 /**
  * Base test case for abstract item implementations.
  *
+ * @covers \PDepend\Source\AST\AbstractASTArtifact
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\AST\AbstractASTArtifact
  * @group unittest
  */
 abstract class AbstractASTArtifactTestCase extends AbstractTestCase
@@ -58,7 +59,6 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
     /**
      * testSetNameChangesPreviousName
      *
-     * @return void
      * @since 1.0.0
      */
     public function testSetNameChangesPreviousName(): void
@@ -73,8 +73,9 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string  $testCase
-     * @param boolean $ignoreAnnotations
+     * @param string $testCase
+     * @param bool   $ignoreAnnotations
+     *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
@@ -96,7 +97,7 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
     /**
      * Creates an abstract item instance.
      *
-     * @return \PDepend\Source\AST\AbstractASTArtifact
+     * @return AbstractASTArtifact
      */
     abstract protected function createItem();
 }

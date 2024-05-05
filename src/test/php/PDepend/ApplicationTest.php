@@ -42,15 +42,17 @@
 
 namespace PDepend;
 
+use InvalidArgumentException;
 use PDepend\Metrics\Analyzer\CrapIndexAnalyzer;
 
 /**
  * Test cases for the {@link \PDepend\Application} class.
  *
+ * @covers \PDepend\Application
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Application
  * @group integration
  */
 class ApplicationTest extends AbstractTestCase
@@ -92,16 +94,14 @@ class ApplicationTest extends AbstractTestCase
         $this->assertMatchesRegularExpression('/<file\s.*name="php:\/\/stdin"/', $xml);
     }
 
-    /**
-     */
     public function testSetConfigurationFileAndThrowInvalidArgumentException(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessageMatches('(^The configuration file ".*fileThatDoesNotExists\\.txt" doesn\\\'t exist\\.$)');
 
         $filename = __DIR__ . '/fileThatDoesNotExists.txt';
 
-        $application = new \PDepend\Application();
+        $application = new Application();
         $application->setConfigurationFile($filename);
     }
 

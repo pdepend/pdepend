@@ -64,21 +64,22 @@ class StubASTVisitor implements ASTVisitor
     /**
      * The last visited class instance.
      *
-     * @var \PDepend\Source\AST\ASTClass
+     * @var ASTClass
      */
     public $class;
 
     /**
      * The last visited class instance.
      *
-     * @var \PDepend\Source\AST\ASTEnum
+     * @var ASTEnum
      */
     public $enum;
 
     /**
      * The last visited trait instance.
      *
-     * @var \PDepend\Source\AST\ASTTrait
+     * @var ASTTrait
+     *
      * @since 1.0.0
      */
     public $trait;
@@ -86,165 +87,44 @@ class StubASTVisitor implements ASTVisitor
     /**
      * The last visited interface instance.
      *
-     * @var \PDepend\Source\AST\ASTInterface
+     * @var ASTInterface
      */
     public $interface;
 
     /**
      * The last visited method instance.
      *
-     * @var \PDepend\Source\AST\ASTMethod
+     * @var ASTMethod
      */
     public $method;
 
     /**
      * The last visited package instance.
      *
-     * @var \PDepend\Source\AST\ASTNamespace
+     * @var ASTNamespace
      */
     public $namespace;
 
     /**
      * The last visited parameter instance.
      *
-     * @var \PDepend\Source\AST\ASTParameter
+     * @var ASTParameter
      */
     public $parameter;
 
     /**
      * The last visited property instance.
      *
-     * @var \PDepend\Source\AST\ASTProperty
+     * @var ASTProperty
      */
     public $property;
 
     /**
      * The last visited function instance.
      *
-     * @var \PDepend\Source\AST\ASTFunction
+     * @var ASTFunction
      */
     public $function;
-
-    /**
-     * Adds a new listener to this node visitor.
-     *
-     * @param \PDepend\Source\ASTVisitor\ASTVisitListener $listener
-     * @return void
-     */
-    public function addVisitListener(ASTVisitListener $listener): void
-    {
-    }
-
-    /**
-     * Visits a class node.
-     *
-     * @param \PDepend\Source\AST\ASTClass $class
-     * @return void
-     */
-    public function visitClass(ASTClass $class): void
-    {
-        $this->class = $class;
-    }
-
-    /**
-     * Visits an enum node.
-     *
-     * @param \PDepend\Source\AST\ASTEnum $enum
-     * @return void
-     */
-    public function visitEnum(ASTEnum $enum): void
-    {
-        $this->enum = $enum;
-    }
-
-    /**
-     * Visits a trait node.
-     *
-     * @param \PDepend\Source\AST\ASTTrait $trait
-     * @return void
-     * @since 1.0.0
-     */
-    public function visitTrait(ASTTrait $trait): void
-    {
-        $this->trait = $trait;
-    }
-
-
-    /**
-     * Visits a code interface object.
-     *
-     * @param \PDepend\Source\AST\ASTInterface $interface
-     * @return void
-     */
-    public function visitInterface(ASTInterface $interface): void
-    {
-        $this->interface = $interface;
-    }
-
-    /**
-     * Visits a method node.
-     *
-     * @param \PDepend\Source\AST\ASTMethod $method
-     * @return void
-     */
-    public function visitMethod(ASTMethod $method): void
-    {
-        $this->method = $method;
-    }
-
-    /**
-     * Visits a package node.
-     *
-     * @param \PDepend\Source\AST\ASTNamespace $namespace The package class node.
-     * @return void
-     */
-    public function visitNamespace(ASTNamespace $namespace): void
-    {
-        $this->namespace = $namespace;
-    }
-
-    /**
-     * Visits a parameter node.
-     *
-     * @param \PDepend\Source\AST\ASTParameter $parameter
-     * @return void
-     */
-    public function visitParameter(ASTParameter $parameter): void
-    {
-        $this->parameter = $parameter;
-    }
-
-    /**
-     * Visits a property node.
-     *
-     * @param \PDepend\Source\AST\ASTProperty $property
-     * @return void
-     */
-    public function visitProperty(ASTProperty $property): void
-    {
-        $this->property = $property;
-    }
-
-    /**
-     * Visits a function node.
-     *
-     * @param \PDepend\Source\AST\ASTFunction $function
-     * @return void
-     */
-    public function visitFunction(ASTFunction $function): void
-    {
-        $this->function = $function;
-    }
-
-    /**
-     * Visits a file node.
-     *
-     * @param \PDepend\Source\AST\ASTCompilationUnit $compilationUnit
-     * @return void
-     */
-    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit): void
-    {
-    }
 
     /**
      * Magic call method used to provide simplified visitor implementations.
@@ -264,12 +144,104 @@ class StubASTVisitor implements ASTVisitor
      * by the concrete visit method.
      *
      * @param string $method Name of the called method.
-     * @param array $args Array with method argument.
+     * @param array  $args   Array with method argument.
      *
      * @return array
+     *
      * @since 0.9.12
      */
     public function __call($method, $args)
+    {
+    }
+
+    /**
+     * Adds a new listener to this node visitor.
+     */
+    public function addVisitListener(ASTVisitListener $listener): void
+    {
+    }
+
+    /**
+     * Visits a class node.
+     */
+    public function visitClass(ASTClass $class): void
+    {
+        $this->class = $class;
+    }
+
+    /**
+     * Visits an enum node.
+     */
+    public function visitEnum(ASTEnum $enum): void
+    {
+        $this->enum = $enum;
+    }
+
+    /**
+     * Visits a trait node.
+     *
+     * @since 1.0.0
+     */
+    public function visitTrait(ASTTrait $trait): void
+    {
+        $this->trait = $trait;
+    }
+
+
+    /**
+     * Visits a code interface object.
+     */
+    public function visitInterface(ASTInterface $interface): void
+    {
+        $this->interface = $interface;
+    }
+
+    /**
+     * Visits a method node.
+     */
+    public function visitMethod(ASTMethod $method): void
+    {
+        $this->method = $method;
+    }
+
+    /**
+     * Visits a package node.
+     *
+     * @param ASTNamespace $namespace The package class node.
+     */
+    public function visitNamespace(ASTNamespace $namespace): void
+    {
+        $this->namespace = $namespace;
+    }
+
+    /**
+     * Visits a parameter node.
+     */
+    public function visitParameter(ASTParameter $parameter): void
+    {
+        $this->parameter = $parameter;
+    }
+
+    /**
+     * Visits a property node.
+     */
+    public function visitProperty(ASTProperty $property): void
+    {
+        $this->property = $property;
+    }
+
+    /**
+     * Visits a function node.
+     */
+    public function visitFunction(ASTFunction $function): void
+    {
+        $this->function = $function;
+    }
+
+    /**
+     * Visits a file node.
+     */
+    public function visitCompilationUnit(ASTCompilationUnit $compilationUnit): void
     {
     }
 

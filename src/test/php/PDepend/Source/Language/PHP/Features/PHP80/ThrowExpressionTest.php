@@ -42,20 +42,18 @@ namespace PDepend\Source\Language\PHP\Features\PHP80;
 
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTReturnStatement;
-use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @group unittest
  * @group php8
  */
 class ThrowExpressionTest extends PHPParserVersion80TestCase
 {
-    /**
-     * @return void
-     */
     public function testNullcoalescingThrow(): void
     {
         /** @var ASTMethod $method */
@@ -80,9 +78,6 @@ class ThrowExpressionTest extends PHPParserVersion80TestCase
         $this->assertSame('\'should not be null\'', $exceptionMessage[0]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testShorthandTernaryOperator(): void
     {
         /** @var ASTMethod $method */
@@ -108,9 +103,6 @@ class ThrowExpressionTest extends PHPParserVersion80TestCase
         $this->assertSame('\'should not be empty\'', $exceptionMessage[0]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testTernaryOperator(): void
     {
         /** @var ASTMethod $method */
@@ -141,9 +133,6 @@ class ThrowExpressionTest extends PHPParserVersion80TestCase
         $this->assertSame('$value', $elseValue->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testThrowFromArrowFunction(): void
     {
         /** @var ASTMethod $method */
@@ -164,9 +153,6 @@ class ThrowExpressionTest extends PHPParserVersion80TestCase
         $this->assertSame('\'not implemented\'', $exceptionMessage[0]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testThrowFromArrowFunctionAsParameter(): void
     {
         /** @var ASTMethod $method */

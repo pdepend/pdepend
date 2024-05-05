@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTConstantDefinition} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTConstantDefinition
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTConstantDefinition
  * @group unittest
  */
 class ASTConstantDefinitionTest extends ASTNodeTestCase
@@ -58,8 +59,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * Tests that the field declaration <b>setModifiers()</b> method accepts all
      * valid combinations of modifiers.
      *
-     * @param integer $modifiers Combinations of valid modifiers.
-     * @return void
+     * @param int $modifiers Combinations of valid modifiers.
+     *
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
     public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers): void
@@ -74,9 +75,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * Tests that the <b>setModifiers()</b> method throws an exception when an
      * invalid modifier or modifier combination was set.
      *
-     * @param integer $modifiers Combinations of invalid modifiers.
+     * @param int $modifiers Combinations of invalid modifiers.
      *
-     * @return void
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers): void
@@ -96,8 +96,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * testIsPublicReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsPublicReturnsFalseByDefault(): void
     {
@@ -107,8 +105,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * testIsPublicReturnsTrueWhenCorrespondingModifierWasSet
-     *
-     * @return void
      */
     public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
@@ -120,8 +116,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * testIsProtectedReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsProtectedReturnsFalseByDefault(): void
     {
@@ -132,8 +126,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet
-     *
-     * @return void
      */
     public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
@@ -145,8 +137,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * testIsPrivateReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsPrivateReturnsFalseByDefault(): void
     {
@@ -156,8 +146,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet
-     *
-     * @return void
      */
     public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
@@ -169,8 +157,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * Tests that the constant definition has the expected doc comment block.
-     *
-     * @return void
      */
     public function testConstantDefinitionHasExpectedDocComment(): void
     {
@@ -185,8 +171,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * Tests that the constant definition has the expected doc comment block.
-     *
-     * @return void
      */
     public function testConstantDefinitionHasExpectedDocCommentWithInlineCommentBetween(): void
     {
@@ -202,7 +186,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinition
      *
-     * @return \PDepend\Source\AST\ASTConstantDefinition
+     * @return ASTConstantDefinition
+     *
      * @since 1.0.2
      */
     public function testConstantDefinition()
@@ -216,9 +201,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinitionHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTConstantDefinition $constant
+     * @param ASTConstantDefinition $constant
      *
-     * @return void
      * @depends testConstantDefinition
      */
     public function testConstantDefinitionHasExpectedStartLine($constant): void
@@ -229,9 +213,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinitionHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTConstantDefinition $constant
+     * @param ASTConstantDefinition $constant
      *
-     * @return void
      * @depends testConstantDefinition
      */
     public function testConstantDefinitionHasExpectedStartColumn($constant): void
@@ -242,9 +225,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinitionHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTConstantDefinition $constant
+     * @param ASTConstantDefinition $constant
      *
-     * @return void
      * @depends testConstantDefinition
      */
     public function testConstantDefinitionHasExpectedEndLine($constant): void
@@ -255,9 +237,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinitionHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTConstantDefinition $constant
+     * @param ASTConstantDefinition $constant
      *
-     * @return void
      * @depends testConstantDefinition
      */
     public function testConstantDefinitionHasExpectedEndColumn($constant): void
@@ -268,7 +249,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinitionWithDeclarators
      *
-     * @return \PDepend\Source\AST\ASTConstantDefinition
+     * @return ASTConstantDefinition
+     *
      * @since 1.0.2
      */
     public function testConstantDefinitionWithDeclarators()
@@ -282,52 +264,52 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinitionWithDeclaratorsHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTConstantDefinition $constant
+     * @param ASTConstantDefinition $constant
      *
-     * @return void
      * @since 1.0.2
+     *
      * @depends testConstantDefinitionWithDeclarators
      */
     public function testConstantDefinitionWithDeclaratorsHasExpectedStartLine($constant): void
     {
         $this->assertEquals(4, $constant->getStartLine());
     }
-    
+
     /**
      * testConstantDefinitionWithDeclaratorsHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTConstantDefinition $constant
+     * @param ASTConstantDefinition $constant
      *
-     * @return void
      * @since 1.0.2
+     *
      * @depends testConstantDefinitionWithDeclarators
      */
     public function testConstantDefinitionWithDeclaratorsHasExpectedStartColumn($constant): void
     {
         $this->assertEquals(5, $constant->getStartColumn());
     }
-    
+
     /**
      * testConstantDefinitionWithDeclaratorsHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTConstantDefinition $constant
+     * @param ASTConstantDefinition $constant
      *
-     * @return void
      * @since 1.0.2
+     *
      * @depends testConstantDefinitionWithDeclarators
      */
     public function testConstantDefinitionWithDeclaratorsHasExpectedEndLine($constant): void
     {
         $this->assertEquals(6, $constant->getEndLine());
     }
-    
+
     /**
      * testConstantDefinitionWithDeclaratorsHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTConstantDefinition $constant
+     * @param ASTConstantDefinition $constant
      *
-     * @return void
      * @since 1.0.2
+     *
      * @depends testConstantDefinitionWithDeclarators
      */
     public function testConstantDefinitionWithDeclaratorsHasExpectedEndColumn($constant): void
@@ -338,7 +320,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinitionInGlobalScope
      *
-     * @return void
      * @since 1.0.2
      */
     public function testConstantDefinitionInGlobalScope(): void
@@ -349,7 +330,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinitionInNamespaceScope
      *
-     * @return void
      * @since 1.0.2
      */
     public function testConstantDefinitionInNamespaceScope(): void
@@ -360,7 +340,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTConstantDefinition
+     * @return ASTConstantDefinition
      */
     private function getFirstConstantDefinitionInClass()
     {
@@ -396,23 +376,23 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
             [State::IS_STATIC],
             [
                 State::IS_PRIVATE |
-                State::IS_ABSTRACT
+                State::IS_ABSTRACT,
             ],
             [
                 State::IS_PROTECTED |
-                State::IS_ABSTRACT
+                State::IS_ABSTRACT,
             ],
             [
                 State::IS_PUBLIC |
-                State::IS_STATIC
+                State::IS_STATIC,
             ],
             [
                 State::IS_PROTECTED |
-                State::IS_STATIC
+                State::IS_STATIC,
             ],
             [
                 State::IS_PRIVATE |
-                State::IS_STATIC
+                State::IS_STATIC,
             ],
         ];
     }

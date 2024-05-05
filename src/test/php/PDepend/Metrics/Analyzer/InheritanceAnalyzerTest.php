@@ -50,10 +50,11 @@ use PDepend\Source\AST\ASTClass;
 /**
  * Test case for the inheritance analyzer.
  *
+ * @covers \PDepend\Metrics\Analyzer\InheritanceAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Metrics\Analyzer\InheritanceAnalyzer
  * @group unittest
  */
 class InheritanceAnalyzerTest extends AbstractMetricsTestCase
@@ -61,8 +62,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct average number of derived
      * classes.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectANDCValue(): void
     {
@@ -80,8 +79,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct average hierarchy height.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectAHHValue(): void
     {
@@ -99,8 +96,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNoccMetricForClassWithoutChildren
-     *
-     * @return void
      */
     public function testCalculatesExpectedNoccMetricForClassWithoutChildren(): void
     {
@@ -109,8 +104,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNoccMetricForClassWithDirectChildren
-     *
-     * @return void
      */
     public function testCalculatesExpectedNoccMetricForClassWithDirectChildren(): void
     {
@@ -119,8 +112,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNoccMetricForClassWithDirectAndIndirectChildren
-     *
-     * @return void
      */
     public function testCalculatesExpectedNoccMetricForClassWithDirectAndIndirectChildren(): void
     {
@@ -129,8 +120,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct DIT values.
-     *
-     * @return void
      */
     public function testCalculateDITMetricNoInheritance(): void
     {
@@ -139,8 +128,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct DIT values.
-     *
-     * @return void
      */
     public function testCalculateDITMetricOneLevelInheritance(): void
     {
@@ -149,8 +136,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct DIT values.
-     *
-     * @return void
      */
     public function testCalculateDITMetricTwoLevelNoInheritance(): void
     {
@@ -159,8 +144,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct DIT values.
-     *
-     * @return void
      */
     public function testCalculateDITMetricThreeLevelNoInheritance(): void
     {
@@ -169,8 +152,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct DIT values.
-     *
-     * @return void
      */
     public function testCalculateDITMetricFourLevelNoInheritance(): void
     {
@@ -179,8 +160,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateDITMetricForUnknownParentIncrementsMetricWithTwo
-     *
-     * @return void
      */
     public function testCalculateDITMetricForUnknownParentIncrementsMetricWithTwo(): void
     {
@@ -189,8 +168,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateDITMetricForInternalParentIncrementsMetricWithTwo
-     *
-     * @return void
      */
     public function testCalculateDITMetricForInternalParentIncrementsMetricWithTwo(): void
     {
@@ -200,8 +177,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that {@link \PDepend\Metrics\Analyzer\InheritanceAnalyzer::analyze()}
      * calculates the expected DIT values.
-     *
-     * @return void
      */
     public function testCalculateDepthOfInheritanceForSeveralClasses(): void
     {
@@ -231,8 +206,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedMaxDepthOfInheritanceTreeMetric
-     *
-     * @return void
      */
     public function testCalculatesExpectedMaxDepthOfInheritanceTreeMetric(): void
     {
@@ -245,8 +218,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNoamMetricForClassWithoutParent
-     *
-     * @return void
      */
     public function testCalculatesExpectedNoamMetricForClassWithoutParent(): void
     {
@@ -255,8 +226,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNoamMetricForClassWithDirectParent
-     *
-     * @return void
      */
     public function testCalculatesExpectedNoamMetricForClassWithDirectParent(): void
     {
@@ -265,8 +234,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNoamMetricForClassWithIndirectParent
-     *
-     * @return void
      */
     public function testCalculatesExpectedNoamMetricForClassWithIndirectParent(): void
     {
@@ -275,8 +242,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNoomMetricForClassWithoutParent
-     *
-     * @return void
      */
     public function testCalculatesExpectedNoomMetricForClassWithoutParent(): void
     {
@@ -285,8 +250,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNoomMetricForClassWithParent
-     *
-     * @return void
      */
     public function testCalculatesExpectedNoomMetricForClassWithParent(): void
     {
@@ -295,8 +258,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNoomMetricForClassWithParentPrivateMethods
-     *
-     * @return void
      */
     public function testCalculatesExpectedNoomMetricForClassWithParentPrivateMethods(): void
     {
@@ -305,8 +266,6 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerIgnoresClassesThatAreNotUserDefined
-     *
-     * @return void
      */
     public function testAnalyzerIgnoresClassesThatAreNotUserDefined(): void
     {
@@ -339,7 +298,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
     }
 
     /**
-     * @return \PDepend\Metrics\Analyzer\InheritanceAnalyzer
+     * @return InheritanceAnalyzer
      */
     private function createAnalyzer()
     {

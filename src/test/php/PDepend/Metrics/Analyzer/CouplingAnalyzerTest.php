@@ -43,23 +43,21 @@
 namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
-use PDepend\Metrics\Analyzer\CouplingAnalyzer;
 
 /**
  * Test case for the coupling analyzer.
  *
+ * @covers \PDepend\Metrics\Analyzer\CouplingAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Metrics\Analyzer\CouplingAnalyzer
  * @group unittest
  */
 class CouplingAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * testGetNodeMetricsReturnsAnEmptyArrayByDefault
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsAnEmptyArrayByDefault(): void
     {
@@ -75,8 +73,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics(): void
     {
@@ -95,8 +91,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaWithoutDependencies
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaWithoutDependencies(): void
     {
@@ -105,8 +99,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaWithObjectInstantiation
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaWithObjectInstantiation(): void
     {
@@ -115,8 +107,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaWithStaticReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaWithStaticReference(): void
     {
@@ -125,8 +115,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaWithReturnReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaWithReturnReference(): void
     {
@@ -135,8 +123,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaWithExceptionReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaWithExceptionReference(): void
     {
@@ -145,8 +131,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaWithPropertyReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaWithPropertyReference(): void
     {
@@ -155,8 +139,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaWithoutDuplicateCount
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaWithoutDuplicateCount(): void
     {
@@ -165,8 +147,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaForParameterTypes
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaForParameterTypes(): void
     {
@@ -175,8 +155,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaForParentTypeReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaForParentTypeReference(): void
     {
@@ -185,8 +163,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaForChildTypeReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaForChildTypeReference(): void
     {
@@ -195,8 +171,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaForFunctionReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionReference(): void
     {
@@ -205,8 +179,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaForFunctionException
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionException(): void
     {
@@ -215,8 +187,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaForFunctionReturnType
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionReturnType(): void
     {
@@ -225,8 +195,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaForFunctionParameter
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionParameter(): void
     {
@@ -235,8 +203,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaForFunctions
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctions(): void
     {
@@ -245,8 +211,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCaForFunctionCountsTypeOnce
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionCountsTypeOnce(): void
     {
@@ -255,8 +219,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboWithoutDependencies
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboWithoutDependencies(): void
     {
@@ -265,8 +227,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboWithObjectInstantiation
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboWithObjectInstantiation(): void
     {
@@ -275,8 +235,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboWithStaticReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboWithStaticReference(): void
     {
@@ -285,8 +243,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboWithReturnReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboWithReturnReference(): void
     {
@@ -295,8 +251,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboWithExceptionReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboWithExceptionReference(): void
     {
@@ -305,8 +259,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboWithPropertyReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboWithPropertyReference(): void
     {
@@ -315,8 +267,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboWithoutDuplicateCount
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboWithoutDuplicateCount(): void
     {
@@ -325,8 +275,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboForParameterTypes
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboForParameterTypes(): void
     {
@@ -335,8 +283,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboForParentTypeReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboForParentTypeReference(): void
     {
@@ -345,8 +291,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboForChildTypeReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboForChildTypeReference(): void
     {
@@ -355,8 +299,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboForUseInSameNamespace
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboForUseInSameNamespace(): void
     {
@@ -365,8 +307,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCboForUseInPartialSameNamespace
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCboForUseInPartialSameNamespace(): void
     {
@@ -375,8 +315,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeWithoutDependencies
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeWithoutDependencies(): void
     {
@@ -385,8 +323,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeWithObjectInstantiation
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeWithObjectInstantiation(): void
     {
@@ -395,8 +331,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeWithStaticReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeWithStaticReference(): void
     {
@@ -405,8 +339,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeWithReturnReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeWithReturnReference(): void
     {
@@ -415,8 +347,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeWithExceptionReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeWithExceptionReference(): void
     {
@@ -425,8 +355,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeWithPropertyReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeWithPropertyReference(): void
     {
@@ -435,8 +363,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeWithoutDuplicateCount
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeWithoutDuplicateCount(): void
     {
@@ -445,8 +371,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeForParameterTypes
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeForParameterTypes(): void
     {
@@ -455,8 +379,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeForParentTypeReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeForParentTypeReference(): void
     {
@@ -465,8 +387,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeForChildTypeReference
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeForChildTypeReference(): void
     {
@@ -475,8 +395,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeForUseInSameNamespace
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeForUseInSameNamespace(): void
     {
@@ -485,8 +403,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsExpectedCeForUseInPartialSameNamespace
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsExpectedCeForUseInPartialSameNamespace(): void
     {
@@ -513,8 +429,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerGetProjectMetricsReturnsArrayWithExpectedKeys
-     *
-     * @return void
      */
     public function testAnalyzerGetProjectMetricsReturnsArrayWithExpectedKeys(): void
     {
@@ -527,8 +441,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates correct fanout and call metrics for
      * functions.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectFunctionCoupling(): void
     {
@@ -541,8 +453,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates correct fanout and call metrics for
      * methods.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectMethodCoupling(): void
     {
@@ -555,8 +465,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates correct fanout and call metrics for
      * properties.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectPropertyCoupling(): void
     {
@@ -569,8 +477,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates correct fanout and call metrics for
      * properties.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectClassCoupling(): void
     {
@@ -583,8 +489,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates correct fanout and call metrics for
      * complete source.
-     *
-     * @return void
      */
     public function testAnalyzerCalculatesCorrectCoupling(): void
     {
@@ -598,6 +502,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testGetNodeMetricsForTrait
      *
      * @return array
+     *
      * @since 1.0.6
      */
     public function testGetNodeMetricsForTrait()
@@ -613,8 +518,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated coupling metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics): void
@@ -627,8 +532,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated coupling metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateCEMetricForTrait(array $metrics): void
@@ -641,8 +546,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated coupling metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateCBOMetricForTrait(array $metrics): void
@@ -655,8 +560,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated coupling metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateCAMetricForTrait(array $metrics): void
@@ -668,6 +573,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testGetProjectMetricsForTrait
      *
      * @return array
+     *
      * @since 1.0.6
      */
     public function testGetProjectMetricsForTrait()
@@ -686,8 +592,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated coupling metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetProjectMetricsForTrait
      */
     public function testGetProjectMetricsForTraitReturnsExpectedMetricSet(array $metrics): void
@@ -700,8 +606,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated coupling metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetProjectMetricsForTrait
      */
     public function testCalculateCallsMetricForTrait(array $metrics): void
@@ -714,8 +620,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated coupling metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetProjectMetricsForTrait
      */
     public function testCalculateFanoutMetricForTrait(array $metrics): void
@@ -728,6 +634,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * returns all measured metrics.
      *
      * @return array<string, mixed>
+     *
      * @since 1.0.6
      */
     private function calculateTraitMetrics()
@@ -743,9 +650,9 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the expected call count.
      *
-     * @param string  $testCase File with test source.
-     * @param integer $calls    Number of expected calls.
-     * @param integer $fanout   Expected fanout value.
+     * @param string $testCase File with test source.
+     * @param int    $calls    Number of expected calls.
+     * @param int    $fanout   Expected fanout value.
      *
      * @dataProvider dataProviderAnalyzerCalculatesExpectedCallCount
      */
@@ -767,6 +674,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * @param string $testCase Optional name of the calling test case.
      *
      * @return array<string, mixed>
+     *
      * @since 0.10.2
      */
     private function calculateProjectMetrics($testCase = null)

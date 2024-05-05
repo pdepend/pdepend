@@ -68,7 +68,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      */
     private $input = [
         'code'       =>  null,
-        'analyzers'  =>  []
+        'analyzers'  =>  [],
     ];
 
     /**
@@ -82,8 +82,6 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      * Sets the output log file.
      *
      * @param string $logFile The output log file.
-     *
-     * @return void
      */
     public function setLogFile($logFile): void
     {
@@ -115,9 +113,6 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
 
     /**
      * Sets the context code nodes.
-     *
-     * @param \PDepend\Source\AST\ASTArtifactList $artifacts
-     * @return void
      */
     public function setArtifacts(ASTArtifactList $artifacts): void
     {
@@ -129,7 +124,8 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
-     * @return boolean
+     *
+     * @return bool
      */
     public function log(\PDepend\Metrics\Analyzer $analyzer)
     {
@@ -139,8 +135,6 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
 
     /**
      * Closes the logger process and writes the output file.
-     *
-     * @return void
      */
     public function close(): void
     {

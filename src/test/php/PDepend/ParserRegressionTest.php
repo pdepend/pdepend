@@ -42,6 +42,8 @@
 
 namespace PDepend;
 
+use DirectoryIterator;
+
 /**
  * Test case that parses several files where we have found errors in PDepend's
  * parser implementation.
@@ -58,7 +60,6 @@ class ParserRegressionTest extends AbstractTestCase
      *
      * @param string $pathName Name of the file to parse.
      *
-     * @return void
      * @dataProvider dataProviderSourceFiles
      */
     public function testParserHandlesSourceFileWithoutException($pathName): void
@@ -74,7 +75,7 @@ class ParserRegressionTest extends AbstractTestCase
     public static function dataProviderSourceFiles()
     {
         $files = [];
-        foreach (new \DirectoryIterator(self::createCodeResourceURI('parser_regression')) as $file) {
+        foreach (new DirectoryIterator(self::createCodeResourceURI('parser_regression')) as $file) {
             if ($file->isFile()) {
                 $files[] = [realpath($file->getPathname())];
             }

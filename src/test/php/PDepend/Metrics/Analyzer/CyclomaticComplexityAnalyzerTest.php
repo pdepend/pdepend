@@ -48,25 +48,25 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 /**
  * Test case for the cyclomatic analyzer.
  *
+ * @covers \PDepend\Metrics\AbstractCachingAnalyzer
+ * @covers \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Metrics\AbstractCachingAnalyzer
- * @covers \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
  * @group unittest
  */
 class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
+     *
      * @since 1.0.0
      */
     private $cache;
 
     /**
      * Initializes a in memory cache.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -77,8 +77,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetCCNReturnsZeroForUnknownNode
-     *
-     * @return void
      */
     public function testGetCCNReturnsZeroForUnknownNode(): void
     {
@@ -90,8 +88,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetCCN2ReturnsZeroForUnknownNode
-     *
-     * @return void
      */
     public function testGetCCN2ReturnsZeroForUnknownNode(): void
     {
@@ -103,8 +99,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct function cc numbers.
-     *
-     * @return void
      */
     public function testCalculateFunctionCCNAndCNN2(): void
     {
@@ -116,7 +110,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $actual   = [];
         $expected = [
             'pdepend1' => ['ccn' => 5, 'ccn2' => 6],
-            'pdepend2' => ['ccn' => 7, 'ccn2' => 10]
+            'pdepend2' => ['ccn' => 7, 'ccn2' => 10],
         ];
 
         foreach ($namespaces[0]->getFunctions() as $function) {
@@ -131,8 +125,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateFunctionCCNAndCNN2ProjectMetrics
-     *
-     * @return void
      */
     public function testCalculateFunctionCCNAndCNN2ProjectMetrics(): void
     {
@@ -147,8 +139,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct method cc numbers.
-     *
-     * @return void
      */
     public function testCalculateMethodCCNAndCNN2(): void
     {
@@ -163,7 +153,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $actual   = [];
         $expected = [
             'pdepend1' => ['ccn' => 5, 'ccn2' => 6],
-            'pdepend2' => ['ccn' => 7, 'ccn2' => 10]
+            'pdepend2' => ['ccn' => 7, 'ccn2' => 10],
         ];
 
         foreach ($methods as $method) {
@@ -179,8 +169,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer also detects a conditional expression nested in a
      * compound expression.
-     *
-     * @return void
      */
     public function testCalculateCCNWithConditionalExprInCompoundExpr(): void
     {
@@ -195,8 +183,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateExpectedCCNForDoWhileStatement
-     *
-     * @return void
      */
     public function testCalculateExpectedCCNForDoWhileStatement(): void
     {
@@ -211,8 +197,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateExpectedCCN2ForDoWhileStatement
-     *
-     * @return void
      */
     public function testCalculateExpectedCCN2ForDoWhileStatement(): void
     {
@@ -227,8 +211,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer ignores the default label in a switch statement.
-     *
-     * @return void
      */
     public function testCalculateCCNIgnoresDefaultLabelInSwitchStatement(): void
     {
@@ -243,8 +225,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer counts all case labels in a switch statement.
-     *
-     * @return void
      */
     public function testCalculateCCNCountsAllCaseLabelsInSwitchStatement(): void
     {
@@ -259,8 +239,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer detects expressions in a for loop.
-     *
-     * @return void
      */
     public function testCalculateCCNDetectsExpressionsInAForLoop(): void
     {
@@ -275,8 +253,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer detects expressions in a while loop.
-     *
-     * @return void
      */
     public function testCalculateCCNDetectsExpressionsInAWhileLoop(): void
     {
@@ -291,8 +267,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer aggregates the correct project metrics.
-     *
-     * @return void
      */
     public function testCalculateProjectMetrics(): void
     {
@@ -307,8 +281,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerAlsoCalculatesCCNAndCCN2OfClosureInMethod
-     *
-     * @return void
      */
     public function testAnalyzerAlsoCalculatesCCNAndCCN2OfClosureInMethod(): void
     {
@@ -324,7 +296,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedFunctionMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedFunctionMetricsFromCache(): void
@@ -348,7 +319,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedMethodMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedMethodMetricsFromCache(): void
@@ -373,7 +343,8 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Returns a pre configured ccn analyzer.
      *
-     * @return \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
+     * @return CyclomaticComplexityAnalyzer
+     *
      * @since 1.0.0
      */
     private function createAnalyzer()

@@ -57,8 +57,6 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
 {
     /**
      * Tests that the parser handles a comma separated property declaration.
-     *
-     * @return void
      */
     public function testParserHandlesSimpleCommaSeparatedPropertyDeclaration(): void
     {
@@ -73,8 +71,6 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
 
     /**
      * Tests that the parser handles a comma separated property declaration.
-     *
-     * @return void
      */
     public function testParserSetsSameVisibilityForAllPropertyDeclarations(): void
     {
@@ -88,7 +84,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
         foreach ($properties as $property) {
             $actual[] = [
                 'private'  =>  $property->isPrivate(),
-                'public'   =>  $property->isPublic()
+                'public'   =>  $property->isPublic(),
             ];
         }
 
@@ -105,8 +101,6 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
 
     /**
      * Tests that the parser handles a comma separated property declaration.
-     *
-     * @return void
      */
     public function testParserSetsExpectedStaticModifierForAllPropertyDeclarations(): void
     {

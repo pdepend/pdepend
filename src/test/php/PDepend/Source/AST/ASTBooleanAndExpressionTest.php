@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTBooleanAndExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTBooleanAndExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTBooleanAndExpression
  * @group unittest
  */
 class ASTBooleanAndExpressionTest extends ASTNodeTestCase
 {
     /**
      * testBooleanAndExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testBooleanAndExpressionHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTBooleanAndExpressionTest extends ASTNodeTestCase
 
     /**
      * testBooleanAndExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testBooleanAndExpressionHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTBooleanAndExpressionTest extends ASTNodeTestCase
 
     /**
      * testBooleanAndExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testBooleanAndExpressionHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTBooleanAndExpressionTest extends ASTNodeTestCase
 
     /**
      * testBooleanAndExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testBooleanAndExpressionHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTBooleanAndExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTBooleanAndExpression
+     * @return ASTBooleanAndExpression
      */
     private function getFirstBooleanAndExpressionInFunction($testCase)
     {

@@ -43,10 +43,6 @@
 namespace PDepend;
 
 use PDepend\Source\AST\ASTArtifactList;
-use PDepend\Source\AST\ASTForeachStatement;
-use PDepend\Source\AST\ASTLiteral;
-use PDepend\Source\AST\ASTString;
-use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\State;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
@@ -58,18 +54,17 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 /**
  * Test case implementation for the PDepend code parser.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
 class ParserTest extends AbstractTestCase
 {
     /**
      * testParserHandlesMaxNestingLevel
-     *
-     * @return void
      */
     public function testParserHandlesMaxNestingLevel(): void
     {
@@ -88,8 +83,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests the main parse method.
-     *
-     * @return void
      */
     public function testParseMixedCode(): void
     {
@@ -97,7 +90,7 @@ class ParserTest extends AbstractTestCase
             'pkg1'                               =>  true,
             'pkg2'                               =>  true,
             'pkg3'                               =>  true,
-            \PDepend\Source\Builder\Builder::DEFAULT_NAMESPACE  =>  true
+            Source\Builder\Builder::DEFAULT_NAMESPACE  =>  true,
         ];
 
         $tmp = $this->parseCodeResourceForTest();
@@ -134,8 +127,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser throws an exception if it reaches the end of the
      * stream but not all class curly braces are closed.
-     *
-     * @return void
      */
     public function testParserWithUnclosedClassFail(): void
     {
@@ -153,8 +144,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser throws an exception if it reaches the end of the
      * stream but not all function curly braces are closed.
-     *
-     * @return void
      */
     public function testParserWithUnclosedFunctionFail(): void
     {
@@ -171,8 +160,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser throws an exception if it finds an invalid
      * function signature.
-     *
-     * @return void
      */
     public function testParserWithInvalidFunction1Fail(): void
     {
@@ -189,8 +176,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser throws an exception if it finds an invalid
      * function signature.
-     *
-     * @return void
      */
     public function testParserWithInvalidFunction2Fail(): void
     {
@@ -206,8 +191,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct line number for a function.
-     *
-     * @return void
      */
     public function testParserSetsCorrectFunctionLineNumber(): void
     {
@@ -219,8 +202,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct tokens for a function.
-     *
-     * @return void
      */
     public function testParserSetsCorrectFunctionTokens(): void
     {
@@ -261,8 +242,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets a detected file comment.
-     *
-     * @return void
      */
     public function testParserSetsCorrectFileComment(): void
     {
@@ -291,8 +270,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser doesn't reuse a type comment as file comment.
-     *
-     * @return void
      */
     public function testParserDoesntReuseTypeComment(): void
     {
@@ -311,8 +288,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser doesn't reuse a function comment as file comment.
-     *
-     * @return void
      */
     public function testParserDoesntReuseFunctionComment(): void
     {
@@ -331,8 +306,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct start line number for a class.
-     *
-     * @return void
      */
     public function testParserSetsCorrectClassStartLineNumber(): void
     {
@@ -341,8 +314,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct end line number for a class.
-     *
-     * @return void
      */
     public function testParserSetsCorrectClassEndLineNumber(): void
     {
@@ -351,8 +322,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct start line number for class methods.
-     *
-     * @return void
      */
     public function testParserSetsCorrectClassMethodStartLineNumber(): void
     {
@@ -365,8 +334,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct end line number for class methods.
-     *
-     * @return void
      */
     public function testParserSetsCorrectClassMethodEndLineNumber(): void
     {
@@ -379,8 +346,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct start line number for an interface.
-     *
-     * @return void
      */
     public function testParserSetsCorrectInterfaceStartLineNumber(): void
     {
@@ -389,8 +354,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct end line number for an interface.
-     *
-     * @return void
      */
     public function testParserSetsCorrectInterfaceEndLineNumber(): void
     {
@@ -400,8 +363,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser sets the correct start line number for interface
      * methods.
-     *
-     * @return void
      */
     public function testParserSetsCorrectInterfaceMethodStartLineNumbers(): void
     {
@@ -411,8 +372,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct end line number for interface methods.
-     *
-     * @return void
      */
     public function testParserSetsCorrectInterfaceMethodEndLineNumbers(): void
     {
@@ -422,8 +381,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser marks all interface methods as abstract.
-     *
-     * @return void
      */
     public function testParserSetsAllInterfaceMethodsAbstract(): void
     {
@@ -433,8 +390,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserHandlesClassWithMultipleImplementedInterfaces
-     *
-     * @return void
      */
     public function testParserHandlesClassWithMultipleImplementedInterfaces(): void
     {
@@ -448,8 +403,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserHandlesInterfaceWithMultipleParentInterfaces
-     *
-     * @return void
      */
     public function testParserHandlesInterfaceWithMultipleParentInterfaces(): void
     {
@@ -463,8 +416,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct line number for methods.
-     *
-     * @return void
      */
     public function testParserSetsCorrectMethodLineNumber(): void
     {
@@ -481,8 +432,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser doesn't mark a non abstract method as abstract.
-     *
-     * @return void
      */
     public function testParserDoesNotMarkNonAbstractMethodAsAbstract(): void
     {
@@ -495,8 +444,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser marks an abstract method as abstract.
-     *
-     * @return void
      */
     public function testParserMarksAbstractMethodAsAbstract(): void
     {
@@ -510,8 +457,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser handles PHP 5.3 object namespace + class chaining.
-     *
-     * @return void
      */
     public function testParserParseNewInstancePHP53(): void
     {
@@ -528,8 +473,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that doc comment blocks are added to a function.
-     *
-     * @return void
      */
     public function testParserSetsCorrectFunctionDocComment(): void
     {
@@ -556,7 +499,7 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param \PDepend\Source\AST\ASTFunction[] $functions
-     * @return void
+     *
      * @depends testParserSetsCorrectFunctionReturnType
      */
     public function testParserSetsFunctionReturnTypeToNull($functions): void
@@ -564,18 +507,18 @@ class ParserTest extends AbstractTestCase
         $this->assertSame(
             [
                 'function' => 'func1',
-                'returnClass' => null
+                'returnClass' => null,
             ],
             [
                 'function' => $functions[0]->getName(),
-                'returnClass' => $functions[0]->getReturnClass()
+                'returnClass' => $functions[0]->getReturnClass(),
             ]
         );
     }
 
     /**
      * @param \PDepend\Source\AST\ASTFunction[] $functions
-     * @return void
+     *
      * @depends testParserSetsCorrectFunctionReturnType
      */
     public function testParserSetsExpectedFunctionReturnTypeOfFunctionTwo($functions): void
@@ -583,18 +526,18 @@ class ParserTest extends AbstractTestCase
         $this->assertSame(
             [
                 'function' => 'func2',
-                'returnClass' => 'SplObjectStore'
+                'returnClass' => 'SplObjectStore',
             ],
             [
                 'function' => $functions[1]->getName(),
-                'returnClass' => $functions[1]->getReturnClass()->getName()
+                'returnClass' => $functions[1]->getReturnClass()->getName(),
             ]
         );
     }
 
     /**
      * @param \PDepend\Source\AST\ASTFunction[] $functions
-     * @return void
+     *
      * @depends testParserSetsCorrectFunctionReturnType
      */
     public function testParserSetsExpectedFunctionReturnTypeOfFunctionThree($functions): void
@@ -602,19 +545,17 @@ class ParserTest extends AbstractTestCase
         $this->assertSame(
             [
                 'function' => 'func3',
-                'returnClass' => 'SplObjectStore'
+                'returnClass' => 'SplObjectStore',
             ],
             [
                 'function' => $functions[2]->getName(),
-                'returnClass' => $functions[2]->getReturnClass()->getName()
+                'returnClass' => $functions[2]->getReturnClass()->getName(),
             ]
         );
     }
 
     /**
      * Tests that the parser sets the correct method exception types.
-     *
-     * @return void
      */
     public function testParserSetsCorrectFunctionExceptionTypes(): void
     {
@@ -641,8 +582,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser doesn't handle annotations if this is set to true.
-     *
-     * @return void
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForFunctions(): void
     {
@@ -661,8 +600,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that doc comment blocks are added to a method.
-     *
-     * @return void
      */
     public function testParserSetsCorrectMethodDocComment(): void
     {
@@ -677,8 +614,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct method return type.
-     *
-     * @return void
      */
     public function testParserSetsCorrectMethodReturnType(): void
     {
@@ -702,8 +637,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct method exception types.
-     *
-     * @return void
      */
     public function testParserSetsCorrectMethodExceptionTypes(): void
     {
@@ -728,7 +661,7 @@ class ParserTest extends AbstractTestCase
                 'method1',
                 'OutOfRangeException',
                 'OutOfBoundsException',
-                'method2'
+                'method2',
             ],
             $actual
         );
@@ -736,8 +669,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser doesn't handle annotations if this is set to true.
-     *
-     * @return void
      */
     public function testParserHandlesIgnoreAnnotationsCorrectForMethods(): void
     {
@@ -758,8 +689,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct doc comment blocks for properties.
-     *
-     * @return void
      */
     public function testParserSetsCorrectPropertyDocComment(): void
     {
@@ -774,8 +703,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets the correct visibility for properties.
-     *
-     * @return void
      */
     public function testParserSetsCorrectPropertyVisibility(): void
     {
@@ -807,8 +734,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets property types for non scalar properties.
-     *
-     * @return void
      */
     public function testParserSetsCorrectPropertyTypes(): void
     {
@@ -846,8 +771,6 @@ class ParserTest extends AbstractTestCase
      * // Results in
      * Runtime
      * </code>
-     *
-     * @return void
      */
     public function testParserSetsExpectedPropertyTypeForChainedComment(): void
     {
@@ -871,8 +794,6 @@ class ParserTest extends AbstractTestCase
      * // Results in
      * Session
      * </code>
-     *
-     * @return void
      */
     public function testParserSetsExpectedPropertyTypeForChainedCommentInArray(): void
     {
@@ -896,8 +817,6 @@ class ParserTest extends AbstractTestCase
      * // Results in
      * Runtime
      * </code>
-     *
-     * @return void
      */
     public function testParserSetsExpectedReturnTypeForChainedComment(): void
     {
@@ -921,8 +840,6 @@ class ParserTest extends AbstractTestCase
      * // Results in
      * Session
      * </code>
-     *
-     * @return void
      */
     public function testParserSetsExpectedReturnTypeForChainedCommentInArray(): void
     {
@@ -939,8 +856,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser sets property types for non scalar properties.
-     *
-     * @return void
      */
     public function testHandlesIgnoreAnnotationsCorrectForProperties(): void
     {
@@ -961,8 +876,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that parser sets the correct doc comment blocks for classes and
      * interfaces.
-     *
-     * @return void
      */
     public function testParserSetsCorrectClassOrInterfaceDocComment(): void
     {
@@ -984,8 +897,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser supports sub packages.
-     *
-     * @return void
      */
     public function testParserSubpackageSupport(): void
     {
@@ -1009,7 +920,7 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
-     * @return void
+     *
      * @depends testParserSetsFileLevelFunctionPackage
      */
     public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace($namespaces): void
@@ -1020,7 +931,7 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
-     * @return void
+     *
      * @depends testParserSetsFileLevelFunctionPackage
      */
     public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace($namespaces): void
@@ -1031,7 +942,7 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
-     * @return void
+     *
      * @depends testParserSetsFileLevelFunctionPackage
      */
     public function testParserSetsFileExpectedPackageForFirstFunctionInFirstNamespace($namespaces): void
@@ -1043,7 +954,7 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
-     * @return void
+     *
      * @depends testParserSetsFileLevelFunctionPackage
      */
     public function testParserSetsFileExpectedPackageForSecondFunctionInFirstNamespace($namespaces): void
@@ -1055,7 +966,7 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
-     * @return void
+     *
      * @depends testParserSetsFileLevelFunctionPackage
      */
     public function testParserSetsFileExpectedPackageForFirstFunctionInSecondNamespace($namespaces): void
@@ -1067,8 +978,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserSetsAbstractPropertyOnClass
-     *
-     * @return void
      */
     public function testParserSetsAbstractPropertyOnClass(): void
     {
@@ -1082,8 +991,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserSetsAbstractModifierOnClass
-     *
-     * @return void
      */
     public function testParserSetsAbstractModifierOnClass(): void
     {
@@ -1100,8 +1007,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserSetsFinalPropertyOnClass
-     *
-     * @return void
      */
     public function testParserSetsFinalPropertyOnClass(): void
     {
@@ -1115,8 +1020,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserSetsFinalModifierOnClass
-     *
-     * @return void
      */
     public function testParserSetsFinalModifierOnClass(): void
     {
@@ -1131,8 +1034,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser handles nested array structures as parameter
      * default value correct.
-     *
-     * @return void
      */
     public function testParserHandlesNestedArraysAsParameterDefaultValue(): void
     {
@@ -1142,8 +1043,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserStripsCommentsInParseExpressionUntilCorrect
-     *
-     * @return void
      */
     public function testParserStripsCommentsInParseExpressionUntilCorrect(): void
     {
@@ -1161,8 +1060,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser throws an exception for an unclosed array
      * declaration within the default value of a parameter.
-     *
-     * @return void
      */
     public function testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue(): void
     {
@@ -1179,8 +1076,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser throws an exception when it detects an invalid
      * token within the parameter declaration of a function or method.
-     *
-     * @return void
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue(): void
     {
@@ -1197,8 +1092,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser throws an exception when it detects an invalid
      * token in a class body.
-     *
-     * @return void
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody(): void
     {
@@ -1215,8 +1108,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser throws an exception when it detects an invalid
      * token in a method or property declaration.
-     *
-     * @return void
      */
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration(): void
     {
@@ -1233,8 +1124,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser handles the <b>parent</b> keyword within the default
      * value of a function.
-     *
-     * @return void
      */
     public function testParserHandlesParentKeywordInFunctionParameterDefaultValue(): void
     {
@@ -1248,8 +1137,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser handles the <b>parent</b> keyword within the default
      * value of a method.
-     *
-     * @return void
      */
     public function testParserHandlesParentKeywordInMethodParameterDefaultValue(): void
     {
@@ -1259,8 +1146,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Tests that the parser handles the self keyword as parameter type hint.
-     *
-     * @return void
      */
     public function testParserHandlesSelfKeywordAsParameterTypeHint(): void
     {
@@ -1270,8 +1155,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals
-     *
-     * @return void
      */
     public function testParserSetsBestMatchForParameterTypeHintEvenWhenNameEquals(): void
     {
@@ -1287,8 +1170,6 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser translates the self keyword into the same instance,
      * even when a similar class exists.
-     *
-     * @return void
      */
     public function testParserSetsTheReallySameParameterHintInstanceForKeywordSelf(): void
     {
@@ -1301,8 +1182,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserStripsLeadingSlashFromNamespacedClassName
-     *
-     * @return void
      */
     public function testParserStripsLeadingSlashFromNamespacedClassName(): void
     {
@@ -1312,8 +1191,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserStripsLeadingSlashFromNamespacedClassName
-     *
-     * @return void
      */
     public function testParserStripsLeadingSlashFromNamespaceAliasedClassName(): void
     {
@@ -1326,8 +1203,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserStripsLeadingSlashFromInheritNamespacedClassName
-     *
-     * @return void
      */
     public function testParserStripsLeadingSlashFromInheritNamespacedClassName(): void
     {
@@ -1340,20 +1215,16 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists
-     *
-     * @return void
      */
     public function testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists(): void
     {
-        $this->expectException(\PDepend\Source\Parser\MissingValueException::class);
+        $this->expectException(Source\Parser\MissingValueException::class);
 
         $this->parseCodeResourceForTest();
     }
 
     /**
      * testParserHandlesDoubleQuoteStringAsConstantDefaultValue
-     *
-     * @return void
      */
     public function testParserHandlesDoubleQuoteStringAsConstantDefaultValue(): void
     {
@@ -1362,8 +1233,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserHandlesDoubleQuoteStringWithEscapedVariable
-     *
-     * @return void
      */
     public function testParserHandlesDoubleQuoteStringWithEscapedVariable(): void
     {
@@ -1380,8 +1249,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserHandlesDoubleQuoteStringWithEscapedDoubleQuote
-     *
-     * @return void
      */
     public function testParserHandlesDoubleQuoteStringWithEscapedDoubleQuote(): void
     {
@@ -1398,8 +1265,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserNotHandlesDoubleQuoteStringWithVariableAndParenthesisAsFunctionCall
-     *
-     * @return void
      */
     public function testParserNotHandlesDoubleQuoteStringWithVariableAndParenthesisAsFunctionCall(): void
     {
@@ -1416,8 +1281,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserNotHandlesDoubleQuoteStringWithVariableAndEqualAsAssignment
-     *
-     * @return void
      */
     public function testParserNotHandlesDoubleQuoteStringWithVariableAndEqualAsAssignment(): void
     {
@@ -1434,8 +1297,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserHandlesStringWithQuestionMarkNotAsTernaryOperator
-     *
-     * @return void
      */
     public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator(): void
     {
@@ -1452,8 +1313,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserStopsProcessingWhenCacheContainsValidResult
-     *
-     * @return void
      */
     public function testParserStopsProcessingWhenCacheContainsValidResult(): void
     {
@@ -1480,8 +1339,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParseClosureAsFunctionArgument
-     *
-     * @return void
      */
     public function testParseClosureAsFunctionArgument(): void
     {
@@ -1490,8 +1347,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParseNowdocInMethodBody
-     *
-     * @return void
      */
     public function testParseNowdocInMethodBody(): void
     {
@@ -1500,8 +1355,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParseDoWhileStatement
-     *
-     * @return void
      */
     public function testParseDoWhileStatement(): void
     {
@@ -1510,8 +1363,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserHandlesCompoundExpressionInArrayBrackets
-     *
-     * @return void
      */
     public function testParserHandlesCompoundExpressionInArrayBrackets(): void
     {
@@ -1520,8 +1371,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserHandlesEmptyNonePhpCodeInMethodBody
-     *
-     * @return void
      */
     public function testParserHandlesEmptyNonePhpCodeInMethodBody(): void
     {
@@ -1530,8 +1379,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserHandlesPhpCloseTagInMethodBody
-     *
-     * @return void
      */
     public function testParserHandlesPhpCloseTagInMethodBody(): void
     {
@@ -1540,8 +1387,6 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParserHandlesMultiplePhpCloseTagsInMethodBody
-     *
-     * @return void
      */
     public function testParserHandlesMultiplePhpCloseTagsInMethodBody(): void
     {
@@ -1550,20 +1395,16 @@ class ParserTest extends AbstractTestCase
 
     /**
      * testParseExpressionUntilThrowsExceptionForUnclosedStatement
-     *
-     * @return void
      */
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(Source\Parser\UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
 
     /**
      * Tests to ensure function docblock comments are parsed correctly
-     *
-     * @return void
      */
     public function testFunctionDocBlockIsCorrectlyParsed(): void
     {
@@ -1581,7 +1422,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Returns an interface instance from the mixed code test file.
      *
-     * @return \PDepend\Source\AST\ASTInterface
+     * @return Source\AST\ASTInterface
      */
     protected function getInterfaceForTest()
     {
@@ -1608,7 +1449,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Returns a class instance from the mixed code test file.
      *
-     * @return \PDepend\Source\AST\ASTClass
+     * @return Source\AST\ASTClass
      */
     protected function getClassForTest()
     {
@@ -1630,9 +1471,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Generic comment test method.
      *
-     * @param \PDepend\Source\AST\ASTArtifactList $nodes
-     * @param integer $indent
-     * @return void
+     * @param int $indent
      */
     protected function doTestParserSetsCorrectDocComment(ASTArtifactList $nodes, $indent = 1): void
     {

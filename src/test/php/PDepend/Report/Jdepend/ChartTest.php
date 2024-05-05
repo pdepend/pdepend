@@ -42,6 +42,8 @@
 
 namespace PDepend\Report\Jdepend;
 
+use DOMDocument;
+use DOMXPath;
 use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
@@ -51,10 +53,11 @@ use PDepend\Source\AST\ASTArtifactList;
 /**
  * Test case for the jdepend chart logger.
  *
+ * @covers \PDepend\Report\Jdepend\Chart
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Report\Jdepend\Chart
  * @group unittest
  */
 class ChartTest extends AbstractTestCase
@@ -68,8 +71,6 @@ class ChartTest extends AbstractTestCase
 
     /**
      * setUp()
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -83,8 +84,6 @@ class ChartTest extends AbstractTestCase
 
     /**
      * tearDown()
-     *
-     * @return void
      */
     protected function tearDown(): void
     {
@@ -97,8 +96,6 @@ class ChartTest extends AbstractTestCase
 
     /**
      * Tests that the logger returns the expected set of analyzers.
-     *
-     * @return void
      */
     public function testReturnsExceptedAnalyzers(): void
     {
@@ -109,8 +106,6 @@ class ChartTest extends AbstractTestCase
     /**
      * Tests that the logger throws an exception if the log target wasn't
      * configured.
-     *
-     * @return void
      */
     public function testThrowsExceptionForInvalidLogTarget(): void
     {
@@ -122,8 +117,6 @@ class ChartTest extends AbstractTestCase
 
     /**
      * testChartLogAcceptsValidAnalyzer
-     *
-     * @return void
      */
     public function testChartLogAcceptsValidAnalyzer(): void
     {
@@ -133,8 +126,6 @@ class ChartTest extends AbstractTestCase
 
     /**
      * testChartLogRejectsInvalidAnalyzer
-     *
-     * @return void
      */
     public function testChartLogRejectsInvalidAnalyzer(): void
     {
@@ -144,8 +135,6 @@ class ChartTest extends AbstractTestCase
 
     /**
      * Tests that the logger generates an image file.
-     *
-     * @return void
      */
     public function testGeneratesCorrectSVGImageFile(): void
     {
@@ -165,8 +154,6 @@ class ChartTest extends AbstractTestCase
 
     /**
      * testGeneratedSvgImageContainsExpectedPackages
-     *
-     * @return void
      */
     public function testGeneratedSvgImageContainsExpectedPackages(): void
     {
@@ -181,10 +168,10 @@ class ChartTest extends AbstractTestCase
         $logger->log($analyzer);
         $logger->close();
 
-        $svg = new \DOMDocument();
+        $svg = new DOMDocument();
         $svg->load($this->outputFile, LIBXML_NOWARNING);
 
-        $xpath = new \DOMXPath($svg);
+        $xpath = new DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
 
         $this->assertEquals(1, $xpath->query("//s:ellipse[@title='package0']")->length);
@@ -193,8 +180,6 @@ class ChartTest extends AbstractTestCase
 
     /**
      * testGeneratesSVGImageDoesNotContainNoneUserDefinedPackages
-     *
-     * @return void
      */
     public function testGeneratesSVGImageDoesNotContainNoneUserDefinedPackages(): void
     {
@@ -209,10 +194,10 @@ class ChartTest extends AbstractTestCase
         $logger->log($analyzer);
         $logger->close();
 
-        $svg = new \DOMDocument();
+        $svg = new DOMDocument();
         $svg->load($this->outputFile, LIBXML_NOWARNING);
 
-        $xpath = new \DOMXPath($svg);
+        $xpath = new DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
 
         $this->assertEquals(0, $xpath->query("//s:ellipse[@title='package1']")->length);
@@ -220,8 +205,6 @@ class ChartTest extends AbstractTestCase
 
     /**
      * testCalculateCorrectEllipseSize
-     *
-     * @return void
      */
     public function testCalculateCorrectEllipseSize(): void
     {
@@ -240,14 +223,14 @@ class ChartTest extends AbstractTestCase
                                 'i'   =>  0,
                                 'd'   =>  0,
                                 'cc'  =>  250,
-                                'ac'  =>  250
+                                'ac'  =>  250,
                             ],
                             $nodes[1]->getId()  =>  [
                                 'a'   =>  0,
                                 'i'   =>  0,
                                 'd'   =>  0,
                                 'cc'  =>  50,
-                                'ac'  =>  50
+                                'ac'  =>  50,
                             ],
                         ];
 
@@ -268,10 +251,10 @@ class ChartTest extends AbstractTestCase
 
         $logger->close();
 
-        $svg = new \DOMDocument();
+        $svg = new DOMDocument();
         $svg->load($this->outputFile, LIBXML_NOWARNING);
 
-        $xpath = new \DOMXPath($svg);
+        $xpath = new DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
 
         $ellipseA = $xpath->query("//s:ellipse[@title='package0']")->item(0);
@@ -289,8 +272,6 @@ class ChartTest extends AbstractTestCase
 
     /**
      * Tests that the logger generates an image file.
-     *
-     * @return void
      */
     public function testGeneratesImageFile(): void
     {
@@ -339,8 +320,9 @@ class ChartTest extends AbstractTestCase
     }
 
     /**
-     * @param boolean $userDefined
+     * @param bool   $userDefined
      * @param string $packageName
+     *
      * @return \PDepend\Source\AST\ASTNamespace
      */
     private function createPackage($userDefined, $packageName)

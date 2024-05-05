@@ -57,8 +57,6 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTestCase
 {
     /**
      * Tests that the parser sets the expected start and end line for a property.
-     *
-     * @return void
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithoutDefaultValue(): void
     {
@@ -75,8 +73,6 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser sets the expected start and end line for a property.
-     *
-     * @return void
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithCommentsInDeclaration(): void
     {
@@ -93,8 +89,6 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser sets the expected start and end line for a property.
-     *
-     * @return void
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithArrayDefaultValue(): void
     {
@@ -110,8 +104,6 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser sets the expected start and end line for a property.
-     *
-     * @return void
      */
     public function testParserSetsExpectedStartAndEndLineForPropertyWithScalarDefaultValueAndComments(): void
     {

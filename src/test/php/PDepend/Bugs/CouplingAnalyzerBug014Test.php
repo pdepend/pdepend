@@ -56,8 +56,6 @@ class CouplingAnalyzerBug014Test extends AbstractRegressionTestCase
 {
     /**
      * Test case for the execution chain bug 14.
-     *
-     * @return void
      */
     public function testAnalyzerExecutionChain(): void
     {
