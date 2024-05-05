@@ -45,7 +45,6 @@ namespace PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AbstractAnalyzer;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
-use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
@@ -67,28 +66,33 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         M_EFFERENT_COUPLING = 'ce';
 
     /**
-     * @var array<string, ASTNamespace>
+     * @var array<string, AbstractASTClassOrInterface>
      */
-    protected $nodeSet = [];
+    private $nodeSet = [];
+
+    /**
+     * @var array<string, array<string, array<int, string>>>
+     */
+    private $nodeRelations = null;
 
     /**
      * Hash with all calculated node metrics.
      *
-     * @var array<string, array<string, array<string, string>>>
+     * @var array<string, array<string, int>>
      */
     private $nodeMetrics = null;
 
     /**
      * Nodes in which the current analyzed class is used.
      *
-     * @var array<string, array<int, AbstractASTType>>
+     * @var array<string, array<int, AbstractASTClassOrInterface>>
      */
     private $efferentNodes = [];
 
     /**
      * Nodes that is used by the current analyzed class.
      *
-     * @var array<string, array<int, AbstractASTType>>
+     * @var array<string, array<int, AbstractASTClassOrInterface>>
      */
     private $afferentNodes = [];
 
@@ -100,6 +104,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         if ($this->nodeMetrics === null) {
             $this->fireStartAnalyzer();
 
+            $this->nodeRelations = [];
             $this->nodeMetrics = [];
 
             foreach ($namespaces as $namespace) {
@@ -115,7 +120,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns an array of all afferent nodes.
      *
-     * @return AbstractASTType[]
+     * @return array<int, AbstractASTClassOrInterface>
      */
     public function getAfferents(AbstractASTArtifact $node)
     {
@@ -129,7 +134,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns an array of all efferent nodes.
      *
-     * @return AbstractASTType[]
+     * @return array<int, AbstractASTClassOrInterface>
      */
     public function getEfferents(AbstractASTArtifact $node)
     {
@@ -153,22 +158,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         }
 
         $this->fireEndMethod($method);
-    }
-
-    /**
-     * Visits a namespace node.
-     */
-    public function visitNamespace(ASTNamespace $namespace): void
-    {
-        $this->fireStartNamespace($namespace);
-
-        $this->nodeSet[$namespace->getId()] = $namespace;
-
-        foreach ($namespace->getTypes() as $type) {
-            $type->accept($this);
-        }
-
-        $this->fireEndNamespace($namespace);
     }
 
     /**
@@ -224,9 +213,9 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         $this->initTypeMetric($typeA);
         $this->initTypeMetric($typeB);
 
-        if (!in_array($idB, $this->nodeMetrics[$idA][self::M_EFFERENT_COUPLING])) {
-            $this->nodeMetrics[$idA][self::M_EFFERENT_COUPLING][] = $idB;
-            $this->nodeMetrics[$idB][self::M_AFFERENT_COUPLING][] = $idA;
+        if (!in_array($idB, $this->nodeRelations[$idA][self::M_EFFERENT_COUPLING])) {
+            $this->nodeRelations[$idA][self::M_EFFERENT_COUPLING][] = $idB;
+            $this->nodeRelations[$idB][self::M_AFFERENT_COUPLING][] = $idA;
         }
     }
 
@@ -237,10 +226,10 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     {
         $id = $type->getId();
 
-        if (!isset($this->nodeMetrics[$id])) {
+        if (!isset($this->nodeRelations[$id])) {
             $this->nodeSet[$id] = $type;
 
-            $this->nodeMetrics[$id] = [
+            $this->nodeRelations[$id] = [
                 self::M_AFFERENT_COUPLING => [],
                 self::M_EFFERENT_COUPLING => [],
             ];
@@ -252,7 +241,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      */
     protected function postProcess(): void
     {
-        foreach ($this->nodeMetrics as $id => $metrics) {
+        foreach ($this->nodeRelations as $id => $metrics) {
             $this->afferentNodes[$id] = [];
             foreach ($metrics[self::M_AFFERENT_COUPLING] as $caId) {
                 $this->afferentNodes[$id][] = $this->nodeSet[$caId];

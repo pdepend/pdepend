@@ -65,7 +65,7 @@ class ReportGeneratorFactory
     /**
      * Set of created logger instances.
      *
-     * @var ReportGenerator[]
+     * @var array<string, ReportGenerator>
      */
     protected $instances = [];
     /**
@@ -107,7 +107,7 @@ class ReportGeneratorFactory
                 }
             }
 
-            if (!$logger) {
+            if (!$logger instanceof ReportGenerator) {
                 throw new RuntimeException(sprintf('Unknown generator with identifier "%s".', $identifier));
             }
 

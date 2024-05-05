@@ -110,7 +110,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * )
      * </code>
      *
-     * @return array<string, string>
+     * @return array<string, array<string, int>>
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {

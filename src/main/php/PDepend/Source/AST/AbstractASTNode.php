@@ -136,13 +136,13 @@ abstract class AbstractASTNode implements ASTNode
     }
 
     /**
-     * @template T of array<string, mixed>|string|null
+     * @template T of array<string, mixed>|numeric-string
      *
      * @param T $data
      *
      * @return T
      */
-    public function accept(ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = [])
     {
         $methodName = 'visit' . substr(get_class($this), 22);
         $callable = [$visitor, $methodName];
