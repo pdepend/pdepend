@@ -42,6 +42,7 @@
 
 namespace PDepend\Util;
 
+use ReflectionException;
 use ReflectionExtension;
 
 /**
@@ -242,6 +243,8 @@ final class Type
      *
      * @param string $typeName The type name.
      *
+     * @throws ReflectionException
+     *
      * @return bool
      */
     public static function isInternalType($typeName)
@@ -260,6 +263,8 @@ final class Type
      *
      * @param string $typeName The type name.
      *
+     * @throws ReflectionException
+     *
      * @return string|null
      */
     public static function getTypePackage($typeName)
@@ -276,6 +281,8 @@ final class Type
 
     /**
      * Returns an array with all package/extension names.
+     *
+     * @throws ReflectionException
      *
      * @return array<string>
      */
@@ -295,6 +302,8 @@ final class Type
      * php extension.
      *
      * @param string $packageName Name of a package.
+     *
+     * @throws ReflectionException
      *
      * @return bool
      */
@@ -386,6 +395,8 @@ final class Type
      * This method reads all available classes and interfaces and checks whether
      * this type belongs to an extension or is internal. All internal and extension
      * classes are collected in an internal data structure.
+     *
+     * @throws ReflectionException
      *
      * @return array<string, string>
      */
