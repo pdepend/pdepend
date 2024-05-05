@@ -482,7 +482,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Sets the parent node of this node.
      */
-    public function setParent(ASTNode $node): void
+    public function setParent(?ASTNode $node): void
     {
         $this->parent = $node;
     }

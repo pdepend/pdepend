@@ -52,12 +52,7 @@ use InvalidArgumentException;
  */
 class ASTMethod extends AbstractASTCallable
 {
-    /**
-     * The parent type object.
-     *
-     * @var AbstractASTClassOrInterface
-     */
-    protected $parent = null;
+    protected ?AbstractASTClassOrInterface $parentClass = null;
 
     /**
      * Defined modifiers for this property node.
@@ -194,7 +189,7 @@ class ASTMethod extends AbstractASTCallable
      */
     public function getParent()
     {
-        return $this->parent;
+        return $this->parentClass;
     }
 
     /**
@@ -202,9 +197,9 @@ class ASTMethod extends AbstractASTCallable
      *
      * @param AbstractASTClassOrInterface|null $parent
      */
-    public function setParent(?AbstractASTType $parent = null): void
+    public function setParent(?ASTNode $parent): void
     {
-        $this->parent = $parent;
+        $this->parentClass = $parent;
     }
 
     /**
@@ -218,10 +213,10 @@ class ASTMethod extends AbstractASTCallable
      */
     public function getCompilationUnit()
     {
-        if ($this->parent === null) {
+        if ($this->parentClass === null) {
             throw new ASTCompilationUnitNotFoundException($this);
         }
 
-        return $this->parent->getCompilationUnit();
+        return $this->parentClass->getCompilationUnit();
     }
 }

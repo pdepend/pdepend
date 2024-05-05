@@ -1949,7 +1949,7 @@ abstract class AbstractPHPParser
     /**
      * Parse individual slot of a list() expression.
      *
-     * @return ASTListExpression|ASTNode
+     * @return ASTNode
      */
     private function parseListSlotExpression()
     {
@@ -6098,7 +6098,7 @@ abstract class AbstractPHPParser
      * @param ASTCallable $callable the callable object (closure, function or method)
      *                              requiring the given parameters list.
      *
-     * @return ASTFormalParameter|ASTNode
+     * @return ASTNode
      */
     protected function parseFormalParameterOrPrefix(ASTCallable $callable)
     {
@@ -6585,7 +6585,7 @@ abstract class AbstractPHPParser
     /**
      * Parses an optional statement or returns <b>null</b>.
      *
-     * @return AbstractASTClassOrInterface|ASTCallable|ASTNode|null
+     * @return ASTNode|null
      *
      * @throws ParserException
      *
@@ -8234,7 +8234,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @return AbstractASTNode|null
+     * @return ASTNode|null
      */
     private function parseEnumCaseValue()
     {

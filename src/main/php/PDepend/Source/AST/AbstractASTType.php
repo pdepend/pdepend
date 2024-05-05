@@ -45,7 +45,6 @@
 namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
-use OutOfBoundsException;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
@@ -207,29 +206,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
     }
 
     /**
-     * Returns the child at the given index.
-     *
-     * @param int $index
-     *
-     * @return ASTNode
-     *
-     * @throws OutOfBoundsException
-     */
-    public function getChild($index)
-    {
-        if (isset($this->nodes[$index])) {
-            return $this->nodes[$index];
-        }
-        throw new OutOfBoundsException(
-            sprintf(
-                'No node found at index %d in node of type: %s',
-                $index,
-                get_class($this),
-            ),
-        );
-    }
-
-    /**
      * Returns all child nodes of this class.
      *
      * @return ASTNode[]
@@ -237,72 +213,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
     public function getChildren()
     {
         return $this->nodes;
-    }
-
-    /**
-     * This method will search recursive for the first child node that is an
-     * instance of the given <b>$targetType</b>. The returned value will be
-     * <b>null</b> if no child exists for that.
-     *
-     * @template T of ASTNode
-     *
-     * @param class-string<T> $targetType Searched class or interface type.
-     *
-     * @return T|null
-     *
-     * @access private
-     *
-     * @todo   Refactor $_methods property to getAllMethods() when it exists.
-     */
-    public function getFirstChildOfType($targetType)
-    {
-        foreach ($this->nodes as $node) {
-            if ($node instanceof $targetType) {
-                return $node;
-            }
-            if (($child = $node->getFirstChildOfType($targetType)) !== null) {
-                return $child;
-            }
-        }
-        $methods = $this->getMethods();
-        foreach ($methods as $method) {
-            if (($child = $method->getFirstChildOfType($targetType)) !== null) {
-                return $child;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Will find all children for the given type.
-     *
-     * @template T of ASTNode
-     * @template R of T
-     *
-     * @param class-string<T> $targetType The target class or interface type.
-     * @param R[]             $results    The found children.
-     *
-     * @return T[]
-     *
-     * @access private
-     *
-     * @todo   Refactor $_methods property to getAllMethods() when it exists.
-     */
-    public function findChildrenOfType($targetType, array &$results = [])
-    {
-        foreach ($this->nodes as $node) {
-            if ($node instanceof $targetType) {
-                $results[] = $node;
-            }
-            $node->findChildrenOfType($targetType, $results);
-        }
-
-        foreach ($this->getMethods() as $method) {
-            $method->findChildrenOfType($targetType, $results);
-        }
-
-        return $results;
     }
 
     /**
@@ -394,8 +304,10 @@ abstract class AbstractASTType extends AbstractASTArtifact
             $startToken = reset($tokens);
         }
 
-        $this->startLine = $startToken->startLine;
-        $this->endLine   = end($tokens)->endLine;
+        $this->startLine   = $startToken->startLine;
+        $this->startColumn = $startToken->startColumn;
+        $this->endLine     = end($tokens)->endLine;
+        $this->endColumn   = end($tokens)->endColumn;
 
         $this->cache
             ->type('tokens')

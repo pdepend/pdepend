@@ -45,6 +45,7 @@
 namespace PDepend\Source\AST;
 
 use OutOfBoundsException;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This is an abstract base implementation of the ast node interface.
@@ -56,6 +57,17 @@ use OutOfBoundsException;
  */
 interface ASTNode
 {
+    /**
+     * ASTVisitor method for node tree traversal.
+     *
+     * @template T of array<string, mixed>|numeric-string
+     *
+     * @param T $data
+     *
+     * @return T
+     */
+    public function accept(ASTVisitor $visitor, $data = []);
+
     /**
      * Returns the source image of this ast node.
      *
@@ -96,7 +108,7 @@ interface ASTNode
      *
      * @param int $index
      *
-     * @return AbstractASTNode|ASTArtifact
+     * @return ASTNode
      *
      * @throws OutOfBoundsException When no node exists at the given index.
      */
@@ -105,7 +117,7 @@ interface ASTNode
     /**
      * This method returns all direct children of the actual node.
      *
-     * @return (AbstractASTNode|ASTArtifact)[]
+     * @return ASTNode[]
      */
     public function getChildren();
 
@@ -148,7 +160,7 @@ interface ASTNode
     /**
      * Sets the parent node of this node.
      */
-    public function setParent(ASTNode $node): void;
+    public function setParent(?ASTNode $node): void;
 
     /**
      * Traverses up the node tree and finds all parent nodes that are instances

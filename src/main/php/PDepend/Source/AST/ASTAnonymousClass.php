@@ -55,14 +55,6 @@ namespace PDepend\Source\AST;
 class ASTAnonymousClass extends ASTClass implements ASTNode
 {
     /**
-     * The parent node of this node or <b>null</b> when this node is the root
-     * of a node tree.
-     *
-     * @var ASTNode|null
-     */
-    protected $parent = null;
-
-    /**
      * Metadata for this node instance, serialized in a string. This string
      * contains the start, end line, and the start, end column and the node
      * image in a colon separated string.
@@ -179,47 +171,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
         $this->setMetadataInteger(1, $endLine);
         $this->setMetadataInteger(2, $startColumn);
         $this->setMetadataInteger(3, $endColumn);
-    }
-
-    /**
-     * Returns the parent node of this node or <b>null</b> when this node is
-     * the root of a node tree.
-     *
-     * @return ?ASTNode
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
-     * Sets the parent node of this node.
-     */
-    public function setParent(ASTNode $node): void
-    {
-        $this->parent = $node;
-    }
-
-    /**
-     * Traverses up the node tree and finds all parent nodes that are instances
-     * of <b>$parentType</b>.
-     *
-     * @param string $parentType
-     *
-     * @return ASTNode[]
-     */
-    public function getParentsOfType($parentType)
-    {
-        $parents = [];
-
-        $parentNode = $this->parent;
-        while (is_object($parentNode)) {
-            if ($parentNode instanceof $parentType) {
-                array_unshift($parents, $parentNode);
-            }
-            $parentNode = $parentNode->getParent();
-        }
-        return $parents;
     }
 
     /**

@@ -42,6 +42,7 @@
 
 namespace PDepend\Source\AST;
 
+use OutOfBoundsException;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
@@ -79,6 +80,15 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * @var int
      */
     protected $endLine = 0;
+
+    protected int $startColumn = 0;
+    protected int $endColumn = 0;
+
+    /**
+     * The parent node of this node or <b>null</b> when this node is the root
+     * of a node tree.
+     */
+    protected ?ASTNode $parent = null;
 
     /**
      * The source file for this item.
@@ -136,8 +146,6 @@ abstract class AbstractASTArtifact implements ASTArtifact
         $this->name = $name;
     }
 
-
-
     /**
      * Returns a id for this code node.
      *
@@ -183,6 +191,78 @@ abstract class AbstractASTArtifact implements ASTArtifact
         }
     }
 
+    public function getChild($index)
+    {
+        $children = $this->getChildren();
+        if (isset($children[$index])) {
+            return $children[$index];
+        }
+        throw new OutOfBoundsException(
+            sprintf(
+                'No node found at index %d in node of type: %s',
+                $index,
+                get_class($this)
+            )
+        );
+    }
+
+    public function getChildren()
+    {
+        return [];
+    }
+
+    public function getFirstChildOfType($targetType)
+    {
+        $children = $this->getChildren();
+        foreach ($children as $node) {
+            if ($node instanceof $targetType) {
+                return $node;
+            }
+            if (($child = $node->getFirstChildOfType($targetType)) !== null) {
+                return $child;
+            }
+        }
+
+        return null;
+    }
+
+    public function findChildrenOfType($targetType, array &$results = array())
+    {
+        $children = $this->getChildren();
+        foreach ($children as $node) {
+            if ($node instanceof $targetType) {
+                $results[] = $node;
+            }
+            $node->findChildrenOfType($targetType, $results);
+        }
+
+        return $results;
+    }
+
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?ASTNode $node): void
+    {
+        $this->parent = $node;
+    }
+
+    public function getParentsOfType($parentType)
+    {
+        $parents = array();
+
+        $parentNode = $this->parent;
+        while (is_object($parentNode)) {
+            if ($parentNode instanceof $parentType) {
+                array_unshift($parents, $parentNode);
+            }
+            $parentNode = $parentNode->getParent();
+        }
+        return $parents;
+    }
+
     /**
      * Returns a doc comment for this node or <b>null</b> when no comment was
      * found.
@@ -204,6 +284,14 @@ abstract class AbstractASTArtifact implements ASTArtifact
         $this->comment = $comment;
     }
 
+    public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn): void
+    {
+        $this->startLine = $startLine;
+        $this->endLine = $endLine;
+        $this->startColumn = $startColumn;
+        $this->endColumn = $endColumn;
+    }
+
     /**
      * Returns the line number where the class or interface declaration starts.
      *
@@ -212,6 +300,11 @@ abstract class AbstractASTArtifact implements ASTArtifact
     public function getStartLine()
     {
         return $this->startLine;
+    }
+
+    public function getStartColumn()
+    {
+        return $this->startColumn;
     }
 
     /**
@@ -224,16 +317,19 @@ abstract class AbstractASTArtifact implements ASTArtifact
         return $this->endLine;
     }
 
-    // BEGIN@deprecated
+    public function getEndColumn()
+    {
+        return $this->endColumn;
+    }
 
     /**
-     * @template T of array<string, mixed>|string|null
+     * @template T of array<string, mixed>|numeric-string
      *
      * @param T $data
      *
      * @return T
      */
-    public function accept(ASTVisitor $visitor, $data = null)
+    public function accept(ASTVisitor $visitor, $data = [])
     {
         $methodName = 'visit' . substr(get_class($this), 22);
         $callable = [$visitor, $methodName];
@@ -241,6 +337,4 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
         return call_user_func($callable, $this, $data);
     }
-
-    // END@deprecated
 }
