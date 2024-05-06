@@ -60,7 +60,6 @@ class PdependExtension extends SymfonyExtension
 {
     /**
      * @param array<array<array<array<string>>>> $configs
-     *
      * @return void
      *
      * {@inheritDoc}
@@ -115,7 +114,6 @@ class PdependExtension extends SymfonyExtension
 
     /**
      * @param array<string, array<string, string>> $config
-     *
      * @return stdClass
      */
     private function createSettings($config)

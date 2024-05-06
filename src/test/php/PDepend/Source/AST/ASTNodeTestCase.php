@@ -50,7 +50,6 @@ use ReflectionClass;
  * Abstract test case for classes derived {@link \PDepend\Source\AST\ASTNode}ö
  *
  * @covers \PDepend\Source\AST\AbstractASTNode
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -725,8 +724,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      * and node builder implementations.
      *
      * @param string $testCase
-     * @param bool   $ignoreAnnotations
-     *
+     * @param bool $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)

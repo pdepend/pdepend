@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  */
 
@@ -52,10 +51,8 @@ use PDepend\Source\AST\ASTClass;
  * class.
  *
  * @covers \PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  *
  * @group unittest

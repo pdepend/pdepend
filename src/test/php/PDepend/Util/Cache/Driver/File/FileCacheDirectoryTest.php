@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 
@@ -51,10 +50,8 @@ use PDepend\Util\Cache\CacheDriver;
  * Test case for the {@link \PDepend\Util\Cache\Driver\File\FileCacheDirectory} class.
  *
  * @covers \PDepend\Util\Cache\Driver\File\FileCacheDirectory
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  *
  * @group unittest

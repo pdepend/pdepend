@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTFieldDeclaration
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -118,7 +117,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * valid combinations of modifiers.
      *
      * @param int $modifiers Combinations of valid modifiers.
-     *
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
     public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers): void
@@ -133,7 +131,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * invalid modifier or modifier combination was set.
      *
      * @param int $modifiers Combinations of invalid modifiers.
-     *
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers): void

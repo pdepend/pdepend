@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.5
  */
 
@@ -52,7 +51,6 @@ use PDepend\Source\Builder\BuilderContext;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.5
  */
 class ASTClassOrInterfaceReference extends ASTType
@@ -88,7 +86,6 @@ class ASTClassOrInterfaceReference extends ASTType
      * be cached for this node instance.
      *
      * @return array
-     *
      * @since  0.10.0
      */
     public function __sleep()

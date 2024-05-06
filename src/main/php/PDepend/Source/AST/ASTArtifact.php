@@ -54,7 +54,6 @@ interface ASTArtifact extends ASTNode
      * Returns the artifact name.
      *
      * @return string
-     *
      * @deprecated Use getImage() inherit from ASTNode class.
      */
     public function getName();

@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.12
  */
 
@@ -49,7 +48,6 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.12
  */
 class ASTClosure extends AbstractASTNode implements ASTCallable
@@ -109,7 +107,6 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      * </code>
      *
      * @return bool
-     *
      * @since  1.0.0
      */
     public function isStatic()
@@ -121,7 +118,6 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      * This method can be used to flag this closure instance as static.
      *
      * @param bool $static Whether this closure is static or not.
-     *
      * @since  1.0.0
      */
     public function setStatic($static): void
@@ -133,7 +129,6 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      * Returns the total number of the used property bag.
      *
      * @return int
-     *
      * @see    ASTNode#getMetadataSize()
      * @since  1.0.0
      */

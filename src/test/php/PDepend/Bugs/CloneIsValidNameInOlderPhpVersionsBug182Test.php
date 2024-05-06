@@ -47,7 +47,6 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
  * @link http://tracker.pdepend.org/pdepend/issue_tracker/issue/182
  *
  * @group regressiontest

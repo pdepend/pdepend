@@ -50,7 +50,6 @@ use RecursiveIteratorIterator;
  * Test case for the exclude path filter.
  *
  * @covers \PDepend\Input\ExcludePathFilter
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -192,7 +191,6 @@ class ExcludePathFilterTest extends AbstractTestCase
      * path filter.
      *
      * @param array<string> $excludes The filtered patterns
-     *
      * @return array<string>
      */
     protected function createFilteredFileList(array $excludes)

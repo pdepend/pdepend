@@ -50,7 +50,6 @@ use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
- *
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @group unittest

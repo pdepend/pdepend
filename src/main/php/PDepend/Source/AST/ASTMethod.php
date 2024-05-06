@@ -67,7 +67,6 @@ class ASTMethod extends AbstractASTCallable
      * cached for method instances.
      *
      * @return array<string>
-     *
      * @since  0.10.0
      */
     public function __sleep()
@@ -80,7 +79,6 @@ class ASTMethod extends AbstractASTCallable
      * this method.
      *
      * @return int
-     *
      * @since  1.0.0
      */
     public function getModifiers()
@@ -96,9 +94,7 @@ class ASTMethod extends AbstractASTCallable
      * contains an invalid/unexpected modifier
      *
      * @param int $modifiers
-     *
      * @throws InvalidArgumentException If the given modifier contains unexpected values.
-     *
      * @since  0.9.4
      */
     public function setModifiers($modifiers): void
@@ -206,9 +202,7 @@ class ASTMethod extends AbstractASTCallable
      * Returns the source file where this method was declared.
      *
      * @return ASTCompilationUnit
-     *
      * @throws ASTCompilationUnitNotFoundException When no parent was set.
-     *
      * @since  0.10.0
      */
     public function getCompilationUnit()

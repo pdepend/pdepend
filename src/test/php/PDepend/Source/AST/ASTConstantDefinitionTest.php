@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTConstantDefinition
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +59,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * valid combinations of modifiers.
      *
      * @param int $modifiers Combinations of valid modifiers.
-     *
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
     public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers): void
@@ -76,7 +74,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * invalid modifier or modifier combination was set.
      *
      * @param int $modifiers Combinations of invalid modifiers.
-     *
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers): void
@@ -187,7 +184,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * testConstantDefinition
      *
      * @return ASTConstantDefinition
-     *
      * @since 1.0.2
      */
     public function testConstantDefinition()
@@ -250,7 +246,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * testConstantDefinitionWithDeclarators
      *
      * @return ASTConstantDefinition
-     *
      * @since 1.0.2
      */
     public function testConstantDefinitionWithDeclarators()
@@ -265,7 +260,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * testConstantDefinitionWithDeclaratorsHasExpectedStartLine
      *
      * @param ASTConstantDefinition $constant
-     *
      * @since 1.0.2
      *
      * @depends testConstantDefinitionWithDeclarators
@@ -279,7 +273,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * testConstantDefinitionWithDeclaratorsHasExpectedStartColumn
      *
      * @param ASTConstantDefinition $constant
-     *
      * @since 1.0.2
      *
      * @depends testConstantDefinitionWithDeclarators
@@ -293,7 +286,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * testConstantDefinitionWithDeclaratorsHasExpectedEndLine
      *
      * @param ASTConstantDefinition $constant
-     *
      * @since 1.0.2
      *
      * @depends testConstantDefinitionWithDeclarators
@@ -307,7 +299,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * testConstantDefinitionWithDeclaratorsHasExpectedEndColumn
      *
      * @param ASTConstantDefinition $constant
-     *
      * @since 1.0.2
      *
      * @depends testConstantDefinitionWithDeclarators

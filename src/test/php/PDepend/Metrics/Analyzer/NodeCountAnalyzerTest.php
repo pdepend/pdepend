@@ -50,7 +50,6 @@ use PDepend\Source\AST\ASTNamespace;
  * Test case for the node count analyzer.
  *
  * @covers \PDepend\Metrics\Analyzer\NodeCountAnalyzer
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *

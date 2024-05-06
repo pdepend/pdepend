@@ -48,7 +48,6 @@ use PDepend\AbstractTestCase;
  * Test case for the {@link \PDepend\Util\Coverage\CloverReport} class.
  *
  * @covers \PDepend\Util\Coverage\CloverReport
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -180,10 +179,9 @@ class CloverReportTest extends AbstractTestCase
     /**
      * Creates a mocked method instance.
      *
-     * @param string $name      Name of the mock method.
-     * @param int    $startLine
-     * @param int    $endLine
-     *
+     * @param string $name Name of the mock method.
+     * @param int $startLine
+     * @param int $endLine
      * @return \PDepend\Source\AST\ASTMethod
      */
     private function createMethodMock($name, $startLine = 1, $endLine = 4)

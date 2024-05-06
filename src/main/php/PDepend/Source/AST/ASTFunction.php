@@ -56,7 +56,6 @@ class ASTFunction extends AbstractASTCallable
      * The currently used builder context.
      *
      * @var BuilderContext|null
-     *
      * @since 0.10.0
      */
     protected $context = null;
@@ -72,7 +71,6 @@ class ASTFunction extends AbstractASTCallable
      * The parent namespace for this function.
      *
      * @var ASTNamespace|null
-     *
      * @since 0.10.0
      */
     private $namespace = null;
@@ -83,7 +81,6 @@ class ASTFunction extends AbstractASTCallable
      * cached for all function instances.
      *
      * @return array<string>
-     *
      * @since  0.10.0
      */
     public function __sleep()
@@ -108,9 +105,7 @@ class ASTFunction extends AbstractASTCallable
      * Sets the currently active builder context.
      *
      * @param BuilderContext $context Current builder context.
-     *
      * @return $this
-     *
      * @since  0.10.0
      */
     public function setContext(BuilderContext $context)
@@ -154,7 +149,6 @@ class ASTFunction extends AbstractASTCallable
      * function does not belong to a namespace.
      *
      * @return string
-     *
      * @since  0.10.0
      */
     public function getNamespaceName()

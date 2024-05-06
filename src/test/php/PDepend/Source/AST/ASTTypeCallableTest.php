@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  */
 
@@ -49,10 +48,8 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTypeCallable
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  *
  * @group unittest
@@ -71,7 +68,6 @@ class ASTTypeCallableTest extends ASTNodeTestCase
      * testCallableType
      *
      * @return ASTTypeCallable
-     *
      * @since 1.0.2
      */
     public function testCallableType()

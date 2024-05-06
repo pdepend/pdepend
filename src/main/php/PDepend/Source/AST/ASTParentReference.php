@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 
@@ -50,7 +49,6 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 final class ASTParentReference extends ASTClassOrInterfaceReference
@@ -71,7 +69,6 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
      * Constructs a new type holder instance.
      *
      * @param ASTClassOrInterfaceReference $reference The type instance that reference the concrete target of self.
-     *
      * @todo Call parent constructor, otherwise this could cause bad side effects.
      */
     public function __construct(ASTClassOrInterfaceReference $reference)
@@ -85,7 +82,6 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
      * array with those property names that should be serialized for this class.
      *
      * @return array<string>
-     *
      * @since  0.10.0
      */
     public function __sleep()
@@ -97,7 +93,6 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
      * Returns the visual representation for this node type.
      *
      * @return string
-     *
      * @since  0.10.4
      */
     public function getImage()

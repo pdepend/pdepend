@@ -57,7 +57,6 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  * Copied from Behat
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
- *
  * @link   https://github.com/Behat/Behat/blob/3.0/src/Behat/Behat/Extension/Extension.php
  */
 abstract class Extension
@@ -72,7 +71,7 @@ abstract class Extension
     /**
      * Loads a specific configuration.
      *
-     * @param array<mixed>     $config    Extension configuration hash (from behat.yml)
+     * @param array<mixed> $config Extension configuration hash (from behat.yml)
      * @param ContainerBuilder $container ContainerBuilder instance
      */
     public function load(array $config, ContainerBuilder $container): void

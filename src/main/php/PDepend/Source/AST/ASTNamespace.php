@@ -112,7 +112,6 @@ class ASTNamespace extends AbstractASTArtifact
      * <b>false</b>.
      *
      * @return bool
-     *
      * @since  0.9.10
      */
     public function isUserDefined()
@@ -129,7 +128,6 @@ class ASTNamespace extends AbstractASTArtifact
      * <b>false</b>.
      *
      * @return bool
-     *
      * @since  0.9.10
      */
     private function checkUserDefined()
@@ -147,7 +145,6 @@ class ASTNamespace extends AbstractASTArtifact
      * instances declared in this namespace.
      *
      * @return ASTArtifactList<ASTTrait>
-     *
      * @since  1.0.0
      */
     public function getTraits()
@@ -195,9 +192,7 @@ class ASTNamespace extends AbstractASTArtifact
      * @template T of AbstractASTClassOrInterface
      *
      * @param class-string<T> $className The class/type we are looking for.
-     *
      * @return ASTArtifactList<T>
-     *
      * @since  1.0.0
      */
     private function getTypesOfType($className)
@@ -226,7 +221,6 @@ class ASTNamespace extends AbstractASTArtifact
      * Adds the given type to this namespace and returns the input type instance.
      *
      * @param AbstractASTClassOrInterface $type
-     *
      * @return AbstractASTClassOrInterface
      */
     public function addType(AbstractASTType $type)

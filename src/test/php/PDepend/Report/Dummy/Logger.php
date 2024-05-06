@@ -124,7 +124,6 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
-     *
      * @return bool
      */
     public function log(\PDepend\Metrics\Analyzer $analyzer)

@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTListExpression
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -59,7 +58,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * testListExpression
      *
      * @return ASTListExpression
-     *
      * @since 1.0.2
      */
     public function testListExpression()
@@ -122,7 +120,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * testListExpressionWithNestedList
      *
      * @return ASTListExpression
-     *
      * @since 1.0.2
      */
     public function testListExpressionWithNestedList()
@@ -137,7 +134,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * testListExpressionWithNestedListHasExpectedStartLine
      *
      * @param ASTListExpression $expr
-     *
      * @since 1.0.2
      *
      * @depends testListExpressionWithNestedList
@@ -151,7 +147,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * testListExpressionWithNestedListHasExpectedStartColumn
      *
      * @param ASTListExpression $expr
-     *
      * @since 1.0.2
      *
      * @depends testListExpressionWithNestedList
@@ -165,7 +160,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * testListExpressionWithNestedListHasExpectedEndLine
      *
      * @param ASTListExpression $expr
-     *
      * @since 1.0.2
      *
      * @depends testListExpressionWithNestedList
@@ -179,7 +173,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * testListExpressionWithNestedListHasExpectedEndColumn
      *
      * @param ASTListExpression $expr
-     *
      * @since 1.0.2
      *
      * @depends testListExpressionWithNestedList
@@ -356,7 +349,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * testListExpressionWithKeys
      *
      * @return ASTListExpression
-     *
      * @since 1.0.2
      */
     public function testListExpressionWithKeys()
@@ -371,7 +363,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
      * testListExpressionWithKeysAndNestedList
      *
      * @return ASTListExpression
-     *
      * @since 1.0.2
      */
     public function testListExpressionWithKeysAndNestedList()

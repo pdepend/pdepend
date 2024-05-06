@@ -137,7 +137,6 @@ class CloverReport implements Report
      * Returns the lines of the covered file.
      *
      * @param string $fileName The source file name.
-     *
      * @return array<bool>
      */
     private function getLines($fileName)

@@ -49,7 +49,6 @@ use PDepend\Source\Builder\BuilderContext;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTClassReference
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -187,7 +186,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
-     *
      * @return ASTClassReference
      */
     private function getFirstReferenceInFunction($testCase)
@@ -202,7 +200,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      * Returns the first reference node for the currently executed test case.
      *
      * @return ASTClassReference
-     *
      * @since 0.10.5
      */
     private function getFirstReferenceInClass()

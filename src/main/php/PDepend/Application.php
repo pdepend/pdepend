@@ -75,7 +75,6 @@ class Application
 
     /**
      * @param string $configurationFile
-     *
      * @throws InvalidArgumentException
      */
     public function setConfigurationFile($configurationFile): void
@@ -91,7 +90,6 @@ class Application
 
     /**
      * @return Configuration
-     *
      * @throws Exception
      */
     public function getConfiguration()
@@ -104,7 +102,6 @@ class Application
 
     /**
      * @return Engine
-     *
      * @throws Exception
      */
     public function getEngine()
@@ -117,7 +114,6 @@ class Application
 
     /**
      * @return Runner
-     *
      * @throws Exception
      */
     public function getRunner()
@@ -130,7 +126,6 @@ class Application
 
     /**
      * @return ReportGeneratorFactory
-     *
      * @throws Exception
      */
     public function getReportGeneratorFactory()
@@ -143,7 +138,6 @@ class Application
 
     /**
      * @return AnalyzerFactory
-     *
      * @throws Exception
      */
     public function getAnalyzerFactory()
@@ -156,7 +150,6 @@ class Application
 
     /**
      * @return TaggedContainerInterface
-     *
      * @throws Exception
      */
     private function getContainer()
@@ -170,7 +163,6 @@ class Application
 
     /**
      * @return TaggedContainerInterface
-     *
      * @throws Exception
      */
     private function createContainer()
@@ -200,7 +192,6 @@ class Application
      * Returns available logger options and documentation messages.
      *
      * @return array<string, array<string, string>>
-     *
      * @throws Exception
      */
     public function getAvailableLoggerOptions()
@@ -212,7 +203,6 @@ class Application
      * Returns available analyzer options and documentation messages.
      *
      * @return array<string, array<string, string>>
-     *
      * @throws Exception
      */
     public function getAvailableAnalyzerOptions()
@@ -222,9 +212,7 @@ class Application
 
     /**
      * @param string $serviceTag
-     *
      * @return array<string, array<string, string>>
-     *
      * @throws Exception
      */
     private function getAvailableOptionsFor($serviceTag)

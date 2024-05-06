@@ -201,7 +201,6 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      *
      * @param string $id1 Identifier for the incoming edges.
      * @param string $id2 Identifier for the outgoing edges.
-     *
      * @return array<string, float>
      */
     protected function computeCodeRank($id1, $id2)

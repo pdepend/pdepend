@@ -88,7 +88,6 @@ interface Tokenizer
      * Returns the previous token or null if there is no one yet.
      *
      * @return Token|null
-     *
      * @since  2.6.0
      */
     public function prevToken();
@@ -97,7 +96,6 @@ interface Tokenizer
      * Returns the current token or null if there is no more.
      *
      * @return Token|null
-     *
      * @since  2.6.0
      */
     public function currentToken();
@@ -115,7 +113,6 @@ interface Tokenizer
      * ignores all comments between the current and the next token.
      *
      * @return int
-     *
      * @since  0.9.12
      */
     public function peekNext();

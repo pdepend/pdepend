@@ -727,7 +727,6 @@ class PHPTokenizerInternal implements FullTokenizer
      * Returns the token type at the given position relatively to the current position.
      *
      * @param int $shift positive or negative to apply to the current index.
-     *
      * @return int
      */
     public function peekAt($shift)
@@ -752,7 +751,6 @@ class PHPTokenizerInternal implements FullTokenizer
      * ignores all comments between the current and the next token.
      *
      * @return int|null
-     *
      * @since  0.9.12
      */
     public function peekNext()
@@ -794,7 +792,6 @@ class PHPTokenizerInternal implements FullTokenizer
      * Split PHP 8 T_NAME(_FULLY)_QUALIFIED token into PHP 7 compatible tokens.
      *
      * @param array{int, string, int} $token
-     *
      * @return array<int, array<int, int|string>>
      */
     private function splitQualifiedNameToken($token)
@@ -826,8 +823,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * Split PHP 8 T_NAME_RELATIVE token into PHP 7 compatible tokens.
      *
      * @param array<int|string> $token
-     * @param string            $namespace
-     *
+     * @param string $namespace
      * @return array<int, array<int, int|string>>
      */
     private function splitRelativeNameToken($token, $namespace)
@@ -865,7 +861,6 @@ class PHPTokenizerInternal implements FullTokenizer
      * parser implementation.
      *
      * @param array<array{int, string, int}|string> $tokens Unprepared array of php tokens.
-     *
      * @return array<array<int, int|string|null>|string>
      */
     private function substituteTokens(array $tokens)
@@ -1081,7 +1076,6 @@ class PHPTokenizerInternal implements FullTokenizer
      * was no none php token.
      *
      * @param array<array<int, int|string>|string> $tokens Reference to the current token stream.
-     *
      * @return string|null
      */
     private function consumeNonePhpTokens(array &$tokens)
@@ -1113,7 +1107,6 @@ class PHPTokenizerInternal implements FullTokenizer
      * Generates a dummy/temp token for unknown string literals.
      *
      * @param string $token The unknown string token.
-     *
      * @return array<int, mixed>
      */
     private function generateUnknownToken($token)

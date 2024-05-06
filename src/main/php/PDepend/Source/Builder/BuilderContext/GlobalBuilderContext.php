@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 
@@ -61,7 +60,6 @@ use PDepend\Source\Builder\BuilderContext;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 class GlobalBuilderContext implements BuilderContext
@@ -138,9 +136,7 @@ class GlobalBuilderContext implements BuilderContext
      * Returns the trait instance for the given qualified name.
      *
      * @param string $qualifiedName
-     *
      * @return ASTTrait
-     *
      * @since  1.0.0
      */
     public function getTrait($qualifiedName)
@@ -152,7 +148,6 @@ class GlobalBuilderContext implements BuilderContext
      * Returns the class instance for the given qualified name.
      *
      * @param string $qualifiedName
-     *
      * @return ASTClass
      */
     public function getClass($qualifiedName)
@@ -164,7 +159,6 @@ class GlobalBuilderContext implements BuilderContext
      * Returns a class or an interface instance for the given qualified name.
      *
      * @param string $qualifiedName
-     *
      * @return AbstractASTClassOrInterface
      */
     public function getClassOrInterface($qualifiedName)

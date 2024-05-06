@@ -50,7 +50,6 @@ use PDepend\Report\DummyAnalyzer;
  * Test case for the jdepend xml logger.
  *
  * @covers \PDepend\Report\Jdepend\Xml
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -143,7 +142,6 @@ class XmlTest extends AbstractTestCase
      * Normalizes the file references within the expected result document.
      *
      * @param string $fileName File name of the expected result document.
-     *
      * @return string The prepared xml document
      */
     protected function getNormalizedPathXml($fileName)

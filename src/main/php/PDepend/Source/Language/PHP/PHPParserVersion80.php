@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.3
  */
 
@@ -66,7 +65,6 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.9
  */
 abstract class PHPParserVersion80 extends PHPParserVersion74
@@ -87,7 +85,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * name part.
      *
      * @param int $tokenType The type of a parsed token.
-     *
      * @return bool
      */
     protected function isClassName($tokenType)
@@ -132,7 +129,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
      * expressions.
      *
      * @return ASTNode
-     *
      * @throws UnexpectedTokenException
      */
     protected function parseOptionalExpressionForVersion()
@@ -347,7 +343,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
 
     /**
      * @param ASTType $firstType
-     *
      * @return ASTUnionType
      */
     protected function parseUnionTypeHint($firstType)
@@ -371,7 +366,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
 
     /**
      * @param ASTType $type
-     *
      * @return ASTType
      */
     protected function parseTypeHintCombination($type)
@@ -385,7 +379,6 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
 
     /**
      * @param ASTNode $type
-     *
      * @return bool
      */
     protected function canNotBeStandAloneType($type)

@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTypeIterable
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -59,7 +58,6 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      * testIterableType
      *
      * @return ASTTypeIterable
-     *
      * @since 2.5.1
      */
     public function testIterableType()

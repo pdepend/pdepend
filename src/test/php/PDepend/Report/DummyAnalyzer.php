@@ -132,7 +132,6 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * state based disabling/enabling.
      *
      * @return bool
-     *
      * @since 0.9.10
      */
     public function isEnabled()
@@ -144,7 +143,6 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * Set global options
      *
      * @param array<string, mixed> $options
-     *
      * @since 2.0.1
      */
     public function setOptions(array $options = []): void

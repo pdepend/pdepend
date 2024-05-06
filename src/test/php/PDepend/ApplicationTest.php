@@ -49,7 +49,6 @@ use PDepend\Metrics\Analyzer\CrapIndexAnalyzer;
  * Test cases for the {@link \PDepend\Application} class.
  *
  * @covers \PDepend\Application
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

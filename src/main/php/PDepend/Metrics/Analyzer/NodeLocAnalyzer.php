@@ -118,7 +118,6 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * this property with each method's ELOC value.
      *
      * @var int
-     *
      * @since 0.9.12
      */
     private $classExecutableLines = 0;
@@ -128,7 +127,6 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * property with each method's LLOC value.
      *
      * @var int
-     *
      * @since 0.9.13
      */
     private $classLogicalLines = 0;
@@ -406,8 +404,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * </code>
      *
      * @param array<int, Token> $tokens The raw token stream.
-     * @param bool              $search Optional boolean flag, search start.
-     *
+     * @param bool $search Optional boolean flag, search start.
      * @return array<int, int>
      */
     private function linesOfCode(array $tokens, $search = false)

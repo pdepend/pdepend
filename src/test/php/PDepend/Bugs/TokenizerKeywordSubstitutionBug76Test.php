@@ -61,9 +61,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
      * This method tests that the parser does not substitute keyword tokens in
      * a class or object operator chain.
      *
-     * @param string     $sourceFile Name of the text file.
+     * @param string $sourceFile Name of the text file.
      * @param array<int> $tokenTypes List of all expected token types.
-     *
      * @dataProvider dataProviderTokenizerKeywordSubstitutionInOperatorChain
      */
     public function testTokenizerKeywordSubstitutionInOperatorChain($sourceFile, array $tokenTypes): void

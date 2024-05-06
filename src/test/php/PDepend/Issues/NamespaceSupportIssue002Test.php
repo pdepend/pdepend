@@ -46,7 +46,6 @@ namespace PDepend\Issues;
  * Test case for ticket 002, PHP 5.3 namespace support.
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -293,9 +292,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * Tests that the parser expands a local name within the signature of a
      * namespace class or interface correct.
      *
-     * @param string $fileName      Name of the test file.
+     * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     *
      * @dataProvider dataProviderParserResolvesQualifiedTypeNameInTypeSignature
      */
     public function testParserResolvesQualifiedTypeNameInTypeSignature($fileName, $namespaceName): void
@@ -314,9 +312,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * Tests that the parser expands a local name within the body of a
      * namespaced function correct.
      *
-     * @param string $fileName      Name of the test file.
+     * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     *
      * @dataProvider dataProviderParserResolvesQualifiedTypeNameInFunction
      */
     public function testParserResolvesQualifiedTypeNameInFunction($fileName, $namespaceName): void
@@ -340,9 +337,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * Tests that the parser does not expand a qualified name within the
      * signature of a namespaced class or interface correct.
      *
-     * @param string $fileName      Name of the test file.
+     * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     *
      * @dataProvider dataProviderParserKeepsQualifiedTypeNameInTypeSignature
      */
     public function testParserKeepsQualifiedTypeNameInTypeSignature($fileName, $namespaceName): void
@@ -361,9 +357,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * Tests that the parser does not expand a qualified name within the body of
      * a namespaced function correct.
      *
-     * @param string $fileName      Name of the test file.
+     * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     *
      * @dataProvider dataProviderParserKeepsQualifiedTypeNameInFunction
      */
     public function testParserKeepsQualifiedTypeNameInFunction($fileName, $namespaceName): void
@@ -382,9 +377,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * Tests that the parser resolves a type name when the name is prefixed with
      * PHP's namespace keyword.
      *
-     * @param string $fileName      Name of the test file.
+     * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     *
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax
      */
     public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax($fileName, $namespaceName): void
@@ -403,9 +397,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * Tests that the parser resolves a type name when the name is prefixed with
      * PHP's namespace keyword.
      *
-     * @param string $fileName      Name of the test file.
+     * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     *
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax
      */
     public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax($fileName, $namespaceName): void
@@ -424,9 +417,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * Tests that the parser resolves a type name when the name is prefixed with
      * PHP's namespace keyword.
      *
-     * @param string $fileName      Name of the test file.
+     * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     *
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax
      */
     public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax($fileName, $namespaceName): void
@@ -445,9 +437,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * Tests that the parser resolves a type name when the name is prefixed with
      * PHP's namespace keyword.
      *
-     * @param string $fileName      Name of the test file.
+     * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     *
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax
      */
     public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax($fileName, $namespaceName): void

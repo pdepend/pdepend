@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTWhileStatement
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -86,7 +85,6 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      * testWhileStatement
      *
      * @return ASTWhileStatement
-     *
      * @since 1.0.2
      */
     public function testWhileStatement()
@@ -149,7 +147,6 @@ class ASTWhileStatementTest extends ASTNodeTestCase
      * testWhileStatementWithAlternativeScope
      *
      * @return ASTWhileStatement
-     *
      * @since 1.0.2
      */
     public function testWhileStatementWithAlternativeScope()

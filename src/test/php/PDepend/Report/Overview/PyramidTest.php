@@ -50,7 +50,6 @@ use PDepend\Report\DummyAnalyzer;
  * Test case for the overview pyramid logger.
  *
  * @covers \PDepend\Report\Overview\Pyramid
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

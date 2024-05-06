@@ -48,7 +48,6 @@ use PDepend\AbstractTestCase;
  * Test case for the composite filter.
  *
  * @covers \PDepend\Input\CompositeFilter
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

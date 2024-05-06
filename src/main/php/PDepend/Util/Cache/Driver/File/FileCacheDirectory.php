@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 
@@ -54,7 +53,6 @@ use SplFileInfo;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 class FileCacheDirectory
@@ -75,7 +73,6 @@ class FileCacheDirectory
      * Constructs a new cache directory helper instance.
      *
      * @param string $cacheDir The cache root directory.
-     *
      * @throws RuntimeException
      */
     public function __construct($cacheDir)
@@ -92,7 +89,6 @@ class FileCacheDirectory
      * full qualified path for that cache directory.
      *
      * @param string $key The cache for an entry.
-     *
      * @return string
      */
     public function createCacheDirectory($key)
@@ -106,7 +102,6 @@ class FileCacheDirectory
      * the full qualified path for that cache directory.
      *
      * @param string $key The cache for an entry.
-     *
      * @return string
      */
     protected function createOrReturnCacheDirectory($key)
@@ -122,7 +117,6 @@ class FileCacheDirectory
      * Ensures that the given <b>$cacheDir</b> really exists.
      *
      * @param string $cacheDir The cache root directory.
-     *
      * @return string
      */
     protected function ensureExists($cacheDir)
@@ -202,7 +196,6 @@ class FileCacheDirectory
      * Deletes all files and directories below the given <b>$cacheDir</b>.
      *
      * @param string $cacheDir A cache directory.
-     *
      * @throws RuntimeException
      */
     protected function flushDirectory($cacheDir): void
@@ -217,7 +210,6 @@ class FileCacheDirectory
      * it is a file, directory or symlink.
      *
      * @param DirectoryIterator $file
-     *
      * @throws RuntimeException
      */
     protected function flushEntry(SplFileInfo $file): void

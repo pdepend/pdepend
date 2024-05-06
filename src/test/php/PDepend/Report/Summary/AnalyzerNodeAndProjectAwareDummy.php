@@ -73,7 +73,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * Constructs a new analyzer dummy instance.
      *
      * @param array<string, mixed> $projectMetrics Dummy project metrics.
-     * @param array<string, array> $nodeMetrics    Dummy node metrics.
+     * @param array<string, array> $nodeMetrics Dummy node metrics.
      */
     public function __construct(array $projectMetrics = [], array $nodeMetrics = [])
     {
@@ -111,7 +111,6 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * state based disabling/enabling.
      *
      * @return bool
-     *
      * @since 0.9.10
      */
     public function isEnabled()
@@ -143,7 +142,6 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * Set global options
      *
      * @param array<string, mixed> $options
-     *
      * @since 2.0.1
      */
     public function setOptions(array $options = []): void

@@ -86,10 +86,8 @@ class ReportGeneratorFactory
      * <b>$identifier</b>.
      *
      * @param string $identifier The generator identifier.
-     * @param string $fileName   The log output file name.
-     *
+     * @param string $fileName The log output file name.
      * @return ReportGenerator
-     *
      * @throws RuntimeException
      */
     public function createGenerator($identifier, $fileName)

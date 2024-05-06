@@ -51,7 +51,6 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  *
  * @covers \PDepend\Metrics\AbstractCachingAnalyzer
  * @covers \PDepend\Metrics\Analyzer\NPathComplexityAnalyzer
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
@@ -61,7 +60,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
-     *
      * @since 1.0.0
      */
     private $cache;
@@ -162,7 +160,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * testNPathComplexityForSiblingExpressions
      *
      * @since 0.9.12
-     *
      * @todo What happens with boolean/logical expressions within the body of
      *       any other statement/expression?
      */
@@ -450,7 +447,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * associated with the calling test case.
      *
      * @return int
-     *
      * @since 0.9.12
      */
     private function calculateFunctionMetric()
@@ -465,7 +461,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * the first function found in the test case source file.
      *
      * @return \PDepend\Source\AST\ASTFunction
-     *
      * @since 0.9.12
      */
     private function getFirstFunctionForTestCaseInternal()
@@ -481,7 +476,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * associated with the calling test case.
      *
      * @return int
-     *
      * @since 0.9.12
      */
     private function calculateMethodMetric()
@@ -496,7 +490,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * the first method found in the test case source file.
      *
      * @return \PDepend\Source\AST\ASTMethod
-     *
      * @since 0.9.12
      */
     private function getFirstMethodForTestCaseInternal()
@@ -513,7 +506,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * Calculates the NPath complexity for the given callable instance.
      *
      * @return string
-     *
      * @since 0.9.12
      */
     private function calculateNPathComplexity(AbstractASTCallable $callable)
@@ -529,7 +521,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * Creates a ready to use npath complexity analyzer.
      *
      * @return NPathComplexityAnalyzer
-     *
      * @since 1.0.0
      */
     private function createAnalyzer()

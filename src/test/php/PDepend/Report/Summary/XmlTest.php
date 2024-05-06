@@ -49,7 +49,6 @@ use PDepend\Source\AST\ASTArtifactList;
  * Test case for the xml summary log.
  *
  * @covers \PDepend\Report\Summary\Xml
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -239,7 +238,6 @@ class XmlTest extends AbstractTestCase
     /**
      * @param string $fixture
      * @param string $expectation
-     *
      * @dataProvider dataProviderNodeAware
      */
     public function testNodeAwareAnalyzer($fixture, $expectation): void

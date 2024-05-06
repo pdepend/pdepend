@@ -95,12 +95,12 @@ class Token
     /**
      * Constructs a new source token.
      *
-     * @param int    $type        The token type identifier.
-     * @param string $image       The token image/textual representation.
-     * @param int    $startLine   The start line number for this token.
-     * @param int    $endLine     The end line number for this token.
-     * @param int    $startColumn The start column number for this token.
-     * @param int    $endColumn   The end column number for this token.
+     * @param int $type The token type identifier.
+     * @param string $image The token image/textual representation.
+     * @param int $startLine The start line number for this token.
+     * @param int $endLine The end line number for this token.
+     * @param int $startColumn The start column number for this token.
+     * @param int $endColumn The end column number for this token.
      */
     public function __construct($type, $image, $startLine, $endLine, $startColumn, $endColumn)
     {

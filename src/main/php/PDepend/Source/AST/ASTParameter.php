@@ -194,7 +194,6 @@ class ASTParameter extends AbstractASTArtifact
      * Returns the parent function or method instance or <b>null</b>
      *
      * @return AbstractASTCallable
-     *
      * @since  0.9.5
      */
     public function getDeclaringFunction()
@@ -217,9 +216,7 @@ class ASTParameter extends AbstractASTArtifact
      * The returned value will be <b>null</b> if the parent is a function.
      *
      * @return AbstractASTClassOrInterface|null
-     *
      * @since  0.9.5
-     *
      * @todo Review this for refactoring, maybe create a empty getParent()?
      */
     public function getDeclaringClass()
@@ -255,7 +252,6 @@ class ASTParameter extends AbstractASTArtifact
      * <b>null</b> for all scalar type, only classes or interfaces are used.
      *
      * @return AbstractASTClassOrInterface|null
-     *
      * @since  0.9.5
      */
     public function getClass()
@@ -274,7 +270,6 @@ class ASTParameter extends AbstractASTArtifact
      * reference.
      *
      * @return bool
-     *
      * @since  0.9.5
      */
     public function isPassedByReference()
@@ -287,7 +282,6 @@ class ASTParameter extends AbstractASTArtifact
      * the array type hint, otherwise the it will return <b>false</b>.
      *
      * @return bool
-     *
      * @since  0.9.5
      */
     public function isArray()
@@ -302,7 +296,6 @@ class ASTParameter extends AbstractASTArtifact
      * value <b>null</b>.
      *
      * @return bool
-     *
      * @since  0.9.5
      */
     public function allowsNull()
@@ -332,7 +325,6 @@ class ASTParameter extends AbstractASTArtifact
      * can be left blank on invocation.
      *
      * @return bool
-     *
      * @since  0.9.5
      */
     public function isOptional()
@@ -347,7 +339,6 @@ class ASTParameter extends AbstractASTArtifact
      *
      * @param bool $optional Boolean flag that marks this parameter a
      *                       optional or not.
-     *
      * @since  0.9.5
      */
     public function setOptional($optional): void
@@ -360,7 +351,6 @@ class ASTParameter extends AbstractASTArtifact
      * contains a default value.
      *
      * @return bool
-     *
      * @since  0.9.5
      */
     public function isDefaultValueAvailable()
@@ -400,7 +390,6 @@ class ASTParameter extends AbstractASTArtifact
 
     /**
      * @param ASTNode $node
-     *
      * @return bool
      */
     private function isTypeAllowingNull($node)

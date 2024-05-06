@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTSwitchLabel
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -96,7 +95,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * testSwitchLabel
      *
      * @return ASTSwitchLabel
-     *
      * @since 1.0.2
      */
     public function testSwitchLabel()
@@ -188,7 +186,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * testSwitchLabelWithNestedNonePhpCode
      *
      * @return ASTSwitchLabel
-     *
      * @since 2.1.0
      */
     public function testSwitchLabelWithNestedNonePhpCode()
@@ -251,7 +248,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * testSwitchLabelDefault
      *
      * @return ASTSwitchLabel
-     *
      * @since 1.0.2
      */
     public function testSwitchLabelDefault()
@@ -342,7 +338,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      * testSwitchLabelWithNestedNonePhpCode
      *
      * @return ASTSwitchLabel
-     *
      * @since 2.1.0
      */
     public function testSwitchLabelDefaultWithNestedNonePhpCode()

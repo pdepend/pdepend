@@ -61,7 +61,6 @@ class ExtensionManager
      * Activate an extension based on a class name.
      *
      * @param class-string<Extension> $className
-     *
      * @throws RuntimeException
      */
     public function activateExtension($className): void

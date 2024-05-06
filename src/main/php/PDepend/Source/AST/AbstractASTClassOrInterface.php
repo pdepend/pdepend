@@ -56,7 +56,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * The parent for this class node.
      *
      * @var ASTClassReference|null
-     *
      * @since 0.9.5
      */
     protected $parentClassReference = null;
@@ -89,7 +88,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * interface instance.
      *
      * @return array
-     *
      * @since  0.10.0
      */
     public function __sleep()
@@ -104,7 +102,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
      * @return ASTClass|null
-     *
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function getParentClass()
@@ -138,9 +135,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * and parent of this parent the second element and so on.
      *
      * @return ASTClass[]
-     *
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
-     *
      * @since  1.0.0
      */
     public function getParentClasses()
@@ -163,7 +158,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns a reference onto the parent class of this class node or <b>null</b>.
      *
      * @return ASTClassReference|null
-     *
      * @since  0.9.5
      */
     public function getParentClassReference()
@@ -175,7 +169,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Sets a reference onto the parent class of this class node.
      *
      * @param ASTClassReference $classReference Reference to the declared parent class.
-     *
      * @since  0.9.5
      */
     public function setParentClassReference(ASTClassReference $classReference): void
@@ -188,7 +181,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns a node iterator with all implemented interfaces.
      *
      * @return AbstractASTClassOrInterface[]|ASTArtifactList<AbstractASTClassOrInterface>
-     *
      * @since  0.9.5
      */
     public function getInterfaces()
@@ -200,7 +192,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns an array of references onto the interfaces of this class node.
      *
      * @return ASTClassOrInterfaceReference[]
-     *
      * @since  0.10.4
      */
     public function getInterfaceReferences()
@@ -251,9 +242,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * otherwise it returns <b>false</b>.
      *
      * @param string $name Name of the searched constant.
-     *
      * @return bool
-     *
      * @since  0.9.6
      */
     public function hasConstant($name)
@@ -269,7 +258,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * will return <b>false</b> when no constant for that name exists.
      *
      * @param string $name Name of the searched constant.
-     *
      * @since  0.9.6
      */
     public function getConstant($name): mixed
@@ -284,7 +272,6 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * Returns a list of all methods provided by this type or one of its parents.
      *
      * @return ASTMethod[]
-     *
      * @since  0.9.10
      */
     public function getAllMethods()

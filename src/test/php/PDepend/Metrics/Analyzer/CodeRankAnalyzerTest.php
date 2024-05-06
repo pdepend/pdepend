@@ -49,7 +49,6 @@ use PDepend\Source\AST\ASTClass;
  * Test case for the code metric analyzer class.
  *
  * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

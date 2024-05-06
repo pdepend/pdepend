@@ -81,7 +81,6 @@ class ASTConstantDefinition extends AbstractASTNode
      * contains an invalid/unexpected modifier
      *
      * @param int $modifiers The declared modifiers for this node.
-     *
      * @throws InvalidArgumentException If the given modifier contains unexpected values.
      */
     public function setModifiers($modifiers): void
@@ -138,7 +137,6 @@ class ASTConstantDefinition extends AbstractASTNode
      * Returns the total number of the used property bag.
      *
      * @return int
-     *
      * @see    ASTNode#getMetadataSize()
      * @since  0.10.4
      */

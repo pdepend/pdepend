@@ -53,7 +53,6 @@ use RuntimeException;
  * Test case for the class level analyzer.
  *
  * @covers \PDepend\Metrics\Analyzer\ClassLevelAnalyzer
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -427,7 +426,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * testGetNodeMetricsForTrait
      *
      * @return array
-     *
      * @since 1.0.6
      */
     public function testGetNodeMetricsForTrait()
@@ -443,7 +441,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * testGetNodeMetricsForTraitReturnsExpectedMetricSet
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -460,7 +457,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Tests that the analyzer calculates the correct IMPL values.
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -474,7 +470,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Tests that the calculated Class Interface Size(CSI) is correct.
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -488,7 +483,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Tests that the calculated Class SiZe(CSZ) metric is correct.
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -502,7 +496,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * testCalculateNpmMetricForClassWithPublicMethod
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -516,7 +509,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Tests that the analyzer calculates the correct VARS metric
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -530,7 +522,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Tests that the analyzer calculates the correct VARSi metric
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -544,7 +535,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Tests that the analyzer calculates the correct VARSnp metric
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -558,7 +548,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Tests that the analyzer calculates the correct WMC metric.
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -572,7 +561,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Tests that the analyzer calculates the correct WMCi metric.
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -586,7 +574,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * Tests that the analyzer calculates the correct WMCnp metric.
      *
      * @param array $metrics Calculated class metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -601,7 +588,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * returns all measured metrics.
      *
      * @return array<string, mixed>
-     *
      * @since 1.0.6
      */
     private function calculateTraitMetrics()

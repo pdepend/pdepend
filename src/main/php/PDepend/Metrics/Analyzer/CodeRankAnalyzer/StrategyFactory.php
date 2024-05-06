@@ -99,9 +99,7 @@ class StrategyFactory
      * Creates a code rank strategy for the given identifier.
      *
      * @param string $strategyName The strategy identifier.
-     *
      * @return CodeRankStrategyI
-     *
      * @throws InvalidArgumentException If the given <b>$id</b> is not valid or
      *                                  no matching class declaration exists.
      */

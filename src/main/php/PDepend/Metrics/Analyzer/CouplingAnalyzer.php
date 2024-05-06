@@ -96,7 +96,6 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * Has this analyzer already processed the source under test?
      *
      * @var bool
-     *
      * @since 0.10.2
      */
     private $uninitialized = true;
@@ -120,7 +119,6 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * depender.
      *
      * @var array<string, array<string, array<string, bool>>>
-     *
      * @since 0.10.2
      */
     private $dependencyMap = [];
@@ -130,7 +128,6 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * the node's metrics.
      *
      * @var array<string, array<string, mixed>>
-     *
      * @since 0.10.2
      */
     private $nodeMetrics = [];
@@ -194,7 +191,6 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * the coupling metrics for them.
      *
      * @param ASTArtifactList<ASTNamespace> $namespaces
-     *
      * @since  0.10.2
      */
     private function doAnalyze($namespaces): void

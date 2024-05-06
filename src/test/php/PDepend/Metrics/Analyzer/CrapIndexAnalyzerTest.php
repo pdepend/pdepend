@@ -48,7 +48,6 @@ use PDepend\Metrics\AbstractMetricsTestCase;
  * Test cases for the {@link  \PDepend\Metrics\Analyzer\CrapIndexAnalyzer} class.
  *
  * @covers \PDepend\Metrics\Analyzer\CrapIndexAnalyzer
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -150,9 +149,9 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests the crap index algorithm implementation.
      *
-     * @param string $testCase  Name of the calling test case.
-     * @param int    $ccn       The entire cyclomatic complexity number.
-     * @param int    $crapIndex The expected crap index.
+     * @param string $testCase Name of the calling test case.
+     * @param int $ccn The entire cyclomatic complexity number.
+     * @param int $crapIndex The expected crap index.
      */
     private function doTestCrapIndexCalculation($testCase, $ccn, $crapIndex): void
     {
@@ -164,8 +163,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      * Calculates the crap index.
      *
      * @param string $testCase Name of the calling test case.
-     * @param int    $ccn      The entire cyclomatic complexity number.
-     *
+     * @param int $ccn The entire cyclomatic complexity number.
      * @return array
      */
     private function calculateCrapIndex($testCase, $ccn)
@@ -216,7 +214,6 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      * Creates a mocked instance of the cyclomatic complexity analyzer.
      *
      * @param int $ccn
-     *
      * @return CyclomaticComplexityAnalyzer
      */
     private function createCyclomaticComplexityAnalyzerMock($ccn = 42)

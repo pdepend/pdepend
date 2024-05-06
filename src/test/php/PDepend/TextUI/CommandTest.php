@@ -52,7 +52,6 @@ use ReflectionClass;
  * Test case for the text ui command.
  *
  * @covers \PDepend\TextUI\Command
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -301,7 +300,6 @@ class CommandTest extends AbstractTestCase
      * Executes the command class and returns an array with namespace statistics.
      *
      * @param string $pathName
-     *
      * @return array
      */
     private function runCommandAndReturnStatistics(array $argv, $pathName)
@@ -567,7 +565,7 @@ class CommandTest extends AbstractTestCase
     /**
      * Tests the help output with an optional prolog text.
      *
-     * @param string $actual     The cli output.
+     * @param string $actual The cli output.
      * @param string $prologText Optional prolog text.
      */
     protected function assertHelpOutput($actual, $prologText = ''): void
@@ -592,7 +590,6 @@ class CommandTest extends AbstractTestCase
      * an array <b>array($exitCode, $output)</b>.
      *
      * @param ?array $argv The cli parameters.
-     *
      * @return array<mixed>
      */
     private function executeCommand(?array $argv = null)

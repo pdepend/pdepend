@@ -50,7 +50,6 @@ use PDepend\Source\Tokenizer\Tokens;
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPTokenizerInternal} class.
  *
  * @covers \PDepend\Source\Language\PHP\PHPTokenizerInternal
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

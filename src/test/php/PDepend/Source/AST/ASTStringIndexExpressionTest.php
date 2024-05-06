@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.12
  */
 
@@ -50,10 +49,8 @@ namespace PDepend\Source\AST;
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTIndexExpression
  * @covers \PDepend\Source\AST\ASTStringIndexExpression
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.12
  *
  * @group unittest
@@ -64,7 +61,6 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
      * testStringIndexExpression
      *
      * @return ASTStringIndexExpression
-     *
      * @since 1.0.2
      */
     public function testStringIndexExpression()

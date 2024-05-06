@@ -70,7 +70,7 @@ class FileCacheGarbageCollector
 
     /**
      * @param string $cacheDir
-     * @param int    $ttl
+     * @param int $ttl
      */
     public function __construct($cacheDir, $ttl = self::DEFAULT_TTL)
     {

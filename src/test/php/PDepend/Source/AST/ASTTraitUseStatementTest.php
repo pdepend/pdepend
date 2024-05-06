@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  */
 
@@ -52,10 +51,8 @@ use ReflectionMethod;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTraitUseStatement
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  *
  * @group unittest
@@ -384,7 +381,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      * testTraitUseStatement
      *
      * @return ASTTraitUseStatement
-     *
      * @since 1.0.2
      */
     public function testTraitUseStatement()
@@ -447,7 +443,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      * testTraitUseStatementInTrait
      *
      * @return ASTTraitUseStatement
-     *
      * @since 1.0.2
      */
     public function testTraitUseStatementInTrait()

@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 
@@ -57,7 +56,6 @@ use OutOfBoundsException;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 class ASTFormalParameter extends AbstractASTNode
@@ -104,7 +102,6 @@ class ASTFormalParameter extends AbstractASTNode
      * variable argument list <b>...</b>.
      *
      * @return bool
-     *
      * @since 2.0.7
      */
     public function isVariableArgList()
@@ -144,7 +141,6 @@ class ASTFormalParameter extends AbstractASTNode
      * Returns the total number of the used property bag.
      *
      * @return int
-     *
      * @see    ASTNode#getMetadataSize()
      * @since  0.10.4
      */
@@ -157,7 +153,6 @@ class ASTFormalParameter extends AbstractASTNode
      * Returns the declared modifiers for this type.
      *
      * @return int
-     *
      * @since  0.9.4
      */
     public function getModifiers()
@@ -173,10 +168,8 @@ class ASTFormalParameter extends AbstractASTNode
      * contains an invalid/unexpected modifier
      *
      * @param int $modifiers
-     *
      * @throws BadMethodCallException
      * @throws InvalidArgumentException
-     *
      * @since  0.9.4
      */
     public function setModifiers($modifiers): void

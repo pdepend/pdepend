@@ -48,7 +48,6 @@ use PDepend\Metrics\AbstractMetricsTestCase;
  * Tests the for the package metrics visitor.
  *
  * @covers \PDepend\Metrics\Analyzer\ClassDependencyAnalyzer
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *

@@ -109,7 +109,6 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      * state based disabling/enabling.
      *
      * @return bool
-     *
      * @since  0.9.10
      */
     public function isEnabled()

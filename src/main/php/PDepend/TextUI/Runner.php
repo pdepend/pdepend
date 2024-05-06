@@ -217,7 +217,7 @@ class Runner
     /**
      * Adds a logger or analyzer option.
      *
-     * @param string               $identifier
+     * @param string $identifier
      * @param array<string>|string $value
      */
     public function addOption($identifier, $value): void
@@ -239,7 +239,6 @@ class Runner
      * execution.
      *
      * @return int
-     *
      * @throws RuntimeException An exception with a readable error message and
      *                          an exit code.
      */

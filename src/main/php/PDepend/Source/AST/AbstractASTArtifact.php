@@ -138,7 +138,6 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * Sets the item name.
      *
      * @param string $name The item name.
-     *
      * @since  1.0.0
      */
     public function setName($name): void
@@ -163,7 +162,6 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * Sets the unique identifier for this node instance.
      *
      * @param string $id Identifier for this node.
-     *
      * @since  0.9.12
      */
     public function setId($id): void
@@ -326,7 +324,6 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * @template T of array<string, mixed>|numeric-string
      *
      * @param T $data
-     *
      * @return T
      */
     public function accept(ASTVisitor $visitor, $data = [])

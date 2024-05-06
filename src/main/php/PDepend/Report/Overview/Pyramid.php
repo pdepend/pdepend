@@ -157,7 +157,6 @@ class Pyramid implements FileAwareGenerator
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param Analyzer $analyzer The analyzer to log.
-     *
      * @return bool
      */
     public function log(Analyzer $analyzer)
@@ -236,9 +235,8 @@ class Pyramid implements FileAwareGenerator
      * If no threshold is defined for the given name, this method will return
      * <b>null</b>.
      *
-     * @param string $name  The metric/field identfier.
-     * @param mixed  $value The metric/field value.
-     *
+     * @param string $name The metric/field identfier.
+     * @param mixed $value The metric/field value.
      * @return string|null
      */
     private function computeThreshold($name, $value)
@@ -267,7 +265,6 @@ class Pyramid implements FileAwareGenerator
      * Computes the proportions between the given metrics.
      *
      * @param array<string, float> $metrics The aggregated project metrics.
-     *
      * @return array<string, float>
      */
     private function computeProportions(array $metrics)
@@ -299,7 +296,6 @@ class Pyramid implements FileAwareGenerator
      * Aggregates the required metrics from the registered analyzers.
      *
      * @return array<string, mixed>
-     *
      * @throws RuntimeException If one of the required analyzers isn't set.
      */
     private function collectMetrics()
