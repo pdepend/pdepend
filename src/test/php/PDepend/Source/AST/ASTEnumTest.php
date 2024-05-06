@@ -42,6 +42,7 @@
 
 namespace PDepend\Source\AST;
 
+use InvalidArgumentException;
 use PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy;
 use PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy;
 use PDepend\Source\Language\PHP\PHPBuilder;
@@ -50,19 +51,18 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTForInit} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTForInit
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTForInit
  * @group unittest
  */
 class ASTEnumTest extends AbstractASTArtifactTestCase
 {
     /**
      * testForInitHasExpectedStartLine
-     *
-     * @return void
      */
     public function testSerialization(): void
     {
@@ -107,11 +107,9 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         ], $nodes);
     }
 
-    /**
-     */
     public function testSetTokensWithEmptyArray(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('An AST node should contain at least one token');
 
         $enum = new ASTEnum('FooBar');

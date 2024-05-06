@@ -41,17 +41,16 @@
 namespace PDepend\Source\Language\PHP\Features\PHP82;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
+ *
  * @group unittest
  * @group php8.2
  */
 class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
 {
-    /**
-     * @return void
-     */
     public function testReturnParenthesesFirst(): void
     {
         $method = $this->getFirstMethodForTestCase();
@@ -68,9 +67,6 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $this->assertSame('D', $children[1]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testReturnParenthesesLast(): void
     {
         $method = $this->getFirstMethodForTestCase();
@@ -90,9 +86,6 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $this->assertSame('D&E&F', $children[2]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testReturnNestedParentheses(): void
     {
         $method = $this->getFirstMethodForTestCase();
@@ -102,9 +95,6 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $this->assertSame('(A&B&C)|true|(D&((E&F)|G))', $type->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testParameterParenthesesFirst(): void
     {
         $method = $this->getFirstMethodForTestCase();
@@ -127,9 +117,6 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $this->assertSame('null', $children[2]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testParameterParenthesesLast(): void
     {
         $method = $this->getFirstMethodForTestCase();
@@ -152,9 +139,6 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $this->assertSame('D&E&F', $children[2]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testParameterNestedParentheses(): void
     {
         $method = $this->getFirstMethodForTestCase();

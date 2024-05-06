@@ -58,6 +58,7 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      * calling test case.
      *
      * @return string
+     *
      * @since 0.10.0
      */
     protected function createSummaryXmlForCallingTest()
@@ -83,7 +84,8 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      * Parses the source of a test case file.
      *
      * @param string $testCase
-     * @param boolean $ignoreAnnotations
+     * @param bool   $ignoreAnnotations
+     *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
@@ -98,6 +100,7 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      * Returns the source file for the given test case.
      *
      * @param string $testCase The qualified test case name.
+     *
      * @return string
      */
     protected function getSourceFileForTestCase($testCase)

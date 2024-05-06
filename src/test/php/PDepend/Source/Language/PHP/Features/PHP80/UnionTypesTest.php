@@ -47,17 +47,16 @@ use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @group unittest
  * @group php8
  */
 class UnionTypesTest extends PHPParserVersion80TestCase
 {
-    /**
-     * @return void
-     */
     public function testUnionTypes(): void
     {
         /** @var ASTMethod $method */
@@ -79,9 +78,6 @@ class UnionTypesTest extends PHPParserVersion80TestCase
         $this->assertSame('$number', $variable->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testUnionTypesAsReturn(): void
     {
         /** @var ASTMethod $method */
@@ -95,9 +91,6 @@ class UnionTypesTest extends PHPParserVersion80TestCase
         $this->assertSame('int|float|Bar\Biz|null', $return->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testUnionTypesAsReturnWithArray(): void
     {
         /** @var ASTMethod $method */
@@ -111,8 +104,6 @@ class UnionTypesTest extends PHPParserVersion80TestCase
         $this->assertSame('array|iterable', $return->getImage());
     }
 
-    /**
-     */
     public function testUnionTypesStandaloneNull(): void
     {
         $this->expectException(\PDepend\Source\Parser\ParserException::class);

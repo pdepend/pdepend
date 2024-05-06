@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTInstanceOfExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTInstanceOfExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTInstanceOfExpression
  * @group unittest
  */
 class ASTInstanceOfExpressionTest extends ASTNodeTestCase
 {
     /**
      * Tests that the created instanceof object graph has the expected structure.
-     *
-     * @return void
      */
     public function testInstanceOfExpressionGraphWithStringIdentifier(): void
     {
@@ -72,8 +71,6 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests that the created instanceof object graph has the expected structure.
-     *
-     * @return void
      */
     public function testInstanceOfExpressionGraphWithLocalNamespaceIdentifier(): void
     {
@@ -88,8 +85,6 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests that the created instanceof object graph has the expected structure.
-     *
-     * @return void
      */
     public function testInstanceOfExpressionGraphWithAbsoluteNamespaceIdentifier(): void
     {
@@ -104,8 +99,6 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests that the created instanceof object graph has the expected structure.
-     *
-     * @return void
      */
     public function testInstanceOfExpressionGraphWithAliasedNamespaceIdentifier(): void
     {
@@ -120,8 +113,6 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests that the created instanceof object graph has the expected structure.
-     *
-     * @return void
      */
     public function testInstanceOfExpressionGraphWithStdClass(): void
     {
@@ -136,8 +127,6 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests that the created instanceof object graph has the expected structure.
-     *
-     * @return void
      */
     public function testInstanceOfExpressionGraphWithPHPIncompleteClass(): void
     {
@@ -152,8 +141,6 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests that the created instanceof object graph has the expected structure.
-     *
-     * @return void
      */
     public function testInstanceOfExpressionGraphWithStaticProperty(): void
     {
@@ -171,8 +158,6 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @param object $parent The parent ast node.
      * @param string $image  The expected type image.
-     *
-     * @return void
      */
     protected function assertInstanceOfGraphStatic($parent, $image): void
     {
@@ -188,8 +173,6 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      *
      * @param object $parent The parent ast node.
      * @param string $image  The expected type image.
-     *
-     * @return void
      */
     protected function assertInstanceOfGraphProperty($parent, $image): void
     {
@@ -206,8 +189,6 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      * @param object $parent The parent ast node.
      * @param string $image  The expected type image.
      * @param string $type   The expected class or interface type.
-     *
-     * @return void
      */
     protected function assertInstanceOfGraph($parent, $image, $type): void
     {
@@ -223,10 +204,10 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
     /**
      * Creates a arguments node.
      *
-     * @return \PDepend\Source\AST\ASTInstanceOfExpression
+     * @return ASTInstanceOfExpression
      */
     protected function createNodeInstance()
     {
-        return new \PDepend\Source\AST\ASTInstanceOfExpression();
+        return new ASTInstanceOfExpression();
     }
 }

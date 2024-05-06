@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTForStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTForStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTForStatement
  * @group unittest
  */
 class ASTForStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the start line value.
-     *
-     * @return void
      */
     public function testForStatementHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value.
-     *
-     * @return void
      */
     public function testForStatementHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value.
-     *
-     * @return void
      */
     public function testForStatementHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value.
-     *
-     * @return void
      */
     public function testForStatementHasExpectedEndColumn(): void
     {
@@ -100,8 +93,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testForExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testForExpressionHasExpectedStartLine(): void
     {
@@ -111,8 +102,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testForExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testForExpressionHasExpectedStartColumn(): void
     {
@@ -122,8 +111,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testForExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testForExpressionHasExpectedEndLine(): void
     {
@@ -133,8 +120,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testForExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testForExpressionHasExpectedEndColumn(): void
     {
@@ -144,8 +129,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testFirstChildOfForStatementIsInstanceOfForInit
-     *
-     * @return void
      */
     public function testFirstChildOfForStatementIsInstanceOfForInit(): void
     {
@@ -155,8 +138,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testFirstChildOfForStatementCanBeLeftBlank
-     *
-     * @return void
      */
     public function testFirstChildOfForStatementCanBeLeftBlank(): void
     {
@@ -167,8 +148,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testParserHandlesBooleanLiteralInForInit
-     *
-     * @return void
      */
     public function testParserHandlesBooleanLiteralInForInit(): void
     {
@@ -177,8 +156,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testSecondChildOfForStatementIsInstanceOfExpression
-     *
-     * @return void
      */
     public function testSecondChildOfForStatementIsInstanceOfExpression(): void
     {
@@ -188,8 +165,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testSecondChildOfForStatementCanBeLeftBlank
-     *
-     * @return void
      */
     public function testSecondChildOfForStatementCanBeLeftBlank(): void
     {
@@ -199,8 +174,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testThirdChildOfForStatementIsInstanceOfForUpdate
-     *
-     * @return void
      */
     public function testThirdChildOfForStatementIsInstanceOfForUpdate(): void
     {
@@ -210,8 +183,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testThirdChildOfForStatementCanBeLeftBlank
-     *
-     * @return void
      */
     public function testThirdChildOfForStatementCanBeLeftBlank(): void
     {
@@ -221,8 +192,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testFourthChildOfForStatementIsInstanceOfScopeStatement
-     *
-     * @return void
      */
     public function testFourthChildOfForStatementIsInstanceOfScopeStatement(): void
     {
@@ -232,8 +201,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testFourthChildOfForStatementIsInstanceOfStatement
-     *
-     * @return void
      */
     public function testFourthChildOfForStatementIsInstanceOfStatement(): void
     {
@@ -243,8 +210,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testParserResetsScopeTreeForEmptyForInit
-     *
-     * @return void
      */
     public function testParserResetsScopeTreeForEmptyForInit(): void
     {
@@ -258,8 +223,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testParserResetsScopeTreeForEmptyForExpression
-     *
-     * @return void
      */
     public function testParserResetsScopeTreeForEmptyForExpression(): void
     {
@@ -273,8 +236,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testForStatementAlternativeScopeHasExpectedStartLine
-     *
-     * @return void
      */
     public function testForStatementAlternativeScopeHasExpectedStartLine(): void
     {
@@ -284,8 +245,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testForStatementAlternativeScopeHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testForStatementAlternativeScopeHasExpectedStartColumn(): void
     {
@@ -295,8 +254,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testForStatementAlternativeScopeHasExpectedEndLine
-     *
-     * @return void
      */
     public function testForStatementAlternativeScopeHasExpectedEndLine(): void
     {
@@ -306,8 +263,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testForStatementAlternativeScopeHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testForStatementAlternativeScopeHasExpectedEndColumn(): void
     {
@@ -317,8 +272,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testForStatementTerminatedByPhpCloseTag
-     *
-     * @return void
      */
     public function testForStatementTerminatedByPhpCloseTag(): void
     {
@@ -328,8 +281,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testParserHandlesBooleanLiteralInForExpression
-     *
-     * @return void
      */
     public function testParserHandlesBooleanLiteralInForExpression(): void
     {
@@ -338,8 +289,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testParserResetsScopeTreeForEmptyForUpdate
-     *
-     * @return void
      */
     public function testParserResetsScopeTreeForEmptyForUpdate(): void
     {
@@ -353,8 +302,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testParserHandlesParenthesisExpressionInForUpdate
-     *
-     * @return void
      */
     public function testParserHandlesParenthesisExpressionInForUpdate(): void
     {
@@ -363,8 +310,6 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * testParserHandlesBooleanLiteralInForUpdate
-     *
-     * @return void
      */
     public function testParserHandlesBooleanLiteralInForUpdate(): void
     {
@@ -376,7 +321,7 @@ class ASTForStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTForStatement
+     * @return ASTForStatement
      */
     private function getFirstForStatementInFunction($testCase)
     {

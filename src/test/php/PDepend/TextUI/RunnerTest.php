@@ -42,20 +42,22 @@
 
 namespace PDepend\TextUI;
 
+use Exception;
 use PDepend\AbstractTestCase;
-use PDepend\Input\ExtensionFilter;
 use PDepend\Input\Filter;
 use PDepend\Report\ReportGeneratorFactory;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Test case for the text ui runner.
  *
+ * @covers \PDepend\TextUI\Runner
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\TextUI\Runner
  * @group unittest
  */
 class RunnerTest extends AbstractTestCase
@@ -63,12 +65,10 @@ class RunnerTest extends AbstractTestCase
     /**
      * Tests that the runner exits with an exception for an invalud source
      * directory.
-     *
-     * @return void
      */
     public function testRunnerThrowsRuntimeExceptionForInvalidSourceDirectory(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $runner = $this->createTextUiRunner();
         $runner->setSourceArguments(['foo/bar']);
@@ -77,12 +77,10 @@ class RunnerTest extends AbstractTestCase
 
     /**
      * Tests that the runner stops processing if no logger is specified.
-     *
-     * @return void
      */
     public function testRunnerThrowsRuntimeExceptionIfNoLoggerIsSpecified(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $runner = $this->createTextUiRunner();
         $runner->setSourceArguments([$this->createCodeResourceUriForTest()]);
@@ -91,8 +89,6 @@ class RunnerTest extends AbstractTestCase
 
     /**
      * testRunnerUsesCorrectFileFilter
-     *
-     * @return void
      */
     public function testRunnerUsesCorrectFileFilter(): void
     {
@@ -101,14 +97,14 @@ class RunnerTest extends AbstractTestCase
                 'functions'   =>  ['foo'],
                 'classes'     =>  ['MyException'],
                 'interfaces'  =>  [],
-                'exceptions'  =>  []
+                'exceptions'  =>  [],
             ],
             'pdepend.test2'  =>  [
                 'functions'   =>  [],
                 'classes'     =>  ['YourException'],
                 'interfaces'  =>  [],
-                'exceptions'  =>  []
-            ]
+                'exceptions'  =>  [],
+            ],
         ];
 
         $runner = $this->createTextUiRunner();
@@ -123,9 +119,6 @@ class RunnerTest extends AbstractTestCase
         $this->assertSame($expected, $actual);
     }
 
-    /**
-     * @return void
-     */
     public function testSetExcludeDirectories(): void
     {
         /** @var Filter[] $record */
@@ -147,7 +140,7 @@ class RunnerTest extends AbstractTestCase
 
         try {
             $this->silentRun($runner);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             // noop
         }
 
@@ -156,9 +149,6 @@ class RunnerTest extends AbstractTestCase
         $this->assertInstanceOf('PDepend\\Input\\ExcludePathFilter', $record[1]);
     }
 
-    /**
-     * @return void
-     */
     public function testSetExcludeNamespaces(): void
     {
         /** @var object[] $record */
@@ -183,7 +173,7 @@ class RunnerTest extends AbstractTestCase
 
         try {
             $this->silentRun($runner);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             // noop
         }
 
@@ -196,8 +186,6 @@ class RunnerTest extends AbstractTestCase
     /**
      * Tests that the runner handles the <b>--without-annotations</b> option
      * correct.
-     *
-     * @return void
      */
     public function testRunnerHandlesWithoutAnnotationsOptionCorrect(): void
     {
@@ -206,14 +194,14 @@ class RunnerTest extends AbstractTestCase
                 'functions'   =>  ['foo'],
                 'classes'     =>  ['MyException'],
                 'interfaces'  =>  [],
-                'exceptions'  =>  []
+                'exceptions'  =>  [],
             ],
             'pdepend.test2'  =>  [
                 'functions'   =>  [],
                 'classes'     =>  ['YourException'],
                 'interfaces'  =>  [],
-                'exceptions'  =>  []
-            ]
+                'exceptions'  =>  [],
+            ],
         ];
 
         $runner = $this->createTextUiRunner();
@@ -229,8 +217,6 @@ class RunnerTest extends AbstractTestCase
 
     /**
      * testSupportBadDocumentation
-     *
-     * @return void
      */
     public function testSupportBadDocumentation(): void
     {
@@ -250,10 +236,10 @@ class RunnerTest extends AbstractTestCase
                 'interfaces'  =>  [
                     'pkg1FooI',
                     'pkg2FooI',
-                    'pkg3FooI'
+                    'pkg3FooI',
                 ],
-                'exceptions'  =>  []
-            ]
+                'exceptions'  =>  [],
+            ],
         ];
 
         $runner = $this->createTextUiRunner();
@@ -267,8 +253,6 @@ class RunnerTest extends AbstractTestCase
 
     /**
      * testRunnerHasParseErrorsReturnsFalseForValidSource
-     *
-     * @return void
      */
     public function testRunnerHasParseErrorsReturnsFalseForValidSource(): void
     {
@@ -283,8 +267,6 @@ class RunnerTest extends AbstractTestCase
 
     /**
      * testRunnerHasParseErrorsReturnsTrueForInvalidSource
-     *
-     * @return void
      */
     public function testRunnerHasParseErrorsReturnsTrueForInvalidSource(): void
     {
@@ -299,8 +281,6 @@ class RunnerTest extends AbstractTestCase
 
     /**
      * testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages
-     *
-     * @return void
      */
     public function testRunnerGetParseErrorsReturnsArrayWithParsingExceptionMessages(): void
     {
@@ -318,12 +298,10 @@ class RunnerTest extends AbstractTestCase
 
     /**
      * testRunnerThrowsExceptionForUndefinedLoggerClass
-     *
-     * @return void
      */
     public function testRunnerThrowsExceptionForUndefinedLoggerClass(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $runner = $this->createTextUiRunner();
         $runner->addReportGenerator('FooBarLogger', $this->createRunResourceURI());
@@ -333,8 +311,9 @@ class RunnerTest extends AbstractTestCase
     /**
      * Executes the runner class and returns an array with namespace statistics.
      *
-     * @param \PDepend\TextUI\Runner $runner The runner instance.
-     * @param $pathName The source path.
+     * @param Runner $runner   The runner instance.
+     * @param        $pathName The source path.
+     *
      * @return array
      */
     private function runRunnerAndReturnStatistics(Runner $runner, $pathName)
@@ -355,7 +334,7 @@ class RunnerTest extends AbstractTestCase
                 'functions'   =>  [],
                 'classes'     =>  [],
                 'interfaces'  =>  [],
-                'exceptions'  =>  []
+                'exceptions'  =>  [],
             ];
             foreach ($namespace->getFunctions() as $function) {
                 $statistics['functions'][] = $function->getName();

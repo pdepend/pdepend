@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTConditionalExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTConditionalExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTConditionalExpression
  * @group unittest
  */
 class ASTConditionalExpressionTest extends ASTNodeTestCase
 {
     /**
      * testConditionalExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testConditionalExpressionHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTConditionalExpressionTest extends ASTNodeTestCase
 
     /**
      * testConditionalExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testConditionalExpressionHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTConditionalExpressionTest extends ASTNodeTestCase
 
     /**
      * testConditionalExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testConditionalExpressionHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTConditionalExpressionTest extends ASTNodeTestCase
 
     /**
      * testConditionalExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testConditionalExpressionHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTConditionalExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTConditionalExpression
+     * @return ASTConditionalExpression
      */
     private function getFirstConditionalExpressionInFunction($testCase)
     {

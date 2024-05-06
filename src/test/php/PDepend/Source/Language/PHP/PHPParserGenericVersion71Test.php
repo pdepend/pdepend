@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2013 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since     0.9.20
  */
 
@@ -48,33 +49,26 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
  *
- * @copyright 2008-2013 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
+ *
+ * @copyright 2008-2013 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  */
 class PHPParserGenericVersion71Test extends AbstractTestCase
 {
-    /**
-     * @return void
-     */
     public function testConstVisibility(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    /**
-     * @return void
-     */
     public function testNullableTypeHintParameter(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
     }
 
-    /**
-     * @return void
-     */
     public function testNullableTypeHintReturn(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());

@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.12
  */
 
@@ -46,31 +47,29 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTRequireExpression} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.12
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTRequireExpression
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 0.9.12
+ *
  * @group unittest
  */
 class ASTRequireExpressionTest extends ASTNodeTestCase
 {
     /**
      * testIsOnceReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsOnceReturnsFalseByDefault(): void
     {
-        $expr = new \PDepend\Source\AST\ASTRequireExpression();
+        $expr = new ASTRequireExpression();
         $this->assertFalse($expr->isOnce());
     }
 
     /**
      * testIsOnceReturnsTrueForRequireOnceExpression
-     *
-     * @return void
      */
     public function testIsOnceReturnsTrueForRequireOnceExpression(): void
     {
@@ -80,18 +79,16 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
 
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
-        $expr = new \PDepend\Source\AST\ASTRequireExpression();
+        $expr = new ASTRequireExpression();
         $this->assertEquals(
             [
                 'once',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $expr->__sleep()
         );
@@ -100,7 +97,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpression
      *
-     * @return \PDepend\Source\AST\ASTRequireExpression
+     * @return ASTRequireExpression
+     *
      * @since 1.0.2
      */
     public function testRequireExpression()
@@ -114,9 +112,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTRequireExpression $expr
+     * @param ASTRequireExpression $expr
      *
-     * @return void
      * @depends testRequireExpression
      */
     public function testRequireExpressionHasExpectedStartLine($expr): void
@@ -127,9 +124,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTRequireExpression $expr
+     * @param ASTRequireExpression $expr
      *
-     * @return void
      * @depends testRequireExpression
      */
     public function testRequireExpressionHasExpectedStartColumn($expr): void
@@ -140,9 +136,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTRequireExpression $expr
+     * @param ASTRequireExpression $expr
      *
-     * @return void
      * @depends testRequireExpression
      */
     public function testRequireExpressionHasExpectedEndLine($expr): void
@@ -153,9 +148,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTRequireExpression $expr
+     * @param ASTRequireExpression $expr
      *
-     * @return void
      * @depends testRequireExpression
      */
     public function testRequireExpressionHasExpectedEndColumn($expr): void
@@ -166,7 +160,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionWithParenthesis
      *
-     * @return \PDepend\Source\AST\ASTRequireExpression
+     * @return ASTRequireExpression
+     *
      * @since 1.0.2
      */
     public function testRequireExpressionWithParenthesis()
@@ -180,9 +175,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionWithParenthesisHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTRequireExpression $expr
+     * @param ASTRequireExpression $expr
      *
-     * @return void
      * @depends testRequireExpressionWithParenthesis
      */
     public function testRequireExpressionWithParenthesisHasExpectedStartLine($expr): void
@@ -193,9 +187,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionWithParenthesisHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTRequireExpression $expr
+     * @param ASTRequireExpression $expr
      *
-     * @return void
      * @depends testRequireExpressionWithParenthesis
      */
     public function testRequireExpressionWithParenthesisHasExpectedStartColumn($expr): void
@@ -206,9 +199,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionWithParenthesisHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTRequireExpression $expr
+     * @param ASTRequireExpression $expr
      *
-     * @return void
      * @depends testRequireExpressionWithParenthesis
      */
     public function testRequireExpressionWithParenthesisHasExpectedEndLine($expr): void
@@ -219,9 +211,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionWithParenthesisHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTRequireExpression $expr
+     * @param ASTRequireExpression $expr
      *
-     * @return void
      * @depends testRequireExpressionWithParenthesis
      */
     public function testRequireExpressionWithParenthesisHasExpectedEndColumn($expr): void
@@ -232,7 +223,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTRequireExpression
+     * @return ASTRequireExpression
      */
     private function getFirstRequireExpressionInFunction()
     {

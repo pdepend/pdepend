@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -46,19 +47,19 @@ namespace PDepend\Source\Parser;
 /**
  * Tests for unstructured code handling in the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
 class UnstructuredCodeTest extends AbstractParserTestCase
 {
     /**
      * testParserHandlesNonPhpCodeInFileProlog
-     *
-     * @return void
      */
     public function testParserHandlesNonPhpCodeInFileProlog(): void
     {
@@ -67,8 +68,6 @@ class UnstructuredCodeTest extends AbstractParserTestCase
 
     /**
      * testParserHandlesConditionalClassDeclaration
-     *
-     * @return void
      */
     public function testParserHandlesConditionalClassDeclaration(): void
     {
@@ -78,8 +77,6 @@ class UnstructuredCodeTest extends AbstractParserTestCase
 
     /**
      * testParserHandlesConditionalInterfaceDeclaration
-     *
-     * @return void
      */
     public function testParserHandlesConditionalInterfaceDeclaration(): void
     {
@@ -89,8 +86,6 @@ class UnstructuredCodeTest extends AbstractParserTestCase
 
     /**
      * testParserHandlesConditionalFunctionDeclaration
-     *
-     * @return void
      */
     public function testParserHandlesConditionalFunctionDeclaration(): void
     {

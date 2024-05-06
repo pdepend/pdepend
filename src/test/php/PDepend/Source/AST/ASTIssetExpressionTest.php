@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.12
  */
 
@@ -46,20 +47,20 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTIssetExpression} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.12
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTIssetExpression
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 0.9.12
+ *
  * @group unittest
  */
 class ASTIssetExpressionTest extends ASTNodeTestCase
 {
     /**
      * testIssetExpressionGraphWithMultipleVariables
-     *
-     * @return void
      */
     public function testIssetExpressionGraphWithMultipleVariables(): void
     {
@@ -70,8 +71,6 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
 
     /**
      * testIssetExpressionGraphWithStaticProperty
-     *
-     * @return void
      */
     public function testIssetExpressionGraphWithStaticProperty(): void
     {
@@ -82,8 +81,6 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
 
     /**
      * testIssetExpressionGraphWithArrayProperty
-     *
-     * @return void
      */
     public function testIssetExpressionGraphWithArrayProperty(): void
     {
@@ -94,8 +91,6 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
 
     /**
      * testIssetExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testIssetExpressionHasExpectedStartLine(): void
     {
@@ -105,8 +100,6 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
 
     /**
      * testIssetExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testIssetExpressionHasExpectedStartColumn(): void
     {
@@ -116,8 +109,6 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
 
     /**
      * testIssetExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testIssetExpressionHasExpectedEndLine(): void
     {
@@ -127,8 +118,6 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
 
     /**
      * testIssetExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testIssetExpressionHasExpectedEndColumn(): void
     {
@@ -141,7 +130,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTIssetExpression
+     * @return ASTIssetExpression
      */
     private function getFirstIssetExpressionInFunction($testCase)
     {

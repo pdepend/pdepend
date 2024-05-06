@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -50,19 +51,19 @@ use PDepend\Source\AST\ASTClass;
  * Test case for the {@link \PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter}
  * class.
  *
+ * @covers \PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  *
- * @covers \PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter
  * @group unittest
  */
 class CollectionArtifactFilterTest extends AbstractTestCase
 {
     /**
      * testAcceptsReturnsTrueByDefault
-     *
-     * @return void
      */
     public function testAcceptsReturnsTrueByDefault(): void
     {
@@ -72,8 +73,6 @@ class CollectionArtifactFilterTest extends AbstractTestCase
 
     /**
      * testAcceptsCallsNestedFilterWhenSet
-     *
-     * @return void
      */
     public function testAcceptsCallsNestedFilterWhenSet(): void
     {

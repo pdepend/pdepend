@@ -42,6 +42,9 @@
 
 namespace PDepend;
 
+use ArrayIterator;
+use DirectoryIterator;
+use ErrorException;
 use Exception;
 use Imagick;
 use PDepend\Input\ExcludePathFilter;
@@ -63,7 +66,8 @@ use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PHPUnit\Framework\TestCase;
-use ReflectionProperty;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * Abstract test case implementation for the PDepend namespace.
@@ -77,14 +81,13 @@ abstract class AbstractTestCase extends TestCase
      * The current working directory.
      *
      * @var string
+     *
      * @since 0.10.0
      */
     protected $workingDirectory = null;
 
     /**
      * Removes temporary test contents.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -104,8 +107,6 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * Resets the global iterator filter.
-     *
-     * @return void
      */
     protected function tearDown(): void
     {
@@ -127,7 +128,6 @@ abstract class AbstractTestCase extends TestCase
      *
      * @param string $directory Optional working directory.
      *
-     * @return void
      * @since 0.10.0
      */
     protected function changeWorkingDirectory($directory = null): void
@@ -144,6 +144,7 @@ abstract class AbstractTestCase extends TestCase
      * Returns the working directory for the currently executed test.
      *
      * @return string
+     *
      * @since 1.0.0
      */
     protected function getTestWorkingDirectory()
@@ -158,7 +159,6 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Resets a previous changed working directory.
      *
-     * @return void
      * @since 0.10.0
      */
     protected function resetWorkingDirectory(): void
@@ -175,7 +175,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $testCase Name of the calling test case.
      * @param string $nodeType The searched node class.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     protected function getFirstNodeOfTypeInFunction($testCase, $nodeType)
     {
@@ -198,7 +198,7 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTClosure
+     * @return Source\AST\ASTClosure
      */
     protected function getFirstClosureForTestCase()
     {
@@ -212,7 +212,7 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Create a TextUi Runner
      *
-     * @return \PDepend\TextUI\Runner
+     * @return TextUI\Runner
      */
     protected function createTextUiRunner()
     {
@@ -223,7 +223,7 @@ abstract class AbstractTestCase extends TestCase
 
     protected function createTestApplication()
     {
-        $application = new \PDepend\Application();
+        $application = new Application();
         $application->setConfigurationFile(__DIR__ . '/../../resources/pdepend.xml.dist');
 
         return $application;
@@ -234,7 +234,8 @@ abstract class AbstractTestCase extends TestCase
      *
      * @param string $nodeType The searched node class.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
+     *
      * @since 1.0.0
      */
     protected function getFirstNodeOfTypeInTrait($nodeType)
@@ -249,7 +250,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $testCase Name of the calling test case.
      * @param string $nodeType The searched node class.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     protected function getFirstNodeOfTypeInClass($testCase, $nodeType)
     {
@@ -263,7 +264,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $testCase Name of the calling test case.
      * @param string $nodeType The searched node class.
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     protected function getFirstNodeOfTypeInInterface($testCase, $nodeType)
     {
@@ -275,7 +276,8 @@ abstract class AbstractTestCase extends TestCase
      * Returns the first trait found in a test file associated with the given
      * test case.
      *
-     * @return \PDepend\Source\AST\ASTTrait
+     * @return ASTTrait
+     *
      * @since 1.0.0
      */
     protected function getFirstTraitForTestCase()
@@ -290,7 +292,7 @@ abstract class AbstractTestCase extends TestCase
      * Returns the first class found in a test file associated with the given
      * test case.
      *
-     * @return \PDepend\Source\AST\ASTClass
+     * @return ASTClass
      */
     protected function getFirstClassForTestCase()
     {
@@ -304,7 +306,7 @@ abstract class AbstractTestCase extends TestCase
      * Returns the first method that could be found in the source file
      * associated with the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTMethod
+     * @return ASTMethod
      */
     protected function getFirstClassMethodForTestCase()
     {
@@ -320,7 +322,7 @@ abstract class AbstractTestCase extends TestCase
      * Returns the first interface that could be found in the source file
      * associated with the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTInterface
+     * @return ASTInterface
      */
     protected function getFirstInterfaceForTestCase()
     {
@@ -334,7 +336,7 @@ abstract class AbstractTestCase extends TestCase
      * Returns the first method that could be found in the source file
      * associated with the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTMethod
+     * @return ASTMethod
      */
     protected function getFirstInterfaceMethodForTestCase()
     {
@@ -350,7 +352,7 @@ abstract class AbstractTestCase extends TestCase
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
      *
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface
+     * @return Source\AST\AbstractASTClassOrInterface
      */
     protected function getFirstTypeForTestCase()
     {
@@ -364,7 +366,7 @@ abstract class AbstractTestCase extends TestCase
      * Returns the first method that could be found in the code under test for
      * the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTMethod
+     * @return ASTMethod
      */
     protected function getFirstMethodForTestCase()
     {
@@ -374,7 +376,7 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTFormalParameter
+     * @return Source\AST\ASTFormalParameter
      */
     protected function getFirstFormalParameterForTestCase()
     {
@@ -387,8 +389,8 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Collects all children from a given node.
      *
-     * @param \PDepend\Source\AST\ASTNode $node   The current root node.
-     * @param array                   $actual Previous filled list.
+     * @param ASTNode $node   The current root node.
+     * @param array   $actual Previous filled list.
      *
      * @return array<string>
      */
@@ -405,10 +407,7 @@ abstract class AbstractTestCase extends TestCase
      * Tests that the given node and its children represent the expected ast
      * object graph.
      *
-     * @param \PDepend\Source\AST\ASTNode $node
      * @param array<string> $expected
-     *
-     * @return void
      */
     protected static function assertGraphEquals(ASTNode $node, array $expected): void
     {
@@ -418,7 +417,7 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Collects all children from a given node.
      *
-     * @param \PDepend\Source\AST\ASTNode $node The current root node.
+     * @param ASTNode $node The current root node.
      *
      * @return array
      */
@@ -438,10 +437,8 @@ abstract class AbstractTestCase extends TestCase
      * Tests that the given node and its children represent the expected ast
      * object graph.
      *
-     * @param \PDepend\Source\AST\ASTNode $node  The root node.
-     * @param array                   $graph Expected class structure.
-     *
-     * @return void
+     * @param ASTNode $node  The root node.
+     * @param array   $graph Expected class structure.
      */
     protected static function assertGraph(ASTNode $node, $graph): void
     {
@@ -455,6 +452,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $className Name of the class to mock.
      *
      * @return stdClass
+     *
      * @since 0.10.0
      */
     protected function getMockWithoutConstructor($className)
@@ -471,7 +469,6 @@ abstract class AbstractTestCase extends TestCase
      * Clears all temporary resources.
      *
      * @param string $dir
-     * @return void
      */
     private function clearRunResources($dir = null): void
     {
@@ -479,7 +476,7 @@ abstract class AbstractTestCase extends TestCase
             $dir = __DIR__ . '/_run';
         }
 
-        foreach (new \DirectoryIterator($dir) as $file) {
+        foreach (new DirectoryIterator($dir) as $file) {
             if ($file == '.' || $file == '..' || $file == '.svn') {
                 continue;
             }
@@ -496,7 +493,8 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Creates a test configuration instance.
      *
-     * @return \PDepend\Util\Configuration
+     * @return Util\Configuration
+     *
      * @since 0.10.0
      */
     protected function createConfigurationFixture()
@@ -507,7 +505,7 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @return \PDepend\Util\Cache\CacheDriver
+     * @return CacheDriver
      */
     protected function createCacheFixture()
     {
@@ -521,7 +519,8 @@ abstract class AbstractTestCase extends TestCase
      * Creates a PDepend instance configured with the code resource associated
      * with the calling test case.
      *
-     * @return \PDepend\Engine
+     * @return Engine
+     *
      * @since 0.10.0
      */
     protected function createEngineFixture()
@@ -533,14 +532,14 @@ abstract class AbstractTestCase extends TestCase
         $application = $this->createTestApplication();
 
         $configuration = $application->getConfiguration();
-        $cacheFactory = new \PDepend\Util\Cache\CacheFactory($configuration);
+        $cacheFactory = new Util\Cache\CacheFactory($configuration);
         $analyzerFactory = $application->getAnalyzerFactory();
 
         return new Engine($configuration, $cacheFactory, $analyzerFactory);
     }
 
     /**
-     * @param \PDepend\TextUI\Runner $runner
+     * @param TextUI\Runner $runner
      *
      * @return int
      */
@@ -552,7 +551,7 @@ abstract class AbstractTestCase extends TestCase
 
         try {
             $exitCode = $runner->run();
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $error = $exception;
         }
 
@@ -570,7 +569,8 @@ abstract class AbstractTestCase extends TestCase
      *
      * @param string $name Optional class name.
      *
-     * @return \PDepend\Source\AST\ASTClass
+     * @return ASTClass
+     *
      * @since 1.0.2
      */
     protected function createClassFixture($name = null)
@@ -592,7 +592,8 @@ abstract class AbstractTestCase extends TestCase
      *
      * @param string $name Optional interface name.
      *
-     * @return \PDepend\Source\AST\ASTInterface
+     * @return ASTInterface
+     *
      * @since 1.0.2
      */
     protected function createInterfaceFixture($name = null)
@@ -610,7 +611,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a ready to use trait fixture.
      *
      * @param string $name Optional trait name.
-     * @return \PDepend\Source\AST\ASTTrait
+     *
+     * @return ASTTrait
+     *
      * @since 1.0.2
      */
     protected function createTraitFixture($name = null)
@@ -627,7 +630,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a ready to use function fixture.
      *
      * @param string $name Optional function name.
-     * @return \PDepend\Source\AST\ASTFunction
+     *
+     * @return ASTFunction
+     *
      * @since 1.0.2
      */
     protected function createFunctionFixture($name = null)
@@ -646,7 +651,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a ready to use method fixture.
      *
      * @param string $name Optional method name.
-     * @return \PDepend\Source\AST\ASTMethod
+     *
+     * @return ASTMethod
+     *
      * @since 1.0.2
      */
     protected function createMethodFixture($name = null)
@@ -664,8 +671,10 @@ abstract class AbstractTestCase extends TestCase
      * Creates a temporary resource for the given file name.
      *
      * @param string $fileName
+     *
      * @return string
-     * @throws \ErrorException
+     *
+     * @throws ErrorException
      */
     protected function createRunResourceURI($fileName = null)
     {
@@ -676,15 +685,17 @@ abstract class AbstractTestCase extends TestCase
      * Creates a code uri for the given file name.
      *
      * @param string $fileName The code file name.
+     *
      * @return string
-     * @throws \ErrorException
+     *
+     * @throws ErrorException
      */
     protected static function createCodeResourceURI($fileName)
     {
         $uri = realpath(__DIR__ . '/../../resources/files') . DIRECTORY_SEPARATOR . $fileName;
 
         if (file_exists($uri) === false) {
-            throw new \ErrorException("File '{$fileName}' does not exists.");
+            throw new ErrorException("File '{$fileName}' does not exists.");
         }
         return $uri;
     }
@@ -717,7 +728,7 @@ abstract class AbstractTestCase extends TestCase
         $fileName = substr(implode(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
         try {
             return self::createCodeResourceURI($fileName);
-        } catch (\ErrorException $e) {
+        } catch (ErrorException $e) {
             return self::createCodeResourceURI("{$fileName}.php");
         }
     }
@@ -734,13 +745,11 @@ abstract class AbstractTestCase extends TestCase
                 return "{$frame['class']}::{$frame['function']}";
             }
         }
-        throw new \ErrorException("No calling test case found.");
+        throw new ErrorException("No calling test case found.");
     }
 
     /**
      * Initializes the test environment.
-     *
-     * @return void
      */
     public static function init(): void
     {
@@ -764,7 +773,6 @@ abstract class AbstractTestCase extends TestCase
      * Autoloader for the test cases.
      *
      * @param string $className Name of the missing class.
-     * @return void
      */
     public static function autoload($className): void
     {
@@ -780,7 +788,8 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Parses the test code associated with the calling test method.
      *
-     * @param boolean $ignoreAnnotations The parser should ignore annotations.
+     * @param bool $ignoreAnnotations The parser should ignore annotations.
+     *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     protected function parseCodeResourceForTest($ignoreAnnotations = false)
@@ -796,7 +805,8 @@ abstract class AbstractTestCase extends TestCase
      * and node builder implementations.
      *
      * @param string $testCase
-     * @param boolean $ignoreAnnotations
+     * @param bool   $ignoreAnnotations
+     *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
@@ -808,7 +818,7 @@ abstract class AbstractTestCase extends TestCase
 
         try {
             $fileOrDirectory = self::createCodeResourceURI($fileName);
-        } catch (\ErrorException $e) {
+        } catch (ErrorException $e) {
             $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
         }
 
@@ -819,8 +829,9 @@ abstract class AbstractTestCase extends TestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string  $fileOrDirectory
-     * @param boolean $ignoreAnnotations
+     * @param string $fileOrDirectory
+     * @param bool   $ignoreAnnotations
+     *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseSource($fileOrDirectory, $ignoreAnnotations = false)
@@ -831,13 +842,13 @@ abstract class AbstractTestCase extends TestCase
 
         if (is_dir($fileOrDirectory)) {
             $it = new Iterator(
-                new \RecursiveIteratorIterator(
-                    new \RecursiveDirectoryIterator($fileOrDirectory)
+                new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($fileOrDirectory)
                 ),
                 new ExcludePathFilter(['.svn'])
             );
         } else {
-            $it = new \ArrayIterator([$fileOrDirectory]);
+            $it = new ArrayIterator([$fileOrDirectory]);
         }
 
         $files = [];
@@ -868,10 +879,9 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder<mixed> $builder
-     * @param \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     *
+     * @return Source\Language\PHP\AbstractPHPParser
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
@@ -889,7 +899,6 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * @param array<int, string> $requiredFormats
-     * @return void
      */
     protected function requireImagick(array $requiredFormats = ['PNG', 'SVG']): void
     {

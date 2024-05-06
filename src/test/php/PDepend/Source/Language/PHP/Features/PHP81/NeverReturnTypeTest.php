@@ -41,17 +41,16 @@
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
  * @group unittest
  * @group php8.1
  */
 class NeverReturnTypeTest extends PHPParserVersion81TestCase
 {
-    /**
-     * @return void
-     */
     public function testFunctionReturnType(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
@@ -60,9 +59,6 @@ class NeverReturnTypeTest extends PHPParserVersion81TestCase
         $this->assertSame('never', $type->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testMethodReturnType(): void
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
@@ -71,9 +67,6 @@ class NeverReturnTypeTest extends PHPParserVersion81TestCase
         $this->assertSame('never', $type->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testClosureReturnType(): void
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();

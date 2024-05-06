@@ -54,8 +54,6 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
 {
     /**
      * testParserNotThrowsAnExceptionForKeywordUse
-     *
-     * @return void
      */
     public function testParserNotThrowsAnExceptionForKeywordUse(): void
     {
@@ -64,8 +62,6 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
 
     /**
      * testParserNotThrowsAnExceptionForKeywordGoto
-     *
-     * @return void
      */
     public function testParserNotThrowsAnExceptionForKeywordGoto(): void
     {
@@ -74,8 +70,6 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
 
     /**
      * testParserNotThrowsAnExceptionForKeywordNamespace
-     *
-     * @return void
      */
     public function testParserNotThrowsAnExceptionForKeywordNamespace(): void
     {
@@ -84,8 +78,6 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
 
     /**
      * testParserNotThrowsAnExceptionForMagicNamespaceConstant
-     *
-     * @return void
      */
     public function testParserNotThrowsAnExceptionForMagicNamespaceConstant(): void
     {
@@ -94,8 +86,6 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
 
     /**
      * testParserNotThrowsAnExceptionForKeywordParent
-     *
-     * @return void
      */
     public function testParserNotThrowsAnExceptionForKeywordParent(): void
     {

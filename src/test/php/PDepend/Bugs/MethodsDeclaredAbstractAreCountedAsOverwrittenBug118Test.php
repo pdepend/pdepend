@@ -56,8 +56,6 @@ class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractR
 {
     /**
      * testAnalyzerNotCountsImplementedAbstractMethodsAsOverwritten
-     *
-     * @return void
      */
     public function testAnalyzerNotCountsImplementedAbstractMethodsAsOverwritten(): void
     {
@@ -73,8 +71,6 @@ class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractR
 
     /**
      * testAnalyzerNotCountsImplementedInterfaceMethodsAsOverwritten
-     *
-     * @return void
      */
     public function testAnalyzerNotCountsImplementedInterfaceMethodsAsOverwritten(): void
     {

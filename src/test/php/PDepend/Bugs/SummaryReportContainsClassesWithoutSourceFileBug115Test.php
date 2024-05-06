@@ -54,8 +54,6 @@ class SummaryReportContainsClassesWithoutSourceFileBug115Test extends AbstractRe
 {
     /**
      * testSummaryReportFiltersClassesNotFlaggedUserDefined
-     *
-     * @return void
      */
     public function testSummaryReportFiltersClassesNotFlaggedUserDefined(): void
     {
@@ -65,8 +63,6 @@ class SummaryReportContainsClassesWithoutSourceFileBug115Test extends AbstractRe
 
     /**
      * testSummaryReportFiltersInternalClasses
-     *
-     * @return void
      */
     public function testSummaryReportFiltersInternalClasses(): void
     {
@@ -76,8 +72,6 @@ class SummaryReportContainsClassesWithoutSourceFileBug115Test extends AbstractRe
 
     /**
      * testSummaryReportDoesNotContainEmptyPackages
-     *
-     * @return void
      */
     public function testSummaryReportDoesNotContainEmptyPackages(): void
     {

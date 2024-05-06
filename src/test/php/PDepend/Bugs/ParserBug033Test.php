@@ -49,6 +49,7 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 33
+ *
  * @group regressiontest
  */
 class ParserBug033Test extends AbstractRegressionTestCase
@@ -58,8 +59,6 @@ class ParserBug033Test extends AbstractRegressionTestCase
      * value for a function parameter.
      *
      * http://bugs.pdepend.org/index.php?do=details&task_id=33&project=3
-     *
-     * @return void
      */
     public function testParserDetectsOnlyTypeHintsWithinTheFunctionSignature(): void
     {
@@ -76,8 +75,6 @@ class ParserBug033Test extends AbstractRegressionTestCase
      * value for a method parameter.
      *
      * http://bugs.pdepend.org/index.php?do=details&task_id=33&project=3
-     *
-     * @return void
      */
     public function testParserDetectsOnlyTypeHintsWithinTheMethodSignature(): void
     {

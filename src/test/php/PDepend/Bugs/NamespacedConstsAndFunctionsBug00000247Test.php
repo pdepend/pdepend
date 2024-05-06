@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2016 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link    https://github.com/pdepend/pdepend/issues/247
  */
 
@@ -46,23 +47,24 @@ namespace PDepend\Bugs;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
+use PHPUnit_Framework_MockObject_MockObject;
 
 /**
  * Test case for bug #247.
  *
  * @copyright 2008-2016 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link    https://github.com/pdepend/pdepend/issues/247
  *
  * @ticket 247
+ *
  * @group regressiontest
  */
 class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTestCase
 {
     /**
      * testUseConst
-     *
-     * @return void
      */
     public function testUseConst(): void
     {
@@ -85,8 +87,6 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
 
     /**
      * testUseFunction
-     *
-     * @return void
      */
     public function testUseFunction(): void
     {
@@ -108,10 +108,9 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
     }
 
     /**
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
      * @param \PDepend\Source\Builder\Builder<mixed> $builder
-     * @param \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PHPUnit_Framework_MockObject_MockObject
+     *
+     * @return PHPUnit_Framework_MockObject_MockObject
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {

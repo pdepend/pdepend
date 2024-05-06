@@ -43,17 +43,16 @@ namespace PDepend\Source\Language\PHP\Features\PHP81;
 use PDepend\Source\AST\State;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
  * @group unittest
  * @group php8.1
  */
 class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
 {
-    /**
-     * @return void
-     */
     public function testReadonlyProperty(): void
     {
         $class = $this->getFirstClassForTestCase();
@@ -66,9 +65,6 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
         $this->assertSame(0, ($expectedModifiers & $property->getModifiers()));
     }
 
-    /**
-     * @return void
-     */
     public function testReadonlyPropertyInConstructor(): void
     {
         $class = $this->getFirstClassForTestCase();
@@ -93,9 +89,6 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
         $this->assertSame($expectedModifiers, $parameter->getFormalParameter()->getModifiers());
     }
 
-    /**
-     * @return void
-     */
     public function testReadonlyNameUsedElsewhere(): void
     {
         $class = $this->getFirstClassForTestCase();

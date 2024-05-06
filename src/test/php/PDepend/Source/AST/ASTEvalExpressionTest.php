@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTEvalExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTEvalExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTEvalExpression
  * @group unittest
  */
 class ASTEvalExpressionTest extends ASTNodeTestCase
 {
     /**
      * testEvalExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testEvalExpressionHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTEvalExpressionTest extends ASTNodeTestCase
 
     /**
      * testEvalExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testEvalExpressionHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTEvalExpressionTest extends ASTNodeTestCase
 
     /**
      * testEvalExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testEvalExpressionHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTEvalExpressionTest extends ASTNodeTestCase
 
     /**
      * testEvalExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testEvalExpressionHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTEvalExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTEvalExpression
+     * @return ASTEvalExpression
      */
     private function getFirstEvalExpressionInFunction($testCase)
     {

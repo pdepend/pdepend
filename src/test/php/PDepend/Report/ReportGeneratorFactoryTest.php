@@ -62,8 +62,6 @@ class ReportGeneratorFactoryTest extends AbstractTestCase
     /**
      * Tests that {@link \PDepend\Report\ReportGeneratorFactory::createGenerator()}
      * returns the expected instance for a valid identifier.
-     *
-     * @return void
      */
     public function testCreateGeneratorWithValidIdentifier(): void
     {
@@ -76,8 +74,6 @@ class ReportGeneratorFactoryTest extends AbstractTestCase
     /**
      * Tests the singleton behaviour of the logger factory method
      * {@link \PDepend\Report\ReportGeneratorFactory::createGenerator()}.
-     *
-     * @return void
      */
     public function testCreateGeneratorSingletonBehaviour(): void
     {
@@ -92,8 +88,6 @@ class ReportGeneratorFactoryTest extends AbstractTestCase
     /**
      * Tests that {@link \PDepend\Report\ReportGeneratorFactory::createGenerator()}
      * fails with an exception for an invalid logger identifier.
-     *
-     * @return void
      */
     public function testCreateGeneratorWithInvalidIdentifierFail(): void
     {

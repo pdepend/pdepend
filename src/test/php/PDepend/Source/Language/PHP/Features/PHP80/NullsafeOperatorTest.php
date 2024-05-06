@@ -45,17 +45,16 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @group unittest
  * @group php8
  */
 class NullsafeOperatorTest extends PHPParserVersion80TestCase
 {
-    /**
-     * @return void
-     */
     public function testNullsafeOperator(): void
     {
         /** @var ASTMethod $method */
@@ -68,9 +67,6 @@ class NullsafeOperatorTest extends PHPParserVersion80TestCase
         $this->assertSame('$obj', $variable->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testNullsafeOperatorChain(): void
     {
         /** @var ASTMethod $method */

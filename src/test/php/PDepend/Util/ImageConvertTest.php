@@ -43,22 +43,22 @@
 namespace PDepend\Util;
 
 use PDepend\AbstractTestCase;
+use stdClass;
 
 /**
  * Test case for the image convert utility class.
  *
+ * @covers \PDepend\Util\ImageConvert
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Util\ImageConvert
  * @group unittest
  */
 class ImageConvertTest extends AbstractTestCase
 {
     /**
      * Tests the copy behaviour for same mime types.
-     *
-     * @return void
      */
     public function testConvertMakesCopyForSameMimeType(): void
     {
@@ -71,8 +71,6 @@ class ImageConvertTest extends AbstractTestCase
 
     /**
      * Tests the image convert behaviour of the image magick execution path.
-     *
-     * @return void
      */
     public function testConvertWithImageMagickExtension(): void
     {
@@ -87,8 +85,6 @@ class ImageConvertTest extends AbstractTestCase
 
     /**
      * Tests that the image convert util appends the default extension as fallback.
-     *
-     * @return void
      */
     public function testConvertAppendDefaultFileExtensionAsFallback(): void
     {
@@ -105,8 +101,6 @@ class ImageConvertTest extends AbstractTestCase
 
     /**
      * testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions
-     *
-     * @return void
      */
     public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions(): void
     {
@@ -117,13 +111,11 @@ class ImageConvertTest extends AbstractTestCase
     /**
      * Tests that the convert util recognizes the imageConvert configuration
      * for the font-family:
-     *
-     * @return void
      */
     public function testConvertRecognizesFontFamilyInConfiguration(): void
     {
-        $settings                           = new \stdClass();
-        $settings->imageConvert             = new \stdClass();
+        $settings                           = new stdClass();
+        $settings->imageConvert             = new stdClass();
         $settings->imageConvert->fontFamily = 'Verdana';
 
         $config = new Configuration($settings);
@@ -140,8 +132,6 @@ class ImageConvertTest extends AbstractTestCase
 
     /**
      * testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions
-     *
-     * @return void
      */
     public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions(): void
     {
@@ -152,13 +142,11 @@ class ImageConvertTest extends AbstractTestCase
     /**
      * Tests that the convert util recognizes the imageConvert configuration
      * for the font-size:
-     *
-     * @return void
      */
     public function testConvertRecognizesFontSizeInConfiguration(): void
     {
-        $settings                         = new \stdClass();
-        $settings->imageConvert           = new \stdClass();
+        $settings                         = new stdClass();
+        $settings->imageConvert           = new stdClass();
         $settings->imageConvert->fontSize = 14;
 
         $config = new Configuration($settings);

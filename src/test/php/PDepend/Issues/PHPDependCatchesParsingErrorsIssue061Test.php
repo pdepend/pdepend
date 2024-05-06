@@ -47,10 +47,11 @@ use PDepend\Input\ExtensionFilter;
 /**
  * Test case for the catch error ticket #61.
  *
+ * @covers \PDepend\Engine
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Engine
  * @group unittest
  */
 class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
@@ -58,8 +59,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     /**
      * Tests that the {@link \PDepend\Engine::getExceptions()} returns a
      * list with the expected exceptions.
-     *
-     * @return void
      */
     public function testPHPDependReturnsExpectedExceptionInstances(): void
     {
@@ -80,7 +79,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      * Tests that the {@link \PDepend\TextUI\Runner::hasErrors()} method will
      * return <b>false</b> when not parsing error occurred.
      *
-     * @return void
      * @covers \PDepend\TextUI\Runner
      */
     public function testRunnerReturnsFalseWhenNoErrorOccurredDuringTheParsingProcess(): void
@@ -97,7 +95,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      * Tests that the {@link \PDepend\TextUI\Runner::hasErrors()} method will
      * return <b>true</b> when a parsing error occurred.
      *
-     * @return void
      * @covers \PDepend\TextUI\Runner
      */
     public function testRunnerReturnsTrueWhenAnErrorOccurredDuringTheParsingProcess(): void
@@ -115,7 +112,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      * Tests that the output does not contain the error hint when the parsing
      * process was successful.
      *
-     * @return void
      * @covers \PDepend\TextUI\Command
      */
     public function testCommandDoesNotPrintErrorOutputOnSuccessfulParsingProcess(): void
@@ -123,7 +119,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
         $this->prepareArgv(
             [
                 '--dummy-logger=' . $this->createRunResourceURI('pdepend.log'),
-                $this->createCodeResourceUriForTest()
+                $this->createCodeResourceUriForTest(),
             ]
         );
 
@@ -135,7 +131,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     /**
      * testCommandPrintsExceptionMessageWhenAnErrorOccurredDuringTheParsingProcess
      *
-     * @return void
      * @covers \PDepend\TextUI\Command
      */
     public function testCommandPrintsExceptionMessageWhenAnErrorOccurredDuringTheParsingProcess(): void
@@ -144,7 +139,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
             [
                 '--dummy-logger=' . $this->createRunResourceURI('pdepend.log'),
                 '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
-                $this->createCodeResourceUriForTest()
+                $this->createCodeResourceUriForTest(),
             ]
         );
         [$exitCode, $output] = $this->runTextUICommand();
@@ -156,8 +151,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      * Sets a command line argument vector.
      *
      * @param array<string> $argv The temporary command line argument vector
-     *
-     * @return void
      */
     protected function prepareArgv($argv): void
     {

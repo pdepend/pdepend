@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 
@@ -49,11 +50,13 @@ use PDepend\Util\Cache\CacheDriver;
 /**
  * Test case for the {@link \PDepend\Util\Cache\Driver\File\FileCacheDirectory} class.
  *
+ * @covers \PDepend\Util\Cache\Driver\File\FileCacheDirectory
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  *
- * @covers \PDepend\Util\Cache\Driver\File\FileCacheDirectory
  * @group unittest
  */
 class FileCacheDirectoryTest extends AbstractTestCase
@@ -74,8 +77,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
 
     /**
      * Initializes a temporary working directory.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -88,8 +89,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
 
     /**
      * testCreatesNotExistingCacheDirectory
-     *
-     * @return void
      */
     public function testCreatesNotExistingCacheDirectory(): void
     {
@@ -99,8 +98,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
 
     /**
      * testAddsCacheVersionFileToNewlyCreatedCache
-     *
-     * @return void
      */
     public function testAddsCacheVersionFileToNewlyCreatedCache(): void
     {
@@ -110,8 +107,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
 
     /**
      * testCacheVersionFileContainsExpectedVersionString
-     *
-     * @return void
      */
     public function testCacheVersionFileContainsExpectedVersionString(): void
     {
@@ -124,8 +119,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
 
     /**
      * testOverwritesPreviousCacheVersionFileWithActualVersionString
-     *
-     * @return void
      */
     public function testOverwritesPreviousCacheVersionFileWithActualVersionString(): void
     {
@@ -141,8 +134,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
 
     /**
      * testDeletesCacheFileIfVersionFileNotExists
-     *
-     * @return void
      */
     public function testDeletesCacheFileIfVersionFileNotExists(): void
     {
@@ -158,8 +149,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
 
     /**
      * testDeletesCacheDirectoryIfVersionFileNotExists
-     *
-     * @return void
      */
     public function testDeletesCacheDirectoryIfVersionFileNotExists(): void
     {
@@ -174,8 +163,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
 
     /**
      * testDeletesCacheDirectoriesRecusiveIfVersionFileNotExists
-     *
-     * @return void
      */
     public function testDeletesCacheDirectoriesRecusiveIfVersionFileNotExists(): void
     {
@@ -192,8 +179,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
 
     /**
      * testCreateCacheDirectoryReturnsExpectedSubDirectory
-     *
-     * @return void
      */
     public function testCreateCacheDirectoryReturnsExpectedSubDirectory(): void
     {
@@ -205,8 +190,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
 
     /**
      * testCreateCacheDirectoryAlsoCreatesThePhysicalDirectory
-     *
-     * @return void
      */
     public function testCreateCacheDirectoryAlsoCreatesThePhysicalDirectory(): void
     {

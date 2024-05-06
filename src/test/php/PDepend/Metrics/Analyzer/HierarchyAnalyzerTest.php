@@ -48,18 +48,17 @@ use PDepend\Source\AST\ASTClass;
 /**
  * Test case for the hierarchy analyzer.
  *
+ * @covers \PDepend\Metrics\Analyzer\HierarchyAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Metrics\Analyzer\HierarchyAnalyzer
-   * @group unittest
+ * @group unittest
  */
 class HierarchyAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * testCalculatesExpectedNumberOfLeafClasses
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfLeafClasses(): void
     {
@@ -72,8 +71,6 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNumberOfAbstractClasses
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfAbstractClasses(): void
     {
@@ -86,8 +83,6 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNumberOfConcreteClasses
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfConcreteClasses(): void
     {
@@ -100,8 +95,6 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNumberOfRootClasses
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfRootClasses(): void
     {
@@ -114,8 +107,6 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatedLeafsMetricDoesNotContainNotUserDefinedClasses
-     *
-     * @return void
      */
     public function testCalculatedLeafsMetricDoesNotContainNotUserDefinedClasses(): void
     {
@@ -128,8 +119,6 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testAnalyzerIgnoresClassesThatAreNotUserDefined
-     *
-     * @return void
      */
     public function testAnalyzerIgnoresClassesThatAreNotUserDefined(): void
     {
@@ -145,8 +134,6 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that {@link \PDepend\Metrics\Analyzer\HierarchyAnalyzer::getNodeMetrics()}
      * returns an empty <b>array</b> for an unknown node id.
-     *
-     * @return void
      */
     public function testGetNodeMetricsForUnknownId(): void
     {
@@ -157,7 +144,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
     }
 
     /**
-     * @return \PDepend\Metrics\Analyzer\HierarchyAnalyzer
+     * @return HierarchyAnalyzer
      */
     private function createAnalyzer()
     {

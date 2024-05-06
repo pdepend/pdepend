@@ -42,30 +42,30 @@
 
 namespace PDepend\Source\AST;
 
+use BadMethodCallException;
+use InvalidArgumentException;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
-use PDepend\Source\Builder\BuilderContext;
-use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\ASTVisitor\StubASTVisitor;
+use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTClass class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PDepend\Source\AST\AbstractASTClassOrInterface
  * @covers \PDepend\Source\AST\AbstractASTType
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  */
 class ASTClassTest extends AbstractASTArtifactTestCase
 {
     /**
      * testGetAllMethodsContainsMethodsOfImplementedInterface
-     *
-     * @return void
      */
     public function testGetAllMethodsContainsMethodsOfImplementedInterface(): void
     {
@@ -78,8 +78,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetAllMethodsContainsMethodsOfImplementedInterfaces
-     *
-     * @return void
      */
     public function testGetAllMethodsContainsMethodsOfImplementedInterfaces(): void
     {
@@ -92,8 +90,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetAllMethodsContainsMethodsOfIndirectImplementedInterfaces
-     *
-     * @return void
      */
     public function testGetAllMethodsContainsMethodsOfIndirectImplementedInterfaces(): void
     {
@@ -106,8 +102,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetAllMethodsContainsMethodsOfParentClass
-     *
-     * @return void
      */
     public function testGetAllMethodsContainsMethodsOfParentClass(): void
     {
@@ -120,8 +114,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetAllMethodsContainsMethodsOfParentClasses
-     *
-     * @return void
      */
     public function testGetAllMethodsContainsMethodsOfParentClasses(): void
     {
@@ -135,7 +127,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsOnClassWithParentReturnsTraitMethod
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsOnClassWithParentReturnsTraitMethod(): void
@@ -152,7 +143,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsOnClassWhereTraitExcludesParentMethod
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsOnClassWhereTraitExcludesParentMethod(): void
@@ -169,7 +159,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod(): void
@@ -186,7 +175,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult(): void
@@ -201,7 +189,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance(): void
@@ -215,7 +202,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsWithAliasedMethodCollision
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsWithAliasedMethodCollision(): void
@@ -230,7 +216,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsWithAliasedMethodTwice
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsWithAliasedMethodTwice(): void
@@ -245,7 +230,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsWithVisibilityChangedToPublic
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsWithVisibilityChangedToPublic(): void
@@ -262,7 +246,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsWithVisibilityChangedToProtected
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsWithVisibilityChangedToProtected(): void
@@ -279,7 +262,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsWithVisibilityChangedToPrivate
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsWithVisibilityChangedToPrivate(): void
@@ -296,7 +278,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier(): void
@@ -313,7 +294,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsWithVisibilityChangedKeepsStaticModifier
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsWithVisibilityChangedKeepsStaticModifier(): void
@@ -330,7 +310,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsHandlesTraitMethodPrecedence
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsHandlesTraitMethodPrecedence(): void
@@ -347,7 +326,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsExcludeTraitMethodWithPrecedence
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsExcludeTraitMethodWithPrecedence(): void
@@ -359,15 +337,15 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsWithMethodCollisionThrowsExpectedException
      *
-     * @return void
-     * @since 1.0.0
      * @covers \PDepend\Source\AST\ASTTraitMethodCollisionException
+     *
+     * @since 1.0.0
      *
      * @group issue-154
      */
     public function testGetAllMethodsWithMethodCollisionThrowsExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\AST\ASTTraitMethodCollisionException::class);
+        $this->expectException(ASTTraitMethodCollisionException::class);
 
         $class = $this->getFirstClassForTestCase();
         $class->getAllMethods();
@@ -376,7 +354,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllChildrenReturnsAnEmptyArrayByDefault
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllChildrenReturnsAnEmptyArrayByDefault(): void
@@ -388,7 +365,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes(): void
@@ -399,8 +375,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetConstantsReturnsAnEmptyArrayByDefault
-     *
-     * @return void
      */
     public function testGetConstantsReturnsAnEmptyArrayByDefault(): void
     {
@@ -410,8 +384,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetConstantsReturnsExpectedConstant
-     *
-     * @return void
      */
     public function testGetConstantsReturnsExpectedConstant(): void
     {
@@ -421,8 +393,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetConstantsReturnsExpectedConstants
-     *
-     * @return void
      */
     public function testGetConstantsReturnsExpectedConstants(): void
     {
@@ -432,8 +402,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetConstantsReturnsExpectedParentConstants
-     *
-     * @return void
      */
     public function testGetConstantsReturnsExpectedParentConstants(): void
     {
@@ -443,8 +411,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetConstantsReturnsExpectedMergedParentAndChildConstants
-     *
-     * @return void
      */
     public function testGetConstantsReturnsExpectedMergedParentAndChildConstants(): void
     {
@@ -455,7 +421,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetConstantsReturnsExpectedInterfaceConstants
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetConstantsReturnsExpectedInterfaceConstants(): void
@@ -466,8 +431,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetConstantReturnsFalseForNotExistentConstant
-     *
-     * @return void
      */
     public function testGetConstantReturnsFalseForNotExistentConstant(): void
     {
@@ -477,8 +440,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetConstantReturnsExpectedValueForExistentConstant
-     *
-     * @return void
      */
     public function testGetConstantReturnsExpectedValueForExistentConstant(): void
     {
@@ -488,8 +449,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetConstantReturnsExpectedValueNullForExistentConstant
-     *
-     * @return void
      */
     public function testGetConstantReturnsExpectedValueNullForExistentConstant(): void
     {
@@ -499,8 +458,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testHasConstantReturnsFalseForNotExistentConstant
-     *
-     * @return void
      */
     public function testHasConstantReturnsFalseForNotExistentConstant(): void
     {
@@ -510,8 +467,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testHasConstantReturnsTrueForExistentConstant
-     *
-     * @return void
      */
     public function testHasConstantReturnsTrueForExistentConstant(): void
     {
@@ -521,8 +476,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testHasConstantReturnsTrueForExistentNullConstant
-     *
-     * @return void
      */
     public function testHasConstantReturnsTrueForExistentNullConstant(): void
     {
@@ -533,7 +486,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetDependenciesReturnsEmptyResultByDefault
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetDependenciesReturnsEmptyResultByDefault(): void
@@ -545,7 +497,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetDependenciesContainsImplementedInterface
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetDependenciesContainsImplementedInterface(): void
@@ -557,7 +508,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetDependenciesContainsImplementedInterfaces
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetDependenciesContainsImplementedInterfaces(): void
@@ -569,7 +519,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetDependenciesContainsParentClass
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetDependenciesContainsParentClass(): void
@@ -581,7 +530,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetDependenciesContainsParentClassAndInterfaces
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetDependenciesContainsParentClassAndInterfaces(): void
@@ -592,8 +540,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch(): void
     {
@@ -621,8 +567,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch(): void
     {
@@ -656,8 +600,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTMethod::getFirstChildOfType()}.
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull(): void
     {
@@ -688,8 +630,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration
-     *
-     * @return void
      */
     public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration(): void
     {
@@ -703,8 +643,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration
-     *
-     * @return void
      */
     public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations(): void
     {
@@ -718,8 +656,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testFindChildrenOfTypeFindsASTNodesFromVariousCodeItems
-     *
-     * @return void
      */
     public function testFindChildrenOfTypeFindsASTNodesFromVariousCodeItems(): void
     {
@@ -733,8 +669,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedClassStillIsParentOfChildMethods
-     *
-     * @return void
      */
     public function testUnserializedClassStillIsParentOfChildMethods(): void
     {
@@ -746,8 +680,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedClassAndChildMethodsStillReferenceTheSameFile
-     *
-     * @return void
      */
     public function testUnserializedClassAndChildMethodsStillReferenceTheSameFile(): void
     {
@@ -762,8 +694,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedClassStillReferencesSameParentClass
-     *
-     * @return void
      */
     public function testUnserializedClassStillReferencesSameParentClass(): void
     {
@@ -778,8 +708,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedClassStillReferencesSameParentInterface
-     *
-     * @return void
      */
     public function testUnserializedClassStillReferencesSameParentInterface(): void
     {
@@ -794,8 +722,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedClassIsReturnedByMethodAsReturnClass
-     *
-     * @return void
      */
     public function testUnserializedClassIsReturnedByMethodAsReturnClass(): void
     {
@@ -812,8 +738,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedClassStillReferencesSamePackage
-     *
-     * @return void
      */
     public function testUnserializedClassStillReferencesSamePackage(): void
     {
@@ -828,8 +752,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedClassRegistersToPackage
-     *
-     * @return void
      */
     public function testUnserializedClassRegistersToPackage(): void
     {
@@ -841,8 +763,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnserializedClassNotAddsDublicateClassToPackage
-     *
-     * @return void
      */
     public function testUnserializedClassNotAddsDublicateClassToPackage(): void
     {
@@ -854,8 +774,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the ctor and the {@link \PDepend\Source\AST\ASTClass::getName()}.
-     *
-     * @return void
      */
     public function testCreateNewClassInstance(): void
     {
@@ -865,8 +783,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsAbstractReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsAbstractReturnsFalseByDefault(): void
     {
@@ -876,8 +792,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testMarkClassInstanceAsAbstract
-     *
-     * @return void
      */
     public function testMarkClassInstanceAsAbstract(): void
     {
@@ -889,8 +803,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsFinalReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsFinalReturnsFalseByDefault(): void
     {
@@ -900,8 +812,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testMarkClassInstanceAsFinal
-     *
-     * @return void
      */
     public function testMarkClassInstanceAsFinal(): void
     {
@@ -914,12 +824,10 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * Tests the behavior of {@link \PDepend\Source\AST\ASTClass::setModifiers()}
      * when it is called with an invalid modifier.
-     *
-     * @return void
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifier(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $class = new ASTClass(__CLASS__);
         $class->setModifiers(
@@ -931,8 +839,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * Tests that a new {@link \PDepend\Source\AST\ASTClass} object returns
      * an empty {@link \PDepend\Source\AST\ASTArtifactList} instance for methods.
-     *
-     * @return void
      */
     public function testGetMethodsNodeIteratorIsEmptyByDefault(): void
     {
@@ -946,8 +852,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      * Tests that the {@link \PDepend\Source\AST\ASTClass::addMethod()}
      * method adds a method to the internal list and sets the context class as
      * parent.
-     *
-     * @return void
      */
     public function testAddMethodStoresNewlyAddedMethodInCollection(): void
     {
@@ -960,8 +864,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testAddMethodSetsParentOfNewlyAddedMethod
-     *
-     * @return void
      */
     public function testAddMethodSetsParentOfNewlyAddedMethod(): void
     {
@@ -975,8 +877,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetNamespaceReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetNamespaceReturnsNullByDefault(): void
     {
@@ -988,8 +888,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      * Tests that the {@link \PDepend\Source\AST\ASTClass::getNamespace()}
      * returns as default value <b>null</b> and that the namespace could be set
      * and unset.
-     *
-     * @return void
      */
     public function testGetSetNamespace(): void
     {
@@ -1002,8 +900,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testUnsetNamespaceResetsNamespaceReference
-     *
-     * @return void
      */
     public function testUnsetNamespaceResetsNamespaceReference(): void
     {
@@ -1018,7 +914,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testUnsetNamespaceResetsNamespaceNameProperty
      *
-     * @return void
      * @since 0.10.2
      */
     public function testUnsetNamespaceResetsNamespaceNameProperty(): void
@@ -1034,8 +929,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * Tests that {@link \PDepend\Source\AST\ASTClass::getInterfaces()}
      * returns the expected result.
-     *
-     * @return void
      */
     public function testGetInterfaces(): void
     {
@@ -1053,8 +946,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * Tests that {@link \PDepend\Source\AST\ASTClass::getInterfaces()}
      * returns the expected result.
-     *
-     * @return void
      */
     public function testGetInterfacesByInheritance(): void
     {
@@ -1077,8 +968,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * Tests that {@link \PDepend\Source\AST\ASTClass::getInterfaces()}
      * returns the expected result.
-     *
-     * @return void
      */
     public function testGetInterfacesByClassInheritence(): void
     {
@@ -1095,8 +984,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * Checks the {@link \PDepend\Source\AST\ASTClass::isSubtypeOf()} method.
-     *
-     * @return void
      */
     public function testIsSubtypeInInheritanceHierarchy(): void
     {
@@ -1118,7 +1005,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             'C' => false,
             'D' => true,
             'E' => true,
-            'F' => false
+            'F' => false,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -1126,8 +1013,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * Checks the {@link \PDepend\Source\AST\ASTClass::isSubtypeOf()} method.
-     *
-     * @return void
      */
     public function testIsSubtypeInClassInheritanceHierarchy(): void
     {
@@ -1149,7 +1034,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             'C' => false,
             'D' => true,
             'E' => true,
-            'F' => false
+            'F' => false,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -1157,8 +1042,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * Checks the {@link \PDepend\Source\AST\ASTClass::isSubtypeOf()} method.
-     *
-     * @return void
      */
     public function testIsSubtypeInClassAndInterfaceInheritanceHierarchy(): void
     {
@@ -1180,7 +1063,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             'C' => true,
             'D' => true,
             'E' => true,
-            'F' => true
+            'F' => true,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -1188,8 +1071,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetPropertiesReturnsExpectedNumberOfProperties
-     *
-     * @return void
      */
     public function testGetPropertiesReturnsExpectedNumberOfProperties(): void
     {
@@ -1199,12 +1080,10 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests that it is not possible to overwrite previously set class modifiers.
-     *
-     * @return void
      */
     public function testSetModifiersThrowsExpectedExceptionOnOverwrite(): void
     {
-        $this->expectException(\BadMethodCallException::class);
+        $this->expectException(BadMethodCallException::class);
 
         $class = new ASTClass(__CLASS__);
         $class->setModifiers(State::IS_FINAL);
@@ -1213,8 +1092,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetModifiersReturnsZeroByDefault
-     *
-     * @return void
      */
     public function testGetModifiersReturnsZeroByDefault(): void
     {
@@ -1224,8 +1101,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetModifiersReturnsInjectedModifierValue
-     *
-     * @return void
      */
     public function testGetModifiersReturnsInjectedModifierValue(): void
     {
@@ -1237,8 +1112,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * Tests the visitor accept method.
-     *
-     * @return void
      */
     public function testVisitorAccept(): void
     {
@@ -1251,8 +1124,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetTokensDelegatesCallToCacheRestore
-     *
-     * @return void
      */
     public function testGetTokensDelegatesCallToCacheRestore(): void
     {
@@ -1271,8 +1142,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testSetTokensDelegatesCallToCacheStore
-     *
-     * @return void
      */
     public function testSetTokensDelegatesCallToCacheStore(): void
     {
@@ -1294,8 +1163,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStartLineReturnsZeroByDefault
-     *
-     * @return void
      */
     public function testGetStartLineReturnsZeroByDefault(): void
     {
@@ -1305,8 +1172,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetStartLineReturnsStartLineOfFirstToken
-     *
-     * @return void
      */
     public function testGetStartLineReturnsStartLineOfFirstToken(): void
     {
@@ -1329,8 +1194,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetEndLineReturnsZeroByDefault
-     *
-     * @return void
      */
     public function testGetEndLineReturnsZeroByDefault(): void
     {
@@ -1340,8 +1203,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetEndLineReturnsEndLineOfLastToken
-     *
-     * @return void
      */
     public function testGetEndLineReturnsEndLineOfLastToken(): void
     {
@@ -1364,8 +1225,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetParentClassReferenceReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetParentClassReferenceReturnsNullByDefault(): void
     {
@@ -1375,8 +1234,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetParentClassReturnsExpectedClassInstance
-     *
-     * @return void
      */
     public function testGetParentClassReturnsExpectedClassInstance(): void
     {
@@ -1392,12 +1249,11 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetParentClassThrowsExpectedExceptionWhenBothAreTheSame
      *
-     * @return void
      * @covers \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testGetParentClassThrowsExpectedExceptionWhenBothAreTheSame(): void
     {
-        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+        $this->expectException(ASTClassOrInterfaceRecursiveInheritanceException::class);
 
         $this->parseCodeResourceForTest()
             ->current()
@@ -1408,8 +1264,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetParentClassesReturnsEmptyArrayByDefault
-     *
-     * @return void
      */
     public function testGetParentClassesReturnsEmptyArrayByDefault(): void
     {
@@ -1419,8 +1273,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetParentClassesReturnsExpectedListClasses
-     *
-     * @return void
      */
     public function testGetParentClassesReturnsExpectedListClasses(): void
     {
@@ -1438,7 +1290,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             [
                 'testGetParentClassesReturnsExpectedListClasses_parentA',
                 'testGetParentClassesReturnsExpectedListClasses_parentB',
-                'testGetParentClassesReturnsExpectedListClasses_parentC'
+                'testGetParentClassesReturnsExpectedListClasses_parentC',
             ],
             $classes
         );
@@ -1447,7 +1299,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetParentReturnsNullWhenParentIsFiltered
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetParentReturnsNullWhenParentIsFiltered(): void
@@ -1463,12 +1314,11 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy
      *
-     * @return void
      * @covers \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy(): void
     {
-        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+        $this->expectException(ASTClassOrInterfaceRecursiveInheritanceException::class);
 
         $this->parseCodeResourceForTest()
             ->current()
@@ -1479,8 +1329,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetInterfaceReferencesReturnsEmptyArrayByDefault
-     *
-     * @return void
      */
     public function testGetInterfaceReferencesReturnsEmptyArrayByDefault(): void
     {
@@ -1490,8 +1338,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces
-     *
-     * @return void
      */
     public function testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces(): void
     {
@@ -1501,8 +1347,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsUserDefinedReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsUserDefinedReturnsFalseByDefault(): void
     {
@@ -1512,8 +1356,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsUserDefinedReturnsTrueAfterSetUserDefinedCall
-     *
-     * @return void
      */
     public function testIsUserDefinedReturnsTrueAfterSetUserDefinedCall(): void
     {
@@ -1525,8 +1367,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsCachedReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsCachedReturnsFalseByDefault(): void
     {
@@ -1536,8 +1376,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testIsCachedReturnsFalseWhenObjectGetsSerialized
-     *
-     * @return void
      */
     public function testIsCachedReturnsFalseWhenObjectGetsSerialized(): void
     {
@@ -1547,18 +1385,12 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $this->assertFalse($class->isCached());
     }
 
-    /**
-     * @return void
-     */
     public function testGetNamespacedName(): void
     {
         $class = new ASTClass('MyClass');
         $this->assertSame('MyClass', $class->getNamespacedName());
     }
 
-    /**
-     * @return void
-     */
     public function testGetNamespacedNameWithNamespaceDeclaration(): void
     {
         $class = new ASTClass('MyClass');
@@ -1567,9 +1399,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $this->assertSame('My\\Namespace\\MyClass', $class->getNamespacedName());
     }
 
-    /**
-     * @return void
-     */
     public function testGetNamespacedNameWithPackageAnnotation(): void
     {
         $namespace = new ASTNamespace('My\\Namespace');
@@ -1583,8 +1412,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames(): void
     {
@@ -1607,7 +1434,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
                 'namespaceName',
                 'startLine',
                 'userDefined',
-                'id'
+                'id',
             ],
             $class->__sleep()
         );
@@ -1615,8 +1442,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testMagicWakeupSetsSourceFileOnChildMethods
-     *
-     * @return void
      */
     public function testMagicWakeupSetsSourceFileOnChildMethods(): void
     {
@@ -1625,7 +1450,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         $method = new ASTMethod(__FUNCTION__);
         $class->addMethod($method);
-        
+
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
         $class->setContext($context);
@@ -1639,8 +1464,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testMagicWakeupCallsRegisterClassOnBuilderContext
-     *
-     * @return void
      */
     public function testMagicWakeupCallsRegisterClassOnBuilderContext(): void
     {
@@ -1658,14 +1481,14 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * Creates an abstract item instance.
      *
-     * @return \PDepend\Source\AST\AbstractASTArtifact
+     * @return AbstractASTArtifact
      */
     protected function createItem()
     {
         $class = new ASTClass(__CLASS__);
         $class->setCompilationUnit(new ASTCompilationUnit(__FILE__));
         $class->setCache(new MemoryCacheDriver());
-        
+
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
         $class->setContext($context);

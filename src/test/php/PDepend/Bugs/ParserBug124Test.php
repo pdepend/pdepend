@@ -51,6 +51,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 124
+ *
  * @group regressiontest
  */
 class ParserBug124Test extends AbstractRegressionTestCase
@@ -61,8 +62,6 @@ class ParserBug124Test extends AbstractRegressionTestCase
      * <code>
      * $className = stdClass::class;
      * </code>
-     *
-     * @return void
      */
     public function testClassNameScalarKeyword(): void
     {
@@ -81,7 +80,7 @@ class ParserBug124Test extends AbstractRegressionTestCase
             Tokens::T_STRING,
             Tokens::T_DOUBLE_COLON,
             Tokens::T_CLASS_FQN,
-            Tokens::T_SEMICOLON
+            Tokens::T_SEMICOLON,
         ];
 
         $this->assertEquals($tokenTypes, $actual);

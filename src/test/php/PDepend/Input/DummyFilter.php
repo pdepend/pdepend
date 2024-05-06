@@ -53,21 +53,21 @@ class DummyFilter implements Filter
     /**
      * The return value for this filter.
      *
-     * @var boolean
+     * @var bool
      */
     public $returnValue = false;
 
     /**
      * Was this filter invoked?
      *
-     * @var boolean
+     * @var bool
      */
     public $invoked = false;
 
     /**
      * Constructs a new dummy filter
      *
-     * @param boolean $returnValue The pre defined return value for this filter.
+     * @param bool $returnValue The pre defined return value for this filter.
      */
     public function __construct($returnValue)
     {

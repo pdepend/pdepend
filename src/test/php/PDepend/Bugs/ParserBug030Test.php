@@ -51,6 +51,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 30
+ *
  * @group regressiontest
  */
 class ParserBug030Test extends AbstractRegressionTestCase
@@ -59,8 +60,6 @@ class ParserBug030Test extends AbstractRegressionTestCase
      * Tests that the parser sets the correct type tokens.
      *
      * http://bugs.xplib.de/index.php?do=details&task_id=30&project=3
-     *
-     * @return void
      */
     public function testCorrectClassTokensAreSet(): void
     {

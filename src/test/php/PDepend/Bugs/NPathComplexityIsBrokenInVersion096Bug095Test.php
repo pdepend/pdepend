@@ -60,8 +60,6 @@ class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractRegressionTe
     /**
      * Tests that the parser handles an interface within an instanceof operator
      * correct.
-     *
-     * @return void
      */
     public function testAnalyzerReturnsExpectedNPathValue(): void
     {

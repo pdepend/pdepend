@@ -56,8 +56,6 @@ class VariableVariablesInForeachStatementBug128Test extends AbstractRegressionTe
 {
     /**
      * testParserHandlesVariableVariableAsForeachValue
-     *
-     * @return void
      */
     public function testParserHandlesVariableVariableAsForeachValue(): void
     {
@@ -66,8 +64,6 @@ class VariableVariablesInForeachStatementBug128Test extends AbstractRegressionTe
 
     /**
      * testParserHandlesVariableVariableAsForeachKey
-     *
-     * @return void
      */
     public function testParserHandlesVariableVariableAsForeachKey(): void
     {
@@ -76,8 +72,6 @@ class VariableVariablesInForeachStatementBug128Test extends AbstractRegressionTe
 
     /**
      * testParserHandlesVariableVariableAsForeachKeyAndValue
-     *
-     * @return void
      */
     public function testParserHandlesVariableVariableAsForeachKeyAndValue(): void
     {

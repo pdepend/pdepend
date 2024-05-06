@@ -57,8 +57,6 @@ class ClassConstantAsArrayDefaultValueResultsInExceptionBug091Test extends Abstr
 {
     /**
      * Tests that the parser does not throw an exception.
-     *
-     * @return void
      */
     public function testMagicClassConstantDoesNotResultInExceptionAsArrayDefaultValue(): void
     {

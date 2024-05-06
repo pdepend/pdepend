@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCloneExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTCloneExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTCloneExpression
  * @group unittest
  */
 class ASTCloneExpressionTest extends ASTNodeTestCase
 {
     /**
      * testCloneExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testCloneExpressionHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
 
     /**
      * testCloneExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testCloneExpressionHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
 
     /**
      * testCloneExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testCloneExpressionHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
 
     /**
      * testCloneExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testCloneExpressionHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTCloneExpression
+     * @return ASTCloneExpression
      */
     private function getFirstCloneExpressionInFunction($testCase)
     {

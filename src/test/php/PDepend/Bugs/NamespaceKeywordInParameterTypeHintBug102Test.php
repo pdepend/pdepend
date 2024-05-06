@@ -57,8 +57,6 @@ class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractRegressionTe
 {
     /**
      * testParserHandlesNamespaceKeywordInFunctionParameterTypeHint
-     *
-     * @return void
      */
     public function testParserHandlesNamespaceKeywordInFunctionParameterTypeHint(): void
     {
@@ -70,8 +68,6 @@ class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractRegressionTe
 
     /**
      * testParserHandlesNamespaceKeywordInMethodParameterTypeHint
-     *
-     * @return void
      */
     public function testParserHandlesNamespaceKeywordInMethodParameterTypeHint(): void
     {

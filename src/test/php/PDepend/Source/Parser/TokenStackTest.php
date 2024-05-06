@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 
@@ -48,19 +49,19 @@ use PDepend\Source\Tokenizer\Token;
 /**
  * Test case for the {@link \PDepend\Source\Parser\TokenStack} class.
  *
+ * @covers \PDepend\Source\Parser\TokenStack
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  *
- * @covers \PDepend\Source\Parser\TokenStack
  * @group unittest
  */
 class TokenStackTest extends AbstractParserTestCase
 {
     /**
      * testAddReturnsGivenTokenInstance
-     *
-     * @return void
      */
     public function testAddReturnsGivenTokenInstance(): void
     {
@@ -72,8 +73,6 @@ class TokenStackTest extends AbstractParserTestCase
 
     /**
      * testPopReturnsExpectedTokenArray
-     *
-     * @return void
      */
     public function testPopReturnsExpectedTokenArray(): void
     {
@@ -83,7 +82,7 @@ class TokenStackTest extends AbstractParserTestCase
         $expected = [
             $stack->add($this->createToken()),
             $stack->add($this->createToken()),
-            $stack->add($this->createToken())
+            $stack->add($this->createToken()),
         ];
 
         $this->assertSame($expected, $stack->pop());
@@ -91,8 +90,6 @@ class TokenStackTest extends AbstractParserTestCase
 
     /**
      * testPopOnlyReturnsExpectedTokenArrayInCurrentScope
-     *
-     * @return void
      */
     public function testPopOnlyReturnsExpectedTokenArrayInCurrentScope(): void
     {
@@ -104,7 +101,7 @@ class TokenStackTest extends AbstractParserTestCase
 
         $expected = [
             $stack->add($this->createToken()),
-            $stack->add($this->createToken())
+            $stack->add($this->createToken()),
         ];
 
         $this->assertSame($expected, $stack->pop());
@@ -112,8 +109,6 @@ class TokenStackTest extends AbstractParserTestCase
 
     /**
      * testPopOnRootReturnsExpectedTokenArrayWithAllTokens
-     *
-     * @return void
      */
     public function testPopOnRootReturnsExpectedTokenArrayWithAllTokens(): void
     {
@@ -122,7 +117,7 @@ class TokenStackTest extends AbstractParserTestCase
 
         $expected = [
             $stack->add($this->createToken()),
-            $stack->add($this->createToken())
+            $stack->add($this->createToken()),
         ];
 
         $stack->push();
@@ -136,7 +131,7 @@ class TokenStackTest extends AbstractParserTestCase
     /**
      * Returns a test token instance.
      *
-     * @return \PDepend\Source\Tokenizer\Token
+     * @return Token
      */
     protected function createToken()
     {

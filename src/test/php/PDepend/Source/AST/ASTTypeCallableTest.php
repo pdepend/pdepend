@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -46,20 +47,20 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTypeCallable} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 1.0.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTypeCallable
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 1.0.0
+ *
  * @group unittest
  */
 class ASTTypeCallableTest extends ASTNodeTestCase
 {
     /**
      * testCallableTypeIsHandledCaseInsensitive
-     *
-     * @return void
      */
     public function testCallableTypeIsHandledCaseInsensitive(): void
     {
@@ -69,7 +70,8 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     /**
      * testCallableType
      *
-     * @return \PDepend\Source\AST\ASTTypeCallable
+     * @return ASTTypeCallable
+     *
      * @since 1.0.2
      */
     public function testCallableType()
@@ -83,9 +85,8 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     /**
      * testCallableTypeHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTypeCallable $type
+     * @param ASTTypeCallable $type
      *
-     * @return void
      * @depends testCallableType
      */
     public function testCallableTypeHasExpectedStartLine($type): void
@@ -96,9 +97,8 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     /**
      * testCallableTypeHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTypeCallable $type
+     * @param ASTTypeCallable $type
      *
-     * @return void
      * @depends testCallableType
      */
     public function testCallableTypeHasExpectedEndLine($type): void
@@ -109,9 +109,8 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     /**
      * testCallableTypeHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTypeCallable $type
+     * @param ASTTypeCallable $type
      *
-     * @return void
      * @depends testCallableType
      */
     public function testCallableTypeHasExpectedStartColumn($type): void
@@ -122,9 +121,8 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     /**
      * testCallableTypeHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTypeCallable $type
+     * @param ASTTypeCallable $type
      *
-     * @return void
      * @depends testCallableType
      */
     public function testCallableTypeHasExpectedEndColumn($type): void
@@ -135,7 +133,7 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTypeCallable
+     * @return ASTTypeCallable
      */
     private function getFirstCallableTypeInFunction()
     {

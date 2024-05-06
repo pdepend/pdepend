@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link ASTPostfixExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTPostfixExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTPostfixExpression
  * @group unittest
  */
 class ASTPostfixExpressionTest extends ASTNodeTestCase
 {
     /**
      * testIncrementPostfixExpressionOnStaticClassMember
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionOnStaticClassMember(): void
     {
@@ -68,15 +67,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testIncrementPostfixExpressionOnSelfClassMember
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionOnSelfClassMember(): void
     {
@@ -87,15 +84,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTSelfReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testIncrementPostfixExpressionOnParentClassMember
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionOnParentClassMember(): void
     {
@@ -106,15 +101,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTParentReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testIncrementPostfixExpressionOnThisObjectMember
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionOnThisObjectMember(): void
     {
@@ -125,15 +118,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTIdentifier'
+                'PDepend\\Source\\AST\\ASTIdentifier',
             ]
         );
     }
 
     /**
      * testIncrementPostfixExpressionOnFunctionPostfix
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionOnFunctionPostfix(): void
     {
@@ -144,15 +135,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTFunctionPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testIncrementPostfixExpressionOnVariableVariable
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionOnVariableVariable(): void
     {
@@ -162,15 +151,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
             [
                 'PDepend\\Source\\AST\\ASTVariableVariable',
                 'PDepend\\Source\\AST\\ASTVariableVariable',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testIncrementPostfixExpressionOnCompoundVariable
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionOnCompoundVariable(): void
     {
@@ -179,15 +166,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
             $expr,
             [
                 'PDepend\\Source\\AST\\ASTCompoundVariable',
-                'PDepend\\Source\\AST\\ASTConstant'
+                'PDepend\\Source\\AST\\ASTConstant',
             ]
         );
     }
 
     /**
      * testIncrementPostfixExpressionOnObjectMethodPostfix
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionOnObjectMethodPostfix(): void
     {
@@ -200,15 +185,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * testIncrementPostfixExpressionOnStaticMethodPostfix
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionOnStaticMethodPostfix(): void
     {
@@ -220,15 +203,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
-                'PDepend\\Source\\AST\\ASTArguments'
+                'PDepend\\Source\\AST\\ASTArguments',
             ]
         );
     }
 
     /**
      * testIncrementPostfixExpressionArrayPropertyPostfix
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionArrayPropertyPostfix(): void
     {
@@ -242,15 +223,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTArrayIndexExpression',
                 'PDepend\\Source\\AST\\ASTIdentifier',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
-    
+
     /**
      * testIncrementPostfixExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionHasExpectedStartLine(): void
     {
@@ -260,8 +239,6 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncrementPostfixExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionHasExpectedStartColumn(): void
     {
@@ -271,8 +248,6 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncrementPostfixExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionHasExpectedEndLine(): void
     {
@@ -282,8 +257,6 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncrementPostfixExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testIncrementPostfixExpressionHasExpectedEndColumn(): void
     {
@@ -293,8 +266,6 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
 
     /**
      * testDecrementPostfixExpressionArrayPropertyPostfix
-     *
-     * @return void
      */
     public function testDecrementPostfixExpressionArrayPropertyPostfix(): void
     {
@@ -308,15 +279,13 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
                 'PDepend\\Source\\AST\\ASTArrayIndexExpression',
                 'PDepend\\Source\\AST\\ASTIdentifier',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
-    
+
     /**
      * testDecrementPostfixExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testDecrementPostfixExpressionHasExpectedStartLine(): void
     {
@@ -326,8 +295,6 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
 
     /**
      * testDecrementPostfixExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testDecrementPostfixExpressionHasExpectedStartColumn(): void
     {
@@ -337,8 +304,6 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
 
     /**
      * testDecrementPostfixExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testDecrementPostfixExpressionHasExpectedEndLine(): void
     {
@@ -348,8 +313,6 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
 
     /**
      * testDecrementPostfixExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testDecrementPostfixExpressionHasExpectedEndColumn(): void
     {

@@ -40,38 +40,30 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP80;
 
-use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTReturnStatement;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @group unittest
  * @group php8
  */
 class MatchExpressionTest extends PHPParserVersion80TestCase
 {
-    /**
-     * @return void
-     */
     public function testMatchExpression(): void
     {
         $this->checkMatchExpression();
     }
 
-    /**
-     * @return void
-     */
     public function testMatchExpressionWithNamespace(): void
     {
         $this->checkMatchExpression('Baz');
     }
 
-    /**
-     * @return void
-     */
     private function checkMatchExpression($namespacePrefix = null): void
     {
         $matchImage = implode('\\', array_filter([$namespacePrefix, 'match']));
@@ -138,7 +130,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $pair[1]);
         $this->assertSame('new', $new->getImage());
         $this->assertSame(['\InvalidArgumentException', ''], array_map(
-            static fn ($node) => $node->getImage(),
+            static fn($node) => $node->getImage(),
             $new->getChildren(),
         ));
         $this->assertSame([
@@ -146,14 +138,11 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
             ['PDepend\\Source\\AST\\ASTVariable', '$in'],
             ['PDepend\\Source\\AST\\ASTLiteral', ']'],
         ], array_map(
-            static fn ($node) => [$node::class, $node->getImage()],
+            static fn($node) => [$node::class, $node->getImage()],
             $new->getChild(1)->getChild(0)->getChildren(),
         ));
     }
 
-    /**
-     * @return void
-     */
     public function testMatchExpressionWithMultipleKeyExpressions(): void
     {
         /** @var ASTMethod $method */
@@ -218,7 +207,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $pair[1]);
         $this->assertSame('new', $new->getImage());
         $this->assertSame(['\InvalidArgumentException', ''], array_map(
-            static fn ($node) => $node->getImage(),
+            static fn($node) => $node->getImage(),
             $new->getChildren(),
         ));
         $this->assertSame([
@@ -226,14 +215,11 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
             ['PDepend\\Source\\AST\\ASTVariable', '$in'],
             ['PDepend\\Source\\AST\\ASTLiteral', ']'],
         ], array_map(
-            static fn ($node) => [$node::class, $node->getImage()],
+            static fn($node) => [$node::class, $node->getImage()],
             $new->getChild(1)->getChild(0)->getChildren(),
         ));
     }
 
-    /**
-     * @return void
-     */
     public function testMatchExpressionWithTooManyArguments(): void
     {
         $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);

@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTThrowStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTThrowStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTThrowStatement
  * @group unittest
  */
 class ASTThrowStatementTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTThrowStatementTest extends ASTNodeTestCase
     /**
      * testThrowStatement
      *
-     * @return \PDepend\Source\AST\ASTThrowStatement
+     * @return ASTThrowStatement
+     *
      * @since 1.0.2
      */
     public function testThrowStatement()
@@ -71,9 +73,8 @@ class ASTThrowStatementTest extends ASTNodeTestCase
     /**
      * testThrowStatementHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTThrowStatement $stmt
+     * @param ASTThrowStatement $stmt
      *
-     * @return void
      * @depends testThrowStatement
      */
     public function testThrowStatementHasExpectedStartLine($stmt): void
@@ -84,9 +85,8 @@ class ASTThrowStatementTest extends ASTNodeTestCase
     /**
      * testThrowStatementHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTThrowStatement $stmt
+     * @param ASTThrowStatement $stmt
      *
-     * @return void
      * @depends testThrowStatement
      */
     public function testThrowStatementHasExpectedStartColumn($stmt): void
@@ -97,9 +97,8 @@ class ASTThrowStatementTest extends ASTNodeTestCase
     /**
      * testThrowStatementHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTThrowStatement $stmt
+     * @param ASTThrowStatement $stmt
      *
-     * @return void
      * @depends testThrowStatement
      */
     public function testThrowStatementHasExpectedEndLine($stmt): void
@@ -110,9 +109,8 @@ class ASTThrowStatementTest extends ASTNodeTestCase
     /**
      * testThrowStatementHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTThrowStatement $stmt
+     * @param ASTThrowStatement $stmt
      *
-     * @return void
      * @depends testThrowStatement
      */
     public function testThrowStatementHasExpectedEndColumn($stmt): void
@@ -123,7 +121,7 @@ class ASTThrowStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTThrowStatement
+     * @return ASTThrowStatement
      */
     private function getFirstThrowStatementInFunction()
     {

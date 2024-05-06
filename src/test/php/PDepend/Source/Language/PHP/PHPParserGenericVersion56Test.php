@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.20
  */
 
@@ -48,21 +49,21 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 2.1.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
+ *
  * @link https://github.com/pdepend/pdepend/issues/180
+ * @since 2.1.0
  */
 class PHPParserGenericVersion56Test extends AbstractTestCase
 {
     /**
      * testShiftLeftInConstantInitializer
-     *
-     * @return void
      */
     public function testShiftLeftInConstantInitializer(): void
     {
@@ -74,8 +75,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
 
     /**
      * testShiftRightInConstantInitializer
-     *
-     * @return void
      */
     public function testShiftRightInConstantInitializer(): void
     {
@@ -87,8 +86,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
 
     /**
      * testShiftLeftInConstantInitializer
-     *
-     * @return void
      */
     public function testMultipleShiftLeftInConstantInitializer(): void
     {
@@ -100,8 +97,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
 
     /**
      * testShiftRightInConstantInitializer
-     *
-     * @return void
      */
     public function testMultipleShiftRightInConstantInitializer(): void
     {
@@ -114,7 +109,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
     /**
      * testConstantSupportForScalarArrayValues
      *
-     * @return void
      * @link https://github.com/pdepend/pdepend/issues/209
      */
     public function testConstantSupportForArrayWithValues(): void
@@ -128,7 +122,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
     /**
      * testConstantSupportForArrayWithKeyValuePairs
      *
-     * @return void
      * @link https://github.com/pdepend/pdepend/issues/209
      */
     public function testConstantSupportForArrayWithKeyValuePairs(): void
@@ -142,7 +135,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
     /**
      * testConstantSupportForArrayWithSelfReferenceInClass
      *
-     * @return void
      * @link https://github.com/pdepend/pdepend/issues/192
      */
     public function testConstantSupportForArrayWithSelfReferenceInClass(): void
@@ -156,7 +148,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
     /**
      * testConstantSupportForArrayWithSelfReferenceInInterface
      *
-     * @return void
      * @link https://github.com/pdepend/pdepend/issues/192
      */
     public function testConstantSupportForArrayWithSelfReferenceInInterface(): void
@@ -169,8 +160,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
 
     /**
      * testComplexExpressionInParameterInitializer
-     *
-     * @return void
      */
     public function testComplexExpressionInParameterInitializer(): void
     {
@@ -182,8 +171,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
 
     /**
      * testComplexExpressionInConstantDeclarator
-     *
-     * @return void
      */
     public function testComplexExpressionInConstantDeclarator(): void
     {
@@ -195,8 +182,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
 
     /**
      * testComplexExpressionInFieldDeclaration
-     *
-     * @return void
      */
     public function testComplexExpressionInFieldDeclaration(): void
     {
@@ -208,8 +193,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
 
     /**
      * testPowExpressionInMethodBody
-     *
-     * @return void
      */
     public function testPowExpressionInMethodBody(): void
     {
@@ -221,8 +204,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
 
     /**
      * testPowExpressionInFieldDeclaration
-     *
-     * @return void
      */
     public function testPowExpressionInFieldDeclaration(): void
     {
@@ -232,9 +213,6 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $this->assertNotNull($node);
     }
 
-    /**
-     * @return void
-     */
     public function testEllipsisOperatorInFunctionCall(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());

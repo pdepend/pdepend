@@ -47,10 +47,11 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the {@link \PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector} class.
  *
+ * @covers \PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Util\Cache\Driver\File\FileCacheGarbageCollector
  * @group unittest
  */
 class FileCacheGarbageCollectorTest extends AbstractTestCase
@@ -71,8 +72,6 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
 
     /**
      * Initializes a temporary working directory.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -85,9 +84,6 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         mkdir($this->cacheDir);
     }
 
-    /**
-     * @return void
-     */
     public function testKeepsRecentFiles(): void
     {
         $this->createFile();
@@ -97,9 +93,6 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         $this->assertSame(0, $garbageCollector->garbageCollect());
     }
 
-    /**
-     * @return void
-     */
     public function testRemovesOutdatedFiles(): void
     {
         $time = 31 * 86400;
@@ -111,9 +104,6 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         $this->assertSame(2, $garbageCollector->garbageCollect());
     }
 
-    /**
-     * @return void
-     */
     public function testKeepsFilesWithRecentATime(): void
     {
         $time = 31 * 86400;
@@ -125,9 +115,6 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         $this->assertSame(1, $garbageCollector->garbageCollect());
     }
 
-    /**
-     * @return void
-     */
     public function testKeepsFilesWithRecentMTime(): void
     {
         $time = 31 * 86400;

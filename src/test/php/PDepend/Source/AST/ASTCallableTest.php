@@ -48,18 +48,17 @@ use PDepend\Source\Tokenizer\Token;
 /**
  * Test case for the {@link \PDepend\Source\AST\AbstractASTCallable} class.
  *
+ * @covers \PDepend\Source\AST\AbstractASTCallable
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\AST\AbstractASTCallable
  * @group unittest
  */
 class ASTCallableTest extends AbstractTestCase
 {
     /**
      * testGetParametersReturnsEmptyArrayByDefault
-     *
-     * @return void
      */
     public function testGetParametersReturnsEmptyArrayByDefault(): void
     {
@@ -69,8 +68,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetParametersReturnsArrayWithOneElement
-     *
-     * @return void
      */
     public function testGetParametersReturnsArrayWithOneElement(): void
     {
@@ -80,8 +77,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetParametersReturnsArrayWithThreeElements
-     *
-     * @return void
      */
     public function testGetParametersReturnsArrayWithThreeElements(): void
     {
@@ -91,8 +86,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetParametersReturnsArrayWithObjectsOfTypeParameter
-     *
-     * @return void
      */
     public function testGetParametersReturnsArrayWithObjectsOfTypeParameter(): void
     {
@@ -102,8 +95,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetParametersNotSetsOptionalOnParameterWithoutDefaultValue
-     *
-     * @return void
      */
     public function testGetParametersNotSetsOptionalOnParameterWithoutDefaultValue(): void
     {
@@ -113,8 +104,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetParametersNotSetsOptionalOnParameterWithFollowingParameterWithoutDefaultValue
-     *
-     * @return void
      */
     public function testGetParametersNotSetsOptionalOnParameterWithFollowingParameterWithoutDefaultValue(): void
     {
@@ -124,8 +113,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetParametersSetsOptionalOnParameterWithDefaultValue
-     *
-     * @return void
      */
     public function testGetParametersSetsOptionalOnParameterWithDefaultValue(): void
     {
@@ -135,8 +122,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetParametersSetsOptionalOnLastParameterWithDefaultValue
-     *
-     * @return void
      */
     public function testGetParametersSetsOptionalOnLastParameterWithDefaultValue(): void
     {
@@ -147,7 +132,6 @@ class ASTCallableTest extends AbstractTestCase
     /**
      * testGetChildrenReturnsExpectedNumberOfNodes
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetChildrenReturnsExpectedNumberOfNodes(): void
@@ -160,8 +144,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetTokensDelegatesCallToCacheRestore
-     *
-     * @return void
      */
     public function testGetTokensDelegatesCallToCacheRestore(): void
     {
@@ -180,8 +162,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testSetTokensDelegatesCallToCacheStore
-     *
-     * @return void
      */
     public function testSetTokensDelegatesCallToCacheStore(): void
     {
@@ -202,8 +182,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetStartLineReturnsZeroByDefault
-     *
-     * @return void
      */
     public function testGetStartLineReturnsZeroByDefault(): void
     {
@@ -213,14 +191,12 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetStartLineReturnsStartLineOfFirstToken
-     *
-     * @return void
      */
     public function testGetStartLineReturnsStartLineOfFirstToken(): void
     {
         $tokens = [
             new Token(1, 'a', 13, 17, 0, 0),
-            new Token(2, 'b', 23, 42, 0, 0)
+            new Token(2, 'b', 23, 42, 0, 0),
         ];
 
         $cache = $this->createCacheFixture();
@@ -237,8 +213,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetEndLineReturnsZeroByDefault
-     *
-     * @return void
      */
     public function testGetEndLineReturnsZeroByDefault(): void
     {
@@ -248,14 +222,12 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetEndLineReturnsEndLineOfLastToken
-     *
-     * @return void
      */
     public function testGetEndLineReturnsEndLineOfLastToken(): void
     {
         $tokens = [
             new Token(1, 'a', 13, 17, 0, 0),
-            new Token(2, 'b', 23, 42, 0, 0)
+            new Token(2, 'b', 23, 42, 0, 0),
         ];
 
         $cache = $this->createCacheFixture();
@@ -272,8 +244,6 @@ class ASTCallableTest extends AbstractTestCase
 
     /**
      * testGetReturnClassReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetReturnClassReturnsNullByDefault(): void
     {
@@ -285,7 +255,8 @@ class ASTCallableTest extends AbstractTestCase
      * Returns the first callable found in the test file for the calling test
      * method.
      *
-     * @return \PDepend\Source\AST\AbstractASTCallable
+     * @return AbstractASTCallable
+     *
      * @since 0.10.0
      */
     protected function getFirstCallableForTest()
@@ -296,7 +267,7 @@ class ASTCallableTest extends AbstractTestCase
     /**
      * Returns a mocked instance of the callable class.
      *
-     * @return \PDepend\Source\AST\AbstractASTCallable
+     * @return AbstractASTCallable
      */
     protected function getCallableMock()
     {

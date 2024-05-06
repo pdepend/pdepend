@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTForUpdate} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTForUpdate
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTForUpdate
  * @group unittest
  */
 class ASTForUpdateTest extends ASTNodeTestCase
 {
     /**
      * testForUpdateHasExpectedStartLine
-     *
-     * @return void
      */
     public function testForUpdateHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTForUpdateTest extends ASTNodeTestCase
 
     /**
      * testForUpdateHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testForUpdateHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTForUpdateTest extends ASTNodeTestCase
 
     /**
      * testForUpdateHasExpectedEndLine
-     *
-     * @return void
      */
     public function testForUpdateHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTForUpdateTest extends ASTNodeTestCase
 
     /**
      * testForUpdateHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testForUpdateHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTForUpdateTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTForUpdate
+     * @return ASTForUpdate
      */
     private function getFirstForUpdateInFunction($testCase)
     {

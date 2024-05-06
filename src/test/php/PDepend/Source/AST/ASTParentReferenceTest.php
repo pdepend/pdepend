@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTParentReference} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTParentReference
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTParentReference
  * @group unittest
  */
 class ASTParentReferenceTest extends ASTNodeTestCase
@@ -57,14 +58,12 @@ class ASTParentReferenceTest extends ASTNodeTestCase
     /**
      * The mocked reference instance.
      *
-     * @var \PDepend\Source\AST\ASTClassOrInterfaceReference
+     * @var ASTClassOrInterfaceReference
      */
     protected $referenceMock = null;
 
     /**
      * testGetTypeDelegatesCallToInjectedReferenceObject
-     *
-     * @return void
      */
     public function testGetTypeDelegatesCallToInjectedReferenceObject(): void
     {
@@ -78,8 +77,6 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
@@ -90,7 +87,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
                 'context',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $reference->__sleep()
         );
@@ -98,8 +95,6 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 
     /**
      * testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException
-     *
-     * @return void
      */
     public function testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException(): void
     {
@@ -110,8 +105,6 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 
     /**
      * testParentReferenceInClassWithoutParentThrowsException
-     *
-     * @return void
      */
     public function testParentReferenceInClassWithoutParentThrowsException(): void
     {
@@ -122,8 +115,6 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 
     /**
      * testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException
-     *
-     * @return void
      */
     public function testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException(): void
     {
@@ -135,7 +126,6 @@ class ASTParentReferenceTest extends ASTNodeTestCase
     /**
      * testGetImageReturnsExpectedValue
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetImageReturnsExpectedValue(): void
@@ -146,8 +136,6 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 
     /**
      * testParentReferenceHasExpectedStartLine
-     *
-     * @return void
      */
     public function testParentReferenceHasExpectedStartLine(): void
     {
@@ -157,8 +145,6 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 
     /**
      * testParentReferenceHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testParentReferenceHasExpectedStartColumn(): void
     {
@@ -168,8 +154,6 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 
     /**
      * testParentReferenceHasExpectedEndLine
-     *
-     * @return void
      */
     public function testParentReferenceHasExpectedEndLine(): void
     {
@@ -179,8 +163,6 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 
     /**
      * testParentReferenceHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testParentReferenceHasExpectedEndColumn(): void
     {
@@ -191,7 +173,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
     /**
      * Creates a concrete node implementation.
      *
-     * @return \PDepend\Source\AST\ASTParentReference
+     * @return ASTParentReference
      */
     protected function createNodeInstance()
     {
@@ -199,7 +181,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        return new \PDepend\Source\AST\ASTParentReference($this->referenceMock);
+        return new ASTParentReference($this->referenceMock);
     }
 
     /**
@@ -207,7 +189,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTParentReference
+     * @return ASTParentReference
      */
     private function getFirstParentReferenceInClass($testCase)
     {

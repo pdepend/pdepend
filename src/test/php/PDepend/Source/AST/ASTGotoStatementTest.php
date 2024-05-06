@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTGotoStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTGotoStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTGotoStatement
  * @group unittest
  */
 class ASTGotoStatementTest extends ASTNodeTestCase
 {
     /**
      * testGotoStatementHasExpectedStartLine
-     *
-     * @return void
      */
     public function testGotoStatementHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTGotoStatementTest extends ASTNodeTestCase
 
     /**
      * testGotoStatementHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testGotoStatementHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTGotoStatementTest extends ASTNodeTestCase
 
     /**
      * testGotoStatementHasExpectedEndLine
-     *
-     * @return void
      */
     public function testGotoStatementHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTGotoStatementTest extends ASTNodeTestCase
 
     /**
      * testGotoStatementHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testGotoStatementHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTGotoStatement
+     * @return ASTGotoStatement
      */
     private function getFirstGotoStatementInFunction($testCase)
     {

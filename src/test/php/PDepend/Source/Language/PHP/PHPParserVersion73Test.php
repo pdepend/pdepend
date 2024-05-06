@@ -56,16 +56,15 @@ use PDepend\Util\Cache\CacheDriver;
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion73} class.
  *
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion73
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion73
+ *
  * @group unittest
  */
 class PHPParserVersion73Test extends AbstractTestCase
 {
-    /**
-     * @return void
-     */
     public function testArrowFunctions(): void
     {
         $this->expectException(
@@ -78,9 +77,6 @@ class PHPParserVersion73Test extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    /**
-     * @return void
-     */
     public function testHereDocAndNowDoc(): void
     {
         /** @var ASTHeredoc $heredoc */
@@ -101,9 +97,6 @@ class PHPParserVersion73Test extends AbstractTestCase
         $this->assertSame('second,', $literal->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testDestructuringArrayReference(): void
     {
         $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
@@ -143,9 +136,6 @@ class PHPParserVersion73Test extends AbstractTestCase
         $this->assertSame('$c', $cVariable->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testInstanceOfLiterals(): void
     {
         $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
@@ -166,9 +156,6 @@ class PHPParserVersion73Test extends AbstractTestCase
         $this->assertSame('DateTimeInterface', $variables[0]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testTrailingCommasInCall(): void
     {
         $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
@@ -192,9 +179,6 @@ class PHPParserVersion73Test extends AbstractTestCase
         $this->assertSame('$i', $arguments[0]->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testTrailingCommasInUnsetCall(): void
     {
         $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
@@ -207,10 +191,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
-     * @param \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     * @return AbstractPHPParser
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {

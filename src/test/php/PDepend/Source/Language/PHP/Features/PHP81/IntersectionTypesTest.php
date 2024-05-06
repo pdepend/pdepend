@@ -47,17 +47,16 @@ use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
  * @group unittest
  * @group php8.1
  */
 class IntersectionTypesTest extends PHPParserVersion81TestCase
 {
-    /**
-     * @return void
-     */
     public function testIntersectionTypes(): void
     {
         /** @var ASTMethod $method */
@@ -77,9 +76,6 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
         $this->assertSame('$iterator', $variable->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testIntersectionTypesWithByReference(): void
     {
         /** @var ASTMethod $method */
@@ -94,9 +90,6 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
         $this->assertSame('Iterator&\Countable&\ArrayAccess', $intersectionType->getImage());
     }
 
-    /**
-     * @return void
-     */
     public function testIntersectionTypesAsReturn(): void
     {
         /** @var ASTMethod $method */
@@ -110,8 +103,6 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
         $this->assertSame('Iterator&\Countable&\ArrayAccess', $return->getImage());
     }
 
-    /**
-     */
     public function testIntersectionTypesCantBeMixedWithUnionTypes(): void
     {
         $this->expectException(\PDepend\Source\Parser\ParserException::class);
@@ -120,8 +111,6 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
         $this->getFirstMethodForTestCase();
     }
 
-    /**
-     */
     public function testIntersectionTypesCantBeScalar(): void
     {
         $this->expectException(\PDepend\Source\Parser\ParserException::class);

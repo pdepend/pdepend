@@ -47,17 +47,16 @@ use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTScalarType;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ *
  * @group unittest
  * @group php8.2
  */
 class TrueTypeTest extends PHPParserVersion82TestCase
 {
-    /**
-     * @return void
-     */
     public function testTypedProperties(): void
     {
         /** @var ASTClass $class */
@@ -96,9 +95,6 @@ class TrueTypeTest extends PHPParserVersion82TestCase
         }
     }
 
-    /**
-     * @return void
-     */
     public function testReturnTypes(): void
     {
         $class = $this->getFirstClassForTestCase();
@@ -112,9 +108,6 @@ class TrueTypeTest extends PHPParserVersion82TestCase
         $this->assertTrue($truthy->isTrue());
     }
 
-    /**
-     * @return void
-     */
     public function testParameters(): void
     {
         $method = $this->getFirstMethodForTestCase();

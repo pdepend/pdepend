@@ -45,18 +45,17 @@ namespace PDepend\Issues;
 /**
  * Test case for ticket 002, PHP 5.3 namespace support.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
 class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that the parser handles a simple use statement as expected.
-     *
-     * @return void
      */
     public function testParserHandlesSimpleUseDeclaration(): void
     {
@@ -69,8 +68,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser handles multiple, comma separated use declarations.
-     *
-     * @return void
      */
     public function testParserHandlesMultipleUseDeclarations(): void
     {
@@ -90,8 +87,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
 
     /**
      * Tests that parser handles a use declaration case insensitive.
-     *
-     * @return void
      */
     public function testParserHandlesUseDeclarationCaseInsensitive(): void
     {
@@ -108,8 +103,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
 
     /**
      * Tests that parser throws an expected exception.
-     *
-     * @return void
      */
     public function testParserThrowsExpectedExceptionWhenUseDeclarationContextEndsOnBackslash(): void
     {
@@ -126,8 +119,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser handles a namespace declaration with namespace
      * identifier and curly brace syntax.
-     *
-     * @return void
      */
     public function testParserHandlesNamespaceDeclarationWithIdentifierAndCurlyBraceSyntax(): void
     {
@@ -137,8 +128,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
 
     /**
      * testParserDoesNotAddEmptyNamespaceToResultSet
-     *
-     * @return void
      */
     public function testParserDoesNotAddEmptyNamespaceToResultSet(): void
     {
@@ -149,8 +138,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser handles a namespace declaration with namespace
      * identifier and semicolon syntax.
-     *
-     * @return void
      */
     public function testParserHandlesNamespaceDeclarationWithIdentifierAndSemicolonSyntax(): void
     {
@@ -161,8 +148,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser handles a namespace declaration without namespace
      * identifier and semicolon syntax.
-     *
-     * @return void
      */
     public function testParserHandlesNamespaceDeclarationWithoutIdentifierAndCurlyBraceSyntax(): void
     {
@@ -174,8 +159,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser does not accept an empty namespace identifier for
      * the semicolon syntax.
-     *
-     * @return void
      */
     public function testParserThrowsExpectedExceptionForNamespaceDeclarationWithoutIdentifierAndSemicolonSyntax(): void
     {
@@ -192,8 +175,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser does not accept a leading backslash in a namespace
      * identifier.
-     *
-     * @return void
      */
     public function testParserThrowsExpectedExceptionForLeadingBackslashInIdentifier(): void
     {
@@ -210,8 +191,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Tests that an existing namespace declaration has a higher priority than
      * a simply package annotation.
-     *
-     * @return void
      */
     public function testNamespaceHasHigherPriorityThanPackageAnnotationSemicolonSyntax(): void
     {
@@ -227,8 +206,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Tests that an existing namespace declaration has a higher priority than
      * a simply package annotation.
-     *
-     * @return void
      */
     public function testNamespaceHasHigherPriorityThanPackageAnnotationCurlyBraceSyntax(): void
     {
@@ -243,8 +220,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser handles multiple namespaces in a single file correct.
-     *
-     * @return void
      */
     public function testParserHandlesFileWithMultipleNamespacesCorrectSemicolonSyntax(): void
     {
@@ -274,8 +249,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser handles multiple namespaces in a single file correct.
-     *
-     * @return void
      */
     public function testParserHandlesFileWithMultipleNamespacesCorrectCurlyBraceSyntax(): void
     {
@@ -305,8 +278,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser adds a function to a declared namespace.
-     *
-     * @return void
      */
     public function testParserAddsFunctionToDeclaredNamespaceSemicolonSyntax(): void
     {
@@ -325,7 +296,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $fileName      Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
      *
-     * @return void
      * @dataProvider dataProviderParserResolvesQualifiedTypeNameInTypeSignature
      */
     public function testParserResolvesQualifiedTypeNameInTypeSignature($fileName, $namespaceName): void
@@ -347,7 +317,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $fileName      Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
      *
-     * @return void
      * @dataProvider dataProviderParserResolvesQualifiedTypeNameInFunction
      */
     public function testParserResolvesQualifiedTypeNameInFunction($fileName, $namespaceName): void
@@ -374,7 +343,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $fileName      Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
      *
-     * @return void
      * @dataProvider dataProviderParserKeepsQualifiedTypeNameInTypeSignature
      */
     public function testParserKeepsQualifiedTypeNameInTypeSignature($fileName, $namespaceName): void
@@ -396,7 +364,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $fileName      Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
      *
-     * @return void
      * @dataProvider dataProviderParserKeepsQualifiedTypeNameInFunction
      */
     public function testParserKeepsQualifiedTypeNameInFunction($fileName, $namespaceName): void
@@ -418,7 +385,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $fileName      Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
      *
-     * @return void
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax
      */
     public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax($fileName, $namespaceName): void
@@ -440,7 +406,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $fileName      Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
      *
-     * @return void
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax
      */
     public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax($fileName, $namespaceName): void
@@ -462,7 +427,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $fileName      Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
      *
-     * @return void
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax
      */
     public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax($fileName, $namespaceName): void
@@ -484,7 +448,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $fileName      Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
      *
-     * @return void
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax
      */
     public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax($fileName, $namespaceName): void

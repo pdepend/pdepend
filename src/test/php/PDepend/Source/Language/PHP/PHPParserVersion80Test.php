@@ -50,17 +50,17 @@ use PDepend\Util\Cache\CacheDriver;
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion80} class.
  *
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @group unittest
  */
 class PHPParserVersion80Test extends AbstractTestCase
 {
     /**
      * testCatchWithoutVariable
-     *
-     * @return void
      */
     public function testCatchWithoutVariable(): void
     {
@@ -73,8 +73,6 @@ class PHPParserVersion80Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintStatic
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintStatic(): void
     {
@@ -86,8 +84,6 @@ class PHPParserVersion80Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintNullableStatic
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintNullableStatic(): void
     {
@@ -99,8 +95,6 @@ class PHPParserVersion80Test extends AbstractTestCase
 
     /**
      * testFunctionReturnTypeHintStaticWithComments
-     *
-     * @return void
      */
     public function testFunctionReturnTypeHintStaticWithComments(): void
     {
@@ -112,8 +106,6 @@ class PHPParserVersion80Test extends AbstractTestCase
 
     /**
      * testFunctionParameterTypeHintByReferenceVariableArguments
-     *
-     * @return void
      */
     public function testFunctionParameterTypeHintByReferenceVariableArguments(): void
     {
@@ -127,9 +119,6 @@ class PHPParserVersion80Test extends AbstractTestCase
         $this->assertTrue($formalParameter->isVariableArgList());
     }
 
-    /**
-     * @return void
-     */
     public function testTrailingCommaInClosureUseList(): void
     {
         $this->parseCodeResourceForTest();
@@ -137,8 +126,6 @@ class PHPParserVersion80Test extends AbstractTestCase
 
     /**
      * testTrailingCommaInParameterList
-     *
-     * @return void
      */
     public function testTrailingCommaInParameterList(): void
     {
@@ -187,10 +174,7 @@ class PHPParserVersion80Test extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\Tokenizer\Tokenizer $tokenizer
-     * @param \PDepend\Source\Builder\Builder $builder
-     * @param \PDepend\Util\Cache\CacheDriver $cache
-     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     * @return AbstractPHPParser
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {

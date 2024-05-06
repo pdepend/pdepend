@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
   * @since 0.10.2
  */
 
@@ -48,19 +49,19 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTValue} class.
  *
+ * @covers \PDepend\Source\AST\ASTValue
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.2
  *
- * @covers \PDepend\Source\AST\ASTValue
  * @group unittest
  */
 class ASTValueTest extends AbstractTestCase
 {
     /**
      * testIsValueAvailableReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsValueAvailableReturnsFalseByDefault(): void
     {
@@ -70,8 +71,6 @@ class ASTValueTest extends AbstractTestCase
 
     /**
      * testIsValueAvailableReturnsTrueWhenValueWasSet
-     *
-     * @return void
      */
     public function testIsValueAvailableReturnsTrueWhenValueWasSet(): void
     {
@@ -83,8 +82,6 @@ class ASTValueTest extends AbstractTestCase
 
     /**
      * testIsValueAvailableReturnsTrueForNullValue
-     *
-     * @return void
      */
     public function testIsValueAvailableReturnsTrueForNullValue(): void
     {
@@ -96,8 +93,6 @@ class ASTValueTest extends AbstractTestCase
 
     /**
      * testGetValueReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetValueReturnsNullByDefault(): void
     {
@@ -107,8 +102,6 @@ class ASTValueTest extends AbstractTestCase
 
     /**
      * testGetValueReturnsPreviouslySetValue
-     *
-     * @return void
      */
     public function testGetValueReturnsPreviouslySetValue(): void
     {
@@ -120,8 +113,6 @@ class ASTValueTest extends AbstractTestCase
 
     /**
      * testSetValueMutatesInternalStateOnlyOnce
-     *
-     * @return void
      */
     public function testSetValueMutatesInternalStateOnlyOnce(): void
     {

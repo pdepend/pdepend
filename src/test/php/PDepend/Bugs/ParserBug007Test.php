@@ -49,14 +49,13 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 7
+ *
  * @group regressiontest
  */
 class ParserBug007Test extends AbstractRegressionTestCase
 {
     /**
      * testParserCurlyBrace
-     *
-     * @return void
      */
     public function testParserCurlyBrace(): void
     {
@@ -68,7 +67,7 @@ class ParserBug007Test extends AbstractRegressionTestCase
         $actual   = [
             'classes'   => $classes->count(),
             'functions' => $functions->count(),
-            'methods'   => $classes->current()->getMethods()->count()
+            'methods'   => $classes->current()->getMethods()->count(),
         ];
 
         $this->assertEquals($expected, $actual);

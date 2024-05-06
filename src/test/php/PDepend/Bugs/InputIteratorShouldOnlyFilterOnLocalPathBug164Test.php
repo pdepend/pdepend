@@ -42,13 +42,16 @@
 
 namespace PDepend\Bugs;
 
+use ArrayIterator;
 use PDepend\Input\Iterator;
+use SplFileInfo;
 
 /**
  * Test case for bug #164.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @link http://tracker.pdepend.org/pdepend/issue_tracker/issue/164
  *
  * @group regressiontest
@@ -57,8 +60,6 @@ class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractRegress
 {
     /**
      * testIteratorOnlyPassesLocalPathToFilter
-     *
-     * @return void
      */
     public function testIteratorOnlyPassesLocalPathToFilter(): void
     {
@@ -69,7 +70,7 @@ class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractRegress
             ->with($this->equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
 
         $iterator = new Iterator(
-            new \ArrayIterator([new \SplFileInfo(__FILE__)]),
+            new ArrayIterator([new SplFileInfo(__FILE__)]),
             $filter,
             __DIR__
         );

@@ -45,12 +45,13 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArrayIndexExpression} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTIndexExpression
  * @covers \PDepend\Source\AST\ASTArrayIndexExpression
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  */
 class ASTArrayIndexExpressionTest extends ASTNodeTestCase
@@ -72,7 +73,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
      *   - ASTLiteral
      * </code>
      *
-     * @return void
      * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromFunctionCall(): void
@@ -83,7 +83,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTFunctionPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
@@ -105,7 +105,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
      *   - ASTLiteral
      * </code>
      *
-     * @return void
      * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromVariableFunctionCall(): void
@@ -116,7 +115,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTFunctionPostfix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTArguments',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
@@ -140,7 +139,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
      *   - ASTLiteral
      * </code>
      *
-     * @return void
      * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromMethodCall(): void
@@ -153,7 +151,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
@@ -177,7 +175,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
      *   - ASTLiteral
      * </code>
      *
-     * @return void
      * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromVariableMethodCall(): void
@@ -190,7 +187,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTArguments',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
@@ -214,7 +211,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
      *   - ASTLiteral
      * </code>
      *
-     * @return void
      * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromStaticMethodCall(): void
@@ -227,7 +223,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
                 'PDepend\\Source\\AST\\ASTArguments',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
@@ -251,7 +247,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
      *   - ASTLiteral
      * </code>
      *
-     * @return void
      * @since 1.0.0
      */
     public function testArrayIndexGraphDereferencedFromVariableStaticMethodCall(): void
@@ -264,7 +259,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTArguments',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
@@ -275,8 +270,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
      * <code>
      * $array[42];
      * </code>
-     *
-     * @return void
      */
     public function testArrayIndexExpressionGraphForVariable(): void
     {
@@ -284,7 +277,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
             $this->getFirstArrayIndexExpressionInFunction(),
             [
                 'PDepend\\Source\\AST\\ASTVariable',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
@@ -295,8 +288,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
      * <code>
      * $object->foo[42];
      * </code>
-     *
-     * @return void
      */
     public function testArrayIndexExpressionGraphForProperty(): void
     {
@@ -304,7 +295,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
             $this->getFirstArrayIndexExpressionInFunction(),
             [
                 'PDepend\\Source\\AST\\ASTIdentifier',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
@@ -315,8 +306,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
      * <code>
      * $array[0][0][0];
      * </code>
-     *
-     * @return void
      */
     public function testArrayIndexExpressionGraphForChainedArrayAccess(): void
     {
@@ -328,15 +317,13 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTLiteral',
                 'PDepend\\Source\\AST\\ASTLiteral',
-                'PDepend\\Source\\AST\\ASTLiteral'
+                'PDepend\\Source\\AST\\ASTLiteral',
             ]
         );
     }
 
     /**
      * testArrayIndexExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testArrayIndexExpressionHasExpectedStartLine(): void
     {
@@ -346,8 +333,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
 
     /**
      * testArrayIndexExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testArrayIndexExpressionHasExpectedStartColumn(): void
     {
@@ -357,8 +342,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
 
     /**
      * testArrayIndexExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testArrayIndexExpressionHasExpectedEndLine(): void
     {
@@ -368,8 +351,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
 
     /**
      * testArrayIndexExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testArrayIndexExpressionHasExpectedEndColumn(): void
     {
@@ -380,7 +361,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTArrayIndexExpression
+     * @return ASTArrayIndexExpression
      */
     private function getFirstArrayIndexExpressionInFunction()
     {

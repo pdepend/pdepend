@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTypeArray} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTTypeArray
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTTypeArray
  * @group unittest
  */
 class ASTTypeArrayTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     /**
      * testArrayType
      *
-     * @return \PDepend\Source\AST\ASTTypeArray
+     * @return ASTTypeArray
+     *
      * @since 1.0.2
      */
     public function testArrayType()
@@ -71,9 +73,8 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     /**
      * testArrayTypeHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTypeArray $type
+     * @param ASTTypeArray $type
      *
-     * @return void
      * @depends testArrayType
      */
     public function testArrayTypeHasExpectedStartLine($type): void
@@ -84,9 +85,8 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     /**
      * testArrayTypeHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTypeArray $type
+     * @param ASTTypeArray $type
      *
-     * @return void
      * @depends testArrayType
      */
     public function testArrayTypeHasExpectedStartColumn($type): void
@@ -97,9 +97,8 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     /**
      * testArrayTypeHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTypeArray $type
+     * @param ASTTypeArray $type
      *
-     * @return void
      * @depends testArrayType
      */
     public function testArrayTypeHasExpectedEndLine($type): void
@@ -110,9 +109,8 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     /**
      * testArrayTypeHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTypeArray $type
+     * @param ASTTypeArray $type
      *
-     * @return void
      * @depends testArrayType
      */
     public function testArrayTypeHasExpectedEndColumn($type): void
@@ -122,30 +120,26 @@ class ASTTypeArrayTest extends ASTNodeTestCase
 
     /**
      * testIsArrayReturnsTrue
-     *
-     * @return void
      */
     public function testIsArrayReturnsTrue(): void
     {
-        $type = new \PDepend\Source\AST\ASTTypeArray();
+        $type = new ASTTypeArray();
         $this->assertTrue($type->isArray());
     }
 
     /**
      * testIsPrimitiveReturnsFalse
-     *
-     * @return void
      */
     public function testIsPrimitiveReturnsFalse(): void
     {
-        $type = new \PDepend\Source\AST\ASTTypeArray();
+        $type = new ASTTypeArray();
         $this->assertFalse($type->isScalar());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTypeArray
+     * @return ASTTypeArray
      */
     private function getFirstArrayTypeInFunction()
     {

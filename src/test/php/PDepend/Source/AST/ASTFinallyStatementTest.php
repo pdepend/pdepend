@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFinallyStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTFinallyStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTFinallyStatement
  * @group unittest
  */
 class ASTFinallyStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the start line value.
-     *
-     * @return void
      */
     public function testFinallyStatementHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value.
-     *
-     * @return void
      */
     public function testFinallyStatementHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value.
-     *
-     * @return void
      */
     public function testFinallyStatementHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value.
-     *
-     * @return void
      */
     public function testFinallyStatementHasExpectedEndColumn(): void
     {
@@ -100,8 +93,6 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
 
     /**
      * testOnlyFinallyStatementHasExpectedStartLine
-     *
-     * @return void
      */
     public function testOnlyFinallyStatementHasExpectedStartLine(): void
     {
@@ -111,8 +102,6 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
 
     /**
      * testOnlyFinallyStatementHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testOnlyFinallyStatementHasExpectedStartColumn(): void
     {
@@ -122,8 +111,6 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
 
     /**
      * testOnlyFinallyStatementHasExpectedEndLine
-     *
-     * @return void
      */
     public function testOnlyFinallyStatementHasExpectedEndLine(): void
     {
@@ -133,8 +120,6 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
 
     /**
      * testOnlyFinallyStatementHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testOnlyFinallyStatementHasExpectedEndColumn(): void
     {
@@ -144,8 +129,6 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
 
     /**
      * testThirdChildOfFinallyStatementIsScopeStatement
-     *
-     * @return void
      */
     public function testChildOfFinallyStatementIsScopeStatement(): void
     {
@@ -158,7 +141,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTFinallyStatement
+     * @return ASTFinallyStatement
      */
     private function getFirstFinallyStatementInFunction($testCase)
     {

@@ -40,24 +40,20 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP80;
 
-use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
-use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\ASTNamedArgument;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
+ *
  * @group unittest
  * @group php8
  */
 class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
 {
-    /**
-     * @return void
-     */
     public function testConstructorPropertyPromotion(): void
     {
         $method = $this->getFirstMethodForTestCase();
@@ -93,9 +89,6 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
         $this->assertFalse($parameters[3]->isPrivate());
     }
 
-    /**
-     * @return void
-     */
     public function testConstructorPropertyPromotionWithComments(): void
     {
         $method = $this->getFirstMethodForTestCase();
@@ -131,9 +124,6 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
         $this->assertFalse($parameters[3]->isPrivate());
     }
 
-    /**
-     * @return void
-     */
     public function testPropertyPromotionOnRandomMethod(): void
     {
         $this->expectException(\PDepend\Source\Parser\TokenException::class);

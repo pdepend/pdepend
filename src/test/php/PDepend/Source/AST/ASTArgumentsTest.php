@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArguments} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTArguments
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTArguments
  * @group unittest
  */
 class ASTArgumentsTest extends ASTNodeTestCase
@@ -57,7 +58,6 @@ class ASTArgumentsTest extends ASTNodeTestCase
     /**
      * testArgumentsGraphWithMagicClassConstant
      *
-     * @return void
      * @since 1.0.0
      */
     public function testArgumentsGraphWithMagicClassConstant(): void
@@ -66,19 +66,17 @@ class ASTArgumentsTest extends ASTNodeTestCase
         $this->assertGraph(
             $arguments,
             [
-                'PDepend\\Source\\AST\\ASTConstant'         . ' (__CLASS__)',
-                'PDepend\\Source\\AST\\ASTLiteral'          . ' ("run")',
-                'PDepend\\Source\\AST\\ASTArray'            . ' ()', [
+                'PDepend\\Source\\AST\\ASTConstant' . ' (__CLASS__)',
+                'PDepend\\Source\\AST\\ASTLiteral' . ' ("run")',
+                'PDepend\\Source\\AST\\ASTArray' . ' ()', [
                     'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
-                        'PDepend\\Source\\AST\\ASTVariable' . ' ($count)']]
+                        'PDepend\\Source\\AST\\ASTVariable' . ' ($count)']],
             ]
         );
     }
 
     /**
      * Tests the start line value of an arguments instance.
-     *
-     * @return void
      */
     public function testArgumentsHasExpectedStartLine(): void
     {
@@ -88,8 +86,6 @@ class ASTArgumentsTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value of an arguments instance.
-     *
-     * @return void
      */
     public function testArgumentsHasExpectedStartColumn(): void
     {
@@ -99,8 +95,6 @@ class ASTArgumentsTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value of an arguments instance.
-     *
-     * @return void
      */
     public function testArgumentsHasExpectedEndLine(): void
     {
@@ -110,8 +104,6 @@ class ASTArgumentsTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value of an arguments instance.
-     *
-     * @return void
      */
     public function testArgumentsHasExpectedEndColumn(): void
     {
@@ -121,8 +113,6 @@ class ASTArgumentsTest extends ASTNodeTestCase
 
     /**
      * Tests the accessors for variadic placeholder
-     *
-     * @return void
      */
     public function testArgumentsIsVariadicPlaceholder(): void
     {
@@ -136,7 +126,7 @@ class ASTArgumentsTest extends ASTNodeTestCase
     /**
      * Returns an arguments instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTArguments
+     * @return ASTArguments
      */
     private function getFirstArgumentsOfFunction()
     {

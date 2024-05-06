@@ -51,14 +51,12 @@ use PDepend\AbstractTestCase;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
-   * @group unittest
+ * @group unittest
  */
 abstract class AbstractDriverTestCase extends AbstractTestCase
 {
     /**
      * testTypeMethodReturnsSameObjectInstance
-     *
-     * @return void
      */
     public function testTypeMethodReturnsSameObjectInstance(): void
     {
@@ -68,8 +66,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * testRestoreMethodReturnsNullByDefault
-     *
-     * @return void
      */
     public function testRestoreMethodReturnsNullByDefault(): void
     {
@@ -79,8 +75,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * testStoreMethodPersistsGivenData
-     *
-     * @return void
      */
     public function testStoreMethodPersistsGivenData(): void
     {
@@ -92,8 +86,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * testStoreMethodPersistsGivenDataWithHash
-     *
-     * @return void
      */
     public function testStoreMethodPersistsGivenDataWithHash(): void
     {
@@ -105,8 +97,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * testRestoreMethodWithDifferentHashReturnsNull
-     *
-     * @return void
      */
     public function testRestoreMethodWithDifferentHashReturnsNull(): void
     {
@@ -118,8 +108,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * testStoreAndRestoreMethodsWithSpecialType
-     *
-     * @return void
      */
     public function testStoreAndRestoreMethodsWithSpecialType(): void
     {
@@ -131,8 +119,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * testStoreMethodWithSpecialTypeNotOverwriteRecordInDefaultType
-     *
-     * @return void
      */
     public function testStoreMethodWithSpecialTypeNotOverwriteRecordInDefaultType(): void
     {
@@ -145,8 +131,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * testRemoveDeletesExistingCacheEntry
-     *
-     * @return void
      */
     public function testRemoveDeletesExistingCacheEntry(): void
     {
@@ -162,8 +146,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * testRemoveDeletesExistingCacheEntriesWithEqualCacheKeyPrefix
-     *
-     * @return void
      */
     public function testRemoveDeletesExistingCacheEntriesWithEqualCacheKeyPrefix(): void
     {
@@ -179,8 +161,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * testRemoveDeletesExistingCacheEntryOfDifferentType
-     *
-     * @return void
      */
     public function testRemoveDeletesExistingCacheEntryOfDifferentType(): void
     {
@@ -196,8 +176,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * testRemoveSilentlyIgnoresPatternsWithoutMatch
-     *
-     * @return void
      */
     public function testRemoveSilentlyIgnoresPatternsWithoutMatch(): void
     {
@@ -214,7 +192,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
     /**
      * Creates a test fixture.
      *
-     * @return \PDepend\Util\Cache\CacheDriver
+     * @return CacheDriver
      */
     abstract protected function createDriver();
 }

@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTUnsetStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTUnsetStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTUnsetStatement
  * @group unittest
  */
 class ASTUnsetStatementTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     /**
      * testUnsetStatement
      *
-     * @return \PDepend\Source\AST\ASTUnsetStatement
+     * @return ASTUnsetStatement
+     *
      * @since 1.0.2
      */
     public function testUnsetStatement()
@@ -71,9 +73,8 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     /**
      * testUnsetStatementHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTUnsetStatement $stmt
+     * @param ASTUnsetStatement $stmt
      *
-     * @return void
      * @depends testUnsetStatement
      */
     public function testUnsetStatementHasExpectedStartLine($stmt): void
@@ -84,9 +85,8 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     /**
      * testUnsetStatementHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTUnsetStatement $stmt
+     * @param ASTUnsetStatement $stmt
      *
-     * @return void
      * @depends testUnsetStatement
      */
     public function testUnsetStatementHasExpectedStartColumn($stmt): void
@@ -97,9 +97,8 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     /**
      * testUnsetStatementHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTUnsetStatement $stmt
+     * @param ASTUnsetStatement $stmt
      *
-     * @return void
      * @depends testUnsetStatement
      */
     public function testUnsetStatementHasExpectedEndLine($stmt): void
@@ -110,9 +109,8 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     /**
      * testUnsetStatementHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTUnsetStatement $stmt
+     * @param ASTUnsetStatement $stmt
      *
-     * @return void
      * @depends testUnsetStatement
      */
     public function testUnsetStatementHasExpectedEndColumn($stmt): void
@@ -125,7 +123,7 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTUnsetStatement
+     * @return ASTUnsetStatement
      */
     private function getFirstUnsetStatementInFunction($testCase)
     {

@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -49,20 +50,20 @@ use ReflectionMethod;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitUseStatement} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 1.0.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTraitUseStatement
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 1.0.0
+ *
  * @group unittest
  */
 class ASTTraitUseStatementTest extends ASTNodeTestCase
 {
     /**
      * testHasExcludeForReturnsFalseIfNoInsteadExists
-     *
-     * @return void
      */
     public function testHasExcludeForReturnsFalseIfNoInsteadExists(): void
     {
@@ -77,8 +78,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testHasExcludeForReturnsFalseIfMethodNotAffectedByInstead
-     *
-     * @return void
      */
     public function testHasExcludeForReturnsFalseIfMethodNotAffectedByInstead(): void
     {
@@ -93,8 +92,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testHasExcludeForReturnsTrueIfMethodAffectedByInstead
-     *
-     * @return void
      */
     public function testHasExcludeForReturnsTrueIfMethodAffectedByInstead(): void
     {
@@ -109,8 +106,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testHasExcludeForReturnsTrueIfMethodAffectedBySecondInstead
-     *
-     * @return void
      */
     public function testHasExcludeForReturnsTrueIfMethodAffectedBySecondInstead(): void
     {
@@ -127,8 +122,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      * testTraitUseInsteadOfSelf
      *
      * @throws ReflectionException
-     *
-     * @return void
      *
      * @group issue-154
      */
@@ -148,8 +141,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      *
      * @throws ReflectionException
      *
-     * @return void
-     *
      * @group issue-154
      */
     public function testTraitMethodAlias(): void
@@ -165,8 +156,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testGetAllMethodsOnClassWithParentReturnsTraitMethod
-     *
-     * @return void
      */
     public function testGetAllMethodsOnClassWithParentReturnsTraitMethod(): void
     {
@@ -182,7 +171,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod(): void
@@ -199,7 +187,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult(): void
@@ -212,8 +199,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testGetAllMethodsWithAliasedMethodCollision
-     *
-     * @return void
      */
     public function testGetAllMethodsWithAliasedMethodCollision(): void
     {
@@ -223,8 +208,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testGetAllMethodsWithAliasedMethodTwice
-     *
-     * @return void
      */
     public function testGetAllMethodsWithAliasedMethodTwice(): void
     {
@@ -234,8 +217,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testGetAllMethodsWithVisibilityChangedToPublic
-     *
-     * @return void
      */
     public function testGetAllMethodsWithVisibilityChangedToPublic(): void
     {
@@ -250,8 +231,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testGetAllMethodsWithVisibilityChangedToProtected
-     *
-     * @return void
      */
     public function testGetAllMethodsWithVisibilityChangedToProtected(): void
     {
@@ -266,8 +245,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testGetAllMethodsWithVisibilityChangedToPrivate
-     *
-     * @return void
      */
     public function testGetAllMethodsWithVisibilityChangedToPrivate(): void
     {
@@ -282,8 +259,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier
-     *
-     * @return void
      */
     public function testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier(): void
     {
@@ -298,8 +273,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testGetAllMethodsWithVisibilityChangedKeepsStaticModifier
-     *
-     * @return void
      */
     public function testGetAllMethodsWithVisibilityChangedKeepsStaticModifier(): void
     {
@@ -314,8 +287,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testGetAllMethodsHandlesTraitMethodPrecedence
-     *
-     * @return void
      */
     public function testGetAllMethodsHandlesTraitMethodPrecedence(): void
     {
@@ -330,8 +301,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testGetAllMethodsExcludeTraitMethodWithPrecedence
-     *
-     * @return void
      */
     public function testGetAllMethodsExcludeTraitMethodWithPrecedence(): void
     {
@@ -341,8 +310,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementWithSimpleAliasHasExpectedEndLine
-     *
-     * @return void
      */
     public function testTraitUseStatementWithSimpleAliasHasExpectedEndLine(): void
     {
@@ -352,8 +319,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementWithSimpleAliasHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testTraitUseStatementWithSimpleAliasHasExpectedEndColumn(): void
     {
@@ -363,8 +328,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementWithQualifiedAliasHasExpectedEndLine
-     *
-     * @return void
      */
     public function testTraitUseStatementWithQualifiedAliasHasExpectedEndLine(): void
     {
@@ -374,8 +337,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementWithQualifiedAliasHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testTraitUseStatementWithQualifiedAliasHasExpectedEndColumn(): void
     {
@@ -385,8 +346,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementWithSingleInsteadofHasExpectedEndLine
-     *
-     * @return void
      */
     public function testTraitUseStatementWithSingleInsteadofHasExpectedEndLine(): void
     {
@@ -396,8 +355,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementWithSingleInsteadofHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testTraitUseStatementWithSingleInsteadofHasExpectedEndColumn(): void
     {
@@ -407,8 +364,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementWithMultipleInsteadofHasExpectedEndLine
-     *
-     * @return void
      */
     public function testTraitUseStatementWithMultipleInsteadofHasExpectedEndLine(): void
     {
@@ -418,8 +373,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementWithMultipleInsteadofHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testTraitUseStatementWithMultipleInsteadofHasExpectedEndColumn(): void
     {
@@ -430,7 +383,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatement
      *
-     * @return \PDepend\Source\AST\ASTTraitUseStatement
+     * @return ASTTraitUseStatement
+     *
      * @since 1.0.2
      */
     public function testTraitUseStatement()
@@ -444,9 +398,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatementHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTraitUseStatement $stmt
+     * @param ASTTraitUseStatement $stmt
      *
-     * @return void
      * @depends testTraitUseStatement
      */
     public function testTraitUseStatementHasExpectedStartLine($stmt): void
@@ -457,9 +410,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatementHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitUseStatement $stmt
+     * @param ASTTraitUseStatement $stmt
      *
-     * @return void
      * @depends testTraitUseStatement
      */
     public function testTraitUseStatementHasExpectedStartColumn($stmt): void
@@ -470,9 +422,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatementHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTraitUseStatement $stmt
+     * @param ASTTraitUseStatement $stmt
      *
-     * @return void
      * @depends testTraitUseStatement
      */
     public function testTraitUseStatementHasExpectedEndLine($stmt): void
@@ -483,9 +434,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatementHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitUseStatement $stmt
+     * @param ASTTraitUseStatement $stmt
      *
-     * @return void
      * @depends testTraitUseStatement
      */
     public function testTraitUseStatementHasExpectedEndColumn($stmt): void
@@ -496,7 +446,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatementInTrait
      *
-     * @return \PDepend\Source\AST\ASTTraitUseStatement
+     * @return ASTTraitUseStatement
+     *
      * @since 1.0.2
      */
     public function testTraitUseStatementInTrait()
@@ -510,9 +461,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatementInTraitHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTraitUseStatement $stmt
+     * @param ASTTraitUseStatement $stmt
      *
-     * @return void
      * @depends testTraitUseStatementInTrait
      */
     public function testTraitUseStatementInTraitHasExpectedStartLine($stmt): void
@@ -523,9 +473,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatementInTraitHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitUseStatement $stmt
+     * @param ASTTraitUseStatement $stmt
      *
-     * @return void
      * @depends testTraitUseStatementInTrait
      */
     public function testTraitUseStatementInTraitHasExpectedStartColumn($stmt): void
@@ -536,9 +485,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatementInTraitHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTraitUseStatement $stmt
+     * @param ASTTraitUseStatement $stmt
      *
-     * @return void
      * @depends testTraitUseStatementInTrait
      */
     public function testTraitUseStatementInTraitHasExpectedEndLine($stmt): void
@@ -549,9 +497,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatementInTraitHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitUseStatement $stmt
+     * @param ASTTraitUseStatement $stmt
      *
-     * @return void
      * @depends testTraitUseStatementInTrait
      */
     public function testTraitUseStatementInTraitHasExpectedEndColumn($stmt): void
@@ -562,7 +509,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTraitUseStatement
+     * @return ASTTraitUseStatement
      */
     private function getFirstTraitUseStatementInClass()
     {
@@ -575,7 +522,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTraitUseStatement
+     * @return ASTTraitUseStatement
      */
     private function getFirstTraitUseStatementInTrait()
     {

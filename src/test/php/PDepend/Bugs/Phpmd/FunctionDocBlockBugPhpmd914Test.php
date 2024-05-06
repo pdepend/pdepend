@@ -42,7 +42,6 @@
 
 namespace PDepend\Bugs\Phpmd;
 
-
 use PDepend\Bugs\AbstractRegressionTestCase;
 use PDepend\Source\AST\ASTFunction;
 
@@ -57,7 +56,7 @@ class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
         $function = $this->getFirstFunctionForTestCase();
 
         $lines = array_map(
-            static fn (string $line) => trim($line, " \t\n\r\0\x0B/*"),
+            static fn(string $line) => trim($line, " \t\n\r\0\x0B/*"),
             explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")),
         );
 
@@ -73,7 +72,7 @@ class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
         $function = $this->getFirstClassMethodForTestCase();
 
         $lines = array_map(
-            static fn ($line) => trim($line, " \t\n\r\0\x0B/*"),
+            static fn($line) => trim($line, " \t\n\r\0\x0B/*"),
             explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")),
         );
 

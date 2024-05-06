@@ -43,26 +43,22 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTestCase;
-use PDepend\Source\AST\ASTClassFqnPostfix;
-use PDepend\Source\AST\ASTComment;
-use PDepend\Source\AST\ASTConstantPostfix;
 use PDepend\Source\AST\ASTFunction;
 
 /**
  * Test case implementation for the default node builder implementation.
  *
+ * @covers \PDepend\Source\Language\PHP\PHPBuilder
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @group unittest
  */
 class PHPBuilderTest extends AbstractTestCase
 {
     /**
      * testBuilderAddsMultiplePackagesForClassesToListOfPackages
-     *
-     * @return void
      */
     public function testBuilderAddsMultiplePackagesForClassesToListOfPackages(): void
     {
@@ -79,8 +75,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderAddsMultiplePackagesForFunctionsToListOfPackages
-     *
-     * @return void
      */
     public function testBuilderAddsMultiplePackagesForFunctionsToListOfPackages(): void
     {
@@ -97,8 +91,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuilderNotAddsNewPackagesOnceItHasReturnedTheListOfPackages
-     *
-     * @return void
      */
     public function testBuilderNotAddsNewPackagesOnceItHasReturnedTheListOfPackages(): void
     {
@@ -117,8 +109,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testRestoreFunctionAddsFunctionToPackage
-     *
-     * @return void
      */
     public function testRestoreFunctionAddsFunctionToPackage(): void
     {
@@ -134,8 +124,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testRestoreFunctionUsesGetNamespaceNameMethod
-     *
-     * @return void
      */
     public function testRestoreFunctionUsesGetNamespaceNameMethod(): void
     {
@@ -152,7 +140,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildTraitWithSameQualifiedNameUnique
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildTraitWithSameQualifiedNameUnique(): void
@@ -170,7 +157,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testGetTraitReturnsDummyIfNoMatchingTraitExists
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetTraitReturnsDummyIfNoMatchingTraitExists(): void
@@ -183,8 +169,6 @@ class PHPBuilderTest extends AbstractTestCase
      * Tests that the {@link \PDepend\Source\Language\PHP\PHPBuilder::buildTrait()}
      * method creates two different trait instances for the same class name, but
      * different packages.
-     *
-     * @return void
      */
     public function testBuildTraitCreatesTwoDifferentInstancesForDifferentPackages(): void
     {
@@ -200,8 +184,6 @@ class PHPBuilderTest extends AbstractTestCase
      * Tests that {@link \PDepend\Source\Language\PHP\PHPBuilder::buildTrait()} returns
      * a previous trait instance for a specified package, if it is called for a
      * same named trait in the default package.
-     *
-     * @return void
      */
     public function testBuildTraitReusesExistingNonDefaultPackageInstanceForDefaultPackage(): void
     {
@@ -220,8 +202,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * Tests that the node builder creates a class for the same name only once.
-     *
-     * @return void
      */
     public function testBuildClassUnique(): void
     {
@@ -238,7 +218,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testGetClassReturnsDummyIfNoMatchingTraitExists
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetClassReturnsDummyIfNoMatchingClassExists(): void
@@ -254,8 +233,6 @@ class PHPBuilderTest extends AbstractTestCase
      * Tests that the {@link \PDepend\Source\Language\PHP\PHPBuilder::buildClass()} method
      * creates two different class instances for the same class name, but
      * different packages.
-     *
-     * @return void
      */
     public function testBuildClassCreatesTwoDifferentInstancesForDifferentPackages(): void
     {
@@ -271,8 +248,6 @@ class PHPBuilderTest extends AbstractTestCase
      * Tests that {@link \PDepend\Source\Language\PHP\PHPBuilder::buildClass()}
      * returns a previous class instance for a specified package, if it is called
      * for a same named class in the default package.
-     *
-     * @return void
      */
     public function testBuildClassReusesExistingNonDefaultPackageInstanceForDefaultPackage(): void
     {
@@ -292,8 +267,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * Tests that the node build generates an unique interface instance for the
      * same identifier.
-     *
-     * @return void
      */
     public function testBuildInterfaceUnique(): void
     {
@@ -310,7 +283,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testGetInterfaceReturnsDummyIfNoMatchingInterfaceExists
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetInterfaceReturnsDummyIfNoMatchingInterfaceExists(): void
@@ -327,8 +299,6 @@ class PHPBuilderTest extends AbstractTestCase
      * method only removes/replaces a previously created class instance, when
      * this class is part of the default namespace. Otherwise there are two user
      * types with the same local or package internal name.
-     *
-     * @return void
      */
     public function testBuildInterfaceDoesntRemoveClassForSameNamedInterface(): void
     {
@@ -350,8 +320,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * Tests that {@link \PDepend\Source\Language\PHP\PHPBuilder::buildInterface()}
      * creates different interface instances for different parent packages.
-     *
-     * @return void
      */
     public function testBuildInterfacesCreatesDifferentInstancesForDifferentPackages(): void
     {
@@ -367,8 +335,6 @@ class PHPBuilderTest extends AbstractTestCase
      * Tests that {@link \PDepend\Source\Language\PHP\PHPBuilder::buildInterface()}
      * replaces an existing default package interface instance, if it creates a
      * more specific version.
-     *
-     * @return void
      */
     public function testCanCreateMultipleInterfaceInstancesWithIdenticalNames(): void
     {
@@ -388,8 +354,6 @@ class PHPBuilderTest extends AbstractTestCase
      * Tests that {@link \PDepend\Source\Language\PHP\PHPBuilder::buildInterface()}
      * returns a previous interface instance for a specified package, if it is called
      * for a same named interface in the default package.
-     *
-     * @return void
      */
     public function testBuildInterfaceReusesExistingNonDefaultPackageInstanceForDefaultPackage(): void
     {
@@ -409,8 +373,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * Tests the 'PDepend\\Source\\AST\\ASTMethod build method.
-     *
-     * @return void
      */
     public function testBuildMethod(): void
     {
@@ -422,8 +384,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * Tests that the node builder creates a package for the same name only once.
-     *
-     * @return void
      */
     public function testBuildPackageUnique(): void
     {
@@ -436,8 +396,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * Tests the implemented {@link IteratorAggregate}.
-     *
-     * @return void
      */
     public function testGetIteratorWithPackages(): void
     {
@@ -446,7 +404,7 @@ class PHPBuilderTest extends AbstractTestCase
         $expected = [
             'package1'  =>  $builder->buildNamespace('package1'),
             'package2'  =>  $builder->buildNamespace('package2'),
-            'package3'  =>  $builder->buildNamespace('package3')
+            'package3'  =>  $builder->buildNamespace('package3'),
         ];
 
         $actual = [];
@@ -460,8 +418,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * Tests the {@link \PDepend\Source\Language\PHP\PHPBuilder::getNamespaces()}
      * method.
-     *
-     * @return void
      */
     public function testGetNamespaces(): void
     {
@@ -470,7 +426,7 @@ class PHPBuilderTest extends AbstractTestCase
         $expected = [
             'package1'  =>  $builder->buildNamespace('package1'),
             'package2'  =>  $builder->buildNamespace('package2'),
-            'package3'  =>  $builder->buildNamespace('package3')
+            'package3'  =>  $builder->buildNamespace('package3'),
         ];
 
         $actual = [];
@@ -484,8 +440,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * There was a missing check within an if statement, so that the builder
      * has alway overwritten previously created instances.
-     *
-     * @return void
      */
     public function testBuildClassDoesNotOverwritePreviousInstances(): void
     {
@@ -508,8 +462,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * There was a missing check within an if statement, so that the builder
      * has alway overwritten previously created instances.
-     *
-     * @return void
      */
     public function testBuildInterfaceDoesNotOverwritePreviousInstances(): void
     {
@@ -526,8 +478,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * Tests that the node builder works case insensitive for class names.
-     *
-     * @return void
      */
     public function testBuildClassWorksCaseInsensitiveIssue26(): void
     {
@@ -543,8 +493,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * Tests that the node builder works case insensitive for interface names.
-     *
-     * @return void
      */
     public function testBuildInterfaceWorksCaseInsensitiveIssue26(): void
     {
@@ -564,7 +512,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testGetClassOrInterfaceReturnsDummyIfNoMatchingTypeExists
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetClassOrInterfaceReturnsDummyIfNoMatchingTypeExists(): void
@@ -579,7 +526,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testGetClassOrInterfaceReturnsClassInExtensionPackage
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetClassOrInterfaceReturnsClassInExtensionPackage(): void
@@ -594,7 +540,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testGetClassOrInterfaceStripsLeadingBackslashFromClass
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetClassOrInterfaceStripsLeadingBackslashFromClass(): void
@@ -608,8 +553,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * Tests that the node builder works case insensitive for interface names.
-     *
-     * @return void
      */
     public function testBuildClassOrInterfaceWorksCaseInsensitive1Issue26(): void
     {
@@ -628,8 +571,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * Tests that the node builder works case insensitive for interface names.
-     *
-     * @return void
      */
     public function testBuildClassOrInterfaceWorksCaseInsensitive2Issue26(): void
     {
@@ -646,8 +587,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
-     *
-     * @return void
      */
     public function testBuildASTClassOrInterfaceReferenceThrowsExpectedExceptionWhenStateIsFrozen(): void
     {
@@ -670,8 +609,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
-     *
-     * @return void
      */
     public function testBuildClassThrowsExpectedExceptionWhenStateIsFrozen(): void
     {
@@ -694,8 +631,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
-     *
-     * @return void
      */
     public function testBuildASTClassReferenceThrowsExpectedExceptionWhenStateIsFrozen(): void
     {
@@ -718,8 +653,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
-     *
-     * @return void
      */
     public function testBuildInterfaceThrowsExpectedExceptionWhenStateIsFrozen(): void
     {
@@ -742,8 +675,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
-     *
-     * @return void
      */
     public function testBuildMethodThrowsExpectedExceptionWhenStateIsFrozen(): void
     {
@@ -766,8 +697,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * Tests that the builder throws the expected exception when some one tries
      * to build a new node, when the internal state flag is frozen.
-     *
-     * @return void
      */
     public function testBuildFunctionThrowsExpectedExceptionWhenStateIsFrozen(): void
     {
@@ -789,8 +718,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTCommentReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTCommentReturnsExpectedType(): void
     {
@@ -802,8 +729,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTScalarTypeReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTScalarTypeReturnsExpectedType(): void
     {
@@ -815,8 +740,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTTypeArrayReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTTypeArrayReturnsExpectedType(): void
     {
@@ -829,7 +752,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTTypeCallableReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTTypeCallableReturnsExpectedType(): void
@@ -843,7 +765,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTTypeCallableReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTTypeIterableReturnsExpectedType(): void
@@ -856,8 +777,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTHeredocReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTHeredocReturnsExpectedType(): void
     {
@@ -869,8 +788,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTIdentifierReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTIdentifierReturnsExpectedType(): void
     {
@@ -882,8 +799,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTLiteralReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTLiteralReturnsExpectedType(): void
     {
@@ -895,8 +810,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTStringReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTStringReturnsExpectedType(): void
     {
@@ -909,7 +822,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTArrayReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTArrayReturnsExpectedType(): void
@@ -923,7 +835,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTArrayElementReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTArrayElementReturnsExpectedType(): void
@@ -936,8 +847,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTScopeReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTScopeReturnsExpectedType(): void
     {
@@ -949,8 +858,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTVariableReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTVariableReturnsExpectedType(): void
     {
@@ -962,8 +869,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTVariableVariableReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTVariableVariableReturnsExpectedType(): void
     {
@@ -975,8 +880,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTCompoundVariableReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTCompoundVariableReturnsExpectedType(): void
     {
@@ -988,8 +891,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTFieldDeclarationReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTFieldDeclarationReturnsExpectedType(): void
     {
@@ -1001,8 +902,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTConstantReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTConstantReturnsExpectedType(): void
     {
@@ -1014,8 +913,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTConstantDeclaratorReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTConstantDeclaratorReturnsExpectedType(): void
     {
@@ -1027,8 +924,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTConstantDefinitionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTConstantDefinitionReturnsExpectedType(): void
     {
@@ -1040,8 +935,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTConstantPostfixReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTConstantPostfixReturnsExpectedType(): void
     {
@@ -1053,8 +946,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTClassFqnPostfixReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTClassFqnPostfixReturnsExpectedType(): void
     {
@@ -1066,8 +957,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTAssignmentExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTAssignmentExpressionReturnsExpectedType(): void
     {
@@ -1080,7 +969,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTShiftLeftExpressionReturnsExpectedType
      *
-     * @return void
      * @since 1.0.1
      */
     public function testBuildASTShiftLeftExpressionReturnsExpectedType(): void
@@ -1094,7 +982,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTShiftRightExpressionReturnsExpectedType
      *
-     * @return void
      * @since 1.0.1
      */
     public function testBuildASTShiftRightExpressionReturnsExpectedType(): void
@@ -1107,8 +994,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTBooleanAndExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTBooleanAndExpressionReturnsExpectedType(): void
     {
@@ -1120,8 +1005,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTBooleanOrExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTBooleanOrExpressionReturnsExpectedType(): void
     {
@@ -1133,8 +1016,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTCastExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTCastExpressionReturnsExpectedType(): void
     {
@@ -1146,8 +1027,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTCloneExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTCloneExpressionReturnsExpectedType(): void
     {
@@ -1159,8 +1038,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTCompoundExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTCompoundExpressionReturnsExpectedType(): void
     {
@@ -1172,8 +1049,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTConditionalExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTConditionalExpressionReturnsExpectedType(): void
     {
@@ -1185,8 +1060,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTEvalExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTEvalExpressionReturnsExpectedType(): void
     {
@@ -1198,8 +1071,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTExitExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTExitExpressionReturnsExpectedType(): void
     {
@@ -1211,8 +1082,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTExpressionReturnsExpectedType(): void
     {
@@ -1224,8 +1093,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTIncludeExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTIncludeExpressionReturnsExpectedType(): void
     {
@@ -1237,8 +1104,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTInstanceOfExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTInstanceOfExpressionReturnsExpectedType(): void
     {
@@ -1250,8 +1115,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTIssetExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTIssetExpressionReturnsExpectedType(): void
     {
@@ -1263,8 +1126,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTListExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTListExpressionReturnsExpectedType(): void
     {
@@ -1276,8 +1137,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTLogicalAndExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTLogicalAndExpressionReturnsExpectedType(): void
     {
@@ -1289,8 +1148,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTLogicalOrExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTLogicalOrExpressionReturnsExpectedType(): void
     {
@@ -1302,8 +1159,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTLogicalXorExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTLogicalXorExpressionReturnsExpectedType(): void
     {
@@ -1315,8 +1170,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTRequireExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTRequireExpressionReturnsExpectedType(): void
     {
@@ -1328,8 +1181,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTStringIndexExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTStringIndexExpressionReturnsExpectedType(): void
     {
@@ -1341,8 +1192,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTUnaryExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTUnaryExpressionReturnsExpectedType(): void
     {
@@ -1354,8 +1203,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTBreakStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTBreakStatementReturnsExpectedType(): void
     {
@@ -1367,8 +1214,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTCatchStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTCatchStatementReturnsExpectedType(): void
     {
@@ -1380,8 +1225,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTFinallyStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTFinallyStatementReturnsExpectedType(): void
     {
@@ -1393,8 +1236,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTDeclareStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTDeclareStatementReturnsExpectedType(): void
     {
@@ -1406,8 +1247,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTIfStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTIfStatementReturnsExpectedType(): void
     {
@@ -1419,8 +1258,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTElseIfStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTElseIfStatementReturnsExpectedType(): void
     {
@@ -1432,8 +1269,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTContinueStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTContinueStatementReturnsExpectedType(): void
     {
@@ -1445,8 +1280,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTDoWhileStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTDoWhileStatementReturnsExpectedType(): void
     {
@@ -1458,8 +1291,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTForStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTForStatementReturnsExpectedType(): void
     {
@@ -1471,8 +1302,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTForInitReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTForInitReturnsExpectedType(): void
     {
@@ -1484,8 +1313,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTForUpdateReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTForUpdateReturnsExpectedType(): void
     {
@@ -1497,8 +1324,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTForeachStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTForeachStatementReturnsExpectedType(): void
     {
@@ -1510,8 +1335,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTFormalParametersReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTFormalParametersReturnsExpectedType(): void
     {
@@ -1523,8 +1346,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTFormalParameterReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTFormalParameterReturnsExpectedType(): void
     {
@@ -1536,8 +1357,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTGlobalStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTGlobalStatementReturnsExpectedType(): void
     {
@@ -1549,8 +1368,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTGotoStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTGotoStatementReturnsExpectedType(): void
     {
@@ -1562,8 +1379,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTLabelStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTLabelStatementReturnsExpectedType(): void
     {
@@ -1575,8 +1390,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTReturnStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTReturnStatementReturnsExpectedType(): void
     {
@@ -1588,8 +1401,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTScopeStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTScopeStatementReturnsExpectedType(): void
     {
@@ -1601,8 +1412,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTStatementReturnsExpectedType(): void
     {
@@ -1615,7 +1424,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTTraitUseStatementReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTTraitUseStatementReturnsExpectedType(): void
@@ -1629,7 +1437,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTTraitAdaptationReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTTraitAdaptationReturnsExpectedType(): void
@@ -1643,7 +1450,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTTraitAdaptationAliasReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTTraitAdaptationAliasReturnsExpectedType(): void
@@ -1657,7 +1463,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTTraitAdaptationPrecedenceReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTTraitAdaptationPrecedenceReturnsExpectedType(): void
@@ -1670,8 +1475,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTSwitchStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTSwitchStatementReturnsExpectedType(): void
     {
@@ -1683,8 +1486,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTThrowStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTThrowStatementReturnsExpectedType(): void
     {
@@ -1696,8 +1497,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTTryStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTTryStatementReturnsExpectedType(): void
     {
@@ -1709,8 +1508,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTUnsetStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTUnsetStatementReturnsExpectedType(): void
     {
@@ -1722,8 +1519,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTWhileStatementReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTWhileStatementReturnsExpectedType(): void
     {
@@ -1735,8 +1530,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTArrayIndexExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTArrayIndexExpressionReturnsExpectedType(): void
     {
@@ -1748,8 +1541,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTClosureReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTClosureReturnsExpectedType(): void
     {
@@ -1761,8 +1552,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTParentReferenceReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTParentReferenceReturnsExpectedType(): void
     {
@@ -1776,8 +1565,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTSelfReferenceReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTSelfReferenceReturnsExpectedType(): void
     {
@@ -1791,8 +1578,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTStaticReferenceReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTStaticReferenceReturnsExpectedType(): void
     {
@@ -1807,7 +1592,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTTraitReferenceReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTTraitReferenceReturnsExpectedType(): void
@@ -1820,8 +1604,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTClassReferenceReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTClassOrInterfaceReferenceReturnsExpectedType(): void
     {
@@ -1833,8 +1615,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTClassReferenceReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTClassReferenceReturnsExpectedType(): void
     {
@@ -1846,8 +1626,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTScalarTypeReturnsInstanceOfExpectedType
-     *
-     * @return void
      */
     public function testBuildASTScalarTypeReturnsInstanceOfExpectedType(): void
     {
@@ -1859,8 +1637,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTAllocationExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTAllocationExpressionReturnsExpectedType(): void
     {
@@ -1875,8 +1651,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTArgumentsReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTArgumentsReturnsExpectedType(): void
     {
@@ -1888,8 +1662,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTSwitchLabel
-     *
-     * @return void
      */
     public function testBuildASTSwitchLabel(): void
     {
@@ -1901,8 +1673,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTEchoStatetmentReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTEchoStatetmentReturnsExpectedType(): void
     {
@@ -1914,8 +1684,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTVariableDeclaratorReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTVariableDeclaratorReturnsExpectedType(): void
     {
@@ -1927,8 +1695,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTStaticVariableDeclarationReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTStaticVariableDeclarationReturnsExpectedType(): void
     {
@@ -1940,8 +1706,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTPostfixExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTPostfixExpressionReturnsExpectedType(): void
     {
@@ -1953,8 +1717,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTPreDecrementExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTPreDecrementExpressionReturnsExpectedType(): void
     {
@@ -1966,8 +1728,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTPreIncrementExpressionReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTPreIncrementExpressionReturnsExpectedType(): void
     {
@@ -1980,7 +1740,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTMemberPrimaryPrefixReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTMemberPrimaryPrefixReturnsExpectedType(): void
@@ -1994,7 +1753,6 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * testBuildASTMethodPostfixReturnsExpectedType
      *
-     * @return void
      * @since 1.0.0
      */
     public function testBuildASTMethodPostfixReturnsExpectedType(): void
@@ -2007,8 +1765,6 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * testBuildASTFunctionPostfixReturnsExpectedType
-     *
-     * @return void
      */
     public function testBuildASTFunctionPostfixReturnsExpectedType(): void
     {
@@ -2021,7 +1777,7 @@ class PHPBuilderTest extends AbstractTestCase
     /**
      * Creates a clean builder test instance.
      *
-     * @return \PDepend\Source\Language\PHP\PHPBuilder
+     * @return PHPBuilder
      */
     protected function createBuilder()
     {

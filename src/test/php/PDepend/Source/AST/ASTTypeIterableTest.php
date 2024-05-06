@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTypeIterable} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTTypeIterable
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTTypeIterable
  * @group unittest
  */
 class ASTTypeIterableTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     /**
      * testIterableType
      *
-     * @return \PDepend\Source\AST\ASTTypeIterable
+     * @return ASTTypeIterable
+     *
      * @since 2.5.1
      */
     public function testIterableType()
@@ -71,9 +73,8 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     /**
      * testIterableTypeHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTypeIterable $type
+     * @param ASTTypeIterable $type
      *
-     * @return void
      * @depends testIterableType
      */
     public function testIterableTypeHasExpectedStartLine($type): void
@@ -84,9 +85,8 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     /**
      * testIterableTypeHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTypeIterable $type
+     * @param ASTTypeIterable $type
      *
-     * @return void
      * @depends testIterableType
      */
     public function testIterableTypeHasExpectedStartColumn($type): void
@@ -97,9 +97,8 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     /**
      * testIterableTypeHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTypeIterable $type
+     * @param ASTTypeIterable $type
      *
-     * @return void
      * @depends testIterableType
      */
     public function testIterableTypeHasExpectedEndLine($type): void
@@ -110,9 +109,8 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     /**
      * testIterableTypeHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTypeIterable $type
+     * @param ASTTypeIterable $type
      *
-     * @return void
      * @depends testIterableType
      */
     public function testIterableTypeHasExpectedEndColumn($type): void
@@ -122,30 +120,26 @@ class ASTTypeIterableTest extends ASTNodeTestCase
 
     /**
      * testIsArrayReturnsTrue
-     *
-     * @return void
      */
     public function testIsArrayReturnsTrue(): void
     {
-        $type = new \PDepend\Source\AST\ASTTypeIterable();
+        $type = new ASTTypeIterable();
         $this->assertTrue($type->isArray());
     }
 
     /**
      * testIsPrimitiveReturnsFalse
-     *
-     * @return void
      */
     public function testIsPrimitiveReturnsFalse(): void
     {
-        $type = new \PDepend\Source\AST\ASTTypeIterable();
+        $type = new ASTTypeIterable();
         $this->assertFalse($type->isScalar());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTypeIterable
+     * @return ASTTypeIterable
      */
     private function getFirstArrayTypeInFunction()
     {

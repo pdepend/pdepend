@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTIdentifier} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTIdentifier
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTIdentifier
  * @group unittest
  */
 class ASTIdentifierTest extends ASTNodeTestCase
 {
     /**
      * testIdentifierHasExpectedStartLine
-     *
-     * @return void
      */
     public function testIdentifierHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTIdentifierTest extends ASTNodeTestCase
 
     /**
      * testIdentifierHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testIdentifierHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTIdentifierTest extends ASTNodeTestCase
 
     /**
      * testIdentifierHasExpectedEndLine
-     *
-     * @return void
      */
     public function testIdentifierHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTIdentifierTest extends ASTNodeTestCase
 
     /**
      * testIdentifierHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testIdentifierHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTIdentifierTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTIdentifier
+     * @return ASTIdentifier
      */
     private function getFirstIdentifierInFunction($testCase)
     {

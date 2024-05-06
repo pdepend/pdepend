@@ -45,18 +45,17 @@ namespace PDepend\Issues;
 /**
  * Test case for parameter related ticker #32.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
 class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
 {
     /**
      * testParserSetsExpectedNumberOfFunctionParameters
-     *
-     * @return void
      */
     public function testParserSetsExpectedNumberOfFunctionParameters(): void
     {
@@ -66,8 +65,6 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
 
     /**
      * testParserSetsExpectedPositionOfFunctionParameters
-     *
-     * @return void
      */
     public function testParserSetsExpectedPositionOfFunctionParameters(): void
     {
@@ -80,8 +77,6 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
 
     /**
      * testParserSetsFunctionParametersInExpectedOrder
-     *
-     * @return void
      */
     public function testParserSetsFunctionParametersInExpectedOrder(): void
     {
@@ -94,8 +89,6 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
 
     /**
      * testParserSetsExpectedTypeHintsForFunctionParameters
-     *
-     * @return void
      */
     public function testParserSetsExpectedTypeHintsForFunctionParameters(): void
     {
@@ -108,8 +101,6 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
 
     /**
      * testParserSetsExpectedNumberOfMethodParameters
-     *
-     * @return void
      */
     public function testParserSetsExpectedNumberOfMethodParameters(): void
     {
@@ -119,8 +110,6 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
 
     /**
      * testParserSetsExpectedPositionOfMethodParameters
-     *
-     * @return void
      */
     public function testParserSetsExpectedPositionOfMethodParameters(): void
     {
@@ -133,8 +122,6 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
 
     /**
      * testParserSetsMethodParametersInExpectedOrder
-     *
-     * @return void
      */
     public function testParserSetsMethodParametersInExpectedOrder(): void
     {
@@ -147,8 +134,6 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
 
     /**
      * testParserSetsExpectedTypeHintsForMethodParameters
-     *
-     * @return void
      */
     public function testParserSetsExpectedTypeHintsForMethodParameters(): void
     {

@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 
@@ -46,20 +47,20 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTDeclareStatement} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.10.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTDeclareStatement
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 0.10.0
+ *
  * @group unittest
  */
 class ASTDeclareStatementTest extends ASTNodeTestCase
 {
     /**
      * testDeclareStatementWithSingleParameter
-     *
-     * @return void
      */
     public function testDeclareStatementWithSingleParameter(): void
     {
@@ -69,8 +70,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementWithMultipleParameter
-     *
-     * @return void
      */
     public function testDeclareStatementWithMultipleParameter(): void
     {
@@ -80,8 +79,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
@@ -91,7 +88,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
                 'values',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $stmt->__sleep()
         );
@@ -99,8 +96,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementHasExpectedStartLine
-     *
-     * @return void
      */
     public function testDeclareStatementHasExpectedStartLine(): void
     {
@@ -110,8 +105,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testDeclareStatementHasExpectedStartColumn(): void
     {
@@ -121,8 +114,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementHasExpectedEndLine
-     *
-     * @return void
      */
     public function testDeclareStatementHasExpectedEndLine(): void
     {
@@ -132,8 +123,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testDeclareStatementHasExpectedEndColumn(): void
     {
@@ -143,8 +132,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementWithScopeHasExpectedStartLine
-     *
-     * @return void
      */
     public function testDeclareStatementWithScopeHasExpectedStartLine(): void
     {
@@ -154,8 +141,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementWithScopeHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testDeclareStatementWithScopeHasExpectedStartColumn(): void
     {
@@ -165,8 +150,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementWithScopeHasExpectedEndLine
-     *
-     * @return void
      */
     public function testDeclareStatementWithScopeHasExpectedEndLine(): void
     {
@@ -176,8 +159,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementWithScopeHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testDeclareStatementWithScopeHasExpectedEndColumn(): void
     {
@@ -187,8 +168,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementWithAlternativeScopeHasExpectedStartLine
-     *
-     * @return void
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedStartLine(): void
     {
@@ -198,8 +177,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementWithAlternativeScopeHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedStartColumn(): void
     {
@@ -209,8 +186,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementWithAlternativeScopeHasExpectedEndLine
-     *
-     * @return void
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedEndLine(): void
     {
@@ -220,8 +195,6 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * testDeclareStatementWithAlternativeScopeHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedEndColumn(): void
     {
@@ -234,7 +207,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTDeclareStatement
+     * @return ASTDeclareStatement
      */
     private function getFirstDeclareStatementInFunction($testCase)
     {

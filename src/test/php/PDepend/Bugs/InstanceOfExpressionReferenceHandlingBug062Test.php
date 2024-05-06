@@ -58,8 +58,6 @@ class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegression
     /**
      * Tests that the parser handles an interface within an instanceof operator
      * correct.
-     *
-     * @return void
      */
     public function testParserTreatsTypeInInstanceOfOperatorGenericWithInterface(): void
     {
@@ -85,8 +83,6 @@ class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegression
     /**
      * Tests that the parser handles an interface within an instanceof operator
      * correct.
-     *
-     * @return void
      */
     public function testParserTreatsTypeInInstanceOfOperatorGenericWithClass(): void
     {

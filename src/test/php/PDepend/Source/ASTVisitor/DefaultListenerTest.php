@@ -44,24 +44,22 @@ namespace PDepend\Source\ASTVisitor;
 
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTCompilationUnit;
-use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTTrait;
 
 /**
  * Test case for the default visit listener implementation.
  *
+ * @covers \PDepend\Source\ASTVisitor\AbstractASTVisitor
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Source\ASTVisitor\AbstractASTVisitor
  * @group unittest
  */
 class DefaultListenerTest extends AbstractTestCase
 {
     /**
      * testDefaultImplementationCallsListeners
-     *
-     * @return void
      */
     public function testDefaultImplementationCallsListeners(): void
     {
@@ -106,8 +104,6 @@ class DefaultListenerTest extends AbstractTestCase
     /**
      * Tests that the default listener implementation delegates a class call
      * to the startVisitNode() and endVisitNode() methods.
-     *
-     * @return void
      */
     public function testListenerCallsStartNodeEndNodeForClass(): void
     {
@@ -134,8 +130,6 @@ class DefaultListenerTest extends AbstractTestCase
     /**
      * Tests that the default listener implementation delegates an interface
      * call to the startVisitNode() and endVisitNode() methods.
-     *
-     * @return void
      */
     public function testListenerCallsStartNodeEndNodeForInterface(): void
     {
@@ -162,8 +156,6 @@ class DefaultListenerTest extends AbstractTestCase
     /**
      * Tests that the default listener implementation delegates a function
      * call to the startVisitNode() and endVisitNode() methods.
-     *
-     * @return void
      */
     public function testListenerCallsStartNodeEndNodeForFunction(): void
     {
@@ -190,8 +182,6 @@ class DefaultListenerTest extends AbstractTestCase
     /**
      * Tests that the default listener implementation delegates a method call to
      * the startVisitNode() and endVisitNode() methods.
-     *
-     * @return void
      */
     public function testListenerCallsStartNodeEndNodeForMethod(): void
     {
@@ -215,8 +205,6 @@ class DefaultListenerTest extends AbstractTestCase
 
     /**
      * testListenerCallsStartVisitNodeForPassedParameterInstance
-     *
-     * @return void
      */
     public function testListenerCallsStartVisitNodeForPassedParameterInstance(): void
     {
@@ -234,8 +222,6 @@ class DefaultListenerTest extends AbstractTestCase
 
     /**
      * testListenerCallsEndVisitNodeForPassedParameterInstance
-     *
-     * @return void
      */
     public function testListenerCallsEndVisitNodeForPassedParameterInstance(): void
     {
@@ -254,7 +240,6 @@ class DefaultListenerTest extends AbstractTestCase
     /**
      * testListenerInvokesStartVisitNotForTrait
      *
-     * @return void
      * @since 1.0.0
      */
     public function testListenerInvokesStartVisitNotForTrait(): void
@@ -271,7 +256,6 @@ class DefaultListenerTest extends AbstractTestCase
     /**
      * testListenerInvokesEndVisitNotForTrait
      *
-     * @return void
      * @since 1.0.0
      */
     public function testListenerInvokesEndVisitNotForTrait(): void

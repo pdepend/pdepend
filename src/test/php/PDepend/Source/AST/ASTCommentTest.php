@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTComment} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTComment
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTComment
  * @group unittest
  */
 class ASTCommentTest extends ASTNodeTestCase
 {
     /**
      * testSingleLineCommentHasExpectedStartLine
-     *
-     * @return void
      */
     public function testSingleLineCommentHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testSingleLineCommentHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testSingleLineCommentHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testSingleLineCommentHasExpectedEndLine
-     *
-     * @return void
      */
     public function testSingleLineCommentHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testSingleLineCommentHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testSingleLineCommentHasExpectedEndColumn(): void
     {
@@ -100,8 +93,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testMultiLineCommentHasExpectedStartLine
-     *
-     * @return void
      */
     public function testMultiLineCommentHasExpectedStartLine(): void
     {
@@ -111,8 +102,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testMultiLineCommentHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testMultiLineCommentHasExpectedStartColumn(): void
     {
@@ -122,8 +111,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testMultiLineCommentHasExpectedEndLine
-     *
-     * @return void
      */
     public function testMultiLineCommentHasExpectedEndLine(): void
     {
@@ -133,8 +120,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testMultiLineCommentHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testMultiLineCommentHasExpectedEndColumn(): void
     {
@@ -144,8 +129,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testDocCommentHasExpectedStartLine
-     *
-     * @return void
      */
     public function testDocCommentHasExpectedStartLine(): void
     {
@@ -155,8 +138,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testDocCommentHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testDocCommentHasExpectedStartColumn(): void
     {
@@ -166,8 +147,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testDocCommentHasExpectedEndLine
-     *
-     * @return void
      */
     public function testDocCommentHasExpectedEndLine(): void
     {
@@ -177,8 +156,6 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * testDocCommentHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testDocCommentHasExpectedEndColumn(): void
     {
@@ -191,7 +168,7 @@ class ASTCommentTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTComment
+     * @return ASTComment
      */
     private function getFirstCommentInClass($testCase)
     {

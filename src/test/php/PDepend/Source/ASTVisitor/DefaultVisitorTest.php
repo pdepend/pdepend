@@ -51,18 +51,17 @@ use PDepend\Source\AST\ASTTrait;
 /**
  * Test case for the default visitor implementation.
  *
+ * @covers \PDepend\Source\ASTVisitor\AbstractASTVisitor
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Source\ASTVisitor\AbstractASTVisitor
  * @group unittest
  */
 class DefaultVisitorTest extends AbstractTestCase
 {
     /**
      * Tests the execution order of the default visitor implementation.
-     *
-     * @return void
      */
     public function testDefaultVisitOrder(): void
     {
@@ -89,7 +88,7 @@ class DefaultVisitorTest extends AbstractTestCase
             'methodCB',
             'methodCA',
             'funcD',
-            'PDepend\\Source\\AST\\ASTCompilationUnit'
+            'PDepend\\Source\\AST\\ASTCompilationUnit',
         ];
 
         $this->assertEquals($expected, $visitor->visits);
@@ -97,8 +96,6 @@ class DefaultVisitorTest extends AbstractTestCase
 
     /**
      * testVisitorVisitsFunctionParameter
-     *
-     * @return void
      */
     public function testVisitorVisitsFunctionParameter(): void
     {
@@ -115,8 +112,6 @@ class DefaultVisitorTest extends AbstractTestCase
 
     /**
      * testVisitorVisitsMethodParameter
-     *
-     * @return void
      */
     public function testVisitorVisitsMethodParameter(): void
     {
@@ -133,8 +128,6 @@ class DefaultVisitorTest extends AbstractTestCase
 
     /**
      * testVisitorInvokesStartVisitParameterOnListener
-     *
-     * @return void
      */
     public function testVisitorInvokesStartVisitParameterOnListener(): void
     {
@@ -155,8 +148,6 @@ class DefaultVisitorTest extends AbstractTestCase
 
     /**
      * testVisitorInvokesEndVisitParameterOnListener
-     *
-     * @return void
      */
     public function testVisitorInvokesEndVisitParameterOnListener(): void
     {
@@ -177,8 +168,6 @@ class DefaultVisitorTest extends AbstractTestCase
 
     /**
      * testVisitorInvokesStartVisitInterfaceOnListener
-     *
-     * @return void
      */
     public function testVisitorInvokesStartVisitInterfaceOnListener(): void
     {
@@ -199,8 +188,6 @@ class DefaultVisitorTest extends AbstractTestCase
 
     /**
      * testVisitorInvokesEndVisitInterfaceOnListener
-     *
-     * @return void
      */
     public function testVisitorInvokesEndVisitInterfaceOnListener(): void
     {
@@ -221,8 +208,6 @@ class DefaultVisitorTest extends AbstractTestCase
 
     /**
      * testVisitorInvokesStartVisitPropertyOnListener
-     *
-     * @return void
      */
     public function testVisitorInvokesStartVisitPropertyOnListener(): void
     {
@@ -243,8 +228,6 @@ class DefaultVisitorTest extends AbstractTestCase
 
     /**
      * testVisitorInvokesEndVisitPropertyOnListener
-     *
-     * @return void
      */
     public function testVisitorInvokesEndVisitPropertyOnListener(): void
     {
@@ -266,7 +249,6 @@ class DefaultVisitorTest extends AbstractTestCase
     /**
      * testVisitorVisitsTrait
      *
-     * @return void
      * @since 1.0.0
      */
     public function testVisitorVisitsTrait(): void
@@ -289,7 +271,6 @@ class DefaultVisitorTest extends AbstractTestCase
     /**
      * testVisitorInvokesAcceptOnTraitMethods
      *
-     * @return void
      * @since 1.0.0
      */
     public function testVisitorInvokesAcceptOnTraitMethods(): void
@@ -309,7 +290,6 @@ class DefaultVisitorTest extends AbstractTestCase
     /**
      * testVisitorInvokesStartTraitOnListener
      *
-     * @return void
      * @since 1.0.0
      */
     public function testVisitorInvokesStartTraitOnListener(): void
@@ -336,7 +316,6 @@ class DefaultVisitorTest extends AbstractTestCase
     /**
      * testVisitorInvokesEndTraitOnListener
      *
-     * @return void
      * @since 1.0.0
      */
     public function testVisitorInvokesEndTraitOnListener(): void
@@ -347,11 +326,11 @@ class DefaultVisitorTest extends AbstractTestCase
         $namespace = new ASTNamespace('MyPackage');
         $namespace->addType($trait);
 
-        $listener = $this->createMock(\PDepend\Source\ASTVisitor\ASTVisitListener::class);
+        $listener = $this->createMock(ASTVisitListener::class);
         $listener->expects($this->once())
             ->method('endVisitTrait');
 
-        $visitor = $this->getMockBuilder(\PDepend\Source\ASTVisitor\AbstractASTVisitor::class)
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['getVisitListeners'])
             ->getMock();
         $visitor->addVisitListener($listener);
@@ -361,8 +340,6 @@ class DefaultVisitorTest extends AbstractTestCase
 
     /**
      * testGetVisitListenersReturnsIterator
-     *
-     * @return void
      */
     public function testGetVisitListenersReturnsIterator(): void
     {
@@ -372,8 +349,6 @@ class DefaultVisitorTest extends AbstractTestCase
 
     /**
      * testGetVisitListenersContainsAddedListener
-     *
-     * @return void
      */
     public function testGetVisitListenersContainsAddedListener(): void
     {

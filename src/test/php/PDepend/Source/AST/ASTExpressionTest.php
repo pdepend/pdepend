@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTExpression
  * @group unittest
  */
 class ASTExpressionTest extends ASTNodeTestCase
 {
     /**
      * testExpressionHasExpectedNumberOfChildNodes
-     *
-     * @return void
      */
     public function testExpressionHasExpectedNumberOfChildNodes(): void
     {
@@ -67,8 +66,6 @@ class ASTExpressionTest extends ASTNodeTestCase
 
     /**
      * Tests the generated object graph of an expression node.
-     *
-     * @return void
      */
     public function testExpressionGraphWithBooleanExpressions(): void
     {
@@ -87,8 +84,6 @@ class ASTExpressionTest extends ASTNodeTestCase
 
     /**
      * testExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testExpressionHasExpectedStartLine(): void
     {
@@ -98,8 +93,6 @@ class ASTExpressionTest extends ASTNodeTestCase
 
     /**
      * testExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testExpressionHasExpectedStartColumn(): void
     {
@@ -109,8 +102,6 @@ class ASTExpressionTest extends ASTNodeTestCase
 
     /**
      * testExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testExpressionHasExpectedEndLine(): void
     {
@@ -120,8 +111,6 @@ class ASTExpressionTest extends ASTNodeTestCase
 
     /**
      * testExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testExpressionHasExpectedEndColumn(): void
     {
@@ -134,7 +123,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTExpression
+     * @return ASTExpression
      */
     private function getFirstExpressionInFunction($testCase)
     {

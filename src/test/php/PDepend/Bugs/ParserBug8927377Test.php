@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://www.pivotaltracker.com/story/show/8927377
  */
 
@@ -50,17 +51,17 @@ use PDepend\Source\AST\ASTPropertyPostfix;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://www.pivotaltracker.com/story/show/8927377
  *
  * @ticket 8927377
+ *
  * @group regressiontest
  */
 class ParserBug8927377Test extends AbstractRegressionTestCase
 {
     /**
      * testPropertyPostfixHasExpectedStartLine
-     *
-     * @return void
      */
     public function testPropertyPostfixHasExpectedStartLine(): void
     {
@@ -70,8 +71,6 @@ class ParserBug8927377Test extends AbstractRegressionTestCase
 
     /**
      * testPropertyPostfixHasExpectedEndLine
-     *
-     * @return void
      */
     public function testPropertyPostfixHasExpectedEndLine(): void
     {
@@ -81,8 +80,6 @@ class ParserBug8927377Test extends AbstractRegressionTestCase
 
     /**
      * testPropertyPostfixHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testPropertyPostfixHasExpectedStartColumn(): void
     {
@@ -92,8 +89,6 @@ class ParserBug8927377Test extends AbstractRegressionTestCase
 
     /**
      * testPropertyPostfixHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testPropertyPostfixHasExpectedEndColumn(): void
     {
@@ -104,7 +99,7 @@ class ParserBug8927377Test extends AbstractRegressionTestCase
     /**
      * Returns the property postfix found in a class.
      *
-     * @return \PDepend\Source\AST\ASTPropertyPostfix
+     * @return ASTPropertyPostfix
      */
     protected function getFirstPropertyPostfixInClass()
     {

@@ -48,18 +48,17 @@ use PDepend\Report\DummyAnalyzer;
 /**
  * Test case for the {@link \PDepend\Metrics\AnalyzerIterator} class.
  *
+ * @covers \PDepend\Metrics\AnalyzerIterator
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Metrics\AnalyzerIterator
  * @group unittest
  */
 class AnalyzerIteratorTest extends AbstractTestCase
 {
     /**
      * testIteratorReturnsEnabledAnalyzerInstances
-     *
-     * @return void
      */
     public function testIteratorReturnsEnabledAnalyzerInstances(): void
     {
@@ -75,8 +74,6 @@ class AnalyzerIteratorTest extends AbstractTestCase
 
     /**
      * testIteratorDoesNotReturnDisabledAnalyzerInstances
-     *
-     * @return void
      */
     public function testIteratorDoesNotReturnDisabledAnalyzerInstances(): void
     {

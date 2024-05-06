@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/176
  */
 
@@ -52,6 +53,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @link http://tracker.pdepend.org/pdepend/issue_tracker/issue/176
  *
  * @group regressiontest
@@ -60,8 +62,6 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegress
 {
     /**
      * testAnalyzerCountsNumberOfMethodsForClassInterfaceSize
-     *
-     * @return void
      */
     public function testAnalyzerCountsNumberOfMethodsForClassInterfaceSize(): void
     {
@@ -78,7 +78,7 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegress
         $analyzer->addAnalyzer($ccnAnalyzer);
 
         $analyzer->analyze($namespaces);
-        
+
         $metrics = $analyzer->getNodeMetrics($class);
 
         $this->assertEquals(2, $metrics['cis']);
@@ -86,8 +86,6 @@ class ClassInterfaceSizeShouldNotSumComplexityBug176Test extends AbstractRegress
 
     /**
      * testAnalyzerCountsNumberOfMethodsForClassSize
-     *
-     * @return void
      */
     public function testAnalyzerCountsNumberOfMethodsForClassSize(): void
     {

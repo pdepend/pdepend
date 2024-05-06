@@ -49,15 +49,13 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 59
+ *
  * @group regressiontest
  */
 class ParserBug059Test extends AbstractRegressionTestCase
 {
-
     /**
      * Tests that the parser sets the source file of an interface method.
-     *
-     * @return void
      */
     public function testParserSetsSourceFileForInterfaceMethod(): void
     {
@@ -77,8 +75,6 @@ class ParserBug059Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser sets the source file of a class method.
-     *
-     * @return void
      */
     public function testParserSetsSourceFileForClassMethod(): void
     {
@@ -98,8 +94,6 @@ class ParserBug059Test extends AbstractRegressionTestCase
 
     /**
      * Tests that the parser sets the source file of a class property.
-     *
-     * @return void
      */
     public function testParserSetsSourceFileForClassProperty(): void
     {

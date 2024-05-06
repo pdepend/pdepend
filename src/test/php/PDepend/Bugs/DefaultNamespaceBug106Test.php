@@ -55,8 +55,6 @@ class DefaultNamespaceBug106Test extends AbstractRegressionTestCase
 {
     /**
      * testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile
-     *
-     * @return void
      */
     public function testAllocatedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile(): void
     {
@@ -66,8 +64,6 @@ class DefaultNamespaceBug106Test extends AbstractRegressionTestCase
 
     /**
      * testExtendedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile
-     *
-     * @return void
      */
     public function testExtendedInternalClassWithLeadingBackslashNotAppearsInSummaryLogFile(): void
     {

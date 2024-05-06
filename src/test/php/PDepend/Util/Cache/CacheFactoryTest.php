@@ -43,24 +43,21 @@
 namespace PDepend\Util\Cache;
 
 use PDepend\AbstractTestCase;
-use PDepend\Util\Cache\Driver\FileCacheDriver;
-use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
  * Test case for the {@link \PDepend\Util\Cache\CacheFactory} class.
  *
+ * @covers \PDepend\Util\Cache\CacheFactory
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Util\Cache\CacheFactory
  * @group unittest
  */
 class CacheFactoryTest extends AbstractTestCase
 {
     /**
      * testCreateReturnsDriverInstance
-     *
-     * @return void
      */
     public function testCreateReturnsDriverInstance(): void
     {
@@ -72,8 +69,6 @@ class CacheFactoryTest extends AbstractTestCase
 
     /**
      * testCreateHasSingletonBehaviorForIdenticalCacheNames
-     *
-     * @return void
      */
     public function testCreateHasSingletonBehaviorForIdenticalCacheNames(): void
     {
@@ -89,8 +84,6 @@ class CacheFactoryTest extends AbstractTestCase
 
     /**
      * testCreateReturnsDifferentInstancesForDifferentCacheNames
-     *
-     * @return void
      */
     public function testCreateReturnsDifferentInstancesForDifferentCacheNames(): void
     {
@@ -106,8 +99,6 @@ class CacheFactoryTest extends AbstractTestCase
 
     /**
      * testCreateReturnsCacheInstanceOfTypeFile
-     *
-     * @return void
      */
     public function testCreateReturnsCacheInstanceOfTypeFile(): void
     {
@@ -121,8 +112,6 @@ class CacheFactoryTest extends AbstractTestCase
 
     /**
      * testCreateReturnsCacheInstanceOfTypeMemory
-     *
-     * @return void
      */
     public function testCreateReturnsCacheInstanceOfTypeMemory(): void
     {
@@ -136,8 +125,6 @@ class CacheFactoryTest extends AbstractTestCase
 
     /**
      * testCreateThrowsExpectedExceptionForUnknownCacheDriver
-     *
-     * @return void
      */
     public function testCreateThrowsExpectedExceptionForUnknownCacheDriver(): void
     {
@@ -153,7 +140,7 @@ class CacheFactoryTest extends AbstractTestCase
     /**
      * Creates a prepared factory instance.
      *
-     * @return \PDepend\Util\Cache\CacheFactory
+     * @return CacheFactory
      */
     protected function createFactoryFixture()
     {

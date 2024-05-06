@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTExitExpression} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTExitExpression
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTExitExpression
  * @group unittest
  */
 class ASTExitExpressionTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithExitCode
      *
-     * @return \PDepend\Source\AST\ASTExitExpression
+     * @return ASTExitExpression
+     *
      * @since 1.0.1
      */
     public function testExitExpressionWithExitCode()
@@ -71,10 +73,10 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithExitCodeHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @since 1.0.1
+     *
      * @depends testExitExpressionWithExitCode
      */
     public function testExitExpressionWithExitCodeHasExpectedStartLine($expr): void
@@ -85,10 +87,10 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithExitCodeHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @since 1.0.1
+     *
      * @depends testExitExpressionWithExitCode
      */
     public function testExitExpressionWithExitCodeHasExpectedEndLine($expr): void
@@ -99,10 +101,10 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithExitCodeHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @since 1.0.1
+     *
      * @depends testExitExpressionWithExitCode
      */
     public function testExitExpressionWithExitCodeHasExpectedStartColumn($expr): void
@@ -113,10 +115,10 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithExitCodeHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @since 1.0.1
+     *
      * @depends testExitExpressionWithExitCode
      */
     public function testExitExpressionWithExitCodeHasExpectedEndColumn($expr): void
@@ -127,7 +129,8 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithEmptyArgs
      *
-     * @return \PDepend\Source\AST\ASTExitExpression
+     * @return ASTExitExpression
+     *
      * @since 1.0.1
      */
     public function testExitExpressionWithEmptyArgs()
@@ -141,10 +144,10 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithEmptyArgsHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @since 1.0.1
+     *
      * @depends testExitExpressionWithEmptyArgs
      */
     public function testExitExpressionWithEmptyArgsHasExpectedStartLine($expr): void
@@ -155,10 +158,10 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithEmptyArgsHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @since 1.0.1
+     *
      * @depends testExitExpressionWithEmptyArgs
      */
     public function testExitExpressionWithEmptyArgsHasExpectedEndLine($expr): void
@@ -169,10 +172,10 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithEmptyArgsHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @since 1.0.1
+     *
      * @depends testExitExpressionWithEmptyArgs
      */
     public function testExitExpressionWithEmptyArgsHasExpectedStartColumn($expr): void
@@ -183,10 +186,10 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithEmptyArgsHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @since 1.0.1
+     *
      * @depends testExitExpressionWithEmptyArgs
      */
     public function testExitExpressionWithEmptyArgsHasExpectedEndColumn($expr): void
@@ -197,7 +200,8 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithoutArgs
      *
-     * @return \PDepend\Source\AST\ASTExitExpression
+     * @return ASTExitExpression
+     *
      * @since 1.0.1
      */
     public function testExitExpressionWithoutArgs()
@@ -211,9 +215,8 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithoutArgsHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @depends testExitExpressionWithoutArgs
      */
     public function testExitExpressionWithoutArgsHasExpectedStartLine($expr): void
@@ -224,9 +227,8 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithoutArgsHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @depends testExitExpressionWithoutArgs
      */
     public function testExitExpressionWithoutArgsHasExpectedStartColumn($expr): void
@@ -237,9 +239,8 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionHasExpectedEndLineWithoutArgs
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @depends testExitExpressionWithoutArgs
      */
     public function testExitExpressionWithoutArgsHasExpectedEndLine($expr): void
@@ -250,9 +251,8 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionHasExpectedEndColumnWithoutArgs
      *
-     * @param \PDepend\Source\AST\ASTExitExpression $expr
+     * @param ASTExitExpression $expr
      *
-     * @return void
      * @depends testExitExpressionWithoutArgs
      */
     public function testExitExpressionWithoutArgsHasExpectedEndColumn($expr): void
@@ -263,7 +263,7 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTExitExpression
+     * @return ASTExitExpression
      */
     private function getFirstExitExpressionInFunction()
     {

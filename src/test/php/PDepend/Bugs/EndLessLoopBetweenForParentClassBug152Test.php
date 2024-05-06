@@ -54,8 +54,6 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
 {
     /**
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass
-     *
-     * @return void
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass(): void
     {
@@ -68,8 +66,6 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
 
     /**
      * testClassNotResultsInEndlessLoopWhileCallingGetParentClass2
-     *
-     * @return void
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2(): void
     {
@@ -84,8 +80,6 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
 
     /**
      * testClassNotResultsInEndlessLoopWhileCallingGetInterfaces
-     *
-     * @return void
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces(): void
     {
@@ -98,8 +92,6 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
 
     /**
      * testClassNotResultsInEndlessLoopWhileCallingGetInterfaces2
-     *
-     * @return void
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces2(): void
     {
@@ -112,8 +104,6 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
 
     /**
      * testClassNotResultsInEndlessLoopWhileCallingGetInterfaces3
-     *
-     * @return void
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetInterfaces3(): void
     {
@@ -126,8 +116,6 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
 
     /**
      * testClassDeclarationAndParameterTypeHintAreReferencesToTheSameClass
-     *
-     * @return void
      */
     public function testClassDeclarationAndParameterTypeHintAreReferencesToTheSameClass(): void
     {
@@ -143,8 +131,6 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
 
     /**
      * testParserDoesNotDetectThrownInternalExceptionClassAsPartOfPackage
-     *
-     * @return void
      */
     public function testParserDoesNotDetectThrownInternalExceptionClassAsPartOfPackage(): void
     {

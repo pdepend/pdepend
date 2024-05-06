@@ -47,18 +47,17 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the {@link \PDepend\Util\FileUtil} class.
  *
+ * @covers \PDepend\Util\FileUtil
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Util\FileUtil
  * @group unittest
  */
 class FileUtilTest extends AbstractTestCase
 {
     /**
      * testGetSysTempDirReturnsExpectedDirectory
-     *
-     * @return void
      */
     public function testGetSysTempDirReturnsExpectedDirectory(): void
     {
@@ -70,8 +69,6 @@ class FileUtilTest extends AbstractTestCase
 
     /**
      * testGetUserHomeDirReturnsExpectedDirectory
-     *
-     * @return void
      */
     public function testGetUserHomeDirReturnsExpectedDirectory(): void
     {
@@ -83,8 +80,6 @@ class FileUtilTest extends AbstractTestCase
 
     /**
      * testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory
-     *
-     * @return void
      */
     public function testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory(): void
     {

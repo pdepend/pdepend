@@ -47,18 +47,17 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the code file class.
  *
+ * @covers \PDepend\Source\AST\ASTCompilationUnit
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\AST\ASTCompilationUnit
  * @group unittest
  */
 class ASTCompilationUnitTest extends AbstractTestCase
 {
     /**
      * testGetNameReturnsTheFileName
-     *
-     * @return void
      */
     public function testGetNameReturnsTheFileName(): void
     {
@@ -68,8 +67,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetFileNameReturnsTheFileName
-     *
-     * @return void
      */
     public function testGetFileNameReturnsTheFileName(): void
     {
@@ -79,8 +76,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetIdReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetIdReturnsNullByDefault(): void
     {
@@ -90,8 +85,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetIdReturnsInjectedIdValue
-     *
-     * @return void
      */
     public function testGetIdReturnsInjectedIdValue(): void
     {
@@ -103,8 +96,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetDocCommentReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetDocCommentReturnsNullByDefault(): void
     {
@@ -114,8 +105,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetDocCommentReturnsInjectedDocCommentValue
-     *
-     * @return void
      */
     public function testGetDocCommentReturnsInjectedDocCommentValue(): void
     {
@@ -127,8 +116,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetTokensDelegatesCallToCacheRestoreWithFileId
-     *
-     * @return void
      */
     public function testGetTokensDelegatesCallToCacheRestoreWithFileId(): void
     {
@@ -150,8 +137,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testSetTokensDelegatesCallToCacheStoreWithFileId
-     *
-     * @return void
      */
     public function testSetTokensDelegatesCallToCacheStoreWithFileId(): void
     {
@@ -173,8 +158,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testAcceptInvokesVisitFileOnGivenVisitor
-     *
-     * @return void
      */
     public function testAcceptInvokesVisitFileOnGivenVisitor(): void
     {
@@ -190,8 +173,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testMagicStringMethodReturnsEmptyStringWhenFileNameIsNull
-     *
-     * @return void
      */
     public function testMagicStringMethodReturnsEmptyStringWhenFileNameIsNull(): void
     {
@@ -201,8 +182,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testMagicStringMethodReturnInjectedFileNameValue
-     *
-     * @return void
      */
     public function testMagicStringMethodReturnInjectedFileNameValue(): void
     {
@@ -212,8 +191,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames(): void
     {
@@ -226,7 +203,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
                 'endLine',
                 'fileName',
                 'startLine',
-                'id'
+                'id',
             ],
             $file->__sleep()
         );
@@ -234,8 +211,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testMagicWakeupMethodInvokesSetSourceFileOnChildNodes
-     *
-     * @return void
      */
     public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes(): void
     {
@@ -254,8 +229,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testIsCachedReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsCachedReturnsFalseByDefault(): void
     {
@@ -265,8 +238,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testIsCachedReturnsFalseWhenObjectGetsSerialized
-     *
-     * @return void
      */
     public function testIsCachedReturnsFalseWhenObjectGetsSerialized(): void
     {
@@ -278,8 +249,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testIsCachedReturnsTrueAfterCallToWakeup
-     *
-     * @return void
      */
     public function testIsCachedReturnsTrueAfterCallToWakeup(): void
     {
@@ -291,8 +260,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetStartLineReturnsZeroWhenSourceFileNotExists
-     *
-     * @return void
      */
     public function testGetStartLineReturnsZeroWhenSourceFileNotExists(): void
     {
@@ -302,8 +269,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetStartLineReturnsOneWhenSourceFileExists
-     *
-     * @return void
      */
     public function testGetStartLineReturnsOneWhenSourceFileExists(): void
     {
@@ -313,8 +278,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetEndLineReturnsZeroWhenSourceFileNotExists
-     *
-     * @return void
      */
     public function testGetEndLineReturnsZeroWhenSourceFileNotExists(): void
     {
@@ -324,8 +287,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetEndLineReturnsOneWhenSourceFileExists
-     *
-     * @return void
      */
     public function testGetEndLineReturnsOneWhenSourceFileExists(): void
     {
@@ -335,8 +296,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * testGetSourceReturnsNullWhenSourceFileNotExists
-     *
-     * @return void
      */
     public function testGetSourceReturnsNullWhenSourceFileNotExists(): void
     {
@@ -346,8 +305,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
 
     /**
      * Tests the {@link \PDepend\Source\AST\ASTCompilationUnit#getSource()} method.
-     *
-     * @return void
      */
     public function testGetSourceReturnsOriginalFileContents(): void
     {

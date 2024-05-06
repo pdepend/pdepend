@@ -47,10 +47,11 @@ use PDepend\AbstractTestCase;
 /**
  * Test case for the code parameter class.
  *
+ * @covers \PDepend\Source\AST\ASTParameter
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\AST\ASTParameter
  * @group unittest
  */
 class ASTParameterTest extends AbstractTestCase
@@ -58,7 +59,6 @@ class ASTParameterTest extends AbstractTestCase
     /**
      * testGetIdReturnsExpectedObjectHash
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetIdReturnsExpectedObjectHash(): void
@@ -69,8 +69,6 @@ class ASTParameterTest extends AbstractTestCase
 
     /**
      * Tests that the allows null method returns <b>true</b> for a simple parameter.
-     *
-     * @return void
      */
     public function testParameterAllowsNullForSimpleVariableIssue67(): void
     {
@@ -81,8 +79,6 @@ class ASTParameterTest extends AbstractTestCase
     /**
      * Tests that the allows null method returns <b>true</b> for a simple
      * parameter passed by reference.
-     *
-     * @return void
      */
     public function testParameterAllowsNullForSimpleVariablePassedByReferenceIssue67(): void
     {
@@ -93,8 +89,6 @@ class ASTParameterTest extends AbstractTestCase
     /**
      * Tests that the allows null method returns <b>false</b> for an array
      * parameter without explicit <b>null</b> default value.
-     *
-     * @return void
      */
     public function testParameterNotAllowsNullForArrayHintVariableIssue67(): void
     {
@@ -105,8 +99,6 @@ class ASTParameterTest extends AbstractTestCase
     /**
      * Tests that the allows null method returns <b>true</b> for an array
      * parameter with explicit <b>null</b> default value.
-     *
-     * @return void
      */
     public function testParameterAllowsNullForArrayHintVariableIssue67(): void
     {
@@ -117,8 +109,6 @@ class ASTParameterTest extends AbstractTestCase
     /**
      * Tests that the allows null method returns <b>false</b> for a typed
      * parameter without explicit <b>null</b> default value.
-     *
-     * @return void
      */
     public function testParameterNotAllowsNullForTypeHintVariableIssue67(): void
     {
@@ -129,8 +119,6 @@ class ASTParameterTest extends AbstractTestCase
     /**
      * Tests that the allows null method returns <b>true</b> for a type
      * parameter with explicit <b>null</b> default value.
-     *
-     * @return void
      */
     public function testParameterAllowsNullForTypeHintVariableIssue67(): void
     {
@@ -141,8 +129,6 @@ class ASTParameterTest extends AbstractTestCase
     /**
      * Tests that the getDeclaringClass() method returns <b>null</b> for a
      * function.
-     *
-     * @return void
      */
     public function testParameterDeclaringClassReturnsNullForFunctionIssue67(): void
     {
@@ -153,8 +139,6 @@ class ASTParameterTest extends AbstractTestCase
     /**
      * Tests that the getDeclaringClass() method returns the declaring class
      * of a parent function/method.
-     *
-     * @return void
      */
     public function testParameterDeclaringClassReturnsExpectedInstanceForMethodIssue67(): void
     {
@@ -172,8 +156,6 @@ class ASTParameterTest extends AbstractTestCase
 
     /**
      * Tests that the parameter class handles a type holder as expected.
-     *
-     * @return void
      */
     public function testParameterReturnsExpectedTypeFromASTClassOrInterfaceReference(): void
     {
@@ -191,8 +173,6 @@ class ASTParameterTest extends AbstractTestCase
 
     /**
      * Tests that a parameter returns <b>null</b> when no type holder was set.
-     *
-     * @return void
      */
     public function testParameterReturnNullForTypeWhenNoASTClassOrInterfaceReferenceWasSet(): void
     {
@@ -202,8 +182,6 @@ class ASTParameterTest extends AbstractTestCase
 
     /**
      * Tests that a parameter returns the expected function instance.
-     *
-     * @return void
      */
     public function testParameterReturnsExpectedDeclaringFunction(): void
     {
@@ -214,8 +192,6 @@ class ASTParameterTest extends AbstractTestCase
 
     /**
      * Tests that a parameter returns the expected method instance.
-     *
-     * @return void
      */
     public function testParameterReturnsExpectedDeclaringMethod(): void
     {
@@ -228,7 +204,8 @@ class ASTParameterTest extends AbstractTestCase
      * Returns the first class method found in the test file associated with the
      * calling test method.
      *
-     * @return \PDepend\Source\AST\ASTMethod
+     * @return ASTMethod
+     *
      * @since 1.0.0
      */
     private function getFirstMethodInClass()
@@ -243,8 +220,6 @@ class ASTParameterTest extends AbstractTestCase
 
     /**
      * testAcceptInvokesVisitParameterOnSuppliedVisitor
-     *
-     * @return void
      */
     public function testAcceptInvokesVisitParameterOnSuppliedVisitor(): void
     {

@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTScope} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTScope
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTScope
  * @group unittest
  */
 class ASTScopeTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * testScope
      *
-     * @return \PDepend\Source\AST\ASTScope
+     * @return ASTScope
+     *
      * @since 1.0.2
      */
     public function testScope()
@@ -71,9 +73,8 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected start line value.
      *
-     * @param \PDepend\Source\AST\ASTScope $scope
+     * @param ASTScope $scope
      *
-     * @return void
      * @depends testScope
      */
     public function testScopeHasExpectedStartLine($scope): void
@@ -84,9 +85,8 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected start column value.
      *
-     * @param \PDepend\Source\AST\ASTScope $scope
+     * @param ASTScope $scope
      *
-     * @return void
      * @depends testScope
      */
     public function testScopeHasExpectedStartColumn($scope): void
@@ -97,9 +97,8 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected end line value.
      *
-     * @param \PDepend\Source\AST\ASTScope $scope
+     * @param ASTScope $scope
      *
-     * @return void
      * @depends testScope
      */
     public function testScopeHasExpectedEndLine($scope): void
@@ -110,9 +109,8 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected end column value.
      *
-     * @param \PDepend\Source\AST\ASTScope $scope
+     * @param ASTScope $scope
      *
-     * @return void
      * @depends testScope
      */
     public function testScopeHasExpectedEndColumn($scope): void
@@ -123,7 +121,7 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTScope
+     * @return ASTScope
      */
     private function getFirstScopeInFunction()
     {

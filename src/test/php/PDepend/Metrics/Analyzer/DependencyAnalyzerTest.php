@@ -47,10 +47,11 @@ use PDepend\Metrics\AbstractMetricsTestCase;
 /**
  * Tests the for the package metrics visitor.
  *
+ * @covers \PDepend\Metrics\Analyzer\DependencyAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Metrics\Analyzer\DependencyAnalyzer
  * @group unittest
  */
 class DependencyAnalyzerTest extends AbstractMetricsTestCase
@@ -76,7 +77,7 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
             'ce'  =>  0,
             'a'   =>  0,
             'i'   =>  0,
-            'd'   =>  1
+            'd'   =>  1,
         ],
         'pkg1'  =>  [
             'tc'  =>  1,
@@ -86,7 +87,7 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
             'ce'  =>  2,
             'a'   =>  0,
             'i'   =>  1,
-            'd'   =>  0
+            'd'   =>  0,
         ],
         'pkg2'  =>  [
             'tc'  =>  1,
@@ -96,7 +97,7 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
             'ce'  =>  0,
             'a'   =>  1,
             'i'   =>  0,
-            'd'   =>  0
+            'd'   =>  0,
         ],
         'pkg3'  =>  [
             'tc'  =>  1,
@@ -112,8 +113,6 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the generated package metrics.
-     *
-     * @return void
      */
     public function testGenerateMetrics(): void
     {

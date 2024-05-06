@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -46,12 +47,14 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitAdaptation} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 1.0.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTraitAdaptation
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 1.0.0
+ *
  * @group unittest
  */
 class ASTTraitAdaptationTest extends ASTNodeTestCase
@@ -59,23 +62,23 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
     /**
      * testTraitAdaptation
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptation
+     * @return ASTTraitAdaptation
+     *
      * @since 1.0.2
      */
     public function testTraitAdaptation()
     {
         $scope = $this->getFirstTraitAdaptationInClass();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitAdaptation', $scope);
-        
+
         return $scope;
     }
-   
+
     /**
      * testTraitAdaptationHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptation $scope
+     * @param ASTTraitAdaptation $scope
      *
-     * @return void
      * @depends testTraitAdaptation
      */
     public function testTraitAdaptationHasExpectedStartLine($scope): void
@@ -86,9 +89,8 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptation $scope
+     * @param ASTTraitAdaptation $scope
      *
-     * @return void
      * @depends testTraitAdaptation
      */
     public function testTraitAdaptationHasExpectedStartColumn($scope): void
@@ -99,9 +101,8 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptation $scope
+     * @param ASTTraitAdaptation $scope
      *
-     * @return void
      * @depends testTraitAdaptation
      */
     public function testTraitAdaptationHasExpectedEndLine($scope): void
@@ -112,9 +113,8 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptation $scope
+     * @param ASTTraitAdaptation $scope
      *
-     * @return void
      * @depends testTraitAdaptation
      */
     public function testTraitAdaptationHasExpectedEndColumn($scope): void
@@ -125,7 +125,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptation
+     * @return ASTTraitAdaptation
      */
     private function getFirstTraitAdaptationInClass()
     {

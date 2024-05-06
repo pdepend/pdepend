@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTForInit} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTForInit
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTForInit
  * @group unittest
  */
 class ASTForInitTest extends ASTNodeTestCase
 {
     /**
      * testForInitHasExpectedStartLine
-     *
-     * @return void
      */
     public function testForInitHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTForInitTest extends ASTNodeTestCase
 
     /**
      * testForInitHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testForInitHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTForInitTest extends ASTNodeTestCase
 
     /**
      * testForInitHasExpectedEndLine
-     *
-     * @return void
      */
     public function testForInitHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTForInitTest extends ASTNodeTestCase
 
     /**
      * testForInitHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testForInitHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTForInitTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTForInit
+     * @return ASTForInit
      */
     private function getFirstForInitInFunction($testCase)
     {

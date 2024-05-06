@@ -49,6 +49,7 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
  * @ticket 69
+ *
  * @group regressiontest
  */
 class ParserBug069Test extends AbstractRegressionTestCase
@@ -59,8 +60,6 @@ class ParserBug069Test extends AbstractRegressionTestCase
      * <code>
      * PDepend\Parser::call();
      * </code>
-     *
-     * @return void
      */
     public function testStaticMethodCallInFunctionBody(): void
     {
@@ -78,8 +77,6 @@ class ParserBug069Test extends AbstractRegressionTestCase
      * <code>
      * \PDepend\Parser::call();
      * </code>
-     *
-     * @return void
      */
     public function testStaticMethodLeadingBackslashCallInFunctionBody(): void
     {
@@ -97,8 +94,6 @@ class ParserBug069Test extends AbstractRegressionTestCase
      * <code>
      * \PDepend\Parser\call();
      * </code>
-     *
-     * @return void
      */
     public function testNotHandlesQualifiedFunctionCallAsDependencyInFunctionBody(): void
     {
@@ -116,8 +111,6 @@ class ParserBug069Test extends AbstractRegressionTestCase
      * <code>
      * \PDepend\Parser::$prop;
      * </code>
-     *
-     * @return void
      */
     public function testQualifiedPropertyAccessAsDependencyInFunctionBody(): void
     {
@@ -135,8 +128,6 @@ class ParserBug069Test extends AbstractRegressionTestCase
      * <code>
      * \PDepend\Parser::CONSTANT;
      * </code>
-     *
-     * @return void
      */
     public function testQualifiedConstantAccessAsDependencyInFunctionBody(): void
     {

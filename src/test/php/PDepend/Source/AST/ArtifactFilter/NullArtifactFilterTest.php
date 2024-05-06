@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -55,19 +56,19 @@ use PDepend\Source\AST\ASTTrait;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArtifactList\NullArtifactFilter} class.
  *
+ * @covers \PDepend\Source\AST\ASTArtifactList\NullArtifactFilter
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  *
- * @covers \PDepend\Source\AST\ASTArtifactList\NullArtifactFilter
  * @group unittest
  */
 class NullArtifactFilterTest extends AbstractTestCase
 {
     /**
      * testAcceptsReturnsTrueForClass
-     *
-     * @return void
      */
     public function testAcceptsReturnsTrueForClass(): void
     {
@@ -77,8 +78,6 @@ class NullArtifactFilterTest extends AbstractTestCase
 
     /**
      * testAcceptsReturnsTrueForFile
-     *
-     * @return void
      */
     public function testAcceptsReturnsTrueForFile(): void
     {
@@ -88,8 +87,6 @@ class NullArtifactFilterTest extends AbstractTestCase
 
     /**
      * testAcceptsReturnsTrueForFunction
-     *
-     * @return void
      */
     public function testAcceptsReturnsTrueForFunction(): void
     {
@@ -99,8 +96,6 @@ class NullArtifactFilterTest extends AbstractTestCase
 
     /**
      * testAcceptsReturnsTrueForInterface
-     *
-     * @return void
      */
     public function testAcceptsReturnsTrueForInterface(): void
     {
@@ -110,8 +105,6 @@ class NullArtifactFilterTest extends AbstractTestCase
 
     /**
      * testAcceptsReturnsTrueForMethod
-     *
-     * @return void
      */
     public function testAcceptsReturnsTrueForMethod(): void
     {
@@ -121,8 +114,6 @@ class NullArtifactFilterTest extends AbstractTestCase
 
     /**
      * testAcceptsReturnsTrueForPackage
-     *
-     * @return void
      */
     public function testAcceptsReturnsTrueForPackage(): void
     {
@@ -132,8 +123,6 @@ class NullArtifactFilterTest extends AbstractTestCase
 
     /**
      * testAcceptsReturnsTrueForTrait
-     *
-     * @return void
      */
     public function testAcceptsReturnsTrueForTrait(): void
     {

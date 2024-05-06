@@ -61,10 +61,9 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
      * This method tests that the parser does not substitute keyword tokens in
      * a class or object operator chain.
      *
-     * @param string         $sourceFile Name of the text file.
-     * @param array<integer> $tokenTypes List of all expected token types.
+     * @param string     $sourceFile Name of the text file.
+     * @param array<int> $tokenTypes List of all expected token types.
      *
-     * @return void
      * @dataProvider dataProviderTokenizerKeywordSubstitutionInOperatorChain
      */
     public function testTokenizerKeywordSubstitutionInOperatorChain($sourceFile, array $tokenTypes): void
@@ -97,8 +96,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-002-tokenizer-keyword-substitution.php',
@@ -108,8 +107,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-003-tokenizer-keyword-substitution.php',
@@ -119,8 +118,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-004-tokenizer-keyword-substitution.php',
@@ -130,8 +129,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-005-tokenizer-keyword-substitution.php',
@@ -141,8 +140,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-006-tokenizer-keyword-substitution.php',
@@ -152,8 +151,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-007-tokenizer-keyword-substitution.php',
@@ -163,8 +162,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-008-tokenizer-keyword-substitution.php',
@@ -174,8 +173,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-009-tokenizer-keyword-substitution.php',
@@ -185,8 +184,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-010-tokenizer-keyword-substitution.php',
@@ -196,8 +195,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-011-tokenizer-keyword-substitution.php',
@@ -207,8 +206,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_VARIABLE,
                     Tokens::T_OBJECT_OPERATOR,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-012-tokenizer-keyword-substitution.php',
@@ -218,8 +217,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_STRING,
                     Tokens::T_DOUBLE_COLON,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-013-tokenizer-keyword-substitution.php',
@@ -229,8 +228,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_STRING,
                     Tokens::T_DOUBLE_COLON,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-014-tokenizer-keyword-substitution.php',
@@ -240,8 +239,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_STRING,
                     Tokens::T_DOUBLE_COLON,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-015-tokenizer-keyword-substitution.php',
@@ -251,8 +250,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_STRING,
                     Tokens::T_DOUBLE_COLON,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-016-tokenizer-keyword-substitution.php',
@@ -262,8 +261,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_STRING,
                     Tokens::T_DOUBLE_COLON,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-017-tokenizer-keyword-substitution.php',
@@ -273,8 +272,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_STRING,
                     Tokens::T_DOUBLE_COLON,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-018-tokenizer-keyword-substitution.php',
@@ -284,8 +283,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_STRING,
                     Tokens::T_DOUBLE_COLON,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-019-tokenizer-keyword-substitution.php',
@@ -295,8 +294,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_STRING,
                     Tokens::T_DOUBLE_COLON,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-020-tokenizer-keyword-substitution.php',
@@ -306,8 +305,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_STRING,
                     Tokens::T_DOUBLE_COLON,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
             [
                 'bugs/076-021-tokenizer-keyword-substitution.php',
@@ -317,8 +316,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
                     Tokens::T_STRING,
                     Tokens::T_DOUBLE_COLON,
                     Tokens::T_STRING,
-                    Tokens::T_SEMICOLON
-                ]
+                    Tokens::T_SEMICOLON,
+                ],
             ],
         ];
     }

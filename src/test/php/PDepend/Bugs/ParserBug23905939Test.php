@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://www.pivotaltracker.com/story/show/23905939
  * @since 0.10.8
  */
@@ -49,18 +50,18 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://www.pivotaltracker.com/story/show/23905939
  * @since 0.10.8
  *
  * @ticket 23905939
+ *
  * @group regressiontest
  */
 class ParserBug23905939Test extends AbstractRegressionTestCase
 {
     /**
      * testParserExtractsCorrectClassPackage
-     *
-     * @return void
      */
     public function testParserExtractsCorrectClassPackage(): void
     {
@@ -76,8 +77,6 @@ class ParserBug23905939Test extends AbstractRegressionTestCase
 
     /**
      * testParserExtractsCorrectInterfacePackage
-     *
-     * @return void
      */
     public function testParserExtractsCorrectInterfacePackage(): void
     {

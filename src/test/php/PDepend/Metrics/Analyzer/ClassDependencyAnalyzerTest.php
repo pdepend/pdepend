@@ -47,10 +47,11 @@ use PDepend\Metrics\AbstractMetricsTestCase;
 /**
  * Tests the for the package metrics visitor.
  *
+ * @covers \PDepend\Metrics\Analyzer\ClassDependencyAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Metrics\Analyzer\ClassDependencyAnalyzer
  * @group unittest
  */
 class ClassDependencyAnalyzerTest extends AbstractMetricsTestCase
@@ -71,7 +72,7 @@ class ClassDependencyAnalyzerTest extends AbstractMetricsTestCase
         'AbstractBase' => [
             'efferent' => [],
             'afferent' => [
-                'BaseClass'
+                'BaseClass',
             ],
         ],
         'SomeInterface' => [
@@ -106,8 +107,6 @@ class ClassDependencyAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the generated package metrics.
-     *
-     * @return void
      */
     public function testGenerateMetrics(): void
     {
@@ -120,11 +119,11 @@ class ClassDependencyAnalyzerTest extends AbstractMetricsTestCase
         foreach ($namespaces as $namespace) {
             foreach ($namespace->getTypes() as $type) {
                 $actual[$type->getName()]['efferent'] = array_map(
-                    static fn ($type) => $type->getName(),
+                    static fn($type) => $type->getName(),
                     $visitor->getEfferents($type)
                 );
                 $actual[$type->getName()]['afferent'] = array_map(
-                    static fn ($type) => $type->getName(),
+                    static fn($type) => $type->getName(),
                     $visitor->getAfferents($type)
                 );
             }

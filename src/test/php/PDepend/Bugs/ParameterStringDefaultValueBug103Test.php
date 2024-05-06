@@ -58,8 +58,6 @@ class ParameterStringDefaultValueBug103Test extends AbstractRegressionTestCase
 {
     /**
      * testParserHandlesStringDefaultValueWithEmbeddedExpression
-     *
-     * @return void
      */
     public function testParserHandlesStringDefaultValueWithEmbeddedExpression(): void
     {

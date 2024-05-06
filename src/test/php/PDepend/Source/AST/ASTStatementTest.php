@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTStatement
  * @group unittest
  */
 class ASTStatementTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTStatementTest extends ASTNodeTestCase
     /**
      * testStatement
      *
-     * @return \PDepend\Source\AST\ASTStatement
+     * @return ASTStatement
+     *
      * @since 1.0.2
      */
     public function testStatement()
@@ -71,9 +73,8 @@ class ASTStatementTest extends ASTNodeTestCase
     /**
      * testStatementHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTStatement $stmt
+     * @param ASTStatement $stmt
      *
-     * @return void
      * @depends testStatement
      */
     public function testStatementHasExpectedStartLine($stmt): void
@@ -84,9 +85,8 @@ class ASTStatementTest extends ASTNodeTestCase
     /**
      * testStatementHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTStatement $stmt
+     * @param ASTStatement $stmt
      *
-     * @return void
      * @depends testStatement
      */
     public function testStatementHasExpectedStartColumn($stmt): void
@@ -97,9 +97,8 @@ class ASTStatementTest extends ASTNodeTestCase
     /**
      * testStatementHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTStatement $stmt
+     * @param ASTStatement $stmt
      *
-     * @return void
      * @depends testStatement
      */
     public function testStatementHasExpectedEndLine($stmt): void
@@ -110,9 +109,8 @@ class ASTStatementTest extends ASTNodeTestCase
     /**
      * testStatementHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTStatement $stmt
+     * @param ASTStatement $stmt
      *
-     * @return void
      * @depends testStatement
      */
     public function testStatementHasExpectedEndColumn($stmt): void
@@ -125,7 +123,7 @@ class ASTStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTStatement
+     * @return ASTStatement
      */
     private function getFirstStatementInFunction($testCase)
     {

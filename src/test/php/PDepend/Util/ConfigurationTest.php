@@ -38,33 +38,36 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.0
  */
 
 namespace PDepend\Util;
 
+use OutOfRangeException;
 use PDepend\AbstractTestCase;
+use stdClass;
 
 /**
  * Test case for the {@link \PDepend\Util\Configuration} class.
  *
+ * @covers \PDepend\Util\Configuration
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @since 0.10.0
  *
- * @covers \PDepend\Util\Configuration
  * @group unittest
  */
 class ConfigurationTest extends AbstractTestCase
 {
     /**
      * testPropertyAccessForExistingValue
-     *
-     * @return void
      */
     public function testPropertyAccessForExistingValue(): void
     {
-        $settings      = new \stdClass();
+        $settings      = new stdClass();
         $settings->foo = 42;
 
         $configuration = new Configuration($settings);
@@ -74,14 +77,12 @@ class ConfigurationTest extends AbstractTestCase
 
     /**
      * testPropertyAccessForNotExistingValueThrowsExpectedException
-     *
-     * @return void
      */
     public function testPropertyAccessForNotExistingValueThrowsExpectedException(): void
     {
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
 
-        $settings      = new \stdClass();
+        $settings      = new stdClass();
         $settings->foo = 42;
 
         $configuration = new Configuration($settings);
@@ -90,25 +91,21 @@ class ConfigurationTest extends AbstractTestCase
 
     /**
      * testPropertiesAreNotWritableAndExpectedExceptionIsThrown
-     *
-     * @return void
      */
     public function testPropertiesAreNotWritableAndExpectedExceptionIsThrown(): void
     {
-        $this->expectException(\OutOfRangeException::class);
+        $this->expectException(OutOfRangeException::class);
 
-        $configuration      = new Configuration(new \stdClass());
+        $configuration      = new Configuration(new stdClass());
         $configuration->foo = 42;
     }
 
     /**
      * testIssetReturnsTrueForExistingValue
-     *
-     * @return void
      */
     public function testIssetReturnsTrueForExistingValue(): void
     {
-        $settings      = new \stdClass();
+        $settings      = new stdClass();
         $settings->foo = 42;
 
         $configuration = new Configuration($settings);
@@ -118,12 +115,10 @@ class ConfigurationTest extends AbstractTestCase
 
     /**
      * testIssetReturnsFalseForNotExistingValue
-     *
-     * @return void
      */
     public function testIssetReturnsFalseForNotExistingValue(): void
     {
-        $settings      = new \stdClass();
+        $settings      = new stdClass();
         $settings->foo = 42;
 
         $configuration = new Configuration($settings);

@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -46,20 +47,20 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitAdaptationAlias} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 1.0.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTraitAdaptationAlias
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 1.0.0
+ *
  * @group unittest
  */
 class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 {
     /**
      * testGetNewNameReturnsNullByDefault
-     *
-     * @return void
      */
     public function testGetNewNameReturnsNullByDefault(): void
     {
@@ -69,8 +70,6 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testGetNewNameReturnsExpectedValue
-     *
-     * @return void
      */
     public function testGetNewNameReturnsExpectedValue(): void
     {
@@ -80,8 +79,6 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testGetNewModifierReturnsMinusOneByDefault
-     *
-     * @return void
      */
     public function testGetNewModifierReturnsMinusOneByDefault(): void
     {
@@ -91,8 +88,6 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testGetNewModifierReturnsExpectedIsPublicValue
-     *
-     * @return void
      */
     public function testGetNewModifierReturnsExpectedIsPublicValue(): void
     {
@@ -105,8 +100,6 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testGetNewModifierReturnsExpectedIsProtectedValue
-     *
-     * @return void
      */
     public function testGetNewModifierReturnsExpectedIsProtectedValue(): void
     {
@@ -119,19 +112,17 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames(): void
     {
-        $alias = new \PDepend\Source\AST\ASTTraitAdaptationAlias();
+        $alias = new ASTTraitAdaptationAlias();
         $this->assertSame(
             [
                 'newName',
                 'newModifier',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $alias->__sleep()
         );
@@ -139,8 +130,6 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testGetNewModifierReturnsExpectedIsPrivateValue
-     *
-     * @return void
      */
     public function testGetNewModifierReturnsExpectedIsPrivateValue(): void
     {
@@ -151,7 +140,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationAlias
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptationAlias
+     * @return ASTTraitAdaptationAlias
+     *
      * @since 1.0.2
      */
     public function testTraitAdaptationAlias()
@@ -161,13 +151,12 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
         return $alias;
     }
-    
+
     /**
      * testTraitAdaptationAliasHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptationAlias $alias
+     * @param ASTTraitAdaptationAlias $alias
      *
-     * @return void
      * @depends testTraitAdaptationAlias
      */
     public function testTraitAdaptationAliasHasExpectedStartLine($alias): void
@@ -178,9 +167,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationAliasHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptationAlias $alias
+     * @param ASTTraitAdaptationAlias $alias
      *
-     * @return void
      * @depends testTraitAdaptationAlias
      */
     public function testTraitAdaptationAliasHasExpectedStartColumn($alias): void
@@ -191,9 +179,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationAliasHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptationAlias $alias
+     * @param ASTTraitAdaptationAlias $alias
      *
-     * @return void
      * @depends testTraitAdaptationAlias
      */
     public function testTraitAdaptationAliasHasExpectedEndLine($alias): void
@@ -204,9 +191,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationAliasHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitAdaptationAlias $alias
+     * @param ASTTraitAdaptationAlias $alias
      *
-     * @return void
      * @depends testTraitAdaptationAlias
      */
     public function testTraitAdaptationAliasHasExpectedEndColumn($alias): void
@@ -217,7 +203,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTraitAdaptationAlias
+     * @return ASTTraitAdaptationAlias
      */
     private function getFirstTraitAdaptationAliasInClass()
     {
@@ -230,7 +216,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitReference
      *
-     * @return \PDepend\Source\AST\ASTTraitReference
+     * @return ASTTraitReference
+     *
      * @since 1.0.2
      */
     public function testTraitReference()
@@ -244,9 +231,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedStartLine($reference): void
@@ -257,9 +243,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedStartColumn($reference): void
@@ -270,9 +255,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedEndLine($reference): void
@@ -283,9 +267,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTTraitReference $reference
+     * @param ASTTraitReference $reference
      *
-     * @return void
      * @depends testTraitReference
      */
     public function testTraitReferenceHasExpectedEndColumn($reference): void
@@ -296,7 +279,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTTraitReference
+     * @return ASTTraitReference
      */
     private function getFirstTraitReferenceInClass()
     {

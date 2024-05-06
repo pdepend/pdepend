@@ -46,16 +46,16 @@ use PDepend\AbstractTestCase;
 use PDepend\MockCommand;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
-use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
 /**
  * Test case for the text ui command.
  *
+ * @covers \PDepend\TextUI\Command
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\TextUI\Command
  * @group unittest
  */
 class CommandTest extends AbstractTestCase
@@ -86,8 +86,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Tests the result of the print version option.
-     *
-     * @return void
      */
     public function testPrintVersion(): void
     {
@@ -97,8 +95,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * testPrintVersionReturnsExitCodeSuccess
-     *
-     * @return void
      */
     public function testPrintVersionReturnsExitCodeSuccess(): void
     {
@@ -108,8 +104,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Tests the result of the print usage option.
-     *
-     * @return void
      */
     public function testPrintUsage(): void
     {
@@ -119,8 +113,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * testPrintUsageReturnsExitCodeSuccess
-     *
-     * @return void
      */
     public function testPrintUsageReturnsExitCodeSuccess(): void
     {
@@ -130,8 +122,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Tests the output of the print help option.
-     *
-     * @return void
      */
     public function testPrintHelp(): void
     {
@@ -141,8 +131,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * testPrintHelpReturnsExitCodeSuccess
-     *
-     * @return void
      */
     public function testPrintHelpReturnsExitCodeSuccess(): void
     {
@@ -152,8 +140,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Tests that the command exits with an cli error if no $argv array exists.
-     *
-     * @return void
      */
     public function testCommandCliReturnsErrorExitCodeIfNoArgvArrayExists(): void
     {
@@ -163,8 +149,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * testCommandCliErrorMessageIfNoArgvArrayExists
-     *
-     * @return void
      */
     public function testCommandCliErrorMessageIfNoArgvArrayExists(): void
     {
@@ -175,8 +159,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Tests that the command exits with a cli error for an empty option list.
-     *
-     * @return void
      */
     public function testCommandDisplaysHelpIfNoOptionsWereSpecified(): void
     {
@@ -186,8 +168,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * testCommandReturnsErrorExitCodeIfNoOptionsWereSpecified
-     *
-     * @return void
      */
     public function testCommandReturnsErrorExitCodeIfNoOptionsWereSpecified(): void
     {
@@ -197,8 +177,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Tests that the command starts the text ui runner.
-     *
-     * @return void
      */
     public function testCommandStartsProcessWithDummyLogger(): void
     {
@@ -213,7 +191,7 @@ class CommandTest extends AbstractTestCase
             '--exclude=pdepend.test2',
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             '--dummy-logger=' . $logFile,
-            $resource
+            $resource,
         ];
 
         [$exitCode, ] = $this->executeCommand($argv);
@@ -224,8 +202,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * testCommandReturnsExitCodeSuccessByDefault
-     *
-     * @return void
      */
     public function testCommandReturnsExitCodeSuccessByDefault(): void
     {
@@ -238,7 +214,7 @@ class CommandTest extends AbstractTestCase
             '--suffix=inc',
             '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
             '--dummy-logger=' . $logFile,
-            $resource
+            $resource,
         ];
 
         [$exitCode, ] = $this->executeCommand($argv);
@@ -247,8 +223,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Tests that the command exits with a cli error for an unknown option.
-     *
-     * @return void
      */
     public function testCommandExitsWithCliErrorForUnknownOption(): void
     {
@@ -259,8 +233,6 @@ class CommandTest extends AbstractTestCase
     /**
      * Tests that the command handles the <b>--without-annotations</b> option
      * correct.
-     *
-     * @return void
      */
     public function testCommandHandlesWithoutAnnotationsOptionCorrect(): void
     {
@@ -269,21 +241,21 @@ class CommandTest extends AbstractTestCase
                 'functions'   =>  ['foo'],
                 'classes'     =>  ['MyException'],
                 'interfaces'  =>  [],
-                'exceptions'  =>  []
+                'exceptions'  =>  [],
             ],
             'pdepend.test2'  =>  [
                 'functions'   =>  [],
                 'classes'     =>  ['YourException'],
                 'interfaces'  =>  [],
-                'exceptions'  =>  []
-            ]
+                'exceptions'  =>  [],
+            ],
         ];
 
         $actual = $this->runCommandAndReturnStatistics(
             [
                 '--suffix=inc',
                 '--without-annotations',
-                '--coderank-mode=property'
+                '--coderank-mode=property',
             ],
             $this->createCodeResourceUriForTest()
         );
@@ -293,8 +265,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * testCommandHandlesBadDocumentedSourceCode
-     *
-     * @return void
      */
     public function testCommandHandlesBadDocumentedSourceCode(): void
     {
@@ -314,10 +284,10 @@ class CommandTest extends AbstractTestCase
                 'interfaces'  =>  [
                     'pkg1FooI',
                     'pkg2FooI',
-                    'pkg3FooI'
+                    'pkg3FooI',
                 ],
-                'exceptions'  =>  []
-            ]
+                'exceptions'  =>  [],
+            ],
         ];
 
         $actual = $this->runCommandAndReturnStatistics(
@@ -330,8 +300,8 @@ class CommandTest extends AbstractTestCase
     /**
      * Executes the command class and returns an array with namespace statistics.
      *
-     * @param array $argv
      * @param string $pathName
+     *
      * @return array
      */
     private function runCommandAndReturnStatistics(array $argv, $pathName)
@@ -357,7 +327,7 @@ class CommandTest extends AbstractTestCase
                 'functions'   =>  [],
                 'classes'     =>  [],
                 'interfaces'  =>  [],
-                'exceptions'  =>  []
+                'exceptions'  =>  [],
             ];
             foreach ($namespace->getFunctions() as $function) {
                 $statistics['functions'][] = $function->getName();
@@ -388,8 +358,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Tests that the command interpretes a "-d key" as "on".
-     *
-     * @return void
      */
     public function testCommandHandlesIniOptionWithoutValueToON(): void
     {
@@ -403,7 +371,7 @@ class CommandTest extends AbstractTestCase
                 '-d',
                 'html_errors',
                 '--dummy-logger=' . $this->createRunResourceURI(),
-                __FILE__
+                __FILE__,
             ]
         );
 
@@ -414,8 +382,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Tests that the text ui command handles an ini option "-d key=value" correct.
-     *
-     * @return void
      */
     public function testCommandHandlesIniOptionWithValue(): void
     {
@@ -429,7 +395,7 @@ class CommandTest extends AbstractTestCase
                 '-d',
                 'html_errors=off',
                 '--dummy-logger=' . $this->createRunResourceURI(),
-                __FILE__
+                __FILE__,
             ]
         );
 
@@ -441,8 +407,6 @@ class CommandTest extends AbstractTestCase
     /**
      * Tests that the command sets a configuration instance for a specified
      * config file.
-     *
-     * @return void
      */
     public function testCommandHandlesConfigurationFileCorrect(): void
     {
@@ -467,7 +431,7 @@ class CommandTest extends AbstractTestCase
         $argv = [
             '--configuration=' . $configFile,
             '--dummy-logger=' . $this->createRunResourceURI(),
-            __FILE__
+            __FILE__,
         ];
 
         // Result previous instance
@@ -481,8 +445,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * testTextUiCommandOutputContainsExpectedCoverageReportOption
-     *
-     * @return void
      */
     public function testTextUiCommandOutputContainsExpectedCoverageReportOption(): void
     {
@@ -492,8 +454,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * testTextUiCommandFailesWithExpectedErrorCodeWhenCoverageReportFileDoesNotExist
-     *
-     * @return void
      */
     public function testTextUiCommandFailesWithExpectedErrorCodeWhenCoverageReportFileDoesNotExist(): void
     {
@@ -512,8 +472,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * testTextUiCommandAcceptsExistingFileForCoverageReportOption
-     *
-     * @return void
      */
     public function testTextUiCommandAcceptsExistingFileForCoverageReportOption(): void
     {
@@ -531,8 +489,6 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Tests that the command fails for an invalid config file.
-     *
-     * @return void
      */
     public function testCommandFailsIfAnInvalidConfigFileWasSpecified(): void
     {
@@ -613,8 +569,6 @@ class CommandTest extends AbstractTestCase
      *
      * @param string $actual     The cli output.
      * @param string $prologText Optional prolog text.
-     *
-     * @return void
      */
     protected function assertHelpOutput($actual, $prologText = ''): void
     {
@@ -657,8 +611,6 @@ class CommandTest extends AbstractTestCase
      * Prepares a fake <b>$argv</b>.
      *
      * @param ?array $argv The cli parameters.
-     *
-     * @return void
      */
     private function prepareArgv(?array $argv = null): void
     {

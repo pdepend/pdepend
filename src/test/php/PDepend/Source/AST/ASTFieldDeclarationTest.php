@@ -42,25 +42,21 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\AST\AbstractASTClassOrInterface;
-use PDepend\Source\AST\ASTFieldDeclaration;
-
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFieldDeclaration} class.
+ *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTFieldDeclaration
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTFieldDeclaration
  * @group unittest
  */
 class ASTFieldDeclarationTest extends ASTNodeTestCase
 {
     /**
      * Tests that a field declaration contains the expected class reference.
-     *
-     * @return void
      */
     public function testFieldDeclarationContainsClassReferenceWithAnnotationsEnabled(): void
     {
@@ -72,8 +68,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * Tests that a field declaration does not contain a class reference.
-     *
-     * @return void
      */
     public function testFieldDeclarationNotContainsClassReferenceWithAnnotationsDisabled(): void
     {
@@ -113,8 +107,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * @depends testClassReferenceForJavaStyleArrayNotation
-     * @param \PDepend\Source\AST\AbstractASTClassOrInterface $type
-     * @return void
      */
     public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type): void
     {
@@ -125,8 +117,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * Tests that the field declaration <b>setModifiers()</b> method accepts all
      * valid combinations of modifiers.
      *
-     * @param integer $modifiers Combinations of valid modifiers.
-     * @return void
+     * @param int $modifiers Combinations of valid modifiers.
+     *
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
     public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers): void
@@ -140,9 +132,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * Tests that the <b>setModifiers()</b> method throws an exception when an
      * invalid modifier or modifier combination was set.
      *
-     * @param integer $modifiers Combinations of invalid modifiers.
+     * @param int $modifiers Combinations of invalid modifiers.
      *
-     * @return void
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers): void
@@ -162,8 +153,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testIsPublicReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsPublicReturnsFalseByDefault(): void
     {
@@ -173,8 +162,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testIsPublicReturnsTrueWhenCorrespondingModifierWasSet
-     *
-     * @return void
      */
     public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
@@ -186,8 +173,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testIsProtectedReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsProtectedReturnsFalseByDefault(): void
     {
@@ -197,8 +182,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet
-     *
-     * @return void
      */
     public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
@@ -210,8 +193,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testIsPrivateReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsPrivateReturnsFalseByDefault(): void
     {
@@ -221,8 +202,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet
-     *
-     * @return void
      */
     public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
@@ -234,8 +213,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testIsStaticReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsStaticReturnsFalseByDefault(): void
     {
@@ -245,8 +222,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testIsStaticReturnsTrueWhenCorrespondingModifierWasSet
-     *
-     * @return void
      */
     public function testIsStaticReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
@@ -258,8 +233,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
@@ -268,7 +241,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
             [
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $declaration->__sleep()
         );
@@ -276,8 +249,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testFieldDeclarationHasExpectedStartLine
-     *
-     * @return void
      */
     public function testFieldDeclarationHasExpectedStartLine(): void
     {
@@ -287,8 +258,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testFieldDeclarationHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testFieldDeclarationHasExpectedStartColumn(): void
     {
@@ -298,8 +267,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testFieldDeclarationHasExpectedEndLine
-     *
-     * @return void
      */
     public function testFieldDeclarationHasExpectedEndLine(): void
     {
@@ -309,8 +276,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testFieldDeclarationHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testFieldDeclarationHasExpectedEndColumn(): void
     {
@@ -344,15 +309,15 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
             [State::IS_PUBLIC],
             [
                 State::IS_PRIVATE |
-                State::IS_STATIC
+                State::IS_STATIC,
             ],
             [
                 State::IS_PROTECTED |
-                State::IS_STATIC
+                State::IS_STATIC,
             ],
             [
                 State::IS_PUBLIC |
-                State::IS_STATIC
+                State::IS_STATIC,
             ],
         ];
     }
@@ -369,20 +334,20 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
             [State::IS_FINAL],
             [
                 State::IS_PRIVATE |
-                State::IS_ABSTRACT
+                State::IS_ABSTRACT,
             ],
             [
                 State::IS_PROTECTED |
-                State::IS_ABSTRACT
+                State::IS_ABSTRACT,
             ],
             [
                 State::IS_PUBLIC |
-                State::IS_FINAL
+                State::IS_FINAL,
             ],
             [
                 State::IS_PUBLIC |
                 State::IS_STATIC |
-                State::IS_FINAL
+                State::IS_FINAL,
             ],
         ];
     }

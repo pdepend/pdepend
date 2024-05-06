@@ -43,28 +43,26 @@
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
 use PDepend\AbstractTestCase;
-use PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy;
 
 /**
  * Test case for the code rank property strategy.
  *
+ * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
-   * @group unittest
+ * @group unittest
  */
 class PropertyStrategyTest extends AbstractTestCase
 {
     /**
      * testStrategyCountsCorrectTypes
-     *
-     * @return void
      */
     public function testStrategyCountsCorrectTypes(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
-        
+
         $idMap = [
             'PDepend::CodeRankA'       =>  null,
             'PDepend::CodeRankB'       =>  null,
@@ -72,7 +70,7 @@ class PropertyStrategyTest extends AbstractTestCase
             'PDepend_CodeRank_ClassB'  =>  null,
             'PDepend_CodeRank_ClassC'  =>  null,
         ];
-        
+
         foreach ($namespaces as $namespace) {
             foreach ($namespace->getClasses() as $class) {
                 $this->assertArrayHasKey($class->getName(), $idMap);
@@ -87,48 +85,48 @@ class PropertyStrategyTest extends AbstractTestCase
             $idMap['PDepend_CodeRank_ClassA']  =>  [
                 'in'  =>  [
                     $idMap['PDepend_CodeRank_ClassB'],
-                    $idMap['PDepend_CodeRank_ClassC']
+                    $idMap['PDepend_CodeRank_ClassC'],
                 ],
                 'out'  =>  [
-                    $idMap['PDepend_CodeRank_ClassC']
+                    $idMap['PDepend_CodeRank_ClassC'],
                 ],
                 'name'  =>  'PDepend_CodeRank_ClassA',
-                'type'  =>  'PDepend\\Source\\AST\\ASTClass'
+                'type'  =>  'PDepend\\Source\\AST\\ASTClass',
             ],
             $idMap['PDepend_CodeRank_ClassB']  =>  [
                 'in'  =>  [
                     $idMap['PDepend_CodeRank_ClassC'],
-                    $idMap['PDepend_CodeRank_ClassC']
+                    $idMap['PDepend_CodeRank_ClassC'],
                 ],
                 'out'  =>  [
-                    $idMap['PDepend_CodeRank_ClassA']
+                    $idMap['PDepend_CodeRank_ClassA'],
                 ],
                 'name'  =>  'PDepend_CodeRank_ClassB',
-                'type'  =>  'PDepend\\Source\\AST\\ASTClass'
+                'type'  =>  'PDepend\\Source\\AST\\ASTClass',
             ],
             $idMap['PDepend_CodeRank_ClassC']  =>  [
                 'in'  =>  [
-                    $idMap['PDepend_CodeRank_ClassA']
+                    $idMap['PDepend_CodeRank_ClassA'],
                 ],
                 'out'  =>  [
                     $idMap['PDepend_CodeRank_ClassA'],
                     $idMap['PDepend_CodeRank_ClassB'],
-                    $idMap['PDepend_CodeRank_ClassB']
+                    $idMap['PDepend_CodeRank_ClassB'],
                 ],
                 'name'  =>  'PDepend_CodeRank_ClassC',
-                'type'  =>  'PDepend\\Source\\AST\\ASTClass'
+                'type'  =>  'PDepend\\Source\\AST\\ASTClass',
             ],
             $idMap['PDepend::CodeRankA']  =>  [
                 'in'  =>  [
                     $idMap['PDepend::CodeRankB'],
                     $idMap['PDepend::CodeRankB'],
-                    $idMap['PDepend::CodeRankB']
+                    $idMap['PDepend::CodeRankB'],
                 ],
                 'out'  =>  [
                     $idMap['PDepend::CodeRankB'],
                 ],
                 'name'  =>  'PDepend::CodeRankA',
-                'type'  =>  'PDepend\\Source\\AST\\ASTNamespace'
+                'type'  =>  'PDepend\\Source\\AST\\ASTNamespace',
             ],
             $idMap['PDepend::CodeRankB']  =>  [
                 'in'  =>  [
@@ -137,20 +135,20 @@ class PropertyStrategyTest extends AbstractTestCase
                 'out'  =>  [
                     $idMap['PDepend::CodeRankA'],
                     $idMap['PDepend::CodeRankA'],
-                    $idMap['PDepend::CodeRankA']
+                    $idMap['PDepend::CodeRankA'],
                 ],
                 'name'  =>  'PDepend::CodeRankB',
-                'type'  =>  'PDepend\\Source\\AST\\ASTNamespace'
+                'type'  =>  'PDepend\\Source\\AST\\ASTNamespace',
             ],
         ];
-    
+
         $strategy = new PropertyStrategy();
         foreach ($namespaces as $namespace) {
             $namespace->accept($strategy);
         }
 
         $actual = $strategy->getCollectedNodes();
-        
+
         $this->assertEquals($expected, $actual);
     }
 }

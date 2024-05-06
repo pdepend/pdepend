@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFormalParameter} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTFormalParameter
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTFormalParameter
  * @group unittest
  */
 class ASTFormalParameterTest extends ASTNodeTestCase
 {
     /**
      * testHasTypeReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testHasTypeReturnsFalseByDefault(): void
     {
@@ -69,8 +68,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testHasTypeReturnsTrueWhenSecondChildNodeExists
-     *
-     * @return void
      */
     public function testHasTypeReturnsTrueWhenSecondChildNodeExists(): void
     {
@@ -83,8 +80,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testGetTypeThrowsAnExceptionByDefault
-     *
-     * @return void
      */
     public function testGetTypeThrowsAnExceptionByDefault(): void
     {
@@ -98,8 +93,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testGetTypeReturnsAssociatedTypeInstance
-     *
-     * @return void
      */
     public function testGetTypeReturnsAssociatedTypeInstance(): void
     {
@@ -112,8 +105,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testIsVariableArgListReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsVariableArgListReturnsFalseByDefault(): void
     {
@@ -123,8 +114,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testIsVariableArgListReturnsTrue
-     *
-     * @return void
      */
     public function testIsVariableArgListReturnsTrue(): void
     {
@@ -134,8 +123,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testIsVariableArgListWithArrayTypeHint
-     *
-     * @return void
      */
     public function testIsVariableArgListWithArrayTypeHint(): void
     {
@@ -145,8 +132,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testIsVariableArgListWithClassTypeHint
-     *
-     * @return void
      */
     public function testIsVariableArgListWithClassTypeHint(): void
     {
@@ -156,8 +141,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testIsVariableArgListPassedByReference
-     *
-     * @return void
      */
     public function testIsVariableArgListPassedByReference(): void
     {
@@ -167,8 +150,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testIsPassedByReferenceReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsPassedByReferenceReturnsFalseByDefault(): void
     {
@@ -178,12 +159,10 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testIsPassedByReferenceCanBeSetToTrue
-     *
-     * @return void
      */
     public function testIsPassedByReferenceCanBeSetToTrue(): void
     {
-        $param = new \PDepend\Source\AST\ASTFormalParameter();
+        $param = new ASTFormalParameter();
         $param->setPassedByReference();
 
         $this->assertTrue($param->isPassedByReference());
@@ -191,8 +170,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testSimpleParameterIsFlaggedAsPassedByReference
-     *
-     * @return void
      */
     public function testSimpleParameterIsFlaggedAsPassedByReference(): void
     {
@@ -202,8 +179,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testParameterWithTypeHintIsFlaggedAsPassedByReference
-     *
-     * @return void
      */
     public function testParameterWithTypeHintIsFlaggedAsPassedByReference(): void
     {
@@ -213,19 +188,16 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testParameterWithDefaultValueIsFlaggedAsPassedByReference
-     *
-     * @return void
      */
     public function testParameterWithDefaultValueIsFlaggedAsPassedByReference(): void
     {
         $param = $this->getFirstFormalParameterInFunction();
         $this->assertTrue($param->isPassedByReference());
     }
-    
+
     /**
      * testFormalParameterWithArrayTypeHint
      *
-     * @return void
      * @since 1.0.0
      */
     public function testFormalParameterWithArrayTypeHint(): void
@@ -240,8 +212,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
@@ -251,7 +221,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
                 'modifiers',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $param->__sleep()
         );
@@ -259,8 +229,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testFormalParameterHasExpectedStartLine
-     *
-     * @return void
      */
     public function testFormalParameterHasExpectedStartLine(): void
     {
@@ -270,8 +238,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testFormalParameterHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testFormalParameterHasExpectedStartColumn(): void
     {
@@ -281,8 +247,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testFormalParameterHasExpectedEndLine
-     *
-     * @return void
      */
     public function testFormalParameterHasExpectedEndLine(): void
     {
@@ -292,8 +256,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
 
     /**
      * testFormalParameterHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testFormalParameterHasExpectedEndColumn(): void
     {
@@ -304,7 +266,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTFormalParameter
+     * @return ASTFormalParameter
      */
     private function getFirstFormalParameterInFunction()
     {

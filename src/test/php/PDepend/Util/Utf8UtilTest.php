@@ -43,15 +43,15 @@
 namespace PDepend\Util;
 
 use PDepend\AbstractTestCase;
-use ReflectionMethod;
 
 /**
  * Test case for type utility class.
  *
+ * @covers \PDepend\Util\Utf8Util
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Util\Utf8Util
  * @group unittest
  */
 class Utf8UtilTest extends AbstractTestCase

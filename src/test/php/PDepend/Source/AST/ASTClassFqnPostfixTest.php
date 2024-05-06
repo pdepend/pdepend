@@ -45,23 +45,22 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTPropertyPostfix} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @covers \PDepend\Source\AST\ASTClassFqnPostfix
+ *
  * @group unittest
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTClassFqnPostfix
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class ASTClassFqnPostfixTest extends ASTNodeTestCase
 {
     /**
      * testGetImage
-     *
-     * @return void
      */
     public function testGetImage(): void
     {
@@ -71,8 +70,6 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * testClassFqnPostfixStructureWithStatic
-     *
-     * @return void
      */
     public function testClassFqnPostfixStructureWithStatic(): void
     {
@@ -80,15 +77,13 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
             $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
             [
                 'PDepend\\Source\\AST\\ASTStaticReference',
-                'PDepend\\Source\\AST\\ASTClassFqnPostfix'
+                'PDepend\\Source\\AST\\ASTClassFqnPostfix',
             ]
         );
     }
 
     /**
      * testGetImageWorksCaseInsensitive
-     *
-     * @return void
      */
     public function testGetImageWorksCaseInsensitive(): void
     {
@@ -98,8 +93,6 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * testClassFqnPostfixStructureWithSelf
-     *
-     * @return void
      */
     public function testClassFqnPostfixStructureWithSelf(): void
     {
@@ -107,15 +100,13 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
             $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
             [
                 'PDepend\\Source\\AST\\ASTSelfReference',
-                'PDepend\\Source\\AST\\ASTClassFqnPostfix'
+                'PDepend\\Source\\AST\\ASTClassFqnPostfix',
             ]
         );
     }
 
     /**
      * testClassFqnPostfixStructureWithParent
-     *
-     * @return void
      */
     public function testClassFqnPostfixStructureWithParent(): void
     {
@@ -123,15 +114,13 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
             $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
             [
                 'PDepend\\Source\\AST\\ASTParentReference',
-                'PDepend\\Source\\AST\\ASTClassFqnPostfix'
+                'PDepend\\Source\\AST\\ASTClassFqnPostfix',
             ]
         );
     }
 
     /**
      * testClassFqnPostfixStructureWithClassName
-     *
-     * @return void
      */
     public function testClassFqnPostfixStructureWithClassName(): void
     {
@@ -139,7 +128,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
             $this->getFirstMemberPrimaryPrefixInClass(__METHOD__),
             [
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
-                'PDepend\\Source\\AST\\ASTClassFqnPostfix'
+                'PDepend\\Source\\AST\\ASTClassFqnPostfix',
             ]
         );
     }
@@ -150,25 +139,23 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
      * <code>
      * protected $foo = \Iterator::class;
      * </code>
-     *
-     * @return void
      */
     public function testClassFqnPostfixAsPropertyInitializer(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
 
-        /** @var \PDepend\Source\AST\ASTFieldDeclaration $fieldDeclaration */
+        /** @var ASTFieldDeclaration $fieldDeclaration */
         $fieldDeclaration = $this->getFirstClassForTestCase(__METHOD__)->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFieldDeclaration', $fieldDeclaration);
 
-        /** @var \PDepend\Source\AST\ASTVariableDeclarator $variableDeclarator */
+        /** @var ASTVariableDeclarator $variableDeclarator */
         $variableDeclarator = $fieldDeclaration->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variableDeclarator);
         $this->assertTrue($variableDeclarator->getValue()->isValueAvailable());
 
-        /** @var \PDepend\Source\AST\ASTClassOrInterfaceReference $classReference */
+        /** @var ASTClassOrInterfaceReference $classReference */
         $classReference = $variableDeclarator->getValue()->getValue();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $classReference);
 
@@ -181,25 +168,23 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
      * <code>
      * protected $foo = self::class;
      * </code>
-     *
-     * @return void
      */
     public function testClassFqnPostfixAsPropertyInitializerWithSelf(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
 
-        /** @var \PDepend\Source\AST\ASTFieldDeclaration $fieldDeclaration */
+        /** @var ASTFieldDeclaration $fieldDeclaration */
         $fieldDeclaration = $this->getFirstClassForTestCase(__METHOD__)->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFieldDeclaration', $fieldDeclaration);
 
-        /** @var \PDepend\Source\AST\ASTVariableDeclarator $variableDeclarator */
+        /** @var ASTVariableDeclarator $variableDeclarator */
         $variableDeclarator = $fieldDeclaration->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variableDeclarator);
         $this->assertTrue($variableDeclarator->getValue()->isValueAvailable());
 
-        /** @var \PDepend\Source\AST\ASTSelfReference $classReference */
+        /** @var ASTSelfReference $classReference */
         $classReference = $variableDeclarator->getValue()->getValue();
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $classReference);
 
@@ -208,8 +193,6 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * testClassFqnPostfixAsParameterInitializer
-     *
-     * @return void
      */
     public function testClassFqnPostfixAsParameterInitializer(): void
     {
@@ -226,8 +209,6 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * testClassFqnPostfixAsParameterInitializerWithSelf
-     *
-     * @return void
      */
     public function testClassFqnPostfixAsParameterInitializerWithSelf(): void
     {
@@ -244,19 +225,17 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * testClassFqnPostfixAsConstantInitializer
-     *
-     * @return void
      */
     public function testClassFqnPostfixAsConstantInitializer(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
 
-        /** @var \PDepend\Source\AST\ASTConstantDefinition $constantDefinition */
+        /** @var ASTConstantDefinition $constantDefinition */
         $constantDefinition = $this->getFirstClassForTestCase()->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constantDefinition);
 
-        /** @var \PDepend\Source\AST\ASTConstantDeclarator $constantDefinition */
+        /** @var ASTConstantDeclarator $constantDefinition */
         $constantDeclarator = $constantDefinition->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDeclarator', $constantDeclarator);
@@ -264,19 +243,17 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * testClassFqnPostfixAsConstantInitializerWithSelf
-     *
-     * @return void
      */
     public function testClassFqnPostfixAsConstantInitializerWithSelf(): void
     {
         $this->assertNotNull($this->parseCodeResourceForTest());
 
-        /** @var \PDepend\Source\AST\ASTConstantDefinition $constantDefinition */
+        /** @var ASTConstantDefinition $constantDefinition */
         $constantDefinition = $this->getFirstClassForTestCase()->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constantDefinition);
 
-        /** @var \PDepend\Source\AST\ASTConstantDeclarator $constantDefinition */
+        /** @var ASTConstantDeclarator $constantDefinition */
         $constantDeclarator = $constantDefinition->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDeclarator', $constantDeclarator);
@@ -284,8 +261,6 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * testClassFqnPostfixHasExpectedStartLine
-     *
-     * @return void
      */
     public function testClassFqnPostfixHasExpectedStartLine(): void
     {
@@ -295,8 +270,6 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * testClassFqnPostfixHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testClassFqnPostfixHasExpectedStartColumn(): void
     {
@@ -306,8 +279,6 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * testClassFqnPostfixHasExpectedEndLine
-     *
-     * @return void
      */
     public function testClassFqnPostfixHasExpectedEndLine(): void
     {
@@ -317,8 +288,6 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * testClassFqnPostfixHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testClassFqnPostfixHasExpectedEndColumn(): void
     {
@@ -329,7 +298,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     /**
      * Creates a field declaration node.
      *
-     * @return \PDepend\Source\AST\ASTClassFqnPostfix
+     * @return ASTClassFqnPostfix
      */
     protected function createNodeInstance()
     {
@@ -339,7 +308,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTClassFqnPostfix
+     * @return ASTClassFqnPostfix
      */
     private function getFirstClassFqnPostfixInClass()
     {
@@ -353,7 +322,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTMemberPrimaryPrefix
+     * @return ASTMemberPrimaryPrefix
      */
     private function getFirstMemberPrimaryPrefixInClass($testCase)
     {

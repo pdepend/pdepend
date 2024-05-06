@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.12
  */
 
@@ -46,31 +47,29 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTIncludeExpression} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.12
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTIncludeExpression
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 0.9.12
+ *
  * @group unittest
  */
 class ASTIncludeExpressionTest extends ASTNodeTestCase
 {
     /**
      * testIsOnceReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testIsOnceReturnsFalseByDefault(): void
     {
-        $expr = new \PDepend\Source\AST\ASTIncludeExpression();
+        $expr = new ASTIncludeExpression();
         $this->assertFalse($expr->isOnce());
     }
 
     /**
      * testIsOnceReturnsTrueForIncludeOnceExpression
-     *
-     * @return void
      */
     public function testIsOnceReturnsTrueForIncludeOnceExpression(): void
     {
@@ -80,18 +79,16 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
 
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
-        $expr = new \PDepend\Source\AST\ASTIncludeExpression();
+        $expr = new ASTIncludeExpression();
         $this->assertEquals(
             [
                 'once',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $expr->__sleep()
         );
@@ -99,8 +96,6 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncludeExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testIncludeExpressionHasExpectedStartLine(): void
     {
@@ -110,8 +105,6 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncludeExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testIncludeExpressionHasExpectedStartColumn(): void
     {
@@ -121,8 +114,6 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncludeExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testIncludeExpressionHasExpectedEndLine(): void
     {
@@ -132,8 +123,6 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncludeExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testIncludeExpressionHasExpectedEndColumn(): void
     {
@@ -143,8 +132,6 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncludeExpressionWithParenthesisHasExpectedStartLine
-     *
-     * @return void
      */
     public function testIncludeExpressionWithParenthesisHasExpectedStartLine(): void
     {
@@ -154,8 +141,6 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncludeExpressionWithParenthesisHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testIncludeExpressionWithParenthesisHasExpectedStartColumn(): void
     {
@@ -165,8 +150,6 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncludeExpressionWithParenthesisHasExpectedEndLine
-     *
-     * @return void
      */
     public function testIncludeExpressionWithParenthesisHasExpectedEndLine(): void
     {
@@ -176,8 +159,6 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
 
     /**
      * testIncludeExpressionWithParenthesisHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testIncludeExpressionWithParenthesisHasExpectedEndColumn(): void
     {
@@ -190,7 +171,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTIncludeExpression
+     * @return ASTIncludeExpression
      */
     private function getFirstIncludeExpressionInFunction($testCase)
     {

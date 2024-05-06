@@ -54,8 +54,6 @@ class InvalidNowdocSubstitutionBug150Test extends AbstractRegressionTestCase
 {
     /**
      * testTokenizerDoesNotDetectNowdocSyntaxInString
-     *
-     * @return void
      */
     public function testTokenizerDoesNotDetectNowdocSyntaxInString(): void
     {

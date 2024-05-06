@@ -41,17 +41,16 @@
 namespace PDepend\Source\Language\PHP\Features\PHP82;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @group unittest
  * @group php8.2
  */
 class TypedClassConstantsTest extends PHPParserVersion82TestCase
 {
-    /**
-     * @return void
-     */
     public function testInterface(): void
     {
         $this->expectException(
@@ -64,9 +63,6 @@ class TypedClassConstantsTest extends PHPParserVersion82TestCase
         $this->getFirstInterfaceForTestCase();
     }
 
-    /**
-     * @return void
-     */
     public function testBroken(): void
     {
         $this->expectException(

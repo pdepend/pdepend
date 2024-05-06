@@ -38,28 +38,28 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.5
  */
 
 namespace PDepend\Source\Parser;
 
-use PDepend\Source\AST\ASTClassOrInterfaceReference;
-
 /**
  * Test case for the namespace resolving in the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.5
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @group unittest
  */
 class NamespaceResovingTest extends AbstractParserTestCase
 {
     /**
      * testNamespacesAreCorrectlyLookedUp
-     *
-     * @return void
      */
     public function testNamespacesAreCorrectlyLookedUp(): void
     {
@@ -85,8 +85,6 @@ class NamespaceResovingTest extends AbstractParserTestCase
 
     /**
      * testNamespacesAreLookedUpCorrectlyInFirstOfMultipleNamespaces
-     *
-     * @return void
      */
     public function testNamespacesAreLookedUpCorrectlyInFirstOfMultipleNamespaces(): void
     {
@@ -112,8 +110,6 @@ class NamespaceResovingTest extends AbstractParserTestCase
 
     /**
      * testNamespacesAreLookedUpCorrectlyInSecondOfMultipleNamespaces
-     *
-     * @return void
      */
     public function testNamespacesAreLookedUpCorrectlyInSecondOfMultipleNamespaces(): void
     {
@@ -147,8 +143,6 @@ class NamespaceResovingTest extends AbstractParserTestCase
 
     /**
      * testNamespacesAreLookedUpCorrectlyInThirdOfMultipleNamespaces
-     *
-     * @return void
      */
     public function testNamespacesAreLookedUpCorrectlyInThirdOfMultipleNamespaces(): void
     {

@@ -56,8 +56,6 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestC
 {
     /**
      * Tests that the parser handles the parent type hint as expected.
-     *
-     * @return void
      */
     public function testParserSetsExpectedParentTypeHintReference(): void
     {
@@ -75,8 +73,6 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestC
     /**
      * Tests that the parser throws an exception when the parent keyword is used
      * within a function signature.
-     *
-     * @return void
      */
     public function testParserThrowsExpectedExceptionForParentTypeHintInFunction(): void
     {
@@ -93,8 +89,6 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestC
 
     /**
      * testParserThrowsExpectedExceptionForParentTypeHintWithRootClass
-     *
-     * @return void
      */
     public function testParserThrowsExpectedExceptionForParentTypeHintWithRootClass(): void
     {

@@ -52,10 +52,11 @@ use PDepend\Source\AST\ASTTrait;
  * Test case for the {@link \PDepend\Source\Builder\BuilderContext\GlobalBuilderContext}
  * class.
  *
+ * @covers \PDepend\Source\Builder\BuilderContext\GlobalBuilderContext
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Builder\BuilderContext\GlobalBuilderContext
  * @group unittest
  */
 class GlobalBuilderContextTest extends AbstractTestCase
@@ -63,7 +64,6 @@ class GlobalBuilderContextTest extends AbstractTestCase
     /**
      * testRegisterTraitCallsRestoreClassOnBuilder
      *
-     * @return void
      * @since 1.0.0
      */
     public function testRegisterTraitCallsRestoreClassOnBuilder(): void
@@ -80,8 +80,6 @@ class GlobalBuilderContextTest extends AbstractTestCase
 
     /**
      * testRegisterClassCallsRestoreClassOnBuilder
-     *
-     * @return void
      */
     public function testRegisterClassCallsRestoreClassOnBuilder(): void
     {
@@ -97,8 +95,6 @@ class GlobalBuilderContextTest extends AbstractTestCase
 
     /**
      * testRegisterInterfaceCallsRestoreInterfaceOnBuilder
-     *
-     * @return void
      */
     public function testRegisterInterfaceCallsRestoreInterfaceOnBuilder(): void
     {
@@ -114,8 +110,6 @@ class GlobalBuilderContextTest extends AbstractTestCase
 
     /**
      * testRegisterFunctionCallsRestoreFunctionOnBuilder
-     *
-     * @return void
      */
     public function testRegisterFunctionCallsRestoreFunctionOnBuilder(): void
     {
@@ -132,7 +126,6 @@ class GlobalBuilderContextTest extends AbstractTestCase
     /**
      * testGetTraitDelegatesCallToWrappedBuilder
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetTraitDelegatesCallToWrappedBuilder(): void
@@ -149,8 +142,6 @@ class GlobalBuilderContextTest extends AbstractTestCase
 
     /**
      * testGetClassDelegatesCallToWrappedBuilder
-     *
-     * @return void
      */
     public function testGetClassDelegatesCallToWrappedBuilder(): void
     {
@@ -166,8 +157,6 @@ class GlobalBuilderContextTest extends AbstractTestCase
 
     /**
      * testGetClassOrInterfaceDelegatesCallToWrappedBuilder
-     *
-     * @return void
      */
     public function testGetClassOrInterfaceDelegatesCallToWrappedBuilder(): void
     {

@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStaticVariableDeclaration} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTStaticVariableDeclaration
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTStaticVariableDeclaration
  * @group unittest
  */
 class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * testStaticVariableDeclaration
      *
-     * @return \PDepend\Source\AST\ASTStringIndexExpression
+     * @return ASTStringIndexExpression
+     *
      * @since 1.0.2
      */
     public function testStaticVariableDeclaration()
@@ -71,9 +73,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected start line value.
      *
-     * @param \PDepend\Source\AST\ASTStringIndexExpression $declaration
+     * @param ASTStringIndexExpression $declaration
      *
-     * @return void
      * @depends testStaticVariableDeclaration
      */
     public function testStaticVariableDeclarationHasExpectedStartLine($declaration): void
@@ -84,9 +85,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected start column value.
      *
-     * @param \PDepend\Source\AST\ASTStringIndexExpression $declaration
+     * @param ASTStringIndexExpression $declaration
      *
-     * @return void
      * @depends testStaticVariableDeclaration
      */
     public function testStaticVariableDeclarationHasExpectedStartColumn($declaration): void
@@ -97,9 +97,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected end line value.
      *
-     * @param \PDepend\Source\AST\ASTStringIndexExpression $declaration
+     * @param ASTStringIndexExpression $declaration
      *
-     * @return void
      * @depends testStaticVariableDeclaration
      */
     public function testStaticVariableDeclarationHasExpectedEndLine($declaration): void
@@ -110,9 +109,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected end column value.
      *
-     * @param \PDepend\Source\AST\ASTStringIndexExpression $declaration
+     * @param ASTStringIndexExpression $declaration
      *
-     * @return void
      * @depends testStaticVariableDeclaration
      */
     public function testStaticVariableDeclarationHasExpectedEndColumn($declaration): void
@@ -123,7 +121,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTStringIndexExpression
+     * @return ASTStringIndexExpression
      */
     private function getFirstStaticVariableDeclarationInFunction()
     {
@@ -136,10 +134,10 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Creates a static variable declaration node.
      *
-     * @return \PDepend\Source\AST\ASTStaticVariableDeclaration
+     * @return ASTStaticVariableDeclaration
      */
     protected function createNodeInstance()
     {
-        return new \PDepend\Source\AST\ASTStaticVariableDeclaration(__FUNCTION__);
+        return new ASTStaticVariableDeclaration(__FUNCTION__);
     }
 }

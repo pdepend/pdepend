@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 1.0.0
  */
 
@@ -46,12 +47,14 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArrayElement} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 1.0.0
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTArrayElement
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 1.0.0
+ *
  * @group unittest
  */
 class ASTArrayElementTest extends ASTNodeTestCase
@@ -70,15 +73,13 @@ class ASTArrayElementTest extends ASTNodeTestCase
      *   - ASTArrayElement
      *     - ASTVariable    ->  $foo
      * </code>
-     *
-     * @return void
      */
     public function testArrayElementGraphSimpleValue(): void
     {
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
             [
-                'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)'
+                'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)',
             ]
         );
     }
@@ -97,15 +98,13 @@ class ASTArrayElementTest extends ASTNodeTestCase
      *   - ASTArrayElement
      *     - ASTVariable    ->  $foo
      * </code>
-     *
-     * @return void
      */
     public function testArrayElementGraphSimpleValueByReference(): void
     {
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
             [
-                'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)'
+                'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)',
             ]
         );
     }
@@ -125,8 +124,6 @@ class ASTArrayElementTest extends ASTNodeTestCase
      *     - ASTVariable    ->  $key
      *     - ASTVariable    ->  $value
      * </code>
-     *
-     * @return void
      */
     public function testArrayElementGraphKeyValue(): void
     {
@@ -134,7 +131,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
             $this->getFirstArrayElementInFunction(),
             [
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($key)',
-                'PDepend\\Source\\AST\\ASTVariable' . ' ($value)'
+                'PDepend\\Source\\AST\\ASTVariable' . ' ($value)',
             ]
         );
     }
@@ -154,8 +151,6 @@ class ASTArrayElementTest extends ASTNodeTestCase
      *     - ASTVariable    ->  $key
      *     - ASTVariable    ->  $value
      * </code>
-     *
-     * @return void
      */
     public function testArrayElementGraphKeyValueByReference(): void
     {
@@ -163,7 +158,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
             $this->getFirstArrayElementInFunction(),
             [
                 'PDepend\\Source\\AST\\ASTVariable' . ' ($key)',
-                'PDepend\\Source\\AST\\ASTVariable' . ' ($value)'
+                'PDepend\\Source\\AST\\ASTVariable' . ' ($value)',
             ]
         );
     }
@@ -202,38 +197,34 @@ class ASTArrayElementTest extends ASTNodeTestCase
      *             - ASTAllocationExpression  ->  new
      *               - ASTClassReference      ->  Object
      * </code>
-     *
-     * @return void
      */
     public function testArrayElementGraphWithTwoDimensions(): void
     {
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
             [
-                'PDepend\\Source\\AST\\ASTLiteral'                              . ' ("bar")',
-                'PDepend\\Source\\AST\\ASTArray'                                . ' ()', [
-                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', [
-                        'PDepend\\Source\\AST\\ASTAllocationExpression'         . ' (new)', [
-                            'PDepend\\Source\\AST\\ASTClassReference'           . ' (Object)']],
-                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', [
-                        'PDepend\\Source\\AST\\ASTLiteral'                      . ' (23)',
-                        'PDepend\\Source\\AST\\ASTAllocationExpression'         . ' (new)', [
-                            'PDepend\\Source\\AST\\ASTClassReference'           . ' (Object)']],
-                    'PDepend\\Source\\AST\\ASTArrayElement'                     . ' ()', [
-                        'PDepend\\Source\\AST\\ASTArray'                        . ' ()', [
-                            'PDepend\\Source\\AST\\ASTArrayElement'             . ' ()', [
-                                'PDepend\\Source\\AST\\ASTLiteral'              . ' ("foo")',
+                'PDepend\\Source\\AST\\ASTLiteral' . ' ("bar")',
+                'PDepend\\Source\\AST\\ASTArray' . ' ()', [
+                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
+                        'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', [
+                            'PDepend\\Source\\AST\\ASTClassReference' . ' (Object)']],
+                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
+                        'PDepend\\Source\\AST\\ASTLiteral' . ' (23)',
+                        'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', [
+                            'PDepend\\Source\\AST\\ASTClassReference' . ' (Object)']],
+                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
+                        'PDepend\\Source\\AST\\ASTArray' . ' ()', [
+                            'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
+                                'PDepend\\Source\\AST\\ASTLiteral' . ' ("foo")',
                                 'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', [
-                                    'PDepend\\Source\\AST\\ASTClassReference'   . ' (Object)']]]]
-            ]
+                                    'PDepend\\Source\\AST\\ASTClassReference' . ' (Object)']]]],
+                ],
             ]
         );
     }
 
     /**
      * testArrayElementByReferenceReturnsFalseByDefault
-     *
-     * @return void
      */
     public function testArrayElementByReferenceReturnsFalseByDefault(): void
     {
@@ -243,8 +234,6 @@ class ASTArrayElementTest extends ASTNodeTestCase
 
     /**
      * testArrayElementByReferenceReturnsTrueForValue
-     *
-     * @return void
      */
     public function testArrayElementByReferenceReturnsTrueForValue(): void
     {
@@ -254,8 +243,6 @@ class ASTArrayElementTest extends ASTNodeTestCase
 
     /**
      * testArrayElementByReferenceReturnsFalseForKeyValue
-     *
-     * @return void
      */
     public function testArrayElementByReferenceReturnsFalseForKeyValue(): void
     {
@@ -265,8 +252,6 @@ class ASTArrayElementTest extends ASTNodeTestCase
 
     /**
      * testArrayElementByReferenceReturnsTrueForKeyValue
-     *
-     * @return void
      */
     public function testArrayElementByReferenceReturnsTrueForKeyValue(): void
     {
@@ -276,8 +261,6 @@ class ASTArrayElementTest extends ASTNodeTestCase
 
     /**
      * Tests the start line value of an array element.
-     *
-     * @return void
      */
     public function testArrayElementHasExpectedStartLine(): void
     {
@@ -287,8 +270,6 @@ class ASTArrayElementTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value of an array element.
-     *
-     * @return void
      */
     public function testArrayElementHasExpectedStartColumn(): void
     {
@@ -298,8 +279,6 @@ class ASTArrayElementTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value of an array element.
-     *
-     * @return void
      */
     public function testArrayElementHasExpectedEndLine(): void
     {
@@ -309,8 +288,6 @@ class ASTArrayElementTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value of an array element.
-     *
-     * @return void
      */
     public function testArrayElementHasExpectedEndColumn(): void
     {
@@ -321,7 +298,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
     /**
      * Returns an array element for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTArrayElement
+     * @return ASTArrayElement
      */
     private function getFirstArrayElementInFunction()
     {

@@ -42,6 +42,7 @@
 
 namespace PDepend\Issues;
 
+use ErrorException;
 use PDepend\AbstractTestCase;
 
 /**
@@ -67,6 +68,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      * Parses the source for the calling test case.
      *
      * @param string $testCase
+     *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     protected function parseTestCase($testCase = null)
@@ -82,14 +84,15 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      * and node builder implementations.
      *
      * @param string $testCase
-     * @param boolean $ignoreAnnotations
+     * @param bool   $ignoreAnnotations
+     *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
         [$class, $method] = explode('::', $testCase);
         if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
-            throw new \ErrorException('Unexpected class name format');
+            throw new ErrorException('Unexpected class name format');
         }
         return $this->parseSource('issues/' . $match[1] . '/' . $method . '.php');
     }
@@ -107,6 +110,6 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
                 return $frame['class'] . '::' . $frame['function'];
             }
         }
-        throw new \ErrorException('Cannot locate test case method.');
+        throw new ErrorException('Cannot locate test case method.');
     }
 }

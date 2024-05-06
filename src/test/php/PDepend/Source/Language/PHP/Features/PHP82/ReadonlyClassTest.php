@@ -41,17 +41,16 @@
 namespace PDepend\Source\Language\PHP\Features\PHP82;
 
 /**
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
+ *
  * @group unittest
  * @group php8.2
  */
 class ReadonlyClassTest extends PHPParserVersion82TestCase
 {
-    /**
-     * @return void
-     */
     public function testReadonlyClass(): void
     {
         $class = $this->getFirstClassForTestCase();

@@ -43,14 +43,16 @@
 namespace PDepend\Util\Cache\Driver;
 
 use PDepend\Util\Cache\AbstractDriverTestCase;
+use RuntimeException;
 
 /**
  * Test case for the {@link \PDepend\Util\Cache\Driver\FileCacheDriver} class.
  *
+ * @covers \PDepend\Util\Cache\Driver\FileCacheDriver
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Util\Cache\Driver\FileCacheDriver
  * @group unittest
  */
 class FileCacheDriverTest extends AbstractDriverTestCase
@@ -71,8 +73,6 @@ class FileCacheDriverTest extends AbstractDriverTestCase
 
     /**
      * Initializes a temporary working directory.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -96,7 +96,6 @@ class FileCacheDriverTest extends AbstractDriverTestCase
     /**
      * testFileDriverStoresFileWithCacheKeyIfPresent
      *
-     * @return void
      * @since 1.0.0
      */
     public function testFileDriverStoresFileWithCacheKeyIfPresent(): void
@@ -113,7 +112,6 @@ class FileCacheDriverTest extends AbstractDriverTestCase
     /**
      * testFileDriverRestoresFileWithCacheKeyIfPresent
      *
-     * @return void
      * @since 1.0.0
      */
     public function testFileDriverRestoresFileWithCacheKeyIfPresent(): void
@@ -140,7 +138,7 @@ class FileCacheDriverTest extends AbstractDriverTestCase
         $corruptCacheContent = 'this is not a valid serialized value';
         $written = file_put_contents($file, $corruptCacheContent);
         if ($written !== strlen($corruptCacheContent)) {
-            throw new \RuntimeException('Could not write to cache file during test. Path: ' . $file);
+            throw new RuntimeException('Could not write to cache file during test. Path: ' . $file);
         }
 
         // Try to retrieve the cached value

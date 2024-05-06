@@ -49,25 +49,25 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 /**
  * Test case for the NPath complexity analyzer.
  *
+ * @covers \PDepend\Metrics\AbstractCachingAnalyzer
+ * @covers \PDepend\Metrics\Analyzer\NPathComplexityAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Metrics\AbstractCachingAnalyzer
- * @covers \PDepend\Metrics\Analyzer\NPathComplexityAnalyzer
  * @group unittest
  */
 class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
+     *
      * @since 1.0.0
      */
     private $cache;
 
     /**
      * Initializes a in memory cache.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -79,7 +79,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedFunctionMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedFunctionMetricsFromCache(): void
@@ -105,7 +104,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedMethodMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedMethodMetricsFromCache(): void
@@ -133,7 +131,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testNPathComplexityForNestedIfStatementsWithScope
      *
-     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForNestedIfStatementsWithScope(): void
@@ -144,7 +141,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testNPathComplexityForNestedIfStatementsWithoutScope
      *
-     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForNestedIfStatementsWithoutScope(): void
@@ -155,7 +151,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testNPathComplexityForSiblingConditionalExpressions
      *
-     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForSiblingConditionalExpressions(): void
@@ -166,8 +161,8 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testNPathComplexityForSiblingExpressions
      *
-     * @return void
      * @since 0.9.12
+     *
      * @todo What happens with boolean/logical expressions within the body of
      *       any other statement/expression?
      */
@@ -179,7 +174,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testNPathComplexityForTwoSiblingIfStatetements
      *
-     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForTwoSiblingIfStatetements(): void
@@ -190,7 +184,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testNPathComplexityForForeachStatementWithNestedIfStatetements
      *
-     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForForeachStatementWithNestedIfStatetements(): void
@@ -201,7 +194,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testNPathComplexityForSiblingIfStatementsAndForeachStatement
      *
-     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForSiblingIfStatementsAndForeachStatement(): void
@@ -212,7 +204,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testNPathComplexityForComplexFunction
      *
-     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForComplexFunction(): void
@@ -223,7 +214,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testNPathComplexityForConditionalsInArrayDeclaration
      *
-     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForComplexNestedControlStatements(): void
@@ -234,7 +224,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testNPathComplexityForConditionalsInArrayDeclaration
      *
-     * @return void
      * @since 0.9.12
      */
     public function testNPathComplexityForConditionalsInArrayDeclaration(): void
@@ -244,8 +233,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testNPathComplexityIsZeroForEmptyMethod
-     *
-     * @return void
      */
     public function testNPathComplexityIsZeroForEmptyMethod(): void
     {
@@ -254,8 +241,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests a method body with a simple if statement.
-     *
-     * @return void
      */
     public function testNPathComplexityForMethodWithSimpleIfStatement(): void
     {
@@ -264,8 +249,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests a method body with a simple if statement with dynamic identifier.
-     *
-     * @return void
      */
     public function testNPathComplexityForIfStatementWithNestedDynamicIdentifier(): void
     {
@@ -274,8 +257,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the analyzer implementation against consecutive if-statements.
-     *
-     * @return void
      */
     public function testNPathComplexityForConsecutiveIfStatements(): void
     {
@@ -284,8 +265,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the analyzer implementation against multiple if-else-if statements.
-     *
-     * @return void
      */
     public function testNPathComplexityForConsecutiveIfElseIfStatements(): void
     {
@@ -294,8 +273,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the analyzer implementation against multiple if-elseif statements.
-     *
-     * @return void
      */
     public function testNPathComplexityForConsecutiveIfElsifStatements(): void
     {
@@ -304,8 +281,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the analyzer implementation against an empty while statement.
-     *
-     * @return void
      */
     public function testNPathComplexityForEmptyWhileStatement(): void
     {
@@ -314,8 +289,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the anaylzer with nested while statements.
-     *
-     * @return void
      */
     public function testNPathComplexityForNestedWhileStatements(): void
     {
@@ -324,8 +297,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the npath algorithm with a simple do-while statement.
-     *
-     * @return void
      */
     public function testNPathComplexityForSimpleDoWhileStatement(): void
     {
@@ -334,8 +305,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the analyzer with a simple for statement.
-     *
-     * @return void
      */
     public function testNPathComplexityForSimpleForStatement(): void
     {
@@ -344,8 +313,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the analyzer with a complex for statement.
-     *
-     * @return void
      */
     public function testNPathComplexityForComplexForStatement(): void
     {
@@ -354,8 +321,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the analyzer implementation with a simple foreach statement.
-     *
-     * @return void
      */
     public function testNPathComplexityForSimpleForeachStatement(): void
     {
@@ -364,8 +329,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the algorithm with a simple return statement.
-     *
-     * @return void
      */
     public function testNPathComplexityForSimpleReturnStatement(): void
     {
@@ -374,8 +337,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the algorithm with a return statement that contains boolean expressions.
-     *
-     * @return void
      */
     public function testNPathComplexityForReturnStatementWithBooleanExpressions(): void
     {
@@ -384,8 +345,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the algorithm with a return statement that contains a conditional.
-     *
-     * @return void
      */
     public function testNPathComplexityForReturnStatementWithConditionalStatement(): void
     {
@@ -395,8 +354,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests the algorithm with a simple switch statement that contains one case
      * child.
-     *
-     * @return void
      */
     public function testNPathComplexityForSimpleSwitchStatement(): void
     {
@@ -406,8 +363,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests the algorithm with a switch statement that contains multiple case
      * statements.
-     *
-     * @return void
      */
     public function testNPathComplexityForSwitchStatementWithMultipleCaseStatements(): void
     {
@@ -417,8 +372,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests the algorithm with a switch statement that contains complex case
      * statements.
-     *
-     * @return void
      */
     public function testNPathComplexityForSwitchStatementWithComplexCaseStatements(): void
     {
@@ -427,8 +380,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the algorithm with a simple try statement.
-     *
-     * @return void
      */
     public function testNPathComplexityForSimpleTryCatchStatement(): void
     {
@@ -437,8 +388,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the algorithm with a try statement with multiple catch statements.
-     *
-     * @return void
      */
     public function testNPathComplexityForTryStatementWithMutlipleCatchStatements(): void
     {
@@ -447,8 +396,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the algorithm with a try statement with nested if statements.
-     *
-     * @return void
      */
     public function testNPathComplexityForTryCatchStatementWithNestedIfStatements(): void
     {
@@ -457,8 +404,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the algorithm with a conditional statement.
-     *
-     * @return void
      */
     public function testNPathComplexityForSimpleConditionalStatement(): void
     {
@@ -467,8 +412,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the algorithm with nested conditional statements.
-     *
-     * @return void
      */
     public function testNPathComplexityForTwoNestedConditionalStatements(): void
     {
@@ -477,8 +420,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests the algorithm with nested conditional statements.
-     *
-     * @return void
      */
     public function testNPathComplexityForThreeNestedConditionalStatements(): void
     {
@@ -488,8 +429,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests the algorithm with a conditional statement with boolean/logical
      * expressions.
-     *
-     * @return void
      */
     public function testNPathComplexityForConditionalStatementWithLogicalExpressions(): void
     {
@@ -499,8 +438,6 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests the algorithm implementation against an existing bug in the
      * combination of return, conditional and if statement.
-     *
-     * @return void
      */
     public function testNPathComplexityForReturnStatementWithConditional(): void
     {
@@ -512,7 +449,8 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * Returns the NPath Complexity of the first function found in source file
      * associated with the calling test case.
      *
-     * @return integer
+     * @return int
+     *
      * @since 0.9.12
      */
     private function calculateFunctionMetric()
@@ -527,6 +465,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * the first function found in the test case source file.
      *
      * @return \PDepend\Source\AST\ASTFunction
+     *
      * @since 0.9.12
      */
     private function getFirstFunctionForTestCaseInternal()
@@ -541,7 +480,8 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * Returns the NPath Complexity of the first method found in source file
      * associated with the calling test case.
      *
-     * @return integer
+     * @return int
+     *
      * @since 0.9.12
      */
     private function calculateMethodMetric()
@@ -556,6 +496,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * the first method found in the test case source file.
      *
      * @return \PDepend\Source\AST\ASTMethod
+     *
      * @since 0.9.12
      */
     private function getFirstMethodForTestCaseInternal()
@@ -571,8 +512,8 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Calculates the NPath complexity for the given callable instance.
      *
-     * @param \PDepend\Source\AST\AbstractASTCallable $callable
      * @return string
+     *
      * @since 0.9.12
      */
     private function calculateNPathComplexity(AbstractASTCallable $callable)
@@ -587,7 +528,8 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Creates a ready to use npath complexity analyzer.
      *
-     * @return \PDepend\Metrics\Analyzer\NPathComplexityAnalyzer
+     * @return NPathComplexityAnalyzer
+     *
      * @since 1.0.0
      */
     private function createAnalyzer()

@@ -56,8 +56,6 @@ class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegression
 {
     /**
      * Tests that the result does not contain an interface with a broken body.
-     *
-     * @return void
      */
     public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody(): void
     {

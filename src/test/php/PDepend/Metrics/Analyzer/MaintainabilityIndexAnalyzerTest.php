@@ -48,25 +48,25 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 /**
  * Test case for the cyclomatic analyzer.
  *
+ * @covers \PDepend\Metrics\AbstractCachingAnalyzer
+ * @covers \PDepend\Metrics\Analyzer\MaintainabilityIndexAnalyzer
+ *
  * @copyright 2015 Matthias Mullie. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Metrics\AbstractCachingAnalyzer
- * @covers \PDepend\Metrics\Analyzer\MaintainabilityIndexAnalyzer
  * @group unittest
  */
 class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
+     *
      * @since 1.0.0
      */
     private $cache;
 
     /**
      * Initializes a in memory cache.
-     *
-     * @return void
      */
     protected function setUp(): void
     {
@@ -77,8 +77,6 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsNothingForUnknownNode
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsNothingForUnknownNode(): void
     {
@@ -91,8 +89,6 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct function maintainability
      * index.
-     *
-     * @return void
      */
     public function testCalculateFunctionMaintainabilityIndex(): void
     {
@@ -120,8 +116,6 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct method maintainability
      * index.
-     *
-     * @return void
      */
     public function testCalculateMethodMaintainabilityIndex(): void
     {
@@ -153,7 +147,6 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedFunctionMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedFunctionMetricsFromCache(): void
@@ -177,7 +170,6 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testAnalyzerRestoresExpectedMethodMetricsFromCache
      *
-     * @return void
      * @since 1.0.0
      */
     public function testAnalyzerRestoresExpectedMethodMetricsFromCache(): void
@@ -202,7 +194,8 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Returns a pre configured ccn analyzer.
      *
-     * @return \PDepend\Metrics\Analyzer\MaintainabilityIndexAnalyzer
+     * @return MaintainabilityIndexAnalyzer
+     *
      * @since 1.0.0
      */
     private function createAnalyzer()

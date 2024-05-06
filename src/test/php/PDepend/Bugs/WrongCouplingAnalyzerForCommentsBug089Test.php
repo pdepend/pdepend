@@ -59,8 +59,6 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTestC
 {
     /**
      * Tests that the analyzer calculates the expected result.
-     *
-     * @return void
      */
     public function testAnalyzerDetectsIdenticalMethodCallWithFunctionComment(): void
     {
@@ -75,8 +73,6 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTestC
 
     /**
      * Tests that the analyzer calculates the expected result.
-     *
-     * @return void
      */
     public function testAnalyzerDetectsFunctionCallWithCommentBetweenParenthesisAndIdentifier(): void
     {
@@ -91,8 +87,6 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTestC
 
     /**
      * Tests that the analyzer calculates the expected result.
-     *
-     * @return void
      */
     public function testAnalyzerDetectsObjectAllocation(): void
     {

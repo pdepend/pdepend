@@ -45,52 +45,45 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTVariable} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTVariable
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTVariable
  * @group unittest
  */
 class ASTVariableTest extends ASTNodeTestCase
 {
     /**
      * testIsThisReturnsTrueForThisImageName
-     *
-     * @return void
      */
     public function testIsThisReturnsTrueForThisImageName(): void
     {
-        $variable = new \PDepend\Source\AST\ASTVariable('$this');
+        $variable = new ASTVariable('$this');
         $this->assertTrue($variable->isThis());
     }
 
     /**
      * testIsThisReturnsFalseForThisImageButDifferentCase
-     *
-     * @return void
      */
     public function testIsThisReturnsFalseForThisImageButDifferentCase(): void
     {
-        $variable = new \PDepend\Source\AST\ASTVariable('$This');
+        $variable = new ASTVariable('$This');
         $this->assertFalse($variable->isThis());
     }
 
     /**
      * testIsThisReturnsFalseForDifferentImage
-     *
-     * @return void
      */
     public function testIsThisReturnsFalseForDifferentImage(): void
     {
-        $variable = new \PDepend\Source\AST\ASTVariable('$foo');
+        $variable = new ASTVariable('$foo');
         $this->assertFalse($variable->isThis());
     }
 
     /**
      * testAcceptInvokesAcceptOnChildNode
-     *
-     * @return void
      */
     public function testAcceptInvokesAcceptOnChildNode(): void
     {
@@ -100,7 +93,8 @@ class ASTVariableTest extends ASTNodeTestCase
     /**
      * testVariable
      *
-     * @return \PDepend\Source\AST\ASTVariable
+     * @return ASTVariable
+     *
      * @since 1.0.2
      */
     public function testVariable()
@@ -114,9 +108,8 @@ class ASTVariableTest extends ASTNodeTestCase
     /**
      * testVariableHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTVariable $variable
+     * @param ASTVariable $variable
      *
-     * @return void
      * @depends testVariable
      */
     public function testVariableHasExpectedStartLine($variable): void
@@ -127,9 +120,8 @@ class ASTVariableTest extends ASTNodeTestCase
     /**
      * testVariableHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTVariable $variable
+     * @param ASTVariable $variable
      *
-     * @return void
      * @depends testVariable
      */
     public function testVariableHasExpectedStartColumn($variable): void
@@ -140,9 +132,8 @@ class ASTVariableTest extends ASTNodeTestCase
     /**
      * testVariableHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTVariable $variable
+     * @param ASTVariable $variable
      *
-     * @return void
      * @depends testVariable
      */
     public function testVariableHasExpectedEndLine($variable): void
@@ -153,9 +144,8 @@ class ASTVariableTest extends ASTNodeTestCase
     /**
      * testVariableHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTVariable $variable
+     * @param ASTVariable $variable
      *
-     * @return void
      * @depends testVariable
      */
     public function testVariableHasExpectedEndColumn($variable): void
@@ -166,7 +156,7 @@ class ASTVariableTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTVariable
+     * @return ASTVariable
      */
     private function getFirstVariableInClass()
     {

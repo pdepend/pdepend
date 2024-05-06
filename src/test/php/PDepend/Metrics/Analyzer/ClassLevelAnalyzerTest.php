@@ -42,18 +42,21 @@
 
 namespace PDepend\Metrics\Analyzer;
 
+use InvalidArgumentException;
 use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use RuntimeException;
 
 /**
  * Test case for the class level analyzer.
  *
+ * @covers \PDepend\Metrics\Analyzer\ClassLevelAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Metrics\Analyzer\ClassLevelAnalyzer
  * @group unittest
  */
 class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
@@ -61,12 +64,10 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the {@link \PDepend\Metrics\Analyzer\ClassLevelAnalyzer::analyzer()}
      * method fails with an exception if no cc analyzer was set.
-     *
-     * @return void
      */
     public function testAnalyzerFailsWithoutCCAnalyzerFail(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $namespace = new ASTNamespace('package1');
         $namespaces = new ASTArtifactList([$namespace]);
@@ -78,12 +79,10 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that {@link \PDepend\Metrics\Analyzer\ClassLevelAnalyzer::addAnalyzer()}
      * fails for an invalid child analyzer.
-     *
-     * @return void
      */
     public function testAddAnalyzerFailsForAnInvalidAnalyzerTypeFail(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(InvalidArgumentException::class);
 
         $analyzer = new ClassLevelAnalyzer();
         $analyzer->addAnalyzer(new CodeRankAnalyzer());
@@ -91,8 +90,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetRequiredAnalyzersReturnsExpectedClassNames
-     *
-     * @return void
      */
     public function testGetRequiredAnalyzersReturnsExpectedClassNames(): void
     {
@@ -105,8 +102,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics
-     *
-     * @return void
      */
     public function testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics(): void
     {
@@ -118,8 +113,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct IMPL values.
-     *
-     * @return void
      */
     public function testCalculateIMPLMetric(): void
     {
@@ -128,8 +121,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct IMPL values.
-     *
-     * @return void
      */
     public function testCalculateIMPLMetric1(): void
     {
@@ -138,8 +129,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct IMPL values.
-     *
-     * @return void
      */
     public function testCalculateIMPLMetric2(): void
     {
@@ -148,8 +137,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateIMPLMetricContainsUnknownImplementedInterface
-     *
-     * @return void
      */
     public function testCalculateIMPLMetricContainsUnknownImplementedInterface(): void
     {
@@ -158,8 +145,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface
-     *
-     * @return void
      */
     public function testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface(): void
     {
@@ -168,8 +153,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateIMPLMetricContainsInternalImplementedInterface
-     *
-     * @return void
      */
     public function testCalculateIMPLMetricContainsInternalImplementedInterface(): void
     {
@@ -178,8 +161,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the calculated Class Interface Size(CSI) is correct.
-     *
-     * @return void
      */
     public function testCalculateCISMetricZeroInheritance(): void
     {
@@ -188,8 +169,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the calculated Class Interface Size(CSI) is correct.
-     *
-     * @return void
      */
     public function testCalculateCISMetricOneLevelInheritance(): void
     {
@@ -198,8 +177,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the calculated Class Interface Size(CSI) is correct.
-     *
-     * @return void
      */
     public function testCalculateCISMetricTwoLevelInheritance(): void
     {
@@ -208,8 +185,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateCISMetricOnlyCountsMethodsAndNotSumsComplexity
-     *
-     * @return void
      */
     public function testCalculateCISMetricOnlyCountsMethodsAndNotSumsComplexity(): void
     {
@@ -218,8 +193,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the calculated Class SiZe(CSZ) metric is correct.
-     *
-     * @return void
      */
     public function testCalculateCSZMetricZeroInheritance(): void
     {
@@ -228,8 +201,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the calculated Class SiZe(CSZ) metric is correct.
-     *
-     * @return void
      */
     public function testCalculateCSZMetricOneLevelInheritance(): void
     {
@@ -238,8 +209,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateCSZMetricOnlyCountsMethodsAndNotSumsComplexity
-     *
-     * @return void
      */
     public function testCalculateCSZMetricOnlyCountsMethodsAndNotSumsComplexity(): void
     {
@@ -248,8 +217,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateNpmMetricForEmptyClass
-     *
-     * @return void
      */
     public function testCalculateNpmMetricForEmptyClass(): void
     {
@@ -258,8 +225,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateNpmMetricForClassWithPublicMethod
-     *
-     * @return void
      */
     public function testCalculateNpmMetricForClassWithPublicMethod(): void
     {
@@ -268,8 +233,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateNpmMetricForClassWithPublicMethods
-     *
-     * @return void
      */
     public function testCalculateNpmMetricForClassWithPublicMethods(): void
     {
@@ -278,8 +241,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateNpmMetricForClassWithPublicStaticMethod
-     *
-     * @return void
      */
     public function testCalculateNpmMetricForClassWithPublicStaticMethod(): void
     {
@@ -288,8 +249,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateNpmMetricForClassWithProtectedMethod
-     *
-     * @return void
      */
     public function testCalculateNpmMetricForClassWithProtectedMethod(): void
     {
@@ -298,8 +257,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateNpmMetricForClassWithPrivateMethod
-     *
-     * @return void
      */
     public function testCalculateNpmMetricForClassWithPrivateMethod(): void
     {
@@ -308,8 +265,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculateNpmMetricForClassWithAllVisibilityMethods
-     *
-     * @return void
      */
     public function testCalculateNpmMetricForClassWithAllVisibilityMethods(): void
     {
@@ -318,8 +273,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct VARS metric
-     *
-     * @return void
      */
     public function testCalculateVARSMetricZeroInheritance(): void
     {
@@ -328,8 +281,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct VARS metric
-     *
-     * @return void
      */
     public function testCalculateVARSMetricOneLevelInheritance(): void
     {
@@ -338,8 +289,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct VARSi metric
-     *
-     * @return void
      */
     public function testCalculateVARSiMetric(): void
     {
@@ -348,8 +297,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct VARSi metric
-     *
-     * @return void
      */
     public function testCalculateVARSiMetricWithInheritance(): void
     {
@@ -358,8 +305,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct VARSnp metric
-     *
-     * @return void
      */
     public function testCalculateVARSnpMetric(): void
     {
@@ -368,8 +313,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct VARSnp metric
-     *
-     * @return void
      */
     public function testCalculateVARSnpMetricWithInheritance(): void
     {
@@ -378,8 +321,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct WMC metric.
-     *
-     * @return void
      */
     public function testCalculateWMCMetric(): void
     {
@@ -388,8 +329,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct WMC metric.
-     *
-     * @return void
      */
     public function testCalculateWMCMetricOneLevelInheritance(): void
     {
@@ -398,8 +337,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct WMC metric.
-     *
-     * @return void
      */
     public function testCalculateWMCMetricTwoLevelInheritance(): void
     {
@@ -408,8 +345,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct WMCi metric.
-     *
-     * @return void
      */
     public function testCalculateWMCiMetric(): void
     {
@@ -418,8 +353,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct WMCi metric.
-     *
-     * @return void
      */
     public function testCalculateWMCiMetricOneLevelInheritance(): void
     {
@@ -428,8 +361,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct WMCi metric.
-     *
-     * @return void
      */
     public function testCalculateWMCiMetricTwoLevelInheritance(): void
     {
@@ -438,8 +369,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct WMCnp metric.
-     *
-     * @return void
      */
     public function testCalculateWMCnpMetric(): void
     {
@@ -448,8 +377,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct WMCnp metric.
-     *
-     * @return void
      */
     public function testCalculateWMCnpMetricOneLevelInheritance(): void
     {
@@ -458,8 +385,6 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct WMCnp metric.
-     *
-     * @return void
      */
     public function testCalculateWMCnpMetricTwoLevelInheritance(): void
     {
@@ -502,6 +427,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * testGetNodeMetricsForTrait
      *
      * @return array
+     *
      * @since 1.0.6
      */
     public function testGetNodeMetricsForTrait()
@@ -518,8 +444,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics): void
@@ -535,8 +461,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateIMPLMetricForTrait(array $metrics): void
@@ -549,8 +475,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateCISMetricForTrait(array $metrics): void
@@ -563,8 +489,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateCSZMetricForTrait(array $metrics): void
@@ -577,8 +503,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateNpmMetricForTrait(array $metrics): void
@@ -591,8 +517,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateVARSMetricForTrait(array $metrics): void
@@ -605,8 +531,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateVARSiMetricForTrait(array $metrics): void
@@ -619,8 +545,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateVARSnpMetricForTrait(array $metrics): void
@@ -633,8 +559,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateWMCMetricForTrait(array $metrics): void
@@ -647,8 +573,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateWMCiMetricForTrait(array $metrics): void
@@ -661,8 +587,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array $metrics Calculated class metrics.
      *
-     * @return void
      * @since 1.0.6
+     *
      * @depends testGetNodeMetricsForTrait
      */
     public function testCalculateWMCnpMetricForTrait(array $metrics): void
@@ -675,6 +601,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * returns all measured metrics.
      *
      * @return array<string, mixed>
+     *
      * @since 1.0.6
      */
     private function calculateTraitMetrics()

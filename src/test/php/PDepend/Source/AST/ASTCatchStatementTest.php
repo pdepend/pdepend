@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCatchStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTCatchStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTCatchStatement
  * @group unittest
  */
 class ASTCatchStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the start line value.
-     *
-     * @return void
      */
     public function testCatchStatementHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTCatchStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value.
-     *
-     * @return void
      */
     public function testCatchStatementHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTCatchStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value.
-     *
-     * @return void
      */
     public function testCatchStatementHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTCatchStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value.
-     *
-     * @return void
      */
     public function testCatchStatementHasExpectedEndColumn(): void
     {
@@ -100,8 +93,6 @@ class ASTCatchStatementTest extends ASTNodeTestCase
 
     /**
      * testCatchStatementVariableHasExpectedStartLine
-     *
-     * @return void
      */
     public function testCatchStatementVariableHasExpectedStartLine(): void
     {
@@ -112,8 +103,6 @@ class ASTCatchStatementTest extends ASTNodeTestCase
 
     /**
      * testCatchStatementVariableHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testCatchStatementVariableHasExpectedStartColumn(): void
     {
@@ -124,8 +113,6 @@ class ASTCatchStatementTest extends ASTNodeTestCase
 
     /**
      * testCatchStatementVariableHasExpectedEndLine
-     *
-     * @return void
      */
     public function testCatchStatementVariableHasExpectedEndLine(): void
     {
@@ -136,8 +123,6 @@ class ASTCatchStatementTest extends ASTNodeTestCase
 
     /**
      * testCatchStatementVariableHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testCatchStatementVariableHasExpectedEndColumn(): void
     {
@@ -148,8 +133,6 @@ class ASTCatchStatementTest extends ASTNodeTestCase
 
     /**
      * testThirdChildOfCatchStatementIsScopeStatement
-     *
-     * @return void
      */
     public function testThirdChildOfCatchStatementIsScopeStatement(): void
     {
@@ -162,7 +145,7 @@ class ASTCatchStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTCatchStatement
+     * @return ASTCatchStatement
      */
     private function getFirstCatchStatementInFunction($testCase)
     {

@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.2
  */
 
@@ -48,18 +49,19 @@ use PDepend\Source\AST\ASTFormalParameter;
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.2
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @group unittest
  */
 class ASTFormalParameterParsingTest extends AbstractParserTestCase
 {
     /**
      * testWithParentTypeHint
-     *
-     * @return void
      */
     public function testWithParentTypeHint(): void
     {
@@ -69,24 +71,20 @@ class ASTFormalParameterParsingTest extends AbstractParserTestCase
 
     /**
      * testWithParentTypeHintInFunctionThrowsExpectedException
-     *
-     * @return void
      */
     public function testWithParentTypeHintInFunctionThrowsExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+        $this->expectException(InvalidStateException::class);
 
         $this->parseCodeResourceForTest();
     }
 
     /**
      * testWithParentTypeHintInRootClassThrowsExpectedException
-     *
-     * @return void
      */
     public function testWithParentTypeHintInRootClassThrowsExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+        $this->expectException(InvalidStateException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -94,7 +92,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTestCase
     /**
      * Returns the first formal parameter found in the associated test file.
      *
-     * @return \PDepend\Source\AST\ASTFormalParameter
+     * @return ASTFormalParameter
      */
     private function getFirstMethodFormalParameter()
     {

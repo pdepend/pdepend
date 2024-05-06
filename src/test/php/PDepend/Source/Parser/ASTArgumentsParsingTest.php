@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.2
  */
 
@@ -46,19 +47,19 @@ namespace PDepend\Source\Parser;
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.10.2
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @group unittest
  */
 class ASTArgumentsParsingTest extends AbstractParserTestCase
 {
     /**
      * Tests that the parser adds the expected children to an argument instance.
-     *
-     * @return void
      */
     public function testArgumentsContainsStaticMethodPostfixExpression(): void
     {
@@ -69,15 +70,13 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
-                'PDepend\\Source\\AST\\ASTArguments'
+                'PDepend\\Source\\AST\\ASTArguments',
             ]
         );
     }
 
     /**
      * Tests that the parser adds the expected children to an argument instance.
-     *
-     * @return void
      */
     public function testArgumentsContainsMethodPostfixExpression(): void
     {
@@ -88,15 +87,13 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
                 'PDepend\\Source\\AST\\ASTVariable',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
-                'PDepend\\Source\\AST\\ASTArguments'
+                'PDepend\\Source\\AST\\ASTArguments',
             ]
         );
     }
 
     /**
      * Tests that the parser adds the expected children to an argument instance.
-     *
-     * @return void
      */
     public function testArgumentsContainsConstantsPostfixExpression(): void
     {
@@ -106,15 +103,13 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTConstantPostfix',
-                'PDepend\\Source\\AST\\ASTIdentifier'
+                'PDepend\\Source\\AST\\ASTIdentifier',
             ]
         );
     }
 
     /**
      * Tests that the parser adds the expected children to an argument instance.
-     *
-     * @return void
      */
     public function testArgumentsContainsPropertyPostfixExpression(): void
     {
@@ -124,15 +119,13 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * Tests that the parser adds the expected children to an argument instance.
-     *
-     * @return void
      */
     public function testArgumentsContainsSelfPropertyPostfixExpression(): void
     {
@@ -142,15 +135,13 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
                 'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
                 'PDepend\\Source\\AST\\ASTSelfReference',
                 'PDepend\\Source\\AST\\ASTPropertyPostfix',
-                'PDepend\\Source\\AST\\ASTVariable'
+                'PDepend\\Source\\AST\\ASTVariable',
             ]
         );
     }
 
     /**
      * Tests that the parser adds the expected children to an argument instance.
-     *
-     * @return void
      */
     public function testArgumentsContainsParentMethodPostfixExpression(): void
     {
@@ -161,15 +152,13 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
                 'PDepend\\Source\\AST\\ASTParentReference',
                 'PDepend\\Source\\AST\\ASTMethodPostfix',
                 'PDepend\\Source\\AST\\ASTIdentifier',
-                'PDepend\\Source\\AST\\ASTArguments'
+                'PDepend\\Source\\AST\\ASTArguments',
             ]
         );
     }
 
     /**
      * Tests that the parser adds the expected children to an argument instance.
-     *
-     * @return void
      */
     public function testArgumentsContainsAllocationExpression(): void
     {
@@ -181,8 +170,6 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the parser adds the expected children to an argument instance.
-     *
-     * @return void
      */
     public function testArgumentsWithSeveralParameters(): void
     {
@@ -196,8 +183,6 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the parser adds the expected children to an argument instance.
-     *
-     * @return void
      */
     public function testArgumentsWithInlineComments(): void
     {
@@ -209,8 +194,6 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
 
     /**
      * Tests that the parser adds the expected children to an argument instance.
-     *
-     * @return void
      */
     public function testArgumentsWithInlineConcatExpression(): void
     {
@@ -225,12 +208,10 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
     /**
      * Tests that an invalid arguments expression results in the expected
      * exception.
-     *
-     * @return void
      */
     public function testUnclosedArgumentsExpressionThrowsExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }

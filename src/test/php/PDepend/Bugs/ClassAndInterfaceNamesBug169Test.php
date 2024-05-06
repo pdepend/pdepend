@@ -54,8 +54,6 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
 {
     /**
      * testParserAcceptsNullAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsNullAsClassName(): void
     {
@@ -64,8 +62,6 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsNullAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsNullAsInterfaceName(): void
     {
@@ -74,8 +70,6 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsTrueAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsTrueAsClassName(): void
     {
@@ -84,8 +78,6 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsTrueAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsTrueAsInterfaceName(): void
     {
@@ -94,8 +86,6 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsFalseAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsFalseAsClassName(): void
     {
@@ -104,8 +94,6 @@ class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsFalseAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsFalseAsInterfaceName(): void
     {

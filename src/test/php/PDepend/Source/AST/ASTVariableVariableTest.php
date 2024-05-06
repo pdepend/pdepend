@@ -45,11 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTVariableVariable} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTVariableVariable
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTVariableVariable
  * @group unittest
  */
 class ASTVariableVariableTest extends ASTNodeTestCase
@@ -57,7 +58,8 @@ class ASTVariableVariableTest extends ASTNodeTestCase
     /**
      * testVariableVariable
      *
-     * @return \PDepend\Source\AST\ASTVariableVariable
+     * @return ASTVariableVariable
+     *
      * @since 1.0.2
      */
     public function testVariableVariable()
@@ -67,13 +69,12 @@ class ASTVariableVariableTest extends ASTNodeTestCase
 
         return $variable;
     }
-    
+
     /**
      * testVariableVariableHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTVariableVariable $variable
+     * @param ASTVariableVariable $variable
      *
-     * @return void
      * @depends testVariableVariable
      */
     public function testVariableVariableHasExpectedStartLine($variable): void
@@ -84,9 +85,8 @@ class ASTVariableVariableTest extends ASTNodeTestCase
     /**
      * testVariableVariableHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTVariableVariable $variable
+     * @param ASTVariableVariable $variable
      *
-     * @return void
      * @depends testVariableVariable
      */
     public function testVariableVariableHasExpectedStartColumn($variable): void
@@ -97,9 +97,8 @@ class ASTVariableVariableTest extends ASTNodeTestCase
     /**
      * testVariableVariableHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTVariableVariable $variable
+     * @param ASTVariableVariable $variable
      *
-     * @return void
      * @depends testVariableVariable
      */
     public function testVariableVariableHasExpectedEndLine($variable): void
@@ -110,9 +109,8 @@ class ASTVariableVariableTest extends ASTNodeTestCase
     /**
      * testVariableVariableHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTVariableVariable $variable
+     * @param ASTVariableVariable $variable
      *
-     * @return void
      * @depends testVariableVariable
      */
     public function testVariableVariableHasExpectedEndColumn($variable): void
@@ -123,9 +121,7 @@ class ASTVariableVariableTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
-     *
-     * @return \PDepend\Source\AST\ASTVariableVariable
+     * @return ASTVariableVariable
      */
     private function getFirstVariableVariableInClass()
     {

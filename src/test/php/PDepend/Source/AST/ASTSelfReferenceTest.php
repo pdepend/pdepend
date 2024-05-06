@@ -43,24 +43,22 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
-use PDepend\Source\Builder\BuilderContext;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTSelfReference} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTSelfReference
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTSelfReference
  * @group unittest
  */
 class ASTSelfReferenceTest extends ASTNodeTestCase
 {
     /**
      * testGetTypeReturnsInjectedConstructorTargetArgument
-     *
-     * @return void
      */
     public function testGetTypeReturnsInjectedConstructorTargetArgument(): void
     {
@@ -71,14 +69,12 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
 
-        $reference = new \PDepend\Source\AST\ASTSelfReference($context, $target);
+        $reference = new ASTSelfReference($context, $target);
         $this->assertSame($target, $reference->getType());
     }
 
     /**
      * testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull
-     *
-     * @return void
      */
     public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull(): void
     {
@@ -94,15 +90,13 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
 
         $context = new GlobalBuilderContext($builder);
 
-        $reference = new \PDepend\Source\AST\ASTSelfReference($context, $target);
+        $reference = new ASTSelfReference($context, $target);
         $reference = unserialize(serialize($reference));
         $reference->getType();
     }
 
     /**
      * testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException
-     *
-     * @return void
      */
     public function testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException(): void
     {
@@ -113,8 +107,6 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
 
     /**
      * testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException
-     *
-     * @return void
      */
     public function testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException(): void
     {
@@ -125,8 +117,6 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
 
     /**
      * testMagicSelfReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSelfReturnsExpectedSetOfPropertyNames(): void
     {
@@ -137,7 +127,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
                 'context',
                 'comment',
                 'metadata',
-                'nodes'
+                'nodes',
             ],
             $reference->__sleep()
         );
@@ -146,7 +136,6 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     /**
      * testGetImageReturnsExpectedValue
      *
-     * @return void
      * @since 1.0.0
      */
     public function testGetImageReturnsExpectedValue(): void
@@ -158,7 +147,8 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     /**
      * testSelfReference
      *
-     * @return \PDepend\Source\AST\ASTSelfReference
+     * @return ASTSelfReference
+     *
      * @since 1.0.2
      */
     public function testSelfReference()
@@ -172,9 +162,8 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     /**
      * testSelfReferenceHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTSelfReference $reference
+     * @param ASTSelfReference $reference
      *
-     * @return void
      * @depends testSelfReference
      */
     public function testSelfReferenceHasExpectedStartLine($reference): void
@@ -185,9 +174,8 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     /**
      * testSelfReferenceHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTSelfReference $reference
+     * @param ASTSelfReference $reference
      *
-     * @return void
      * @depends testSelfReference
      */
     public function testSelfReferenceHasExpectedStartColumn($reference): void
@@ -198,9 +186,8 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     /**
      * testSelfReferenceHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTSelfReference $reference
+     * @param ASTSelfReference $reference
      *
-     * @return void
      * @depends testSelfReference
      */
     public function testSelfReferenceHasExpectedEndLine($reference): void
@@ -211,9 +198,8 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     /**
      * testSelfReferenceHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTSelfReference $reference
+     * @param ASTSelfReference $reference
      *
-     * @return void
      * @depends testSelfReference
      */
     public function testSelfReferenceHasExpectedEndColumn($reference): void
@@ -224,14 +210,14 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     /**
      * Creates a concrete node implementation.
      *
-     * @return \PDepend\Source\AST\ASTSelfReference
+     * @return ASTSelfReference
      */
     protected function createNodeInstance()
     {
         $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
             ->getMock();
 
-        return new \PDepend\Source\AST\ASTSelfReference(
+        return new ASTSelfReference(
             $context,
             $this->getAbstractClassMock('\\PDepend\\Source\\AST\\AbstractASTClassOrInterface', [__CLASS__])
         );
@@ -240,7 +226,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTSelfReference
+     * @return ASTSelfReference
      */
     private function getFirstSelfReferenceInClass()
     {

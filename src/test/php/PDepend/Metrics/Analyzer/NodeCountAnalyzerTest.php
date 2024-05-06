@@ -49,18 +49,17 @@ use PDepend\Source\AST\ASTNamespace;
 /**
  * Test case for the node count analyzer.
  *
+ * @covers \PDepend\Metrics\Analyzer\NodeCountAnalyzer
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
- * @covers \PDepend\Metrics\Analyzer\NodeCountAnalyzer
  * @group unittest
  */
 class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * testVisitClassIgnoresClassesThatAreNotUserDefined
-     *
-     * @return void
      */
     public function testVisitClassIgnoresClassesThatAreNotUserDefined(): void
     {
@@ -78,8 +77,6 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testVisitClassCountsClassesThatAreNotUserDefined
-     *
-     * @return void
      */
     public function testVisitClassCountsClassesThatAreNotUserDefined(): void
     {
@@ -98,8 +95,6 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testVisitClassIgnoresInterfacesThatAreNotUserDefined
-     *
-     * @return void
      */
     public function testVisitClassIgnoresInterfacesThatAreNotUserDefined(): void
     {
@@ -117,8 +112,6 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testVisitClassCountsInterfacesThatAreNotUserDefined
-     *
-     * @return void
      */
     public function testVisitClassCountsInterfacesThatAreNotUserDefined(): void
     {
@@ -137,38 +130,32 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Tests that the analyzer calculates the correct number of packages value.
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfPackages(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
-        
+
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(3, $metrics['nop']);
     }
-    
+
     /**
      * testCalculatesExpectedNumberOfClassesInProject
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfClassesInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
-        
+
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(6, $metrics['noc']);
     }
 
     /**
      * testCalculatesExpectedNumberOfClassesInPackages
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfClassesInPackages(): void
     {
@@ -190,26 +177,22 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
             $metrics
         );
     }
-    
+
     /**
      * testCalculatesExpectedNumberOfInterfacesInProject
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfInterfacesInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
-        
+
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(9, $metrics['noi']);
     }
 
     /**
      * testCalculatesExpectedNumberOfInterfacesInPackages
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfInterfacesInPackages(): void
     {
@@ -231,26 +214,22 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
             $metrics
         );
     }
-    
+
     /**
      * testCalculatesExpectedNumberOfMethodsInProject
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfMethodsInProject(): void
     {
         $namespaces = $this->parseTestCaseSource(__METHOD__);
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
-        
+
         $metrics = $analyzer->getProjectMetrics();
         $this->assertEquals(9, $metrics['nom']);
     }
 
     /**
      * testCalculatesExpectedNumberOfMethodsInPackages
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfMethodsInPackages(): void
     {
@@ -275,8 +254,6 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNumberOfFunctionsInProject
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfFunctionsInProject(): void
     {
@@ -290,8 +267,6 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCalculatesExpectedNumberOfFunctionsInPackages
-     *
-     * @return void
      */
     public function testCalculatesExpectedNumberOfFunctionsInPackages(): void
     {
@@ -315,7 +290,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
     }
 
     /**
-     * @return \PDepend\Metrics\Analyzer\NodeCountAnalyzer
+     * @return NodeCountAnalyzer
      */
     private function createAnalyzer()
     {

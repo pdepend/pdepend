@@ -47,46 +47,35 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCatchStatement} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
  * @covers \PDepend\Source\AST\ASTAnonymousClass
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @group unittest
  */
 class ASTAnonymousClassTest extends ASTNodeTestCase
 {
-    /**
-     * @return void
-     */
     public function testAnonymousClassHasExpectedStartLine(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
         $this->assertEquals(4, $expr->getStartLine());
     }
 
-    /**
-     * @return void
-     */
     public function testAnonymousClassHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
         $this->assertEquals(16, $expr->getStartColumn());
     }
 
-    /**
-     * @return void
-     */
     public function testAnonymousClassHasExpectedEndLine(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
         $this->assertEquals(9, $expr->getEndLine());
     }
 
-    /**
-     * @return void
-     */
     public function testAnonymousClassHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
@@ -95,8 +84,6 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
 
     /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
-     *
-     * @return void
      */
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames(): void
     {
@@ -119,14 +106,14 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
                 'namespaceName',
                 'startLine',
                 'userDefined',
-                'id'
+                'id',
             ],
             $class->__sleep()
         );
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTAnonymousClass
+     * @return ASTAnonymousClass
      */
     private function getFirstAnonymousClassInFunction()
     {

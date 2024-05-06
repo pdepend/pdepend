@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.8
  */
 
@@ -46,20 +47,20 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTLogicalOrExpression} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.8
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTLogicalOrExpression
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 0.9.8
+ *
  * @group unittest
  */
 class ASTLogicalOrExpressionTest extends ASTNodeTestCase
 {
     /**
      * testLogicalOrExpressionHasExpectedStartLine
-     *
-     * @return void
      */
     public function testLogicalOrExpressionHasExpectedStartLine(): void
     {
@@ -69,8 +70,6 @@ class ASTLogicalOrExpressionTest extends ASTNodeTestCase
 
     /**
      * testLogicalOrExpressionHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testLogicalOrExpressionHasExpectedStartColumn(): void
     {
@@ -80,8 +79,6 @@ class ASTLogicalOrExpressionTest extends ASTNodeTestCase
 
     /**
      * testLogicalOrExpressionHasExpectedEndLine
-     *
-     * @return void
      */
     public function testLogicalOrExpressionHasExpectedEndLine(): void
     {
@@ -91,8 +88,6 @@ class ASTLogicalOrExpressionTest extends ASTNodeTestCase
 
     /**
      * testLogicalOrExpressionHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testLogicalOrExpressionHasExpectedEndColumn(): void
     {
@@ -105,7 +100,7 @@ class ASTLogicalOrExpressionTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTLogicalOrExpression
+     * @return ASTLogicalOrExpression
      */
     private function getFirstLogicalOrExpressionInFunction($testCase)
     {

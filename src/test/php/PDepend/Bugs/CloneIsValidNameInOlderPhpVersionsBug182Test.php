@@ -47,6 +47,7 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
+ *
  * @link http://tracker.pdepend.org/pdepend/issue_tracker/issue/182
  *
  * @group regressiontest
@@ -55,8 +56,6 @@ class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTes
 {
     /**
      * testParserAcceptsCloneAsFunctionName
-     *
-     * @return void
      */
     public function testParserAcceptsCloneAsFunctionName(): void
     {
@@ -65,8 +64,6 @@ class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTes
 
     /**
      * testParserAcceptsCloneAsMethodName
-     *
-     * @return void
      */
     public function testParserAcceptsCloneAsMethodName(): void
     {
@@ -75,8 +72,6 @@ class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTes
 
     /**
      * testParserAcceptsCloneAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsCloneAsClassName(): void
     {
@@ -85,8 +80,6 @@ class CloneIsValidNameInOlderPhpVersionsBug182Test extends AbstractRegressionTes
 
     /**
      * testParserAcceptsCloneAsInterfaceName
-     *
-     * @return void
      */
     public function testParserAcceptsCloneAsInterfaceName(): void
     {

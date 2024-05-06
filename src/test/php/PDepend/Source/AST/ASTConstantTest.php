@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTConstant} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTConstant
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTConstant
  * @group unittest
  */
 class ASTConstantTest extends ASTNodeTestCase
 {
     /**
      * Tests that a parsed constant has the expected object graph.
-     *
-     * @return void
      */
     public function testConstantGraphSimple(): void
     {
@@ -67,8 +66,6 @@ class ASTConstantTest extends ASTNodeTestCase
 
     /**
      * Tests that a parsed constant has the expected object graph.
-     *
-     * @return void
      */
     public function testConstantGraphKeywordSelf(): void
     {
@@ -78,8 +75,6 @@ class ASTConstantTest extends ASTNodeTestCase
 
     /**
      * Tests that a parsed constant has the expected object graph.
-     *
-     * @return void
      */
     public function testConstantGraphKeywordParent(): void
     {
@@ -89,8 +84,6 @@ class ASTConstantTest extends ASTNodeTestCase
 
     /**
      * testConstantHasExpectedStartLine
-     *
-     * @return void
      */
     public function testConstantHasExpectedStartLine(): void
     {
@@ -100,8 +93,6 @@ class ASTConstantTest extends ASTNodeTestCase
 
     /**
      * testConstantHasExpectedStartColumn
-     *
-     * @return void
      */
     public function testConstantHasExpectedStartColumn(): void
     {
@@ -111,8 +102,6 @@ class ASTConstantTest extends ASTNodeTestCase
 
     /**
      * testConstantHasExpectedEndLine
-     *
-     * @return void
      */
     public function testConstantHasExpectedEndLine(): void
     {
@@ -122,8 +111,6 @@ class ASTConstantTest extends ASTNodeTestCase
 
     /**
      * testConstantHasExpectedEndColumn
-     *
-     * @return void
      */
     public function testConstantHasExpectedEndColumn(): void
     {
@@ -136,7 +123,7 @@ class ASTConstantTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTConstant
+     * @return ASTConstant
      */
     private function getFirstConstantInFunction($testCase)
     {

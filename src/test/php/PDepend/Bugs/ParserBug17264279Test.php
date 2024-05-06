@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://www.pivotaltracker.com/story/show/17264279
  */
 
@@ -48,17 +49,17 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @link       https://www.pivotaltracker.com/story/show/17264279
  *
  * @ticket 17264279
+ *
  * @group regressiontest
  */
 class ParserBug17264279Test extends AbstractRegressionTestCase
 {
     /**
      * testParserAcceptsUseAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsUseAsClassName(): void
     {
@@ -67,8 +68,6 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsNullAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsNullAsClassName(): void
     {
@@ -77,8 +76,6 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsTrueAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsTrueAsClassName(): void
     {
@@ -87,8 +84,6 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsCloneAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsCloneAsClassName(): void
     {
@@ -97,8 +92,6 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsFalseAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsFalseAsClassName(): void
     {
@@ -107,8 +100,6 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsStringAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsStringAsClassName(): void
     {
@@ -117,8 +108,6 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsObjectAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsObjectAsClassName(): void
     {
@@ -127,8 +116,6 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
 
     /**
      * testParserAcceptsNamespaceAsClassName
-     *
-     * @return void
      */
     public function testParserAcceptsNamespaceAsClassName(): void
     {

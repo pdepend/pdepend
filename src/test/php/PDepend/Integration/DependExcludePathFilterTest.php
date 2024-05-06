@@ -55,11 +55,8 @@ use PDepend\AbstractTestCase;
  */
 class DependExcludePathFilterTest extends AbstractTestCase
 {
-
     /**
      * testPDependFiltersSingleFileWithPattern
-     *
-     * @return void
      */
     public function testPDependFiltersSingleFileWithPattern(): void
     {
@@ -69,7 +66,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pattern   = '*' . DIRECTORY_SEPARATOR . 'Integration' . DIRECTORY_SEPARATOR . '*';
 
         $pdepend = $this->createEngineFixture();
-        $pdepend->addFile($this->createCodeResourceUriForTest().'/Integration/FilteredClass.php');
+        $pdepend->addFile($this->createCodeResourceUriForTest() . '/Integration/FilteredClass.php');
         $pdepend->addFileFilter(
             new \PDepend\Input\ExcludePathFilter([$pattern])
         );
@@ -80,8 +77,6 @@ class DependExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testPDependFiltersByRelativePath
-     *
-     * @return void
      */
     public function testPDependFiltersByRelativePath(): void
     {
@@ -101,8 +96,6 @@ class DependExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testPDependFiltersByAbsolutePath
-     *
-     * @return void
      */
     public function testPDependFiltersByAbsolutePath(): void
     {
@@ -134,8 +127,6 @@ class DependExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testPDependNotFiltersByOverlappingPathMatch
-     *
-     * @return void
      */
     public function testPDependNotFiltersByOverlappingPathMatch(): void
     {

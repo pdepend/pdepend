@@ -38,6 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
  * @since 0.9.12
  */
 
@@ -46,13 +47,15 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStringIndexExpression} class.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.12
- *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTIndexExpression
  * @covers \PDepend\Source\AST\ASTStringIndexExpression
+ *
+ * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ *
+ * @since 0.9.12
+ *
  * @group unittest
  */
 class ASTStringIndexExpressionTest extends ASTNodeTestCase
@@ -60,7 +63,8 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     /**
      * testStringIndexExpression
      *
-     * @return \PDepend\Source\AST\ASTStringIndexExpression
+     * @return ASTStringIndexExpression
+     *
      * @since 1.0.2
      */
     public function testStringIndexExpression()
@@ -74,9 +78,8 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     /**
      * testStringIndexExpressionHasExpectedStartLine
      *
-     * @param \PDepend\Source\AST\ASTStringIndexExpression $expr
+     * @param ASTStringIndexExpression $expr
      *
-     * @return void
      * @depends testStringIndexExpression
      */
     public function testStringIndexExpressionHasExpectedStartLine($expr): void
@@ -87,9 +90,8 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     /**
      * testStringIndexExpressionHasExpectedStartColumn
      *
-     * @param \PDepend\Source\AST\ASTStringIndexExpression $expr
+     * @param ASTStringIndexExpression $expr
      *
-     * @return void
      * @depends testStringIndexExpression
      */
     public function testStringIndexExpressionHasExpectedStartColumn($expr): void
@@ -100,9 +102,8 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     /**
      * testStringIndexExpressionHasExpectedEndLine
      *
-     * @param \PDepend\Source\AST\ASTStringIndexExpression $expr
+     * @param ASTStringIndexExpression $expr
      *
-     * @return void
      * @depends testStringIndexExpression
      */
     public function testStringIndexExpressionHasExpectedEndLine($expr): void
@@ -113,9 +114,8 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     /**
      * testStringIndexExpressionHasExpectedEndColumn
      *
-     * @param \PDepend\Source\AST\ASTStringIndexExpression $expr
+     * @param ASTStringIndexExpression $expr
      *
-     * @return void
      * @depends testStringIndexExpression
      */
     public function testStringIndexExpressionHasExpectedEndColumn($expr): void
@@ -126,7 +126,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return \PDepend\Source\AST\ASTStringIndexExpression
+     * @return ASTStringIndexExpression
      */
     private function getFirstStringIndexExpressionInFunction()
     {

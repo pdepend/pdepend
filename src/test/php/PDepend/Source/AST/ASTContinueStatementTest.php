@@ -45,19 +45,18 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTContinueStatement} class.
  *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\AST\ASTContinueStatement
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTContinueStatement
  * @group unittest
  */
 class ASTContinueStatementTest extends ASTNodeTestCase
 {
     /**
      * Tests the start line value.
-     *
-     * @return void
      */
     public function testContinueStatementHasExpectedStartLine(): void
     {
@@ -67,8 +66,6 @@ class ASTContinueStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the start column value.
-     *
-     * @return void
      */
     public function testContinueStatementHasExpectedStartColumn(): void
     {
@@ -78,8 +75,6 @@ class ASTContinueStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end line value.
-     *
-     * @return void
      */
     public function testContinueStatementHasExpectedEndLine(): void
     {
@@ -89,8 +84,6 @@ class ASTContinueStatementTest extends ASTNodeTestCase
 
     /**
      * Tests the end column value.
-     *
-     * @return void
      */
     public function testContinueStatementHasExpectedEndColumn(): void
     {
@@ -103,7 +96,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
      *
      * @param string $testCase Name of the calling test case.
      *
-     * @return \PDepend\Source\AST\ASTContinueStatement
+     * @return ASTContinueStatement
      */
     private function getFirstContinueStatementInFunction($testCase)
     {
