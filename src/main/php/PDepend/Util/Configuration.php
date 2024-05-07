@@ -57,10 +57,9 @@ class Configuration
     /**
      * Simple object tree holding the concrete configuration values.
      *
-     * @var stdClass
      * @since 0.10.0
      */
-    protected $settings = null;
+    protected stdClass $settings;
 
     /**
      * Constructs a new configuration instance with the given settings tree.

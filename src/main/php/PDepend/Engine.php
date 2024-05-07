@@ -89,45 +89,42 @@ class Engine
     /**
      * The system configuration.
      *
-     * @var Configuration
      * @since 0.10.0
      */
-    protected $configuration = null;
+    protected Configuration $configuration;
 
     /**
      * Prefix for PHP streams.
-     *
-     * @var string
      */
-    protected $phpStreamPrefix = 'php://';
+    protected string $phpStreamPrefix = 'php://';
 
     /**
      * List of source directories.
      *
      * @var array<string>
      */
-    private $directories = [];
+    private array $directories = [];
 
     /**
      * List of source code file names.
      *
      * @var array<string>
      */
-    private $files = [];
+    private array $files = [];
 
     /**
      * The used code node builder.
      *
-     * @var PHPBuilder<ASTNamespace>|null
+     * @var PHPBuilder<ASTNamespace>
      */
-    private $builder = null;
+    private PHPBuilder $builder;
 
     /**
      * Generated {@link ASTNamespace} objects.
      *
      * @var ASTArtifactList<ASTNamespace>
      */
-    private $namespaces = null;
+    private ASTArtifactList $namespaces;
 
     /**
      * List of all registered {@link ReportGenerator} instances.
@@ -138,17 +135,13 @@ class Engine
 
     /**
      * A composite filter for input files.
-     *
-     * @var CompositeFilter
      */
-    private $fileFilter = null;
+    private CompositeFilter $fileFilter;
 
     /**
      * A filter for namespace.
-     *
-     * @var ArtifactFilter
      */
-    private $codeFilter = null;
+    private ArtifactFilter $codeFilter;
 
     /**
      * Should the parse ignore doc comment annotations?
@@ -362,7 +355,7 @@ class Engine
      */
     public function countClasses()
     {
-        if ($this->namespaces === null) {
+        if (!isset($this->namespaces)) {
             $msg = 'countClasses() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
@@ -393,7 +386,7 @@ class Engine
      */
     public function countNamespaces()
     {
-        if ($this->namespaces === null) {
+        if (!isset($this->namespaces)) {
             $msg = 'countNamespaces() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
@@ -417,7 +410,7 @@ class Engine
      */
     public function getNamespace($name)
     {
-        if ($this->namespaces === null) {
+        if (!isset($this->namespaces)) {
             $msg = 'getNamespace() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }
@@ -437,7 +430,7 @@ class Engine
      */
     public function getNamespaces()
     {
-        if ($this->namespaces === null) {
+        if (!isset($this->namespaces)) {
             $msg = 'getNamespaces() doesn\'t work before the source was analyzed.';
             throw new RuntimeException($msg);
         }

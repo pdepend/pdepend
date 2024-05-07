@@ -111,7 +111,7 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
         $this->analyzersLOC->setCache($this->getCache());
         $this->analyzersLOC->analyze($namespaces);
 
-        if ($this->metrics === null) {
+        if (!isset($this->metrics)) {
             $this->loadCache();
             $this->fireStartAnalyzer();
 

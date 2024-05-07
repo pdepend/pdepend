@@ -85,7 +85,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function analyze($namespaces): void
     {
-        if ($this->metrics === null) {
+        if (!isset($this->metrics)) {
             $this->loadCache();
             $this->fireStartAnalyzer();
 

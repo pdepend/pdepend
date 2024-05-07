@@ -98,7 +98,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      *
      * @var array<string, array<string, int>>
      */
-    protected $metrics = null;
+    protected array $metrics;
 
     /**
      * Collected project metrics.
@@ -179,7 +179,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      */
     public function analyze($namespaces): void
     {
-        if ($this->metrics === null) {
+        if (!isset($this->metrics)) {
             $this->loadCache();
             $this->fireStartAnalyzer();
 

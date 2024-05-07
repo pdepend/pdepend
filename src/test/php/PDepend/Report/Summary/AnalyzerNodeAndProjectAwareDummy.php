@@ -60,14 +60,14 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      *
      * @var array<string, mixed>
      */
-    protected $projectMetrics = null;
+    protected array $projectMetrics;
 
     /**
      * Dummy node metrics.
      *
      * @var array<string, array>
      */
-    protected $nodeMetrics = null;
+    protected array $nodeMetrics;
 
     /**
      * Constructs a new analyzer dummy instance.

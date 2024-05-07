@@ -51,13 +51,6 @@ namespace PDepend\Source\AST;
 class ASTNamespace extends AbstractASTArtifact
 {
     /**
-     * The unique identifier for this function.
-     *
-     * @var string
-     */
-    protected $id = null;
-
-    /**
      * List of all {@link AbstractASTClassOrInterface}
      * objects for this namespace.
      *

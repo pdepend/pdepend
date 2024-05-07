@@ -82,10 +82,9 @@ abstract class AbstractASTNode implements ASTNode
      * contains the start, end line, and the start, end column and the node
      * image in a colon seperated string.
      *
-     * @var string
      * @since 0.10.4
      */
-    protected $metadata = '::::';
+    protected string $metadata = '::::';
 
     /**
      * Constructs a new ast node instance.

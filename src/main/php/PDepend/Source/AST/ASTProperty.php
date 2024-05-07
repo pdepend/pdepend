@@ -60,18 +60,16 @@ class ASTProperty extends AbstractASTArtifact
     /**
      * The wrapped field declaration instance.
      *
-     * @var ASTFieldDeclaration
      * @since 0.9.6
      */
-    private $fieldDeclaration = null;
+    private ASTFieldDeclaration $fieldDeclaration;
 
     /**
      * The wrapped variable declarator instance.
      *
-     * @var ASTVariableDeclarator
      * @since 0.9.6
      */
-    private $variableDeclarator = null;
+    private ASTVariableDeclarator $variableDeclarator;
 
     /**
      * Constructs a new item for the given field declaration and variable

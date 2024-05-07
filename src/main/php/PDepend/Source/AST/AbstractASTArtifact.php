@@ -69,19 +69,16 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * The line number where the item declaration starts.
-     *
-     * @var int
      */
-    protected $startLine = 0;
+    protected int $startLine = 0;
 
     /**
      * The line number where the item declaration ends.
-     *
-     * @var int
      */
-    protected $endLine = 0;
+    protected int $endLine = 0;
 
     protected int $startColumn = 0;
+
     protected int $endColumn = 0;
 
     /**
@@ -184,7 +181,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      */
     public function setCompilationUnit(ASTCompilationUnit $compilationUnit): void
     {
-        if ($this->compilationUnit === null || $this->compilationUnit->getName() === null) {
+        if ($this->compilationUnit?->getName() === null) {
             $this->compilationUnit = $compilationUnit;
         }
     }

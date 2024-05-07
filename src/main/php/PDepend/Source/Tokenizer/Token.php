@@ -52,45 +52,33 @@ class Token
 {
     /**
      * The token type identifier.
-     *
-     * @var int
      */
-    public $type = null;
+    public int $type;
 
     /**
      * The token image/textual representation.
-     *
-     * @var string
      */
-    public $image = null;
+    public string $image;
 
     /**
      * The start line number for this token.
-     *
-     * @var int
      */
-    public $startLine = null;
+    public int $startLine;
 
     /**
      * The end line number for this token.
-     *
-     * @var int
      */
-    public $endLine = null;
+    public int $endLine;
 
     /**
      * The start column number for this token.
-     *
-     * @var int
      */
-    public $startColumn = null;
+    public int $startColumn;
 
     /**
      * The end column number for this token.
-     *
-     * @var int
      */
-    public $endColumn = null;
+    public int $endColumn;
 
     /**
      * Constructs a new source token.

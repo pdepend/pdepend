@@ -296,10 +296,8 @@ abstract class AbstractPHPParser
 
     /**
      * The symbol table used to handle PHP 5.3 use statements.
-     *
-     * @var SymbolTable
      */
-    protected $useSymbolTable;
+    protected SymbolTable $useSymbolTable;
 
     /**
      * The actually parsed class or interface instance.
@@ -310,23 +308,18 @@ abstract class AbstractPHPParser
 
     /**
      * Stack with all active token scopes.
-     *
-     * @var TokenStack
      */
-    protected $tokenStack;
+    protected TokenStack $tokenStack;
 
     /**
-     * @var CacheDriver
      * @since 0.10.0
      */
-    protected $cache;
+    protected CacheDriver $cache;
 
     /**
      * The used code tokenizer.
-     *
-     * @var Tokenizer
      */
-    protected $tokenizer;
+    protected Tokenizer $tokenizer;
 
     /**
      * The name of the last detected namespace.
@@ -374,10 +367,9 @@ abstract class AbstractPHPParser
     /**
      * Used identifier builder instance.
      *
-     * @var IdBuilder
      * @since 0.9.12
      */
-    private $idBuilder = null;
+    private IdBuilder $idBuilder;
 
     /**
      * The maximum valid nesting level allowed.

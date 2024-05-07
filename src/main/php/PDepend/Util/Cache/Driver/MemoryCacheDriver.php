@@ -80,17 +80,15 @@ class MemoryCacheDriver implements CacheDriver
 
     /**
      * Unique identifier within the same cache instance.
-     *
-     * @var string
      */
-    protected $staticId = null;
+    protected string $staticId;
 
     /**
      * Global stack, mainly used during testing.
      *
      * @var array<string, array<string, array<int, mixed>>>
      */
-    protected static $staticCache = [];
+    protected static array $staticCache = [];
 
     /**
      * Instantiates a new in memory cache instance.

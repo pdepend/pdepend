@@ -81,7 +81,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      *
      * @var array<string, array<string, float>>
      */
-    private $metrics = null;
+    private array $metrics;
 
     /**
      * The coverage report instance representing the supplied coverage report
@@ -146,7 +146,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     public function analyze($namespaces): void
     {
-        if ($this->isEnabled() && $this->metrics === null) {
+        if ($this->isEnabled() && !isset($this->metrics)) {
             $this->doAnalyze($namespaces);
         }
     }

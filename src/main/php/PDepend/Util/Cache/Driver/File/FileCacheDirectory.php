@@ -64,10 +64,8 @@ class FileCacheDirectory
 
     /**
      * The cache root directory.
-     *
-     * @var string
      */
-    protected $cacheDir = null;
+    protected string $cacheDir;
 
     /**
      * Constructs a new cache directory helper instance.

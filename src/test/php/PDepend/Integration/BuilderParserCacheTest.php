@@ -60,24 +60,18 @@ class BuilderParserCacheTest extends AbstractTestCase
 {
     /**
      * The temporary cache directory.
-     *
-     * @var string
      */
-    protected $cacheDir = null;
+    protected string $cacheDir;
 
     /**
      * TTL for files in cache directory
-     *
-     * @var int
      */
-    protected $cacheTtl = null;
+    protected int $cacheTtl = FileCacheDriver::DEFAULT_TTL;
 
     /**
      * The temporary cache file.
-     *
-     * @var string
      */
-    protected $testFile = null;
+    protected string $testFile;
 
     /**
      * Creates temporary test resources.
@@ -88,7 +82,6 @@ class BuilderParserCacheTest extends AbstractTestCase
 
         $this->cacheDir = $this->createRunResourceURI('cacheDir');
         unlink($this->cacheDir);
-        $this->cacheTtl = FileCacheDriver::DEFAULT_TTL;
         $this->testFile = $this->createRunResourceURI('testFile');
     }
 
