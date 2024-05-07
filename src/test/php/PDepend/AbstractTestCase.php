@@ -398,7 +398,7 @@ abstract class AbstractTestCase extends TestCase
     {
         foreach ($node->getChildren() as $child) {
             $actual[] = $child::class;
-            $actual   = self::collectChildNodes($child, $actual);
+            $actual = self::collectChildNodes($child, $actual);
         }
         return $actual;
     }
@@ -758,13 +758,13 @@ abstract class AbstractTestCase extends TestCase
 
         // Is it not installed?
         if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
-            $path  = realpath(__DIR__ . '/../../../main/php/');
+            $path = realpath(__DIR__ . '/../../../main/php/');
             $path .= PATH_SEPARATOR . get_include_path();
             set_include_path($path);
         }
 
         // Set test path
-        $path  = realpath(__DIR__ . '/..');
+        $path = realpath(__DIR__ . '/..');
         $path .= PATH_SEPARATOR . get_include_path();
         set_include_path($path);
     }
@@ -861,7 +861,7 @@ abstract class AbstractTestCase extends TestCase
         }
         sort($files);
 
-        $cache   = new MemoryCacheDriver();
+        $cache = new MemoryCacheDriver();
         $builder = new PHPBuilder();
 
         foreach ($files as $file) {

@@ -93,17 +93,17 @@ class RunnerTest extends AbstractTestCase
     public function testRunnerUsesCorrectFileFilter(): void
     {
         $expected = [
-            'pdepend.test'  =>  [
-                'functions'   =>  ['foo'],
-                'classes'     =>  ['MyException'],
-                'interfaces'  =>  [],
-                'exceptions'  =>  [],
+            'pdepend.test' => [
+                'functions' => ['foo'],
+                'classes' => ['MyException'],
+                'interfaces' => [],
+                'exceptions' => [],
             ],
-            'pdepend.test2'  =>  [
-                'functions'   =>  [],
-                'classes'     =>  ['YourException'],
-                'interfaces'  =>  [],
-                'exceptions'  =>  [],
+            'pdepend.test2' => [
+                'functions' => [],
+                'classes' => ['YourException'],
+                'interfaces' => [],
+                'exceptions' => [],
             ],
         ];
 
@@ -190,17 +190,17 @@ class RunnerTest extends AbstractTestCase
     public function testRunnerHandlesWithoutAnnotationsOptionCorrect(): void
     {
         $expected = [
-            'pdepend.test'  =>  [
-                'functions'   =>  ['foo'],
-                'classes'     =>  ['MyException'],
-                'interfaces'  =>  [],
-                'exceptions'  =>  [],
+            'pdepend.test' => [
+                'functions' => ['foo'],
+                'classes' => ['MyException'],
+                'interfaces' => [],
+                'exceptions' => [],
             ],
-            'pdepend.test2'  =>  [
-                'functions'   =>  [],
-                'classes'     =>  ['YourException'],
-                'interfaces'  =>  [],
-                'exceptions'  =>  [],
+            'pdepend.test2' => [
+                'functions' => [],
+                'classes' => ['YourException'],
+                'interfaces' => [],
+                'exceptions' => [],
             ],
         ];
 
@@ -221,9 +221,9 @@ class RunnerTest extends AbstractTestCase
     public function testSupportBadDocumentation(): void
     {
         $expected = [
-            '+global'  =>  [
-                'functions'   =>  ['pkg3_foo'],
-                'classes'     =>  [
+            '+global' => [
+                'functions' => ['pkg3_foo'],
+                'classes' => [
                     'Bar',
                     'pkg1Bar',
                     'pkg1Barfoo',
@@ -233,12 +233,12 @@ class RunnerTest extends AbstractTestCase
                     'pkg2Barfoo',
                     'pkg2Foobar',
                 ],
-                'interfaces'  =>  [
+                'interfaces' => [
                     'pkg1FooI',
                     'pkg2FooI',
                     'pkg3FooI',
                 ],
-                'exceptions'  =>  [],
+                'exceptions' => [],
             ],
         ];
 
@@ -331,10 +331,10 @@ class RunnerTest extends AbstractTestCase
         $actual = [];
         foreach ($code as $namespace) {
             $statistics = [
-                'functions'   =>  [],
-                'classes'     =>  [],
-                'interfaces'  =>  [],
-                'exceptions'  =>  [],
+                'functions' => [],
+                'classes' => [],
+                'interfaces' => [],
+                'exceptions' => [],
             ];
             foreach ($namespace->getFunctions() as $function) {
                 $statistics['functions'][] = $function->getName();

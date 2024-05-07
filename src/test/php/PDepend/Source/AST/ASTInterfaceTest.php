@@ -291,7 +291,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
         $namespace = $namespaces->current();
-        $current  = $namespace->getInterfaces()->current();
+        $current = $namespace->getInterfaces()->current();
 
         $actual = [];
         foreach ($namespace->getInterfaces() as $interface) {
@@ -409,7 +409,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
      */
     public function testUnserializedInterfaceIsReturnedByMethodAsReturnClass(): void
     {
-        $orig   = $this->getFirstInterfaceForTestCase();
+        $orig = $this->getFirstInterfaceForTestCase();
         $method = $orig->getMethods()->current();
 
         $copy = unserialize(serialize($orig));
@@ -781,7 +781,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testMagicWakeupSetsSourceFileOnChildMethods(): void
     {
         $interface = $this->createItem();
-        $method    = new ASTMethod(__FUNCTION__);
+        $method = new ASTMethod(__FUNCTION__);
         $interface->addMethod($method);
 
         $interface->__wakeup();

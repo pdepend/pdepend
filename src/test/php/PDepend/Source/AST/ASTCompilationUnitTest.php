@@ -310,7 +310,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     {
         $file = new ASTCompilationUnit($this->createCodeResourceUriForTest());
 
-        $actual   = $file->getSource();
+        $actual = $file->getSource();
         $expected = file_get_contents($this->createCodeResourceUriForTest());
 
         $this->assertEquals($expected, $actual);

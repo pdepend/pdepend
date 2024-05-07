@@ -433,7 +433,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerGetProjectMetricsReturnsArrayWithExpectedKeys(): void
     {
         $expected = ['calls', 'fanout'];
-        $actual   = array_keys($this->calculateProjectMetrics());
+        $actual = array_keys($this->calculateProjectMetrics());
 
         $this->assertEquals($expected, $actual);
     }
@@ -445,7 +445,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerCalculatesCorrectFunctionCoupling(): void
     {
         $expected = ['calls' => 10, 'fanout' => 7];
-        $actual   = $this->calculateProjectMetrics();
+        $actual = $this->calculateProjectMetrics();
 
         $this->assertEquals($expected, $actual);
     }
@@ -457,7 +457,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerCalculatesCorrectMethodCoupling(): void
     {
         $expected = ['calls' => 10, 'fanout' => 9];
-        $actual   = $this->calculateProjectMetrics();
+        $actual = $this->calculateProjectMetrics();
 
         $this->assertEquals($expected, $actual);
     }
@@ -469,7 +469,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerCalculatesCorrectPropertyCoupling(): void
     {
         $expected = ['calls' => 0, 'fanout' => 3];
-        $actual   = $this->calculateProjectMetrics();
+        $actual = $this->calculateProjectMetrics();
 
         $this->assertEquals($expected, $actual);
     }
@@ -481,7 +481,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerCalculatesCorrectClassCoupling(): void
     {
         $expected = ['calls' => 10, 'fanout' => 12];
-        $actual   = $this->calculateProjectMetrics();
+        $actual = $this->calculateProjectMetrics();
 
         $this->assertEquals($expected, $actual);
     }
@@ -493,7 +493,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerCalculatesCorrectCoupling(): void
     {
         $expected = ['calls' => 30, 'fanout' => 31];
-        $actual   = $this->calculateProjectMetrics();
+        $actual = $this->calculateProjectMetrics();
 
         $this->assertEquals($expected, $actual);
     }
@@ -662,7 +662,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $fanout
     ): void {
         $expected = ['calls' => $calls, 'fanout' => $fanout];
-        $actual   = $this->calculateProjectMetrics($testCase);
+        $actual = $this->calculateProjectMetrics($testCase);
 
         $this->assertEquals($expected, $actual);
     }

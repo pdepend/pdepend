@@ -180,7 +180,7 @@ class CommandTest extends AbstractTestCase
      */
     public function testCommandStartsProcessWithDummyLogger(): void
     {
-        $logFile  = $this->createRunResourceURI();
+        $logFile = $this->createRunResourceURI();
         $resource = $this->createCodeResourceUriForTest();
 
         set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__);
@@ -205,7 +205,7 @@ class CommandTest extends AbstractTestCase
      */
     public function testCommandReturnsExitCodeSuccessByDefault(): void
     {
-        $logFile  = $this->createRunResourceURI();
+        $logFile = $this->createRunResourceURI();
         $resource = $this->createCodeResourceUriForTest();
 
         set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__);
@@ -237,17 +237,17 @@ class CommandTest extends AbstractTestCase
     public function testCommandHandlesWithoutAnnotationsOptionCorrect(): void
     {
         $expected = [
-            'pdepend.test'  =>  [
-                'functions'   =>  ['foo'],
-                'classes'     =>  ['MyException'],
-                'interfaces'  =>  [],
-                'exceptions'  =>  [],
+            'pdepend.test' => [
+                'functions' => ['foo'],
+                'classes' => ['MyException'],
+                'interfaces' => [],
+                'exceptions' => [],
             ],
-            'pdepend.test2'  =>  [
-                'functions'   =>  [],
-                'classes'     =>  ['YourException'],
-                'interfaces'  =>  [],
-                'exceptions'  =>  [],
+            'pdepend.test2' => [
+                'functions' => [],
+                'classes' => ['YourException'],
+                'interfaces' => [],
+                'exceptions' => [],
             ],
         ];
 
@@ -269,9 +269,9 @@ class CommandTest extends AbstractTestCase
     public function testCommandHandlesBadDocumentedSourceCode(): void
     {
         $expected = [
-            '+global'  =>  [
-                'functions'   =>  ['pkg3_foo'],
-                'classes'     =>  [
+            '+global' => [
+                'functions' => ['pkg3_foo'],
+                'classes' => [
                     'Bar',
                     'pkg1Bar',
                     'pkg1Barfoo',
@@ -281,12 +281,12 @@ class CommandTest extends AbstractTestCase
                     'pkg2Barfoo',
                     'pkg2Foobar',
                 ],
-                'interfaces'  =>  [
+                'interfaces' => [
                     'pkg1FooI',
                     'pkg2FooI',
                     'pkg3FooI',
                 ],
-                'exceptions'  =>  [],
+                'exceptions' => [],
             ],
         ];
 
@@ -324,10 +324,10 @@ class CommandTest extends AbstractTestCase
         $actual = [];
         foreach ($code as $namespace) {
             $statistics = [
-                'functions'   =>  [],
-                'classes'     =>  [],
-                'interfaces'  =>  [],
-                'exceptions'  =>  [],
+                'functions' => [],
+                'classes' => [],
+                'interfaces' => [],
+                'exceptions' => [],
             ];
             foreach ($namespace->getFunctions() as $function) {
                 $statistics['functions'][] = $function->getName();
@@ -525,7 +525,7 @@ class CommandTest extends AbstractTestCase
     {
         ob_start();
         $exitCode = MockCommand::main();
-        $output   = ob_get_contents();
+        $output = ob_get_contents();
         ob_end_clean();
 
         $this->assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
@@ -542,7 +542,7 @@ class CommandTest extends AbstractTestCase
 
         ob_start();
         $exitCode = MockCommand::main();
-        $output   = ob_get_contents();
+        $output = ob_get_contents();
         ob_end_clean();
 
         Log::setSeverity(2);
@@ -601,7 +601,7 @@ class CommandTest extends AbstractTestCase
 
         ob_start();
         $exitCode = Command::main();
-        $output   = ob_get_contents();
+        $output = ob_get_contents();
         ob_end_clean();
 
         return [$exitCode, $output];

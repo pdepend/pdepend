@@ -64,10 +64,10 @@ class ParserBug007Test extends AbstractRegressionTestCase
         $functions = $namespace->getFunctions();
 
         $expected = ['classes' => 1, 'functions' => 1, 'methods' => 3];
-        $actual   = [
-            'classes'   => $classes->count(),
+        $actual = [
+            'classes' => $classes->count(),
             'functions' => $functions->count(),
-            'methods'   => $classes->current()->getMethods()->count(),
+            'methods' => $classes->current()->getMethods()->count(),
         ];
 
         $this->assertEquals($expected, $actual);

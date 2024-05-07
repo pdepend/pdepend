@@ -63,7 +63,7 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTFormalParameter $parameter */
         $parameter = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
-        $children  = $parameter->getChildren();
+        $children = $parameter->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[0]);
         /** @var ASTIntersectionType $intersectionType */
@@ -82,7 +82,7 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTFormalParameter $parameter */
         $parameter = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
-        $children  = $parameter->getChildren();
+        $children = $parameter->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[0]);
         /** @var ASTIntersectionType $intersectionType */

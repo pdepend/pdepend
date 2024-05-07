@@ -128,10 +128,10 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
     {
         if (!isset($this->nodes[$node->getId()])) {
             $this->nodes[$node->getId()] = [
-                'in'   =>  [],
-                'out'  =>  [],
-                'name'  =>  $node->getName(),
-                'type'  =>  $node::class,
+                'in' => [],
+                'out' => [],
+                'name' => $node->getName(),
+                'type' => $node::class,
             ];
         }
     }

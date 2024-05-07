@@ -63,8 +63,8 @@ class PyramidTest extends AbstractTestCase
      */
     public function testReturnsExceptedAnalyzers(): void
     {
-        $logger    = new Pyramid();
-        $actual    = $logger->getAcceptedAnalyzers();
+        $logger = new Pyramid();
+        $actual = $logger->getAcceptedAnalyzers();
         $exptected = [
             'pdepend.analyzer.coupling',
             'pdepend.analyzer.cyclomatic_complexity',
@@ -231,21 +231,21 @@ class PyramidTest extends AbstractTestCase
         $this->assertFileExists($output);
 
         $expected = [
-            'cyclo'         =>  5579,
-            'loc'           =>  35175,
-            'nom'           =>  3618,
-            'noc'           =>  384,
-            'nop'           =>  19,
-            'andc'          =>  0.31,
-            'ahh'           =>  0.12,
-            'calls'         =>  15128,
-            'fanout'        =>  8590,
-            'cyclo-loc'     =>  0.15,
-            'loc-nom'       =>  9.72,
-            'nom-noc'       =>  9.42,
-            'noc-nop'       =>  20.21,
-            'fanout-calls'  =>  0.56,
-            'calls-nom'     =>  4.18,
+            'cyclo' => 5579,
+            'loc' => 35175,
+            'nom' => 3618,
+            'noc' => 384,
+            'nop' => 19,
+            'andc' => 0.31,
+            'ahh' => 0.12,
+            'calls' => 15128,
+            'fanout' => 8590,
+            'cyclo-loc' => 0.15,
+            'loc-nom' => 9.72,
+            'nom-noc' => 9.42,
+            'noc-nop' => 20.21,
+            'fanout-calls' => 0.56,
+            'calls-nom' => 4.18,
         ];
 
         $svg = new DOMDocument();
@@ -269,8 +269,8 @@ class PyramidTest extends AbstractTestCase
             ->method('getProjectMetrics')
             ->will($this->returnValue(
                 [
-                    'fanout'  =>  8590,
-                    'calls'   =>  15128,
+                    'fanout' => 8590,
+                    'calls' => 15128,
                 ]
             ));
 
@@ -285,7 +285,7 @@ class PyramidTest extends AbstractTestCase
             ->method('getProjectMetrics')
             ->will($this->returnValue(
                 [
-                    'ccn2'  =>  5579,
+                    'ccn2' => 5579,
                 ]
             ));
 
@@ -300,8 +300,8 @@ class PyramidTest extends AbstractTestCase
             ->method('getProjectMetrics')
             ->will($this->returnValue(
                 [
-                    'andc'  =>  0.31,
-                    'ahh'   =>  0.12,
+                    'andc' => 0.31,
+                    'ahh' => 0.12,
                 ]
             ));
 
@@ -316,10 +316,10 @@ class PyramidTest extends AbstractTestCase
             ->method('getProjectMetrics')
             ->will($this->returnValue(
                 [
-                    'nop'  =>  19,
-                    'noc'  =>  384,
-                    'nom'  =>  2018,
-                    'nof'  =>  1600,
+                    'nop' => 19,
+                    'noc' => 384,
+                    'nom' => 2018,
+                    'nof' => 1600,
                 ]
             ));
 
@@ -334,7 +334,7 @@ class PyramidTest extends AbstractTestCase
             ->method('getProjectMetrics')
             ->will($this->returnValue(
                 [
-                    'eloc'  =>  35175,
+                    'eloc' => 35175,
                 ]
             ));
 

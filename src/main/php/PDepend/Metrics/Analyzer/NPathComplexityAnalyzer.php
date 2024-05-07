@@ -116,7 +116,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     {
         $metric = [];
         if (isset($this->metrics[$artifact->getId()])) {
-            $metric = [self::M_NPATH_COMPLEXITY  =>  $this->metrics[$artifact->getId()]];
+            $metric = [self::M_NPATH_COMPLEXITY => $this->metrics[$artifact->getId()]];
         }
         return $metric;
     }
@@ -167,7 +167,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     {
         $npath = '1';
         foreach ($callable->getChildren() as $child) {
-            $stmt  = $child->accept($this, $npath);
+            $stmt = $child->accept($this, $npath);
             $npath = MathUtil::mul($npath, $stmt);
         }
 
@@ -278,7 +278,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $npath = $this->sumComplexity($node->getChild(0));
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
-                $expr  = $child->accept($this, '1');
+                $expr = $child->accept($this, '1');
                 $npath = MathUtil::add($npath, $expr);
             }
         }
@@ -314,10 +314,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $npath = '1';
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
-                $stmt  = $child->accept($this, '1');
+                $stmt = $child->accept($this, '1');
                 $npath = MathUtil::add($npath, $stmt);
             } elseif ($child instanceof ASTExpression) {
-                $expr  = $this->sumComplexity($child);
+                $expr = $this->sumComplexity($child);
                 $npath = MathUtil::add($npath, $expr);
             }
         }
@@ -351,7 +351,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
-                $stmt  = $child->accept($this, '1');
+                $stmt = $child->accept($this, '1');
                 $npath = MathUtil::add($npath, $stmt);
             }
         }
@@ -393,7 +393,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
-                $stmt  = $child->accept($this, '1');
+                $stmt = $child->accept($this, '1');
                 $npath = MathUtil::add($npath, $stmt);
             }
         }
@@ -499,7 +499,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $npath = '0';
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
-                $stmt  = $child->accept($this, '1');
+                $stmt = $child->accept($this, '1');
                 $npath = MathUtil::add($npath, $stmt);
             }
         }
@@ -564,7 +564,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         } else {
             foreach ($node->getChildren() as $child) {
                 $expr = $this->sumComplexity($child);
-                $sum  = MathUtil::add($sum, $expr);
+                $sum = MathUtil::add($sum, $expr);
             }
         }
         return $sum;

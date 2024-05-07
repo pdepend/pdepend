@@ -304,10 +304,10 @@ abstract class AbstractASTType extends AbstractASTArtifact
             $startToken = reset($tokens);
         }
 
-        $this->startLine   = $startToken->startLine;
+        $this->startLine = $startToken->startLine;
         $this->startColumn = $startToken->startColumn;
-        $this->endLine     = end($tokens)->endLine;
-        $this->endColumn   = end($tokens)->endColumn;
+        $this->endLine = end($tokens)->endLine;
+        $this->endColumn = end($tokens)->endColumn;
 
         $this->cache
             ->type('tokens')

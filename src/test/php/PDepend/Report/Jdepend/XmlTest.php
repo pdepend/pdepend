@@ -104,9 +104,9 @@ class XmlTest extends AbstractTestCase
      */
     public function testReturnsExceptedAnalyzers(): void
     {
-        $logger    = new Xml();
-        $actual    = $logger->getAcceptedAnalyzers();
-        $expected =  ['pdepend.analyzer.dependency'];
+        $logger = new Xml();
+        $actual = $logger->getAcceptedAnalyzers();
+        $expected = ['pdepend.analyzer.dependency'];
 
         $this->assertEquals($expected, $actual);
     }

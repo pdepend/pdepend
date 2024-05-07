@@ -196,7 +196,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     {
         $this->metrics[$callable->getId()] = [
             self::M_CRAP_INDEX => $this->calculateCrapIndex($callable),
-            self::M_COVERAGE   => $this->calculateCoverage($callable),
+            self::M_COVERAGE => $this->calculateCoverage($callable),
         ];
     }
 
@@ -210,7 +210,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
         $report = $this->createOrReturnCoverageReport();
 
         $complexity = $this->ccnAnalyzer->getCcn2($callable);
-        $coverage   = $report->getCoverage($callable);
+        $coverage = $report->getCoverage($callable);
 
         if ($coverage == 0) {
             return $complexity ** 2 + $complexity;

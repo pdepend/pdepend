@@ -63,7 +63,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $this->changeWorkingDirectory();
 
         $directory = $this->createCodeResourceUriForTest();
-        $pattern   = '*' . DIRECTORY_SEPARATOR . 'Integration' . DIRECTORY_SEPARATOR . '*';
+        $pattern = '*' . DIRECTORY_SEPARATOR . 'Integration' . DIRECTORY_SEPARATOR . '*';
 
         $pdepend = $this->createEngineFixture();
         $pdepend->addFile($this->createCodeResourceUriForTest() . '/Integration/FilteredClass.php');
@@ -83,7 +83,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $this->changeWorkingDirectory();
 
         $directory = $this->createCodeResourceUriForTest();
-        $pattern   = DIRECTORY_SEPARATOR . 'Integration';
+        $pattern = DIRECTORY_SEPARATOR . 'Integration';
 
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);
@@ -102,7 +102,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $this->changeWorkingDirectory();
 
         $directory = $this->createCodeResourceUriForTest();
-        $pattern   = $directory . DIRECTORY_SEPARATOR . 'Integration';
+        $pattern = $directory . DIRECTORY_SEPARATOR . 'Integration';
 
         if (str_starts_with($directory, '/scratch/')) {
             $this->markTestSkipped('Not sure why, but this test fails @CloudBees');
@@ -133,7 +133,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $this->changeWorkingDirectory();
 
         $directory = $this->createCodeResourceUriForTest();
-        $pattern   = __FUNCTION__ . DIRECTORY_SEPARATOR . 'Integration';
+        $pattern = __FUNCTION__ . DIRECTORY_SEPARATOR . 'Integration';
 
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($directory);

@@ -82,7 +82,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
     {
         parent::setUp();
 
-        $this->cacheDir    = $this->createRunResourceURI('cache');
+        $this->cacheDir = $this->createRunResourceURI('cache');
         unlink($this->cacheDir);
         $this->versionFile = "{$this->cacheDir}/_version";
     }
@@ -166,7 +166,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      */
     public function testDeletesCacheDirectoriesRecusiveIfVersionFileNotExists(): void
     {
-        $cacheDir  = "{$this->cacheDir}/test/dir";
+        $cacheDir = "{$this->cacheDir}/test/dir";
         $cacheFile = "{$this->cacheDir}/test/test.file";
 
         mkdir($cacheDir, 0o755, true);
@@ -182,7 +182,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
      */
     public function testCreateCacheDirectoryReturnsExpectedSubDirectory(): void
     {
-        $dir  = new FileCacheDirectory($this->cacheDir);
+        $dir = new FileCacheDirectory($this->cacheDir);
         $path = $dir->createCacheDirectory('abcdef0123456789');
 
         $this->assertEquals("{$this->cacheDir}/ab", $path);

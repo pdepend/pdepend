@@ -77,8 +77,8 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     private const
         M_NUMBER_OF_ABSTRACT_CLASSES = 'clsa',
         M_NUMBER_OF_CONCRETE_CLASSES = 'clsc',
-        M_NUMBER_OF_ROOT_CLASSES     = 'roots',
-        M_NUMBER_OF_LEAF_CLASSES     = 'leafs';
+        M_NUMBER_OF_ROOT_CLASSES = 'roots',
+        M_NUMBER_OF_LEAF_CLASSES = 'leafs';
 
     /**
      * Number of all analyzed functions.
@@ -182,10 +182,10 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         $noneLeafs = count($this->noneLeafs);
 
         return [
-            self::M_NUMBER_OF_ABSTRACT_CLASSES  =>  $this->clsa,
-            self::M_NUMBER_OF_CONCRETE_CLASSES  =>  $this->cls - $this->clsa,
-            self::M_NUMBER_OF_ROOT_CLASSES      =>  count($this->roots),
-            self::M_NUMBER_OF_LEAF_CLASSES      =>  $this->cls - $noneLeafs,
+            self::M_NUMBER_OF_ABSTRACT_CLASSES => $this->clsa,
+            self::M_NUMBER_OF_CONCRETE_CLASSES => $this->cls - $this->clsa,
+            self::M_NUMBER_OF_ROOT_CLASSES => count($this->roots),
+            self::M_NUMBER_OF_LEAF_CLASSES => $this->cls - $noneLeafs,
         ];
     }
 

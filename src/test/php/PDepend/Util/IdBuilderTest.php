@@ -70,7 +70,7 @@ class IdBuilderTest extends AbstractTestCase
      */
     public function testBuilderCreatesExpectedIdentifierForFile(): void
     {
-        $file    = new ASTCompilationUnit(__FILE__);
+        $file = new ASTCompilationUnit(__FILE__);
         $builder = new IdBuilder();
 
         $this->assertMatchesRegularExpression('/^[a-z0-9]{11}$/', $builder->forFile($file));

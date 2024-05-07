@@ -115,7 +115,7 @@ class ASTArtifactListTest extends AbstractTestCase
         );
 
         $expected = [$object2, $object1, $object3];
-        $actual   = [];
+        $actual = [];
         foreach ($iterator as $codeNode) {
             $actual[] = $codeNode;
         }
@@ -138,7 +138,7 @@ class ASTArtifactListTest extends AbstractTestCase
         $iterator = new ASTArtifactList($nodes);
 
         $expected = ['clazz', 'func', 'method', 'pkg'];
-        $actual   = [];
+        $actual = [];
         foreach ($iterator as $codeNode) {
             $actual[] = $iterator->key();
         }
@@ -195,9 +195,9 @@ class ASTArtifactListTest extends AbstractTestCase
     {
         $iterator = new ASTArtifactList(
             [
-                $class     = new ASTClass('Class'),
+                $class = new ASTClass('Class'),
                 $interface = new ASTInterface('Interface'),
-                $trait     = new ASTTrait('Trait'),
+                $trait = new ASTTrait('Trait'),
             ]
         );
         $this->assertSame($interface, $iterator[1]);
@@ -225,7 +225,7 @@ class ASTArtifactListTest extends AbstractTestCase
     {
         $this->expectException(BadMethodCallException::class);
 
-        $iterator    = new ASTArtifactList([]);
+        $iterator = new ASTArtifactList([]);
         $iterator[0] = new ASTClass('Class');
     }
 

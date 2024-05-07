@@ -67,7 +67,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testHasExcludeForReturnsFalseIfNoInsteadExists(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $useStmt = $class->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTTraitUseStatement'
         );
@@ -81,7 +81,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testHasExcludeForReturnsFalseIfMethodNotAffectedByInstead(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $useStmt = $class->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTTraitUseStatement'
         );
@@ -95,7 +95,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testHasExcludeForReturnsTrueIfMethodAffectedByInstead(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $useStmt = $class->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTTraitUseStatement'
         );
@@ -109,7 +109,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testHasExcludeForReturnsTrueIfMethodAffectedBySecondInstead(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $useStmt = $class->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTTraitUseStatement'
         );

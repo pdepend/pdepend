@@ -67,13 +67,13 @@ class ImageConvert
      */
     public static function convert($input, $output): void
     {
-        $inputType  = strtolower(pathinfo($input, PATHINFO_EXTENSION));
+        $inputType = strtolower(pathinfo($input, PATHINFO_EXTENSION));
         $outputType = strtolower(pathinfo($output, PATHINFO_EXTENSION));
 
         // Check for output file without extension and reuse input type
         if ($outputType === '') {
             $outputType = $inputType;
-            $output    .= ".{$outputType}";
+            $output .= ".{$outputType}";
         }
 
         if ($inputType === 'svg') {
@@ -90,7 +90,7 @@ class ImageConvert
             // The following code is not testable when imagick is installed
             // @codeCoverageIgnoreStart
         } elseif (self::hasImagickConvert() === true) {
-            $input  = escapeshellarg($input);
+            $input = escapeshellarg($input);
             $output = escapeshellarg($output);
 
             system("convert {$input} {$output}");
@@ -116,9 +116,9 @@ class ImageConvert
     {
         // @codeCoverageIgnoreStart
         $desc = [
-            0  =>  ['pipe', 'r'],
-            1  =>  ['pipe', 'w'],
-            2  =>  ['pipe', 'a'],
+            0 => ['pipe', 'r'],
+            1 => ['pipe', 'w'],
+            2 => ['pipe', 'a'],
         ];
 
         $proc = proc_open('convert', $desc, $pipes);

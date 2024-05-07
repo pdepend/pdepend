@@ -89,7 +89,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance(): void
     {
-        $trait   = $this->getFirstTraitForTest();
+        $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
         $this->assertSame($trait, $methods['foo']->getParent());
@@ -124,7 +124,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithVisibilityChangedToPublic(): void
     {
-        $trait   = $this->getFirstTraitForTest();
+        $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(
@@ -138,7 +138,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithVisibilityChangedToProtected(): void
     {
-        $trait   = $this->getFirstTraitForTest();
+        $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(
@@ -152,7 +152,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithVisibilityChangedToPrivate(): void
     {
-        $trait   = $this->getFirstTraitForTest();
+        $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(
@@ -166,7 +166,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier(): void
     {
-        $trait   = $this->getFirstTraitForTest();
+        $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(
@@ -180,7 +180,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithVisibilityChangedKeepsStaticModifier(): void
     {
-        $trait   = $this->getFirstTraitForTest();
+        $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(
@@ -194,7 +194,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsHandlesTraitMethodPrecedence(): void
     {
-        $trait   = $this->getFirstTraitForTest();
+        $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
         $this->assertEquals(

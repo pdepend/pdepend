@@ -87,10 +87,10 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * Metrics provided by the analyzer implementation.
      */
     public const
-        M_LINES_OF_CODE             = 'loc',
-        M_COMMENT_LINES_OF_CODE     = 'cloc',
-        M_EXECUTABLE_LINES_OF_CODE  = 'eloc',
-        M_LOGICAL_LINES_OF_CODE     = 'lloc',
+        M_LINES_OF_CODE = 'loc',
+        M_COMMENT_LINES_OF_CODE = 'cloc',
+        M_EXECUTABLE_LINES_OF_CODE = 'eloc',
+        M_LOGICAL_LINES_OF_CODE = 'lloc',
         M_NON_COMMENT_LINES_OF_CODE = 'ncloc';
 
     /**
@@ -99,11 +99,11 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * @var array<string, int>
      */
     private $projectMetrics = [
-        self::M_LINES_OF_CODE              =>  0,
-        self::M_COMMENT_LINES_OF_CODE      =>  0,
-        self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
-        self::M_LOGICAL_LINES_OF_CODE      =>  0,
-        self::M_NON_COMMENT_LINES_OF_CODE  =>  0,
+        self::M_LINES_OF_CODE => 0,
+        self::M_COMMENT_LINES_OF_CODE => 0,
+        self::M_EXECUTABLE_LINES_OF_CODE => 0,
+        self::M_LOGICAL_LINES_OF_CODE => 0,
+        self::M_NON_COMMENT_LINES_OF_CODE => 0,
     ];
 
     /**
@@ -198,7 +198,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         $class->getCompilationUnit()->accept($this);
 
         $this->classExecutableLines = 0;
-        $this->classLogicalLines    = 0;
+        $this->classLogicalLines = 0;
 
         foreach ($class->getMethods() as $method) {
             $method->accept($this);
@@ -211,15 +211,15 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         [$cloc] = $this->linesOfCode($class->getTokens(), true);
 
-        $loc   = $class->getEndLine() - $class->getStartLine() + 1;
+        $loc = $class->getEndLine() - $class->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
         $this->metrics[$class->getId()] = [
-            self::M_LINES_OF_CODE              =>  $loc,
-            self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
-            self::M_EXECUTABLE_LINES_OF_CODE   =>  $this->classExecutableLines,
-            self::M_LOGICAL_LINES_OF_CODE      =>  $this->classLogicalLines,
-            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
+            self::M_LINES_OF_CODE => $loc,
+            self::M_COMMENT_LINES_OF_CODE => $cloc,
+            self::M_EXECUTABLE_LINES_OF_CODE => $this->classExecutableLines,
+            self::M_LOGICAL_LINES_OF_CODE => $this->classLogicalLines,
+            self::M_NON_COMMENT_LINES_OF_CODE => $ncloc,
         ];
 
         $this->fireEndClass($class);
@@ -250,15 +250,15 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         [$cloc, $eloc, $lloc] = $this->linesOfCode($compilationUnit->getTokens());
 
-        $loc   = $compilationUnit->getEndLine();
+        $loc = $compilationUnit->getEndLine();
         $ncloc = $loc - $cloc;
 
         $this->metrics[$id] = [
-            self::M_LINES_OF_CODE              =>  $loc,
-            self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
-            self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
-            self::M_LOGICAL_LINES_OF_CODE      =>  $lloc,
-            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
+            self::M_LINES_OF_CODE => $loc,
+            self::M_COMMENT_LINES_OF_CODE => $cloc,
+            self::M_EXECUTABLE_LINES_OF_CODE => $eloc,
+            self::M_LOGICAL_LINES_OF_CODE => $lloc,
+            self::M_NON_COMMENT_LINES_OF_CODE => $ncloc,
         ];
 
         $this->updateProjectMetrics($id);
@@ -285,15 +285,15 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             true,
         );
 
-        $loc   = $function->getEndLine() - $function->getStartLine() + 1;
+        $loc = $function->getEndLine() - $function->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
         $this->metrics[$function->getId()] = [
-            self::M_LINES_OF_CODE              =>  $loc,
-            self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
-            self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
-            self::M_LOGICAL_LINES_OF_CODE      =>  $lloc,
-            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
+            self::M_LINES_OF_CODE => $loc,
+            self::M_COMMENT_LINES_OF_CODE => $cloc,
+            self::M_EXECUTABLE_LINES_OF_CODE => $eloc,
+            self::M_LOGICAL_LINES_OF_CODE => $lloc,
+            self::M_NON_COMMENT_LINES_OF_CODE => $ncloc,
         ];
 
         $this->fireEndFunction($function);
@@ -319,15 +319,15 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         [$cloc] = $this->linesOfCode($interface->getTokens(), true);
 
-        $loc   = $interface->getEndLine() - $interface->getStartLine() + 1;
+        $loc = $interface->getEndLine() - $interface->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
         $this->metrics[$interface->getId()] = [
-            self::M_LINES_OF_CODE              =>  $loc,
-            self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
-            self::M_EXECUTABLE_LINES_OF_CODE   =>  0,
-            self::M_LOGICAL_LINES_OF_CODE      =>  0,
-            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
+            self::M_LINES_OF_CODE => $loc,
+            self::M_COMMENT_LINES_OF_CODE => $cloc,
+            self::M_EXECUTABLE_LINES_OF_CODE => 0,
+            self::M_LOGICAL_LINES_OF_CODE => 0,
+            self::M_NON_COMMENT_LINES_OF_CODE => $ncloc,
         ];
 
         $this->fireEndInterface($interface);
@@ -355,19 +355,19 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
                 true,
             );
         }
-        $loc   = $method->getEndLine() - $method->getStartLine() + 1;
+        $loc = $method->getEndLine() - $method->getStartLine() + 1;
         $ncloc = $loc - $cloc;
 
         $this->metrics[$method->getId()] = [
-            self::M_LINES_OF_CODE              =>  $loc,
-            self::M_COMMENT_LINES_OF_CODE      =>  $cloc,
-            self::M_EXECUTABLE_LINES_OF_CODE   =>  $eloc,
-            self::M_LOGICAL_LINES_OF_CODE      =>  $lloc,
-            self::M_NON_COMMENT_LINES_OF_CODE  =>  $ncloc,
+            self::M_LINES_OF_CODE => $loc,
+            self::M_COMMENT_LINES_OF_CODE => $cloc,
+            self::M_EXECUTABLE_LINES_OF_CODE => $eloc,
+            self::M_LOGICAL_LINES_OF_CODE => $lloc,
+            self::M_NON_COMMENT_LINES_OF_CODE => $ncloc,
         ];
 
         $this->classExecutableLines += $eloc;
-        $this->classLogicalLines    += $lloc;
+        $this->classLogicalLines += $lloc;
 
         $this->fireEndMethod($method);
     }

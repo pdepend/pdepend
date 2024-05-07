@@ -62,7 +62,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeReturnsInjectedConstructorTargetArgument(): void
     {
-        $target  = $this->getAbstractClassMock(
+        $target = $this->getAbstractClassMock(
             '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
             [__CLASS__]
         );

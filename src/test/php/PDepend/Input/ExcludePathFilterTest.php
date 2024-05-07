@@ -91,7 +91,7 @@ class ExcludePathFilterTest extends AbstractTestCase
      */
     public function testUnixPathAsFilterPatternNotMatchesPartial(): void
     {
-        $pattern  = 'PDepend-git/PHP';
+        $pattern = 'PDepend-git/PHP';
         $absolute = '/home/manuel/workspace/PDepend-git/PDepend.php';
         $relative = '/PDepend.php';
 
@@ -122,7 +122,7 @@ class ExcludePathFilterTest extends AbstractTestCase
      */
     public function testWindowsPathAsFilterPatternNotMatchesPartial(): void
     {
-        $pattern  = 'PDepend-git\PHP';
+        $pattern = 'PDepend-git\PHP';
         $absolute = 'c:\workspace\PDepend-git\PDepend.php';
         $relative = '\PDepend.php';
 
@@ -135,7 +135,7 @@ class ExcludePathFilterTest extends AbstractTestCase
      */
     public function testExcludePathFilterRejectsFile(): void
     {
-        $actual   = $this->createFilteredFileList([DIRECTORY_SEPARATOR . 'package2.php']);
+        $actual = $this->createFilteredFileList([DIRECTORY_SEPARATOR . 'package2.php']);
         $expected = ['package1.php', 'package3.php'];
 
         $this->assertEquals($expected, $actual);
@@ -146,7 +146,7 @@ class ExcludePathFilterTest extends AbstractTestCase
      */
     public function testExcludePathFilterRejectsFiles(): void
     {
-        $actual   = $this->createFilteredFileList([DIRECTORY_SEPARATOR . 'package2.php', '*1.php']);
+        $actual = $this->createFilteredFileList([DIRECTORY_SEPARATOR . 'package2.php', '*1.php']);
         $expected = ['package3.php'];
 
         $this->assertEquals($expected, $actual);
@@ -157,7 +157,7 @@ class ExcludePathFilterTest extends AbstractTestCase
      */
     public function testExcludePathFilterRejectsDirectory(): void
     {
-        $actual   = $this->createFilteredFileList([DIRECTORY_SEPARATOR . 'package1']);
+        $actual = $this->createFilteredFileList([DIRECTORY_SEPARATOR . 'package1']);
         $expected = ['file2.php', 'file3.php'];
 
         $this->assertEquals($expected, $actual);
@@ -168,7 +168,7 @@ class ExcludePathFilterTest extends AbstractTestCase
      */
     public function testExcludePathFilterRejectsDirectories(): void
     {
-        $actual   = $this->createFilteredFileList([DIRECTORY_SEPARATOR . 'package1', 'package3']);
+        $actual = $this->createFilteredFileList([DIRECTORY_SEPARATOR . 'package1', 'package3']);
         $expected = ['file2.php'];
 
         $this->assertEquals($expected, $actual);
@@ -179,7 +179,7 @@ class ExcludePathFilterTest extends AbstractTestCase
      */
     public function testExcludePathFilterRejectsFilesAndDirectories(): void
     {
-        $actual   = $this->createFilteredFileList(
+        $actual = $this->createFilteredFileList(
             [DIRECTORY_SEPARATOR . 'package1', DIRECTORY_SEPARATOR . 'file3.php']
         );
         $expected = ['file2.php'];

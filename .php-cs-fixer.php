@@ -9,6 +9,7 @@ $config = new PhpCsFixer\Config();
 return $config
     ->setRules([
         '@PER-CS2.0' => true,
+        'binary_operator_spaces' => true,
         'ordered_class_elements' => [
             'order' => [
                 'use_trait',
@@ -49,7 +50,6 @@ return $config
         'no_unused_imports' => true,
         // Using sorting algo "alpha" instead of "none" defined in PER CS v2
         'ordered_imports' => ['imports_order' => ['class', 'function', 'const'], 'sort_algorithm' => 'alpha'],
-        'phpdoc_align' => true,
         'phpdoc_indent' => true,
         'phpdoc_order' => [
             'order' => [
@@ -88,7 +88,6 @@ return $config
         ],
         'phpdoc_return_self_reference' => true,
         'phpdoc_scalar' => true,
-        'phpdoc_separation' => true,
         'phpdoc_single_line_var_spacing' => true,
         'phpdoc_trim' => true,
         'phpdoc_trim_consecutive_blank_line_separation' => true,

@@ -67,7 +67,7 @@ class ResultPrinterTest extends AbstractTestCase
     public function testResultPrinterOutputForSingleEntry(): void
     {
         // Create dummy objects
-        $builder   = new PHPBuilder();
+        $builder = new PHPBuilder();
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(__FILE__);
 
@@ -90,7 +90,7 @@ class ResultPrinterTest extends AbstractTestCase
     public function testResultPrinterOutputForMultipleEntries(): void
     {
         // Create dummy objects
-        $builder   = new PHPBuilder();
+        $builder = new PHPBuilder();
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile(__FILE__);
 
@@ -116,7 +116,7 @@ class ResultPrinterTest extends AbstractTestCase
     public function testResultPrinterForMultipleEntries(): void
     {
         // Create dummy objects
-        $method   = new ASTMethod('method');
+        $method = new ASTMethod('method');
         $analyzer = new ClassLevelAnalyzer();
 
         $printer = new ResultPrinter();
@@ -141,7 +141,7 @@ class ResultPrinterTest extends AbstractTestCase
     public function testResultPrinterForCompleteLine(): void
     {
         // Create dummy objects
-        $method   = new ASTMethod('method');
+        $method = new ASTMethod('method');
         $analyzer = new ClassLevelAnalyzer();
 
         $printer = new ResultPrinter();

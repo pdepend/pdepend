@@ -99,7 +99,7 @@ class ChartTest extends AbstractTestCase
      */
     public function testReturnsExceptedAnalyzers(): void
     {
-        $logger    = new Chart();
+        $logger = new Chart();
         $this->assertEquals(['pdepend.analyzer.dependency'], $logger->getAcceptedAnalyzers());
     }
 
@@ -218,19 +218,19 @@ class ChartTest extends AbstractTestCase
                 $this->returnCallback(
                     function (AbstractASTArtifact $node) use ($nodes) {
                         $data = [
-                            $nodes[0]->getId()  =>  [
-                                'a'   =>  0,
-                                'i'   =>  0,
-                                'd'   =>  0,
-                                'cc'  =>  250,
-                                'ac'  =>  250,
+                            $nodes[0]->getId() => [
+                                'a' => 0,
+                                'i' => 0,
+                                'd' => 0,
+                                'cc' => 250,
+                                'ac' => 250,
                             ],
-                            $nodes[1]->getId()  =>  [
-                                'a'   =>  0,
-                                'i'   =>  0,
-                                'd'   =>  0,
-                                'cc'  =>  50,
-                                'ac'  =>  50,
+                            $nodes[1]->getId() => [
+                                'a' => 0,
+                                'i' => 0,
+                                'd' => 0,
+                                'cc' => 50,
+                                'ac' => 50,
                             ],
                         ];
 
@@ -258,13 +258,13 @@ class ChartTest extends AbstractTestCase
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
 
         $ellipseA = $xpath->query("//s:ellipse[@title='package0']")->item(0);
-        $matrixA  = $ellipseA->getAttribute('transform');
+        $matrixA = $ellipseA->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixA, $matches);
         $this->assertEquals(1, $matches[1]);
         $this->assertEquals(1, $matches[4]);
 
         $ellipseB = $xpath->query("//s:ellipse[@title='package1']")->item(0);
-        $matrixB  = $ellipseB->getAttribute('transform');
+        $matrixB = $ellipseB->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixB, $matches);
         $this->assertEqualsWithDelta(0.3333333, $matches[1], 0.000001);
         $this->assertEqualsWithDelta(0.3333333, $matches[4], 0.000001);

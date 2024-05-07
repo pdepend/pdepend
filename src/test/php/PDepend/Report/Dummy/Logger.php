@@ -67,8 +67,8 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      * @var array<string, mixed>
      */
     private $input = [
-        'code'       =>  null,
-        'analyzers'  =>  [],
+        'code' => null,
+        'analyzers' => [],
     ];
 
     /**

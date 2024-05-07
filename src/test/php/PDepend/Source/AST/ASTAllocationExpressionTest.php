@@ -84,7 +84,7 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
     public function testAllocationExpressionWithNestedArguments(): void
     {
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
-        $arg  = $expr->getFirstChildOfType('PDepend\\Source\\AST\\ASTArguments');
+        $arg = $expr->getFirstChildOfType('PDepend\\Source\\AST\\ASTArguments');
 
         $this->assertEquals($expr, $arg->getParent());
     }

@@ -214,7 +214,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         }
 
         $this->startLine = reset($tokens)->startLine;
-        $this->endLine   = end($tokens)->endLine;
+        $this->endLine = end($tokens)->endLine;
 
         $this->cache
             ->type('tokens')

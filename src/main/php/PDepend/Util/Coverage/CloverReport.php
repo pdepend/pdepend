@@ -110,10 +110,10 @@ class CloverReport implements Report
         $lines = $this->getLines($artifact->getCompilationUnit()->getFileName());
 
         $startLine = $artifact->getStartLine();
-        $endLine   = $artifact->getEndLine();
+        $endLine = $artifact->getEndLine();
 
         $executable = 0;
-        $executed   = 0;
+        $executed = 0;
         for ($i = $startLine; $i <= $endLine; ++$i) {
             if (!isset($lines[$i])) {
                 continue;

@@ -255,13 +255,13 @@ class Runner
 
         if (count($this->excludeDirectories) > 0) {
             $exclude = $this->excludeDirectories;
-            $filter  = new ExcludePathFilter($exclude);
+            $filter = new ExcludePathFilter($exclude);
             $engine->addFileFilter($filter);
         }
 
         if (count($this->excludeNamespaces) > 0) {
             $exclude = $this->excludeNamespaces;
-            $filter  = new PackageArtifactFilter($exclude);
+            $filter = new PackageArtifactFilter($exclude);
             $engine->setCodeFilter($filter);
         }
 

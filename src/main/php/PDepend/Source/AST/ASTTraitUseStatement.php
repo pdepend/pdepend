@@ -89,7 +89,7 @@ class ASTTraitUseStatement extends ASTStatement
      */
     public function hasExcludeFor(ASTMethod $method)
     {
-        $methodName   = strtolower($method->getName());
+        $methodName = strtolower($method->getName());
         $methodParent = $method->getParent();
 
         $precedences = $this->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence');

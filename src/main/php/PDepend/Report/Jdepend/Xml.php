@@ -204,7 +204,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $jdepend = $dom->createElement('PDepend');
 
         $this->packages = $jdepend->appendChild($dom->createElement('Packages'));
-        $this->cycles   = $jdepend->appendChild($dom->createElement('Cycles'));
+        $this->cycles = $jdepend->appendChild($dom->createElement('Cycles'));
 
         foreach ($this->code as $node) {
             $node->accept($this);

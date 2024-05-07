@@ -67,32 +67,32 @@ class DefaultListenerTest extends AbstractTestCase
         $namespaces = $this->parseSource($codeUri);
 
         $listener = new StubAbstractASTVisitListener();
-        $visitor  = new StubAbstractASTVisitor();
+        $visitor = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
         $visitor->visitNamespace($namespaces[0]);
 
-        $actual   = $listener->nodes;
+        $actual = $listener->nodes;
         $expected = [
-            $codeUri . '#start'  =>  true,
-            $codeUri . '#end'  =>  true,
-            'package#start'  =>  true,
-            'package#end'  =>  true,
-            'clazz#start'  =>  true,
-            'clazz#end'  =>  true,
-            'func#start'  =>  true,
-            'func#end'  =>  true,
-            'interfs#start'  =>  true,
-            'interfs#end'  =>  true,
-            'm1#start'  =>  true,
-            'm1#end'  =>  true,
-            'm2#start'  =>  true,
-            'm2#end'  =>  true,
-            'm3#start'  =>  true,
-            'm3#end'  =>  true,
-            'm4#start'  =>  true,
-            'm4#end'  =>  true,
-            '$_p1#start'  =>  true,
-            '$_p1#end'  =>  true,
+            $codeUri . '#start' => true,
+            $codeUri . '#end' => true,
+            'package#start' => true,
+            'package#end' => true,
+            'clazz#start' => true,
+            'clazz#end' => true,
+            'func#start' => true,
+            'func#end' => true,
+            'interfs#start' => true,
+            'interfs#end' => true,
+            'm1#start' => true,
+            'm1#end' => true,
+            'm2#start' => true,
+            'm2#end' => true,
+            'm3#start' => true,
+            'm3#end' => true,
+            'm4#start' => true,
+            'm4#end' => true,
+            '$_p1#start' => true,
+            '$_p1#end' => true,
         ];
 
         ksort($actual);
@@ -111,12 +111,12 @@ class DefaultListenerTest extends AbstractTestCase
         $class->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $listener = new StubAbstractASTVisitListener();
-        $visitor  = new StubAbstractASTVisitor();
+        $visitor = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
         $class->accept($visitor);
 
-        $actual   = $listener->nodes;
+        $actual = $listener->nodes;
         $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
@@ -137,12 +137,12 @@ class DefaultListenerTest extends AbstractTestCase
         $interface->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $listener = new StubAbstractASTVisitListener();
-        $visitor  = new StubAbstractASTVisitor();
+        $visitor = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
         $interface->accept($visitor);
 
-        $actual   = $listener->nodes;
+        $actual = $listener->nodes;
         $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
@@ -163,12 +163,12 @@ class DefaultListenerTest extends AbstractTestCase
         $function->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $listener = new StubAbstractASTVisitListener();
-        $visitor  = new StubAbstractASTVisitor();
+        $visitor = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
         $function->accept($visitor);
 
-        $actual   = $listener->nodes;
+        $actual = $listener->nodes;
         $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
@@ -189,12 +189,12 @@ class DefaultListenerTest extends AbstractTestCase
         $method->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
         $listener = new StubAbstractASTVisitListener();
-        $visitor  = new StubAbstractASTVisitor();
+        $visitor = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
         $method->accept($visitor);
 
-        $actual   = $listener->nodes;
+        $actual = $listener->nodes;
         $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,

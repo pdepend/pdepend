@@ -96,8 +96,8 @@ class XmlTest extends AbstractTestCase
      */
     public function testReturnsExceptedAnalyzers(): void
     {
-        $logger    = new Xml();
-        $actual    = $logger->getAcceptedAnalyzers();
+        $logger = new Xml();
+        $actual = $logger->getAcceptedAnalyzers();
         $expected = [
             'pdepend.analyzer.cyclomatic_complexity',
             'pdepend.analyzer.node_loc',
@@ -189,11 +189,11 @@ class XmlTest extends AbstractTestCase
      */
     public function testProjectAwareAnalyzerWithoutCode(): void
     {
-        $metricsOne = ['interfs'  =>  42, 'cls'  =>  23];
-        $resultOne  = new AnalyzerProjectAwareDummy($metricsOne);
+        $metricsOne = ['interfs' => 42, 'cls' => 23];
+        $resultOne = new AnalyzerProjectAwareDummy($metricsOne);
 
-        $metricsTwo = ['ncloc'  =>  1742, 'loc'  =>  4217];
-        $resultTwo  = new AnalyzerProjectAwareDummy($metricsTwo);
+        $metricsTwo = ['ncloc' => 1742, 'loc' => 4217];
+        $resultTwo = new AnalyzerProjectAwareDummy($metricsTwo);
 
         $log = new Xml();
         $log->setLogFile($this->resultFile);
@@ -247,17 +247,17 @@ class XmlTest extends AbstractTestCase
         $this->namespaces = $this->parseSource($fixture);
 
         $input = [
-            ['loc'  =>  42],  ['ncloc'  =>  23],
-            ['loc'  =>  9],   ['ncloc'  =>  7],
-            ['loc'  =>  101], ['ncloc'  =>  99],
-            ['loc'  =>  90],  ['ncloc'  =>  80],
-            ['loc'  =>  50],  ['ncloc'  =>  45],
-            ['loc'  =>  30],  ['ncloc'  =>  22],
-            ['loc'  =>  9],   ['ncloc'  =>  9],
-            ['loc'  =>  3],   ['ncloc'  =>  3],
-            ['loc'  =>  42],  ['ncloc'  =>  23],
-            ['loc'  =>  33],  ['ncloc'  =>  20],
-            ['loc'  =>  9],   ['ncloc'  =>  7],
+            ['loc' => 42],  ['ncloc' => 23],
+            ['loc' => 9],   ['ncloc' => 7],
+            ['loc' => 101], ['ncloc' => 99],
+            ['loc' => 90],  ['ncloc' => 80],
+            ['loc' => 50],  ['ncloc' => 45],
+            ['loc' => 30],  ['ncloc' => 22],
+            ['loc' => 9],   ['ncloc' => 9],
+            ['loc' => 3],   ['ncloc' => 3],
+            ['loc' => 42],  ['ncloc' => 23],
+            ['loc' => 33],  ['ncloc' => 20],
+            ['loc' => 9],   ['ncloc' => 7],
         ];
 
         $metricsOne = [];

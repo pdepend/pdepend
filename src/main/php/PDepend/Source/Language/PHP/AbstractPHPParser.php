@@ -405,11 +405,11 @@ abstract class AbstractPHPParser
     public function __construct(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
         $this->tokenizer = $tokenizer;
-        $this->builder   = $builder;
-        $this->cache     = $cache;
+        $this->builder = $builder;
+        $this->cache = $cache;
 
-        $this->idBuilder    = new IdBuilder();
-        $this->tokenStack     = new TokenStack();
+        $this->idBuilder = new IdBuilder();
+        $this->tokenStack = new TokenStack();
         $this->useSymbolTable = new SymbolTable();
 
         $this->builder->setCache($this->cache);
@@ -488,7 +488,7 @@ abstract class AbstractPHPParser
                     $comment = $this->consumeToken(Tokens::T_DOC_COMMENT)->image;
 
                     $this->packageName = $this->parsePackageAnnotation($comment);
-                    $this->docComment  = $comment;
+                    $this->docComment = $comment;
                     break;
                 case Tokens::T_USE:
                     // Parse a use statement. This method has no return value but it
@@ -566,9 +566,9 @@ abstract class AbstractPHPParser
     protected function reset($modifiers = 0, $echoing = false): void
     {
         $this->packageName = Builder::DEFAULT_NAMESPACE;
-        $this->docComment  = null;
-        $this->modifiers   = $modifiers;
-        $this->echoing     = $echoing;
+        $this->docComment = null;
+        $this->modifiers = $modifiers;
+        $this->echoing = $echoing;
     }
 
     /**
@@ -2379,7 +2379,7 @@ abstract class AbstractPHPParser
     {
         $tokens = $this->stripTrailingComments($this->tokenStack->pop());
 
-        $end   = $tokens[count($tokens) - 1];
+        $end = $tokens[count($tokens) - 1];
         $start = $tokens[0];
 
         $node->configureLinesAndColumns(
@@ -4850,7 +4850,7 @@ abstract class AbstractPHPParser
      */
     private function parseMethodPostfix(ASTNode $node)
     {
-        $args  = $this->parseArguments();
+        $args = $this->parseArguments();
         $image = $this->extractPostfixImage($node);
 
         $postfix = $this->builder->buildAstMethodPostfix($image);
@@ -5937,12 +5937,12 @@ abstract class AbstractPHPParser
      */
     private function parseStringSequence($tokenType)
     {
-        $type   = $tokenType;
+        $type = $tokenType;
         $string = '';
 
         do {
             $string .= $this->consumeToken($type)->image;
-            $type    = $this->tokenizer->peek();
+            $type = $this->tokenizer->peek();
         } while ($type !== $tokenType && $type !== Tokenizer::T_EOF);
 
         return $string . $this->consumeToken($tokenType)->image;
@@ -6045,14 +6045,14 @@ abstract class AbstractPHPParser
     {
         $this->tokenStack->push();
 
-        $image  = $this->consumeToken(Tokens::T_BACKSLASH)->image;
+        $image = $this->consumeToken(Tokens::T_BACKSLASH)->image;
         $escape = true;
 
         $tokenType = $this->tokenizer->peek();
         while ($tokenType !== Tokenizer::T_EOF) {
             if ($tokenType === Tokens::T_BACKSLASH) {
                 $escape = !$escape;
-                $image  .= $this->consumeToken(Tokens::T_BACKSLASH)->image;
+                $image .= $this->consumeToken(Tokens::T_BACKSLASH)->image;
 
                 $tokenType = $this->tokenizer->peek();
                 continue;
@@ -8002,7 +8002,7 @@ abstract class AbstractPHPParser
         $type = $this->tokenizer->peek();
         while ($type == Tokens::T_COMMENT || $type == Tokens::T_DOC_COMMENT) {
             $token = $this->consumeToken($type);
-            $type  = $this->tokenizer->peek();
+            $type = $this->tokenizer->peek();
 
             if (Tokens::T_COMMENT === $token->type) {
                 continue;

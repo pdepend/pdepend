@@ -62,7 +62,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerReturnsExpectedDependencies(): void
     {
         $analyzer = new CrapIndexAnalyzer();
-        $actual   = $analyzer->getRequiredAnalyzers();
+        $actual = $analyzer->getRequiredAnalyzers();
         $expected = ['PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'];
 
         $this->assertEquals($expected, $actual);
@@ -83,7 +83,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testAnalyzerIsEnabledReturnsTrueWhenCoverageReportFileWasSupplied(): void
     {
-        $options  = ['coverage-report' => $this->createCloverReportFile()];
+        $options = ['coverage-report' => $this->createCloverReportFile()];
         $analyzer = new CrapIndexAnalyzer($options);
 
         $this->assertTrue($analyzer->isEnabled());
@@ -172,7 +172,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $options  = ['coverage-report' => $this->createCloverReportFile()];
+        $options = ['coverage-report' => $this->createCloverReportFile()];
         $analyzer = new CrapIndexAnalyzer($options);
         $analyzer->addAnalyzer($this->createCyclomaticComplexityAnalyzerMock($ccn));
         $analyzer->analyze($namespaces);

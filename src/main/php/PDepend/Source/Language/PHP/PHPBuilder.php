@@ -2466,12 +2466,12 @@ class PHPBuilder implements Builder
 
         $this->frozen = true;
 
-        $this->frozenTraits     = $this->copyTypesWithPackage($this->traits);
-        $this->frozenClasses    = $this->copyTypesWithPackage($this->classes);
+        $this->frozenTraits = $this->copyTypesWithPackage($this->traits);
+        $this->frozenClasses = $this->copyTypesWithPackage($this->classes);
         $this->frozenInterfaces = $this->copyTypesWithPackage($this->interfaces);
 
-        $this->traits     = [];
-        $this->classes    = [];
+        $this->traits = [];
+        $this->classes = [];
         $this->interfaces = [];
     }
 

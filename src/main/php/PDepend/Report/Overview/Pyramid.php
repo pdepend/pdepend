@@ -115,14 +115,14 @@ class Pyramid implements FileAwareGenerator
      * @var array<string, array<int, float>>
      */
     private $thresholds = [
-        'cyclo-loc'     =>  [0.16, 0.20, 0.24],
-        'loc-nom'       =>  [7, 10, 13],
-        'nom-noc'       =>  [4, 7, 10],
-        'noc-nop'       =>  [6, 17, 26],
-        'calls-nom'     =>  [2.01, 2.62, 3.2],
-        'fanout-calls'  =>  [0.56, 0.62, 0.68],
-        'andc'          =>  [0.25, 0.41, 0.57],
-        'ahh'           =>  [0.09, 0.21, 0.32],
+        'cyclo-loc' => [0.16, 0.20, 0.24],
+        'loc-nom' => [7, 10, 13],
+        'nom-noc' => [4, 7, 10],
+        'noc-nop' => [6, 17, 26],
+        'calls-nom' => [2.01, 2.62, 3.2],
+        'fanout-calls' => [0.56, 0.62, 0.68],
+        'andc' => [0.25, 0.41, 0.57],
+        'ahh' => [0.09, 0.21, 0.32],
     ];
 
     /**
@@ -190,7 +190,7 @@ class Pyramid implements FileAwareGenerator
             throw new NoLogOutputException($this);
         }
 
-        $metrics     = $this->collectMetrics();
+        $metrics = $this->collectMetrics();
         $proportions = $this->computeProportions($metrics);
 
         $svg = new DOMDocument('1.0', 'UTF-8');
@@ -221,7 +221,7 @@ class Pyramid implements FileAwareGenerator
             $rect->setAttribute('style', $style);
         }
 
-        $temp  = FileUtil::getSysTempDir();
+        $temp = FileUtil::getSysTempDir();
         $temp .= '/' . uniqid('pdepend_') . '.svg';
         $svg->save($temp);
 
@@ -320,22 +320,22 @@ class Pyramid implements FileAwareGenerator
             throw new RuntimeException('Missing Node LOC analyzer.');
         }
 
-        $coupling    = $this->coupling->getProjectMetrics();
-        $cyclomatic  = $this->cyclomaticComplexity->getProjectMetrics();
+        $coupling = $this->coupling->getProjectMetrics();
+        $cyclomatic = $this->cyclomaticComplexity->getProjectMetrics();
         $inheritance = $this->inheritance->getProjectMetrics();
-        $nodeCount   = $this->nodeCount->getProjectMetrics();
-        $nodeLoc     = $this->nodeLoc->getProjectMetrics();
+        $nodeCount = $this->nodeCount->getProjectMetrics();
+        $nodeLoc = $this->nodeLoc->getProjectMetrics();
 
         return [
-            'cyclo'   =>  $cyclomatic['ccn2'],
-            'loc'     =>  $nodeLoc['eloc'],
-            'nom'     =>  ($nodeCount['nom'] + $nodeCount['nof']),
-            'noc'     =>  $nodeCount['noc'],
-            'nop'     =>  $nodeCount['nop'],
-            'ahh'     =>  round($inheritance['ahh'], 3),
-            'andc'    =>  round($inheritance['andc'], 3),
-            'fanout'  =>  $coupling['fanout'],
-            'calls'   =>  $coupling['calls'],
+            'cyclo' => $cyclomatic['ccn2'],
+            'loc' => $nodeLoc['eloc'],
+            'nom' => ($nodeCount['nom'] + $nodeCount['nof']),
+            'noc' => $nodeCount['noc'],
+            'nop' => $nodeCount['nop'],
+            'ahh' => round($inheritance['ahh'], 3),
+            'andc' => round($inheritance['andc'], 3),
+            'fanout' => $coupling['fanout'],
+            'calls' => $coupling['calls'],
         ];
     }
 }

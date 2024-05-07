@@ -458,7 +458,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserHandlesCallableTypeHint(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
+        $type = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTypeCallable', $type);
     }
@@ -471,7 +471,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserHandlesNamespaceTypeHint(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
+        $type = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $type);
     }
@@ -484,7 +484,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserHandlesArrayTypeHint(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
+        $type = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTypeArray', $type);
     }
@@ -497,7 +497,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserHandlesSelfTypeHint(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        $type   = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
+        $type = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $type);
     }
@@ -509,7 +509,7 @@ class PHPParserGenericTest extends AbstractTestCase
      */
     public function testParserHandlesCompoundStaticMethodInvocation(): void
     {
-        $method  = $this->getFirstMethodForTestCase();
+        $method = $this->getFirstMethodForTestCase();
         $postfix = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix');
 
         $this->assertNotNull($postfix);
@@ -522,7 +522,7 @@ class PHPParserGenericTest extends AbstractTestCase
      */
     public function testParserHandlesVariableStaticMethodInvocation(): void
     {
-        $method  = $this->getFirstMethodForTestCase();
+        $method = $this->getFirstMethodForTestCase();
         $postfix = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTMethodPostfix');
 
         $this->assertNotNull($postfix);

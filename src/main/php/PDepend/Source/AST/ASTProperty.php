@@ -86,7 +86,7 @@ class ASTProperty extends AbstractASTArtifact
         ASTFieldDeclaration $fieldDeclaration,
         ASTVariableDeclarator $variableDeclarator,
     ) {
-        $this->fieldDeclaration   = $fieldDeclaration;
+        $this->fieldDeclaration = $fieldDeclaration;
         $this->variableDeclarator = $variableDeclarator;
 
         $this->id = spl_object_hash($this);
@@ -101,10 +101,10 @@ class ASTProperty extends AbstractASTArtifact
      */
     public function __toString()
     {
-        $static  = '';
+        $static = '';
 
         if ($this->isStatic() === true) {
-            $static  = ' static';
+            $static = ' static';
         }
 
         $visibility = ' public';

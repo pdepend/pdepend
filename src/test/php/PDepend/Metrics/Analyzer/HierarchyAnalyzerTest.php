@@ -137,7 +137,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsForUnknownId(): void
     {
-        $class    = new ASTClass('PDepend');
+        $class = new ASTClass('PDepend');
         $analyzer = $this->createAnalyzer();
 
         $this->assertSame([], $analyzer->getNodeMetrics($class));

@@ -70,7 +70,7 @@ class ParserTest extends AbstractTestCase
     {
         ini_set('xdebug.max_nesting_level', '100');
 
-        $cache   = new MemoryCacheDriver();
+        $cache = new MemoryCacheDriver();
         $builder = new PHPBuilder();
 
         $tokenizer = new PHPTokenizerInternal();
@@ -87,10 +87,10 @@ class ParserTest extends AbstractTestCase
     public function testParseMixedCode(): void
     {
         $expected = [
-            'pkg1'                               =>  true,
-            'pkg2'                               =>  true,
-            'pkg3'                               =>  true,
-            Source\Builder\Builder::DEFAULT_NAMESPACE  =>  true,
+            'pkg1' => true,
+            'pkg2' => true,
+            'pkg3' => true,
+            Source\Builder\Builder::DEFAULT_NAMESPACE => true,
         ];
 
         $tmp = $this->parseCodeResourceForTest();
@@ -692,7 +692,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectPropertyDocComment(): void
     {
-        $nodes    = $this->parseCodeResourceForTest()
+        $nodes = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
@@ -715,9 +715,9 @@ class ParserTest extends AbstractTestCase
         $actual = [];
         foreach ($nodes as $node) {
             $actual[] = [
-                'public'     =>  $node->isPublic(),
-                'protected'  =>  $node->isProtected(),
-                'private'    =>  $node->isPrivate(),
+                'public' => $node->isPublic(),
+                'protected' => $node->isProtected(),
+                'private' => $node->isPrivate(),
             ];
         }
 
@@ -751,12 +751,12 @@ class ParserTest extends AbstractTestCase
 
         $this->assertEquals(
             [
-                '$property1'  =>  'MyPropertyClass2',
-                '$property2'  =>  'MyPropertyClass2',
-                '$property3'  =>  'MyPropertyClass2',
-                '$property4'  =>  'MyPropertyClass2',
-                '$property5'  =>  null,
-                '$property6'  =>  null,
+                '$property1' => 'MyPropertyClass2',
+                '$property2' => 'MyPropertyClass2',
+                '$property3' => 'MyPropertyClass2',
+                '$property4' => 'MyPropertyClass2',
+                '$property5' => null,
+                '$property6' => null,
             ],
             $actual
         );
@@ -879,7 +879,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectClassOrInterfaceDocComment(): void
     {
-        $actual   = [];
+        $actual = [];
         $expected = [
             "/**\n * Sample comment.\n */",
             null,
@@ -1242,7 +1242,7 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $string = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
-        $image  = $string->getChild(0)->getImage();
+        $image = $string->getChild(0)->getImage();
 
         $this->assertEquals('\$foobar', $image);
     }
@@ -1258,7 +1258,7 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $string = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
-        $image  = $string->getChild(0)->getImage();
+        $image = $string->getChild(0)->getImage();
 
         $this->assertEquals('\\\\\"', $image);
     }
@@ -1273,7 +1273,7 @@ class ParserTest extends AbstractTestCase
             ->getFunctions()
             ->current();
 
-        $string   = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
+        $string = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
         $variable = $string->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $variable);
@@ -1289,7 +1289,7 @@ class ParserTest extends AbstractTestCase
             ->getFunctions()
             ->current();
 
-        $string   = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
+        $string = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
         $variable = $string->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $variable);
