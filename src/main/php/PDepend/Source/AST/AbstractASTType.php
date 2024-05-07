@@ -170,6 +170,10 @@ abstract class AbstractASTType extends AbstractASTArtifact
     public function __wakeup(): void
     {
         $this->methods = null;
+
+        foreach ($this->nodes as $node) {
+            $node->setParent($this);
+        }
     }
 
     /**
@@ -203,6 +207,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     public function addChild(ASTNode $node): void
     {
         $this->nodes[] = $node;
+        $node->setParent($this);
     }
 
     /**
