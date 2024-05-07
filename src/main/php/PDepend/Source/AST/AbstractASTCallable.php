@@ -151,6 +151,19 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     }
 
     /**
+     * The magic wakeup method will be called by PHP's runtime environment when
+     * a previously serialized object gets unserialized. This implementation of
+     * the wakeup method restores the dependencies between an ast node and the
+     * node's children.
+     */
+    public function __wakeup(): void
+    {
+        foreach ($this->nodes as $node) {
+            $node->setParent($this);
+        }
+    }
+
+    /**
      * Setter method for the currently used token cache, where this callable
      * instance can store the associated tokens.
      *
@@ -176,6 +189,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     public function addChild(ASTNode $node): void
     {
         $this->nodes[] = $node;
+        $node->setParent($this);
     }
 
     /**
