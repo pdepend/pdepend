@@ -66,7 +66,7 @@ class IteratorTest extends AbstractTestCase
      */
     public function testIteratorWithOneFileExtension(): void
     {
-        $actual   = $this->createFilteredFileList(['php4']);
+        $actual = $this->createFilteredFileList(['php4']);
         $expected = ['file4.php4'];
 
         $this->assertEquals($expected, $actual);
@@ -77,7 +77,7 @@ class IteratorTest extends AbstractTestCase
      */
     public function testIteratorWithMultipleFileExtensions(): void
     {
-        $actual   = $this->createFilteredFileList(['inc', 'php']);
+        $actual = $this->createFilteredFileList(['inc', 'php']);
         $expected = ['file1.inc', 'file2.php'];
 
         $this->assertEquals($expected, $actual);
@@ -91,7 +91,7 @@ class IteratorTest extends AbstractTestCase
         $directory = $this->createCodeResourceUriForTest();
         $pattern = $directory . DIRECTORY_SEPARATOR . 'Ignored';
 
-        $files  = new Iterator(
+        $files = new Iterator(
             new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory)),
             new ExcludePathFilter([$pattern])
         );
@@ -169,7 +169,7 @@ class IteratorTest extends AbstractTestCase
      */
     protected function createFilteredFileList(array $extensions)
     {
-        $files  = new Iterator(
+        $files = new Iterator(
             new DirectoryIterator($this->createCodeResourceUriForTest()),
             new ExtensionFilter($extensions)
         );

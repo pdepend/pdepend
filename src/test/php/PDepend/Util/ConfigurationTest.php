@@ -67,7 +67,7 @@ class ConfigurationTest extends AbstractTestCase
      */
     public function testPropertyAccessForExistingValue(): void
     {
-        $settings      = new stdClass();
+        $settings = new stdClass();
         $settings->foo = 42;
 
         $configuration = new Configuration($settings);
@@ -82,7 +82,7 @@ class ConfigurationTest extends AbstractTestCase
     {
         $this->expectException(OutOfRangeException::class);
 
-        $settings      = new stdClass();
+        $settings = new stdClass();
         $settings->foo = 42;
 
         $configuration = new Configuration($settings);
@@ -96,7 +96,7 @@ class ConfigurationTest extends AbstractTestCase
     {
         $this->expectException(OutOfRangeException::class);
 
-        $configuration      = new Configuration(new stdClass());
+        $configuration = new Configuration(new stdClass());
         $configuration->foo = 42;
     }
 
@@ -105,7 +105,7 @@ class ConfigurationTest extends AbstractTestCase
      */
     public function testIssetReturnsTrueForExistingValue(): void
     {
-        $settings      = new stdClass();
+        $settings = new stdClass();
         $settings->foo = 42;
 
         $configuration = new Configuration($settings);
@@ -118,7 +118,7 @@ class ConfigurationTest extends AbstractTestCase
      */
     public function testIssetReturnsFalseForNotExistingValue(): void
     {
-        $settings      = new stdClass();
+        $settings = new stdClass();
         $settings->foo = 42;
 
         $configuration = new Configuration($settings);

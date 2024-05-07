@@ -74,15 +74,15 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Metrics provided by the analyzer implementation.
      */
-    public const M_IMPLEMENTED_INTERFACES       = 'impl',
-        M_CLASS_INTERFACE_SIZE         = 'cis',
-        M_CLASS_SIZE                   = 'csz',
-        M_NUMBER_OF_PUBLIC_METHODS     = 'npm',
-        M_PROPERTIES                   = 'vars',
-        M_PROPERTIES_INHERIT           = 'varsi',
-        M_PROPERTIES_NON_PRIVATE       = 'varsnp',
-        M_WEIGHTED_METHODS             = 'wmc',
-        M_WEIGHTED_METHODS_INHERIT     = 'wmci',
+    public const M_IMPLEMENTED_INTERFACES = 'impl',
+        M_CLASS_INTERFACE_SIZE = 'cis',
+        M_CLASS_SIZE = 'csz',
+        M_NUMBER_OF_PUBLIC_METHODS = 'npm',
+        M_PROPERTIES = 'vars',
+        M_PROPERTIES_INHERIT = 'varsi',
+        M_PROPERTIES_NON_PRIVATE = 'varsnp',
+        M_WEIGHTED_METHODS = 'wmc',
+        M_WEIGHTED_METHODS_INHERIT = 'wmci',
         M_WEIGHTED_METHODS_NON_PRIVATE = 'wmcnp';
 
     /**
@@ -212,15 +212,15 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         $wmci = $this->calculateWmciForTrait($trait);
 
         $this->nodeMetrics[$trait->getId()] = [
-            self::M_IMPLEMENTED_INTERFACES       => 0,
-            self::M_CLASS_INTERFACE_SIZE         => 0,
-            self::M_CLASS_SIZE                   => 0,
-            self::M_NUMBER_OF_PUBLIC_METHODS     => 0,
-            self::M_PROPERTIES                   => 0,
-            self::M_PROPERTIES_INHERIT           => 0,
-            self::M_PROPERTIES_NON_PRIVATE       => 0,
-            self::M_WEIGHTED_METHODS             => 0,
-            self::M_WEIGHTED_METHODS_INHERIT     => $wmci,
+            self::M_IMPLEMENTED_INTERFACES => 0,
+            self::M_CLASS_INTERFACE_SIZE => 0,
+            self::M_CLASS_SIZE => 0,
+            self::M_NUMBER_OF_PUBLIC_METHODS => 0,
+            self::M_PROPERTIES => 0,
+            self::M_PROPERTIES_INHERIT => 0,
+            self::M_PROPERTIES_NON_PRIVATE => 0,
+            self::M_WEIGHTED_METHODS => 0,
+            self::M_WEIGHTED_METHODS_INHERIT => $wmci,
             self::M_WEIGHTED_METHODS_NON_PRIVATE => 0,
         ];
 
@@ -386,20 +386,20 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      */
     private function calculateAbstractASTClassOrInterfaceMetrics(AbstractASTClassOrInterface $class): void
     {
-        $impl  = count($class->getInterfaces());
+        $impl = count($class->getInterfaces());
         $varsi = $this->calculateVarsi($class);
-        $wmci  = $this->calculateWmciForClass($class);
+        $wmci = $this->calculateWmciForClass($class);
 
         $this->nodeMetrics[$class->getId()] = [
-            self::M_IMPLEMENTED_INTERFACES       => $impl,
-            self::M_CLASS_INTERFACE_SIZE         => 0,
-            self::M_CLASS_SIZE                   => 0,
-            self::M_NUMBER_OF_PUBLIC_METHODS     => 0,
-            self::M_PROPERTIES                   => 0,
-            self::M_PROPERTIES_INHERIT           => $varsi,
-            self::M_PROPERTIES_NON_PRIVATE       => 0,
-            self::M_WEIGHTED_METHODS             => 0,
-            self::M_WEIGHTED_METHODS_INHERIT     => $wmci,
+            self::M_IMPLEMENTED_INTERFACES => $impl,
+            self::M_CLASS_INTERFACE_SIZE => 0,
+            self::M_CLASS_SIZE => 0,
+            self::M_NUMBER_OF_PUBLIC_METHODS => 0,
+            self::M_PROPERTIES => 0,
+            self::M_PROPERTIES_INHERIT => $varsi,
+            self::M_PROPERTIES_NON_PRIVATE => 0,
+            self::M_WEIGHTED_METHODS => 0,
+            self::M_WEIGHTED_METHODS_INHERIT => $wmci,
             self::M_WEIGHTED_METHODS_NON_PRIVATE => 0,
         ];
 

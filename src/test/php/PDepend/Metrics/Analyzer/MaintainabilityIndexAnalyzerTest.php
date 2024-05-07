@@ -97,7 +97,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $actual   = [];
+        $actual = [];
         $expected = [
             'pdepend1' => ['mi' => 76.389359628780454],
             'pdepend2' => ['mi' => 81.120955834208331],
@@ -127,7 +127,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
         $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
-        $actual   = [];
+        $actual = [];
         $expected = [
             'pdepend1' => ['mi' => 76.389359628780454],
             'pdepend2' => ['mi' => 81.120955834208331],

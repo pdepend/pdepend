@@ -66,11 +66,11 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      * Metrics provided by the analyzer implementation.
      */
     private const
-        M_NUMBER_OF_PACKAGES   = 'nop',
-        M_NUMBER_OF_CLASSES    = 'noc',
+        M_NUMBER_OF_PACKAGES = 'nop',
+        M_NUMBER_OF_CLASSES = 'noc',
         M_NUMBER_OF_INTERFACES = 'noi',
-        M_NUMBER_OF_METHODS    = 'nom',
-        M_NUMBER_OF_FUNCTIONS  = 'nof';
+        M_NUMBER_OF_METHODS = 'nom',
+        M_NUMBER_OF_FUNCTIONS = 'nof';
 
     /**
      * Number Of Packages.
@@ -156,11 +156,11 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     public function getProjectMetrics()
     {
         return [
-            self::M_NUMBER_OF_PACKAGES    =>  $this->nop,
-            self::M_NUMBER_OF_CLASSES     =>  $this->noc,
-            self::M_NUMBER_OF_INTERFACES  =>  $this->noi,
-            self::M_NUMBER_OF_METHODS     =>  $this->nom,
-            self::M_NUMBER_OF_FUNCTIONS   =>  $this->nof,
+            self::M_NUMBER_OF_PACKAGES => $this->nop,
+            self::M_NUMBER_OF_CLASSES => $this->noc,
+            self::M_NUMBER_OF_INTERFACES => $this->noi,
+            self::M_NUMBER_OF_METHODS => $this->nom,
+            self::M_NUMBER_OF_FUNCTIONS => $this->nof,
         ];
     }
 
@@ -201,7 +201,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CLASSES];
 
         $this->nodeMetrics[$class->getId()] = [
-            self::M_NUMBER_OF_METHODS  =>  0,
+            self::M_NUMBER_OF_METHODS => 0,
         ];
 
         foreach ($class->getMethods() as $method) {
@@ -245,7 +245,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ++$this->nodeMetrics[$id][self::M_NUMBER_OF_INTERFACES];
 
         $this->nodeMetrics[$interface->getId()] = [
-            self::M_NUMBER_OF_METHODS  =>  0,
+            self::M_NUMBER_OF_METHODS => 0,
         ];
 
         foreach ($interface->getMethods() as $method) {
@@ -287,10 +287,10 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ++$this->nop;
 
         $this->nodeMetrics[$namespace->getId()] = [
-            self::M_NUMBER_OF_CLASSES     =>  0,
-            self::M_NUMBER_OF_INTERFACES  =>  0,
-            self::M_NUMBER_OF_METHODS     =>  0,
-            self::M_NUMBER_OF_FUNCTIONS   =>  0,
+            self::M_NUMBER_OF_CLASSES => 0,
+            self::M_NUMBER_OF_INTERFACES => 0,
+            self::M_NUMBER_OF_METHODS => 0,
+            self::M_NUMBER_OF_FUNCTIONS => 0,
         ];
 
 

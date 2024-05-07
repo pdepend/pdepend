@@ -103,7 +103,7 @@ class ASTParameter extends AbstractASTArtifact
      */
     public function __construct(ASTFormalParameter $formalParameter)
     {
-        $this->formalParameter    = $formalParameter;
+        $this->formalParameter = $formalParameter;
         $this->variableDeclarator = $formalParameter->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTVariableDeclarator',
         );
@@ -118,7 +118,7 @@ class ASTParameter extends AbstractASTArtifact
      */
     public function __toString()
     {
-        $required  = $this->isOptional() ? 'optional' : 'required';
+        $required = $this->isOptional() ? 'optional' : 'required';
         $reference = $this->isPassedByReference() ? '&' : '';
 
         $typeHint = '';
@@ -134,7 +134,7 @@ class ASTParameter extends AbstractASTArtifact
 
             $value = $this->getDefaultValue();
             if ($value === null) {
-                $default  .= 'NULL';
+                $default .= 'NULL';
                 $typeHint .= ($typeHint !== '' ? ' or NULL' : '');
             } elseif ($value === false) {
                 $default .= 'false';

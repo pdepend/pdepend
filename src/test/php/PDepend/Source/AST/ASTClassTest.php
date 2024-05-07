@@ -69,7 +69,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsContainsMethodsOfImplementedInterface(): void
     {
-        $class  = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
@@ -81,7 +81,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsContainsMethodsOfImplementedInterfaces(): void
     {
-        $class  = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
@@ -93,7 +93,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsContainsMethodsOfIndirectImplementedInterfaces(): void
     {
-        $class  = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
@@ -105,7 +105,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsContainsMethodsOfParentClass(): void
     {
-        $class  = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
@@ -117,7 +117,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsContainsMethodsOfParentClasses(): void
     {
-        $class  = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $actual = array_keys($class->getAllMethods());
         sort($actual);
 
@@ -131,7 +131,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsOnClassWithParentReturnsTraitMethod(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $methods = $class->getAllMethods();
 
         $this->assertInstanceOf(
@@ -147,7 +147,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsOnClassWhereTraitExcludesParentMethod(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $methods = $class->getAllMethods();
 
         $this->assertInstanceOf(
@@ -163,7 +163,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsOnClassWithParentAndPrecedenceReturnsParentMethod(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $methods = $class->getAllMethods();
 
         $this->assertInstanceOf(
@@ -193,7 +193,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithRedeclaredMethodReturnsExpectedInstance(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $methods = $class->getAllMethods();
 
         $this->assertSame($class, $methods['foo']->getParent());
@@ -234,7 +234,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithVisibilityChangedToPublic(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
@@ -250,7 +250,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithVisibilityChangedToProtected(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
@@ -266,7 +266,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithVisibilityChangedToPrivate(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
@@ -282,7 +282,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithVisibilityChangedKeepsAbstractModifier(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
@@ -298,7 +298,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsWithVisibilityChangedKeepsStaticModifier(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
@@ -314,7 +314,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetAllMethodsHandlesTraitMethodPrecedence(): void
     {
-        $class   = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $methods = $class->getAllMethods();
 
         $this->assertEquals(
@@ -633,7 +633,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetFirstChildOfTypeFindsASTNodeInMethodDeclaration(): void
     {
-        $class  = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $params = $class->getFirstChildOfType(
             'PDepend\\Source\\AST\\ASTFormalParameter'
         );
@@ -646,7 +646,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testFindChildrenOfTypeFindsASTNodeInMethodDeclarations(): void
     {
-        $class  = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $params = $class->findChildrenOfType(
             'PDepend\\Source\\AST\\ASTFormalParameter'
         );
@@ -659,7 +659,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testFindChildrenOfTypeFindsASTNodesFromVariousCodeItems(): void
     {
-        $class  = $this->getFirstClassForTestCase();
+        $class = $this->getFirstClassForTestCase();
         $params = $class->findChildrenOfType(
             'PDepend\\Source\\AST\\ASTVariableDeclarator'
         );
@@ -725,7 +725,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testUnserializedClassIsReturnedByMethodAsReturnClass(): void
     {
-        $orig   = $this->getFirstClassForTestCase();
+        $orig = $this->getFirstClassForTestCase();
         $method = $orig->getMethods()->current();
 
         $copy = unserialize(serialize($orig));
@@ -892,7 +892,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testGetSetNamespace(): void
     {
         $namespace = new ASTNamespace(__FUNCTION__);
-        $class   = new ASTClass(__CLASS__);
+        $class = new ASTClass(__CLASS__);
 
         $class->setNamespace($namespace);
         $this->assertSame($namespace, $class->getNamespace());
@@ -1115,7 +1115,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testVisitorAccept(): void
     {
-        $class   = new ASTClass(__CLASS__);
+        $class = new ASTClass(__CLASS__);
         $visitor = new StubASTVisitor();
 
         $class->accept($visitor);

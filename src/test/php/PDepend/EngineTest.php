@@ -107,9 +107,9 @@ class EngineTest extends AbstractTestCase
         $metrics = $engine->analyze();
 
         $expected = [
-            'package1'  =>  true,
-            'package2'  =>  true,
-            'package3'  =>  true,
+            'package1' => true,
+            'package2' => true,
+            'package3' => true,
         ];
 
         foreach ($metrics as $metric) {

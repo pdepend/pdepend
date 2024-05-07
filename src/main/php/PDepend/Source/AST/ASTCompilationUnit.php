@@ -362,7 +362,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
             $this->source = str_replace(["\r\n", "\r"], "\n", $source);
 
             $this->startLine = 1;
-            $this->endLine   = substr_count($this->source, "\n") + 1;
+            $this->endLine = substr_count($this->source, "\n") + 1;
         }
     }
 }

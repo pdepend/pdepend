@@ -95,7 +95,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
     public function testFilterAcceptsClass(): void
     {
         $namespace = new ASTNamespace(__FUNCTION__);
-        $class   = $namespace->addType(new ASTClass('Clazz'));
+        $class = $namespace->addType(new ASTClass('Clazz'));
 
         $filter = new PackageArtifactFilter([__CLASS__]);
         $this->assertTrue($filter->accept($class));
@@ -107,7 +107,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
     public function testFilterNotAcceptsClass(): void
     {
         $namespace = new ASTNamespace(__FUNCTION__);
-        $class   = $namespace->addType(new ASTClass('Clazz'));
+        $class = $namespace->addType(new ASTClass('Clazz'));
 
         $filter = new PackageArtifactFilter([__FUNCTION__]);
         $this->assertFalse($filter->accept($class));
@@ -118,7 +118,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      */
     public function testFilterAcceptsInterface(): void
     {
-        $namespace   = new ASTNamespace(__FUNCTION__);
+        $namespace = new ASTNamespace(__FUNCTION__);
         $interface = $namespace->addType(new ASTInterface('Iface'));
 
         $filter = new PackageArtifactFilter([__CLASS__]);
@@ -130,7 +130,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      */
     public function testFilterNotAcceptsInterface(): void
     {
-        $namespace   = new ASTNamespace(__FUNCTION__);
+        $namespace = new ASTNamespace(__FUNCTION__);
         $interface = $namespace->addType(new ASTInterface('Iface'));
 
         $filter = new PackageArtifactFilter([__FUNCTION__]);
@@ -142,7 +142,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      */
     public function testFilterAcceptsFunction(): void
     {
-        $namespace  = new ASTNamespace(__FUNCTION__);
+        $namespace = new ASTNamespace(__FUNCTION__);
         $function = $namespace->addFunction(new ASTFunction('Func'));
 
         $filter = new PackageArtifactFilter([__CLASS__]);
@@ -154,7 +154,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      */
     public function testFilterNotAcceptsFunction(): void
     {
-        $namespace  = new ASTNamespace(__FUNCTION__);
+        $namespace = new ASTNamespace(__FUNCTION__);
         $function = $namespace->addFunction(new ASTFunction('Func'));
 
         $filter = new PackageArtifactFilter([__FUNCTION__]);
@@ -189,7 +189,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
      */
     public function testFilterAcceptsAndNotAcceptsPackageWithWildcard(): void
     {
-        $zendFW  = new ASTNamespace('Zend_Controller');
+        $zendFW = new ASTNamespace('Zend_Controller');
         $pdepend = new ASTNamespace('PDepend_Code');
 
         $filter = new PackageArtifactFilter(['ezc*', 'Zend_*']);

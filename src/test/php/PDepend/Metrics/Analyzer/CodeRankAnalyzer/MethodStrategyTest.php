@@ -64,11 +64,11 @@ class MethodStrategyTest extends AbstractTestCase
         $namespaces = $this->parseCodeResourceForTest();
 
         $idMap = [
-            'PDepend::CodeRankA'       =>  null,
-            'PDepend::CodeRankB'       =>  null,
-            'PDepend_CodeRank_ClassA'  =>  null,
-            'PDepend_CodeRank_ClassB'  =>  null,
-            'PDepend_CodeRank_ClassC'  =>  null,
+            'PDepend::CodeRankA' => null,
+            'PDepend::CodeRankB' => null,
+            'PDepend_CodeRank_ClassA' => null,
+            'PDepend_CodeRank_ClassB' => null,
+            'PDepend_CodeRank_ClassC' => null,
         ];
 
         foreach ($namespaces as $namespace) {
@@ -82,63 +82,63 @@ class MethodStrategyTest extends AbstractTestCase
         }
 
         $expected = [
-            $idMap['PDepend_CodeRank_ClassA']  =>  [
-                'in'  =>  [
+            $idMap['PDepend_CodeRank_ClassA'] => [
+                'in' => [
                     $idMap['PDepend_CodeRank_ClassB'],
                     $idMap['PDepend_CodeRank_ClassC'],
                 ],
-                'out'  =>  [
+                'out' => [
                     $idMap['PDepend_CodeRank_ClassC'],
                 ],
-                'name'  =>  'PDepend_CodeRank_ClassA',
-                'type'  =>  'PDepend\\Source\\AST\\ASTClass',
+                'name' => 'PDepend_CodeRank_ClassA',
+                'type' => 'PDepend\\Source\\AST\\ASTClass',
             ],
-            $idMap['PDepend_CodeRank_ClassB']  =>  [
-                'in'  =>  [
+            $idMap['PDepend_CodeRank_ClassB'] => [
+                'in' => [
                     $idMap['PDepend_CodeRank_ClassC'],
                     $idMap['PDepend_CodeRank_ClassC'],
                 ],
-                'out'  =>  [
+                'out' => [
                     $idMap['PDepend_CodeRank_ClassA'],
                 ],
-                'name'  =>  'PDepend_CodeRank_ClassB',
-                'type'  =>  'PDepend\\Source\\AST\\ASTClass',
+                'name' => 'PDepend_CodeRank_ClassB',
+                'type' => 'PDepend\\Source\\AST\\ASTClass',
             ],
-            $idMap['PDepend_CodeRank_ClassC']  =>  [
-                'in'  =>  [
+            $idMap['PDepend_CodeRank_ClassC'] => [
+                'in' => [
                     $idMap['PDepend_CodeRank_ClassA'],
                 ],
-                'out'  =>  [
+                'out' => [
                     $idMap['PDepend_CodeRank_ClassA'],
                     $idMap['PDepend_CodeRank_ClassB'],
                     $idMap['PDepend_CodeRank_ClassB'],
                 ],
-                'name'  =>  'PDepend_CodeRank_ClassC',
-                'type'  =>  'PDepend\\Source\\AST\\ASTClass',
+                'name' => 'PDepend_CodeRank_ClassC',
+                'type' => 'PDepend\\Source\\AST\\ASTClass',
             ],
-            $idMap['PDepend::CodeRankA']  =>  [
-                'in'  =>  [
+            $idMap['PDepend::CodeRankA'] => [
+                'in' => [
                     $idMap['PDepend::CodeRankB'],
                     $idMap['PDepend::CodeRankB'],
                     $idMap['PDepend::CodeRankB'],
                 ],
-                'out'  =>  [
+                'out' => [
                     $idMap['PDepend::CodeRankB'],
                 ],
-                'name'  =>  'PDepend::CodeRankA',
-                'type'  =>  'PDepend\\Source\\AST\\ASTNamespace',
+                'name' => 'PDepend::CodeRankA',
+                'type' => 'PDepend\\Source\\AST\\ASTNamespace',
             ],
-            $idMap['PDepend::CodeRankB']  =>  [
-                'in'  =>  [
+            $idMap['PDepend::CodeRankB'] => [
+                'in' => [
                     $idMap['PDepend::CodeRankA'],
                 ],
-                'out'  =>  [
+                'out' => [
                     $idMap['PDepend::CodeRankA'],
                     $idMap['PDepend::CodeRankA'],
                     $idMap['PDepend::CodeRankA'],
                 ],
-                'name'  =>  'PDepend::CodeRankB',
-                'type'  =>  'PDepend\\Source\\AST\\ASTNamespace',
+                'name' => 'PDepend::CodeRankB',
+                'type' => 'PDepend\\Source\\AST\\ASTNamespace',
             ],
         ];
 

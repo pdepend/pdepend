@@ -61,7 +61,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * Metrics provided by the analyzer implementation.
      */
     private const
-        M_CODE_RANK         = 'cr',
+        M_CODE_RANK = 'cr',
         M_REVERSE_CODE_RANK = 'rcr';
 
     /**
@@ -148,7 +148,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 
             // Collect all nodes
             foreach ($this->strategies as $strategy) {
-                $collected    = $strategy->getCollectedNodes();
+                $collected = $strategy->getCollectedNodes();
                 $this->nodes = array_merge_recursive($collected, $this->nodes);
             }
 
@@ -184,8 +184,8 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     {
         foreach (array_keys($this->nodes) as $id) {
             $this->nodeMetrics[$id] = [
-                self::M_CODE_RANK          =>  0,
-                self::M_REVERSE_CODE_RANK  =>  0,
+                self::M_CODE_RANK => 0,
+                self::M_REVERSE_CODE_RANK => 0,
             ];
         }
         foreach ($this->computeCodeRank('out', 'in') as $id => $rank) {
@@ -219,7 +219,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
                 $rank = 0;
                 foreach ($info[$id1] as $ref) {
                     $previousRank = $ranks[$ref];
-                    $refCount     = count($this->nodes[$ref][$id2]);
+                    $refCount = count($this->nodes[$ref][$id2]);
 
                     $rank += ($previousRank / $refCount);
                 }

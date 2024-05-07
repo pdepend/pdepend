@@ -167,7 +167,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testInternalWithMixedContent(): void
     {
-        $tokenizer  = new PHPTokenizerInternal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = [
@@ -213,7 +213,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testInternalReturnsBOFTokenForPrevCall(): void
     {
-        $tokenizer  = new PHPTokenizerInternal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $this->assertEquals(Tokenizer::T_BOF, $tokenizer->prev());
@@ -344,7 +344,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             $this->markTestSkipped('Must enable short_open_tag');
         }
 
-        $tokenizer  = new PHPTokenizerInternal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = [
@@ -401,7 +401,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             $this->markTestSkipped('Must enable short_open_tag');
         }
 
-        $tokenizer  = new PHPTokenizerInternal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = [
@@ -439,7 +439,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testTokenizingShortTagsWithMultipleVariables(): void
     {
-        $tokenizer  = new PHPTokenizerInternal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = [
@@ -474,7 +474,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testTokenizerCalculatesCorrectColumnForInlinePhpInTextIssue88(): void
     {
-        $tokenizer  = new PHPTokenizerInternal();
+        $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
         $expected = [

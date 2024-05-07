@@ -92,7 +92,7 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             $this->initNode($class);
             $this->initNode($depClass);
 
-            $this->nodes[$class->getId()]['in'][]     = $depClass->getId();
+            $this->nodes[$class->getId()]['in'][] = $depClass->getId();
             $this->nodes[$depClass->getId()]['out'][] = $class->getId();
         }
 
@@ -100,7 +100,7 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             $this->initNode($namespace);
             $this->initNode($depNamespace);
 
-            $this->nodes[$namespace->getId()]['in'][]     = $depNamespace->getId();
+            $this->nodes[$namespace->getId()]['in'][] = $depNamespace->getId();
             $this->nodes[$depNamespace->getId()]['out'][] = $namespace->getId();
         }
 
@@ -114,10 +114,10 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
     {
         if (!isset($this->nodes[$node->getId()])) {
             $this->nodes[$node->getId()] = [
-                'in'   =>  [],
-                'out'  =>  [],
-                'name'  =>  $node->getName(),
-                'type'  =>  $node::class,
+                'in' => [],
+                'out' => [],
+                'name' => $node->getName(),
+                'type' => $node::class,
             ];
         }
     }

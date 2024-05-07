@@ -87,7 +87,7 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
      */
     public function __construct(BuilderContext $context, AbstractASTClassOrInterface $target)
     {
-        $this->context      = $context;
+        $this->context = $context;
         $this->typeInstance = $target;
     }
 

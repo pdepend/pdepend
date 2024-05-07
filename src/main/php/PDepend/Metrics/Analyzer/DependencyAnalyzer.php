@@ -62,14 +62,14 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * Metrics provided by the analyzer implementation.
      */
     private const
-        M_NUMBER_OF_CLASSES          = 'tc',
+        M_NUMBER_OF_CLASSES = 'tc',
         M_NUMBER_OF_CONCRETE_CLASSES = 'cc',
         M_NUMBER_OF_ABSTRACT_CLASSES = 'ac',
-        M_AFFERENT_COUPLING          = 'ca',
-        M_EFFERENT_COUPLING          = 'ce',
-        M_ABSTRACTION                = 'a',
-        M_INSTABILITY                = 'i',
-        M_DISTANCE                   = 'd';
+        M_AFFERENT_COUPLING = 'ca',
+        M_EFFERENT_COUPLING = 'ce',
+        M_ABSTRACTION = 'a',
+        M_INSTABILITY = 'i',
+        M_DISTANCE = 'd';
 
     /**
      * @var array<string, ASTNamespace>
@@ -341,14 +341,14 @@ class DependencyAnalyzer extends AbstractAnalyzer
             $this->nodeSet[$id] = $namespace;
 
             $this->nodeMetrics[$id] = [
-                self::M_NUMBER_OF_CLASSES           =>  0,
-                self::M_NUMBER_OF_CONCRETE_CLASSES  =>  0,
-                self::M_NUMBER_OF_ABSTRACT_CLASSES  =>  0,
-                self::M_AFFERENT_COUPLING           =>  [],
-                self::M_EFFERENT_COUPLING           =>  [],
-                self::M_ABSTRACTION                 =>  0,
-                self::M_INSTABILITY                 =>  0,
-                self::M_DISTANCE                    =>  0,
+                self::M_NUMBER_OF_CLASSES => 0,
+                self::M_NUMBER_OF_CONCRETE_CLASSES => 0,
+                self::M_NUMBER_OF_ABSTRACT_CLASSES => 0,
+                self::M_AFFERENT_COUPLING => [],
+                self::M_EFFERENT_COUPLING => [],
+                self::M_ABSTRACTION => 0,
+                self::M_INSTABILITY => 0,
+                self::M_DISTANCE => 0,
             ];
         }
     }

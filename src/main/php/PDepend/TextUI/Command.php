@@ -482,7 +482,7 @@ class Command
     protected function printLogOptions()
     {
         $maxLength = 0;
-        $options   = [];
+        $options = [];
         $logOptions = $this->application->getAvailableLoggerOptions();
         foreach ($logOptions as $option => $info) {
             // Build log option identifier
@@ -588,7 +588,7 @@ class Command
             return;
         }
 
-        $option  = '--notify-me';
+        $option = '--notify-me';
         $message = 'Show a notification after analysis.';
 
         $this->printOption($option, $message, $length);

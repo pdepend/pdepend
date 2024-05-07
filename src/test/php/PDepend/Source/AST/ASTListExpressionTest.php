@@ -245,7 +245,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     public function testListExpressionWithVariableVariable(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
-        $var  = $expr->getChild(0);
+        $var = $expr->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableVariable', $var);
     }
@@ -325,7 +325,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     public function testListExpressionWithCompoundVariable(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
-        $var  = $expr->getChild(0);
+        $var = $expr->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundVariable', $var);
     }
@@ -336,7 +336,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     public function testListExpressionWithArrayElement(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
-        $var  = $expr->getChild(0);
+        $var = $expr->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArrayIndexExpression', $var);
     }
@@ -347,7 +347,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     public function testListExpressionWithObjectProperty(): void
     {
         $expr = $this->getFirstListExpressionInFunction();
-        $var  = $expr->getChild(0);
+        $var = $expr->getChild(0);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $var);
     }

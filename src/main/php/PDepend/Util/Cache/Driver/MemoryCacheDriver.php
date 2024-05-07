@@ -209,7 +209,7 @@ class MemoryCacheDriver implements CacheDriver
      */
     protected function getCacheKey($key)
     {
-        $type       = $this->type;
+        $type = $this->type;
         $this->type = self::ENTRY_TYPE;
 
         return "{$key}.{$type}";

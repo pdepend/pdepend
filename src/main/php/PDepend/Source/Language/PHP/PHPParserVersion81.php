@@ -220,7 +220,7 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
         $this->consumeComments();
 
         // peek if there's an ellipsis to determine variadic placeholder
-        $ellipsis  = Tokens::T_ELLIPSIS === $this->tokenizer->peek();
+        $ellipsis = Tokens::T_ELLIPSIS === $this->tokenizer->peek();
 
         $arguments = parent::parseArgumentList($arguments);
 

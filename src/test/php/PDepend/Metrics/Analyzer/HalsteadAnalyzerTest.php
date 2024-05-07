@@ -97,7 +97,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $actual   = [];
+        $actual = [];
         $expected = [
             'pdepend1' => ['n1' => 5, 'n2' => 3, 'N1' => 6, 'N2' => 4],
             'pdepend2' => ['n1' => 4, 'n2' => 2, 'N1' => 4, 'N2' => 2],
@@ -124,7 +124,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $actual   = [];
+        $actual = [];
         $expected = [
             'pdepend1' => [
                 'hnt' => 10,
@@ -175,7 +175,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
-        $actual   = [];
+        $actual = [];
         $expected = [
             'pdepend1' => ['n1' => 5, 'n2' => 3, 'N1' => 6, 'N2' => 4],
             'pdepend2' => ['n1' => 4, 'n2' => 2, 'N1' => 4, 'N2' => 2],
@@ -205,7 +205,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
-        $actual   = [];
+        $actual = [];
         $expected = [
             'pdepend1' => [
                 'hnt' => 10,

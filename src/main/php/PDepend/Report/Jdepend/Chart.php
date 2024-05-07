@@ -204,7 +204,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
         $good->parentNode->removeChild($good);
         $legendTemplate->parentNode->removeChild($legendTemplate);
 
-        $temp  = FileUtil::getSysTempDir();
+        $temp = FileUtil::getSysTempDir();
         $temp .= '/' . uniqid('pdepend_') . '.svg';
         $svg->save($temp);
 
@@ -232,11 +232,11 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
             }
 
             $items[] = [
-                'size'         =>  $metrics['cc'] + $metrics['ac'],
-                'abstraction'  =>  $metrics['a'],
-                'instability'  =>  $metrics['i'],
-                'distance'     =>  $metrics['d'],
-                'name'         =>  Utf8Util::ensureEncoding($namespace->getName()),
+                'size' => $metrics['cc'] + $metrics['ac'],
+                'abstraction' => $metrics['a'],
+                'instability' => $metrics['i'],
+                'distance' => $metrics['d'],
+                'name' => Utf8Util::ensureEncoding($namespace->getName()),
             ];
         }
 

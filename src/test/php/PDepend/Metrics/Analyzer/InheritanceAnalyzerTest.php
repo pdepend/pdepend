@@ -288,7 +288,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
     private function getCalculatedMetric($testCase, $metric): mixed
     {
         $namespaces = $this->parseTestCaseSource($testCase);
-        $namespace  = $namespaces->current();
+        $namespace = $namespaces->current();
 
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);

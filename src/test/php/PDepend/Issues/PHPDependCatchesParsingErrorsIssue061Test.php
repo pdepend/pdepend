@@ -171,7 +171,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
 
         ob_start();
         $exitCode = $command->run();
-        $output   = ob_get_clean();
+        $output = ob_get_clean();
 
         return [$exitCode, $output];
     }

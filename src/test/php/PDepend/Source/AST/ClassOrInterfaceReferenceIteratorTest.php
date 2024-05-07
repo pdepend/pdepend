@@ -88,7 +88,7 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
 
         $references = [$reference1, $reference2];
 
-        $refs  = new ASTClassOrInterfaceReferenceIterator($references);
+        $refs = new ASTClassOrInterfaceReferenceIterator($references);
         $types = [];
         foreach ($refs as $type) {
             $types[] = $type->getId();
@@ -124,7 +124,7 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
 
         $references = [$reference1, $reference2];
 
-        $refs  = new ASTClassOrInterfaceReferenceIterator($references);
+        $refs = new ASTClassOrInterfaceReferenceIterator($references);
         $types = [];
         foreach ($refs as $type) {
             $types[] = $type->getId();

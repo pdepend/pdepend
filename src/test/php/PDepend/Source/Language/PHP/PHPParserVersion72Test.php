@@ -131,7 +131,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserHandlesBinaryIntegerLiteral(): void
     {
-        $method  = $this->getFirstMethodForTestCase();
+        $method = $this->getFirstMethodForTestCase();
         $literal = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTLiteral');
 
         $this->assertEquals('0b0100110100111', $literal->getImage());

@@ -235,14 +235,14 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
         $namespaces->next();
 
         $namespace = $namespaces->current();
-        $types   = $namespace->getTypes();
+        $types = $namespace->getTypes();
         $this->assertEquals('foo', $namespace->getName());
         $this->assertEquals('FooBar', $types->current()->getName());
 
         $namespaces->next();
 
         $namespace = $namespaces->current();
-        $types   = $namespace->getTypes();
+        $types = $namespace->getTypes();
         $this->assertEquals('baz', $namespace->getName());
         $this->assertEquals('FooBaz', $types->current()->getName());
     }
@@ -257,21 +257,21 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
         $this->assertEquals(3, $namespaces->count());
 
         $namespace = $namespaces->current();
-        $types   = $namespace->getTypes();
+        $types = $namespace->getTypes();
         $this->assertEquals('bar', $namespace->getName());
         $this->assertEquals('BarFoo', $types->current()->getName());
 
         $namespaces->next();
 
         $namespace = $namespaces->current();
-        $types   = $namespace->getTypes();
+        $types = $namespace->getTypes();
         $this->assertEquals('foo', $namespace->getName());
         $this->assertEquals('FooBar', $types->current()->getName());
 
         $namespaces->next();
 
         $namespace = $namespaces->current();
-        $types   = $namespace->getTypes();
+        $types = $namespace->getTypes();
         $this->assertEquals('baz', $namespace->getName());
         $this->assertEquals('FooBaz', $types->current()->getName());
     }

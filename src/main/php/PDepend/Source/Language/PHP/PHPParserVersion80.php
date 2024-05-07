@@ -200,9 +200,9 @@ abstract class PHPParserVersion80 extends PHPParserVersion74
     protected function parseConstructFormalParameterModifiers()
     {
         static $states = [
-            Tokens::T_PUBLIC    => State::IS_PUBLIC,
+            Tokens::T_PUBLIC => State::IS_PUBLIC,
             Tokens::T_PROTECTED => State::IS_PROTECTED,
-            Tokens::T_PRIVATE   => State::IS_PRIVATE,
+            Tokens::T_PRIVATE => State::IS_PRIVATE,
         ];
 
         $modifier = 0;

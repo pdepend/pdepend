@@ -387,7 +387,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildPackageUnique(): void
     {
-        $builder  = $this->createBuilder();
+        $builder = $this->createBuilder();
         $namespace1 = $builder->buildNamespace('package1');
         $namespace2 = $builder->buildNamespace('package1');
 
@@ -402,9 +402,9 @@ class PHPBuilderTest extends AbstractTestCase
         $builder = $this->createBuilder();
 
         $expected = [
-            'package1'  =>  $builder->buildNamespace('package1'),
-            'package2'  =>  $builder->buildNamespace('package2'),
-            'package3'  =>  $builder->buildNamespace('package3'),
+            'package1' => $builder->buildNamespace('package1'),
+            'package2' => $builder->buildNamespace('package2'),
+            'package3' => $builder->buildNamespace('package3'),
         ];
 
         $actual = [];
@@ -424,9 +424,9 @@ class PHPBuilderTest extends AbstractTestCase
         $builder = $this->createBuilder();
 
         $expected = [
-            'package1'  =>  $builder->buildNamespace('package1'),
-            'package2'  =>  $builder->buildNamespace('package2'),
-            'package3'  =>  $builder->buildNamespace('package3'),
+            'package1' => $builder->buildNamespace('package1'),
+            'package2' => $builder->buildNamespace('package2'),
+            'package3' => $builder->buildNamespace('package3'),
         ];
 
         $actual = [];
@@ -1629,7 +1629,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTScalarTypeReturnsInstanceOfExpectedType(): void
     {
-        $builder  = $this->createBuilder();
+        $builder = $this->createBuilder();
         $instance = $builder->buildAstScalarType(__FUNCTION__);
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $instance);

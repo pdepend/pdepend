@@ -328,7 +328,7 @@ abstract class AbstractASTNode implements ASTNode
      */
     protected function setMetadata($index, $value): void
     {
-        $metadata         = explode(':', $this->metadata, $this->getMetadataSize());
+        $metadata = explode(':', $this->metadata, $this->getMetadataSize());
         $metadata[$index] = $value;
 
         $this->metadata = implode(':', $metadata);

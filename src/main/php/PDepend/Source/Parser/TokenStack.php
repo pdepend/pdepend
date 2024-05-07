@@ -84,7 +84,7 @@ class TokenStack
     public function push(): void
     {
         $this->stack[$this->offset++] = $this->tokens;
-        $this->tokens                 = [];
+        $this->tokens = [];
     }
 
     /**
@@ -96,7 +96,7 @@ class TokenStack
      */
     public function pop()
     {
-        $tokens       = $this->tokens;
+        $tokens = $this->tokens;
         $this->tokens = isset($this->stack[--$this->offset]) ? $this->stack[$this->offset] : [];
 
         unset($this->stack[$this->offset]);

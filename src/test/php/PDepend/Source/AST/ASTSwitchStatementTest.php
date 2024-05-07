@@ -61,7 +61,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     public function testSwitchStatementGraphWithBooleanExpressions(): void
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
-        $children  = $stmt->getChildren();
+        $children = $stmt->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $children[0]);
     }
@@ -72,7 +72,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     public function testSwitchStatementGraphWithLabels(): void
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
-        $children  = $stmt->getChildren();
+        $children = $stmt->getChildren();
 
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $children[1]);
         $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $children[2]);

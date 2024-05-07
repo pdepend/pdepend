@@ -109,7 +109,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerRestoresExpectedMethodMetricsFromCache(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
-        $method   = $namespaces->current()
+        $method = $namespaces->current()
             ->getClasses()
             ->current()
             ->getMethods()

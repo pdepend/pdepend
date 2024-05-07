@@ -146,7 +146,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     public function getParentClasses()
     {
         $parents = [];
-        $parent  = $this;
+        $parent = $this;
 
         while ($parent = $parent->getParentClass()) {
             if (in_array($parent, $parents, true)) {
@@ -180,7 +180,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      */
     public function setParentClassReference(ASTClassReference $classReference): void
     {
-        $this->nodes[]              = $classReference;
+        $this->nodes[] = $classReference;
         $this->parentClassReference = $classReference;
     }
 

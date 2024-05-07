@@ -63,21 +63,21 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @var array<string, array>
      */
     private $input = [
-        'package1'    =>  ['cr'  =>  0.2775,     'rcr'  =>  0.385875],
-        'package2'    =>  ['cr'  =>  0.15,       'rcr'  =>  0.47799375],
-        'package3'    =>  ['cr'  =>  0.385875,   'rcr'  =>  0.2775],
-        'core'        =>  ['cr'  =>  0.47799375, 'rcr'  =>  0.15],
-        'pkg1Foo'     =>  ['cr'  =>  0.15,       'rcr'  =>  0.181875],
-        'pkg2FooI'    =>  ['cr'  =>  0.15,       'rcr'  =>  0.181875],
-        'pkg2Bar'     =>  ['cr'  =>  0.15,       'rcr'  =>  0.1755],
-        'pkg2Foobar'  =>  ['cr'  =>  0.15,       'rcr'  =>  0.1755],
-        'pkg1Barfoo'  =>  ['cr'  =>  0.15,       'rcr'  =>  0.207375],
-        'pkg2Barfoo'  =>  ['cr'  =>  0.15,       'rcr'  =>  0.207375],
-        'pkg1Foobar'  =>  ['cr'  =>  0.15,       'rcr'  =>  0.411375],
-        'pkg1FooI'    =>  ['cr'  =>  0.5325,     'rcr'  =>  0.15],
-        'pkg1Bar'     =>  ['cr'  =>  0.59625,    'rcr'  =>  0.15],
-        'pkg3FooI'    =>  ['cr'  =>  0.21375,    'rcr'  =>  0.2775],
-        'Iterator'    =>  ['cr'  =>  0.3316875,  'rcr'  =>  0.15],
+        'package1' => ['cr' => 0.2775,     'rcr' => 0.385875],
+        'package2' => ['cr' => 0.15,       'rcr' => 0.47799375],
+        'package3' => ['cr' => 0.385875,   'rcr' => 0.2775],
+        'core' => ['cr' => 0.47799375, 'rcr' => 0.15],
+        'pkg1Foo' => ['cr' => 0.15,       'rcr' => 0.181875],
+        'pkg2FooI' => ['cr' => 0.15,       'rcr' => 0.181875],
+        'pkg2Bar' => ['cr' => 0.15,       'rcr' => 0.1755],
+        'pkg2Foobar' => ['cr' => 0.15,       'rcr' => 0.1755],
+        'pkg1Barfoo' => ['cr' => 0.15,       'rcr' => 0.207375],
+        'pkg2Barfoo' => ['cr' => 0.15,       'rcr' => 0.207375],
+        'pkg1Foobar' => ['cr' => 0.15,       'rcr' => 0.411375],
+        'pkg1FooI' => ['cr' => 0.5325,     'rcr' => 0.15],
+        'pkg1Bar' => ['cr' => 0.59625,    'rcr' => 0.15],
+        'pkg3FooI' => ['cr' => 0.21375,    'rcr' => 0.2775],
+        'Iterator' => ['cr' => 0.3316875,  'rcr' => 0.15],
     ];
 
     /**
@@ -97,8 +97,8 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $actual = $this->getCodeRankForTestCase();
 
         $expected = [
-            'Foo'  =>  0.15,
-            'Bar'  =>  0.2775,
+            'Foo' => 0.15,
+            'Bar' => 0.2775,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -114,8 +114,8 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $actual = $this->getReverseCodeRankForTestCase();
 
         $expected = [
-            'Foo'  =>  0.2775,
-            'Bar'  =>  0.15,
+            'Foo' => 0.2775,
+            'Bar' => 0.15,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -129,7 +129,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testCodeRankOfNamespacedSameNameInheritanceExample(): void
     {
         $actual = $this->getCodeRankForTestCase();
-        $this->assertEquals(['Foo' =>  0.15], $actual);
+        $this->assertEquals(['Foo' => 0.15], $actual);
     }
 
     /**
@@ -140,9 +140,9 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testCodeRankOfNamespacedSameNamePropertyExample(): void
     {
         $options = ['coderank-mode' => ['property']];
-        $actual  = $this->getCodeRankForTestCase($options);
+        $actual = $this->getCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' =>  0.15], $actual);
+        $this->assertEquals(['Foo' => 0.15], $actual);
     }
 
     /**
@@ -153,9 +153,9 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testReverseCodeRankOfNamespacedSameNamePropertyExample(): void
     {
         $options = ['coderank-mode' => ['property']];
-        $actual  = $this->getReverseCodeRankForTestCase($options);
+        $actual = $this->getReverseCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' =>  0.2775], $actual);
+        $this->assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
@@ -166,9 +166,9 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testCodeRankOfNamespacedSameNameMethodParamExample(): void
     {
         $options = ['coderank-mode' => ['method']];
-        $actual  = $this->getCodeRankForTestCase($options);
+        $actual = $this->getCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' =>  0.15], $actual);
+        $this->assertEquals(['Foo' => 0.15], $actual);
     }
 
     /**
@@ -179,9 +179,9 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testReverseCodeRankOfNamespacedSameNameMethodParamExample(): void
     {
         $options = ['coderank-mode' => ['method']];
-        $actual  = $this->getReverseCodeRankForTestCase($options);
+        $actual = $this->getReverseCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' =>  0.2775], $actual);
+        $this->assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
@@ -192,9 +192,9 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testCodeRankOfNamespacedSameNameMethodReturnExample(): void
     {
         $options = ['coderank-mode' => ['method']];
-        $actual  = $this->getReverseCodeRankForTestCase($options);
+        $actual = $this->getReverseCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' =>  0.2775], $actual);
+        $this->assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
@@ -205,9 +205,9 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testReverseCodeRankOfNamespacedSameNameMethodReturnExample(): void
     {
         $options = ['coderank-mode' => ['method']];
-        $actual  = $this->getReverseCodeRankForTestCase($options);
+        $actual = $this->getReverseCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' =>  0.2775], $actual);
+        $this->assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
@@ -218,9 +218,9 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testCodeRankOfNamespacedSameNameMethodExceptionExample(): void
     {
         $options = ['coderank-mode' => ['method']];
-        $actual  = $this->getCodeRankForTestCase($options);
+        $actual = $this->getCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' =>  0.15], $actual);
+        $this->assertEquals(['Foo' => 0.15], $actual);
     }
 
     /**
@@ -231,9 +231,9 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testReverseCodeRankOfNamespacedSameNameMethodExceptionExample(): void
     {
         $options = ['coderank-mode' => ['method']];
-        $actual  = $this->getReverseCodeRankForTestCase($options);
+        $actual = $this->getReverseCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' =>  0.2775], $actual);
+        $this->assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
@@ -256,14 +256,14 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testCodeRankOfOrderExampleWithInheritanceAndMethodStrategy(): void
     {
         $options = ['coderank-mode' => ['inheritance', 'method']];
-        $actual  = $this->getCodeRankForTestCase($options);
+        $actual = $this->getCodeRankForTestCase($options);
 
         $expected = [
-            'BCollection'   =>  0.58637,
-            'BList'         =>  0.51338,
-            'AbstractList'  =>  0.2775,
-            'ArrayList'     =>  0.15,
-            'Order'         =>  0.15,
+            'BCollection' => 0.58637,
+            'BList' => 0.51338,
+            'AbstractList' => 0.2775,
+            'ArrayList' => 0.15,
+            'Order' => 0.15,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -278,14 +278,14 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testReverseCodeRankOfOrderExampleWithInheritanceAndMethodStrategy(): void
     {
         $options = ['coderank-mode' => ['inheritance', 'method']];
-        $actual  = $this->getReverseCodeRankForTestCase($options);
+        $actual = $this->getReverseCodeRankForTestCase($options);
 
         $expected = [
-            'BCollection'   =>  0.15,
-            'BList'         =>  0.2775,
-            'AbstractList'  =>  0.26794,
-            'ArrayList'     =>  0.37775,
-            'Order'         =>  0.26794,
+            'BCollection' => 0.15,
+            'BList' => 0.2775,
+            'AbstractList' => 0.26794,
+            'ArrayList' => 0.37775,
+            'Order' => 0.26794,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -300,14 +300,14 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy(): void
     {
         $options = ['coderank-mode' => ['inheritance', 'property']];
-        $actual  = $this->getCodeRankForTestCase($options);
+        $actual = $this->getCodeRankForTestCase($options);
 
         $expected = [
-            'BCollection'   =>  0.58637,
-            'BList'         =>  0.51338,
-            'AbstractList'  =>  0.2775,
-            'ArrayList'     =>  0.15,
-            'Order'         =>  0.15,
+            'BCollection' => 0.58637,
+            'BList' => 0.51338,
+            'AbstractList' => 0.2775,
+            'ArrayList' => 0.15,
+            'Order' => 0.15,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -322,14 +322,14 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testReverseCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy(): void
     {
         $options = ['coderank-mode' => ['inheritance', 'property']];
-        $actual  = $this->getReverseCodeRankForTestCase($options);
+        $actual = $this->getReverseCodeRankForTestCase($options);
 
         $expected = [
-            'BCollection'   =>  0.15,
-            'BList'         =>  0.2775,
-            'AbstractList'  =>  0.26794,
-            'ArrayList'     =>  0.37775,
-            'Order'         =>  0.26794,
+            'BCollection' => 0.15,
+            'BList' => 0.2775,
+            'AbstractList' => 0.26794,
+            'ArrayList' => 0.37775,
+            'Order' => 0.26794,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -345,13 +345,13 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testCodeRankOfInternalInterfaceExample(): void
     {
         $options = ['coderank-mode' => ['inheritance', 'method', 'property']];
-        $actual  = $this->getCodeRankForTestCase($options);
+        $actual = $this->getCodeRankForTestCase($options);
 
         $expected = [
-            'BList'         =>  0.51338,
-            'AbstractList'  =>  0.2775,
-            'ArrayList'     =>  0.15,
-            'Order'         =>  0.15,
+            'BList' => 0.51338,
+            'AbstractList' => 0.2775,
+            'ArrayList' => 0.15,
+            'Order' => 0.15,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -369,10 +369,10 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $options = ['coderank-mode' => ['inheritance', 'method', 'property']];
         $actual = $this->getReverseCodeRankForTestCase($options);
         $expected = [
-            'BList'         =>  0.2775,
-            'AbstractList'  =>  0.26794,
-            'ArrayList'     =>  0.37775,
-            'Order'         =>  0.26794,
+            'BList' => 0.2775,
+            'AbstractList' => 0.26794,
+            'ArrayList' => 0.37775,
+            'Order' => 0.26794,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -430,7 +430,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $this->analyzer = new CodeRankAnalyzer();
         $this->analyzer->analyze($namespaces);
 
-        $class   = new ASTClass('PDepend');
+        $class = new ASTClass('PDepend');
         $metrics = $this->analyzer->getNodeMetrics($class);
 
         $this->assertIsArray($metrics);

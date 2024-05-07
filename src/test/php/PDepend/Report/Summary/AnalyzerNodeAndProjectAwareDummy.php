@@ -78,7 +78,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
     public function __construct(array $projectMetrics = [], array $nodeMetrics = [])
     {
         $this->projectMetrics = $projectMetrics;
-        $this->nodeMetrics    = $nodeMetrics;
+        $this->nodeMetrics = $nodeMetrics;
     }
 
     /**

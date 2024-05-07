@@ -86,11 +86,11 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * Metrics provided by the analyzer implementation.
      */
     private const
-        M_CALLS  = 'calls',
+        M_CALLS = 'calls',
         M_FANOUT = 'fanout',
-        M_CA     = 'ca',
-        M_CBO    = 'cbo',
-        M_CE     = 'ce';
+        M_CA = 'ca',
+        M_CBO = 'cbo',
+        M_CE = 'ce';
 
     /**
      * Has this analyzer already processed the source under test?
@@ -150,8 +150,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     public function getProjectMetrics()
     {
         return [
-            self::M_CALLS   =>  $this->calls,
-            self::M_FANOUT  =>  $this->fanout,
+            self::M_CALLS => $this->calls,
+            self::M_FANOUT => $this->fanout,
         ];
     }
 
@@ -218,9 +218,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      */
     private function reset(): void
     {
-        $this->calls         = 0;
-        $this->fanout        = 0;
-        $this->nodeMetrics   = [];
+        $this->calls = 0;
+        $this->fanout = 0;
+        $this->nodeMetrics = [];
         $this->dependencyMap = [];
     }
 
@@ -237,9 +237,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
             $efferentCoupling = count($metrics['ce']);
 
             $this->nodeMetrics[$id] = [
-                self::M_CA   =>  $afferentCoupling,
-                self::M_CBO  =>  $efferentCoupling,
-                self::M_CE   =>  $efferentCoupling,
+                self::M_CA => $afferentCoupling,
+                self::M_CBO => $efferentCoupling,
+                self::M_CE => $efferentCoupling,
             ];
 
             $this->fanout += $efferentCoupling;

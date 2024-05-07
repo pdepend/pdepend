@@ -114,7 +114,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
     public function testParserHandlesStringWithQuestionMarkNotAsTernaryOperator(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
-        $method   = $namespaces->current()
+        $method = $namespaces->current()
             ->getClasses()
             ->current()
             ->getMethods()

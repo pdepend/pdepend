@@ -83,8 +83,8 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
         $actual = [];
         foreach ($properties as $property) {
             $actual[] = [
-                'private'  =>  $property->isPrivate(),
-                'public'   =>  $property->isPublic(),
+                'private' => $property->isPrivate(),
+                'public' => $property->isPublic(),
             ];
         }
 

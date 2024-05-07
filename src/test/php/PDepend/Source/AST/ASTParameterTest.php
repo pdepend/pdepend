@@ -185,7 +185,7 @@ class ASTParameterTest extends AbstractTestCase
      */
     public function testParameterReturnsExpectedDeclaringFunction(): void
     {
-        $function   = $this->getFirstFunctionForTestCase();
+        $function = $this->getFirstFunctionForTestCase();
         $parameters = $function->getParameters();
         $this->assertSame($function, $parameters[0]->getDeclaringFunction());
     }
@@ -195,7 +195,7 @@ class ASTParameterTest extends AbstractTestCase
      */
     public function testParameterReturnsExpectedDeclaringMethod(): void
     {
-        $method     = $this->getFirstMethodInClass();
+        $method = $this->getFirstMethodInClass();
         $parameters = $method->getParameters();
         $this->assertSame($method, $parameters[0]->getDeclaringFunction());
     }

@@ -62,7 +62,7 @@ class ImageConvertTest extends AbstractTestCase
      */
     public function testConvertMakesCopyForSameMimeType(): void
     {
-        $input  = $this->createInputSvg();
+        $input = $this->createInputSvg();
         $output = $this->createRunResourceURI('pdepend.out') . '.svg';
 
         ImageConvert::convert($input, $output);
@@ -76,7 +76,7 @@ class ImageConvertTest extends AbstractTestCase
     {
         $this->requireImagick();
 
-        $input  = $this->createInputSvg();
+        $input = $this->createInputSvg();
         $output = $this->createRunResourceURI('pdepend.out') . '.png';
 
         ImageConvert::convert($input, $output);
@@ -92,7 +92,7 @@ class ImageConvertTest extends AbstractTestCase
             $this->markTestSkipped('No pecl/imagick extension.');
         }
 
-        $input  = $this->createInputSvg();
+        $input = $this->createInputSvg();
         $output = $this->createRunResourceURI('pdepend');
 
         ImageConvert::convert($input, $output);
@@ -114,14 +114,14 @@ class ImageConvertTest extends AbstractTestCase
      */
     public function testConvertRecognizesFontFamilyInConfiguration(): void
     {
-        $settings                           = new stdClass();
-        $settings->imageConvert             = new stdClass();
+        $settings = new stdClass();
+        $settings->imageConvert = new stdClass();
         $settings->imageConvert->fontFamily = 'Verdana';
 
         $config = new Configuration($settings);
         ConfigurationInstance::set($config);
 
-        $input  = $this->createInputSvg();
+        $input = $this->createInputSvg();
         $output = $this->createRunResourceURI('pdepend') . '.svg';
 
         ImageConvert::convert($input, $output);
@@ -145,14 +145,14 @@ class ImageConvertTest extends AbstractTestCase
      */
     public function testConvertRecognizesFontSizeInConfiguration(): void
     {
-        $settings                         = new stdClass();
-        $settings->imageConvert           = new stdClass();
+        $settings = new stdClass();
+        $settings->imageConvert = new stdClass();
         $settings->imageConvert->fontSize = 14;
 
         $config = new Configuration($settings);
         ConfigurationInstance::set($config);
 
-        $input  = $this->createInputSvg();
+        $input = $this->createInputSvg();
         $output = $this->createRunResourceURI('pdepend') . '.svg';
 
         ImageConvert::convert($input, $output);

@@ -131,7 +131,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      */
     public function testUnsetNamespaceWithNullWillResetPreviousPackage(): void
     {
-        $namespace  = new ASTNamespace('nspace');
+        $namespace = new ASTNamespace('nspace');
         $function = $this->createItem();
 
         $function->setNamespace($namespace);
@@ -196,7 +196,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      */
     public function testGetSetNamespace(): void
     {
-        $namespace  = new ASTNamespace('nspace');
+        $namespace = new ASTNamespace('nspace');
         $function = $this->createItem();
 
         $function->setNamespace($namespace);
@@ -563,7 +563,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testVisitorAccept(): void
     {
         $function = $this->createItem();
-        $visitor  = new StubASTVisitor();
+        $visitor = new StubASTVisitor();
 
         $function->accept($visitor);
         $this->assertSame($function, $visitor->function);

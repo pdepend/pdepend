@@ -104,11 +104,11 @@ class Token
      */
     public function __construct($type, $image, $startLine, $endLine, $startColumn, $endColumn)
     {
-        $this->type        = $type;
-        $this->image       = $image;
-        $this->startLine   = $startLine;
-        $this->endLine     = $endLine;
+        $this->type = $type;
+        $this->image = $image;
+        $this->startLine = $startLine;
+        $this->endLine = $endLine;
         $this->startColumn = $startColumn;
-        $this->endColumn   = $endColumn;
+        $this->endColumn = $endColumn;
     }
 }

@@ -302,7 +302,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
      */
     public function testSetParentWithNullResetsPreviousParentToNull(): void
     {
-        $class  = new ASTClass('clazz');
+        $class = new ASTClass('clazz');
         $method = new ASTMethod('method');
 
         $method->setParent($class);
@@ -316,7 +316,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
      */
     public function testGetSetParent(): void
     {
-        $class  = new ASTClass('clazz');
+        $class = new ASTClass('clazz');
         $method = new ASTMethod('method');
 
         $method->setParent($class);
@@ -328,7 +328,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
      */
     public function testVisitorAccept(): void
     {
-        $method  = new ASTMethod('method', 0);
+        $method = new ASTMethod('method', 0);
         $visitor = new StubASTVisitor();
         $method->accept($visitor);
 

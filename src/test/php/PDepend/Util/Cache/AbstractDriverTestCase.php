@@ -134,7 +134,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      */
     public function testRemoveDeletesExistingCacheEntry(): void
     {
-        $key  = __FUNCTION__ . '.tokens';
+        $key = __FUNCTION__ . '.tokens';
         $data = __METHOD__;
 
         $driver = $this->createDriver();
@@ -149,7 +149,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      */
     public function testRemoveDeletesExistingCacheEntriesWithEqualCacheKeyPrefix(): void
     {
-        $key  = __FUNCTION__ . '.tokens';
+        $key = __FUNCTION__ . '.tokens';
         $data = __METHOD__;
 
         $driver = $this->createDriver();
@@ -164,7 +164,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      */
     public function testRemoveDeletesExistingCacheEntryOfDifferentType(): void
     {
-        $key  = __FUNCTION__ . '.tokens';
+        $key = __FUNCTION__ . '.tokens';
         $data = __METHOD__;
 
         $driver = $this->createDriver();
@@ -179,7 +179,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
      */
     public function testRemoveSilentlyIgnoresPatternsWithoutMatch(): void
     {
-        $key  = __FUNCTION__;
+        $key = __FUNCTION__;
         $data = __METHOD__;
 
         $driver = $this->createDriver();

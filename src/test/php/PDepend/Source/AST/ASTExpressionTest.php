@@ -70,7 +70,7 @@ class ASTExpressionTest extends ASTNodeTestCase
     public function testExpressionGraphWithBooleanExpressions(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
-        $expected   = [
+        $expected = [
             'PDepend\\Source\\AST\\ASTExpression',
             'PDepend\\Source\\AST\\ASTVariable',
             'PDepend\\Source\\AST\\ASTBooleanAndExpression',

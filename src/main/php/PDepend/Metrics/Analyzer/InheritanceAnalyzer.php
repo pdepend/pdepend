@@ -74,12 +74,12 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      */
     private const
         M_AVERAGE_NUMBER_DERIVED_CLASSES = 'andc',
-        M_AVERAGE_HIERARCHY_HEIGHT       = 'ahh',
-        M_DEPTH_OF_INHERITANCE_TREE      = 'dit',
-        M_NUMBER_OF_ADDED_METHODS        = 'noam',
-        M_NUMBER_OF_OVERWRITTEN_METHODS  = 'noom',
-        M_NUMBER_OF_DERIVED_CLASSES      = 'nocc',
-        M_MAXIMUM_INHERITANCE_DEPTH      = 'maxDIT';
+        M_AVERAGE_HIERARCHY_HEIGHT = 'ahh',
+        M_DEPTH_OF_INHERITANCE_TREE = 'dit',
+        M_NUMBER_OF_ADDED_METHODS = 'noam',
+        M_NUMBER_OF_OVERWRITTEN_METHODS = 'noom',
+        M_NUMBER_OF_DERIVED_CLASSES = 'nocc',
+        M_MAXIMUM_INHERITANCE_DEPTH = 'maxDIT';
 
     /**
      * Contains the max inheritance depth for all root classes within the
@@ -162,9 +162,9 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     public function getProjectMetrics()
     {
         return [
-            self::M_AVERAGE_NUMBER_DERIVED_CLASSES  =>  $this->andc,
-            self::M_AVERAGE_HIERARCHY_HEIGHT        =>  $this->ahh,
-            self::M_MAXIMUM_INHERITANCE_DEPTH       =>  $this->maxDIT,
+            self::M_AVERAGE_NUMBER_DERIVED_CLASSES => $this->andc,
+            self::M_AVERAGE_HIERARCHY_HEIGHT => $this->ahh,
+            self::M_MAXIMUM_INHERITANCE_DEPTH => $this->maxDIT,
         ];
     }
 
@@ -248,7 +248,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      */
     private function calculateDepthOfInheritanceTree(ASTClass $class): void
     {
-        $dit  = 0;
+        $dit = 0;
         $id = $class->getId();
         $root = $class->getId();
 
@@ -287,7 +287,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
             $parentMethodNames[$method->getName()] = $method->isAbstract();
         }
 
-        $numberOfAddedMethods       = 0;
+        $numberOfAddedMethods = 0;
         $numberOfOverwrittenMethods = 0;
 
         foreach ($class->getAllMethods() as $method) {
@@ -325,9 +325,9 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
         ++$this->numberOfClasses;
 
         $this->nodeMetrics[$id] = [
-            self::M_DEPTH_OF_INHERITANCE_TREE     => 0,
-            self::M_NUMBER_OF_ADDED_METHODS       => 0,
-            self::M_NUMBER_OF_DERIVED_CLASSES     => 0,
+            self::M_DEPTH_OF_INHERITANCE_TREE => 0,
+            self::M_NUMBER_OF_ADDED_METHODS => 0,
+            self::M_NUMBER_OF_DERIVED_CLASSES => 0,
             self::M_NUMBER_OF_OVERWRITTEN_METHODS => 0,
         ];
 

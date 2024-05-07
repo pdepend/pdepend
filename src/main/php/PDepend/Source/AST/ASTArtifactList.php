@@ -104,7 +104,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
 
             if ($filter->accept($artifact)) {
                 $nodeKeys[$id] = $id;
-                $this->artifacts[]  = $artifact;
+                $this->artifacts[] = $artifact;
 
                 ++$this->count;
             }
