@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.8
  */
 
@@ -49,7 +48,6 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.8
  */
 class ASTElseIfStatement extends ASTStatement
@@ -59,7 +57,6 @@ class ASTElseIfStatement extends ASTStatement
      * <b>else</b>-statement.
      *
      * @return bool
-     *
      * @since  0.9.12
      */
     public function hasElse()

@@ -46,7 +46,6 @@ use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

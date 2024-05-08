@@ -122,7 +122,6 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param Analyzer $analyzer The analyzer to log.
-     *
      * @return bool
      */
     public function log(Analyzer $analyzer)

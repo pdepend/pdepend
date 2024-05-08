@@ -48,7 +48,6 @@ use PDepend\AbstractTestCase;
  * Base test case for abstract item implementations.
  *
  * @covers \PDepend\Source\AST\AbstractASTArtifact
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -74,8 +73,7 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
      * and node builder implementations.
      *
      * @param string $testCase
-     * @param bool   $ignoreAnnotations
-     *
+     * @param bool $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)

@@ -51,7 +51,6 @@ use PDepend\Source\AST\ASTClass;
  * Test case for the inheritance analyzer.
  *
  * @covers \PDepend\Metrics\Analyzer\InheritanceAnalyzer
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
@@ -283,7 +282,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      * calculated metric value.
      *
      * @param string $testCase Name of the calling test case.
-     * @param string $metric   Name of the searched metric.
+     * @param string $metric Name of the searched metric.
      */
     private function getCalculatedMetric($testCase, $metric): mixed
     {

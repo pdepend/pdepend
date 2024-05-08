@@ -59,7 +59,6 @@ class ParserRegressionTest extends AbstractTestCase
      * Tests that the parser handles the given source file.
      *
      * @param string $pathName Name of the file to parse.
-     *
      * @dataProvider dataProviderSourceFiles
      */
     public function testParserHandlesSourceFileWithoutException($pathName): void

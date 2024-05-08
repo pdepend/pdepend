@@ -48,7 +48,6 @@ use PDepend\Metrics\AbstractMetricsTestCase;
  * Test case for the coupling analyzer.
  *
  * @covers \PDepend\Metrics\Analyzer\CouplingAnalyzer
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -502,7 +501,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testGetNodeMetricsForTrait
      *
      * @return array
-     *
      * @since 1.0.6
      */
     public function testGetNodeMetricsForTrait()
@@ -517,7 +515,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testGetNodeMetricsForTraitReturnsExpectedMetricSet
      *
      * @param array $metrics Calculated coupling metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -531,7 +528,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testCalculateCEMetricForTrait
      *
      * @param array $metrics Calculated coupling metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -545,7 +541,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testCalculateCBOMetricForTrait
      *
      * @param array $metrics Calculated coupling metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -559,7 +554,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testCalculateCAMetricForTrait
      *
      * @param array $metrics Calculated coupling metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -573,7 +567,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testGetProjectMetricsForTrait
      *
      * @return array
-     *
      * @since 1.0.6
      */
     public function testGetProjectMetricsForTrait()
@@ -591,7 +584,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testGetProjectMetricsForTraitReturnsExpectedMetricSet
      *
      * @param array $metrics Calculated coupling metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetProjectMetricsForTrait
@@ -605,7 +597,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testCalculateCallsMetricForTrait
      *
      * @param array $metrics Calculated coupling metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetProjectMetricsForTrait
@@ -619,7 +610,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * testCalculateFanoutMetricForTrait
      *
      * @param array $metrics Calculated coupling metrics.
-     *
      * @since 1.0.6
      *
      * @depends testGetProjectMetricsForTrait
@@ -634,7 +624,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * returns all measured metrics.
      *
      * @return array<string, mixed>
-     *
      * @since 1.0.6
      */
     private function calculateTraitMetrics()
@@ -651,9 +640,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * Tests that the analyzer calculates the expected call count.
      *
      * @param string $testCase File with test source.
-     * @param int    $calls    Number of expected calls.
-     * @param int    $fanout   Expected fanout value.
-     *
+     * @param int $calls Number of expected calls.
+     * @param int $fanout Expected fanout value.
      * @dataProvider dataProviderAnalyzerCalculatesExpectedCallCount
      */
     public function testAnalyzerCalculatesExpectedCallCount(
@@ -672,9 +660,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * the calculated project metrics.
      *
      * @param string $testCase Optional name of the calling test case.
-     *
      * @return array<string, mixed>
-     *
      * @since 0.10.2
      */
     private function calculateProjectMetrics($testCase = null)

@@ -58,9 +58,8 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTestCase
      * This method tests that the parser handles reserved keywords in type
      * constant names correct.
      *
-     * @param string     $sourceFile   Name of the test file.
+     * @param string $sourceFile Name of the test file.
      * @param array<int> $constantName Name of the expected constant
-     *
      * @dataProvider dataProviderReservedKeywordAsTypeConstantName
      */
     public function testReservedKeywordAsTypeConstantName($sourceFile, $constantName): void

@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 
@@ -52,10 +51,8 @@ use stdClass;
  * Test case for the {@link \PDepend\Util\Configuration} class.
  *
  * @covers \PDepend\Util\Configuration
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
  * @since 0.10.0
  *
  * @group unittest

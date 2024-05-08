@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.11
  */
 
@@ -54,7 +53,6 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.12
  */
 abstract class PHPParserVersion83 extends PHPParserVersion82
@@ -63,10 +61,8 @@ abstract class PHPParserVersion83 extends PHPParserVersion82
      * Parse a typed constant (PHP >= 8.3).
      *
      * @return ASTConstantDeclarator
-     *
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
-     *
      * @since  1.16.0
      */
     protected function parseTypedConstantDeclarator()
@@ -88,9 +84,7 @@ abstract class PHPParserVersion83 extends PHPParserVersion82
 
     /**
      * @param int $tokenType
-     *
      * @return bool
-     *
      * @since  2.16.3
      */
     protected function isConstantName($tokenType)

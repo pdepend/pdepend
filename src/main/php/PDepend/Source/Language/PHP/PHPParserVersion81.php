@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.11
  */
 
@@ -59,7 +58,6 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.11
  */
 abstract class PHPParserVersion81 extends PHPParserVersion80
@@ -86,7 +84,6 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      * Tests if the given image is a PHP 8.1 type hint.
      *
      * @param string $image
-     *
      * @return bool
      */
     protected function isScalarOrCallableTypeHint($image)
@@ -127,7 +124,6 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
      * declaration.
      *
      * @return ASTValue
-     *
      * @since 2.11.0
      */
     protected function parseVariableDefaultValue()
@@ -163,7 +159,6 @@ abstract class PHPParserVersion81 extends PHPParserVersion80
 
     /**
      * @param ASTType $firstType
-     *
      * @return ASTIntersectionType
      */
     protected function parseIntersectionTypeHint($firstType)

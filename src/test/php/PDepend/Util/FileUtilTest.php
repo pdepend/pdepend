@@ -48,7 +48,6 @@ use PDepend\AbstractTestCase;
  * Test case for the {@link \PDepend\Util\FileUtil} class.
  *
  * @covers \PDepend\Util\FileUtil
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *

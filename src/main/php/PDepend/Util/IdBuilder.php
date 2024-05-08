@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.12
  */
 
@@ -56,7 +55,6 @@ use PDepend\Source\AST\ASTMethod;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.12
  */
 class IdBuilder
@@ -103,7 +101,6 @@ class IdBuilder
      * Generates an identifier for the given source item.
      *
      * @param string $prefix The item type identifier.
-     *
      * @return string
      */
     protected function forOffsetItem(AbstractASTArtifact $artifact, $prefix)
@@ -134,7 +131,6 @@ class IdBuilder
      * Creates a base 36 hash for the given string.
      *
      * @param string $string The raw input identifier/string.
-     *
      * @return string
      */
     protected function hash($string)
@@ -146,9 +142,8 @@ class IdBuilder
      * Returns the node offset/occurence of the given <b>$string</b> within a
      * file.
      *
-     * @param string $file   The file identifier.
+     * @param string $file The file identifier.
      * @param string $string The node identifier.
-     *
      * @return string
      */
     protected function getOffsetInFile($file, $string)

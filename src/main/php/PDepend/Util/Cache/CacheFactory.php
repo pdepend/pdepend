@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 
@@ -56,7 +55,6 @@ use RuntimeException;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 class CacheFactory
@@ -92,9 +90,7 @@ class CacheFactory
      * identifier.
      *
      * @param string $cacheKey The name/identifier for the cache instance.
-     *
      * @return CacheDriver
-     *
      * @throws InvalidArgumentException
      * @throws RandomException
      * @throws RuntimeException
@@ -111,9 +107,7 @@ class CacheFactory
      * Creates a cache instance based on the supplied configuration.
      *
      * @param string|null $cacheKey The name/identifier for the cache instance.
-     *
      * @return CacheDriver
-     *
      * @throws InvalidArgumentException If the configured cache driver is unknown.
      * @throws RandomException
      * @throws RuntimeException
@@ -138,12 +132,10 @@ class CacheFactory
     /**
      * Creates a new file system based cache instance.
      *
-     * @param string      $location Cache root directory.
-     * @param int         $ttl      Cache ttl
+     * @param string $location Cache root directory.
+     * @param int $ttl Cache ttl
      * @param string|null $cacheKey The name/identifier for the cache instance.
-     *
      * @return FileCacheDriver
-     *
      * @throws RuntimeException
      */
     protected function createFileCache($location, $ttl = self::DEFAULT_TTL, $cacheKey = null)
@@ -155,7 +147,6 @@ class CacheFactory
      * Creates an in memory cache instance.
      *
      * @return MemoryCacheDriver
-     *
      * @throws RandomException
      */
     protected function createMemoryCache()

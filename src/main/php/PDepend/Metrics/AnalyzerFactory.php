@@ -71,9 +71,7 @@ class AnalyzerFactory
      * Create and configure all analyzers required for given set of loggers.
      *
      * @param ReportGenerator[] $generators
-     *
      * @return Analyzer[]
-     *
      * @throws InvalidArgumentException
      */
     public function createRequiredForGenerators(array $generators)

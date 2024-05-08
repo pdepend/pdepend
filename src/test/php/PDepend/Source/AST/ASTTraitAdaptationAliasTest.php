@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  */
 
@@ -49,10 +48,8 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTraitAdaptationAlias
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  *
  * @group unittest
@@ -141,7 +138,6 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      * testTraitAdaptationAlias
      *
      * @return ASTTraitAdaptationAlias
-     *
      * @since 1.0.2
      */
     public function testTraitAdaptationAlias()
@@ -217,7 +213,6 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      * testTraitReference
      *
      * @return ASTTraitReference
-     *
      * @since 1.0.2
      */
     public function testTraitReference()

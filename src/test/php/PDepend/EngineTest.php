@@ -49,7 +49,6 @@ use PDepend\Source\AST\ASTNamespace;
  * Test case for \PDepend\Engine facade.
  *
  * @covers \PDepend\Engine
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

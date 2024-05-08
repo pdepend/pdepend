@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 
@@ -66,7 +65,6 @@ use OutOfBoundsException;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 class ASTFieldDeclaration extends AbstractASTNode
@@ -115,7 +113,6 @@ class ASTFieldDeclaration extends AbstractASTNode
      * contains an invalid/unexpected modifier
      *
      * @param int $modifiers The declared modifiers for this node.
-     *
      * @throws InvalidArgumentException If the given modifier contains unexpected values.
      */
     public function setModifiers($modifiers): void
@@ -184,7 +181,6 @@ class ASTFieldDeclaration extends AbstractASTNode
      * Returns the total number of the used property bag.
      *
      * @return int
-     *
      * @see    ASTNode#getMetadataSize()
      * @since  0.10.4
      */

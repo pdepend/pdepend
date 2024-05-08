@@ -81,7 +81,6 @@ interface Analyzer
      * for any reason should return <b>false</b>.
      *
      * @return bool
-     *
      * @since  0.9.10
      */
     public function isEnabled();
@@ -90,7 +89,6 @@ interface Analyzer
      * Set global options
      *
      * @param array<string, mixed> $options
-     *
      * @since 2.0.1
      */
     public function setOptions(array $options = []): void;

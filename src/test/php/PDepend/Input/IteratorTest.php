@@ -53,7 +53,6 @@ use SplFileInfo;
  * Test case for the php file filter iterator.
  *
  * @covers \PDepend\Input\Iterator
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -164,7 +163,6 @@ class IteratorTest extends AbstractTestCase
      * Creates an array of file names that were returned by the input iterator.
      *
      * @param array<string> $extensions The accepted file extension.
-     *
      * @return array<string>
      */
     protected function createFilteredFileList(array $extensions)

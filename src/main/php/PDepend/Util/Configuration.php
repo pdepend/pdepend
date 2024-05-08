@@ -58,7 +58,6 @@ class Configuration
      * Simple object tree holding the concrete configuration values.
      *
      * @var stdClass
-     *
      * @since 0.10.0
      */
     protected $settings = null;
@@ -67,7 +66,6 @@ class Configuration
      * Constructs a new configuration instance with the given settings tree.
      *
      * @param stdClass $settings The concrete configuration values.
-     *
      * @since 0.10.0
      */
     public function __construct(stdClass $settings)
@@ -83,9 +81,7 @@ class Configuration
      * a matching entry exists. Otherwise this method will throw an exception.
      *
      * @param string $name Name of the requested configuration value.
-     *
      * @throws OutOfRangeException If no matching configuration value exists.
-     *
      * @since  0.10.0
      */
     public function __get($name): mixed
@@ -104,11 +100,9 @@ class Configuration
      * implementation of the magic set method always throws an exception, because
      * configuration settings are immutable.
      *
-     * @param string $name  Name of the write property.
-     * @param mixed  $value The new property value.
-     *
+     * @param string $name Name of the write property.
+     * @param mixed $value The new property value.
      * @throws OutOfRangeException Whenever this method is called.
-     *
      * @since  0.10.0
      */
     public function __set($name, $value): void
@@ -125,9 +119,7 @@ class Configuration
      * for the given <b>$name</b> exists.
      *
      * @param string $name Name of the requested property.
-     *
      * @return bool
-     *
      * @since  0.10.0
      */
     public function __isset($name)

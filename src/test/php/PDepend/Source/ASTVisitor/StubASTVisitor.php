@@ -79,7 +79,6 @@ class StubASTVisitor implements ASTVisitor
      * The last visited trait instance.
      *
      * @var ASTTrait
-     *
      * @since 1.0.0
      */
     public $trait;
@@ -144,10 +143,8 @@ class StubASTVisitor implements ASTVisitor
      * by the concrete visit method.
      *
      * @param string $method Name of the called method.
-     * @param array  $args   Array with method argument.
-     *
+     * @param array $args Array with method argument.
      * @return array
-     *
      * @since 0.9.12
      */
     public function __call($method, $args)

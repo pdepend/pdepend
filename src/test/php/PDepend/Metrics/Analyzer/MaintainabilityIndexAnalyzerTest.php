@@ -50,7 +50,6 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  *
  * @covers \PDepend\Metrics\AbstractCachingAnalyzer
  * @covers \PDepend\Metrics\Analyzer\MaintainabilityIndexAnalyzer
- *
  * @copyright 2015 Matthias Mullie. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
@@ -60,7 +59,6 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
-     *
      * @since 1.0.0
      */
     private $cache;
@@ -195,7 +193,6 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
      * Returns a pre configured ccn analyzer.
      *
      * @return MaintainabilityIndexAnalyzer
-     *
      * @since 1.0.0
      */
     private function createAnalyzer()

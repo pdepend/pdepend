@@ -54,7 +54,6 @@ use Symfony\Component\DependencyInjection\Container;
  * Test case for the text ui runner.
  *
  * @covers \PDepend\TextUI\Runner
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -311,9 +310,8 @@ class RunnerTest extends AbstractTestCase
     /**
      * Executes the runner class and returns an array with namespace statistics.
      *
-     * @param Runner $runner   The runner instance.
-     * @param        $pathName The source path.
-     *
+     * @param Runner $runner The runner instance.
+     * @param $pathName The source path.
      * @return array
      */
     private function runRunnerAndReturnStatistics(Runner $runner, $pathName)

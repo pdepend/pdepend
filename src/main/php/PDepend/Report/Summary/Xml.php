@@ -164,7 +164,6 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param Analyzer $analyzer The analyzer to log.
-     *
      * @return bool
      */
     public function log(Analyzer $analyzer)
@@ -235,7 +234,6 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Returns an array with all collected project metrics.
      *
      * @return array<string, mixed>
-     *
      * @since  0.9.10
      */
     private function getProjectMetrics()
@@ -422,7 +420,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *   </class>
      * </code>
      *
-     * @param DOMElement          $xml             The parent xml element.
+     * @param DOMElement $xml The parent xml element.
      * @param ?ASTCompilationUnit $compilationUnit The code file instance.
      */
     protected function writeFileReference(DOMElement $xml, ?ASTCompilationUnit $compilationUnit = null): void

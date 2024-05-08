@@ -184,11 +184,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(?) = NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 2 --
      * </code>
      *
-     * @param ASTNode        $node
+     * @param ASTNode $node
      * @param numeric-string $data
-     *
      * @return numeric-string
-     *
      * @since  0.9.12
      */
     public function visitConditionalExpression($node, $data)
@@ -227,11 +225,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(do) = NP(<do-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param ASTNode        $node The currently visited node.
+     * @param ASTNode $node The currently visited node.
      * @param numeric-string $data The previously calculated npath value.
-     *
      * @return numeric-string
-     *
      * @since  0.9.12
      */
     public function visitDoWhileStatement($node, $data)
@@ -267,10 +263,8 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * </code>
      *
      * @param ASTElseIfStatement $node The currently visited node.
-     * @param numeric-string     $data The previously calculated npath value.
-     *
+     * @param numeric-string $data The previously calculated npath value.
      * @return numeric-string
-     *
      * @since  0.9.12
      */
     public function visitElseIfStatement($node, $data)
@@ -302,11 +296,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(for) = NP(<for-range>) + NP(<expr1>) + NP(<expr2>) + NP(<expr3>) + 1 --
      * </code>
      *
-     * @param ASTNode        $node The currently visited node.
+     * @param ASTNode $node The currently visited node.
      * @param numeric-string $data The previously calculated npath value.
-     *
      * @return numeric-string
-     *
      * @since  0.9.12
      */
     public function visitForStatement($node, $data)
@@ -337,11 +329,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(foreach) = NP(<foreach-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param ASTNode        $node The currently visited node.
+     * @param ASTNode $node The currently visited node.
      * @param numeric-string $data The previously calculated npath value.
-     *
      * @return numeric-string
-     *
      * @since  0.9.12
      */
     public function visitForeachStatement($node, $data)
@@ -382,9 +372,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      *
      * @param ASTIfStatement $node The currently visited node.
      * @param numeric-string $data The previously calculated npath value.
-     *
      * @return numeric-string
-     *
      * @since  0.9.12
      */
     public function visitIfStatement($node, $data)
@@ -415,11 +403,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(return) = NP(<expr>) --
      * </code>
      *
-     * @param ASTNode        $node The currently visited node.
+     * @param ASTNode $node The currently visited node.
      * @param numeric-string $data The previously calculated npath value.
-     *
      * @return numeric-string
-     *
      * @since  0.9.12
      */
     public function visitReturnStatement($node, $data)
@@ -444,11 +430,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(switch) = NP(<expr>) + NP(<default-range>) +  NP(<case-range1>) ... --
      * </code>
      *
-     * @param ASTNode        $node The currently visited node.
+     * @param ASTNode $node The currently visited node.
      * @param numeric-string $data The previously calculated npath value.
-     *
      * @return numeric-string
-     *
      * @since  0.9.12
      */
     public function visitSwitchStatement($node, $data)
@@ -487,11 +471,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(try) = NP(<try-range>) + NP(<catch-range1>) + NP(<catch-range2>) ... --
      * </code>
      *
-     * @param ASTNode        $node The currently visited node.
+     * @param ASTNode $node The currently visited node.
      * @param numeric-string $data The previously calculated npath value.
-     *
      * @return numeric-string
-     *
      * @since  0.9.12
      */
     public function visitTryStatement($node, $data)
@@ -518,11 +500,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * -- NP(while) = NP(<while-range>) + NP(<expr>) + 1 --
      * </code>
      *
-     * @param ASTNode        $node The currently visited node.
+     * @param ASTNode $node The currently visited node.
      * @param numeric-string $data The previously calculated npath value.
-     *
      * @return numeric-string
-     *
      * @since  0.9.12
      */
     public function visitWhileStatement($node, $data)
@@ -540,11 +520,8 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * Calculates the expression sum of the given node.
      *
      * @param ASTNode $node The currently visited node.
-     *
      * @return numeric-string
-     *
      * @since  0.9.12
-     *
      * @todo   I don't like this method implementation, it should be possible to
      *       implement this method with more visitor behavior for the boolean
      *       and logical expressions.

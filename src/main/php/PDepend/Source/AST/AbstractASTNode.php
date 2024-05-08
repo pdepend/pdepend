@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 
@@ -52,7 +51,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 abstract class AbstractASTNode implements ASTNode
@@ -85,7 +83,6 @@ abstract class AbstractASTNode implements ASTNode
      * image in a colon seperated string.
      *
      * @var string
-     *
      * @since 0.10.4
      */
     protected $metadata = '::::';
@@ -108,7 +105,6 @@ abstract class AbstractASTNode implements ASTNode
      * array with those property names that should be serialized for this class.
      *
      * @return array
-     *
      * @since 0.10.0
      */
     public function __sleep()
@@ -139,7 +135,6 @@ abstract class AbstractASTNode implements ASTNode
      * @template T of array<string, mixed>|numeric-string
      *
      * @param T $data
-     *
      * @return T
      */
     public function accept(ASTVisitor $visitor, $data = [])
@@ -231,7 +226,6 @@ abstract class AbstractASTNode implements ASTNode
      * @param int $endLine
      * @param int $startColumn
      * @param int $endColumn
-     *
      * @since 0.9.10
      */
     public function configureLinesAndColumns(
@@ -250,9 +244,7 @@ abstract class AbstractASTNode implements ASTNode
      * Returns an integer value that was stored under the given index.
      *
      * @param int $index
-     *
      * @return int
-     *
      * @since 0.10.4
      */
     protected function getMetadataInteger($index)
@@ -266,7 +258,6 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @param int $index
      * @param int $value
-     *
      * @since 0.10.4
      */
     protected function setMetadataInteger($index, $value): void
@@ -278,9 +269,7 @@ abstract class AbstractASTNode implements ASTNode
      * Returns a boolean value that was stored under the given index.
      *
      * @param int $index
-     *
      * @return bool
-     *
      * @since 0.10.4
      */
     protected function getMetadataBoolean($index)
@@ -292,9 +281,8 @@ abstract class AbstractASTNode implements ASTNode
      * Stores a boolean value under the given index in the internally used data
      * string.
      *
-     * @param int  $index
+     * @param int $index
      * @param bool $value
-     *
      * @since 0.10.4
      */
     protected function setMetadataBoolean($index, $value): void
@@ -306,9 +294,7 @@ abstract class AbstractASTNode implements ASTNode
      * Returns the value that was stored under the given index.
      *
      * @param int $index
-     *
      * @return string
-     *
      * @since 0.10.4
      */
     protected function getMetadata($index)
@@ -321,9 +307,8 @@ abstract class AbstractASTNode implements ASTNode
      * Stores the given value under the given index in an internal storage
      * container.
      *
-     * @param int    $index
+     * @param int $index
      * @param string $value
-     *
      * @since 0.10.4
      */
     protected function setMetadata($index, $value): void
@@ -338,7 +323,6 @@ abstract class AbstractASTNode implements ASTNode
      * Returns the total number of the used property bag.
      *
      * @return int
-     *
      * @since 0.10.4
      */
     protected function getMetadataSize()
@@ -350,9 +334,7 @@ abstract class AbstractASTNode implements ASTNode
      * Returns the node instance for the given index or throws an exception.
      *
      * @param int $index
-     *
      * @return ASTNode
-     *
      * @throws OutOfBoundsException When no node exists at the given index.
      */
     public function getChild($index)
@@ -387,7 +369,6 @@ abstract class AbstractASTNode implements ASTNode
      * @template T of ASTNode
      *
      * @param class-string<T> $targetType
-     *
      * @return T|null
      */
     public function getFirstChildOfType($targetType)
@@ -412,9 +393,8 @@ abstract class AbstractASTNode implements ASTNode
      * @template R of T
      *
      * @param class-string<T> $targetType Searched class or interface type.
-     * @param R[]             $results    Already found node instances. This parameter
-     *                                    is only for internal usage.
-     *
+     * @param R[] $results Already found node instances. This parameter
+     *                     is only for internal usage.
      * @return T[]
      */
     public function findChildrenOfType($targetType, array &$results = [])
@@ -462,7 +442,6 @@ abstract class AbstractASTNode implements ASTNode
      * of <b>$parentType</b>.
      *
      * @param string $parentType
-     *
      * @return ASTNode[]
      */
     public function getParentsOfType($parentType)

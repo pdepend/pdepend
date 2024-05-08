@@ -265,7 +265,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * that are part of the cylce are stored in the given <b>$list</b> array.
      *
      * @param AbstractASTArtifact[] $list
-     *
      * @return bool If this method detects a cycle the return value is <b>true</b>
      *              otherwise this method will return <b>false</b>.
      */

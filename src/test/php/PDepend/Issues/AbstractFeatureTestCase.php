@@ -68,7 +68,6 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      * Parses the source for the calling test case.
      *
      * @param string $testCase
-     *
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     protected function parseTestCase($testCase = null)
@@ -84,8 +83,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      * and node builder implementations.
      *
      * @param string $testCase
-     * @param bool   $ignoreAnnotations
-     *
+     * @param bool $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)

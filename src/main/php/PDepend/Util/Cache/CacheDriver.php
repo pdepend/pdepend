@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 
@@ -49,7 +48,6 @@ namespace PDepend\Util\Cache;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 interface CacheDriver
@@ -68,7 +66,6 @@ interface CacheDriver
      * <em>store()</em>.
      *
      * @param string $type
-     *
      * @return CacheDriver
      */
     public function type($type);
@@ -80,8 +77,8 @@ interface CacheDriver
      * hash and the supplied hash are not identical, that cache entry will be
      * removed and not returned.
      *
-     * @param string $key  The cache key for the given data.
-     * @param mixed  $data Any data that should be cached.
+     * @param string $key The cache key for the given data.
+     * @param mixed $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
      */
     public function store($key, $data, $hash = null): void;
@@ -93,7 +90,7 @@ interface CacheDriver
      * Then it returns the cached entry. Otherwise this method will return
      * <b>NULL</b>.
      *
-     * @param string $key  The cache key for the given data.
+     * @param string $key The cache key for the given data.
      * @param string $hash Optional hash that will be used for verification.
      */
     public function restore($key, $hash = null): mixed;

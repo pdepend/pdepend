@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 
@@ -58,7 +57,6 @@ use RuntimeException;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 class FileCacheDriver implements CacheDriver
@@ -95,7 +93,6 @@ class FileCacheDriver implements CacheDriver
      * Unique key for this cache instance.
      *
      * @var string
-     *
      * @since 1.0.0
      */
     private $cacheKey;
@@ -104,10 +101,9 @@ class FileCacheDriver implements CacheDriver
      * This method constructs a new file cache instance for the given root
      * directory.
      *
-     * @param string      $root     The cache root directory.
-     * @param int         $ttl      The cache TTL.
+     * @param string $root The cache root directory.
+     * @param int $ttl The cache TTL.
      * @param string|null $cacheKey Unique key for this cache instance.
-     *
      * @throws RuntimeException
      */
     public function __construct($root, $ttl = self::DEFAULT_TTL, $cacheKey = null)
@@ -129,7 +125,6 @@ class FileCacheDriver implements CacheDriver
      * <em>store()</em>.
      *
      * @param string $type The name or object type for the next storage method call.
-     *
      * @return $this
      */
     public function type($type)
@@ -145,8 +140,8 @@ class FileCacheDriver implements CacheDriver
      * hash and the supplied hash are not identical, that cache entry will be
      * removed and not returned.
      *
-     * @param string $key  The cache key for the given data.
-     * @param mixed  $data Any data that should be cached.
+     * @param string $key The cache key for the given data.
+     * @param mixed $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
      */
     public function store($key, $data, $hash = null): void
@@ -180,7 +175,7 @@ class FileCacheDriver implements CacheDriver
      * Then it returns the cached entry. Otherwise this method will return
      * <b>NULL</b>.
      *
-     * @param string $key  The cache key for the given data.
+     * @param string $key The cache key for the given data.
      * @param string $hash Optional hash that will be used for verification.
      */
     public function restore($key, $hash = null): mixed
@@ -214,7 +209,6 @@ class FileCacheDriver implements CacheDriver
      * This method reads the raw data from the given <em>$file</em>.
      *
      * @param string $file The cache file name.
-     *
      * @return string
      */
     protected function read($file)
@@ -263,7 +257,6 @@ class FileCacheDriver implements CacheDriver
      * directory and the current entry type.
      *
      * @param string $key The cache key for the given data.
-     *
      * @return string
      */
     protected function getCacheFile($key)
@@ -284,7 +277,6 @@ class FileCacheDriver implements CacheDriver
      * extension.
      *
      * @param string $key The cache key for the given data.
-     *
      * @return string
      */
     protected function getCacheFileWithoutExtension($key)
@@ -301,7 +293,7 @@ class FileCacheDriver implements CacheDriver
      * Cleans old cache files.
      *
      * @param string $root
-     * @param int    $ttl
+     * @param int $ttl
      */
     protected function garbageCollect($root, $ttl): void
     {

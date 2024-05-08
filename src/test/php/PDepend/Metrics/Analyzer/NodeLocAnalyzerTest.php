@@ -51,7 +51,6 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  *
  * @covers \PDepend\Metrics\AbstractCachingAnalyzer
  * @covers \PDepend\Metrics\Analyzer\NodeLocAnalyzer
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -61,7 +60,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
-     *
      * @since 1.0.0
      */
     private $cache;
@@ -645,7 +643,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      * the calling test case and returns the metric value for <b>$name</b>.
      *
      * @param string $name The name of the requested metric.
-     *
      * @since 0.10.2
      */
     private function calculateFunctionMetric($name): mixed
@@ -666,7 +663,6 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      * Creates a ready to use node loc analyzer.
      *
      * @return NodeLocAnalyzer
-     *
      * @since 1.0.0
      */
     private function createAnalyzer()

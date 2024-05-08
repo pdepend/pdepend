@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTInstanceOfExpression
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -157,7 +156,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      * Tests the instanceof expression object graph.
      *
      * @param object $parent The parent ast node.
-     * @param string $image  The expected type image.
+     * @param string $image The expected type image.
      */
     protected function assertInstanceOfGraphStatic($parent, $image): void
     {
@@ -172,7 +171,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      * Tests the instanceof expression object graph.
      *
      * @param object $parent The parent ast node.
-     * @param string $image  The expected type image.
+     * @param string $image The expected type image.
      */
     protected function assertInstanceOfGraphProperty($parent, $image): void
     {
@@ -187,8 +186,8 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      * Tests the instanceof expression object graph.
      *
      * @param object $parent The parent ast node.
-     * @param string $image  The expected type image.
-     * @param string $type   The expected class or interface type.
+     * @param string $image The expected type image.
+     * @param string $type The expected class or interface type.
      */
     protected function assertInstanceOfGraph($parent, $image, $type): void
     {

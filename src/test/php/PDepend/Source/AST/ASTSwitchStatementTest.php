@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTSwitchStatement
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -82,7 +81,6 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * testSwitchStatement
      *
      * @return ASTSwitchStatement
-     *
      * @since 1.0.2
      */
     public function testSwitchStatement()
@@ -181,7 +179,6 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * testSwitchStatementWithAlternativeScope
      *
      * @return ASTSwitchStatement
-     *
      * @since 1.0.2
      */
     public function testSwitchStatementWithAlternativeScope()
@@ -253,7 +250,6 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      * testSwitchStatementWithNestedNonePhpCode
      *
      * @return ASTSwitch
-     *
      * @since 2.1.0
      */
     public function testSwitchStatementWithNestedNonePhpCode()

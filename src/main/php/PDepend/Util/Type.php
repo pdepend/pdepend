@@ -142,7 +142,6 @@ final class Type
      * and contain the name of the extension.
      *
      * @var array<string, string>
-     *
      * @since 0.9.10
      */
     private static $internalNamespaces = null;
@@ -242,9 +241,7 @@ final class Type
      * extension.
      *
      * @param string $typeName The type name.
-     *
      * @return bool
-     *
      * @throws ReflectionException
      */
     public static function isInternalType($typeName)
@@ -262,9 +259,7 @@ final class Type
      * exists, this method will return <b>null</b>.
      *
      * @param string $typeName The type name.
-     *
      * @return string|null
-     *
      * @throws ReflectionException
      */
     public static function getTypePackage($typeName)
@@ -283,7 +278,6 @@ final class Type
      * Returns an array with all package/extension names.
      *
      * @return array<string>
-     *
      * @throws ReflectionException
      */
     public static function getInternalNamespaces()
@@ -302,9 +296,7 @@ final class Type
      * php extension.
      *
      * @param string $packageName Name of a package.
-     *
      * @return bool
-     *
      * @throws ReflectionException
      */
     public static function isInternalPackage($packageName)
@@ -318,7 +310,6 @@ final class Type
      * the list of scalar/none-object types.
      *
      * @param string $image The type identifier.
-     *
      * @return bool
      */
     public static function isScalarType($image)
@@ -339,9 +330,7 @@ final class Type
      * the list of primitive types.
      *
      * @param string $image The type image.
-     *
      * @return bool
-     *
      * @since  0.9.6
      */
     public static function isPrimitiveType($image)
@@ -354,9 +343,7 @@ final class Type
      * image.
      *
      * @param string $image The found primitive type image.
-     *
      * @return string|null
-     *
      * @since  0.9.6
      */
     public static function getPrimitiveType($image)
@@ -381,9 +368,7 @@ final class Type
      * php array type.
      *
      * @param string $image The found type image.
-     *
      * @return bool
-     *
      * @since  0.9.6
      */
     public static function isArrayType($image)
@@ -397,7 +382,6 @@ final class Type
      * classes are collected in an internal data structure.
      *
      * @return array<string, string>
-     *
      * @throws ReflectionException
      */
     private static function initTypeToExtension()

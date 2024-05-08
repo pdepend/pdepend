@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTString
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -244,7 +243,6 @@ class ASTStringTest extends ASTNodeTestCase
      * Returns a test member primary prefix.
      *
      * @param string $testCase The calling test case.
-     *
      * @return ASTString
      */
     private function getFirstStringInFunction($testCase)

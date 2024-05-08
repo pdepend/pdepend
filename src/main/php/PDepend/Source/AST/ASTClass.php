@@ -172,7 +172,6 @@ class ASTClass extends AbstractASTClassOrInterface
      * Returns the declared modifiers for this type.
      *
      * @return int
-     *
      * @since  0.9.4
      */
     public function getModifiers()
@@ -188,10 +187,8 @@ class ASTClass extends AbstractASTClassOrInterface
      * contains an invalid/unexpected modifier
      *
      * @param int $modifiers
-     *
      * @throws BadMethodCallException
      * @throws InvalidArgumentException
-     *
      * @since  0.9.4
      */
     public function setModifiers($modifiers): void

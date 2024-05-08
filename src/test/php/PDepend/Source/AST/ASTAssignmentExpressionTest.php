@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTAssignmentExpression
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -273,7 +272,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      * testVariableAssignmentExpression
      *
      * @return ASTAssignmentExpression
-     *
      * @since 1.0.1
      */
     public function testVariableAssignmentExpression()
@@ -336,7 +334,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      * testStaticPropertyAssignmentExpression
      *
      * @return ASTAssignmentExpression
-     *
      * @since 1.0.1
      */
     public function testStaticPropertyAssignmentExpression()
@@ -399,7 +396,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      * testObjectPropertyAssignmentExpression
      *
      * @return ASTAssignmentExpression
-     *
      * @since 1.0.1
      */
     public function testObjectPropertyAssignmentExpression()
@@ -462,7 +458,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      * testChainedPropertyAssignmentExpression
      *
      * @return ASTAssignmentExpression
-     *
      * @since 1.0.1
      */
     public function testChainedPropertyAssignmentExpression()

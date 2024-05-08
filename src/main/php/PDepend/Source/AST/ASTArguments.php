@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 
@@ -62,7 +61,6 @@ use InvalidArgumentException;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 class ASTArguments extends AbstractASTNode
@@ -71,7 +69,6 @@ class ASTArguments extends AbstractASTNode
      * This method will return true if the argument list is declared as foo(...)
      *
      * @return bool
-     *
      * @since 2.11.0
      */
     public function isVariadicPlaceholder()

@@ -53,7 +53,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTPropertyPostfix
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
@@ -413,7 +412,6 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
-     *
      * @return ASTMemberPrimaryPrefix
      */
     private function getFirstMemberPrimaryPrefixInFunction($testCase)
@@ -428,7 +426,6 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $testCase Name of the calling test case.
-     *
      * @return ASTMemberPrimaryPrefix
      */
     private function getFirstMemberPrimaryPrefixInClass($testCase)

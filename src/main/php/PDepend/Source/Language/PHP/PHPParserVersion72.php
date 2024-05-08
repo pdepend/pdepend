@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.3
  */
 
@@ -70,7 +69,6 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.4
  */
 abstract class PHPParserVersion72 extends AbstractPHPParser
@@ -97,9 +95,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * This methods return true if the token matches a list opening in the current PHP version level.
      *
      * @param int $tokenType
-     *
      * @return bool
-     *
      * @since 2.6.0
      */
     protected function isListUnpacking($tokenType = null)
@@ -191,7 +187,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * Parses a scalar type hint or a callable type hint.
      *
      * @param string $image
-     *
      * @return ASTType|false
      */
     protected function parseScalarOrCallableTypeHint($image)
@@ -250,7 +245,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
     /**
      * @param int $tokenType
      * @param int $modifiers
-     *
      * @return int
      */
     private function getModifiersForConstantDefinition($tokenType, $modifiers)
@@ -276,7 +270,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * Return true if the current node can be used as a list key.
      *
      * @param ASTExpression|null $node
-     *
      * @return bool
      */
     protected function canBeListKey($node)
@@ -287,7 +280,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
 
     /**
      * @param int $tokenType
-     *
      * @return bool
      */
     protected function isConstantName($tokenType)
@@ -369,7 +361,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
 
     /**
      * @param int $tokenType
-     *
      * @return bool
      */
     protected function isMethodName($tokenType)
@@ -384,7 +375,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
 
     /**
      * @param int $tokenType
-     *
      * @return bool
      */
     protected function isTypeHint($tokenType)
@@ -484,7 +474,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * Tests if the given image is a PHP 7.0 type hint.
      *
      * @param string $image
-     *
      * @return bool
      */
     protected function isScalarOrCallableTypeHint($image)
@@ -507,7 +496,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * Parse the type reference used in an allocation expression.
      *
      * @return ASTNode
-     *
      * @since 2.3
      */
     protected function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation)
@@ -522,7 +510,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * @template T of ASTAllocationExpression
      *
      * @param T $allocation
-     *
      * @return T|null
      */
     protected function parseAnonymousClassDeclaration(ASTAllocationExpression $allocation)
@@ -620,9 +607,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * expressions.
      *
      * @return ASTNode
-     *
      * @throws UnexpectedTokenException
-     *
      * @since 2.2
      */
     protected function parseOptionalExpressionForVersion()
@@ -663,7 +648,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * </code>
      *
      * @return ASTFormalParameter
-     *
      * @since 2.0.7
      */
     protected function parseFormalParameter()
@@ -750,7 +734,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
 
     /**
      * @param array<string> $previousElements
-     *
      * @return string|null
      */
     protected function parseQualifiedNameElement(array $previousElements)
@@ -770,7 +753,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * Parses additional static values that are valid in the supported php version.
      *
      * @return ASTValue|null
-     *
      * @throws UnexpectedTokenException
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
@@ -1098,7 +1080,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * parseFullQualifiedClassNamePostfix() exists since 2.0.0 and have been customized for PHP 5.5 since 2.6.0.
      *
      * @return ASTClassFqnPostfix
-     *
      * @since 2.0.0
      */
     protected function parseFullQualifiedClassNamePostfix()
@@ -1117,9 +1098,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * name part.
      *
      * @param int $tokenType The type of a parsed token.
-     *
      * @return bool
-     *
      * @since  0.10.6
      */
     protected function isClassName($tokenType)
@@ -1141,9 +1120,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * version.
      *
      * @param int $tokenType
-     *
      * @return bool
-     *
      * @since 2.3
      */
     protected function isFunctionName($tokenType)
@@ -1165,7 +1142,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * version.
      *
      * @param int $tokenType
-     *
      * @return bool
      */
     protected function isKeyword($tokenType)
@@ -1186,7 +1162,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * PHP version.
      *
      * @return bool
-     *
      * @since 1.0.0
      */
     protected function isArrayStartDelimiter()
@@ -1204,9 +1179,7 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * Parses a php array declaration.
      *
      * @param bool $static
-     *
      * @return ASTArray
-     *
      * @since 1.0.0
      */
     protected function parseArray(ASTArray $array, $static = false)
@@ -1235,7 +1208,6 @@ abstract class PHPParserVersion72 extends AbstractPHPParser
      * Parses an integer value.
      *
      * @return ASTLiteral
-     *
      * @throws UnexpectedTokenException
      */
     protected function parseIntegerNumber()

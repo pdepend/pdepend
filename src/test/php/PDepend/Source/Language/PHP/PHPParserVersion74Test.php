@@ -63,7 +63,6 @@ use PDepend\Util\Cache\CacheDriver;
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserVersion74} class.
  *
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion74
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

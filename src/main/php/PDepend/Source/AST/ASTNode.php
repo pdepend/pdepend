@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 
@@ -52,7 +51,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.3
  */
 interface ASTNode
@@ -63,7 +61,6 @@ interface ASTNode
      * @template T of array<string, mixed>|numeric-string
      *
      * @param T $data
-     *
      * @return T
      */
     public function accept(ASTVisitor $visitor, $data = []);
@@ -107,9 +104,7 @@ interface ASTNode
      * Returns the node instance for the given index or throws an exception.
      *
      * @param int $index
-     *
      * @return ASTNode
-     *
      * @throws OutOfBoundsException When no node exists at the given index.
      */
     public function getChild($index);
@@ -129,7 +124,6 @@ interface ASTNode
      * @template T of ASTNode
      *
      * @param class-string<T> $targetType
-     *
      * @return T|null
      */
     public function getFirstChildOfType($targetType);
@@ -142,9 +136,8 @@ interface ASTNode
      * @template T of ASTNode
      *
      * @param class-string<T> $targetType Searched class or interface type.
-     * @param T[]             $results    Already found node instances. This parameter
-     *                                    is only for internal usage.
-     *
+     * @param T[] $results Already found node instances. This parameter
+     *                     is only for internal usage.
      * @return T[]
      */
     public function findChildrenOfType($targetType, array &$results = []);
@@ -167,7 +160,6 @@ interface ASTNode
      * of <b>$parentType</b>.
      *
      * @param string $parentType
-     *
      * @return ASTNode[]
      */
     public function getParentsOfType($parentType);
@@ -195,7 +187,6 @@ interface ASTNode
      * @param int $endLine
      * @param int $startColumn
      * @param int $endColumn
-     *
      * @since 0.9.10
      */
     public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn): void;

@@ -49,7 +49,6 @@ use PDepend\Source\ASTVisitor\StubASTVisitor;
  * Test case implementation for the \PDepend\Source\AST\ASTNamespace class.
  *
  * @covers \PDepend\Source\AST\ASTNamespace
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

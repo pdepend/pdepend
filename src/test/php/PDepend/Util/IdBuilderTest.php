@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.12
  */
 
@@ -55,10 +54,8 @@ use PDepend\Source\AST\ASTMethod;
  * Test case for the {@link \PDepend\Util\IdBuilder} class.
  *
  * @covers \PDepend\Util\IdBuilder
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
  * @since 0.9.12
  *
  * @group unittest

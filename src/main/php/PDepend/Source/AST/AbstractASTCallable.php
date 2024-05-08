@@ -60,7 +60,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * The internal used cache instance.
      *
      * @var CacheDriver|null
-     *
      * @since 0.10.0
      */
     protected $cache = null;
@@ -70,7 +69,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * default and for any scalar type this property is <b>null</b>.
      *
      * @var ASTClassOrInterfaceReference|null
-     *
      * @since 0.9.5
      */
     protected $returnClassReference = null;
@@ -79,7 +77,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * List of all exceptions classes referenced by this callable.
      *
      * @var ASTClassOrInterfaceReference[]
-     *
      * @since 0.9.5
      */
     protected $exceptionClassReferences = [];
@@ -95,7 +92,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * List of all parsed child nodes.
      *
      * @var AbstractASTNode[]
-     *
      * @since 0.9.6
      */
     protected $nodes = [];
@@ -104,7 +100,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * The start line number of the method or function declaration.
      *
      * @var int
-     *
      * @since 0.9.12
      */
     protected $startLine = 0;
@@ -113,7 +108,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * The end line number of the method or function declaration.
      *
      * @var int
-     *
      * @since 0.9.12
      */
     protected $endLine = 0;
@@ -131,7 +125,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * cached for all callable instances.
      *
      * @return array
-     *
      * @since  0.10.0
      */
     public function __sleep()
@@ -168,7 +161,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * instance can store the associated tokens.
      *
      * @return $this
-     *
      * @since  0.10.0
      */
     public function setCache(CacheDriver $cache)
@@ -196,7 +188,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Returns all child nodes of this method.
      *
      * @return AbstractASTNode[]
-     *
      * @since  0.9.8
      */
     public function getChildren()
@@ -239,7 +230,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Returns the line number where the callable declaration starts.
      *
      * @return int
-     *
      * @since  0.9.6
      */
     public function getStartLine()
@@ -251,7 +241,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Returns the line number where the callable declaration ends.
      *
      * @return int
-     *
      * @since  0.9.6
      */
     public function getEndLine()
@@ -280,7 +269,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * if there is no return value or the return value is scalat.
      *
      * @return AbstractASTClassOrInterface|null
-     *
      * @since  0.9.5
      */
     public function getReturnClass()
@@ -299,7 +287,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * configured.
      *
      * @return bool
-     *
      * @since 2.2.4
      */
     public function hasReturnClass()
@@ -331,7 +318,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * function return type.
      *
      * @param ASTClassOrInterfaceReference $classReference Holder instance for the declared function return type.
-     *
      * @since  0.9.5
      */
     public function setReturnClassReference(ASTClassOrInterfaceReference $classReference): void
@@ -344,7 +330,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * this callable.
      *
      * @param ASTClassOrInterfaceReference $classReference A reference instance for a thrown exception.
-     *
      * @since  0.9.5
      */
     public function addExceptionClassReference(
@@ -384,7 +369,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * reference, otherwise the return value will be <b>false</b>.
      *
      * @return bool
-     *
      * @since  0.9.5
      */
     public function returnsReference()
@@ -408,7 +392,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Returns an array with all declared static variables.
      *
      * @return array<string, mixed>
-     *
      * @since  0.9.6
      */
     public function getStaticVariables()
@@ -441,7 +424,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * will return <b>false</b>.
      *
      * @return bool
-     *
      * @since  0.10.0
      */
     public function isCached()

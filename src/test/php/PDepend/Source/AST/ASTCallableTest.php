@@ -49,7 +49,6 @@ use PDepend\Source\Tokenizer\Token;
  * Test case for the {@link \PDepend\Source\AST\AbstractASTCallable} class.
  *
  * @covers \PDepend\Source\AST\AbstractASTCallable
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -256,7 +255,6 @@ class ASTCallableTest extends AbstractTestCase
      * method.
      *
      * @return AbstractASTCallable
-     *
      * @since 0.10.0
      */
     protected function getFirstCallableForTest()

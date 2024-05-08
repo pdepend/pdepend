@@ -50,7 +50,6 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  *
  * @covers \PDepend\Metrics\AbstractCachingAnalyzer
  * @covers \PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  *
@@ -60,7 +59,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * @var \PDepend\Util\Cache\CacheDriver
-     *
      * @since 1.0.0
      */
     private $cache;
@@ -344,7 +342,6 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
      * Returns a pre configured ccn analyzer.
      *
      * @return CyclomaticComplexityAnalyzer
-     *
      * @since 1.0.0
      */
     private function createAnalyzer()

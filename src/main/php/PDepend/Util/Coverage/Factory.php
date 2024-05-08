@@ -59,9 +59,7 @@ class Factory
      * path name.
      *
      * @param string $pathName Qualified path name of a coverage report file.
-     *
      * @return CloverReport
-     *
      * @throws RuntimeException When the given path name does not point to a
      *                          valid coverage file or onto an unsupported coverage format.
      */
@@ -79,9 +77,7 @@ class Factory
      * the given path name.
      *
      * @param string $pathName Qualified path name of a coverage report file.
-     *
      * @return SimpleXMLElement
-     *
      * @throws RuntimeException When the given path name does not point to a
      *                          valid xml file.
      */

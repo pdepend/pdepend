@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 
@@ -50,7 +49,6 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.6
  */
 class ASTStaticReference extends ASTSelfReference
@@ -64,7 +62,6 @@ class ASTStaticReference extends ASTSelfReference
      * Returns the visual representation for this node type.
      *
      * @return string
-     *
      * @since  0.10.4
      */
     public function getImage()

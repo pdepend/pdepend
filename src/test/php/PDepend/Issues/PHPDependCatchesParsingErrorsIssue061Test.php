@@ -48,7 +48,6 @@ use PDepend\Input\ExtensionFilter;
  * Test case for the catch error ticket #61.
  *
  * @covers \PDepend\Engine
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

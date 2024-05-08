@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @link       https://www.pivotaltracker.com/story/show/13405179
  */
 
@@ -49,7 +48,6 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
  * @link https://www.pivotaltracker.com/story/show/13405179
  *
  * @ticket 13405179
@@ -63,7 +61,6 @@ class PHPDependBug13405179Test extends AbstractRegressionTestCase
      *
      * @param string $className Class name of a logger implementation.
      * @param string $extension Log file extension.
-     *
      * @dataProvider getLoggerClassNames
      */
     public function testLogFileIsCreatedForUnstructuredCode($className, $extension): void

@@ -304,7 +304,6 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * counts protected and public properties of parent classes.
      *
      * @param ASTClass|ASTEnum|ASTTrait $class The context class instance.
-     *
      * @return int
      */
     private function calculateVarsi(AbstractASTClassOrInterface $class)
@@ -355,7 +354,6 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * Calculates the Weight Method Per Class metric for a trait.
      *
      * @return int
-     *
      * @since  1.0.6
      */
     private function calculateWmciForTrait(ASTTrait $trait)
@@ -367,7 +365,6 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * Calculates the Weight Method Per Class metric.
      *
      * @return int[]
-     *
      * @since  1.0.6
      */
     private function calculateWmci(AbstractASTType $type)

@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.20
  */
 
@@ -54,7 +53,6 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.9.20
  */
 class PHPParserGeneric extends PHPParserVersion83
@@ -64,9 +62,7 @@ class PHPParserGeneric extends PHPParserVersion83
      * version.
      *
      * @param int $tokenType
-     *
      * @return bool
-     *
      * @since  1.1.1
      */
     protected function isKeyword($tokenType)
@@ -84,9 +80,7 @@ class PHPParserGeneric extends PHPParserVersion83
      * version.
      *
      * @param int $tokenType
-     *
      * @return bool
-     *
      * @since 2.3
      */
     protected function isFunctionName($tokenType)
@@ -117,11 +111,8 @@ class PHPParserGeneric extends PHPParserVersion83
      * Parses additional static values that are valid in the supported php version.
      *
      * @param ASTValue $value
-     *
      * @return ASTValue
-     *
      * @throws UnexpectedTokenException
-     *
      * @todo Handle shift left/right expressions in ASTValue
      */
     /*

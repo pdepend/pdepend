@@ -58,7 +58,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * The internal used cache instance.
      *
      * @var CacheDriver|null
-     *
      * @since 0.10.0
      */
     protected $cache = null;
@@ -88,7 +87,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * The files start line. This property must always have the value <em>1</em>.
      *
      * @var int
-     *
      * @since 0.10.0
      */
     protected $startLine = 0;
@@ -97,7 +95,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * The files end line.
      *
      * @var int
-     *
      * @since 0.10.0
      */
     protected $endLine = 0;
@@ -106,7 +103,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * List of classes, interfaces and functions that parsed from this file.
      *
      * @var AbstractASTArtifact[]
-     *
      * @since 0.10.0
      */
     protected $childNodes = [];
@@ -115,7 +111,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * Was this file instance restored from the cache?
      *
      * @var bool
-     *
      * @since 0.10.0
      */
     protected $cached = false;
@@ -147,7 +142,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * array with those property names that should be serialized.
      *
      * @return array<string>
-     *
      * @since  0.10.0
      */
     public function __sleep()
@@ -225,7 +219,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * Sets the unique identifier for this file instance.
      *
      * @param string $id Identifier for this file.
-     *
      * @since  0.9.12
      */
     public function setId($id): void
@@ -237,7 +230,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * Setter method for the used parser and token cache.
      *
      * @return $this
-     *
      * @since  0.10.0
      */
     public function setCache(CacheDriver $cache)
@@ -302,7 +294,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * not existing dummy file.
      *
      * @return int
-     *
      * @since  0.10.0
      */
     public function getStartLine()
@@ -319,7 +310,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * for a not existing dummy file.
      *
      * @return int
-     *
      * @since  0.10.0
      */
     public function getEndLine()
@@ -336,7 +326,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * <b>false</b>.
      *
      * @return bool
-     *
      * @since  0.10.0
      */
     public function isCached()

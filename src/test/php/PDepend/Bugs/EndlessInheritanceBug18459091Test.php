@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @link       https://www.pivotaltracker.com/story/show/18459091
  * @since 1.0.0
  */
@@ -55,7 +54,6 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
  * @link https://www.pivotaltracker.com/story/show/18459091
  * @since 1.0.0
  *

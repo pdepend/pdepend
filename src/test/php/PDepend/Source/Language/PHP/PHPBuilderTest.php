@@ -49,7 +49,6 @@ use PDepend\Source\AST\ASTFunction;
  * Test case implementation for the default node builder implementation.
  *
  * @covers \PDepend\Source\Language\PHP\PHPBuilder
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

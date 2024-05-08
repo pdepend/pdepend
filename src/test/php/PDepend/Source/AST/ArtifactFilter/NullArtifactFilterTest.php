@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  */
 
@@ -57,10 +56,8 @@ use PDepend\Source\AST\ASTTrait;
  * Test case for the {@link \PDepend\Source\AST\ASTArtifactList\NullArtifactFilter} class.
  *
  * @covers \PDepend\Source\AST\ASTArtifactList\NullArtifactFilter
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  *
  * @group unittest

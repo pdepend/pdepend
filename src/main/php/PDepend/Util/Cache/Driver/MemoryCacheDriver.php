@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 
@@ -56,7 +55,6 @@ use Random\RandomException;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 0.10.0
  */
 class MemoryCacheDriver implements CacheDriver
@@ -108,7 +106,6 @@ class MemoryCacheDriver implements CacheDriver
      * PHP's magic serialize sleep method.
      *
      * @return array
-     *
      * @since  1.0.2
      */
     public function __sleep()
@@ -137,7 +134,6 @@ class MemoryCacheDriver implements CacheDriver
      * <em>store()</em>.
      *
      * @param string $type The name or object type for the next storage method call.
-     *
      * @return $this
      */
     public function type($type)
@@ -153,8 +149,8 @@ class MemoryCacheDriver implements CacheDriver
      * hash and the supplied hash are not identical, that cache entry will be
      * removed and not returned.
      *
-     * @param string $key  The cache key for the given data.
-     * @param mixed  $data Any data that should be cached.
+     * @param string $key The cache key for the given data.
+     * @param mixed $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
      */
     public function store($key, $data, $hash = null): void
@@ -169,7 +165,7 @@ class MemoryCacheDriver implements CacheDriver
      * Then it returns the cached entry. Otherwise this method will return
      * <b>NULL</b>.
      *
-     * @param string $key  The cache key for the given data.
+     * @param string $key The cache key for the given data.
      * @param string $hash Optional hash that will be used for verification.
      */
     public function restore($key, $hash = null): mixed
@@ -204,7 +200,6 @@ class MemoryCacheDriver implements CacheDriver
      * type, so that it is only valid for a single call.
      *
      * @param string $key The concrete object key.
-     *
      * @return string
      */
     protected function getCacheKey($key)

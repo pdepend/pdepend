@@ -94,9 +94,8 @@ class SymbolTable
     /**
      * Adds a new value to the top most scope.
      *
-     * @param string $key   The key of this scope value.
-     * @param mixed  $value A new scope value.
-     *
+     * @param string $key The key of this scope value.
+     * @param mixed $value A new scope value.
      * @throws NoActiveScopeException
      */
     public function add($key, $value): void
@@ -122,9 +121,7 @@ class SymbolTable
      * value exists for the given key.
      *
      * @param string $key The key for a searched scope value.
-     *
      * @return string|null
-     *
      * @throws NoActiveScopeException
      */
     public function lookup($key)
@@ -153,7 +150,6 @@ class SymbolTable
      * <code>add()</code> and <code>lookup()</code> operations.
      *
      * @param string $key
-     *
      * @return string normalized key
      */
     private function normalizeKey($key)

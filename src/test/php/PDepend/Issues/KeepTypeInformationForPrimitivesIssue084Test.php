@@ -47,7 +47,6 @@ namespace PDepend\Issues;
  * primitive property and parameter types.
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -58,9 +57,8 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
     /**
      * Tests that the parser sets the expected primitive type information.
      *
-     * @param string $actual   The actual used type identifier.
+     * @param string $actual The actual used type identifier.
      * @param string $expected The expected primitive type image.
-     *
      * @dataProvider dataProviderParserSetsExpectedPrimitivePropertyType
      */
     public function testParserSetsExpectedPrimitivePropertyType($actual, $expected): void

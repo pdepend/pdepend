@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTScopeStatement
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -59,7 +58,6 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testParserHandlesInlineScopeStatement
      *
      * @return ASTScopeStatement
-     *
      * @since 1.0.0
      */
     public function testParserHandlesInlineScopeStatement()
@@ -74,9 +72,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testInlineScopeStatementHasExpectedStartLine
      *
      * @param ASTScopeStatement $stmt
-     *
      * @return ASTScopeStatement
-     *
      * @since 1.0.0
      *
      * @depends testParserHandlesInlineScopeStatement
@@ -92,9 +88,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testInlineScopeStatementHasExpectedStartColumn
      *
      * @param ASTScopeStatement $stmt
-     *
      * @return ASTScopeStatement
-     *
      * @since 1.0.0
      *
      * @depends testInlineScopeStatementHasExpectedStartLine
@@ -110,9 +104,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testInlineScopeStatementHasExpectedEndLine
      *
      * @param ASTScopeStatement $stmt
-     *
      * @return ASTScopeStatement
-     *
      * @since 1.0.0
      *
      * @depends testInlineScopeStatementHasExpectedStartColumn
@@ -128,9 +120,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testInlineScopeStatementHasExpectedEndColumn
      *
      * @param ASTScopeStatement $stmt
-     *
      * @return ASTScopeStatement
-     *
      * @since 1.0.0
      *
      * @depends testInlineScopeStatementHasExpectedEndLine
@@ -144,7 +134,6 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testScopeStatement
      *
      * @return ASTScopeStatement
-     *
      * @since 1.0.2
      */
     public function testScopeStatement()
@@ -207,7 +196,6 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testScopeStatementWithAlternative
      *
      * @return ASTScopeStatement
-     *
      * @since 1.0.2
      */
     public function testScopeStatementWithAlternative()

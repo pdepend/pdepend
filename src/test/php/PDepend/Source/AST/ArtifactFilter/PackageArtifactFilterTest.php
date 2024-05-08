@@ -53,7 +53,6 @@ use PDepend\Source\AST\ASTNamespace;
  * class.
  *
  * @covers \PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

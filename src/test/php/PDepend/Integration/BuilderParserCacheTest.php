@@ -124,7 +124,6 @@ class BuilderParserCacheTest extends AbstractTestCase
      * Parses the given test file and then returns the builder instance.
      *
      * @param string $file Relative path to a test file for the calling test.
-     *
      * @return \PDepend\Source\Builder\Builder
      */
     protected function parseSourceAndReturnBuilder($file)

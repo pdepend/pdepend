@@ -59,9 +59,8 @@ class ImageConvert
     /**
      * Tries to converts the <b>$input</b> image into the <b>$output</b> format.
      *
-     * @param string $input  The input file.
+     * @param string $input The input file.
      * @param string $output The output file.
-     *
      * @throws ImagickException
      * @throws InvalidArgumentException
      */
@@ -140,7 +139,6 @@ class ImageConvert
      * file.
      *
      * @param string $input The input svg file.
-     *
      * @throws InvalidArgumentException
      */
     protected static function prepareSvg($input): void

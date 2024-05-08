@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTExitExpression
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -59,7 +58,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithExitCode
      *
      * @return ASTExitExpression
-     *
      * @since 1.0.1
      */
     public function testExitExpressionWithExitCode()
@@ -74,7 +72,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithExitCodeHasExpectedStartLine
      *
      * @param ASTExitExpression $expr
-     *
      * @since 1.0.1
      *
      * @depends testExitExpressionWithExitCode
@@ -88,7 +85,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithExitCodeHasExpectedEndLine
      *
      * @param ASTExitExpression $expr
-     *
      * @since 1.0.1
      *
      * @depends testExitExpressionWithExitCode
@@ -102,7 +98,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithExitCodeHasExpectedStartColumn
      *
      * @param ASTExitExpression $expr
-     *
      * @since 1.0.1
      *
      * @depends testExitExpressionWithExitCode
@@ -116,7 +111,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithExitCodeHasExpectedEndColumn
      *
      * @param ASTExitExpression $expr
-     *
      * @since 1.0.1
      *
      * @depends testExitExpressionWithExitCode
@@ -130,7 +124,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithEmptyArgs
      *
      * @return ASTExitExpression
-     *
      * @since 1.0.1
      */
     public function testExitExpressionWithEmptyArgs()
@@ -145,7 +138,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithEmptyArgsHasExpectedStartLine
      *
      * @param ASTExitExpression $expr
-     *
      * @since 1.0.1
      *
      * @depends testExitExpressionWithEmptyArgs
@@ -159,7 +151,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithEmptyArgsHasExpectedEndLine
      *
      * @param ASTExitExpression $expr
-     *
      * @since 1.0.1
      *
      * @depends testExitExpressionWithEmptyArgs
@@ -173,7 +164,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithEmptyArgsHasExpectedStartColumn
      *
      * @param ASTExitExpression $expr
-     *
      * @since 1.0.1
      *
      * @depends testExitExpressionWithEmptyArgs
@@ -187,7 +177,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithEmptyArgsHasExpectedEndColumn
      *
      * @param ASTExitExpression $expr
-     *
      * @since 1.0.1
      *
      * @depends testExitExpressionWithEmptyArgs
@@ -201,7 +190,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
      * testExitExpressionWithoutArgs
      *
      * @return ASTExitExpression
-     *
      * @since 1.0.1
      */
     public function testExitExpressionWithoutArgs()

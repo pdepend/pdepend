@@ -51,7 +51,6 @@ use ReflectionMethod;
  *
  * @covers \PDepend\DependencyInjection\TreeBuilderFactory
  * @covers \PDepend\DependencyInjection\TreeBuilder
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

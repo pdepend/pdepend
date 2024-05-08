@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.3
  */
 
@@ -49,7 +48,6 @@ namespace PDepend\Source\AST;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 2.3
  */
 class ASTAnonymousClass extends ASTClass implements ASTNode
@@ -60,7 +58,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * image in a colon separated string.
      *
      * @var string
-     *
      * @since 0.10.4
      */
     protected $metadata = ':::';
@@ -71,7 +68,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * array with those property names that should be serialized for this class.
      *
      * @return array
-     *
      * @since 0.10.0
      */
     public function __sleep()
@@ -162,7 +158,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * @param int $endLine
      * @param int $startColumn
      * @param int $endColumn
-     *
      * @since 0.9.10
      */
     public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn): void
@@ -197,9 +192,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Returns an integer value that was stored under the given index.
      *
      * @param int $index
-     *
      * @return int
-     *
      * @since 0.10.4
      */
     protected function getMetadataInteger($index)
@@ -213,7 +206,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      *
      * @param int $index
      * @param int $value
-     *
      * @since 0.10.4
      */
     protected function setMetadataInteger($index, $value): void
@@ -225,9 +217,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Returns the value that was stored under the given index.
      *
      * @param int $index
-     *
      * @return string
-     *
      * @since 0.10.4
      */
     protected function getMetadata($index)
@@ -240,9 +230,8 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Stores the given value under the given index in an internal storage
      * container.
      *
-     * @param int    $index
+     * @param int $index
      * @param string $value
-     *
      * @since 0.10.4
      */
     protected function setMetadata($index, $value): void
@@ -257,7 +246,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      * Returns the total number of the used property bag.
      *
      * @return int
-     *
      * @since 0.10.4
      */
     protected function getMetadataSize()

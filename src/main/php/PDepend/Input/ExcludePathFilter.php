@@ -54,7 +54,6 @@ class ExcludePathFilter implements Filter
      * Regular expression that should not match against the absolute file paths or a chunk of a relative path.
      *
      * @var string
-     *
      * @since 0.10.0
      */
     protected $pattern = '';
@@ -92,9 +91,7 @@ class ExcludePathFilter implements Filter
      * exclude patterns as an absolute path.
      *
      * @param string $path The absolute path to a source file.
-     *
      * @return bool
-     *
      * @since  0.10.0
      */
     protected function notAbsolute($path)
@@ -107,9 +104,7 @@ class ExcludePathFilter implements Filter
      * exclude patterns as an relative path.
      *
      * @param string $path The relative path to a source file.
-     *
      * @return bool
-     *
      * @since  0.10.0
      */
     protected function notRelative($path)

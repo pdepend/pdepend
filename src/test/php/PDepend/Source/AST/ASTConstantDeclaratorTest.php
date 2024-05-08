@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTConstantDeclarator
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -105,7 +104,6 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
      * testConstantDeclarator
      *
      * @return ASTConstantDeclarator
-     *
      * @since 1.0.2
      */
     public function testConstantDeclarator()

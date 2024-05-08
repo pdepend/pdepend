@@ -476,7 +476,6 @@ class Command
      * option.
      *
      * @return int
-     *
      * @throws Exception
      */
     protected function printLogOptions()
@@ -518,9 +517,7 @@ class Command
      * Prints the analyzer options.
      *
      * @param int $length Length of the longest option.
-     *
      * @return int
-     *
      * @throws Exception
      */
     protected function printAnalyzerOptions($length)
@@ -550,9 +547,9 @@ class Command
     /**
      * Prints a single option.
      *
-     * @param string $option  The option identifier.
+     * @param string $option The option identifier.
      * @param string $message The option help message.
-     * @param int    $length  The length of the longest option.
+     * @param int $length The length of the longest option.
      */
     private function printOption($option, $message, $length): void
     {
@@ -625,7 +622,6 @@ class Command
 
     /**
      * @param Exception|Throwable $exception
-     *
      * @return string
      */
     private function getErrorTrace($exception)

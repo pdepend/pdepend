@@ -61,7 +61,6 @@ class ASTProperty extends AbstractASTArtifact
      * The wrapped field declaration instance.
      *
      * @var ASTFieldDeclaration
-     *
      * @since 0.9.6
      */
     private $fieldDeclaration = null;
@@ -70,7 +69,6 @@ class ASTProperty extends AbstractASTArtifact
      * The wrapped variable declarator instance.
      *
      * @var ASTVariableDeclarator
-     *
      * @since 0.9.6
      */
     private $variableDeclarator = null;
@@ -79,7 +77,7 @@ class ASTProperty extends AbstractASTArtifact
      * Constructs a new item for the given field declaration and variable
      * declarator.
      *
-     * @param ASTFieldDeclaration   $fieldDeclaration   The context field declaration where this property was declared in the source.
+     * @param ASTFieldDeclaration $fieldDeclaration The context field declaration where this property was declared in the source.
      * @param ASTVariableDeclarator $variableDeclarator The context variable declarator for this property instance.
      */
     public function __construct(
@@ -96,7 +94,6 @@ class ASTProperty extends AbstractASTArtifact
      * This method returns a string representation of this parameter.
      *
      * @return string
-     *
      * @since  0.9.6
      */
     public function __toString()
@@ -138,7 +135,6 @@ class ASTProperty extends AbstractASTArtifact
      * this property.
      *
      * @return int
-     *
      * @since  0.9.6
      */
     public function getModifiers()
@@ -195,7 +191,6 @@ class ASTProperty extends AbstractASTArtifact
      * contains an array type hint, otherwise the it will return <b>false</b>.
      *
      * @return bool
-     *
      * @since  0.9.6
      */
     public function isArray()
@@ -214,7 +209,6 @@ class ASTProperty extends AbstractASTArtifact
      * contains a primitive type hint, otherwise the it will return <b>false</b>.
      *
      * @return bool
-     *
      * @since  0.9.6
      */
     public function isScalar()
@@ -233,7 +227,6 @@ class ASTProperty extends AbstractASTArtifact
      * for all scalar type, only class properties will have a type.
      *
      * @return AbstractASTClassOrInterface|null
-     *
      * @since  0.9.5
      */
     public function getClass()
@@ -261,7 +254,6 @@ class ASTProperty extends AbstractASTArtifact
      * Returns the line number where the property declaration can be found.
      *
      * @return int
-     *
      * @since  0.9.6
      */
     public function getStartLine()
@@ -273,7 +265,6 @@ class ASTProperty extends AbstractASTArtifact
      * Returns the column number where the property declaration starts.
      *
      * @return int
-     *
      * @since  0.9.8
      */
     public function getStartColumn()
@@ -285,7 +276,6 @@ class ASTProperty extends AbstractASTArtifact
      * Returns the line number where the property declaration ends.
      *
      * @return int
-     *
      * @since  0.9.6
      */
     public function getEndLine()
@@ -297,7 +287,6 @@ class ASTProperty extends AbstractASTArtifact
      * Returns the column number where the property declaration ends.
      *
      * @return int
-     *
      * @since  0.9.8
      */
     public function getEndColumn()
@@ -309,7 +298,6 @@ class ASTProperty extends AbstractASTArtifact
      * This method will return the class where this property was declared.
      *
      * @return AbstractASTClassOrInterface
-     *
      * @since  0.9.6
      */
     public function getDeclaringClass()
@@ -332,7 +320,6 @@ class ASTProperty extends AbstractASTArtifact
      * contains a default value.
      *
      * @return bool
-     *
      * @since  0.9.6
      */
     public function isDefaultValueAvailable()

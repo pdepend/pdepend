@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  */
 
@@ -58,7 +57,6 @@ use PDepend\Util\Cache\CacheDriver;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  */
 abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements AnalyzerCacheAware
@@ -108,7 +106,6 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      * value will be <b>FALSE</b>.
      *
      * @param ASTClass|ASTCompilationUnit|ASTFunction|ASTInterface|ASTMethod $node
-     *
      * @return bool
      */
     protected function restoreFromCache(AbstractASTArtifact $node)

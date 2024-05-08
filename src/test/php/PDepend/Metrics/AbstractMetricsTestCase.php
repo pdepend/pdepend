@@ -58,8 +58,7 @@ abstract class AbstractMetricsTestCase extends AbstractTestCase
      * and node builder implementations.
      *
      * @param string $testCase
-     * @param bool   $ignoreAnnotations
-     *
+     * @param bool $ignoreAnnotations
      * @return \PDepend\Source\AST\ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)

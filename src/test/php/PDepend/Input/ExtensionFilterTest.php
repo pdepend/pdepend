@@ -50,7 +50,6 @@ use RecursiveIteratorIterator;
  * Test case for the file extension filter.
  *
  * @covers \PDepend\Input\ExtensionFilter
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -92,7 +91,6 @@ class ExtensionFilterTest extends AbstractTestCase
      * filter.
      *
      * @param array<string> $includes The file extensions
-     *
      * @return array<string>
      */
     protected function createFilteredFileList(array $includes)

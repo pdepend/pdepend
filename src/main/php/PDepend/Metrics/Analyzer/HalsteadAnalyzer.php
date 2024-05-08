@@ -359,9 +359,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * Calculates Halstead measures from n1, n2, N1 & N2.
      *
      * @param array<string, int> $basis [n1, n2, N1, N2]
-     *
      * @return array<string, float>
-     *
      * @see http://www.verifysoft.com/en_halstead_metrics.html
      * @see http://www.grammatech.com/codesonar/workflow-features/halstead
      */

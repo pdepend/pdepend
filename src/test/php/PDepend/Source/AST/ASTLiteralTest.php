@@ -47,7 +47,6 @@ namespace PDepend\Source\AST;
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTLiteral
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -155,7 +154,6 @@ class ASTLiteralTest extends ASTNodeTestCase
      * testLiteralWithZeroBinaryIntegerValue
      *
      * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
-     *
      * @since 1.0.0
      */
     public function testLiteralWithZeroBinaryIntegerValue(): void
@@ -190,7 +188,6 @@ class ASTLiteralTest extends ASTNodeTestCase
      * testLiteralWithNonZeroBinaryIntegerValue
      *
      * @covers \PDepend\Source\Language\PHP\PHPParserVersion72
-     *
      * @since 1.0.0
      */
     public function testLiteralWithNonZeroBinaryIntegerValue(): void
@@ -203,7 +200,6 @@ class ASTLiteralTest extends ASTNodeTestCase
      * testLiteralWithZeroFloatValue
      *
      * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
-     *
      * @since 2.16.0
      */
     public function testLiteralWithZeroFloatValue(): void

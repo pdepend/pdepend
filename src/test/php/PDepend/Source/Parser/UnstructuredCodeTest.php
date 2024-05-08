@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  */
 
@@ -48,10 +47,8 @@ namespace PDepend\Source\Parser;
  * Tests for unstructured code handling in the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  *
  * @group unittest

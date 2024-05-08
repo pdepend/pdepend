@@ -48,7 +48,6 @@ use PDepend\AbstractTestCase;
  * Test case for the code parameter class.
  *
  * @covers \PDepend\Source\AST\ASTParameter
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -205,7 +204,6 @@ class ASTParameterTest extends AbstractTestCase
      * calling test method.
      *
      * @return ASTMethod
-     *
      * @since 1.0.0
      */
     private function getFirstMethodInClass()

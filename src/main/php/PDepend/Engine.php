@@ -90,7 +90,6 @@ class Engine
      * The system configuration.
      *
      * @var Configuration
-     *
      * @since 0.10.0
      */
     protected $configuration = null;
@@ -184,7 +183,6 @@ class Engine
      * The configured cache factory.
      *
      * @var CacheFactory
-     *
      * @since 1.0.0
      */
     private $cacheFactory;
@@ -217,7 +215,6 @@ class Engine
      * Adds the specified directory to the list of directories to be analyzed.
      *
      * @param string $directory The php source directory.
-     *
      * @throws InvalidArgumentException
      */
     public function addDirectory($directory): void
@@ -235,7 +232,6 @@ class Engine
      * Adds a single source code file to the list of files to be analysed.
      *
      * @param string $file The source file name.
-     *
      * @throws InvalidArgumentException
      */
     public function addFile($file): void
@@ -322,7 +318,6 @@ class Engine
      * analyzed namespace.
      *
      * @return ASTArtifactList<ASTNamespace>
-     *
      * @throws InvalidArgumentException
      */
     public function analyze()
@@ -363,7 +358,6 @@ class Engine
      * Returns the number of analyzed php classes and interfaces.
      *
      * @return int
-     *
      * @throws RuntimeException
      */
     public function countClasses()
@@ -395,7 +389,6 @@ class Engine
      * Returns the number of analyzed namespaces.
      *
      * @return int
-     *
      * @throws RuntimeException
      */
     public function countNamespaces()
@@ -418,9 +411,7 @@ class Engine
      * Returns the analyzed namespace for the given name.
      *
      * @param string $name
-     *
      * @return ASTNamespace
-     *
      * @throws OutOfBoundsException
      * @throws RuntimeException
      */
@@ -442,7 +433,6 @@ class Engine
      * Returns an array with the analyzed namespace.
      *
      * @return ASTArtifactList<ASTNamespace>
-     *
      * @throws RuntimeException
      */
     public function getNamespaces()
@@ -624,7 +614,6 @@ class Engine
      * that are part of the parsing process.
      *
      * @return ArrayIterator<int, string>
-     *
      * @throws RuntimeException
      */
     private function createFileIterator()
@@ -685,9 +674,7 @@ class Engine
 
     /**
      * @param array<string, mixed> $options
-     *
      * @return Analyzer[]
-     *
      * @throws InvalidArgumentException
      */
     private function createAnalyzers($options)
@@ -717,7 +704,6 @@ class Engine
 
     /**
      * @param string $path
-     *
      * @return bool
      */
     private function isPhpStream($path)

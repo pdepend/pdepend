@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  */
 
@@ -54,7 +53,6 @@ use PDepend\Util\Cache\CacheDriver;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @since 1.0.0
  */
 abstract class AbstractASTType extends AbstractASTArtifact
@@ -115,7 +113,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Temporary property that only holds methods during the parsing process.
      *
      * @var ASTMethod[]|null
-     *
      * @since 1.0.2
      */
     protected $methods = [];
@@ -392,7 +389,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * instance.
      *
      * @return bool
-     *
      * @since  1.0.6
      */
     abstract public function isSubtypeOf(AbstractASTType $type);
@@ -402,7 +398,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * that are imported through traits.
      *
      * @return ASTMethod[]
-     *
      * @since  1.0.0
      */
     protected function getTraitMethods()

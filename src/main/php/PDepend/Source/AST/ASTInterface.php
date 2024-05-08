@@ -89,7 +89,6 @@ class ASTInterface extends AbstractASTClassOrInterface
      * Sets a reference onto the parent class of this class node.
      *
      * @throws BadMethodCallException
-     *
      * @since  0.9.5
      */
     public function setParentClassReference(ASTClassReference $classReference): void
@@ -122,7 +121,6 @@ class ASTInterface extends AbstractASTClassOrInterface
      * Returns the declared modifiers for this type.
      *
      * @return int
-     *
      * @since  0.9.4
      */
     public function getModifiers()

@@ -38,7 +38,6 @@
  *
  * @copyright 2008-2016 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @link    https://github.com/pdepend/pdepend/issues/247
  */
 
@@ -54,7 +53,6 @@ use PHPUnit_Framework_MockObject_MockObject;
  *
  * @copyright 2008-2016 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @link    https://github.com/pdepend/pdepend/issues/247
  *
  * @ticket 247
@@ -109,7 +107,6 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
 
     /**
      * @param \PDepend\Source\Builder\Builder<mixed> $builder
-     *
      * @return PHPUnit_Framework_MockObject_MockObject
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
