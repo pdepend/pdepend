@@ -2492,6 +2492,9 @@ abstract class AbstractPHPParser
 
         $expr = $this->builder->buildAstIssetExpression();
         $expr = $this->parseVariableList($expr, true);
+        if ($this->tokenizer->peek() === Tokens::T_SQUARED_BRACKET_OPEN) {
+            $this->parseListExpression();
+        }
         $this->consumeComments();
 
         $stopToken = $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
