@@ -27,7 +27,7 @@ class pkg2Foobar extends pkg1Bar {
      * Command manager singleton method which returns a configured instance
      * or <b>null</b>.
      *
-     * @return pkg2Foobar
+     * @return ?pkg2Foobar
      */
     public static function get()
     {

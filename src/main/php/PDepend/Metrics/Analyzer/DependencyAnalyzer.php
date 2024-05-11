@@ -206,7 +206,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * returns <b>null</b> if no cycle exists .
      *
      * @param ASTNamespace $node
-     * @return AbstractASTArtifact[]
+     * @return AbstractASTArtifact[]|null
      */
     public function getCycle(AbstractASTArtifact $node)
     {

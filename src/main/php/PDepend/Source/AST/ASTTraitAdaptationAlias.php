@@ -113,7 +113,7 @@ class ASTTraitAdaptationAlias extends ASTStatement
      * Returns the new aliased method name or <b>NULL</b> when this alias does
      * not specify a new method name.
      *
-     * @return string
+     * @return ?string
      */
     public function getNewName()
     {
