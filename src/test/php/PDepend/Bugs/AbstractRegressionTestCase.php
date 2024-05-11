@@ -44,6 +44,7 @@ namespace PDepend\Bugs;
 
 use PDepend\AbstractTestCase;
 use PDepend\Report\Summary\Xml;
+use PDepend\Source\AST\ASTNamespace;
 
 /**
  * Abstract test case for the "Bugs" package.
@@ -84,7 +85,7 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      *
      * @param string $testCase
      * @param bool $ignoreAnnotations
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {

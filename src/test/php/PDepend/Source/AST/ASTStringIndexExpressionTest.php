@@ -66,7 +66,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     public function testStringIndexExpression()
     {
         $expr = $this->getFirstStringIndexExpressionInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStringIndexExpression', $expr);
+        $this->assertInstanceOf(ASTStringIndexExpression::class, $expr);
 
         return $expr;
     }
@@ -128,7 +128,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTStringIndexExpression'
+            ASTStringIndexExpression::class
         );
     }
 }

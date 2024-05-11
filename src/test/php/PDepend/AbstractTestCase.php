@@ -49,16 +49,22 @@ use Exception;
 use Imagick;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\Iterator;
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClosure;
 use PDepend\Source\AST\ASTCompilationUnit;
+use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\Builder\Builder;
+use PDepend\Source\Builder\BuilderContext;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -193,7 +199,7 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @return Source\AST\ASTClosure
+     * @return ASTClosure
      */
     protected function getFirstClosureForTestCase()
     {
@@ -201,7 +207,7 @@ abstract class AbstractTestCase extends TestCase
             ->current()
             ->getFunctions()
             ->current()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTClosure');
+            ->getFirstChildOfType(ASTClosure::class);
     }
 
     /**
@@ -342,7 +348,7 @@ abstract class AbstractTestCase extends TestCase
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
      *
-     * @return Source\AST\AbstractASTClassOrInterface
+     * @return AbstractASTClassOrInterface
      */
     protected function getFirstTypeForTestCase()
     {
@@ -366,13 +372,13 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @return Source\AST\ASTFormalParameter
+     * @return ASTFormalParameter
      */
     protected function getFirstFormalParameterForTestCase()
     {
         return $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType(
-                'PDepend\\Source\\AST\\ASTFormalParameter'
+                ASTFormalParameter::class
             );
     }
 
@@ -494,7 +500,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function createCacheFixture()
     {
-        $cache = $this->getMockBuilder('\\PDepend\\Util\\Cache\\CacheDriver')
+        $cache = $this->getMockBuilder(CacheDriver::class)
             ->getMock();
 
         return $cache;
@@ -561,7 +567,7 @@ abstract class AbstractTestCase extends TestCase
         $class = new ASTClass($name);
         $class->setCompilationUnit(new ASTCompilationUnit($GLOBALS['argv'][0]));
         $class->setCache(new MemoryCacheDriver());
-        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+        $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
         $class->setContext($context);
 
@@ -758,7 +764,7 @@ abstract class AbstractTestCase extends TestCase
      * Parses the test code associated with the calling test method.
      *
      * @param bool $ignoreAnnotations The parser should ignore annotations.
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     protected function parseCodeResourceForTest($ignoreAnnotations = false)
     {
@@ -774,7 +780,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @param string $testCase
      * @param bool $ignoreAnnotations
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
@@ -798,7 +804,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @param string $fileOrDirectory
      * @param bool $ignoreAnnotations
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     public function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {
@@ -845,8 +851,8 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @param \PDepend\Source\Builder\Builder<mixed> $builder
-     * @return Source\Language\PHP\AbstractPHPParser
+     * @param Builder<mixed> $builder
+     * @return AbstractPHPParser
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {

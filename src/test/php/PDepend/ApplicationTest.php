@@ -44,6 +44,10 @@ namespace PDepend;
 
 use InvalidArgumentException;
 use PDepend\Metrics\Analyzer\CrapIndexAnalyzer;
+use PDepend\Metrics\AnalyzerFactory;
+use PDepend\Report\ReportGeneratorFactory;
+use PDepend\TextUI\Runner;
+use PDepend\Util\Configuration;
 
 /**
  * Test cases for the {@link \PDepend\Application} class.
@@ -61,21 +65,21 @@ class ApplicationTest extends AbstractTestCase
         $application = $this->createTestApplication();
         $runner = $application->getRunner();
 
-        $this->assertInstanceOf('PDepend\\TextUI\\Runner', $runner);
+        $this->assertInstanceOf(Runner::class, $runner);
     }
 
     public function testAnalyzerFactory(): void
     {
         $application = $this->createTestApplication();
 
-        $this->assertInstanceOf('PDepend\\Metrics\\AnalyzerFactory', $application->getAnalyzerFactory());
+        $this->assertInstanceOf(AnalyzerFactory::class, $application->getAnalyzerFactory());
     }
 
     public function testReportGeneratorFactory(): void
     {
         $application = $this->createTestApplication();
 
-        $this->assertInstanceOf('PDepend\\Report\\ReportGeneratorFactory', $application->getReportGeneratorFactory());
+        $this->assertInstanceOf(ReportGeneratorFactory::class, $application->getReportGeneratorFactory());
     }
 
     public function testBinCanReadInput(): void
@@ -109,7 +113,7 @@ class ApplicationTest extends AbstractTestCase
         $application = $this->createTestApplication();
         $config = $application->getConfiguration();
 
-        $this->assertInstanceOf('PDepend\\Util\\Configuration', $config);
+        $this->assertInstanceOf(Configuration::class, $config);
     }
 
     public function testGetEngine(): void
@@ -117,7 +121,7 @@ class ApplicationTest extends AbstractTestCase
         $application = $this->createTestApplication();
         $config = $application->getEngine();
 
-        $this->assertInstanceOf('PDepend\\Engine', $config);
+        $this->assertInstanceOf(Engine::class, $config);
     }
 
     public function testGetAvailableLoggerOptions(): void

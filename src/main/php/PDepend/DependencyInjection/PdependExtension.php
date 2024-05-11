@@ -77,7 +77,7 @@ class PdependExtension extends SymfonyExtension
                 if (!isset($config['class'])) {
                     continue;
                 }
-                if (!is_a($config['class'], 'PDepend\DependencyInjection\Extension', true)) {
+                if (!is_a($config['class'], Extension::class, true)) {
                     throw new RuntimeException(
                         sprintf('Class "%s" is not a valid Extension', $config['class']),
                     );

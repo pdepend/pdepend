@@ -128,7 +128,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     public function getRequiredAnalyzers()
     {
-        return ['PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'];
+        return [CyclomaticComplexityAnalyzer::class];
     }
 
     /**

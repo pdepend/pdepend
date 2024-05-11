@@ -43,6 +43,8 @@
 namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
+use PDepend\Source\AST\ASTArtifact;
+use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
@@ -58,7 +60,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
-     * @var \PDepend\Util\Cache\CacheDriver
+     * @var CacheDriver
      * @since 1.0.0
      */
     private $cache;
@@ -79,7 +81,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
     public function testGetCCNReturnsZeroForUnknownNode(): void
     {
         $analyzer = $this->createAnalyzer();
-        $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
+        $astArtifact = $this->getMockBuilder(ASTArtifact::class)
             ->getMock();
         $this->assertEquals(0, $analyzer->getCcn($astArtifact));
     }
@@ -90,7 +92,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
     public function testGetCCN2ReturnsZeroForUnknownNode(): void
     {
         $analyzer = $this->createAnalyzer();
-        $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
+        $astArtifact = $this->getMockBuilder(ASTArtifact::class)
             ->getMock();
         $this->assertEquals(0, $analyzer->getCcn2($astArtifact));
     }

@@ -41,8 +41,11 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTestCase;
+use PDepend\Source\AST\ASTCatchStatement;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTUnionType;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
@@ -64,7 +67,7 @@ class PHPParserVersion80Test extends AbstractTestCase
     public function testCatchWithoutVariable(): void
     {
         $catchStatement = $this->getFirstMethodForTestCase()->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTCatchStatement'
+            ASTCatchStatement::class
         );
 
         $this->assertCount(2, $catchStatement->getChildren());
@@ -152,7 +155,7 @@ class PHPParserVersion80Test extends AbstractTestCase
         }, $children);
 
         foreach ([
-            ['null|int|float', '$number', 'PDepend\\Source\\AST\\ASTUnionType'],
+            ['null|int|float', '$number', ASTUnionType::class],
         ] as $index => $expected) {
             [$expectedType, $expectedVariable, $expectedTypeClass] = $expected;
             [$type, $variable] = $declarations[$index];
@@ -164,7 +167,7 @@ class PHPParserVersion80Test extends AbstractTestCase
             );
             $this->assertSame(ltrim($expectedType, '?'), $type->getImage());
             $this->assertInstanceOf(
-                'PDepend\\Source\\AST\\ASTVariableDeclarator',
+                ASTVariableDeclarator::class,
                 $variable,
                 "Wrong variable for $expectedType $expectedVariable"
             );

@@ -43,6 +43,7 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTestCase;
+use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -465,7 +466,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
 
         $list = $this->parseCodeResourceForTest();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArtifactList', $list);
+        $this->assertInstanceOf(ASTArtifactList::class, $list);
     }
 
     /**

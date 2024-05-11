@@ -240,7 +240,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     {
         return new ASTClassOrInterfaceReferenceIterator(
             $this->findChildrenOfType(
-                'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
+                ASTClassOrInterfaceReference::class,
             ),
         );
     }
@@ -381,11 +381,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         $staticVariables = [];
 
         $declarations = $this->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTStaticVariableDeclaration',
+            ASTStaticVariableDeclaration::class,
         );
         foreach ($declarations as $declaration) {
             $variables = $declaration->findChildrenOfType(
-                'PDepend\\Source\\AST\\ASTVariableDeclarator',
+                ASTVariableDeclarator::class,
             );
             foreach ($variables as $variable) {
                 $image = $variable->getImage();
@@ -423,11 +423,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         $parameters = [];
 
         $formalParameters = $this->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTFormalParameters',
+            ASTFormalParameters::class,
         );
 
         $formalParameters = $formalParameters->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTFormalParameter',
+            ASTFormalParameter::class,
         );
 
         foreach ($formalParameters as $formalParameter) {

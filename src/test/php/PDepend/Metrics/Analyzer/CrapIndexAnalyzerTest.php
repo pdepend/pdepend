@@ -62,7 +62,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     {
         $analyzer = new CrapIndexAnalyzer();
         $actual = $analyzer->getRequiredAnalyzers();
-        $expected = ['PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'];
+        $expected = [CyclomaticComplexityAnalyzer::class];
 
         $this->assertEquals($expected, $actual);
     }
@@ -218,7 +218,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      */
     private function createCyclomaticComplexityAnalyzerMock($ccn = 42)
     {
-        $mock = $this->getMockBuilder('PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer')
+        $mock = $this->getMockBuilder(CyclomaticComplexityAnalyzer::class)
             ->getMock();
         $mock->expects($this->any())
             ->method('getCCN2')

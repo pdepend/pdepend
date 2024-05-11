@@ -42,7 +42,13 @@
 
 namespace PDepend\Issues;
 
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\Parser\MissingValueException;
+use PDepend\Source\Parser\TokenStreamEndException;
 
 /**
  * Test case for the Reflection API compatibility ticket #67.
@@ -571,7 +577,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
      */
     public function testParserThrowsExpectedExceptionForMissingDefaultValue(): void
     {
-        $this->expectException(\PDepend\Source\Parser\MissingValueException::class);
+        $this->expectException(MissingValueException::class);
 
         $this->parseTestCase();
     }
@@ -584,7 +590,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
      */
     public function testParserThrowsExpectedExceptionWhenReachesEofWhileParsingDefaultValue(): void
     {
-        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+        $this->expectException(TokenStreamEndException::class);
 
         $this->parseTestCase();
     }
@@ -592,7 +598,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Returns the first interface in the test case file.
      *
-     * @return \PDepend\Source\AST\ASTInterface
+     * @return ASTInterface
      */
     private function getFirstInterface()
     {
@@ -605,7 +611,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Returns the first class in the test case file.
      *
-     * @return \PDepend\Source\AST\ASTClass
+     * @return ASTClass
      */
     private function getFirstClass()
     {
@@ -618,7 +624,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Returns the first method in the test case file.
      *
-     * @return \PDepend\Source\AST\ASTMethod
+     * @return ASTMethod
      */
     private function getFirstMethod()
     {
@@ -633,7 +639,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Returns the first function in the test case file.
      *
-     * @return \PDepend\Source\AST\ASTFunction
+     * @return ASTFunction
      */
     private function getFirstFunction()
     {

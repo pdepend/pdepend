@@ -42,7 +42,11 @@
 
 namespace PDepend\Issues;
 
+use PDepend\Source\AST\ASTAllocationExpression;
+use PDepend\Source\AST\ASTAssignmentExpression;
+use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTStatement;
+use PDepend\Source\AST\ASTVariable;
 
 /**
  * Test case for ticket 002, PHP 5.3 namespace support.
@@ -78,13 +82,13 @@ class NewClassInstanceTest extends AbstractFeatureTestCase
             $children = $statement->getChildren();
 
             $self->assertCount(1, $children);
-            $self->assertInstanceOf('PDepend\\Source\\AST\\ASTAssignmentExpression', $children[0]);
+            $self->assertInstanceOf(ASTAssignmentExpression::class, $children[0]);
 
             $children = $children[0]->getChildren();
             $self->assertCount(2, $children);
-            $self->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $children[0]);
+            $self->assertInstanceOf(ASTVariable::class, $children[0]);
             $self->assertMatchesRegularExpression('/^\$object\d+$/', $children[0]->getImage());
-            $self->assertInstanceOf('PDepend\\Source\\AST\\ASTAllocationExpression', $children[1]);
+            $self->assertInstanceOf(ASTAllocationExpression::class, $children[1]);
             $children = $children[1]->getChildren();
             $self->assertCount(1, $children);
 
@@ -92,13 +96,13 @@ class NewClassInstanceTest extends AbstractFeatureTestCase
         }, array_slice($instructions, 1, 3));
 
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $expressions[0]);
+        $this->assertInstanceOf(ASTVariable::class, $expressions[0]);
         $this->assertEquals('$class', $expressions[0]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $expressions[1]);
+        $this->assertInstanceOf(ASTVariable::class, $expressions[1]);
         $this->assertEquals('$class', $expressions[1]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $expressions[2]);
+        $this->assertInstanceOf(ASTLiteral::class, $expressions[2]);
         $this->assertEquals("'stdClass'", $expressions[2]->getImage());
     }
 }

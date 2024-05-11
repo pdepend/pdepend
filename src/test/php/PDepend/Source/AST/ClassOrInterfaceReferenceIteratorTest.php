@@ -69,14 +69,14 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
         $class2 = new ASTClass('c2');
         $class2->setId(md5(42));
 
-        $reference1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTSelfReference')
+        $reference1 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
             ->getMock();
         $reference1->expects($this->once())
             ->method('getType')
             ->will($this->returnValue($class1));
 
-        $reference2 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTSelfReference')
+        $reference2 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
             ->getMock();
         $reference2->expects($this->once())
@@ -105,14 +105,14 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
         $class2 = new ASTClass('c2');
         $class2->setId(md5(23));
 
-        $reference1 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTSelfReference')
+        $reference1 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
             ->getMock();
         $reference1->expects($this->once())
             ->method('getType')
             ->will($this->returnValue($class1));
 
-        $reference2 = $this->getMockBuilder('PDepend\\Source\\AST\\ASTSelfReference')
+        $reference2 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
             ->getMock();
         $reference2->expects($this->once())

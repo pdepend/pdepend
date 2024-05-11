@@ -94,7 +94,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     {
         $analyzer = new ClassLevelAnalyzer();
         $this->assertEquals(
-            ['PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'],
+            [CyclomaticComplexityAnalyzer::class],
             $analyzer->getRequiredAnalyzers()
         );
     }

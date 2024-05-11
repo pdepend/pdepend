@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Parser\TokenStreamEndException;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCompoundVariable} class.
  *
@@ -62,7 +64,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
         $variable = $this->getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTString', $string);
+        $this->assertInstanceOf(ASTString::class, $string);
     }
 
     /**
@@ -84,7 +86,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
         $variable = $this->getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTString', $string);
+        $this->assertInstanceOf(ASTString::class, $string);
     }
 
     /**
@@ -94,11 +96,11 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
         $expected = [
-            'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
-            'PDepend\\Source\\AST\\ASTVariable',
-            'PDepend\\Source\\AST\\ASTMethodPostfix',
-            'PDepend\\Source\\AST\\ASTIdentifier',
-            'PDepend\\Source\\AST\\ASTArguments',
+            ASTMemberPrimaryPrefix::class,
+            ASTVariable::class,
+            ASTMethodPostfix::class,
+            ASTIdentifier::class,
+            ASTArguments::class,
         ];
 
         $this->assertGraphEquals($variable, $expected);
@@ -109,7 +111,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      */
     public function testUnclosedCompoundVariableThrowsExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+        $this->expectException(TokenStreamEndException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -160,7 +162,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTCompoundVariable'
+            ASTCompoundVariable::class
         );
     }
 }

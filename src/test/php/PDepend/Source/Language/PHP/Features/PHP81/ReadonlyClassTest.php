@@ -40,6 +40,8 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
+use PDepend\Source\Parser\UnexpectedTokenException;
+
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -53,7 +55,7 @@ class ReadonlyClassTest extends PHPParserVersion81TestCase
     public function testReadonlyClass(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: readonly, line: 2, col: 1, file: '

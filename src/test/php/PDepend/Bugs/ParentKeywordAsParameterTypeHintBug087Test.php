@@ -42,6 +42,8 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Source\Parser\InvalidStateException;
+
 /**
  * Test case for the parent keyword type hint bug no #87.
  *
@@ -77,7 +79,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestC
     public function testParserThrowsExpectedExceptionForParentTypeHintInFunction(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException'
+            InvalidStateException::class
         );
         $this->expectExceptionMessage(
             'The keyword "parent" was used as type hint but the parameter ' .
@@ -93,7 +95,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestC
     public function testParserThrowsExpectedExceptionForParentTypeHintWithRootClass(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException'
+            InvalidStateException::class
         );
         $this->expectExceptionMessage(
             'The keyword "parent" was used as type hint but the ' .

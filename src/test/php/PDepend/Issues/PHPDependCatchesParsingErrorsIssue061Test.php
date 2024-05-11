@@ -43,6 +43,8 @@
 namespace PDepend\Issues;
 
 use PDepend\Input\ExtensionFilter;
+use PDepend\Report\Dummy\Logger;
+use PDepend\TextUI\Command;
 
 /**
  * Test case for the catch error ticket #61.
@@ -64,7 +66,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
         $pdepend = $this->createEngineFixture();
         $pdepend->addDirectory($this->createCodeResourceUriForTest());
         $pdepend->addFileFilter(new ExtensionFilter(['php']));
-        $pdepend->addReportGenerator(new \PDepend\Report\Dummy\Logger());
+        $pdepend->addReportGenerator(new Logger());
         $pdepend->analyze();
 
         $exceptions = $pdepend->getExceptions();
@@ -166,7 +168,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      */
     protected function runTextUICommand()
     {
-        $command = new \PDepend\TextUI\Command();
+        $command = new Command();
 
         ob_start();
         $exitCode = $command->run();

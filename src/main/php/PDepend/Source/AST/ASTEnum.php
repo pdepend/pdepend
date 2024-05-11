@@ -164,7 +164,7 @@ class ASTEnum extends AbstractASTClassOrInterface
     public function getCases()
     {
         return new ASTArtifactList(
-            $this->findChildrenOfType('PDepend\\Source\\AST\\ASTEnumCase'),
+            $this->findChildrenOfType(ASTEnumCase::class),
         );
     }
 

@@ -43,6 +43,7 @@
 namespace PDepend\Issues;
 
 use PDepend\Source\AST\State;
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -222,7 +223,7 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
      */
     public function testAbstractFinalReadonlyClass(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->getFirstClassForTestCase();
     }

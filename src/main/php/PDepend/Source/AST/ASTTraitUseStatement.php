@@ -90,7 +90,7 @@ class ASTTraitUseStatement extends ASTStatement
         $methodName = strtolower($method->getName());
         $methodParent = $method->getParent();
 
-        $precedences = $this->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence');
+        $precedences = $this->findChildrenOfType(ASTTraitAdaptationPrecedence::class);
 
         foreach ($precedences as $precedence) {
             if (strtolower($precedence->getImage()) !== $methodName) {
@@ -196,6 +196,6 @@ class ASTTraitUseStatement extends ASTStatement
      */
     private function getAliases()
     {
-        return $this->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationAlias');
+        return $this->findChildrenOfType(ASTTraitAdaptationAlias::class);
     }
 }

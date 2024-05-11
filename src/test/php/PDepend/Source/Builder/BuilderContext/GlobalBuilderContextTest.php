@@ -47,6 +47,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTTrait;
+use PDepend\Source\Builder\Builder;
 
 /**
  * Test case for the {@link \PDepend\Source\Builder\BuilderContext\GlobalBuilderContext}
@@ -67,11 +68,11 @@ class GlobalBuilderContextTest extends AbstractTestCase
      */
     public function testRegisterTraitCallsRestoreClassOnBuilder(): void
     {
-        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+        $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
         $builder->expects($this->once())
             ->method('restoreTrait')
-            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTTrait'));
+            ->with($this->isInstanceOf(ASTTrait::class));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerTrait(new ASTTrait(__CLASS__));
@@ -82,11 +83,11 @@ class GlobalBuilderContextTest extends AbstractTestCase
      */
     public function testRegisterClassCallsRestoreClassOnBuilder(): void
     {
-        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+        $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
         $builder->expects($this->once())
             ->method('restoreClass')
-            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTClass'));
+            ->with($this->isInstanceOf(ASTClass::class));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerClass(new ASTClass(__CLASS__));
@@ -97,11 +98,11 @@ class GlobalBuilderContextTest extends AbstractTestCase
      */
     public function testRegisterInterfaceCallsRestoreInterfaceOnBuilder(): void
     {
-        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+        $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
         $builder->expects($this->once())
             ->method('restoreInterface')
-            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTInterface'));
+            ->with($this->isInstanceOf(ASTInterface::class));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerInterface(new ASTInterface(__CLASS__));
@@ -112,11 +113,11 @@ class GlobalBuilderContextTest extends AbstractTestCase
      */
     public function testRegisterFunctionCallsRestoreFunctionOnBuilder(): void
     {
-        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+        $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
         $builder->expects($this->once())
             ->method('restoreFunction')
-            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTFunction'));
+            ->with($this->isInstanceOf(ASTFunction::class));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerFunction(new ASTFunction(__CLASS__));
@@ -129,7 +130,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
      */
     public function testGetTraitDelegatesCallToWrappedBuilder(): void
     {
-        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+        $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
         $builder->expects($this->once())
             ->method('getTrait')
@@ -144,7 +145,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
      */
     public function testGetClassDelegatesCallToWrappedBuilder(): void
     {
-        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+        $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
         $builder->expects($this->once())
             ->method('getClass')
@@ -159,7 +160,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
      */
     public function testGetClassOrInterfaceDelegatesCallToWrappedBuilder(): void
     {
-        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+        $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
         $builder->expects($this->once())
             ->method('getClassOrInterface')

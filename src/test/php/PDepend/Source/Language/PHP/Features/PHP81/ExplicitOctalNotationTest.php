@@ -41,6 +41,7 @@
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 use PDepend\Source\AST\ASTConstantDeclarator;
+use PDepend\Source\AST\ASTLiteral;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
@@ -73,7 +74,7 @@ class ExplicitOctalNotationTest extends PHPParserVersion81TestCase
         $this->assertSame(
             '0o170',
             $this->getFirstMethodForTestCase()
-                ->getFirstChildOfType('PDepend\\Source\\AST\\ASTLiteral')->getImage()
+                ->getFirstChildOfType(ASTLiteral::class)->getImage()
         );
     }
 }

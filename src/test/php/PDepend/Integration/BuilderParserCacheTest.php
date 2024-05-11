@@ -43,6 +43,7 @@
 namespace PDepend\Integration;
 
 use PDepend\AbstractTestCase;
+use PDepend\Source\Builder\Builder;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -117,7 +118,7 @@ class BuilderParserCacheTest extends AbstractTestCase
      * Parses the given test file and then returns the builder instance.
      *
      * @param string $file Relative path to a test file for the calling test.
-     * @return \PDepend\Source\Builder\Builder
+     * @return Builder
      */
     protected function parseSourceAndReturnBuilder($file)
     {

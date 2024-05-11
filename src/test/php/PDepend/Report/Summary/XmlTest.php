@@ -43,6 +43,9 @@
 namespace PDepend\Report\Summary;
 
 use PDepend\AbstractTestCase;
+use PDepend\Metrics\AnalyzerNodeAware;
+use PDepend\Metrics\AnalyzerProjectAware;
+use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
 
@@ -122,7 +125,7 @@ class XmlTest extends AbstractTestCase
     public function testThrowsExceptionForInvalidLogTarget(): void
     {
         $this->expectException(
-            '\\PDepend\\Report\\NoLogOutputException'
+            NoLogOutputException::class
         );
         $this->expectExceptionMessage(
             "The log target is not configured for 'PDepend\\Report\\Summary\\Xml'."
@@ -137,7 +140,7 @@ class XmlTest extends AbstractTestCase
      */
     public function testLogMethodReturnsTrueForAnalyzerOfTypeProjectAware(): void
     {
-        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\AnalyzerProjectAware')
+        $analyzer = $this->getMockBuilder(AnalyzerProjectAware::class)
             ->getMock();
 
         $logger = new Xml();
@@ -151,7 +154,7 @@ class XmlTest extends AbstractTestCase
      */
     public function testLogMethodReturnsTrueForAnalyzerOfTypeNodeAware(): void
     {
-        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\AnalyzerNodeAware')
+        $analyzer = $this->getMockBuilder(AnalyzerNodeAware::class)
             ->getMock();
 
         $logger = new Xml();

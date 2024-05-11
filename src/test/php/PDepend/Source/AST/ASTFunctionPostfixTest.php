@@ -92,9 +92,9 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     {
         $postfix = $this->getFirstFunctionPostfixInFunction();
         $expected = [
-            'PDepend\\Source\\AST\\ASTIdentifier',
-            'PDepend\\Source\\AST\\ASTArguments',
-            'PDepend\\Source\\AST\\ASTLiteral',
+            ASTIdentifier::class,
+            ASTArguments::class,
+            ASTLiteral::class,
         ];
 
         $this->assertGraphEquals($postfix, $expected);
@@ -107,8 +107,8 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     {
         $postfix = $this->getFirstFunctionPostfixInFunction();
         $expected = [
-            'PDepend\\Source\\AST\\ASTVariable',
-            'PDepend\\Source\\AST\\ASTArguments',
+            ASTVariable::class,
+            ASTArguments::class,
         ];
 
         $this->assertGraphEquals($postfix, $expected);
@@ -121,10 +121,10 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     {
         $postfix = $this->getFirstFunctionPostfixInFunction();
         $expected = [
-            'PDepend\\Source\\AST\\ASTCompoundVariable',
-            'PDepend\\Source\\AST\\ASTConstant',
-            'PDepend\\Source\\AST\\ASTArguments',
-            'PDepend\\Source\\AST\\ASTConstant',
+            ASTCompoundVariable::class,
+            ASTConstant::class,
+            ASTArguments::class,
+            ASTConstant::class,
         ];
 
         $this->assertGraphEquals($postfix, $expected);
@@ -137,12 +137,12 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     {
         $postfix = $this->getFirstFunctionPostfixInFunction();
         $expected = [
-            'PDepend\\Source\\AST\\ASTArrayIndexExpression',
-            'PDepend\\Source\\AST\\ASTArrayIndexExpression',
-            'PDepend\\Source\\AST\\ASTVariable',
-            'PDepend\\Source\\AST\\ASTVariable',
-            'PDepend\\Source\\AST\\ASTLiteral',
-            'PDepend\\Source\\AST\\ASTArguments',
+            ASTArrayIndexExpression::class,
+            ASTArrayIndexExpression::class,
+            ASTVariable::class,
+            ASTVariable::class,
+            ASTLiteral::class,
+            ASTArguments::class,
         ];
 
         $this->assertGraphEquals($postfix, $expected);
@@ -155,9 +155,9 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     {
         $postfix = $this->getFirstFunctionPostfixInFunction();
         $expected = [
-            'PDepend\\Source\\AST\\ASTIdentifier',
-            'PDepend\\Source\\AST\\ASTArguments',
-            'PDepend\\Source\\AST\\ASTLiteral',
+            ASTIdentifier::class,
+            ASTArguments::class,
+            ASTLiteral::class,
         ];
 
         $this->assertGraphEquals($postfix, $expected);
@@ -170,9 +170,9 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     {
         $postfix = $this->getFirstFunctionPostfixInFunction();
         $expected = [
-            'PDepend\\Source\\AST\\ASTIdentifier',
-            'PDepend\\Source\\AST\\ASTArguments',
-            'PDepend\\Source\\AST\\ASTLiteral',
+            ASTIdentifier::class,
+            ASTArguments::class,
+            ASTLiteral::class,
         ];
 
         $this->assertGraphEquals($postfix, $expected);
@@ -185,13 +185,13 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     {
         $postfix = $this->getFirstFunctionPostfixInFunction();
         $expected = [
-            'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix',
-            'PDepend\\Source\\AST\\ASTVariable',
-            'PDepend\\Source\\AST\\ASTPropertyPostfix',
-            'PDepend\\Source\\AST\\ASTArrayIndexExpression',
-            'PDepend\\Source\\AST\\ASTIdentifier',
-            'PDepend\\Source\\AST\\ASTLiteral',
-            'PDepend\\Source\\AST\\ASTArguments',
+            ASTMemberPrimaryPrefix::class,
+            ASTVariable::class,
+            ASTPropertyPostfix::class,
+            ASTArrayIndexExpression::class,
+            ASTIdentifier::class,
+            ASTLiteral::class,
+            ASTArguments::class,
         ];
 
         $this->assertGraphEquals($postfix, $expected);
@@ -252,7 +252,7 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTFunctionPostfix'
+            ASTFunctionPostfix::class
         );
     }
 }

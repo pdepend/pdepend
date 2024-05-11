@@ -100,7 +100,7 @@ class ASTIdentifierTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTIdentifier'
+            ASTIdentifier::class
         );
     }
 }

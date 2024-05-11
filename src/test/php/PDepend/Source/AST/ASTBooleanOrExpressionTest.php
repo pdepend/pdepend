@@ -100,7 +100,7 @@ class ASTBooleanOrExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTBooleanOrExpression'
+            ASTBooleanOrExpression::class
         );
     }
 }

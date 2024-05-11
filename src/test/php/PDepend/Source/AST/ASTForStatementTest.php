@@ -132,7 +132,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testFirstChildOfForStatementIsInstanceOfForInit(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForInit', $stmt->getChild(0));
+        $this->assertInstanceOf(ASTForInit::class, $stmt->getChild(0));
     }
 
     /**
@@ -141,7 +141,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testFirstChildOfForStatementCanBeLeftBlank(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
+        $this->assertInstanceOf(ASTExpression::class, $stmt->getChild(0));
     }
 
 
@@ -159,7 +159,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testSecondChildOfForStatementIsInstanceOfExpression(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTExpression::class, $stmt->getChild(1));
     }
 
     /**
@@ -168,7 +168,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testSecondChildOfForStatementCanBeLeftBlank(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForUpdate', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTForUpdate::class, $stmt->getChild(1));
     }
 
     /**
@@ -177,7 +177,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testThirdChildOfForStatementIsInstanceOfForUpdate(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTForUpdate', $stmt->getChild(2));
+        $this->assertInstanceOf(ASTForUpdate::class, $stmt->getChild(2));
     }
 
     /**
@@ -186,7 +186,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testThirdChildOfForStatementCanBeLeftBlank(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(2));
+        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(2));
     }
 
     /**
@@ -195,7 +195,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testFourthChildOfForStatementIsInstanceOfScopeStatement(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(3));
+        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(3));
     }
 
     /**
@@ -204,7 +204,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testFourthChildOfForStatementIsInstanceOfStatement(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStatement', $stmt->getChild(3));
+        $this->assertInstanceOf(ASTStatement::class, $stmt->getChild(3));
     }
 
     /**
@@ -325,7 +325,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTForStatement'
+            ASTForStatement::class
         );
     }
 }

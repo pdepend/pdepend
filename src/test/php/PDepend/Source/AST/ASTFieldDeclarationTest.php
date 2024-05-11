@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use Java\Style;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFieldDeclaration} class.
  *
@@ -77,10 +79,10 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
             ->current();
 
         $declaration = $class->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTFieldDeclaration'
+            ASTFieldDeclaration::class
         );
         $reference = $declaration->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
+            ASTClassOrInterfaceReference::class
         );
         $this->assertNull($reference);
     }
@@ -94,7 +96,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     {
         $declaration = $this->getFirstFieldDeclarationInClass();
         $reference = $declaration->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
+            ASTClassOrInterfaceReference::class
         );
 
         $type = $reference->getType();
@@ -109,7 +111,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      */
     public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type): void
     {
-        $this->assertEquals('Java\\Style', $type->getNamespaceName());
+        $this->assertEquals(Style::class, $type->getNamespaceName());
     }
 
     /**
@@ -289,7 +291,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTFieldDeclaration'
+            ASTFieldDeclaration::class
         );
     }
 

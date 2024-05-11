@@ -42,18 +42,30 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTArrayIndexExpression;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTCompoundExpression;
 use PDepend\Source\AST\ASTConstantDeclarator;
 use PDepend\Source\AST\ASTConstantDefinition;
+use PDepend\Source\AST\ASTConstantPostfix;
 use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTReturnStatement;
+use PDepend\Source\AST\ASTSelfReference;
 use PDepend\Source\AST\ASTValue;
+use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\Builder\Builder;
+use PDepend\Source\Parser\InvalidStateException;
+use PDepend\Source\Parser\TokenStreamEndException;
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
@@ -88,7 +100,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
         $classes = $namespaces[0]->getClasses();
-        $dependencies = $classes[0]->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference');
+        $dependencies = $classes[0]->findChildrenOfType(ASTClassOrInterfaceReference::class);
 
         $this->assertCount(1, $dependencies);
 
@@ -102,7 +114,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testParserThrowsUnexpectedTokenExceptionForArrayWithEOF(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\TokenStreamEndException'
+            TokenStreamEndException::class
         );
         $this->expectExceptionMessage(
             'Unexpected end of token stream in file:'
@@ -111,7 +123,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         $cache = new MemoryCacheDriver();
         $builder = new PHPBuilder();
         /** @var Tokenizer $tokenizer */
-        $tokenizer = $this->getMockBuilder('PDepend\\Source\\Tokenizer\\Tokenizer')
+        $tokenizer = $this->getMockBuilder(Tokenizer::class)
             ->getMock();
         $tokenizer
             ->method('peek')
@@ -131,7 +143,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testParserHandlesBinaryIntegerLiteral(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        $literal = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTLiteral');
+        $literal = $method->getFirstChildOfType(ASTLiteral::class);
 
         $this->assertEquals('0b0100110100111', $literal->getImage());
     }
@@ -142,9 +154,9 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testParserHandlesStaticMemberExpressionSyntax(): void
     {
         $function = $this->getFirstFunctionForTestCase();
-        $expr = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTCompoundExpression');
+        $expr = $function->getFirstChildOfType(ASTCompoundExpression::class);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundExpression', $expr);
+        $this->assertInstanceOf(ASTCompoundExpression::class, $expr);
     }
 
     /**
@@ -152,7 +164,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForTraitAsClassName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -162,7 +174,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForTraitAsFunctionName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -172,7 +184,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForTraitAsInterfaceName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -182,7 +194,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForTraitAsNamespaceName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -192,7 +204,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForTraitAsCalledFunction(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -202,7 +214,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsClassName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -212,7 +224,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsFunctionName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -222,7 +234,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsInterfaceName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -232,7 +244,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsNamespaceName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -242,7 +254,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForInsteadOfAsCalledFunction(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -252,7 +264,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForCallableAsClassName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -262,7 +274,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForCallableAsFunctionName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -272,7 +284,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForCallableAsInterfaceName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -282,7 +294,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForCallableAsNamespaceName(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -292,7 +304,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionForCallableAsCalledFunction(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -307,7 +319,7 @@ class PHPParserVersion72Test extends AbstractTestCase
      */
     public function testDoubleColonClass(): void
     {
-        $this->assertInstanceOf('PDepend\Source\AST\ASTArtifactList', $this->parseCodeResourceForTest());
+        $this->assertInstanceOf(ASTArtifactList::class, $this->parseCodeResourceForTest());
     }
 
     /**
@@ -316,7 +328,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testComplexExpressionInParameterInitializer(): void
     {
         $node = $this->getFirstFunctionForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
+            ->getFirstChildOfType(ASTFormalParameter::class);
 
         $this->assertNotNull($node);
     }
@@ -327,7 +339,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testComplexExpressionInConstantDeclarator(): void
     {
         $node = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
+            ->getFirstChildOfType(ASTConstantDeclarator::class);
 
         $this->assertNotNull($node);
     }
@@ -338,7 +350,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testComplexExpressionInFieldDeclaration(): void
     {
         $node = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
+            ->getFirstChildOfType(ASTFieldDeclaration::class);
 
         $this->assertNotNull($node);
     }
@@ -349,7 +361,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testPowExpressionInMethodBody(): void
     {
         $node = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTReturnStatement');
+            ->getFirstChildOfType(ASTReturnStatement::class);
 
         $this->assertSame('**', $node->getChild(0)->getChild(1)->getImage());
     }
@@ -360,7 +372,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testPowExpressionInFieldDeclaration(): void
     {
         $node = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
+            ->getFirstChildOfType(ASTFieldDeclaration::class);
 
         $this->assertNotNull($node);
     }
@@ -383,20 +395,20 @@ class PHPParserVersion72Test extends AbstractTestCase
         /** @var ASTReturnStatement[] $returnStatements */
         $returnStatements = $this
             ->getFirstMethodForTestCase()
-            ->findChildrenOfType('PDepend\\Source\\AST\\ASTReturnStatement');
+            ->findChildrenOfType(ASTReturnStatement::class);
 
         /** @var ASTMemberPrimaryPrefix $memberPrefix */
         $memberPrefix = $returnStatements[0]->getChild(0);
-        $this->assertInstanceOf('PDepend\Source\AST\ASTMemberPrimaryPrefix', $memberPrefix);
+        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $memberPrefix);
         $this->assertTrue($memberPrefix->isStatic());
-        $this->assertInstanceOf('PDepend\Source\AST\ASTSelfReference', $memberPrefix->getChild(0));
+        $this->assertInstanceOf(ASTSelfReference::class, $memberPrefix->getChild(0));
         $children = $memberPrefix->getChild(1)->getChildren();
         $this->assertCount(1, $children);
-        $this->assertInstanceOf('PDepend\Source\AST\ASTArrayIndexExpression', $children[0]);
+        $this->assertInstanceOf(ASTArrayIndexExpression::class, $children[0]);
         $children = $children[0]->getChildren();
         $this->assertCount(2, $children);
-        $this->assertInstanceOf('PDepend\Source\AST\ASTVariable', $children[0]);
-        $this->assertInstanceOf('PDepend\Source\AST\ASTLiteral', $children[1]);
+        $this->assertInstanceOf(ASTVariable::class, $children[0]);
+        $this->assertInstanceOf(ASTLiteral::class, $children[1]);
         $this->assertSame('$foo', $children[0]->getImage());
         $this->assertSame("'bar'", $children[1]->getImage());
     }
@@ -414,29 +426,29 @@ class PHPParserVersion72Test extends AbstractTestCase
         $constants = $class->getChildren();
 
         $this->assertCount(2, $constants);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constants[0]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $constants[1]);
+        $this->assertInstanceOf(ASTConstantDefinition::class, $constants[0]);
+        $this->assertInstanceOf(ASTConstantDefinition::class, $constants[1]);
 
         /** @var ASTConstantDeclarator[] $declarators */
         $declarators = $constants[1]->getChildren();
 
         $this->assertCount(1, $declarators);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDeclarator', $declarators[0]);
+        $this->assertInstanceOf(ASTConstantDeclarator::class, $declarators[0]);
 
         /** @var ASTExpression $expression */
         $expression = $declarators[0]->getValue()->getValue();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
+        $this->assertInstanceOf(ASTExpression::class, $expression);
 
         $nodes = $expression->getChildren();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $nodes[0]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $nodes[1]);
+        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $nodes[0]);
+        $this->assertInstanceOf(ASTExpression::class, $nodes[1]);
         $this->assertSame('+', $nodes[1]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $nodes[2]);
+        $this->assertInstanceOf(ASTArray::class, $nodes[2]);
 
         $nodes = $nodes[0]->getChildren();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $nodes[0]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantPostfix', $nodes[1]);
+        $this->assertInstanceOf(ASTSelfReference::class, $nodes[0]);
+        $this->assertInstanceOf(ASTConstantPostfix::class, $nodes[1]);
         $this->assertSame('A', $nodes[1]->getImage());
     }
 
@@ -447,7 +459,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testParserThrowsUnexpectedTokenExceptionForOF(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: function, line: 1, col: 1, file:'
@@ -456,7 +468,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         $cache = new MemoryCacheDriver();
         $builder = new PHPBuilder();
         /** @var Tokenizer $tokenizer */
-        $tokenizer = $this->getMockBuilder('PDepend\\Source\\Tokenizer\\Tokenizer')
+        $tokenizer = $this->getMockBuilder(Tokenizer::class)
             ->getMock();
         $tokenizer
             ->method('peek')
@@ -692,8 +704,8 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testSpaceshipOperatorWithStrings(): void
     {
         $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+            ->getFirstChildOfType(ASTExpression::class)
+            ->getFirstChildOfType(ASTExpression::class);
 
         $this->assertSame('<=>', $expr->getImage());
     }
@@ -704,8 +716,8 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testSpaceshipOperatorWithNumbers(): void
     {
         $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+            ->getFirstChildOfType(ASTExpression::class)
+            ->getFirstChildOfType(ASTExpression::class);
 
         $this->assertSame('<=>', $expr->getImage());
     }
@@ -718,7 +730,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testSpaceshipOperatorWithArrays()
     {
         $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getFirstChildOfType(ASTExpression::class)
             ->getChild(1);
 
         $this->assertSame('<=>', $expr->getImage());
@@ -764,8 +776,8 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testNullCoalesceOperator(): void
     {
         $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+            ->getFirstChildOfType(ASTExpression::class)
+            ->getFirstChildOfType(ASTExpression::class);
 
         $this->assertSame('??', $expr->getImage());
     }
@@ -778,7 +790,7 @@ class PHPParserVersion72Test extends AbstractTestCase
 
     public function testListKeywordAsFunctionNameThrowsException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -885,7 +897,7 @@ class PHPParserVersion72Test extends AbstractTestCase
 
         $classes = $namespaces[0]->getClasses();
         /** @var ASTConstantDeclarator[] $constants */
-        $constants = $classes[0]->findChildrenOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
+        $constants = $classes[0]->findChildrenOfType(ASTConstantDeclarator::class);
 
         $this->assertSame('trait', $constants[0]->getImage());
         $this->assertSame('callable', $constants[1]->getImage());
@@ -895,7 +907,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testCallableKeywordAsClassName(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: callable, line: 3, col: 7, file: '
@@ -907,7 +919,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testTraitKeywordAsClassName(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: trait, line: 3, col: 7, file: '
@@ -919,7 +931,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testInsteadofKeywordAsClassName(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: insteadof, line: 3, col: 7, file: '
@@ -931,7 +943,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testCallableKeywordAsInterfaceName(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: callable, line: 3, col: 11, file: '
@@ -943,7 +955,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testTraitKeywordAsInterfaceName(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: trait, line: 3, col: 11, file: '
@@ -955,7 +967,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testInsteadofKeywordAsInterfaceName(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: insteadof, line: 3, col: 11, file: '
@@ -986,7 +998,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testConstVisibilityInInterfaceProtected(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException'
+            InvalidStateException::class
         );
         $this->expectExceptionMessage(
             'Constant can\'t be declared private or protected in interface "TestInterface".'
@@ -998,7 +1010,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     public function testConstVisibilityInInterfacePrivate(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException'
+            InvalidStateException::class
         );
         $this->expectExceptionMessage(
             'Constant can\'t be declared private or protected in interface "TestInterface".'
@@ -1070,7 +1082,7 @@ class PHPParserVersion72Test extends AbstractTestCase
         /** @var ASTArray $expr */
         $array = $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTArray'
+            ASTArray::class
         );
         $this->assertCount(1, $array->getChildren());
         $this->assertSame('$b', $array->getChild(0)->getChild(0)->getImage());
@@ -1126,7 +1138,7 @@ class PHPParserVersion72Test extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
         $this->assertGreaterThan(0, count($namespaces));
-        $this->assertContainsOnlyInstancesOf('PDepend\\Source\\AST\\ASTNamespace', $namespaces);
+        $this->assertContainsOnlyInstancesOf(ASTNamespace::class, $namespaces);
     }
 
     /**
@@ -1142,7 +1154,7 @@ class PHPParserVersion72Test extends AbstractTestCase
 
     public function testTrailingCommasInUnsetCall(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
         $this->expectExceptionMessage('Unexpected token: ), line: 4, col: 14');
 
         $this->parseCodeResourceForTest();

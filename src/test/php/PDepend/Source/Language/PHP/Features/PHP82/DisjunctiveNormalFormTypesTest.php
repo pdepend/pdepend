@@ -40,6 +40,11 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP82;
 
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTIntersectionType;
+use PDepend\Source\AST\ASTScalarType;
+use PDepend\Source\AST\ASTUnionType;
+
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -55,14 +60,14 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $method = $this->getFirstMethodForTestCase();
         $type = $method->getReturnType();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $type);
+        $this->assertInstanceOf(ASTUnionType::class, $type);
         $children = $type->getChildren();
 
         $this->assertCount(2, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[0]);
+        $this->assertInstanceOf(ASTIntersectionType::class, $children[0]);
         $this->assertSame('A&B', $children[0]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $children[1]);
+        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[1]);
         $this->assertSame('D', $children[1]->getImage());
     }
 
@@ -71,17 +76,17 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $method = $this->getFirstMethodForTestCase();
         $type = $method->getReturnType();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $type);
+        $this->assertInstanceOf(ASTUnionType::class, $type);
         $children = $type->getChildren();
 
         $this->assertCount(3, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $children[0]);
+        $this->assertInstanceOf(ASTScalarType::class, $children[0]);
         $this->assertSame('null', $children[0]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $children[1]);
+        $this->assertInstanceOf(ASTUnionType::class, $children[1]);
         $this->assertSame('A|B|C', $children[1]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[2]);
+        $this->assertInstanceOf(ASTIntersectionType::class, $children[2]);
         $this->assertSame('D&E&F', $children[2]->getImage());
     }
 
@@ -90,7 +95,7 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $method = $this->getFirstMethodForTestCase();
         $type = $method->getReturnType();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $type);
+        $this->assertInstanceOf(ASTUnionType::class, $type);
         $this->assertSame('(A&B&C)|true|(D&((E&F)|G))', $type->getImage());
     }
 
@@ -102,17 +107,17 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $parameter = $parameters[0];
         $type = $parameter->getFormalParameter()->getType();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $type);
+        $this->assertInstanceOf(ASTUnionType::class, $type);
         $children = $type->getChildren();
 
         $this->assertCount(3, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[0]);
+        $this->assertInstanceOf(ASTIntersectionType::class, $children[0]);
         $this->assertSame('A&B', $children[0]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $children[1]);
+        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[1]);
         $this->assertSame('D', $children[1]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $children[1]);
+        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[1]);
         $this->assertSame('null', $children[2]->getImage());
     }
 
@@ -124,17 +129,17 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $parameter = $parameters[0];
         $type = $parameter->getFormalParameter()->getType();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $type);
+        $this->assertInstanceOf(ASTUnionType::class, $type);
         $children = $type->getChildren();
 
         $this->assertCount(3, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $children[0]);
+        $this->assertInstanceOf(ASTScalarType::class, $children[0]);
         $this->assertSame('null', $children[0]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $children[1]);
+        $this->assertInstanceOf(ASTUnionType::class, $children[1]);
         $this->assertSame('A|B|C', $children[1]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[2]);
+        $this->assertInstanceOf(ASTIntersectionType::class, $children[2]);
         $this->assertSame('D&E&F', $children[2]->getImage());
     }
 
@@ -146,7 +151,7 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $parameter = $parameters[0];
         $type = $parameter->getFormalParameter()->getType();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $type);
+        $this->assertInstanceOf(ASTUnionType::class, $type);
         $this->assertSame('(A&B&C)|true|(D&((E&F)|G))', $type->getImage());
     }
 }

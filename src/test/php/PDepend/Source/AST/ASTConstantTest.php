@@ -127,7 +127,7 @@ class ASTConstantTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTConstant'
+            ASTConstant::class
         );
     }
 }

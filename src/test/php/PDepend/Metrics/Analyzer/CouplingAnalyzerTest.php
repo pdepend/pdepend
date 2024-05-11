@@ -43,6 +43,7 @@
 namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
+use PDepend\Source\AST\ASTArtifact;
 
 /**
  * Test case for the coupling analyzer.
@@ -60,7 +61,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsAnEmptyArrayByDefault(): void
     {
-        $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
+        $astArtifact = $this->getMockBuilder(ASTArtifact::class)
             ->getMock();
 
         $analyzer = new CouplingAnalyzer();

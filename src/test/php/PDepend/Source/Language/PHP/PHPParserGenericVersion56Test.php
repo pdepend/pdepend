@@ -44,6 +44,11 @@
 namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTestCase;
+use PDepend\Source\AST\ASTConstantDeclarator;
+use PDepend\Source\AST\ASTConstantDefinition;
+use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTReturnStatement;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
@@ -68,7 +73,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -79,7 +84,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -90,7 +95,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -101,7 +106,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -114,7 +119,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -127,7 +132,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -140,7 +145,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -153,7 +158,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstInterfaceForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -162,7 +167,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
     public function testComplexExpressionInParameterInitializer(): void
     {
         $node = $this->getFirstFunctionForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
+            ->getFirstChildOfType(ASTFormalParameter::class);
 
         $this->assertNotNull($node);
     }
@@ -173,7 +178,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
     public function testComplexExpressionInConstantDeclarator(): void
     {
         $node = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
+            ->getFirstChildOfType(ASTConstantDeclarator::class);
 
         $this->assertNotNull($node);
     }
@@ -184,7 +189,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
     public function testComplexExpressionInFieldDeclaration(): void
     {
         $node = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
+            ->getFirstChildOfType(ASTFieldDeclaration::class);
 
         $this->assertNotNull($node);
     }
@@ -195,7 +200,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
     public function testPowExpressionInMethodBody(): void
     {
         $node = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTReturnStatement');
+            ->getFirstChildOfType(ASTReturnStatement::class);
 
         $this->assertSame('**', $node->getChild(0)->getChild(1)->getImage());
     }
@@ -206,7 +211,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
     public function testPowExpressionInFieldDeclaration(): void
     {
         $node = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
+            ->getFirstChildOfType(ASTFieldDeclaration::class);
 
         $this->assertNotNull($node);
     }

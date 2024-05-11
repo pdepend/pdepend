@@ -45,6 +45,7 @@ namespace PDepend\DependencyInjection;
 use PDepend\AbstractTestCase;
 use PDepend\TestExtension;
 use ReflectionMethod;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
  * Test cases for the {@link \PDepend\Application} class.
@@ -63,17 +64,17 @@ class ConfigurationTest extends AbstractTestCase
         $config = new Configuration([new TestExtension()]);
 
         $this->assertInstanceOf(
-            'Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder',
+            TreeBuilder::class,
             $config->getConfigTreeBuilder()
         );
 
         $method = new ReflectionMethod(
-            'PDepend\\DependencyInjection\\Configuration',
+            Configuration::class,
             'getConfigTreeBuilder'
         );
 
         $this->assertSame(
-            'Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder',
+            TreeBuilder::class,
             $method->getReturnType()->getName()
         );
     }

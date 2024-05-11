@@ -41,7 +41,9 @@
 namespace PDepend\Source\Language\PHP\Features\PHP83;
 
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTConstantDeclarator;
+use PDepend\Source\AST\ASTConstantPostfix;
 use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTLiteral;
@@ -49,6 +51,7 @@ use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\AST\ASTValue;
+use PDepend\Source\Parser\UnexpectedTokenException;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion83
@@ -69,22 +72,22 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
         $constantDeclarator = $interface->getChild(0)->getChild(0);
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
+        $this->assertInstanceOf(ASTScalarType::class, $type);
         $this->assertSame('string', $type->getImage());
         /** @var ASTValue $value */
         $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $value);
+        $this->assertInstanceOf(ASTValue::class, $value);
 
         /** @var ASTMemberPrimaryPrefix $constant */
         $constant = $interface->getConstant('TEST');
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $constant);
+        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $constant);
         $this->assertSame($constant, $value->getValue());
 
         $children = $constant->getChildren();
         $this->assertCount(2, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $children[0]);
+        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[0]);
         $this->assertSame('E', $children[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantPostfix', $children[1]);
+        $this->assertInstanceOf(ASTConstantPostfix::class, $children[1]);
         $this->assertSame('TEST', $children[1]->getImage());
     }
 
@@ -99,15 +102,15 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
         $constantDeclarator = $enum->getChild(0)->getChild(0);
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
+        $this->assertInstanceOf(ASTScalarType::class, $type);
         $this->assertSame('string', $type->getImage());
         /** @var ASTValue $value */
         $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $value);
+        $this->assertInstanceOf(ASTValue::class, $value);
 
         /** @var ASTLiteral $constant */
         $constant = $enum->getConstant('TEST');
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $constant);
+        $this->assertInstanceOf(ASTLiteral::class, $constant);
         $this->assertSame($constant, $value->getValue());
         $this->assertSame('"Test1"', $constant->getImage());
     }
@@ -123,11 +126,11 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
         $constantDeclarator = $trait->getChild(0)->getChild(0);
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
+        $this->assertInstanceOf(ASTScalarType::class, $type);
         $this->assertSame('string', $type->getImage());
         /** @var ASTValue $value */
         $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $value);
+        $this->assertInstanceOf(ASTValue::class, $value);
 
         /** @var ASTMemberPrimaryPrefix $constant */
         $constant = $trait->getConstant('TEST');
@@ -135,9 +138,9 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
 
         $children = $constant->getChildren();
         $this->assertCount(2, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $children[0]);
+        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[0]);
         $this->assertSame('E', $children[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantPostfix', $children[1]);
+        $this->assertInstanceOf(ASTConstantPostfix::class, $children[1]);
         $this->assertSame('TEST', $children[1]->getImage());
     }
 
@@ -152,11 +155,11 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
         $constantDeclarator = $class->getChild(2)->getChild(0);
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
+        $this->assertInstanceOf(ASTScalarType::class, $type);
         $this->assertSame('string', $type->getImage());
         /** @var ASTValue $value */
         $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $value);
+        $this->assertInstanceOf(ASTValue::class, $value);
 
         /** @var ASTMemberPrimaryPrefix $constant */
         $constant = $class->getConstant('TEST');
@@ -164,9 +167,9 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
 
         $children = $constant->getChildren();
         $this->assertCount(2, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $children[0]);
+        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[0]);
         $this->assertSame('E', $children[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTConstantPostfix', $children[1]);
+        $this->assertInstanceOf(ASTConstantPostfix::class, $children[1]);
         $this->assertSame('TEST', $children[1]->getImage());
 
         /** @var ASTClass $class */
@@ -175,11 +178,11 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
         $constantDeclarator = $class->getChild(1)->getChild(0);
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
+        $this->assertInstanceOf(ASTScalarType::class, $type);
         $this->assertSame('string', $type->getImage());
         /** @var ASTValue $value */
         $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $value);
+        $this->assertInstanceOf(ASTValue::class, $value);
 
         /** @var ASTMemberPrimaryPrefix $constant */
         $constant = $class->getConstant('TEST');
@@ -190,7 +193,7 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
     public function testBroken(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: 7, line: 4, col: 11, file: '

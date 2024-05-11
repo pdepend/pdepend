@@ -74,20 +74,20 @@ class DefaultVisitorTest extends AbstractTestCase
         $expected = [
             'pkgA',
             'classB',
-            'PDepend\\Source\\AST\\ASTCompilationUnit',
+            ASTCompilationUnit::class,
             'methodBA',
             'methodBB',
             'classA',
-            'PDepend\\Source\\AST\\ASTCompilationUnit',
+            ASTCompilationUnit::class,
             'methodAB',
             'methodAA',
             'pkgB',
             'interfsC',
-            'PDepend\\Source\\AST\\ASTCompilationUnit',
+            ASTCompilationUnit::class,
             'methodCB',
             'methodCA',
             'funcD',
-            'PDepend\\Source\\AST\\ASTCompilationUnit',
+            ASTCompilationUnit::class,
         ];
 
         $this->assertEquals($expected, $visitor->visits);
@@ -100,7 +100,7 @@ class DefaultVisitorTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor')
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['visitParameter'])
             ->getMock();
         $visitor->expects($this->exactly(2))
@@ -116,7 +116,7 @@ class DefaultVisitorTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor')
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['visitParameter'])
             ->getMock();
         $visitor->expects($this->exactly(3))
@@ -132,12 +132,12 @@ class DefaultVisitorTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
+        $listener = $this->getMockBuilder(ASTVisitListener::class)
             ->getMock();
         $listener->expects($this->exactly(2))
             ->method('startVisitParameter');
 
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor')
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['getVisitListeners'])
             ->getMock();
         $visitor->addVisitListener($listener);
@@ -152,12 +152,12 @@ class DefaultVisitorTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
+        $listener = $this->getMockBuilder(ASTVisitListener::class)
             ->getMock();
         $listener->expects($this->exactly(3))
             ->method('endVisitParameter');
 
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor')
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['getVisitListeners'])
             ->getMock();
         $visitor->addVisitListener($listener);
@@ -172,12 +172,12 @@ class DefaultVisitorTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
+        $listener = $this->getMockBuilder(ASTVisitListener::class)
             ->getMock();
         $listener->expects($this->once())
             ->method('startVisitInterface');
 
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor')
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['getVisitListeners'])
             ->getMock();
         $visitor->addVisitListener($listener);
@@ -192,12 +192,12 @@ class DefaultVisitorTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
+        $listener = $this->getMockBuilder(ASTVisitListener::class)
             ->getMock();
         $listener->expects($this->once())
             ->method('endVisitInterface');
 
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor')
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['getVisitListeners'])
             ->getMock();
         $visitor->addVisitListener($listener);
@@ -212,12 +212,12 @@ class DefaultVisitorTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
+        $listener = $this->getMockBuilder(ASTVisitListener::class)
             ->getMock();
         $listener->expects($this->once())
             ->method('startVisitProperty');
 
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor')
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['getVisitListeners'])
             ->getMock();
         $visitor->addVisitListener($listener);
@@ -232,12 +232,12 @@ class DefaultVisitorTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
+        $listener = $this->getMockBuilder(ASTVisitListener::class)
             ->getMock();
         $listener->expects($this->once())
             ->method('endVisitProperty');
 
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor')
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['getVisitListeners'])
             ->getMock();
         $visitor->addVisitListener($listener);
@@ -258,7 +258,7 @@ class DefaultVisitorTest extends AbstractTestCase
         $namespace->addType(new ASTTrait('MyTraitTwo'))
             ->setCompilationUnit(new ASTCompilationUnit(__FILE__));
 
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor')
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['visitTrait'])
             ->getMock();
         $visitor->expects($this->exactly(2))
@@ -279,7 +279,7 @@ class DefaultVisitorTest extends AbstractTestCase
         $trait->addMethod($method0 = new ASTMethod('m0'));
         $trait->addMethod($method1 = new ASTMethod('m1'));
 
-        $visitor = $this->createMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
+        $visitor = $this->createMock(AbstractASTVisitor::class);
         $visitor->method('visitMethod')
             ->willReturnOnConsecutiveCalls($this->equalTo($method0), $this->equalTo($method1));
 
@@ -299,12 +299,12 @@ class DefaultVisitorTest extends AbstractTestCase
         $namespace = new ASTNamespace('MyPackage');
         $namespace->addType($trait);
 
-        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
+        $listener = $this->getMockBuilder(ASTVisitListener::class)
             ->getMock();
         $listener->expects($this->once())
             ->method('startVisitTrait');
 
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor')
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['getVisitListeners'])
             ->getMock();
         $visitor->addVisitListener($listener);
@@ -342,7 +342,7 @@ class DefaultVisitorTest extends AbstractTestCase
      */
     public function testGetVisitListenersReturnsIterator(): void
     {
-        $visitor = $this->getAbstractClassMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
+        $visitor = $this->getAbstractClassMock(AbstractASTVisitor::class);
         $this->assertInstanceOf('Iterator', $visitor->getVisitListeners());
     }
 
@@ -351,9 +351,9 @@ class DefaultVisitorTest extends AbstractTestCase
      */
     public function testGetVisitListenersContainsAddedListener(): void
     {
-        $visitor = $this->getAbstractClassMock('\\PDepend\\Source\\ASTVisitor\\AbstractASTVisitor');
+        $visitor = $this->getAbstractClassMock(AbstractASTVisitor::class);
 
-        $listener = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitListener')
+        $listener = $this->getMockBuilder(ASTVisitListener::class)
             ->getMock();
         $visitor->addVisitListener($listener);
 

@@ -43,6 +43,11 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Report\Jdepend\Chart;
+use PDepend\Report\Jdepend\Xml as JdependXml;
+use PDepend\Report\Overview\Pyramid;
+use PDepend\Report\Summary\Xml as SummaryXml;
+
 /**
  * Test case for bug #13405179.
  *
@@ -86,10 +91,10 @@ class PHPDependBug13405179Test extends AbstractRegressionTestCase
     public static function getLoggerClassNames()
     {
         return [
-            ['PDepend\\Report\\Jdepend\\Chart', 'svg'],
-            ['PDepend\\Report\\Jdepend\\Xml', 'xml'],
-            ['PDepend\\Report\\Overview\\Pyramid', 'svg'],
-            ['PDepend\\Report\\Summary\\Xml', 'xml'],
+            [Chart::class, 'svg'],
+            [JdependXml::class, 'xml'],
+            [Pyramid::class, 'svg'],
+            [SummaryXml::class, 'xml'],
         ];
     }
 }

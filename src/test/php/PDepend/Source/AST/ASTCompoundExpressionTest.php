@@ -100,7 +100,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTCompoundExpression'
+            ASTCompoundExpression::class
         );
     }
 }

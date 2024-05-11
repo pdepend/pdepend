@@ -42,6 +42,9 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTString;
+
 /**
  * Test case for ticket #114.
  *
@@ -120,7 +123,7 @@ class ComplexStringParsingBug114Test extends AbstractRegressionTestCase
             ->getMethods()
             ->current();
 
-        $string = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $string->getChild(1));
+        $string = $method->getFirstChildOfType(ASTString::class);
+        $this->assertInstanceOf(ASTLiteral::class, $string->getChild(1));
     }
 }

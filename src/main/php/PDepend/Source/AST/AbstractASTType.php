@@ -406,12 +406,12 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
         /** @var ASTTraitUseStatement[] */
         $uses = $this->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTTraitUseStatement',
+            ASTTraitUseStatement::class,
         );
 
         foreach ($uses as $use) {
             $priorMethods = [];
-            $precedences = $use->findChildrenOfType('PDepend\\Source\\AST\\ASTTraitAdaptationPrecedence');
+            $precedences = $use->findChildrenOfType(ASTTraitAdaptationPrecedence::class);
 
             foreach ($precedences as $precedence) {
                 $priorMethods[strtolower($precedence->getImage())] = true;

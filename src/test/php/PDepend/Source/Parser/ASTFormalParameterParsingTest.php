@@ -44,6 +44,7 @@
 namespace PDepend\Source\Parser;
 
 use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTParentReference;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
@@ -63,7 +64,7 @@ class ASTFormalParameterParsingTest extends AbstractParserTestCase
     public function testWithParentTypeHint(): void
     {
         $typeHint = $this->getFirstMethodFormalParameter()->getChild(0);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParentReference', $typeHint);
+        $this->assertInstanceOf(ASTParentReference::class, $typeHint);
     }
 
     /**
@@ -99,6 +100,6 @@ class ASTFormalParameterParsingTest extends AbstractParserTestCase
             ->current()
             ->getMethods()
             ->current()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
+            ->getFirstChildOfType(ASTFormalParameter::class);
     }
 }

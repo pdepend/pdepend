@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Parser\TokenStreamEndException;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTSwitchLabel} class.
  *
@@ -100,7 +102,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     public function testSwitchLabel()
     {
         $label = $this->getFirstSwitchLabelInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
+        $this->assertInstanceOf(ASTSwitchLabel::class, $label);
 
         return $label;
     }
@@ -174,9 +176,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
         }
 
         $expected = [
-            'PDepend\\Source\\AST\\ASTExpression',
-            'PDepend\\Source\\AST\\ASTSwitchStatement',
-            'PDepend\\Source\\AST\\ASTBreakStatement',
+            ASTExpression::class,
+            ASTSwitchStatement::class,
+            ASTBreakStatement::class,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -191,7 +193,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     public function testSwitchLabelWithNestedNonePhpCode()
     {
         $label = $this->getFirstSwitchLabelInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
+        $this->assertInstanceOf(ASTSwitchLabel::class, $label);
 
         return $label;
     }
@@ -253,7 +255,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     public function testSwitchLabelDefault()
     {
         $label = $this->getFirstSwitchLabelInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
+        $this->assertInstanceOf(ASTSwitchLabel::class, $label);
 
         return $label;
     }
@@ -327,8 +329,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
         }
 
         $expected = [
-            'PDepend\\Source\\AST\\ASTSwitchStatement',
-            'PDepend\\Source\\AST\\ASTBreakStatement',
+            ASTSwitchStatement::class,
+            ASTBreakStatement::class,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -343,7 +345,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     public function testSwitchLabelDefaultWithNestedNonePhpCode()
     {
         $label = $this->getFirstSwitchLabelInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $label);
+        $this->assertInstanceOf(ASTSwitchLabel::class, $label);
 
         return $label;
     }
@@ -409,7 +411,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
      */
     public function testParserThrowsExceptionForUnclosedSwitchLabelBody(): void
     {
-        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+        $this->expectException(TokenStreamEndException::class);
 
         $this->getFirstSwitchLabelInFunction();
     }
@@ -423,7 +425,7 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTSwitchLabel'
+            ASTSwitchLabel::class
         );
     }
 }

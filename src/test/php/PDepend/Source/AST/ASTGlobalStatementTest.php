@@ -100,7 +100,7 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTGlobalStatement'
+            ASTGlobalStatement::class
         );
     }
 }

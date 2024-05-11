@@ -143,7 +143,7 @@ class ASTArrayTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTArray'
+            ASTArray::class
         );
     }
 }

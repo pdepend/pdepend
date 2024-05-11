@@ -69,7 +69,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     public function testFirstChildOfWhileStatementIsASTExpression(): void
     {
         $stmt = $this->getFirstWhileStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
+        $this->assertInstanceOf(ASTExpression::class, $stmt->getChild(0));
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     public function testSecondChildOfWhileStatementIsASTScopeStatement(): void
     {
         $stmt = $this->getFirstWhileStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(1));
     }
 
     /**
@@ -90,7 +90,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     public function testWhileStatement()
     {
         $stmt = $this->getFirstWhileStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTWhileStatement', $stmt);
+        $this->assertInstanceOf(ASTWhileStatement::class, $stmt);
 
         return $stmt;
     }
@@ -152,7 +152,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     public function testWhileStatementWithAlternativeScope()
     {
         $stmt = $this->getFirstWhileStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTWhileStatement', $stmt);
+        $this->assertInstanceOf(ASTWhileStatement::class, $stmt);
 
         return $stmt;
     }
@@ -223,7 +223,7 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTWhileStatement'
+            ASTWhileStatement::class
         );
     }
 }

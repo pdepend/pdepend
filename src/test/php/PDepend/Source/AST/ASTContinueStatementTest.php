@@ -100,7 +100,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTContinueStatement'
+            ASTContinueStatement::class
         );
     }
 }

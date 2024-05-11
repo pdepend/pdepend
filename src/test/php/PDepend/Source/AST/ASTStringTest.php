@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Parser\TokenException;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTString} class.
  *
@@ -87,7 +89,7 @@ class ASTStringTest extends ASTNodeTestCase
     public function testBacktickExpressionContainsExpectedCompoundVariable(): void
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundVariable', $string->getChild(0));
+        $this->assertInstanceOf(ASTCompoundVariable::class, $string->getChild(0));
     }
 
     /**
@@ -126,7 +128,7 @@ class ASTStringTest extends ASTNodeTestCase
     public function testDoubleQuoteStringContainsVariable(): void
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $string->getChild(0));
+        $this->assertInstanceOf(ASTVariable::class, $string->getChild(0));
     }
 
     /**
@@ -135,7 +137,7 @@ class ASTStringTest extends ASTNodeTestCase
     public function testDoubleQuoteStringContainsVariableAfterNotOperator(): void
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $string->getChild(1));
+        $this->assertInstanceOf(ASTVariable::class, $string->getChild(1));
     }
 
     /**
@@ -144,7 +146,7 @@ class ASTStringTest extends ASTNodeTestCase
     public function testDoubleQuoteStringContainsVariableAfterSilenceOperator(): void
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $string->getChild(1));
+        $this->assertInstanceOf(ASTVariable::class, $string->getChild(1));
     }
 
     /**
@@ -153,7 +155,7 @@ class ASTStringTest extends ASTNodeTestCase
     public function testDoubleQuoteStringContainsCompoundVariable(): void
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundVariable', $string->getChild(0));
+        $this->assertInstanceOf(ASTCompoundVariable::class, $string->getChild(0));
     }
 
     /**
@@ -162,7 +164,7 @@ class ASTStringTest extends ASTNodeTestCase
     public function testDoubleQuoteStringContainsCompoundExpressionAfterLiteral(): void
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundExpression', $string->getChild(1));
+        $this->assertInstanceOf(ASTCompoundExpression::class, $string->getChild(1));
     }
 
     /**
@@ -171,7 +173,7 @@ class ASTStringTest extends ASTNodeTestCase
     public function testDoubleQuoteStringContainsVariableAfterDollarTwoLiterals(): void
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $string->getChild(1));
+        $this->assertInstanceOf(ASTVariable::class, $string->getChild(1));
     }
 
     /**
@@ -180,7 +182,7 @@ class ASTStringTest extends ASTNodeTestCase
     public function testDoubleQuoteStringContainsDollarLiteralForVariableVariable(): void
     {
         $string = $this->getFirstStringInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $string->getChild(0));
+        $this->assertInstanceOf(ASTLiteral::class, $string->getChild(0));
     }
 
     /**
@@ -188,7 +190,7 @@ class ASTStringTest extends ASTNodeTestCase
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\TokenException::class);
+        $this->expectException(TokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -249,7 +251,7 @@ class ASTStringTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTString'
+            ASTString::class
         );
     }
 }

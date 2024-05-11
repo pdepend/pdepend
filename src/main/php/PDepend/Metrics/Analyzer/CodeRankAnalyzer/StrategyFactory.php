@@ -80,9 +80,9 @@ class StrategyFactory
      * @var array<string, class-string<CodeRankStrategyI>>
      */
     private $validStrategies = [
-        self::STRATEGY_INHERITANCE => 'PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\InheritanceStrategy',
-        self::STRATEGY_METHOD => 'PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\MethodStrategy',
-        self::STRATEGY_PROPERTY => 'PDepend\\Metrics\\Analyzer\\CodeRankAnalyzer\\PropertyStrategy',
+        self::STRATEGY_INHERITANCE => InheritanceStrategy::class,
+        self::STRATEGY_METHOD => MethodStrategy::class,
+        self::STRATEGY_PROPERTY => PropertyStrategy::class,
     ];
 
     /**

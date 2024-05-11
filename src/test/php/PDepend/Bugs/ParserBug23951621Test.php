@@ -44,6 +44,9 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTInterface;
+
 /**
  * Test case for bug #23951621.
  *
@@ -64,7 +67,7 @@ class ParserBug23951621Test extends AbstractRegressionTestCase
     public function testParserHandlesHeredocAsPropertyDefaultValue(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClass', $class);
+        $this->assertInstanceOf(ASTClass::class, $class);
     }
 
     /**
@@ -73,7 +76,7 @@ class ParserBug23951621Test extends AbstractRegressionTestCase
     public function testParserHandlesHeredocAsParameterDefaultValue(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClass', $class);
+        $this->assertInstanceOf(ASTClass::class, $class);
     }
 
     /**
@@ -82,6 +85,6 @@ class ParserBug23951621Test extends AbstractRegressionTestCase
     public function testParserHandlesHeredocAsClassConstantValue(): void
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTInterface', $interface);
+        $this->assertInstanceOf(ASTInterface::class, $interface);
     }
 }

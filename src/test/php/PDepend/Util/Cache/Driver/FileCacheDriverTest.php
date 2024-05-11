@@ -43,6 +43,7 @@
 namespace PDepend\Util\Cache\Driver;
 
 use PDepend\Util\Cache\AbstractDriverTestCase;
+use PDepend\Util\Cache\CacheDriver;
 use RuntimeException;
 
 /**
@@ -80,7 +81,7 @@ class FileCacheDriverTest extends AbstractDriverTestCase
     /**
      * Creates a test fixture.
      *
-     * @return \PDepend\Util\Cache\CacheDriver
+     * @return CacheDriver
      */
     protected function createDriver()
     {

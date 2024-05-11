@@ -173,7 +173,7 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTIncludeExpression'
+            ASTIncludeExpression::class
         );
     }
 }

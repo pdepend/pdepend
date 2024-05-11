@@ -43,6 +43,8 @@
 namespace PDepend\Util\Coverage;
 
 use PDepend\AbstractTestCase;
+use PDepend\Source\AST\ASTCompilationUnit;
+use PDepend\Source\AST\ASTMethod;
 
 /**
  * Test case for the {@link \PDepend\Util\Coverage\CloverReport} class.
@@ -182,18 +184,18 @@ class CloverReportTest extends AbstractTestCase
      * @param string $name Name of the mock method.
      * @param int $startLine
      * @param int $endLine
-     * @return \PDepend\Source\AST\ASTMethod
+     * @return ASTMethod
      */
     private function createMethodMock($name, $startLine = 1, $endLine = 4)
     {
-        $file = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTCompilationUnit')
+        $file = $this->getMockBuilder(ASTCompilationUnit::class)
             ->setConstructorArgs([null])
             ->getMock();
         $file->expects($this->any())
             ->method('getFileName')
             ->will($this->returnValue('/' . $name . '.php'));
 
-        $method = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTMethod')
+        $method = $this->getMockBuilder(ASTMethod::class)
             ->setConstructorArgs([$name])
             ->getMock();
         $method->expects($this->once())

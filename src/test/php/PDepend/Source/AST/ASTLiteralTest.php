@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Parser\TokenStreamEndException;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTLiteral} class.
  *
@@ -228,7 +230,7 @@ class ASTLiteralTest extends ASTNodeTestCase
      */
     public function testUnclosedDoubleQuoteStringResultsInExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+        $this->expectException(TokenStreamEndException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -252,7 +254,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTLiteral'
+            ASTLiteral::class
         );
     }
 }

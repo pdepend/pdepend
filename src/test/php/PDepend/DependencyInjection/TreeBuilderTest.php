@@ -43,6 +43,8 @@
 namespace PDepend\DependencyInjection;
 
 use PDepend\AbstractTestCase;
+use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder as SymfonyTreeBuilder;
 
 /**
  * Test cases for the {@link \PDepend\Application} class.
@@ -60,12 +62,12 @@ class TreeBuilderTest extends AbstractTestCase
         $treeBuilder = new TreeBuilder();
 
         $this->assertInstanceOf(
-            'Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition',
+            ArrayNodeDefinition::class,
             $treeBuilder->getRootNode()
         );
 
         $this->assertInstanceOf(
-            'Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder',
+            SymfonyTreeBuilder::class,
             $treeBuilder->getTreeBuilder()
         );
     }

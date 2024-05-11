@@ -42,6 +42,7 @@
 
 namespace PDepend\Report\Dummy;
 
+use PDepend\Metrics\Analyzer;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Report\FileAwareGenerator;
 use PDepend\Source\AST\ASTArtifactList;
@@ -114,10 +115,10 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      * Adds an analyzer to log. If this logger accepts the given analyzer it
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
-     * @param \PDepend\Metrics\Analyzer $analyzer The analyzer to log.
+     * @param Analyzer $analyzer The analyzer to log.
      * @return bool
      */
-    public function log(\PDepend\Metrics\Analyzer $analyzer)
+    public function log(Analyzer $analyzer)
     {
         $this->input['analyzers'][] = $analyzer;
         return true;

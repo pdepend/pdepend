@@ -100,7 +100,7 @@ class ASTForInitTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTForInit'
+            ASTForInit::class
         );
     }
 }

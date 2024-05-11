@@ -43,6 +43,9 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\ASTVisitor\ASTVisitor;
+use PDepend\Source\Builder\BuilderContext;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTrait} class.
  *
@@ -364,12 +367,12 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testAcceptInvokesVisitTraitOnGivenVisitor(): void
     {
-        $visitor = $this->getMockBuilder('PDepend\\Source\\ASTVisitor\\ASTVisitor')
+        $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->disableOriginalClone()
             ->getMock();
         $visitor->expects($this->once())
             ->method('visitTrait')
-            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTTrait'));
+            ->with($this->isInstanceOf(ASTTrait::class));
 
         $trait = new ASTTrait('MyTrait');
         $trait->accept($visitor);
@@ -380,12 +383,12 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testMagicWakeupCallsRegisterTraitOnBuilderContext(): void
     {
-        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+        $context = $this->getMockBuilder(BuilderContext::class)
             ->disableOriginalClone()
             ->getMock();
         $context->expects($this->once())
             ->method('registerTrait')
-            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTTrait'));
+            ->with($this->isInstanceOf(ASTTrait::class));
 
         $trait = new ASTTrait(__FUNCTION__);
         $trait->setContext($context);

@@ -43,6 +43,10 @@
 namespace PDepend\Util\Cache;
 
 use PDepend\AbstractTestCase;
+use PDepend\Application;
+use PDepend\Util\Cache\Driver\FileCacheDriver;
+use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * Test case for the {@link \PDepend\Util\Cache\CacheFactory} class.
@@ -63,7 +67,7 @@ class CacheFactoryTest extends AbstractTestCase
         $factory = new CacheFactory(
             $this->createConfigurationFixture()
         );
-        $this->assertInstanceOf('\\PDepend\\Util\\Cache\\CacheDriver', $factory->create());
+        $this->assertInstanceOf(CacheDriver::class, $factory->create());
     }
 
     /**
@@ -104,7 +108,7 @@ class CacheFactoryTest extends AbstractTestCase
         $this->changeWorkingDirectory();
 
         $this->assertInstanceOf(
-            'PDepend\\Util\\Cache\\Driver\\FileCacheDriver',
+            FileCacheDriver::class,
             $this->createFactoryFixture()->create()
         );
     }
@@ -117,7 +121,7 @@ class CacheFactoryTest extends AbstractTestCase
         $this->changeWorkingDirectory();
 
         $this->assertInstanceOf(
-            'PDepend\\Util\\Cache\\Driver\\MemoryCacheDriver',
+            MemoryCacheDriver::class,
             $this->createFactoryFixture()->create()
         );
     }
@@ -127,7 +131,7 @@ class CacheFactoryTest extends AbstractTestCase
      */
     public function testCreateThrowsExpectedExceptionForUnknownCacheDriver(): void
     {
-        $this->expectException(\Symfony\Component\Config\Definition\Exception\InvalidConfigurationException::class);
+        $this->expectException(InvalidConfigurationException::class);
         $this->expectExceptionMessage('The value "fail" is not allowed for path "pdepend.cache.driver". Permissible values: "file", "memory"');
 
         $this->changeWorkingDirectory();
@@ -143,7 +147,7 @@ class CacheFactoryTest extends AbstractTestCase
      */
     protected function createFactoryFixture()
     {
-        $application = new \PDepend\Application();
+        $application = new Application();
         $application->setConfigurationFile(getcwd() . '/pdepend.xml');
         return new CacheFactory($application->getConfiguration());
     }

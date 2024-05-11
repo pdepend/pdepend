@@ -42,6 +42,7 @@ namespace PDepend\Source\Language\PHP\Features\PHP83;
 
 use PDepend\AbstractTestCase;
 use PDepend\Source\Builder\Builder;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 
@@ -55,7 +56,7 @@ use PDepend\Util\Cache\CacheDriver;
 abstract class PHPParserVersion83TestCase extends AbstractTestCase
 {
     /**
-     * @return \PDepend\Source\Language\PHP\AbstractPHPParser
+     * @return AbstractPHPParser
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {

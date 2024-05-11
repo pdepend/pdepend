@@ -111,6 +111,6 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
             ->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTHeredoc');
+            ->getFirstChildOfType(ASTHeredoc::class);
     }
 }

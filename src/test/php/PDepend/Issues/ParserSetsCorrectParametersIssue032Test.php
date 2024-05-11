@@ -42,6 +42,8 @@
 
 namespace PDepend\Issues;
 
+use PDepend\Source\AST\ASTParameter;
+
 /**
  * Test case for parameter related ticker #32.
  *
@@ -146,7 +148,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
     /**
      * Returns the parameters of the first method in the test case file.
      *
-     * @return \PDepend\Source\AST\ASTParameter[]
+     * @return ASTParameter[]
      */
     private function getParametersOfFirstMethod()
     {

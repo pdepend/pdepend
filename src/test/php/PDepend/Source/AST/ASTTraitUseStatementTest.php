@@ -66,7 +66,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     {
         $class = $this->getFirstClassForTestCase();
         $useStmt = $class->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTTraitUseStatement'
+            ASTTraitUseStatement::class
         );
         $methods = $useStmt->getAllMethods();
 
@@ -80,7 +80,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     {
         $class = $this->getFirstClassForTestCase();
         $useStmt = $class->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTTraitUseStatement'
+            ASTTraitUseStatement::class
         );
         $methods = $useStmt->getAllMethods();
 
@@ -94,7 +94,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     {
         $class = $this->getFirstClassForTestCase();
         $useStmt = $class->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTTraitUseStatement'
+            ASTTraitUseStatement::class
         );
         $methods = $useStmt->getAllMethods();
 
@@ -108,7 +108,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     {
         $class = $this->getFirstClassForTestCase();
         $useStmt = $class->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTTraitUseStatement'
+            ASTTraitUseStatement::class
         );
         $methods = $useStmt->getAllMethods();
 
@@ -160,7 +160,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $methods = $useStmt->getAllMethods();
 
         $this->assertInstanceOf(
-            'PDepend\\Source\\AST\\ASTTrait',
+            ASTTrait::class,
             $methods[0]->getParent()
         );
     }
@@ -176,7 +176,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $methods = $useStmt->getAllMethods();
 
         $this->assertInstanceOf(
-            'PDepend\\Source\\AST\\ASTTrait',
+            ASTTrait::class,
             $methods[0]->getParent()
         );
     }
@@ -386,7 +386,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatement()
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitUseStatement', $stmt);
+        $this->assertInstanceOf(ASTTraitUseStatement::class, $stmt);
 
         return $stmt;
     }
@@ -448,7 +448,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatementInTrait()
     {
         $stmt = $this->getFirstTraitUseStatementInTrait();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitUseStatement', $stmt);
+        $this->assertInstanceOf(ASTTraitUseStatement::class, $stmt);
 
         return $stmt;
     }
@@ -510,7 +510,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTTraitUseStatement'
+            ASTTraitUseStatement::class
         );
     }
 
@@ -522,7 +522,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     private function getFirstTraitUseStatementInTrait()
     {
         return $this->getFirstNodeOfTypeInTrait(
-            'PDepend\\Source\\AST\\ASTTraitUseStatement'
+            ASTTraitUseStatement::class
         );
     }
 }

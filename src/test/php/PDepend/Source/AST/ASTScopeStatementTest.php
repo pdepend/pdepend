@@ -139,7 +139,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     public function testScopeStatement()
     {
         $stmt = $this->getFirstScopeStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt);
+        $this->assertInstanceOf(ASTScopeStatement::class, $stmt);
 
         return $stmt;
     }
@@ -201,7 +201,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     public function testScopeStatementWithAlternative()
     {
         $stmt = $this->getFirstScopeStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt);
+        $this->assertInstanceOf(ASTScopeStatement::class, $stmt);
 
         return $stmt;
     }
@@ -263,7 +263,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTScopeStatement'
+            ASTScopeStatement::class
         );
     }
 }

@@ -89,7 +89,7 @@ class ASTCallableTest extends AbstractTestCase
     public function testGetParametersReturnsArrayWithObjectsOfTypeParameter(): void
     {
         $parameters = $this->getFirstCallableForTest()->getParameters();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParameter', $parameters[0]);
+        $this->assertInstanceOf(ASTParameter::class, $parameters[0]);
     }
 
     /**
@@ -270,7 +270,7 @@ class ASTCallableTest extends AbstractTestCase
     protected function getCallableMock()
     {
         return $this->getAbstractClassMock(
-            'PDepend\\Source\\AST\\AbstractASTCallable',
+            AbstractASTCallable::class,
             [__CLASS__]
         );
     }

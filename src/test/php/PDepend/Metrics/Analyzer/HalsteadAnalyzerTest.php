@@ -43,6 +43,8 @@
 namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
+use PDepend\Source\AST\ASTArtifact;
+use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
@@ -58,7 +60,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 class HalsteadAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
-     * @var \PDepend\Util\Cache\CacheDriver
+     * @var CacheDriver
      * @since 1.0.0
      */
     private $cache;
@@ -79,7 +81,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
     public function testGetNodeMetricsReturnsNothingForUnknownNode(): void
     {
         $analyzer = $this->createAnalyzer();
-        $astArtifact = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifact')
+        $astArtifact = $this->getMockBuilder(ASTArtifact::class)
             ->getMock();
         $this->assertEquals([], $analyzer->getNodeMetrics($astArtifact));
     }

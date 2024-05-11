@@ -43,6 +43,8 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Source\AST\ASTConstant;
+use PDepend\Source\AST\ASTFunctionPostfix;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
@@ -69,7 +71,7 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
         $method = $this->getFirstClassMethodForTestCase();
 
         $actual = [];
-        foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTConstant') as $reference) {
+        foreach ($method->findChildrenOfType(ASTConstant::class) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -91,7 +93,7 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
         $method = $this->getFirstClassMethodForTestCase();
 
         $actual = [];
-        foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTFunctionPostfix') as $reference) {
+        foreach ($method->findChildrenOfType(ASTFunctionPostfix::class) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -106,7 +108,7 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
     }
 
     /**
-     * @param \PDepend\Source\Builder\Builder<mixed> $builder
+     * @param Builder<mixed> $builder
      * @return PHPUnit_Framework_MockObject_MockObject
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)

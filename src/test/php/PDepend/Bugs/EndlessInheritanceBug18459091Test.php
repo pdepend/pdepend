@@ -47,6 +47,8 @@ namespace PDepend\Bugs;
 use PDepend\Metrics\Analyzer\ClassLevelAnalyzer;
 use PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer;
 use PDepend\Metrics\Analyzer\InheritanceAnalyzer;
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PDepend\TextUI\Command;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
@@ -78,7 +80,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
      */
     public function testClassLevelAnalyzerNotRunsEndlessForTwoLevelClassHierarchy(): void
     {
-        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+        $this->expectException(ASTClassOrInterfaceRecursiveInheritanceException::class);
 
         set_time_limit(5);
 
@@ -96,7 +98,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
      */
     public function testClassLevelAnalyzerNotRunsEndlessForDeepClassHierarchy(): void
     {
-        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+        $this->expectException(ASTClassOrInterfaceRecursiveInheritanceException::class);
 
         set_time_limit(5);
 
@@ -146,7 +148,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
      */
     public function testInheritanceAnalyzerNotRunsEndlessForTwoLevelClassHierarchy(): void
     {
-        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+        $this->expectException(ASTClassOrInterfaceRecursiveInheritanceException::class);
 
         set_time_limit(5);
 
@@ -159,7 +161,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
      */
     public function testInheritanceAnalyzerNotRunsEndlessForDeepClassHierarchy(): void
     {
-        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+        $this->expectException(ASTClassOrInterfaceRecursiveInheritanceException::class);
 
         set_time_limit(5);
 
@@ -205,7 +207,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 
         ob_start();
 
-        $command = new \PDepend\TextUI\Command();
+        $command = new Command();
         $command->run();
 
         $output = ob_get_clean();

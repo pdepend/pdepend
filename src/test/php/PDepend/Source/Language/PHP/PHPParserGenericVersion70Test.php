@@ -46,6 +46,8 @@ namespace PDepend\Source\Language\PHP;
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
+use PDepend\Source\Parser\UnexpectedTokenException;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
@@ -303,8 +305,8 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     public function testSpaceshipOperatorWithStrings(): void
     {
         $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+            ->getFirstChildOfType(ASTExpression::class)
+            ->getFirstChildOfType(ASTExpression::class);
 
         $this->assertSame('<=>', $expr->getImage());
     }
@@ -315,8 +317,8 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     public function testSpaceshipOperatorWithNumbers(): void
     {
         $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+            ->getFirstChildOfType(ASTExpression::class)
+            ->getFirstChildOfType(ASTExpression::class);
 
         $this->assertSame('<=>', $expr->getImage());
     }
@@ -324,12 +326,12 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     /**
      * testSpaceshipOperatorWithArrays
      *
-     * @return \PDepend\Source\AST\ASTNode
+     * @return ASTNode
      */
     public function testSpaceshipOperatorWithArrays()
     {
         $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getFirstChildOfType(ASTExpression::class)
             ->getChild(1);
 
         $this->assertSame('<=>', $expr->getImage());
@@ -375,8 +377,8 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
     public function testNullCoalesceOperator(): void
     {
         $expr = $this->getFirstClassMethodForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+            ->getFirstChildOfType(ASTExpression::class)
+            ->getFirstChildOfType(ASTExpression::class);
 
         $this->assertSame('??', $expr->getImage());
     }
@@ -389,7 +391,7 @@ class PHPParserGenericVersion70Test extends AbstractTestCase
 
     public function testListKeywordAsFunctionNameThrowsException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }

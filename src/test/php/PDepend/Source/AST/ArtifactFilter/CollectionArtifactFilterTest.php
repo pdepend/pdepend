@@ -75,7 +75,7 @@ class CollectionArtifactFilterTest extends AbstractTestCase
     {
         $class = new ASTClass(__CLASS__);
 
-        $filter = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTArtifactList\\ArtifactFilter')
+        $filter = $this->getMockBuilder(ArtifactFilter::class)
             ->getMock();
         $filter->expects($this->once())
             ->method('accept')

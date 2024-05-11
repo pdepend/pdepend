@@ -44,6 +44,7 @@ namespace PDepend\Metrics;
 
 use Exception;
 use PDepend\AbstractTestCase;
+use PDepend\Source\AST\ASTNamespace;
 
 /**
  * Abstract base class for tests of the metrics package.
@@ -59,7 +60,7 @@ abstract class AbstractMetricsTestCase extends AbstractTestCase
      *
      * @param string $testCase
      * @param bool $ignoreAnnotations
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {

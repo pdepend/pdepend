@@ -44,6 +44,8 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTParameter;
+use PDepend\Source\AST\ASTScalarType;
+use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion82
@@ -76,7 +78,7 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
             ['false', '$falsy'],
         ] as $index => $expected) {
             [$expectedType, $expectedVariable] = $expected;
-            $expectedTypeClass = $expected[2] ?? 'PDepend\\Source\\AST\\ASTScalarType';
+            $expectedTypeClass = $expected[2] ?? ASTScalarType::class;
             [$type, $variable] = $declarations[$index];
 
             $this->assertInstanceOf(
@@ -86,7 +88,7 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
             );
             $this->assertSame(ltrim($expectedType, '?'), $type->getImage());
             $this->assertInstanceOf(
-                'PDepend\\Source\\AST\\ASTVariableDeclarator',
+                ASTVariableDeclarator::class,
                 $variable,
                 "Wrong variable for $expectedType $expectedVariable"
             );
@@ -102,10 +104,10 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
         $nullish = $methods[0]->getReturnType();
         $falsy = $methods[1]->getReturnType();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $nullish);
+        $this->assertInstanceOf(ASTScalarType::class, $nullish);
         $this->assertSame('null', $nullish->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $falsy);
+        $this->assertInstanceOf(ASTScalarType::class, $falsy);
         $this->assertSame('false', $falsy->getImage());
     }
 
@@ -123,14 +125,14 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
         $nullish = $nullish->getFormalParameter()->getType();
         $falsy = $falsy->getFormalParameter()->getType();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $nullish);
+        $this->assertInstanceOf(ASTScalarType::class, $nullish);
         $this->assertSame('null', $nullish->getImage());
         $this->assertSame(3, $nullish->getStartLine());
         $this->assertSame(29, $nullish->getStartColumn());
         $this->assertSame(3, $nullish->getEndLine());
         $this->assertSame(32, $nullish->getEndColumn());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $falsy);
+        $this->assertInstanceOf(ASTScalarType::class, $falsy);
         $this->assertSame('false', $falsy->getImage());
         $this->assertSame(3, $falsy->getStartLine());
         $this->assertSame(44, $falsy->getStartColumn());

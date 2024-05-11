@@ -100,7 +100,7 @@ class ASTLabelStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTLabelStatement'
+            ASTLabelStatement::class
         );
     }
 }

@@ -65,7 +65,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
     public function testTraitAdaptation()
     {
         $scope = $this->getFirstTraitAdaptationInClass();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitAdaptation', $scope);
+        $this->assertInstanceOf(ASTTraitAdaptation::class, $scope);
 
         return $scope;
     }
@@ -127,7 +127,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTTraitAdaptation'
+            ASTTraitAdaptation::class
         );
     }
 }

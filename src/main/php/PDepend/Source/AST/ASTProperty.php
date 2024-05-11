@@ -194,7 +194,7 @@ class ASTProperty extends AbstractASTArtifact
     public function isArray()
     {
         $typeNode = $this->fieldDeclaration->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTType',
+            ASTType::class,
         );
         if ($typeNode === null) {
             return false;
@@ -212,7 +212,7 @@ class ASTProperty extends AbstractASTArtifact
     public function isScalar()
     {
         $typeNode = $this->fieldDeclaration->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTType',
+            ASTType::class,
         );
         if ($typeNode === null) {
             return false;
@@ -230,7 +230,7 @@ class ASTProperty extends AbstractASTArtifact
     public function getClass()
     {
         $reference = $this->fieldDeclaration->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
+            ASTClassOrInterfaceReference::class,
         );
         if ($reference === null) {
             return null;
