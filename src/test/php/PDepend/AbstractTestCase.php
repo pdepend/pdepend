@@ -464,7 +464,7 @@ abstract class AbstractTestCase extends TestCase
         }
 
         foreach (new DirectoryIterator($dir) as $file) {
-            if ($file == '.' || $file == '..' || $file == '.svn') {
+            if ($file->isDot() || $file->getFilename() === '.svn') {
                 continue;
             }
             $pathName = realpath($file->getPathname());
