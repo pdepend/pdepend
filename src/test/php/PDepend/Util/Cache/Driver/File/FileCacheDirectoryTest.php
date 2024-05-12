@@ -60,17 +60,13 @@ class FileCacheDirectoryTest extends AbstractTestCase
 {
     /**
      * Temporary cache directory.
-     *
-     * @var string
      */
-    protected $cacheDir = null;
+    protected string $cacheDir;
 
     /**
      * File with the cache version information.
-     *
-     * @var string
      */
-    protected $versionFile = null;
+    protected string $versionFile;
 
     /**
      * Initializes a temporary working directory.

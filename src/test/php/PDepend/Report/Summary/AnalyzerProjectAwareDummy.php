@@ -58,7 +58,7 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
      *
      * @var array<string, mixed>
      */
-    protected $projectMetrics = null;
+    protected array $projectMetrics;
 
     /**
      * Constructs a new analyzer dummy instance.

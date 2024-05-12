@@ -56,27 +56,18 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
 {
     /**
      * The output file name.
-     *
-     * @var string
      */
-    private $logFile = null;
+    private string $logFile;
 
     /**
      * The logger input data.
      *
      * @var array<string, mixed>
      */
-    private $input = [
+    private array $input = [
         'code' => null,
         'analyzers' => [],
     ];
-
-    /**
-     * Constructs a new logger for the given output file.
-     */
-    public function __construct()
-    {
-    }
 
     /**
      * Sets the output log file.
@@ -137,7 +128,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      */
     public function close(): void
     {
-        if ($this->logFile) {
+        if (isset($this->logFile)) {
             file_put_contents($this->logFile, serialize($this->input));
         }
     }

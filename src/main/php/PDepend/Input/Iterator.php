@@ -55,18 +55,15 @@ class Iterator extends FilterIterator
 {
     /**
      * The associated filter object.
-     *
-     * @var Filter
      */
-    protected $filter = null;
+    protected Filter $filter;
 
     /**
      * Optional root path for the files.
      *
-     * @var string|null
      * @since 0.10.0
      */
-    protected $rootPath = null;
+    protected ?string $rootPath;
 
     /**
      * Constructs a new file filter iterator.

@@ -63,17 +63,15 @@ class CacheFactory
 
     /**
      * The system configuration.
-     *
-     * @var Configuration
      */
-    protected $configuration = null;
+    protected Configuration $configuration;
 
     /**
      * Singleton property that holds existing cache instances.
      *
      * @var CacheDriver[]
      */
-    protected $caches = [];
+    protected array $caches = [];
 
     /**
      * Constructs a new cache factory instance for the given configuration.

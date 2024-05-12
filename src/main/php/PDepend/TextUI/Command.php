@@ -73,26 +73,21 @@ class Command
      *
      * @var array<string, mixed>
      */
-    private $options = [];
+    private array $options = [];
 
     /**
      * The directories/files to be analyzed
      *
      * @var array<int, string>
      */
-    private $source = [];
+    private array $source = [];
 
     /**
      * The used text ui runner.
-     *
-     * @var Runner
      */
-    private $runner = null;
+    private Runner $runner;
 
-    /**
-     * @var Application
-     */
-    private $application;
+    private Application $application;
 
     /**
      * Performs the main cli process and returns the exit code.

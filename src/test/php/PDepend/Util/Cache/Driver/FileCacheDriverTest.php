@@ -58,17 +58,13 @@ class FileCacheDriverTest extends AbstractDriverTestCase
 {
     /**
      * Temporary cache directory.
-     *
-     * @var string
      */
-    protected $cacheDir = null;
+    protected string $cacheDir;
 
     /**
      * Cache TTL
-     *
-     * @var int
      */
-    protected $cacheTtl = null;
+    protected int $cacheTtl = FileCacheDriver::DEFAULT_TTL;
 
     /**
      * Initializes a temporary working directory.
@@ -79,7 +75,6 @@ class FileCacheDriverTest extends AbstractDriverTestCase
 
         $this->cacheDir = $this->createRunResourceURI('cache');
         unlink($this->cacheDir);
-        $this->cacheTtl = FileCacheDriver::DEFAULT_TTL;
     }
 
     /**

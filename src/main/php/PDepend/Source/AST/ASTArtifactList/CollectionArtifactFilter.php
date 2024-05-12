@@ -70,15 +70,6 @@ final class CollectionArtifactFilter implements ArtifactFilter
     private $filter = null;
 
     /**
-     * Constructs a new static filter.
-     *
-     * @access private
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Singleton method for this filter class.
      *
      * @return CollectionArtifactFilter

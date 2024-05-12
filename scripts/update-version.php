@@ -53,34 +53,28 @@ class CacheVersionUpdater
 {
     /**
      * The source directory.
-     *
-     * @var string
      */
-    private $rootDirectory = null;
+    private string $rootDirectory;
 
     /**
      * The source sub directories that we will process.
      *
-     * @var array(string)
+     * @var array<int, string>
      */
-    private $localPaths = [
+    private array $localPaths = [
         '/Source',
         '/Metrics',
     ];
 
     /**
      * The target file, where this script will persist the new cache version.
-     *
-     * @var string
      */
-    private $targetFile = '/Util/Cache/CacheDriver.php';
+    private string $targetFile = '/Util/Cache/CacheDriver.php';
 
     /**
      * Regular expression used to replace a previous cache version.
-     *
-     * @var string
      */
-    private $targetRegexp = '(@version:[a-f0-9]{32}:@)';
+    private string $targetRegexp = '(@version:[a-f0-9]{32}:@)';
 
     /**
      * Constructs a new cache version updater instance.

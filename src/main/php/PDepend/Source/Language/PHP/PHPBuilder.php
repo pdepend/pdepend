@@ -186,25 +186,20 @@ class PHPBuilder implements Builder
     /**
      * The ast builder context.
      *
-     * @var BuilderContext
      * @since 0.10.0
      */
-    protected $context = null;
+    protected BuilderContext $context;
 
     /**
      * Default package which contains all functions and classes with an unknown
      * scope.
-     *
-     * @var ASTNamespace
      */
-    protected $defaultPackage = null;
+    protected ASTNamespace $defaultPackage;
 
     /**
      * Default source file that acts as a dummy.
-     *
-     * @var ASTCompilationUnit
      */
-    protected $defaultCompilationUnit = null;
+    protected ASTCompilationUnit $defaultCompilationUnit;
 
     /**
      * This property holds all packages found during the parsing phase.
@@ -240,7 +235,7 @@ class PHPBuilder implements Builder
      *
      * @var ASTNamespace[]
      */
-    private $namespaces = [];
+    private array $namespaces = [];
 
     /**
      * Internal status flag used to check that a build request is internal.

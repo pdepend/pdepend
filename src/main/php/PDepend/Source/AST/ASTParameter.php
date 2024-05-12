@@ -86,17 +86,13 @@ class ASTParameter extends AbstractASTArtifact
 
     /**
      * The wrapped formal parameter instance.
-     *
-     * @var ASTFormalParameter
      */
-    private $formalParameter = null;
+    private ASTFormalParameter $formalParameter;
 
     /**
      * The wrapped variable declarator instance.
-     *
-     * @var ASTVariableDeclarator
      */
-    private $variableDeclarator = null;
+    private ?ASTVariableDeclarator $variableDeclarator;
 
     /**
      * Constructs a new parameter instance for the given AST node.

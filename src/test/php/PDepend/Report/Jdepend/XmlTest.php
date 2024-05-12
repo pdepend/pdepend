@@ -45,6 +45,7 @@ namespace PDepend\Report\Jdepend;
 use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
+use PDepend\Source\AST\ASTArtifactList;
 
 /**
  * Test case for the jdepend xml logger.
@@ -59,24 +60,18 @@ class XmlTest extends AbstractTestCase
 {
     /**
      * Test code structure.
-     *
-     * @var \PDepend\Source\AST\ASTArtifactList
      */
-    protected $packages = null;
+    protected ASTArtifactList $packages;
 
     /**
      * Test dependency analyzer.
-     *
-     * @var DependencyAnalyzer
      */
-    protected $analyzer = null;
+    protected DependencyAnalyzer $analyzer;
 
     /**
      * The temporary file name for the logger result.
-     *
-     * @var string
      */
-    protected $resultFile = null;
+    protected string $resultFile;
 
     /**
      * Creates the package structure from a test source file.

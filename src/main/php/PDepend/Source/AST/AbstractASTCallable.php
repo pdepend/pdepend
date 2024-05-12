@@ -97,24 +97,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     protected $nodes = [];
 
     /**
-     * The start line number of the method or function declaration.
-     *
-     * @var int
-     * @since 0.9.12
-     */
-    protected $startLine = 0;
-
-    /**
-     * The end line number of the method or function declaration.
-     *
-     * @var int
-     * @since 0.9.12
-     */
-    protected $endLine = 0;
-
-    /**
-     * List of method/function parameters.
-     *
      * @var ASTParameter[]|null
      */
     private $parameters = null;

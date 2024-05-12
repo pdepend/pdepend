@@ -81,7 +81,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      */
     public function analyze($namespaces): void
     {
-        if ($this->metrics === null) {
+        if (!isset($this->metrics)) {
             $this->loadCache();
             $this->fireStartAnalyzer();
 

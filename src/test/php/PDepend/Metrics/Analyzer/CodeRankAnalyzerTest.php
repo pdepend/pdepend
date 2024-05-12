@@ -81,10 +81,8 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * The code rank analyzer.
-     *
-     * @var CodeRankAnalyzer
      */
-    private $analyzer = null;
+    private CodeRankAnalyzer $analyzer;
 
     /**
      * testCodeRankOfSimpleInheritanceExample

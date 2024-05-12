@@ -44,6 +44,7 @@ namespace PDepend\Report\Summary;
 
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTNamespace;
 
 /**
  * Test case for the xml summary log.
@@ -59,16 +60,14 @@ class XmlTest extends AbstractTestCase
     /**
      * Test code structure.
      *
-     * @var \PDepend\Source\AST\ASTNamespace[]
+     * @var ASTArtifactList<ASTNamespace>
      */
-    protected $namespaces = null;
+    protected ASTArtifactList $namespaces;
 
     /**
      * The temporary file name for the logger result.
-     *
-     * @var string
      */
-    protected $resultFile = null;
+    protected string $resultFile;
 
     /**
      * Creates the package structure from a test source file.

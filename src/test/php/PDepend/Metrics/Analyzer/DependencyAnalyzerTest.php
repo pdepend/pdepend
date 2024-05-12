@@ -43,6 +43,7 @@
 namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
+use PDepend\Source\Builder\Builder;
 
 /**
  * Tests the for the package metrics visitor.
@@ -57,17 +58,15 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
      * The used node builder.
-     *
-     * @var \PDepend\Source\Builder\Builder
      */
-    protected $builder = null;
+    protected Builder $builder;
 
     /**
      * Input test data.
      *
      * @var array<string, array>
      */
-    private $input = [
+    private array $input = [
         '+global' => [
             'tc' => 0,
             'cc' => 0,

@@ -59,7 +59,7 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
      *
      * @var array<string, array>
      */
-    protected $nodeMetrics = null;
+    protected array $nodeMetrics;
 
     /**
      * Constructs a new analyzer dummy instance.

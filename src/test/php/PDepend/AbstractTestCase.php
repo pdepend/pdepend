@@ -80,10 +80,9 @@ abstract class AbstractTestCase extends TestCase
     /**
      * The current working directory.
      *
-     * @var string
      * @since 0.10.0
      */
-    protected $workingDirectory = null;
+    protected ?string $workingDirectory = null;
 
     /**
      * Removes temporary test contents.

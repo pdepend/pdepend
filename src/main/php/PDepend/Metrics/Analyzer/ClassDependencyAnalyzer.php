@@ -68,7 +68,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     /**
      * @var array<string, AbstractASTClassOrInterface>
      */
-    private $nodeSet = [];
+    private array $nodeSet = [];
 
     /**
      * @var array<string, array<string, array<int, string>>>
@@ -80,28 +80,28 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      *
      * @var array<string, array<string, int>>
      */
-    private $nodeMetrics = null;
+    private array $nodeMetrics;
 
     /**
      * Nodes in which the current analyzed class is used.
      *
      * @var array<string, array<int, AbstractASTClassOrInterface>>
      */
-    private $efferentNodes = [];
+    private array $efferentNodes = [];
 
     /**
      * Nodes that is used by the current analyzed class.
      *
      * @var array<string, array<int, AbstractASTClassOrInterface>>
      */
-    private $afferentNodes = [];
+    private array $afferentNodes = [];
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
      */
     public function analyze($namespaces): void
     {
-        if ($this->nodeMetrics === null) {
+        if (!isset($this->nodeMetrics)) {
             $this->fireStartAnalyzer();
 
             $this->nodeRelations = [];

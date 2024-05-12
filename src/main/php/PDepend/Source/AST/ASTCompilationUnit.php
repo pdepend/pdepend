@@ -71,10 +71,8 @@ class ASTCompilationUnit extends AbstractASTArtifact
 
     /**
      * The source file name/path.
-     *
-     * @var string|null
      */
-    protected $fileName = null;
+    protected ?string $fileName = null;
 
     /**
      * The comment for this type.
@@ -82,22 +80,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * @var string|null
      */
     protected $comment = null;
-
-    /**
-     * The files start line. This property must always have the value <em>1</em>.
-     *
-     * @var int
-     * @since 0.10.0
-     */
-    protected $startLine = 0;
-
-    /**
-     * The files end line.
-     *
-     * @var int
-     * @since 0.10.0
-     */
-    protected $endLine = 0;
 
     /**
      * List of classes, interfaces and functions that parsed from this file.

@@ -60,10 +60,8 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
 
     /**
      * The wrapped reference node.
-     *
-     * @var ASTClassOrInterfaceReference
      */
-    protected $reference = null;
+    protected ASTClassOrInterfaceReference $reference;
 
     /**
      * Constructs a new type holder instance.

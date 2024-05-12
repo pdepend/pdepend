@@ -105,23 +105,21 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      *
      * @var array<string, array<string, int>>
      */
-    private $nodeMetrics = null;
+    private array $nodeMetrics;
 
     /**
      * The internal used cyclomatic complexity analyzer.
-     *
-     * @var CyclomaticComplexityAnalyzer
      */
-    private $cyclomaticAnalyzer = null;
+    private CyclomaticComplexityAnalyzer $cyclomaticAnalyzer;
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
      */
     public function analyze($namespaces): void
     {
-        if ($this->nodeMetrics === null) {
+        if (!isset($this->nodeMetrics)) {
             // First check for the require cc analyzer
-            if ($this->cyclomaticAnalyzer === null) {
+            if (!isset($this->cyclomaticAnalyzer)) {
                 throw new RuntimeException('Missing required CC analyzer.');
             }
 

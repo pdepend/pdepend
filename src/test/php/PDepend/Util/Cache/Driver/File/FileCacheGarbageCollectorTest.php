@@ -57,17 +57,13 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
 {
     /**
      * Temporary cache directory.
-     *
-     * @var string
      */
-    protected $cacheDir;
+    protected string $cacheDir;
 
     /**
      * Cache TTL
-     *
-     * @var int
      */
-    protected $cacheTtl = null;
+    protected int $cacheTtl = FileCacheGarbageCollector::DEFAULT_TTL;
 
     /**
      * Initializes a temporary working directory.
@@ -79,7 +75,6 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         $tmp = $this->createRunResourceURI('cache');
         unlink($tmp);
         $this->cacheDir = $tmp . '/';
-        $this->cacheTtl = FileCacheGarbageCollector::DEFAULT_TTL;
         mkdir($this->cacheDir);
     }
 

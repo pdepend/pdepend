@@ -56,10 +56,8 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 {
     /**
      * The mocked reference instance.
-     *
-     * @var ASTClassOrInterfaceReference
      */
-    protected $referenceMock = null;
+    protected ASTClassOrInterfaceReference $referenceMock;
 
     /**
      * testGetTypeDelegatesCallToInjectedReferenceObject

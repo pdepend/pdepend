@@ -63,10 +63,8 @@ class ChartTest extends AbstractTestCase
 {
     /**
      * Temporary output file.
-     *
-     * @var string
      */
-    private $outputFile = null;
+    private string $outputFile;
 
     /**
      * setUp()

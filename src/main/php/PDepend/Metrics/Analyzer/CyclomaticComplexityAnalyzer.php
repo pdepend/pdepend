@@ -89,7 +89,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function analyze($namespaces): void
     {
-        if ($this->metrics === null) {
+        if (!isset($this->metrics)) {
             $this->loadCache();
             $this->fireStartAnalyzer();
 
