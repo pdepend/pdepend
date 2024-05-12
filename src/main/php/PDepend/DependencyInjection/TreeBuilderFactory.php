@@ -78,21 +78,13 @@ class TreeBuilderFactory
     {
         $home = FileUtil::getUserHomeDirOrSysTempDir();
 
-        $defaultCacheDriver = 'file';
-
-        $name = 'pdepend';
-        $treeBuilder = new TreeBuilder($name);
-        // @codeCoverageIgnoreStart
-        /** @var ArrayNodeDefinition $rootNode */
-        $rootNode = method_exists($treeBuilder, 'getRootNode')
-            ? $treeBuilder->getRootNode()
-            : $treeBuilder->root($name); // @phpstan-ignore-line
-        // @codeCoverageIgnoreEnd
-
+        $treeBuilder = new TreeBuilder('pdepend', 'array');
+        $rootNode = $treeBuilder->getRootNode();
+        assert($rootNode instanceof ArrayNodeDefinition);
         $nodes = $rootNode->children();
 
         $cacheNode = $nodes->arrayNode('cache')->addDefaultsIfNotSet()->children();
-        $cacheNode->enumNode('driver')->defaultValue($defaultCacheDriver)->values(['file', 'memory']);
+        $cacheNode->enumNode('driver')->defaultValue('file')->values(['file', 'memory']);
         $cacheNode->scalarNode('location')->info('This value is only used for the file cache.')->defaultValue($home . '/.pdepend');
         $cacheNode->integerNode('ttl')->info('This value is only used for the file cache. Value in seconds.')->defaultValue(self::DEFAULT_TTL);
 
