@@ -212,7 +212,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
         $complexity = $this->ccnAnalyzer->getCcn2($callable);
         $coverage = $report->getCoverage($callable);
 
-        if ($coverage == 0) {
+        if ($coverage === 0.0) {
             return $complexity ** 2 + $complexity;
         } elseif ($coverage > 99.5) {
             return $complexity;
