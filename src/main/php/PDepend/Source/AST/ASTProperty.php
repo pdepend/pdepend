@@ -52,10 +52,8 @@ class ASTProperty extends AbstractASTArtifact
 {
     /**
      * The parent type object.
-     *
-     * @var ASTClass
      */
-    private $declaringClass = null;
+    private ASTClass $declaringClass;
 
     /**
      * The wrapped field declaration instance.

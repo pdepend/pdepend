@@ -55,25 +55,21 @@ class ASTFunction extends AbstractASTCallable
     /**
      * The currently used builder context.
      *
-     * @var BuilderContext|null
      * @since 0.10.0
      */
-    protected $context = null;
+    protected BuilderContext $context;
 
     /**
      * The name of the parent namespace for this function. We use this property
      * to restore the parent namespace while we unserialize a cached object tree.
-     *
-     * @var string|null
      */
-    protected $namespaceName = null;
+    protected ?string $namespaceName = null;
     /**
      * The parent namespace for this function.
      *
-     * @var ASTNamespace|null
      * @since 0.10.0
      */
-    private $namespace = null;
+    private ?ASTNamespace $namespace = null;
 
     /**
      * The magic sleep method will be called by the PHP engine when this class

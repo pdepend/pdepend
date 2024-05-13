@@ -59,24 +59,13 @@ abstract class AbstractASTType extends AbstractASTArtifact
 {
     /**
      * The internal used cache instance.
-     *
-     * @var CacheDriver|null
      */
-    protected $cache = null;
+    protected CacheDriver $cache;
 
     /**
      * The currently used builder context.
-     *
-     * @var BuilderContext|null
      */
-    protected $context = null;
-
-    /**
-     * An <b>array</b> with all constants defined in this class or interface.
-     *
-     * @var array<string, mixed>|null
-     */
-    protected $constants = null;
+    protected BuilderContext $context;
 
     /**
      * This property will indicate that the class or interface is user defined.
@@ -97,10 +86,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Name of the parent namespace for this class or interface instance. Or
      * <b>NULL</b> when no namespace was specified.
-     *
-     * @var string|null
      */
-    protected $namespaceName = null;
+    protected ?string $namespaceName = null;
 
     /**
      * The modifiers for this class instance.
@@ -119,10 +106,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
     /**
      * The parent namespace for this class.
-     *
-     * @var ASTNamespace|null
      */
-    private $namespace = null;
+    private ?ASTNamespace $namespace = null;
 
     /**
      * The magic sleep method is called by the PHP runtime environment before an

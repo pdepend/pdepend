@@ -130,7 +130,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      *
      * @var array<string, array<string, mixed>>
      */
-    private $nodeMetrics = null;
+    private array $nodeMetrics;
 
     /**
      * This method will return an <b>array</b> with all generated metric values
@@ -173,7 +173,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      */
     public function analyze($namespaces): void
     {
-        if ($this->nodeMetrics === null) {
+        if (!isset($this->nodeMetrics)) {
             $this->nodeMetrics = [];
 
             $this->fireStartAnalyzer();

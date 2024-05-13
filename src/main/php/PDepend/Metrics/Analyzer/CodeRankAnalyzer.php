@@ -113,14 +113,14 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      *
      * @var array<string, array<string, float>>
      */
-    private $nodeMetrics = null;
+    private array $nodeMetrics;
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
      */
     public function analyze($namespaces): void
     {
-        if ($this->nodeMetrics === null) {
+        if (!isset($this->nodeMetrics)) {
             $this->fireStartAnalyzer();
 
             $factory = new StrategyFactory();

@@ -603,31 +603,25 @@ class PHPTokenizerInternal implements FullTokenizer
 
     /**
      * The source file instance.
-     *
-     * @var ASTCompilationUnit|null
      */
-    protected $sourceFile = null;
+    private ASTCompilationUnit $sourceFile;
 
     /**
      * Count of all tokens.
-     *
-     * @var int
      */
-    protected $count = 0;
+    private int $count = 0;
 
     /**
      * Internal stream pointer index.
-     *
-     * @var int
      */
-    protected $index = 0;
+    private int $index = 0;
 
     /**
      * Prepared token list.
      *
-     * @var Token[]|null
+     * @var Token[]
      */
-    protected $tokens = null;
+    private array $tokens;
 
     /**
      * The next free identifier for unknown string tokens.
@@ -639,7 +633,7 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the name of the source file.
      *
-     * @return ASTCompilationUnit|null
+     * @return ASTCompilationUnit
      */
     public function getSourceFile()
     {
@@ -653,7 +647,7 @@ class PHPTokenizerInternal implements FullTokenizer
      */
     public function setSourceFile($sourceFile): void
     {
-        $this->tokens = null;
+        unset($this->tokens);
         $this->sourceFile = new ASTCompilationUnit($sourceFile);
     }
 
@@ -929,7 +923,7 @@ class PHPTokenizerInternal implements FullTokenizer
      */
     private function tokenize(): void
     {
-        if ($this->tokens !== null) {
+        if (isset($this->tokens)) {
             return;
         }
 

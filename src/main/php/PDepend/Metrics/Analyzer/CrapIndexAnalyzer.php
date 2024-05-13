@@ -86,15 +86,10 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * The coverage report instance representing the supplied coverage report
      * file.
-     *
-     * @var Report
      */
-    private $report = null;
+    private Report $report;
 
-    /**
-     * @var CyclomaticComplexityAnalyzer
-     */
-    private $ccnAnalyzer = null;
+    private CyclomaticComplexityAnalyzer $ccnAnalyzer;
 
     /**
      * Returns <b>true</b> when this analyzer is enabled.
@@ -238,7 +233,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     private function createOrReturnCoverageReport()
     {
-        if ($this->report === null) {
+        if (!isset($this->report)) {
             $this->report = $this->createCoverageReport();
         }
         return $this->report;

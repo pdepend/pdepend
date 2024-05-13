@@ -149,14 +149,14 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      *
      * @var array<string, array<string, int>>
      */
-    private $nodeMetrics = null;
+    private array $nodeMetrics;
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
      */
     public function analyze($namespaces): void
     {
-        if ($this->nodeMetrics === null) {
+        if (!isset($this->nodeMetrics)) {
             $this->fireStartAnalyzer();
 
             // Init node metrics

@@ -68,45 +68,33 @@ class Pyramid implements FileAwareGenerator
 {
     /**
      * The output file name.
-     *
-     * @var string
      */
-    private $logFile = null;
+    private string $logFile;
 
     /**
      * The used coupling analyzer.
-     *
-     * @var CouplingAnalyzer
      */
-    private $coupling = null;
+    private CouplingAnalyzer $coupling;
 
     /**
      * The used cyclomatic complexity analyzer.
-     *
-     * @var CyclomaticComplexityAnalyzer
      */
-    private $cyclomaticComplexity = null;
+    private CyclomaticComplexityAnalyzer $cyclomaticComplexity;
 
     /**
      * The used inheritance analyzer.
-     *
-     * @var InheritanceAnalyzer
      */
-    private $inheritance = null;
+    private InheritanceAnalyzer $inheritance;
 
     /**
      * The used node count analyzer.
-     *
-     * @var NodeCountAnalyzer
      */
-    private $nodeCount = null;
+    private NodeCountAnalyzer $nodeCount;
 
     /**
      * The used node loc analyzer.
-     *
-     * @var NodeLocAnalyzer
      */
-    private $nodeLoc = null;
+    private NodeLocAnalyzer $nodeLoc;
 
     /**
      * Holds defined thresholds for the computed proportions. This set is based
@@ -185,7 +173,7 @@ class Pyramid implements FileAwareGenerator
     public function close(): void
     {
         // Check for configured log file
-        if ($this->logFile === null) {
+        if (!isset($this->logFile)) {
             throw new NoLogOutputException($this);
         }
 
@@ -300,19 +288,19 @@ class Pyramid implements FileAwareGenerator
      */
     private function collectMetrics()
     {
-        if ($this->coupling === null) {
+        if (!isset($this->coupling)) {
             throw new RuntimeException('Missing Coupling analyzer.');
         }
-        if ($this->cyclomaticComplexity === null) {
+        if (!isset($this->cyclomaticComplexity)) {
             throw new RuntimeException('Missing Cyclomatic Complexity analyzer.');
         }
-        if ($this->inheritance === null) {
+        if (!isset($this->inheritance)) {
             throw new RuntimeException('Missing Inheritance analyzer.');
         }
-        if ($this->nodeCount === null) {
+        if (!isset($this->nodeCount)) {
             throw new RuntimeException('Missing Node Count analyzer.');
         }
-        if ($this->nodeLoc === null) {
+        if (!isset($this->nodeLoc)) {
             throw new RuntimeException('Missing Node LOC analyzer.');
         }
 

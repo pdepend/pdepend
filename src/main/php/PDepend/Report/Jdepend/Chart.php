@@ -67,24 +67,20 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
 {
     /**
      * The output file name.
-     *
-     * @var string
      */
-    private $logFile = null;
+    private string $logFile;
 
     /**
      * The context source code.
      *
      * @var ASTArtifactList<ASTNamespace>
      */
-    private $code = null;
+    private ASTArtifactList $code;
 
     /**
      * The context analyzer instance.
-     *
-     * @var DependencyAnalyzer
      */
-    private $analyzer = null;
+    private DependencyAnalyzer $analyzer;
 
     /**
      * Sets the output log file.
@@ -142,7 +138,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     public function close(): void
     {
         // Check for configured log file
-        if ($this->logFile === null) {
+        if (!isset($this->logFile)) {
             throw new NoLogOutputException($this);
         }
 

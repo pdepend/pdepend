@@ -57,29 +57,19 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * The internal used cache instance.
      *
-     * @var CacheDriver|null
      * @since 0.10.0
      */
-    protected $cache = null;
+    protected CacheDriver $cache;
 
     /**
      * The unique identifier for this function.
-     *
-     * @var string|null
      */
-    protected $id = null;
+    protected ?string $id = null;
 
     /**
      * The source file name/path.
      */
     protected ?string $fileName = null;
-
-    /**
-     * The comment for this type.
-     *
-     * @var string|null
-     */
-    protected $comment = null;
 
     /**
      * List of classes, interfaces and functions that parsed from this file.
@@ -99,10 +89,8 @@ class ASTCompilationUnit extends AbstractASTArtifact
 
     /**
      * Normalized code in this file.
-     *
-     * @var string|null
      */
-    private $source = null;
+    private ?string $source = null;
 
     /**
      * Constructs a new source file instance.
