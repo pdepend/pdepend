@@ -69,7 +69,7 @@ class ASTSwitchLabel extends AbstractASTNode
      */
     public function __sleep()
     {
-        return array_merge(['default'], parent::__sleep());
+        return ['default', ...parent::__sleep()];
     }
 
     /**

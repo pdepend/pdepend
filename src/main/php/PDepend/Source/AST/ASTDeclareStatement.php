@@ -87,7 +87,7 @@ class ASTDeclareStatement extends ASTStatement
      */
     public function __sleep()
     {
-        return array_merge(['values'], parent::__sleep());
+        return ['values', ...parent::__sleep()];
     }
 
     /**

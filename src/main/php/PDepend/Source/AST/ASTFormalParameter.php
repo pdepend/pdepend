@@ -69,7 +69,7 @@ class ASTFormalParameter extends AbstractASTNode
 
     public function __sleep()
     {
-        return array_merge(['modifiers'], parent::__sleep());
+        return ['modifiers', ...parent::__sleep()];
     }
 
     /**
