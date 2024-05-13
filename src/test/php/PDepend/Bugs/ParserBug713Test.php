@@ -11,11 +11,15 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * Test case for bug #713.
  *
  * @ticket 713
- * @covers \stdClass
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseIssetExpression
  * @group regressiontest
  */
 class ParserBug713Test extends AbstractRegressionTest
 {
+    /**
+     * Expect no uncaught exceptions.
+     * @doesNotPerformAssertions
+     */
     public function testConstantArrayIndexIsset()
     {
         $cache   = new MemoryCacheDriver();

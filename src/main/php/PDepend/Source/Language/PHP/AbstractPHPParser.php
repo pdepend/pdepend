@@ -2477,6 +2477,11 @@ abstract class AbstractPHPParser
      * if (isset($foo, $bar, $baz)) {
      * //  -----------------------
      * }
+     *
+     * //  -----------------------
+     * if (isset($foo['bar'], BAR['baz']['foo'])) {
+     * //  -----------------------
+     * }
      * </code>
      *
      * @return ASTIssetExpression
@@ -2492,9 +2497,6 @@ abstract class AbstractPHPParser
 
         $expr = $this->builder->buildAstIssetExpression();
         $expr = $this->parseVariableList($expr, true);
-        if ($this->tokenizer->peek() === Tokens::T_SQUARED_BRACKET_OPEN) {
-            $this->parseListExpression();
-        }
         $this->consumeComments();
 
         $stopToken = $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
@@ -5347,6 +5349,10 @@ abstract class AbstractPHPParser
             $node->addChild($this->parseVariableOrConstantOrPrimaryPrefix());
 
             $this->consumeComments();
+
+            while ($this->tokenizer->peek() === Tokens::T_SQUARED_BRACKET_OPEN) {
+                $this->parseListExpression();
+            }
 
             if ($this->tokenizer->peek() === Tokens::T_COMMA) {
                 $this->consumeToken(Tokens::T_COMMA);
