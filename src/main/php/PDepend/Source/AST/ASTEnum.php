@@ -95,10 +95,7 @@ class ASTEnum extends AbstractASTClassOrInterface
      */
     public function __sleep()
     {
-        return array_merge(
-            ['type'],
-            parent::__sleep(),
-        );
+        return ['type', ...parent::__sleep()];
     }
 
     /**
@@ -220,7 +217,7 @@ class ASTEnum extends AbstractASTClassOrInterface
             $interfaces[] = $backedEnum;
         }
 
-        return new ASTArtifactList(array_merge($interfaces, $this->getInterfacesClasses()));
+        return new ASTArtifactList([...$interfaces, ...$this->getInterfacesClasses()]);
     }
 
     /**

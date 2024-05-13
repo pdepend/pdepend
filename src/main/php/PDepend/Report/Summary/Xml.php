@@ -239,10 +239,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     {
         $projectMetrics = [];
         foreach ($this->projectAwareAnalyzers as $analyzer) {
-            $projectMetrics = array_merge(
-                $projectMetrics,
-                $analyzer->getProjectMetrics(),
-            );
+            $projectMetrics = $analyzer->getProjectMetrics() + $projectMetrics;
         }
         ksort($projectMetrics);
 
@@ -421,7 +418,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     {
         $metrics = [];
         foreach ($this->nodeAwareAnalyzers as $analyzer) {
-            $metrics = array_merge($metrics, $analyzer->getNodeMetrics($node));
+            $metrics = $analyzer->getNodeMetrics($node) + $metrics;
         }
 
         foreach ($metrics as $name => $value) {

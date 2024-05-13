@@ -91,10 +91,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      */
     public function __sleep()
     {
-        return array_merge(
-            ['constants', 'interfaceReferences', 'parentClassReference'],
-            parent::__sleep(),
-        );
+        return ['constants', 'interfaceReferences', 'parentClassReference', ...parent::__sleep()];
     }
 
     /**
@@ -392,10 +389,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         }
 
         foreach ($this->getInterfaces() as $interface) {
-            $this->constantDeclarators = array_merge(
-                $this->constantDeclarators,
-                $interface->getConstantDeclarators(),
-            );
+            $this->constantDeclarators = $interface->getConstantDeclarators() + $this->constantDeclarators;
         }
 
         $definitions = $this->findChildrenOfType(ASTConstantDefinition::class);

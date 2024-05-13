@@ -177,7 +177,7 @@ class Pyramid implements FileAwareGenerator
         }
         $svg->loadXML($template);
 
-        $items = array_merge($metrics, $proportions);
+        $items = $proportions + $metrics;
         foreach ($items as $name => $value) {
             $node = $svg->getElementById("pdepend.{$name}");
             if (!$node) {

@@ -75,7 +75,7 @@ class ASTTraitAdaptationAlias extends ASTStatement
      */
     public function __sleep()
     {
-        return array_merge(['newName', 'newModifier'], parent::__sleep());
+        return ['newName', 'newModifier', ...parent::__sleep()];
     }
 
     /**

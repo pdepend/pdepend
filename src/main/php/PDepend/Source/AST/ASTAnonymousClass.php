@@ -72,7 +72,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
      */
     public function __sleep()
     {
-        return array_merge(['metadata'], parent::__sleep());
+        return ['metadata', ...parent::__sleep()];
     }
 
     /**
