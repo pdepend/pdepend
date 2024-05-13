@@ -204,7 +204,7 @@ class Pyramid implements FileAwareGenerator
             preg_match('/fill:(#[^;"]+)/', $color->getAttribute('style'), $match);
 
             $style = $rect->getAttribute('style');
-            $style = preg_replace('/fill:#[^;"]+/', "fill:{$match[1]}", $style);
+            $style = preg_replace('/fill:#[^;"]+/', "fill:{$match[1]}", $style) ?? $style;
             $rect->setAttribute('style', $style);
         }
 

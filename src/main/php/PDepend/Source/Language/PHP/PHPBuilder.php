@@ -2040,7 +2040,7 @@ class PHPBuilder implements Builder
 
         $trait = $this->buildTrait($qualifiedName);
         $trait->setNamespace(
-            $this->buildNamespace($this->extractNamespaceName($qualifiedName)),
+            $this->buildNamespace($this->extractNamespaceName($qualifiedName) ?? self::DEFAULT_NAMESPACE),
         );
 
         $this->restoreTrait($trait);
@@ -2113,7 +2113,7 @@ class PHPBuilder implements Builder
 
         $interface = $this->buildInterface($qualifiedName);
         $interface->setNamespace(
-            $this->buildNamespace($this->extractNamespaceName($qualifiedName)),
+            $this->buildNamespace($this->extractNamespaceName($qualifiedName) ?? self::DEFAULT_NAMESPACE),
         );
 
         $this->restoreInterface($interface);
@@ -2183,7 +2183,7 @@ class PHPBuilder implements Builder
 
         $class = $this->buildClass($qualifiedName);
         $class->setNamespace(
-            $this->buildNamespace($this->extractNamespaceName($qualifiedName)),
+            $this->buildNamespace($this->extractNamespaceName($qualifiedName) ?? self::DEFAULT_NAMESPACE),
         );
 
         $this->restoreClass($class);

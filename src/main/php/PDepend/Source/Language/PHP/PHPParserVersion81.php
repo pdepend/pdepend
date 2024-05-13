@@ -169,6 +169,7 @@ abstract class PHPParserVersion81 extends AbstractPHPParser
         while ($this->tokenizer->peekNext() !== Tokens::T_VARIABLE && $this->addTokenToStackIfType(Tokens::T_BITWISE_AND)) {
             $types[] = $this->parseSingleTypeHint();
         }
+        $types = array_filter($types);
 
         $intersectionType = $this->builder->buildAstIntersectionType();
         foreach ($types as $type) {

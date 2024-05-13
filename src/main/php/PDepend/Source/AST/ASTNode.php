@@ -175,7 +175,7 @@ interface ASTNode
     /**
      * Sets the raw doc comment for this node.
      *
-     * @param string $comment The doc comment block for this node.
+     * @param ?string $comment The doc comment block for this node.
      */
     public function setComment($comment): void;
 

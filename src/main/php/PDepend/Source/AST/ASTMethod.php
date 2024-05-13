@@ -201,7 +201,7 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns the source file where this method was declared.
      *
-     * @return ASTCompilationUnit
+     * @return ?ASTCompilationUnit
      * @throws ASTCompilationUnitNotFoundException When no parent was set.
      * @since  0.10.0
      */

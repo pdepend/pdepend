@@ -62,11 +62,6 @@ class ASTCompilationUnit extends AbstractASTArtifact
     protected CacheDriver $cache;
 
     /**
-     * The unique identifier for this function.
-     */
-    protected ?string $id = null;
-
-    /**
      * The source file name/path.
      */
     protected ?string $fileName = null;
@@ -182,18 +177,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    /**
-     * Sets the unique identifier for this file instance.
-     *
-     * @param string $id Identifier for this file.
-     * @since  0.9.12
-     */
-    public function setId($id): void
-    {
-        $this->id = $id;
+        return $this->id ?? null;
     }
 
     /**

@@ -161,7 +161,7 @@ class ImageConvert
             $fontReplace = 'font-family:' . strtr($fontFamily, ';:', '  ');
             $fontPattern = '/font-family:\s*Arial/';
 
-            $svg = preg_replace($fontPattern, $fontReplace, $svg);
+            $svg = preg_replace($fontPattern, $fontReplace, $svg) ?? $svg;
         }
 
         // Check for font size
@@ -180,7 +180,7 @@ class ImageConvert
                 $fontReplace = 'font-size:' . ($fontSize + $resize);
                 $fontPattern = "/font-size:\s*{$fontSize}/";
 
-                $svg = preg_replace($fontPattern, $fontReplace, $svg);
+                $svg = preg_replace($fontPattern, $fontReplace, $svg) ?? $svg;
             }
         }
 

@@ -130,7 +130,7 @@ class PHPParserGeneric extends PHPParserVersion83
             default:
                 throw new UnexpectedTokenException(
                     $this->tokenizer->next(),
-                    $this->tokenizer->getSourceFile()
+                    $this->tokenizer->getSourceFile() ?? 'unknown'
                 );
         }
 

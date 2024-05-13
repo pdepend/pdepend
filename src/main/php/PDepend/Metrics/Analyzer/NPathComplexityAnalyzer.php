@@ -191,9 +191,13 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function visitConditionalExpression($node, $data)
     {
+        $npath = '0';
+
         // Calculate the complexity of the condition
-        $parent = $node->getParent()->getChild(0);
-        $npath = $this->sumComplexity($parent);
+        $parent = $node->getParent();
+        if ($parent) {
+            $npath = $this->sumComplexity($parent->getChild(0));
+        }
 
         // New PHP 5.3 ifsetor-operator $x ?: $y
         if (count($node->getChildren()) === 1) {

@@ -102,7 +102,7 @@ abstract class PHPParserVersion82 extends PHPParserVersion81
     }
 
     /**
-     * @return ASTType
+     * @return ?ASTType
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
      */
