@@ -40,6 +40,8 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
+use PDepend\Source\AST\ASTMethodPostfix;
+use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\State;
 
 /**
@@ -108,11 +110,11 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
         $assignment = $constructorNodes[1]->getChild(0)->getChild(0);
 
         $propertyPostfix = $assignment->getChild(0)->getChild(1);
-        self::assertInstanceOf('PDepend\\Source\\AST\\ASTPropertyPostfix', $propertyPostfix);
+        self::assertInstanceOf(ASTPropertyPostfix::class, $propertyPostfix);
         $this->assertSame('readonly', $propertyPostfix->getImage());
 
         $methodPostfix = $assignment->getChild(1)->getChild(1);
-        self::assertInstanceOf('PDepend\\Source\\AST\\ASTMethodPostfix', $methodPostfix);
+        self::assertInstanceOf(ASTMethodPostfix::class, $methodPostfix);
         $this->assertSame('readonly', $methodPostfix->getImage());
 
         $method = $class->getMethods()->offsetGet(1);

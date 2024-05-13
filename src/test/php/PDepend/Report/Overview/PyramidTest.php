@@ -43,8 +43,15 @@
 namespace PDepend\Report\Overview;
 
 use DOMDocument;
+use DOMElement;
 use PDepend\AbstractTestCase;
+use PDepend\Metrics\Analyzer\CouplingAnalyzer;
+use PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer;
+use PDepend\Metrics\Analyzer\InheritanceAnalyzer;
+use PDepend\Metrics\Analyzer\NodeCountAnalyzer;
+use PDepend\Metrics\Analyzer\NodeLocAnalyzer;
 use PDepend\Report\DummyAnalyzer;
+use PDepend\Report\NoLogOutputException;
 
 /**
  * Test case for the overview pyramid logger.
@@ -84,7 +91,7 @@ class PyramidTest extends AbstractTestCase
     public function testThrowsExceptionForInvalidLogTarget(): void
     {
         $this->expectException(
-            '\\PDepend\\Report\\NoLogOutputException'
+            NoLogOutputException::class
         );
         $this->expectExceptionMessage(
             "The log target is not configured for 'PDepend\\Report\\Overview\\Pyramid'."
@@ -253,7 +260,7 @@ class PyramidTest extends AbstractTestCase
         // TODO: Replace this loop assertion
         foreach ($expected as $name => $value) {
             $elem = $svg->getElementById("pdepend.{$name}");
-            $this->assertInstanceOf('\\DOMElement', $elem);
+            $this->assertInstanceOf(DOMElement::class, $elem);
             $this->assertEqualsWithDelta($value, $elem->nodeValue, 0.01);
         }
 
@@ -262,7 +269,7 @@ class PyramidTest extends AbstractTestCase
 
     private function createCouplingAnalyzer()
     {
-        $mock = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\CouplingAnalyzer')
+        $mock = $this->getMockBuilder(CouplingAnalyzer::class)
             ->getMock();
         $mock->expects($this->any())
             ->method('getProjectMetrics')
@@ -278,7 +285,7 @@ class PyramidTest extends AbstractTestCase
 
     private function createComplexityAnalyzer()
     {
-        $mock = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer')
+        $mock = $this->getMockBuilder(CyclomaticComplexityAnalyzer::class)
             ->getMock();
         $mock->expects($this->any())
             ->method('getProjectMetrics')
@@ -293,7 +300,7 @@ class PyramidTest extends AbstractTestCase
 
     private function createInheritanceAnalyzer()
     {
-        $mock = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\InheritanceAnalyzer')
+        $mock = $this->getMockBuilder(InheritanceAnalyzer::class)
             ->getMock();
         $mock->expects($this->any())
             ->method('getProjectMetrics')
@@ -309,7 +316,7 @@ class PyramidTest extends AbstractTestCase
 
     private function createNodeCountAnalyzer()
     {
-        $mock = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\NodeCountAnalyzer')
+        $mock = $this->getMockBuilder(NodeCountAnalyzer::class)
             ->getMock();
         $mock->expects($this->any())
             ->method('getProjectMetrics')
@@ -327,7 +334,7 @@ class PyramidTest extends AbstractTestCase
 
     private function createNodeLocAnalyzer()
     {
-        $mock = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\NodeLocAnalyzer')
+        $mock = $this->getMockBuilder(NodeLocAnalyzer::class)
             ->getMock();
         $mock->expects($this->any())
             ->method('getProjectMetrics')

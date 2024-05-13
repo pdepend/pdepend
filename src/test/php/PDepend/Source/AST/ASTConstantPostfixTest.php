@@ -69,7 +69,7 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
     public function testConstantPostfixStructureForStaticAccessOnVariable(): void
     {
         $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIdentifier', $postfix->getChild(0));
+        $this->assertInstanceOf(ASTIdentifier::class, $postfix->getChild(0));
     }
 
     /**
@@ -118,7 +118,7 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTConstantPostfix'
+            ASTConstantPostfix::class
         );
     }
 }

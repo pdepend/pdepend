@@ -40,6 +40,11 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
+use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTArrayElement;
+use PDepend\Source\AST\ASTReturnStatement;
+use PDepend\Source\AST\ASTTypeArray;
+
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -57,18 +62,18 @@ class ArrayUnpackingWithStringKeysTest extends PHPParserVersion81TestCase
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTypeArray', $children[1]);
+        $this->assertInstanceOf(ASTTypeArray::class, $children[1]);
         $children = $children[2]->getChildren();
         $this->assertCount(1, $children);
         $return = $children[0];
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTReturnStatement', $return);
+        $this->assertInstanceOf(ASTReturnStatement::class, $return);
         $children = $return->getChildren();
         $this->assertCount(1, $children);
         $array = $children[0];
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $array);
+        $this->assertInstanceOf(ASTArray::class, $array);
         $children = $array->getChildren();
         $this->assertCount(2, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArrayElement', $children[0]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArrayElement', $children[1]);
+        $this->assertInstanceOf(ASTArrayElement::class, $children[0]);
+        $this->assertInstanceOf(ASTArrayElement::class, $children[1]);
     }
 }

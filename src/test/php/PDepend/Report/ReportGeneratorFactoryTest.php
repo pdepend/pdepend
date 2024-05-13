@@ -43,6 +43,7 @@
 namespace PDepend\Report;
 
 use PDepend\AbstractTestCase;
+use PDepend\Application;
 
 /**
  * Test case for the logger factory.
@@ -54,7 +55,7 @@ class ReportGeneratorFactoryTest extends AbstractTestCase
 {
     private function createReportGeneratorFactory()
     {
-        $application = new \PDepend\Application();
+        $application = new Application();
 
         return $application->getReportGeneratorFactory();
     }
@@ -68,7 +69,7 @@ class ReportGeneratorFactoryTest extends AbstractTestCase
         $factory = $this->createReportGeneratorFactory();
         $generator = $factory->createGenerator('summary-xml', 'pdepend.xml');
 
-        $this->assertInstanceOf('PDepend\\Report\\Summary\\Xml', $generator);
+        $this->assertInstanceOf(Summary\Xml::class, $generator);
     }
 
     /**
@@ -81,7 +82,7 @@ class ReportGeneratorFactoryTest extends AbstractTestCase
         $generator1 = $factory->createGenerator('summary-xml', 'pdepend1.xml');
         $generator2 = $factory->createGenerator('summary-xml', 'pdepend2.xml');
 
-        $this->assertInstanceOf('PDepend\\Report\\Summary\\Xml', $generator1);
+        $this->assertInstanceOf(Summary\Xml::class, $generator1);
         $this->assertSame($generator1, $generator2);
     }
 

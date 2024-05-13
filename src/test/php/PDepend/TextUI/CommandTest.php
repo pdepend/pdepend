@@ -533,7 +533,7 @@ class CommandTest extends AbstractTestCase
     public function testDebugErrorDisplay(): void
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
-        $streamProperty = new ReflectionClass('PDepend\\Util\\Log');
+        $streamProperty = new ReflectionClass(Log::class);
         $streamProperty->setStaticPropertyValue('stream', fopen($file, 'a+'));
 
         Log::setSeverity(Log::DEBUG);

@@ -71,7 +71,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
         $declarator = new ASTVariableDeclarator();
         $declarator->setValue(new ASTValue());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $declarator->getValue());
+        $this->assertInstanceOf(ASTValue::class, $declarator->getValue());
     }
 
     /**
@@ -100,7 +100,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     public function testVariableDeclarator()
     {
         $declarator = $this->getFirstVariableDeclaratorInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $declarator);
+        $this->assertInstanceOf(ASTVariableDeclarator::class, $declarator);
 
         return $declarator;
     }
@@ -154,7 +154,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTVariableDeclarator'
+            ASTVariableDeclarator::class
         );
     }
 }

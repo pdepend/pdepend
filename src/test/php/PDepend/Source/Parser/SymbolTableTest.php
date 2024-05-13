@@ -40,10 +40,9 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\PDepend\Source\Parser;
+namespace PDepend\Source\Parser;
 
 use PDepend\AbstractTestCase;
-use PDepend\Source\Parser\SymbolTable;
 
 /**
  * Test case for the {@link SymbolTable} class.
@@ -60,7 +59,7 @@ class SymbolTableTest extends AbstractTestCase
     public function testCannotAddSymbolToASymbolTableWithoutActiveScope(): void
     {
         $this->expectException(
-            '\PDepend\Source\Parser\NoActiveScopeException'
+            NoActiveScopeException::class
         );
         $this->expectExceptionMessage(
             'No active scope in symbol table.'
@@ -77,7 +76,7 @@ class SymbolTableTest extends AbstractTestCase
     public function testCannotPerformLookupOnASymbolTableWithoutActiveScope(): void
     {
         $this->expectException(
-            '\PDepend\Source\Parser\NoActiveScopeException'
+            NoActiveScopeException::class
         );
         $this->expectExceptionMessage(
             'No active scope in symbol table.'
@@ -94,7 +93,7 @@ class SymbolTableTest extends AbstractTestCase
     public function testCannotResetWithoutActiveScope(): void
     {
         $this->expectException(
-            '\PDepend\Source\Parser\NoActiveScopeException'
+            NoActiveScopeException::class
         );
         $this->expectExceptionMessage(
             'No active scope in symbol table.'
@@ -111,7 +110,7 @@ class SymbolTableTest extends AbstractTestCase
     public function testCannotDestroyWithoutActiveScope(): void
     {
         $this->expectException(
-            '\PDepend\Source\Parser\NoActiveScopeException'
+            NoActiveScopeException::class
         );
         $this->expectExceptionMessage(
             'No active scope in symbol table.'

@@ -42,6 +42,7 @@ namespace PDepend\Source\Language\PHP\Features\PHP80;
 
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\Parser\TokenException;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
@@ -58,7 +59,7 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $children[0]);
+        $this->assertInstanceOf(ASTFormalParameters::class, $children[0]);
 
         /** @var ASTFormalParameters $parametersBag */
         $parametersBag = $children[0];
@@ -93,7 +94,7 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $children[0]);
+        $this->assertInstanceOf(ASTFormalParameters::class, $children[0]);
 
         /** @var ASTFormalParameters $parametersBag */
         $parametersBag = $children[0];
@@ -125,7 +126,7 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
 
     public function testPropertyPromotionOnRandomMethod(): void
     {
-        $this->expectException(\PDepend\Source\Parser\TokenException::class);
+        $this->expectException(TokenException::class);
         $this->expectExceptionMessage('Unexpected token: private, line: 5, col: 9');
 
         $this->parseCodeResourceForTest();

@@ -100,7 +100,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTBreakStatement'
+            ASTBreakStatement::class
         );
     }
 }

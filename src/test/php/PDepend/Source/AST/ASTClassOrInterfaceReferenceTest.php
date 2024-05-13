@@ -249,7 +249,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
+            ASTClassOrInterfaceReference::class
         );
     }
 
@@ -263,7 +263,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
+            ASTClassOrInterfaceReference::class
         );
     }
 
@@ -277,7 +277,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInInterface(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'
+            ASTClassOrInterfaceReference::class
         );
     }
 
@@ -301,7 +301,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
      */
     protected function getBuilderContextMock()
     {
-        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+        $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
 
         return $context;

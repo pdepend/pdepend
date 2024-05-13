@@ -395,10 +395,10 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
             );
         }
 
-        $definitions = $this->findChildrenOfType('PDepend\\Source\\AST\\ASTConstantDefinition');
+        $definitions = $this->findChildrenOfType(ASTConstantDefinition::class);
 
         foreach ($definitions as $definition) {
-            $declarators = $definition->findChildrenOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
+            $declarators = $definition->findChildrenOfType(ASTConstantDeclarator::class);
 
             foreach ($declarators as $declarator) {
                 $image = $declarator->getImage();

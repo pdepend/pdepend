@@ -42,6 +42,8 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+
 /**
  * Test case for bug #152.
  *
@@ -69,7 +71,7 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
      */
     public function testClassNotResultsInEndlessLoopWhileCallingGetParentClass2(): void
     {
-        $this->expectException(\PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException::class);
+        $this->expectException(ASTClassOrInterfaceRecursiveInheritanceException::class);
 
         $this->parseCodeResourceForTest()
             ->current()

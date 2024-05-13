@@ -42,6 +42,9 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Parser\TokenStreamEndException;
+use PDepend\Source\Parser\UnexpectedTokenException;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTSwitchStatement} class.
  *
@@ -62,7 +65,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
         $stmt = $this->getFirstSwitchStatementInFunction();
         $children = $stmt->getChildren();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $children[0]);
+        $this->assertInstanceOf(ASTExpression::class, $children[0]);
     }
 
     /**
@@ -73,8 +76,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
         $stmt = $this->getFirstSwitchStatementInFunction();
         $children = $stmt->getChildren();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $children[1]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $children[2]);
+        $this->assertInstanceOf(ASTSwitchLabel::class, $children[1]);
+        $this->assertInstanceOf(ASTSwitchLabel::class, $children[2]);
     }
 
     /**
@@ -86,7 +89,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     public function testSwitchStatement()
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchStatement', $stmt);
+        $this->assertInstanceOf(ASTSwitchStatement::class, $stmt);
 
         return $stmt;
     }
@@ -160,7 +163,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testInvalidStatementInSwitchStatementResultsInExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->getFirstSwitchStatementInFunction();
     }
@@ -170,7 +173,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testUnclosedSwitchStatementResultsInExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\TokenStreamEndException::class);
+        $this->expectException(TokenStreamEndException::class);
 
         $this->getFirstSwitchStatementInFunction();
     }
@@ -184,7 +187,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     public function testSwitchStatementWithAlternativeScope()
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchStatement', $stmt);
+        $this->assertInstanceOf(ASTSwitchStatement::class, $stmt);
 
         return $stmt;
     }
@@ -255,7 +258,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     public function testSwitchStatementWithNestedNonePhpCode()
     {
         $switch = $this->getFirstSwitchStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchStatement', $switch);
+        $this->assertInstanceOf(ASTSwitchStatement::class, $switch);
 
         return $switch;
     }
@@ -317,7 +320,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTSwitchStatement'
+            ASTSwitchStatement::class
         );
     }
 }

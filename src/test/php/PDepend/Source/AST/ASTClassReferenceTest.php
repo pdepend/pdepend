@@ -192,7 +192,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTClassReference'
+            ASTClassReference::class
         );
     }
 
@@ -206,7 +206,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTClassReference'
+            ASTClassReference::class
         );
     }
 
@@ -230,7 +230,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      */
     protected function getBuilderContextMock()
     {
-        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+        $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
 
         return $context;

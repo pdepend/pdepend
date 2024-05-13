@@ -243,7 +243,7 @@ class EngineTest extends AbstractTestCase
             'package3',
         ];
 
-        $className = '\\PDepend\\Source\\AST\\ASTNamespace';
+        $className = ASTNamespace::class;
 
         foreach ($namespaces as $namespace) {
             $this->assertInstanceOf($className, $engine->getNamespace($namespace));

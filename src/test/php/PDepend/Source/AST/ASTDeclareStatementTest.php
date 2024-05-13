@@ -209,7 +209,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTDeclareStatement'
+            ASTDeclareStatement::class
         );
     }
 }

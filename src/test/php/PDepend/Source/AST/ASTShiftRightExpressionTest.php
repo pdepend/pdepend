@@ -73,7 +73,7 @@ class ASTShiftRightExpressionTest extends ASTNodeTestCase
     public function testShiftRightExpression()
     {
         $expr = $this->getFirstShiftRightExpressionInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTShiftRightExpression', $expr);
+        $this->assertInstanceOf(ASTShiftRightExpression::class, $expr);
 
         return $expr;
     }
@@ -135,7 +135,7 @@ class ASTShiftRightExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTShiftRightExpression'
+            ASTShiftRightExpression::class
         );
     }
 }

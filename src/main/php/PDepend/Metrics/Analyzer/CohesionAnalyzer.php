@@ -119,7 +119,7 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         $this->fireStartMethod($method);
 
         $prefixes = $method->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTMemberPrimaryPrefix'
+            ASTMemberPrimaryPrefix::class
         );
         foreach ($prefixes as $prefix) {
             $variable = $prefix->getChild(0);

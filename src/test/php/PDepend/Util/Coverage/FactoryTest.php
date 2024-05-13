@@ -64,7 +64,7 @@ class FactoryTest extends AbstractTestCase
         $factory = new Factory();
         $report = $factory->create(__DIR__ . '/_files/clover.xml');
 
-        $this->assertInstanceOf('PDepend\\Util\\Coverage\\CloverReport', $report);
+        $this->assertInstanceOf(CloverReport::class, $report);
     }
 
     /**

@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Parser\UnexpectedTokenException;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTIfStatement} class.
  *
@@ -105,7 +107,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
     public function testFirstChildOfIfStatementIsInstanceOfExpression(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
+        $this->assertInstanceOf(ASTExpression::class, $stmt->getChild(0));
     }
 
     /**
@@ -114,7 +116,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
     public function testSecondChildOfIfStatementIsInstanceOfScopeStatement(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(1));
     }
 
     /**
@@ -122,7 +124,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
      */
     public function testParserThrowsExpectedExceptionWhenIfStatementHasNoBody(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->getFirstIfStatementInFunction(__METHOD__);
     }
@@ -295,7 +297,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
     public function testThirdChildOfIfStatementIsInstanceOfScopeStatementForElse(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(2));
+        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(2));
     }
 
     /**
@@ -304,7 +306,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
     public function testThirdChildOfIfStatementIsInstanceOfIfStatementForElseIf(): void
     {
         $stmt = $this->getFirstIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIfStatement', $stmt->getChild(2));
+        $this->assertInstanceOf(ASTIfStatement::class, $stmt->getChild(2));
     }
 
     /**
@@ -317,7 +319,7 @@ class ASTIfStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTIfStatement'
+            ASTIfStatement::class
         );
     }
 }

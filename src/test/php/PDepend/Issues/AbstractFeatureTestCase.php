@@ -44,6 +44,8 @@ namespace PDepend\Issues;
 
 use ErrorException;
 use PDepend\AbstractTestCase;
+use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTParameter;
 
 /**
  * Abstract base class for issue tests.
@@ -56,7 +58,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
     /**
      * Returns the parameters of the first function in the test case file.
      *
-     * @return \PDepend\Source\AST\ASTParameter[]
+     * @return ASTParameter[]
      */
     protected function getParametersOfFirstFunction()
     {
@@ -68,7 +70,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      * Parses the source for the calling test case.
      *
      * @param string $testCase
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     protected function parseTestCase($testCase = null)
     {
@@ -84,7 +86,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      *
      * @param string $testCase
      * @param bool $ignoreAnnotations
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {

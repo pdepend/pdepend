@@ -147,7 +147,7 @@ class ASTArtifactTest extends AbstractTestCase
     protected function getItemMock()
     {
         return $this->getAbstractClassMock(
-            'PDepend\\Source\\AST\\AbstractASTArtifact',
+            AbstractASTArtifact::class,
             [__CLASS__]
         );
     }

@@ -76,7 +76,7 @@ class ASTNamespaceTest extends AbstractTestCase
         $namespace = new ASTNamespace('package1');
         $types = $namespace->getTypes();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArtifactList', $types);
+        $this->assertInstanceOf(ASTArtifactList::class, $types);
     }
 
     /**
@@ -263,7 +263,7 @@ class ASTNamespaceTest extends AbstractTestCase
         $namespace = new ASTNamespace('package1');
         $functions = $namespace->getFunctions();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArtifactList', $functions);
+        $this->assertInstanceOf(ASTArtifactList::class, $functions);
     }
 
     /**

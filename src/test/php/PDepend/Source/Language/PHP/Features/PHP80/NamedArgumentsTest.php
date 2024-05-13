@@ -41,7 +41,9 @@
 namespace PDepend\Source\Language\PHP\Features\PHP80;
 
 use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamedArgument;
 use PDepend\Source\AST\ASTVariable;
@@ -62,18 +64,18 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTArguments $arguments */
         $arguments = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTArguments'
+            ASTArguments::class
         );
         $children = $arguments->getChildren();
 
         $this->assertCount(2, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $children[0]);
+        $this->assertInstanceOf(ASTLiteral::class, $children[0]);
         $this->assertSame('5623', $children[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTNamedArgument', $children[1]);
+        $this->assertInstanceOf(ASTNamedArgument::class, $children[1]);
         /** @var ASTNamedArgument $argument */
         $argument = $children[1];
         $this->assertSame('thousands_separator', $argument->getName());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $argument->getValue());
+        $this->assertInstanceOf(ASTLiteral::class, $argument->getValue());
         $this->assertSame("' '", $argument->getValue()->getImage());
         $this->assertSame("thousands_separator: ' '", $argument->getImage());
     }
@@ -84,19 +86,19 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTArguments $arguments */
         $arguments = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTArguments'
+            ASTArguments::class
         );
         $children = $arguments->getChildren();
 
         $this->assertCount(4, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $children[0]);
+        $this->assertInstanceOf(ASTLiteral::class, $children[0]);
         $this->assertSame("'/thing/{id}'", $children[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTNamedArgument', $children[3]);
+        $this->assertInstanceOf(ASTNamedArgument::class, $children[3]);
         /** @var ASTNamedArgument $argument */
         $argument = $children[3];
 
         $this->assertSame('methods', $argument->getName());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $argument->getValue());
+        $this->assertInstanceOf(ASTArray::class, $argument->getValue());
     }
 
     public function testNamedArgumentsWithDefaultName(): void
@@ -105,12 +107,12 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTArguments $arguments */
         $arguments = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTArguments'
+            ASTArguments::class
         );
         $children = $arguments->getChildren();
 
         $this->assertCount(1, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTNamedArgument', $children[0]);
+        $this->assertInstanceOf(ASTNamedArgument::class, $children[0]);
         $this->assertSame("default: 'bar'", $children[0]->getImage());
     }
 
@@ -120,19 +122,19 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTArguments $arguments */
         $arguments = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTArguments'
+            ASTArguments::class
         );
         $children = $arguments->getChildren();
 
         $this->assertCount(4, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $children[0]);
+        $this->assertInstanceOf(ASTLiteral::class, $children[0]);
         $this->assertSame("'/thing/{id}'", $children[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTNamedArgument', $children[3]);
+        $this->assertInstanceOf(ASTNamedArgument::class, $children[3]);
         /** @var ASTNamedArgument $argument */
         $argument = $children[3];
 
         $this->assertSame('methods', $argument->getName());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $argument->getValue());
+        $this->assertInstanceOf(ASTArray::class, $argument->getValue());
     }
 
     public function testNamedArgumentsFindVariable(): void
@@ -141,15 +143,15 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTNamedArgument $namedArgument */
         $namedArgument = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTNamedArgument'
+            ASTNamedArgument::class
         );
         /** @var ASTVariable[] $variables */
         $variables = $method->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTVariable'
+            ASTVariable::class
         );
         $this->assertCount(2, $variables);
 
-        $foundVariable = $namedArgument->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
+        $foundVariable = $namedArgument->getFirstChildOfType(ASTVariable::class);
         $this->assertSame($variables[1], $foundVariable);
         $this->assertSame('$foo', $foundVariable->getImage());
         /** @var ASTExpression $expression */
@@ -159,7 +161,7 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $this->assertSame($namedArgument, $expressionParent);
         $this->assertSame(
             [$variables[1]],
-            $namedArgument->findChildrenOfType('PDepend\\Source\\AST\\ASTVariable')
+            $namedArgument->findChildrenOfType(ASTVariable::class)
         );
     }
 
@@ -169,15 +171,15 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTNamedArgument $namedArgument */
         $namedArgument = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTNamedArgument'
+            ASTNamedArgument::class
         );
         /** @var ASTVariable[] $variables */
         $variables = $method->findChildrenOfType(
-            'PDepend\\Source\\AST\\ASTVariable'
+            ASTVariable::class
         );
         $this->assertCount(2, $variables);
 
-        $foundVariable = $namedArgument->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable');
+        $foundVariable = $namedArgument->getFirstChildOfType(ASTVariable::class);
         $this->assertSame($variables[1], $foundVariable);
         $this->assertSame('$foo', $foundVariable->getImage());
         /** @var ASTNamedArgument $variableParent */
@@ -185,7 +187,7 @@ class NamedArgumentsTest extends PHPParserVersion80TestCase
         $this->assertSame($namedArgument, $variableParent);
         $this->assertSame(
             [$variables[1]],
-            $namedArgument->findChildrenOfType('PDepend\\Source\\AST\\ASTVariable')
+            $namedArgument->findChildrenOfType(ASTVariable::class)
         );
     }
 }

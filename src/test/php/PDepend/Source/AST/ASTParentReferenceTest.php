@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Parser\InvalidStateException;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTParentReference} class.
  *
@@ -95,7 +97,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      */
     public function testParentReferenceAllocationOutsideOfClassScopeThrowsExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+        $this->expectException(InvalidStateException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -105,7 +107,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      */
     public function testParentReferenceInClassWithoutParentThrowsException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+        $this->expectException(InvalidStateException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -115,7 +117,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      */
     public function testParentReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+        $this->expectException(InvalidStateException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -174,7 +176,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      */
     protected function createNodeInstance()
     {
-        $this->referenceMock = $this->getMockBuilder('\PDepend\Source\AST\ASTClassOrInterfaceReference')
+        $this->referenceMock = $this->getMockBuilder(ASTClassOrInterfaceReference::class)
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -191,7 +193,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $testCase,
-            'PDepend\\Source\\AST\\ASTParentReference'
+            ASTParentReference::class
         );
     }
 }

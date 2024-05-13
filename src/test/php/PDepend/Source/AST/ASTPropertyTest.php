@@ -43,6 +43,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\AbstractTestCase;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Test case for the code property class.
@@ -134,7 +135,7 @@ class ASTPropertyTest extends AbstractTestCase
      */
     public function testGetCompilationUnitReturnsNullByDefault(): void
     {
-        $property = $this->getMockWithoutConstructor('PDepend\\Source\\AST\\ASTProperty');
+        $property = $this->getMockWithoutConstructor(ASTProperty::class);
         $this->assertNull($property->getCompilationUnit());
     }
 
@@ -145,7 +146,7 @@ class ASTPropertyTest extends AbstractTestCase
     {
         $compilationUnit = new ASTCompilationUnit(__FILE__);
 
-        $property = $this->getMockWithoutConstructor('PDepend\\Source\\AST\\ASTProperty');
+        $property = $this->getMockWithoutConstructor(ASTProperty::class);
         $property->setCompilationUnit($compilationUnit);
 
         $this->assertSame($compilationUnit, $property->getCompilationUnit());
@@ -400,12 +401,12 @@ class ASTPropertyTest extends AbstractTestCase
      */
     public function testAcceptCallsVisitorMethodVisitProperty(): void
     {
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitor')
+        $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->getMock();
         $visitor->expects($this->once())
             ->method('visitProperty');
 
-        $property = $this->getMockBuilder('PDepend\\Source\\AST\\ASTProperty')
+        $property = $this->getMockBuilder(ASTProperty::class)
             ->onlyMethods(['__construct'])
             ->disableOriginalConstructor()
             ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTProperty')

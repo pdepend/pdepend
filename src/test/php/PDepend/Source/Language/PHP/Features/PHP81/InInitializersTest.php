@@ -62,7 +62,7 @@ class InInitializersTest extends PHPParserVersion81TestCase
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $children[0]);
+        $this->assertInstanceOf(ASTFormalParameters::class, $children[0]);
 
         /** @var ASTFormalParameters $parametersBag */
         $parametersBag = $children[0];
@@ -73,24 +73,24 @@ class InInitializersTest extends PHPParserVersion81TestCase
 
         $classRef = $parameters[0];
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameter', $classRef);
+        $this->assertInstanceOf(ASTFormalParameter::class, $classRef);
         $this->assertTrue($classRef->isPromoted());
         $this->assertTrue($classRef->isPublic());
 
         /** @var ASTVariableDeclarator $variable */
         $variable = $classRef->getChild(1);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variable);
+        $this->assertInstanceOf(ASTVariableDeclarator::class, $variable);
 
         /** @var ASTValue $defaultValue */
         $defaultValue = $variable->getValue();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $defaultValue);
+        $this->assertInstanceOf(ASTValue::class, $defaultValue);
         $this->assertTrue($defaultValue->isValueAvailable());
 
         /** @var ASTAllocationExpression $expression */
         $expression = $defaultValue->getValue();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAllocationExpression', $expression);
+        $this->assertInstanceOf(ASTAllocationExpression::class, $expression);
         $this->assertSame('Bar', $expression->getChild(0)->getImage());
     }
 
@@ -99,7 +99,7 @@ class InInitializersTest extends PHPParserVersion81TestCase
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $children[0]);
+        $this->assertInstanceOf(ASTFormalParameters::class, $children[0]);
 
         /** @var ASTFormalParameters $parametersBag */
         $parametersBag = $children[0];
@@ -110,50 +110,50 @@ class InInitializersTest extends PHPParserVersion81TestCase
 
         $classRef = $parameters[0];
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameter', $classRef);
+        $this->assertInstanceOf(ASTFormalParameter::class, $classRef);
         $this->assertTrue($classRef->isPromoted());
         $this->assertTrue($classRef->isPublic());
 
         /** @var ASTClassOrInterfaceReference $variable */
         $type = $classRef->getChild(0);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $type);
+        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $type);
         $this->assertSame('Bar', $type->getImage());
 
         /** @var ASTVariableDeclarator $variable */
         $variable = $classRef->getChild(1);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variable);
+        $this->assertInstanceOf(ASTVariableDeclarator::class, $variable);
 
         /** @var ASTValue $defaultValue */
         $defaultValue = $variable->getValue();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $defaultValue);
+        $this->assertInstanceOf(ASTValue::class, $defaultValue);
         $this->assertTrue($defaultValue->isValueAvailable());
 
         /** @var ASTAllocationExpression $expression */
         $expression = $defaultValue->getValue();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAllocationExpression', $expression);
+        $this->assertInstanceOf(ASTAllocationExpression::class, $expression);
         $this->assertSame('Bar', $expression->getChild(0)->getImage());
 
         $str = $parameters[1];
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameter', $str);
+        $this->assertInstanceOf(ASTFormalParameter::class, $str);
         $this->assertTrue($str->isPromoted());
         $this->assertTrue($str->isProtected());
 
         /** @var ASTScalarType $variable */
         $type = $str->getChild(0);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
+        $this->assertInstanceOf(ASTScalarType::class, $type);
         $this->assertSame('string', $type->getImage());
 
         /** @var ASTVariableDeclarator $variable */
         $variable = $str->getChild(1);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variable);
+        $this->assertInstanceOf(ASTVariableDeclarator::class, $variable);
 
         /** @var ASTValue $defaultValue */
         $defaultValue = $variable->getValue();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $defaultValue);
+        $this->assertInstanceOf(ASTValue::class, $defaultValue);
         $this->assertTrue($defaultValue->isValueAvailable());
 
         /** @var ASTAllocationExpression $expression */
@@ -163,24 +163,24 @@ class InInitializersTest extends PHPParserVersion81TestCase
 
         $classRef = $parameters[2];
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameter', $classRef);
+        $this->assertInstanceOf(ASTFormalParameter::class, $classRef);
         $this->assertFalse($classRef->isPromoted());
         $this->assertFalse($classRef->isPublic());
 
         /** @var ASTVariableDeclarator $variable */
         $variable = $classRef->getChild(0);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variable);
+        $this->assertInstanceOf(ASTVariableDeclarator::class, $variable);
 
         /** @var ASTValue $defaultValue */
         $defaultValue = $variable->getValue();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTValue', $defaultValue);
+        $this->assertInstanceOf(ASTValue::class, $defaultValue);
         $this->assertTrue($defaultValue->isValueAvailable());
 
         /** @var ASTAllocationExpression $expression */
         $expression = $defaultValue->getValue();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTAllocationExpression', $expression);
+        $this->assertInstanceOf(ASTAllocationExpression::class, $expression);
         $this->assertSame('Biz', $expression->getChild(0)->getImage());
     }
 }

@@ -40,6 +40,8 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
+use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTEnumCase;
 use PDepend\Source\AST\ASTInterface;
@@ -63,13 +65,13 @@ class EnumTest extends PHPParserVersion81TestCase
             ->getTypes();
 
         $this->assertCount(4, $types);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTInterface', $types[0]);
+        $this->assertInstanceOf(ASTInterface::class, $types[0]);
         $this->assertSame('HasColor', $types[0]->getName());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTEnum', $types[1]);
+        $this->assertInstanceOf(ASTEnum::class, $types[1]);
         $this->assertSame('Suit', $types[1]->getName());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClass', $types[2]);
+        $this->assertInstanceOf(ASTClass::class, $types[2]);
         $this->assertSame('UseEnum', $types[2]->getName());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTEnum', $types[3]);
+        $this->assertInstanceOf(ASTEnum::class, $types[3]);
         $this->assertSame('SpecialCases', $types[3]->getName());
 
         $methods = $types[1]->getMethods();
@@ -91,7 +93,7 @@ class EnumTest extends PHPParserVersion81TestCase
         /** @var ASTEnum $enum */
         $enum = $parameters[0]->getClass();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTEnum', $enum);
+        $this->assertInstanceOf(ASTEnum::class, $enum);
         $this->assertSame('Suit', $enum->getName());
         $this->assertSame('string', $enum->getType()->getImage());
         $this->assertTrue($enum->isBacked());
@@ -123,7 +125,7 @@ class EnumTest extends PHPParserVersion81TestCase
             )
         );
         $cases = $enum->getCases();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArtifactList', $cases);
+        $this->assertInstanceOf(ASTArtifactList::class, $cases);
         $this->assertSame(
             [
                 'HEARTS' => "'hearts'",

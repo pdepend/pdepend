@@ -105,6 +105,6 @@ class ParserBug8927377Test extends AbstractRegressionTestCase
             ->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTPropertyPostfix');
+            ->getFirstChildOfType(ASTPropertyPostfix::class);
     }
 }

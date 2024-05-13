@@ -40,7 +40,13 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
+use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTIdentifier;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethodPostfix;
+use PDepend\Source\AST\ASTReturnStatement;
+use PDepend\Source\AST\ASTTypeCallable;
+use PDepend\Source\AST\ASTVariable;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
@@ -56,24 +62,24 @@ class FirstClassCallableSyntaxTest extends PHPParserVersion81TestCase
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTypeCallable', $children[1]);
+        $this->assertInstanceOf(ASTTypeCallable::class, $children[1]);
         $children = $children[2]->getChildren();
         $this->assertCount(1, $children);
         $return = $children[0];
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTReturnStatement', $return);
+        $this->assertInstanceOf(ASTReturnStatement::class, $return);
         $children = $return->getChildren();
         $this->assertCount(1, $children);
         $prefix = $children[0];
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $prefix);
+        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $prefix);
         $children = $prefix->getChildren();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $children[0]);
+        $this->assertInstanceOf(ASTVariable::class, $children[0]);
         /** @var ASTMethodPostfix $methodPostFix */
         $methodPostFix = $children[1];
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMethodPostfix', $methodPostFix);
+        $this->assertInstanceOf(ASTMethodPostfix::class, $methodPostFix);
         $this->assertSame('getTime', $methodPostFix->getImage());
         $children = $methodPostFix->getChildren();
         $this->assertCount(2, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIdentifier', $children[0]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArguments', $children[1]);
+        $this->assertInstanceOf(ASTIdentifier::class, $children[0]);
+        $this->assertInstanceOf(ASTArguments::class, $children[1]);
     }
 }

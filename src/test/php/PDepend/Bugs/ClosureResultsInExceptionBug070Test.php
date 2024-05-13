@@ -42,6 +42,8 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Source\Parser\UnexpectedTokenException;
+
 /**
  * Test case related to bug 70.
  *
@@ -90,7 +92,7 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
      */
     public function testParserThrowsExceptionForInvalidBoundClosureVariableBug70(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }

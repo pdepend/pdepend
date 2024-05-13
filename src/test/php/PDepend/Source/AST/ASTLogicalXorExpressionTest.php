@@ -100,7 +100,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTLogicalXorExpression'
+            ASTLogicalXorExpression::class
         );
     }
 }

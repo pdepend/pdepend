@@ -42,6 +42,7 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTArguments;
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTFunctionPostfix;
@@ -50,6 +51,7 @@ use PDepend\Source\AST\ASTInstanceOfExpression;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\Builder\Builder;
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 
@@ -67,7 +69,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     public function testArrowFunctions(): void
     {
         $this->expectException(
-            'PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: fn, line: 4, col: 22, file:'
@@ -79,7 +81,7 @@ class PHPParserVersion73Test extends AbstractTestCase
     public function testHereDocAndNowDoc(): void
     {
         /** @var ASTHeredoc $heredoc */
-        $heredoc = $this->getFirstNodeOfTypeInFunction('', 'PDepend\\Source\\AST\\ASTArray');
+        $heredoc = $this->getFirstNodeOfTypeInFunction('', ASTArray::class);
         $arrayElements = $heredoc->getChildren();
         $children = $arrayElements[0]->getChildren();
         $children = $children[0]->getChildren();
@@ -149,9 +151,9 @@ class PHPParserVersion73Test extends AbstractTestCase
         $variables = $instanceOf->getChildren();
 
         $this->assertCount(2, $expression);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literal);
+        $this->assertInstanceOf(ASTLiteral::class, $literal);
         $this->assertSame('false', $literal->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $variables[0]);
+        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $variables[0]);
         $this->assertSame('DateTimeInterface', $variables[0]->getImage());
     }
 
@@ -163,18 +165,18 @@ class PHPParserVersion73Test extends AbstractTestCase
         $calls = $statements[0]->getChildren();
 
         $this->assertCount(1, $calls);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $calls[0]);
+        $this->assertInstanceOf(ASTFunctionPostfix::class, $calls[0]);
 
         $children = $calls[0]->getChildren();
         /** @var ASTArguments $arguments */
         $arguments = $children[1];
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArguments', $arguments);
+        $this->assertInstanceOf(ASTArguments::class, $arguments);
 
         $arguments = $arguments->getChildren();
 
         $this->assertCount(1, $arguments);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $arguments[0]);
+        $this->assertInstanceOf(ASTVariable::class, $arguments[0]);
         $this->assertSame('$i', $arguments[0]->getImage());
     }
 

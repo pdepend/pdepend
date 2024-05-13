@@ -63,7 +63,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     public function testUnaryExpression()
     {
         $expr = $this->getFirstUnaryExpressionInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $expr);
+        $this->assertInstanceOf(ASTUnaryExpression::class, $expr);
 
         return $expr;
     }
@@ -122,7 +122,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     public function testUnaryExpressionNot()
     {
         $expr = $this->getFirstUnaryExpressionInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $expr);
+        $this->assertInstanceOf(ASTUnaryExpression::class, $expr);
 
         return $expr;
     }
@@ -165,7 +165,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     public function testUnaryExpressionSuppressWarning()
     {
         $expr = $this->getFirstUnaryExpressionInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $expr);
+        $this->assertInstanceOf(ASTUnaryExpression::class, $expr);
 
         return $expr;
     }
@@ -211,7 +211,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTUnaryExpression'
+            ASTUnaryExpression::class
         );
     }
 }

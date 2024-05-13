@@ -45,6 +45,7 @@ use PDepend\Source\AST\ASTIntersectionType;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTVariableDeclarator;
+use PDepend\Source\Parser\ParserException;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
@@ -61,15 +62,15 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTFormalParameter $parameter */
-        $parameter = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
+        $parameter = $method->getFirstChildOfType(ASTFormalParameter::class);
         $children = $parameter->getChildren();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[0]);
+        $this->assertInstanceOf(ASTIntersectionType::class, $children[0]);
         /** @var ASTIntersectionType $intersectionType */
         $intersectionType = $children[0];
         $this->assertSame('Iterator&\Countable&\ArrayAccess', $intersectionType->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $children[1]);
+        $this->assertInstanceOf(ASTVariableDeclarator::class, $children[1]);
         /** @var ASTVariableDeclarator $variable */
         $variable = $children[1];
         $this->assertSame('$iterator', $variable->getImage());
@@ -80,10 +81,10 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTFormalParameter $parameter */
-        $parameter = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
+        $parameter = $method->getFirstChildOfType(ASTFormalParameter::class);
         $children = $parameter->getChildren();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $children[0]);
+        $this->assertInstanceOf(ASTIntersectionType::class, $children[0]);
         /** @var ASTIntersectionType $intersectionType */
         $intersectionType = $children[0];
         $this->assertSame('Iterator&\Countable&\ArrayAccess', $intersectionType->getImage());
@@ -95,16 +96,16 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTType $return */
         $return = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTType'
+            ASTType::class
         );
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIntersectionType', $return);
+        $this->assertInstanceOf(ASTIntersectionType::class, $return);
         $this->assertSame('Iterator&\Countable&\ArrayAccess', $return->getImage());
     }
 
     public function testIntersectionTypesCantBeMixedWithUnionTypes(): void
     {
-        $this->expectException(\PDepend\Source\Parser\ParserException::class);
+        $this->expectException(ParserException::class);
         $this->expectExceptionMessage('Unexpected token');
 
         $this->getFirstMethodForTestCase();
@@ -112,7 +113,7 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
 
     public function testIntersectionTypesCantBeScalar(): void
     {
-        $this->expectException(\PDepend\Source\Parser\ParserException::class);
+        $this->expectException(ParserException::class);
         $this->expectExceptionMessage('int can not be used in an intersection type');
 
         $this->getFirstMethodForTestCase();

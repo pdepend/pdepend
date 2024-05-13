@@ -102,7 +102,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTLogicalAndExpression'
+            ASTLogicalAndExpression::class
         );
     }
 }

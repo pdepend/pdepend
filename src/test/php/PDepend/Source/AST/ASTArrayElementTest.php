@@ -76,7 +76,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
             [
-                'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)',
+                ASTVariable::class . ' ($foo)',
             ]
         );
     }
@@ -101,7 +101,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
             [
-                'PDepend\\Source\\AST\\ASTVariable' . ' ($foo)',
+                ASTVariable::class . ' ($foo)',
             ]
         );
     }
@@ -127,8 +127,8 @@ class ASTArrayElementTest extends ASTNodeTestCase
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
             [
-                'PDepend\\Source\\AST\\ASTVariable' . ' ($key)',
-                'PDepend\\Source\\AST\\ASTVariable' . ' ($value)',
+                ASTVariable::class . ' ($key)',
+                ASTVariable::class . ' ($value)',
             ]
         );
     }
@@ -154,8 +154,8 @@ class ASTArrayElementTest extends ASTNodeTestCase
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
             [
-                'PDepend\\Source\\AST\\ASTVariable' . ' ($key)',
-                'PDepend\\Source\\AST\\ASTVariable' . ' ($value)',
+                ASTVariable::class . ' ($key)',
+                ASTVariable::class . ' ($value)',
             ]
         );
     }
@@ -200,21 +200,21 @@ class ASTArrayElementTest extends ASTNodeTestCase
         $this->assertGraph(
             $this->getFirstArrayElementInFunction(),
             [
-                'PDepend\\Source\\AST\\ASTLiteral' . ' ("bar")',
-                'PDepend\\Source\\AST\\ASTArray' . ' ()', [
-                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
-                        'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', [
-                            'PDepend\\Source\\AST\\ASTClassReference' . ' (Object)']],
-                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
-                        'PDepend\\Source\\AST\\ASTLiteral' . ' (23)',
-                        'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', [
-                            'PDepend\\Source\\AST\\ASTClassReference' . ' (Object)']],
-                    'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
-                        'PDepend\\Source\\AST\\ASTArray' . ' ()', [
-                            'PDepend\\Source\\AST\\ASTArrayElement' . ' ()', [
-                                'PDepend\\Source\\AST\\ASTLiteral' . ' ("foo")',
-                                'PDepend\\Source\\AST\\ASTAllocationExpression' . ' (new)', [
-                                    'PDepend\\Source\\AST\\ASTClassReference' . ' (Object)']]]],
+                ASTLiteral::class . ' ("bar")',
+                ASTArray::class . ' ()', [
+                    ASTArrayElement::class . ' ()', [
+                        ASTAllocationExpression::class . ' (new)', [
+                            ASTClassReference::class . ' (Object)']],
+                    ASTArrayElement::class . ' ()', [
+                        ASTLiteral::class . ' (23)',
+                        ASTAllocationExpression::class . ' (new)', [
+                            ASTClassReference::class . ' (Object)']],
+                    ASTArrayElement::class . ' ()', [
+                        ASTArray::class . ' ()', [
+                            ASTArrayElement::class . ' ()', [
+                                ASTLiteral::class . ' ("foo")',
+                                ASTAllocationExpression::class . ' (new)', [
+                                    ASTClassReference::class . ' (Object)']]]],
                 ],
             ]
         );
@@ -301,7 +301,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTArrayElement'
+            ASTArrayElement::class
         );
     }
 }

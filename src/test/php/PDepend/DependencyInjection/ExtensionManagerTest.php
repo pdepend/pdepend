@@ -43,6 +43,7 @@
 namespace PDepend\DependencyInjection;
 
 use PDepend\AbstractTestCase;
+use PDepend\TestExtension;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -82,7 +83,7 @@ class ExtensionManagerTest extends AbstractTestCase
         $message = null;
 
         try {
-            $extensionManager->activateExtension('PDepend\\DependencyInjection\\ExtensionManager');
+            $extensionManager->activateExtension(ExtensionManager::class);
         } catch (RuntimeException $exception) {
             $message = $exception->getMessage();
         }
@@ -93,14 +94,14 @@ class ExtensionManagerTest extends AbstractTestCase
         );
         $this->assertSame([], $extensionManager->getActivatedExtensions());
 
-        $extensionManager->activateExtension('PDepend\\TestExtension');
+        $extensionManager->activateExtension(TestExtension::class);
         $extensions = $extensionManager->getActivatedExtensions();
 
         $this->assertSame(['test'], array_keys($extensions));
 
         $extension = $extensions['test'];
 
-        $this->assertInstanceOf('PDepend\\TestExtension', $extension);
+        $this->assertInstanceOf(TestExtension::class, $extension);
         $this->assertSame([], $extension->getCompilerPasses());
 
         $container = new ContainerBuilder();

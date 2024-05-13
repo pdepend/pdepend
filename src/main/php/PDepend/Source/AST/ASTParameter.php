@@ -101,7 +101,7 @@ class ASTParameter extends AbstractASTArtifact
     {
         $this->formalParameter = $formalParameter;
         $this->variableDeclarator = $formalParameter->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTVariableDeclarator',
+            ASTVariableDeclarator::class,
         );
 
         $this->id = spl_object_hash($this);
@@ -253,7 +253,7 @@ class ASTParameter extends AbstractASTArtifact
     public function getClass()
     {
         $classReference = $this->formalParameter->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTClassOrInterfaceReference',
+            ASTClassOrInterfaceReference::class,
         );
         if ($classReference === null) {
             return null;

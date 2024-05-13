@@ -42,7 +42,10 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
+use PDepend\Source\Parser\InvalidStateException;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStaticReference} class.
@@ -62,10 +65,10 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     public function testGetTypeReturnsInjectedConstructorTargetArgument(): void
     {
         $target = $this->getAbstractClassMock(
-            '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
+            AbstractASTClassOrInterface::class,
             [__CLASS__]
         );
-        $context = $this->getMockBuilder('\\PDepend\\Source\\Builder\\BuilderContext')
+        $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
 
         $reference = new ASTStaticReference($context, $target);
@@ -78,11 +81,11 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull(): void
     {
         $target = $this->getAbstractClassMock(
-            '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
+            AbstractASTClassOrInterface::class,
             [__CLASS__]
         );
 
-        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+        $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
         $builder->expects($this->once())
             ->method('getClassOrInterface');
@@ -100,7 +103,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     public function testStaticReferenceAllocationOutsideOfClassScopeThrowsExpectedException(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException'
+            InvalidStateException::class
         );
         $this->expectExceptionMessage(
             'The keyword "static" was used outside of a class/method scope.'
@@ -115,7 +118,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\InvalidStateException'
+            InvalidStateException::class
         );
         $this->expectExceptionMessage(
             'The keyword "static" was used outside of a class/method scope.'
@@ -162,7 +165,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     public function testStaticReference()
     {
         $reference = $this->getFirstStaticReferenceInClass();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTStaticReference', $reference);
+        $this->assertInstanceOf(ASTStaticReference::class, $reference);
 
         return $reference;
     }
@@ -222,13 +225,13 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      */
     protected function createNodeInstance()
     {
-        $context = $this->getMockBuilder('\\PDepend\\Source\\Builder\\BuilderContext')
+        $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
 
         return new ASTStaticReference(
             $context,
             $this->getAbstractClassMock(
-                '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
+                AbstractASTClassOrInterface::class,
                 [__CLASS__]
             )
         );
@@ -243,7 +246,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTStaticReference'
+            ASTStaticReference::class
         );
     }
 }

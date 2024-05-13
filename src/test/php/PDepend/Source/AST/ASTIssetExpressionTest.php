@@ -62,7 +62,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
     public function testIssetExpressionGraphWithMultipleVariables(): void
     {
         $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
-        $vars = $expr->findChildrenOfType('PDepend\\Source\\AST\\ASTVariable');
+        $vars = $expr->findChildrenOfType(ASTVariable::class);
         $this->assertCount(3, $vars);
     }
 
@@ -72,7 +72,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
     public function testIssetExpressionGraphWithStaticProperty(): void
     {
         $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
-        $vars = $expr->findChildrenOfType('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix');
+        $vars = $expr->findChildrenOfType(ASTMemberPrimaryPrefix::class);
         $this->assertCount(1, $vars);
     }
 
@@ -82,7 +82,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
     public function testIssetExpressionGraphWithArrayProperty(): void
     {
         $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
-        $vars = $expr->findChildrenOfType('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix');
+        $vars = $expr->findChildrenOfType(ASTMemberPrimaryPrefix::class);
         $this->assertCount(1, $vars);
     }
 
@@ -132,7 +132,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTIssetExpression'
+            ASTIssetExpression::class
         );
     }
 }

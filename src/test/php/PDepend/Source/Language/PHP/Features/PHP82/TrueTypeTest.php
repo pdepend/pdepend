@@ -45,6 +45,7 @@ use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTScalarType;
+use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
@@ -76,7 +77,7 @@ class TrueTypeTest extends PHPParserVersion82TestCase
             ['true', '$truthy'],
         ] as $index => $expected) {
             [$expectedType, $expectedVariable] = $expected;
-            $expectedTypeClass = $expected[2] ?? 'PDepend\\Source\\AST\\ASTScalarType';
+            $expectedTypeClass = $expected[2] ?? ASTScalarType::class;
             [$type, $variable] = $declarations[$index];
 
             $this->assertInstanceOf(
@@ -86,7 +87,7 @@ class TrueTypeTest extends PHPParserVersion82TestCase
             );
             $this->assertSame(ltrim($expectedType, '?'), $type->getImage());
             $this->assertInstanceOf(
-                'PDepend\\Source\\AST\\ASTVariableDeclarator',
+                ASTVariableDeclarator::class,
                 $variable,
                 "Wrong variable for $expectedType $expectedVariable"
             );
@@ -102,7 +103,7 @@ class TrueTypeTest extends PHPParserVersion82TestCase
         /** @var ASTScalarType $truthy */
         $truthy = $methods[0]->getReturnType();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $truthy);
+        $this->assertInstanceOf(ASTScalarType::class, $truthy);
         $this->assertSame('true', $truthy->getImage());
         $this->assertTrue($truthy->isTrue());
     }
@@ -118,7 +119,7 @@ class TrueTypeTest extends PHPParserVersion82TestCase
 
         $truthy = $truthy->getFormalParameter()->getType();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $truthy);
+        $this->assertInstanceOf(ASTScalarType::class, $truthy);
         $this->assertSame('true', $truthy->getImage());
         $this->assertSame(3, $truthy->getStartLine());
         $this->assertSame(29, $truthy->getStartColumn());

@@ -52,6 +52,8 @@ use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTInvocation;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTProperty;
@@ -403,12 +405,12 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      */
     private function countCalls(AbstractASTCallable $callable): void
     {
-        $invocations = $callable->findChildrenOfType('PDepend\\Source\\AST\\ASTInvocation');
+        $invocations = $callable->findChildrenOfType(ASTInvocation::class);
 
         $invoked = [];
 
         foreach ($invocations as $invocation) {
-            $parents = $invocation->getParentsOfType('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix');
+            $parents = $invocation->getParentsOfType(ASTMemberPrimaryPrefix::class);
 
             $image = '';
             foreach ($parents as $parent) {

@@ -42,6 +42,8 @@
 
 namespace PDepend\Issues;
 
+use PDepend\Source\Parser\UnexpectedTokenException;
+
 /**
  * Test case for ticket 002, PHP 5.3 namespace support.
  *
@@ -106,7 +108,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     public function testParserThrowsExpectedExceptionWhenUseDeclarationContextEndsOnBackslash(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: as, line: 2, col: 19, file: '
@@ -162,7 +164,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     public function testParserThrowsExpectedExceptionForNamespaceDeclarationWithoutIdentifierAndSemicolonSyntax(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: ;, line: 2, col: 18, file: '
@@ -178,7 +180,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     public function testParserThrowsExpectedExceptionForLeadingBackslashInIdentifier(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: {, line: 2, col: 13, file: '

@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Parser\UnexpectedTokenException;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTryStatement} class.
  *
@@ -63,7 +65,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
     public function testTryStatement()
     {
         $stmt = $this->getFirstTryStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTryStatement', $stmt);
+        $this->assertInstanceOf(ASTTryStatement::class, $stmt);
 
         return $stmt;
     }
@@ -125,7 +127,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
      */
     public function testFirstChildOfTryStatementIsInstanceOfScopeStatement($stmt): void
     {
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(0));
+        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(0));
     }
 
     /**
@@ -137,7 +139,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
      */
     public function testSecondChildOfTryStatementIsInstanceOfCatchStatement($stmt): void
     {
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCatchStatement', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTCatchStatement::class, $stmt->getChild(1));
     }
 
     /**
@@ -151,11 +153,11 @@ class ASTTryStatementTest extends ASTNodeTestCase
         }
 
         $expected = [
-            'PDepend\\Source\\AST\\ASTScopeStatement',
-            'PDepend\\Source\\AST\\ASTCatchStatement',
-            'PDepend\\Source\\AST\\ASTCatchStatement',
-            'PDepend\\Source\\AST\\ASTCatchStatement',
-            'PDepend\\Source\\AST\\ASTCatchStatement',
+            ASTScopeStatement::class,
+            ASTCatchStatement::class,
+            ASTCatchStatement::class,
+            ASTCatchStatement::class,
+            ASTCatchStatement::class,
         ];
 
         $this->assertEquals($expected, $actual);
@@ -166,7 +168,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
      */
     public function testParserThrowsExceptionWhenNoCatchStatementFollows(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->getFirstTryStatementInFunction();
     }
@@ -180,7 +182,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTTryStatement'
+            ASTTryStatement::class
         );
     }
 }

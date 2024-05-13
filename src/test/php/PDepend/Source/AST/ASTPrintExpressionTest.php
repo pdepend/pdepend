@@ -60,7 +60,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
     public function testSimplePrintExpression()
     {
         $print = $this->getFirstPrintInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTPrintExpression', $print);
+        $this->assertInstanceOf(ASTPrintExpression::class, $print);
 
         return $print;
     }
@@ -103,6 +103,6 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
     private function getFirstPrintInFunction()
     {
         return $this->getFirstFunctionForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTPrintExpression');
+            ->getFirstChildOfType(ASTPrintExpression::class);
     }
 }

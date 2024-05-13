@@ -42,6 +42,9 @@
 
 namespace PDepend\Issues;
 
+use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTType;
+
 /**
  * Test case for issue #84, where the object model should keep information about
  * primitive property and parameter types.
@@ -67,8 +70,8 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
             ->current()
             ->getClasses()
             ->current()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
+            ->getFirstChildOfType(ASTFieldDeclaration::class)
+            ->getFirstChildOfType(ASTType::class);
 
         $this->assertEquals($expected, $type->getImage());
     }
@@ -79,8 +82,8 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
     public function testParserSetsExpectedArrayPropertyType(): void
     {
         $type = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
+            ->getFirstChildOfType(ASTFieldDeclaration::class)
+            ->getFirstChildOfType(ASTType::class);
 
         $this->assertTrue($type->isArray());
     }
@@ -91,8 +94,8 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
     public function testParserSetsExpectedArrayWithParenthesisPropertyType(): void
     {
         $type = $this->getFirstClassForTestCase()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTType');
+            ->getFirstChildOfType(ASTFieldDeclaration::class)
+            ->getFirstChildOfType(ASTType::class);
 
         $this->assertTrue($type->isArray());
     }

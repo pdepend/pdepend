@@ -80,14 +80,14 @@ class IdBuilderTest extends AbstractTestCase
     {
         $builder = new IdBuilder();
 
-        $unitStub0 = $this->getMockBuilder('\PDepend\Source\AST\ASTCompilationUnit')
+        $unitStub0 = $this->getMockBuilder(ASTCompilationUnit::class)
                 ->disableOriginalConstructor()
                 ->getMock();
         $unitStub0->method('getFileName')
                 ->willReturn(__FILE__);
         $identifier0 = $builder->forFile($unitStub0);
 
-        $unitStub1 = $this->getMockBuilder('\PDepend\Source\AST\ASTCompilationUnit')
+        $unitStub1 = $this->getMockBuilder(ASTCompilationUnit::class)
                 ->disableOriginalConstructor()
                 ->getMock();
         $unitStub1->method('getFileName')

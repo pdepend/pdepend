@@ -143,7 +143,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testTraitAdaptationAlias()
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitAdaptationAlias', $alias);
+        $this->assertInstanceOf(ASTTraitAdaptationAlias::class, $alias);
 
         return $alias;
     }
@@ -205,7 +205,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTTraitAdaptationAlias'
+            ASTTraitAdaptationAlias::class
         );
     }
 
@@ -218,7 +218,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testTraitReference()
     {
         $reference = $this->getFirstTraitReferenceInClass();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTTraitReference', $reference);
+        $this->assertInstanceOf(ASTTraitReference::class, $reference);
 
         return $reference;
     }
@@ -279,6 +279,6 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     private function getFirstTraitReferenceInClass()
     {
         return $this->getFirstTraitAdaptationAliasInClass()
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTTraitReference');
+            ->getFirstChildOfType(ASTTraitReference::class);
     }
 }

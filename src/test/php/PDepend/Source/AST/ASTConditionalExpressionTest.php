@@ -100,7 +100,7 @@ class ASTConditionalExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTConditionalExpression'
+            ASTConditionalExpression::class
         );
     }
 }

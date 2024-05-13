@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use OutOfBoundsException;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFormalParameter} class.
  *
@@ -85,7 +87,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
         $parameter = new ASTFormalParameter();
         $parameter->addChild(new ASTVariableDeclarator());
 
-        $this->expectException('\\OutOfBoundsException');
+        $this->expectException(OutOfBoundsException::class);
 
         $parameter->getType();
     }
@@ -202,7 +204,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testFormalParameterWithArrayTypeHint(): void
     {
         $this->assertInstanceOf(
-            'PDepend\\Source\\AST\\ASTTypeArray',
+            ASTTypeArray::class,
             $this->getFirstFormalParameterInFunction()->getChild(0)
         );
     }
@@ -271,7 +273,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTFormalParameter'
+            ASTFormalParameter::class
         );
     }
 }

@@ -63,7 +63,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     public function testReturnStatement()
     {
         $stmt = $this->getFirstReturnStatementInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTReturnStatement', $stmt);
+        $this->assertInstanceOf(ASTReturnStatement::class, $stmt);
 
         return $stmt;
     }
@@ -143,7 +143,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTReturnStatement'
+            ASTReturnStatement::class
         );
     }
 }

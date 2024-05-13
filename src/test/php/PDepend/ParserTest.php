@@ -43,13 +43,28 @@
 namespace PDepend;
 
 use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTForeachStatement;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTParentReference;
+use PDepend\Source\AST\ASTString;
+use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\State;
+use PDepend\Source\Builder\Builder;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
+use PDepend\Source\Parser\MissingValueException;
+use PDepend\Source\Parser\TokenStreamEndException;
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use RuntimeException;
 
 /**
  * Test case implementation for the PDepend code parser.
@@ -89,7 +104,7 @@ class ParserTest extends AbstractTestCase
             'pkg1' => true,
             'pkg2' => true,
             'pkg3' => true,
-            Source\Builder\Builder::DEFAULT_NAMESPACE => true,
+            Builder::DEFAULT_NAMESPACE => true,
         ];
 
         $tmp = $this->parseCodeResourceForTest();
@@ -131,7 +146,7 @@ class ParserTest extends AbstractTestCase
     {
         $sourceFile = $this->createCodeResourceUriForTest();
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\TokenStreamEndException'
+            TokenStreamEndException::class
         );
         $this->expectExceptionMessage(
             "Unexpected end of token stream in file: {$sourceFile}."
@@ -147,7 +162,7 @@ class ParserTest extends AbstractTestCase
     public function testParserWithUnclosedFunctionFail(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\TokenStreamEndException'
+            TokenStreamEndException::class
         );
         $this->expectExceptionMessage(
             'Unexpected end of token stream in file: '
@@ -163,7 +178,7 @@ class ParserTest extends AbstractTestCase
     public function testParserWithInvalidFunction1Fail(): void
     {
         $this->expectException(
-            '\\RuntimeException'
+            RuntimeException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: (, line: 3, col: 23, file: '
@@ -179,7 +194,7 @@ class ParserTest extends AbstractTestCase
     public function testParserWithInvalidFunction2Fail(): void
     {
         $this->expectException(
-            '\\RuntimeException'
+            RuntimeException::class
         );
         $this->expectExceptionMessage(
             "Unexpected token: Bar, line: 3, col: 18, file: "
@@ -484,7 +499,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser sets the correct function return type.
      *
-     * @return \PDepend\Source\AST\ASTFunction[]
+     * @return ASTFunction[]
      */
     public function testParserSetsCorrectFunctionReturnType()
     {
@@ -497,7 +512,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTFunction[] $functions
+     * @param ASTFunction[] $functions
      *
      * @depends testParserSetsCorrectFunctionReturnType
      */
@@ -516,7 +531,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTFunction[] $functions
+     * @param ASTFunction[] $functions
      *
      * @depends testParserSetsCorrectFunctionReturnType
      */
@@ -535,7 +550,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTFunction[] $functions
+     * @param ASTFunction[] $functions
      *
      * @depends testParserSetsCorrectFunctionReturnType
      */
@@ -906,7 +921,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser supports sub packages.
      *
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     public function testParserSetsFileLevelFunctionPackage()
     {
@@ -918,7 +933,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
@@ -929,7 +944,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
@@ -940,7 +955,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
@@ -952,7 +967,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
@@ -964,7 +979,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param \PDepend\Source\AST\ASTNamespace[] $namespaces
+     * @param ASTNamespace[] $namespaces
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
@@ -1052,7 +1067,7 @@ class ParserTest extends AbstractTestCase
             ->getMethods()
             ->current();
 
-        $foreach = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTForeachStatement');
+        $foreach = $method->getFirstChildOfType(ASTForeachStatement::class);
         $this->assertNotNull($foreach);
     }
 
@@ -1063,7 +1078,7 @@ class ParserTest extends AbstractTestCase
     public function testParserThrowsUnexpectedTokenExceptionForBrokenParameterArrayDefaultValue(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: {, line: 2, col: 29, file: '
@@ -1079,7 +1094,7 @@ class ParserTest extends AbstractTestCase
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInParameterDefaultValue(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: &, line: 2, col: 27, file: '
@@ -1095,7 +1110,7 @@ class ParserTest extends AbstractTestCase
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInClassBody(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: ;, line: 4, col: 5, file: '
@@ -1111,7 +1126,7 @@ class ParserTest extends AbstractTestCase
     public function testParserThrowsUnexpectedTokenExceptionForInvalidTokenInMethodDeclaration(): void
     {
         $this->expectException(
-            '\\PDepend\\Source\\Parser\\UnexpectedTokenException'
+            UnexpectedTokenException::class
         );
         $this->expectExceptionMessage(
             'Unexpected token: &, line: 4, col: 12, file: '
@@ -1129,7 +1144,7 @@ class ParserTest extends AbstractTestCase
         $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
 
         $this->assertTrue($parameters[0]->isDefaultValueAvailable());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTParentReference', $parameters[0]->getDefaultValue());
+        $this->assertInstanceOf(ASTParentReference::class, $parameters[0]->getDefaultValue());
         $this->assertSame('parent', $parameters[0]->getDefaultValue()->getImage());
     }
 
@@ -1217,7 +1232,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserThrowsExpectedExceptionWhenDefaultStaticDefaultValueNotExists(): void
     {
-        $this->expectException(Source\Parser\MissingValueException::class);
+        $this->expectException(MissingValueException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -1240,7 +1255,7 @@ class ParserTest extends AbstractTestCase
             ->getFunctions()
             ->current();
 
-        $string = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
+        $string = $function->getFirstChildOfType(ASTString::class);
         $image = $string->getChild(0)->getImage();
 
         $this->assertEquals('\$foobar', $image);
@@ -1256,7 +1271,7 @@ class ParserTest extends AbstractTestCase
             ->getFunctions()
             ->current();
 
-        $string = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
+        $string = $function->getFirstChildOfType(ASTString::class);
         $image = $string->getChild(0)->getImage();
 
         $this->assertEquals('\\\\\"', $image);
@@ -1272,10 +1287,10 @@ class ParserTest extends AbstractTestCase
             ->getFunctions()
             ->current();
 
-        $string = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
+        $string = $function->getFirstChildOfType(ASTString::class);
         $variable = $string->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $variable);
+        $this->assertInstanceOf(ASTVariable::class, $variable);
     }
 
     /**
@@ -1288,10 +1303,10 @@ class ParserTest extends AbstractTestCase
             ->getFunctions()
             ->current();
 
-        $string = $function->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
+        $string = $function->getFirstChildOfType(ASTString::class);
         $variable = $string->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $variable);
+        $this->assertInstanceOf(ASTVariable::class, $variable);
     }
 
     /**
@@ -1306,8 +1321,8 @@ class ParserTest extends AbstractTestCase
             ->getMethods()
             ->current();
 
-        $string = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTString');
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $string->getChild(1));
+        $string = $method->getFirstChildOfType(ASTString::class);
+        $this->assertInstanceOf(ASTLiteral::class, $string->getChild(1));
     }
 
     /**
@@ -1315,7 +1330,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserStopsProcessingWhenCacheContainsValidResult(): void
     {
-        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+        $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
 
         $tokenizer = new PHPTokenizerInternal();
@@ -1397,7 +1412,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParseExpressionUntilThrowsExceptionForUnclosedStatement(): void
     {
-        $this->expectException(Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -1421,7 +1436,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Returns an interface instance from the mixed code test file.
      *
-     * @return Source\AST\ASTInterface
+     * @return ASTInterface
      */
     protected function getInterfaceForTest()
     {
@@ -1433,7 +1448,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Returns the methods of an interface from the mixed code test file.
      *
-     * @return \PDepend\Source\AST\ASTMethod[]
+     * @return ASTMethod[]
      */
     protected function getInterfaceMethodsForTest()
     {
@@ -1448,7 +1463,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Returns a class instance from the mixed code test file.
      *
-     * @return Source\AST\ASTClass
+     * @return ASTClass
      */
     protected function getClassForTest()
     {
@@ -1459,7 +1474,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Returns the methods of a class from the mixed code test file.
      *
-     * @return \PDepend\Source\AST\ASTMethod[]
+     * @return ASTMethod[]
      */
     protected function getClassMethodsForTest()
     {

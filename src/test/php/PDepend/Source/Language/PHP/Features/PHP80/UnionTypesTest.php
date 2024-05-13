@@ -45,6 +45,7 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTVariableDeclarator;
+use PDepend\Source\Parser\ParserException;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
@@ -62,16 +63,16 @@ class UnionTypesTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTFormalParameter $parameter */
         $parameter = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTFormalParameter'
+            ASTFormalParameter::class
         );
         $children = $parameter->getChildren();
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $children[0]);
+        $this->assertInstanceOf(ASTUnionType::class, $children[0]);
         /** @var ASTUnionType $unionType */
         $unionType = $children[0];
         $this->assertSame('array|int|float|Bar\Biz|null', $unionType->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $children[1]);
+        $this->assertInstanceOf(ASTVariableDeclarator::class, $children[1]);
         /** @var ASTVariableDeclarator $variable */
         $variable = $children[1];
         $this->assertSame('$number', $variable->getImage());
@@ -83,10 +84,10 @@ class UnionTypesTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTType $return */
         $return = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTType'
+            ASTType::class
         );
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $return);
+        $this->assertInstanceOf(ASTUnionType::class, $return);
         $this->assertSame('int|float|Bar\Biz|null', $return->getImage());
     }
 
@@ -96,16 +97,16 @@ class UnionTypesTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTType $return */
         $return = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTType'
+            ASTType::class
         );
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnionType', $return);
+        $this->assertInstanceOf(ASTUnionType::class, $return);
         $this->assertSame('array|iterable', $return->getImage());
     }
 
     public function testUnionTypesStandaloneNull(): void
     {
-        $this->expectException(\PDepend\Source\Parser\ParserException::class);
+        $this->expectException(ParserException::class);
         $this->expectExceptionMessage('null can not be used as a standalone type');
 
         $this->getFirstMethodForTestCase();

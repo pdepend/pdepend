@@ -107,7 +107,7 @@ class ASTClosureTest extends ASTNodeTestCase
     public function testParserHandlesPureClosureStatementWithoutAssignment(): void
     {
         $closure = $this->getFirstClosureInFunction();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTClosure', $closure);
+        $this->assertInstanceOf(ASTClosure::class, $closure);
     }
 
     /**
@@ -263,7 +263,7 @@ class ASTClosureTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTClosure'
+            ASTClosure::class
         );
     }
 }

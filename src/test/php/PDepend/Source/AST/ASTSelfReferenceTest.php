@@ -42,7 +42,10 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
+use PDepend\Source\Parser\InvalidStateException;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTSelfReference} class.
@@ -62,10 +65,10 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     public function testGetTypeReturnsInjectedConstructorTargetArgument(): void
     {
         $target = $this->getAbstractClassMock(
-            '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
+            AbstractASTClassOrInterface::class,
             [__CLASS__]
         );
-        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+        $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
 
         $reference = new ASTSelfReference($context, $target);
@@ -78,11 +81,11 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull(): void
     {
         $target = $this->getAbstractClassMock(
-            '\\PDepend\\Source\\AST\\AbstractASTClassOrInterface',
+            AbstractASTClassOrInterface::class,
             [__CLASS__]
         );
 
-        $builder = $this->getMockBuilder('\\PDepend\\Source\\Builder\\Builder')
+        $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
         $builder->expects($this->once())
             ->method('getClassOrInterface');
@@ -99,7 +102,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     public function testSelfReferenceAllocationOutsideOfClassScopeThrowsExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+        $this->expectException(InvalidStateException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -109,7 +112,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     public function testSelfReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException(): void
     {
-        $this->expectException(\PDepend\Source\Parser\InvalidStateException::class);
+        $this->expectException(InvalidStateException::class);
 
         $this->parseCodeResourceForTest();
     }
@@ -152,7 +155,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     public function testSelfReference()
     {
         $reference = $this->getFirstSelfReferenceInClass();
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $reference);
+        $this->assertInstanceOf(ASTSelfReference::class, $reference);
 
         return $reference;
     }
@@ -212,12 +215,12 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     protected function createNodeInstance()
     {
-        $context = $this->getMockBuilder('PDepend\\Source\\Builder\\BuilderContext')
+        $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
 
         return new ASTSelfReference(
             $context,
-            $this->getAbstractClassMock('\\PDepend\\Source\\AST\\AbstractASTClassOrInterface', [__CLASS__])
+            $this->getAbstractClassMock(AbstractASTClassOrInterface::class, [__CLASS__])
         );
     }
 
@@ -230,7 +233,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTSelfReference'
+            ASTSelfReference::class
         );
     }
 }

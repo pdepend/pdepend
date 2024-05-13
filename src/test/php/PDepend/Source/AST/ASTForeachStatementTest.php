@@ -42,6 +42,8 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Parser\UnexpectedTokenException;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTForeachStatement} class.
  *
@@ -60,7 +62,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testThirdChildOfForeachStatementIsASTScopeStatement(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(2));
+        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(2));
     }
 
     /**
@@ -105,7 +107,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementContainsExpressionAsFirstChild(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $stmt->getChild(0));
+        $this->assertInstanceOf(ASTExpression::class, $stmt->getChild(0));
     }
 
     /**
@@ -114,7 +116,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithoutKeyAndWithValue(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTVariable::class, $stmt->getChild(1));
     }
 
     /**
@@ -123,7 +125,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithoutKeyAndWithValueByReference(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTUnaryExpression::class, $stmt->getChild(1));
     }
 
     /**
@@ -132,7 +134,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithKeyAndValue(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $stmt->getChild(2));
+        $this->assertInstanceOf(ASTVariable::class, $stmt->getChild(2));
     }
 
     /**
@@ -141,7 +143,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithKeyAndValueByReference(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $stmt->getChild(2));
+        $this->assertInstanceOf(ASTUnaryExpression::class, $stmt->getChild(2));
     }
 
     /**
@@ -150,7 +152,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithObjectPropertyByReference(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTUnaryExpression::class, $stmt->getChild(1));
     }
 
     /**
@@ -159,7 +161,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithKeyAndObjectPropertyByReference(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTUnaryExpression', $stmt->getChild(2));
+        $this->assertInstanceOf(ASTUnaryExpression::class, $stmt->getChild(2));
     }
 
     /**
@@ -168,7 +170,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithObjectPropertyAsKey(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $stmt->getChild(1));
     }
 
     /**
@@ -177,7 +179,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithObjectPropertyAsValue(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $stmt->getChild(1));
     }
 
     /**
@@ -186,7 +188,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithObjectPropertyAsKeyAndValue(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $stmt->getChild(1));
     }
 
     /**
@@ -194,7 +196,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
      */
     public function testForeachStatementThrowsExpectedExceptionForKeyByReference(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
 
         $this->getFirstForeachStatementInFunction(__METHOD__);
     }
@@ -258,7 +260,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithList(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTListExpression::class, $stmt->getChild(1));
     }
 
     /**
@@ -267,7 +269,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithKeyAndList(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $stmt->getChild(2));
+        $this->assertInstanceOf(ASTListExpression::class, $stmt->getChild(2));
     }
 
     /**
@@ -276,7 +278,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithShortList(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $stmt->getChild(1));
+        $this->assertInstanceOf(ASTListExpression::class, $stmt->getChild(1));
     }
 
     /**
@@ -285,7 +287,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     public function testForeachStatementWithKeyAndShortList(): void
     {
         $stmt = $this->getFirstForeachStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTListExpression', $stmt->getChild(2));
+        $this->assertInstanceOf(ASTListExpression::class, $stmt->getChild(2));
     }
 
     /**
@@ -298,7 +300,7 @@ class ASTForeachStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTForeachStatement'
+            ASTForeachStatement::class
         );
     }
 }

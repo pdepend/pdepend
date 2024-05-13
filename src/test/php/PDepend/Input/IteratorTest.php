@@ -111,7 +111,7 @@ class IteratorTest extends AbstractTestCase
      */
     public function testIteratorPassesLocalPathToFilterWhenRootIsPresent(): void
     {
-        $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
+        $filter = $this->getMockBuilder(Filter::class)
             ->getMock();
         $filter->expects($this->once())
             ->method('accept')
@@ -132,7 +132,7 @@ class IteratorTest extends AbstractTestCase
     {
         $files = new ArrayIterator([new SplFileInfo(__FILE__)]);
 
-        $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
+        $filter = $this->getMockBuilder(Filter::class)
             ->getMock();
         $filter->expects($this->once())
             ->method('accept')
@@ -149,7 +149,7 @@ class IteratorTest extends AbstractTestCase
     {
         $files = new ArrayIterator([new SplFileInfo(__FILE__)]);
 
-        $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
+        $filter = $this->getMockBuilder(Filter::class)
             ->getMock();
         $filter->expects($this->once())
             ->method('accept')

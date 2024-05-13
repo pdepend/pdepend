@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\Parser;
 
+use PDepend\Source\AST\ASTClassOrInterfaceReference;
+
 /**
  * Test case for the namespace resolving in the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
@@ -63,7 +65,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
         $method = $this->getFirstClassMethodForTestCase();
 
         $actual = [];
-        foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference') as $reference) {
+        foreach ($method->findChildrenOfType(ASTClassOrInterfaceReference::class) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -88,7 +90,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
         $method = $this->getFirstClassMethodForTestCase();
 
         $actual = [];
-        foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference') as $reference) {
+        foreach ($method->findChildrenOfType(ASTClassOrInterfaceReference::class) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -120,7 +122,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
             ->current();
 
         $actual = [];
-        foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference') as $reference) {
+        foreach ($method->findChildrenOfType(ASTClassOrInterfaceReference::class) as $reference) {
             $actual[] = $reference->getImage();
         }
 
@@ -154,7 +156,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
             ->current();
 
         $actual = [];
-        foreach ($method->findChildrenOfType('PDepend\\Source\\AST\\ASTClassOrInterfaceReference') as $reference) {
+        foreach ($method->findChildrenOfType(ASTClassOrInterfaceReference::class) as $reference) {
             $actual[] = $reference->getImage();
         }
 

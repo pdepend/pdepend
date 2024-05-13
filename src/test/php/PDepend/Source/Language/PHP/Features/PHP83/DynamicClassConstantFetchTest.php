@@ -40,8 +40,12 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP83;
 
+use PDepend\Source\AST\ASTCompoundExpression;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTScope;
+use PDepend\Source\AST\ASTSelfReference;
+use PDepend\Source\AST\ASTVariable;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPBuilder
@@ -61,23 +65,23 @@ class DynamicClassConstantFetchTest extends PHPParserVersion83TestCase
         /** @var ASTScope $scope */
         $scope = $children[2];
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScope', $scope);
+        $this->assertInstanceOf(ASTScope::class, $scope);
 
         /** @var ASTMemberPrimaryPrefix $return */
         $member = $scope->getChild(0)->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix', $member);
+        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $member);
         $children = $member->getChildren();
 
         $this->assertCount(2, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSelfReference', $children[0]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTPropertyPostfix', $children[1]);
+        $this->assertInstanceOf(ASTSelfReference::class, $children[0]);
+        $this->assertInstanceOf(ASTPropertyPostfix::class, $children[1]);
         $children = $children[1]->getChildren();
         $this->assertCount(1, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTCompoundExpression', $children[0]);
+        $this->assertInstanceOf(ASTCompoundExpression::class, $children[0]);
         $children = $children[0]->getChildren();
         $this->assertCount(1, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $children[0]);
+        $this->assertInstanceOf(ASTVariable::class, $children[0]);
         $this->assertSame('$bar', $children[0]->getImage());
     }
 }

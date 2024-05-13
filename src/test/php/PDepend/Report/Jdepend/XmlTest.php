@@ -45,6 +45,7 @@ namespace PDepend\Report\Jdepend;
 use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
+use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\ASTArtifactList;
 
 /**
@@ -112,7 +113,7 @@ class XmlTest extends AbstractTestCase
     public function testThrowsExceptionForInvalidLogTarget(): void
     {
         $this->expectException(
-            '\\PDepend\\Report\\NoLogOutputException'
+            NoLogOutputException::class
         );
         $this->expectExceptionMessage(
             "The log target is not configured for 'PDepend\\Report\\Jdepend\\Xml'."

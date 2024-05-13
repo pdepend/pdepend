@@ -47,8 +47,10 @@ use DOMXPath;
 use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
+use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTNamespace;
 
 /**
  * Test case for the jdepend chart logger.
@@ -106,7 +108,7 @@ class ChartTest extends AbstractTestCase
      */
     public function testThrowsExceptionForInvalidLogTarget(): void
     {
-        $this->expectException(\PDepend\Report\NoLogOutputException::class);
+        $this->expectException(NoLogOutputException::class);
 
         $logger = new Chart();
         $logger->close();
@@ -207,7 +209,7 @@ class ChartTest extends AbstractTestCase
     {
         $nodes = $this->createPackages(true, true);
 
-        $analyzer = $this->getMockBuilder('\\PDepend\\Metrics\\Analyzer\\DependencyAnalyzer')
+        $analyzer = $this->getMockBuilder(DependencyAnalyzer::class)
             ->getMock();
         $analyzer->expects($this->atLeastOnce())
             ->method('getStats')
@@ -302,7 +304,7 @@ class ChartTest extends AbstractTestCase
     }
 
     /**
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     private function createPackages()
     {
@@ -319,11 +321,11 @@ class ChartTest extends AbstractTestCase
     /**
      * @param bool $userDefined
      * @param string $packageName
-     * @return \PDepend\Source\AST\ASTNamespace
+     * @return ASTNamespace
      */
     private function createPackage($userDefined, $packageName)
     {
-        $packageA = $this->getMockBuilder('\\PDepend\\Source\\AST\\ASTNamespace')
+        $packageA = $this->getMockBuilder(ASTNamespace::class)
             ->onlyMethods(['isUserDefined'])
             ->setConstructorArgs([$packageName])
             ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTNamespace')

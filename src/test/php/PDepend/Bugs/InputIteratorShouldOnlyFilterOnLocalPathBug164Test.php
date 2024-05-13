@@ -43,6 +43,7 @@
 namespace PDepend\Bugs;
 
 use ArrayIterator;
+use PDepend\Input\Filter;
 use PDepend\Input\Iterator;
 use SplFileInfo;
 
@@ -62,7 +63,7 @@ class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractRegress
      */
     public function testIteratorOnlyPassesLocalPathToFilter(): void
     {
-        $filter = $this->getMockBuilder('\\PDepend\\Input\\Filter')
+        $filter = $this->getMockBuilder(Filter::class)
             ->getMock();
         $filter->expects($this->once())
             ->method('accept')

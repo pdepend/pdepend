@@ -44,6 +44,9 @@ namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\AbstractASTCallable;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 
 /**
@@ -59,7 +62,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
-     * @var \PDepend\Util\Cache\CacheDriver
+     * @var CacheDriver
      * @since 1.0.0
      */
     private $cache;
@@ -460,7 +463,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * Parses the source code associated with the calling test case and returns
      * the first function found in the test case source file.
      *
-     * @return \PDepend\Source\AST\ASTFunction
+     * @return ASTFunction
      * @since 0.9.12
      */
     private function getFirstFunctionForTestCaseInternal()
@@ -489,7 +492,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * Parses the source code associated with the calling test case and returns
      * the first method found in the test case source file.
      *
-     * @return \PDepend\Source\AST\ASTMethod
+     * @return ASTMethod
      * @since 0.9.12
      */
     private function getFirstMethodForTestCaseInternal()

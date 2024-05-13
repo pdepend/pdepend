@@ -43,6 +43,8 @@
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
 use PDepend\AbstractTestCase;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTNamespace;
 
 /**
  * Test case for the method strategy.
@@ -90,7 +92,7 @@ class MethodStrategyTest extends AbstractTestCase
                     $idMap['PDepend_CodeRank_ClassC'],
                 ],
                 'name' => 'PDepend_CodeRank_ClassA',
-                'type' => 'PDepend\\Source\\AST\\ASTClass',
+                'type' => ASTClass::class,
             ],
             $idMap['PDepend_CodeRank_ClassB'] => [
                 'in' => [
@@ -101,7 +103,7 @@ class MethodStrategyTest extends AbstractTestCase
                     $idMap['PDepend_CodeRank_ClassA'],
                 ],
                 'name' => 'PDepend_CodeRank_ClassB',
-                'type' => 'PDepend\\Source\\AST\\ASTClass',
+                'type' => ASTClass::class,
             ],
             $idMap['PDepend_CodeRank_ClassC'] => [
                 'in' => [
@@ -113,7 +115,7 @@ class MethodStrategyTest extends AbstractTestCase
                     $idMap['PDepend_CodeRank_ClassB'],
                 ],
                 'name' => 'PDepend_CodeRank_ClassC',
-                'type' => 'PDepend\\Source\\AST\\ASTClass',
+                'type' => ASTClass::class,
             ],
             $idMap['PDepend::CodeRankA'] => [
                 'in' => [
@@ -125,7 +127,7 @@ class MethodStrategyTest extends AbstractTestCase
                     $idMap['PDepend::CodeRankB'],
                 ],
                 'name' => 'PDepend::CodeRankA',
-                'type' => 'PDepend\\Source\\AST\\ASTNamespace',
+                'type' => ASTNamespace::class,
             ],
             $idMap['PDepend::CodeRankB'] => [
                 'in' => [
@@ -137,7 +139,7 @@ class MethodStrategyTest extends AbstractTestCase
                     $idMap['PDepend::CodeRankA'],
                 ],
                 'name' => 'PDepend::CodeRankB',
-                'type' => 'PDepend\\Source\\AST\\ASTNamespace',
+                'type' => ASTNamespace::class,
             ],
         ];
 

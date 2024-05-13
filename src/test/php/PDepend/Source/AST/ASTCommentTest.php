@@ -172,7 +172,7 @@ class ASTCommentTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $testCase,
-            'PDepend\\Source\\AST\\ASTComment'
+            ASTComment::class
         );
     }
 }

@@ -243,10 +243,10 @@ class ASTCastExpressionTest extends ASTNodeTestCase
         $this->assertGraphEquals(
             $expr,
             [
-                'PDepend\\Source\\AST\\ASTCastExpression',
-                'PDepend\\Source\\AST\\ASTCastExpression',
-                'PDepend\\Source\\AST\\ASTCastExpression',
-                'PDepend\\Source\\AST\\ASTVariable',
+                ASTCastExpression::class,
+                ASTCastExpression::class,
+                ASTCastExpression::class,
+                ASTVariable::class,
             ]
         );
     }
@@ -297,7 +297,7 @@ class ASTCastExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTCastExpression'
+            ASTCastExpression::class
         );
     }
 }

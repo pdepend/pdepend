@@ -62,7 +62,7 @@ class ASTHeredocTest extends ASTNodeTestCase
     public function testHeredocAsArrayInitializeValue(): void
     {
         $this->assertInstanceOf(
-            'PDepend\\Source\\AST\\ASTLiteral',
+            ASTLiteral::class,
             $this->getFirstHeredocInClass()->getChild(0)
         );
     }
@@ -112,7 +112,7 @@ class ASTHeredocTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTHeredoc'
+            ASTHeredoc::class
         );
     }
 
@@ -125,7 +125,7 @@ class ASTHeredocTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInClass(
             $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTHeredoc'
+            ASTHeredoc::class
         );
     }
 }

@@ -40,6 +40,7 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP82;
 
+use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTCompoundExpression;
 use PDepend\Source\AST\ASTConstantDeclarator;
 use PDepend\Source\AST\ASTConstantDefinition;
@@ -70,7 +71,7 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
         $constants = $enum->getConstants();
 
         $this->assertCount(1, $constants);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArray', $constants['C']);
+        $this->assertInstanceOf(ASTArray::class, $constants['C']);
 
         $elements = $constants['C']->getChildren();
         $this->assertCount(1, $elements);

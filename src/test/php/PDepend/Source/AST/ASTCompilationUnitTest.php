@@ -43,6 +43,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\AbstractTestCase;
+use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Test case for the code file class.
@@ -160,11 +161,11 @@ class ASTCompilationUnitTest extends AbstractTestCase
      */
     public function testAcceptInvokesVisitFileOnGivenVisitor(): void
     {
-        $visitor = $this->getMockBuilder('\\PDepend\\Source\\ASTVisitor\\ASTVisitor')
+        $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->getMock();
         $visitor->expects($this->once())
             ->method('visitCompilationUnit')
-            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTCompilationUnit'));
+            ->with($this->isInstanceOf(ASTCompilationUnit::class));
 
         $file = new ASTCompilationUnit(null);
         $file->accept($visitor);
@@ -213,13 +214,13 @@ class ASTCompilationUnitTest extends AbstractTestCase
      */
     public function testMagicWakeupMethodInvokesSetSourceFileOnChildNodes(): void
     {
-        $node = $this->getMockBuilder('PDepend\\Source\\AST\\ASTClass')
+        $node = $this->getMockBuilder(ASTClass::class)
             ->onlyMethods(['setCompilationUnit'])
             ->setConstructorArgs([__CLASS__])
             ->getMock();
         $node->expects($this->once())
             ->method('setCompilationUnit')
-            ->with($this->isInstanceOf('PDepend\\Source\\AST\\ASTCompilationUnit'));
+            ->with($this->isInstanceOf(ASTCompilationUnit::class));
 
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->addChild($node);

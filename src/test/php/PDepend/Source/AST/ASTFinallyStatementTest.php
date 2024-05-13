@@ -132,7 +132,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     public function testChildOfFinallyStatementIsScopeStatement(): void
     {
         $stmt = $this->getFirstFinallyStatementInFunction(__METHOD__);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScopeStatement', $stmt->getChild(0));
+        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(0));
     }
 
     /**
@@ -145,7 +145,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTFinallyStatement'
+            ASTFinallyStatement::class
         );
     }
 }

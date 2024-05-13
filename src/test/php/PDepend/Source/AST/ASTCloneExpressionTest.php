@@ -100,7 +100,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
     {
         return $this->getFirstNodeOfTypeInFunction(
             $testCase,
-            'PDepend\\Source\\AST\\ASTCloneExpression'
+            ASTCloneExpression::class
         );
     }
 }

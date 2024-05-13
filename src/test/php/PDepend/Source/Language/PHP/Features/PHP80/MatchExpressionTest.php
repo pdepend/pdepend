@@ -40,8 +40,18 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP80;
 
+use PDepend\Source\AST\ASTFunctionPostfix;
+use PDepend\Source\AST\ASTIdentifier;
+use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTMatchArgument;
+use PDepend\Source\AST\ASTMatchBlock;
+use PDepend\Source\AST\ASTMatchEntry;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTReturnStatement;
+use PDepend\Source\AST\ASTSwitchLabel;
+use PDepend\Source\AST\ASTThrowStatement;
+use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\Parser\UnexpectedTokenException;
 
 /**
  * @covers \PDepend\Source\Language\PHP\PHPParserVersion80
@@ -70,72 +80,72 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTReturnStatement[] $returns */
-        $returns = $method->findChildrenOfType('PDepend\\Source\\AST\\ASTReturnStatement');
+        $returns = $method->findChildrenOfType(ASTReturnStatement::class);
         $match = $returns[0]->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $match);
+        $this->assertInstanceOf(ASTFunctionPostfix::class, $match);
         $this->assertSame($matchImage, $match->getImage());
         $this->assertSame('match', $match->getImageWithoutNamespace());
         /**
          * @var array{
-         *     \PDepend\Source\AST\ASTIdentifier,
-         *     \PDepend\Source\AST\ASTMatchArgument,
-         *     \PDepend\Source\AST\ASTMatchBlock,
+         *     ASTIdentifier,
+         *     ASTMatchArgument,
+         *     ASTMatchBlock,
          * } $children
          */
         $children = $match->getChildren();
         $this->assertCount(3, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIdentifier', $children[0]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchArgument', $children[1]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchBlock', $children[2]);
+        $this->assertInstanceOf(ASTIdentifier::class, $children[0]);
+        $this->assertInstanceOf(ASTMatchArgument::class, $children[1]);
+        $this->assertInstanceOf(ASTMatchBlock::class, $children[2]);
         $this->assertSame($matchImage, $children[0]->getImage());
         $this->assertSame('match', $children[0]->getImageWithoutNamespace());
-        /** @var \PDepend\Source\AST\ASTVariable[] $arguments */
+        /** @var ASTVariable[] $arguments */
         $arguments = $children[1]->getChildren();
         $this->assertCount(1, $arguments);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $arguments[0]);
+        $this->assertInstanceOf(ASTVariable::class, $arguments[0]);
         $this->assertSame('$in', $arguments[0]->getImage());
-        /** @var \PDepend\Source\AST\ASTMatchEntry[] $entries */
+        /** @var ASTMatchEntry[] $entries */
         $entries = $children[2]->getChildren();
         $this->assertCount(3, $entries);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchEntry', $entries[0]);
-        /** @var \PDepend\Source\AST\ASTLiteral[] $literals */
+        $this->assertInstanceOf(ASTMatchEntry::class, $entries[0]);
+        /** @var ASTLiteral[] $literals */
         $literals = $entries[0]->getChildren();
         $this->assertCount(2, $literals);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literals[0]);
+        $this->assertInstanceOf(ASTLiteral::class, $literals[0]);
         $this->assertSame("'a'", $literals[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literals[1]);
+        $this->assertInstanceOf(ASTLiteral::class, $literals[1]);
         $this->assertSame("'A'", $literals[1]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchEntry', $entries[1]);
-        /** @var \PDepend\Source\AST\ASTLiteral[] $literals */
+        $this->assertInstanceOf(ASTMatchEntry::class, $entries[1]);
+        /** @var ASTLiteral[] $literals */
         $literals = $entries[1]->getChildren();
         $this->assertCount(2, $literals);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literals[0]);
+        $this->assertInstanceOf(ASTLiteral::class, $literals[0]);
         $this->assertSame("'b'", $literals[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literals[1]);
+        $this->assertInstanceOf(ASTLiteral::class, $literals[1]);
         $this->assertSame("'B'", $literals[1]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchEntry', $entries[2]);
-        /** @var array{\PDepend\Source\AST\ASTSwitchLabel, \PDepend\Source\AST\ASTThrowStatement} $pair */
+        $this->assertInstanceOf(ASTMatchEntry::class, $entries[2]);
+        /** @var array{ASTSwitchLabel, ASTThrowStatement} $pair */
         $pair = $entries[2]->getChildren();
         $this->assertCount(2, $pair);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $pair[0]);
+        $this->assertInstanceOf(ASTSwitchLabel::class, $pair[0]);
         $this->assertSame('default', $pair[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $pair[1]);
+        $this->assertInstanceOf(ASTThrowStatement::class, $pair[1]);
         $this->assertSame('throw', $pair[1]->getImage());
         $this->assertCount(1, $pair[1]->getChildren());
         $new = $pair[1]->getChild(0);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $pair[1]);
+        $this->assertInstanceOf(ASTThrowStatement::class, $pair[1]);
         $this->assertSame('new', $new->getImage());
         $this->assertSame(['\InvalidArgumentException', ''], array_map(
             static fn($node) => $node->getImage(),
             $new->getChildren(),
         ));
         $this->assertSame([
-            ['PDepend\\Source\\AST\\ASTLiteral', 'Invalid code ['],
-            ['PDepend\\Source\\AST\\ASTVariable', '$in'],
-            ['PDepend\\Source\\AST\\ASTLiteral', ']'],
+            [ASTLiteral::class, 'Invalid code ['],
+            [ASTVariable::class, '$in'],
+            [ASTLiteral::class, ']'],
         ], array_map(
             static fn($node) => [$node::class, $node->getImage()],
             $new->getChild(1)->getChild(0)->getChildren(),
@@ -147,72 +157,72 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTReturnStatement[] $returns */
-        $returns = $method->findChildrenOfType('PDepend\\Source\\AST\\ASTReturnStatement');
+        $returns = $method->findChildrenOfType(ASTReturnStatement::class);
         $match = $returns[0]->getChild(0);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $match);
+        $this->assertInstanceOf(ASTFunctionPostfix::class, $match);
         $this->assertSame('match', $match->getImage());
         /**
          * @var array{
-         *     \PDepend\Source\AST\ASTIdentifier,
-         *     \PDepend\Source\AST\ASTMatchArgument,
-         *     \PDepend\Source\AST\ASTMatchBlock,
+         *     ASTIdentifier,
+         *     ASTMatchArgument,
+         *     ASTMatchBlock,
          * } $children
          */
         $children = $match->getChildren();
         $this->assertCount(3, $children);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTIdentifier', $children[0]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchArgument', $children[1]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchBlock', $children[2]);
+        $this->assertInstanceOf(ASTIdentifier::class, $children[0]);
+        $this->assertInstanceOf(ASTMatchArgument::class, $children[1]);
+        $this->assertInstanceOf(ASTMatchBlock::class, $children[2]);
         $this->assertSame('match', $children[0]->getImage());
-        /** @var \PDepend\Source\AST\ASTVariable[] $arguments */
+        /** @var ASTVariable[] $arguments */
         $arguments = $children[1]->getChildren();
         $this->assertCount(1, $arguments);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $arguments[0]);
+        $this->assertInstanceOf(ASTVariable::class, $arguments[0]);
         $this->assertSame('$in', $arguments[0]->getImage());
-        /** @var \PDepend\Source\AST\ASTMatchEntry[] $entries */
+        /** @var ASTMatchEntry[] $entries */
         $entries = $children[2]->getChildren();
         $this->assertCount(3, $entries);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchEntry', $entries[0]);
-        /** @var \PDepend\Source\AST\ASTLiteral[] $literals */
+        $this->assertInstanceOf(ASTMatchEntry::class, $entries[0]);
+        /** @var ASTLiteral[] $literals */
         $literals = $entries[0]->getChildren();
         $this->assertCount(3, $literals);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literals[0]);
+        $this->assertInstanceOf(ASTLiteral::class, $literals[0]);
         $this->assertSame("'a'", $literals[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literals[1]);
+        $this->assertInstanceOf(ASTLiteral::class, $literals[1]);
         $this->assertSame("'b'", $literals[1]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literals[2]);
+        $this->assertInstanceOf(ASTLiteral::class, $literals[2]);
         $this->assertSame("'AB'", $literals[2]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchEntry', $entries[1]);
-        /** @var \PDepend\Source\AST\ASTLiteral[] $literals */
+        $this->assertInstanceOf(ASTMatchEntry::class, $entries[1]);
+        /** @var ASTLiteral[] $literals */
         $literals = $entries[1]->getChildren();
         $this->assertCount(2, $literals);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literals[0]);
+        $this->assertInstanceOf(ASTLiteral::class, $literals[0]);
         $this->assertSame("1", $literals[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literals[1]);
+        $this->assertInstanceOf(ASTLiteral::class, $literals[1]);
         $this->assertSame("'One'", $literals[1]->getImage());
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTMatchEntry', $entries[2]);
-        /** @var array{\PDepend\Source\AST\ASTSwitchLabel, \PDepend\Source\AST\ASTThrowStatement} $pair */
+        $this->assertInstanceOf(ASTMatchEntry::class, $entries[2]);
+        /** @var array{ASTSwitchLabel, ASTThrowStatement} $pair */
         $pair = $entries[2]->getChildren();
         $this->assertCount(2, $pair);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTSwitchLabel', $pair[0]);
+        $this->assertInstanceOf(ASTSwitchLabel::class, $pair[0]);
         $this->assertSame('default', $pair[0]->getImage());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $pair[1]);
+        $this->assertInstanceOf(ASTThrowStatement::class, $pair[1]);
         $this->assertSame('throw', $pair[1]->getImage());
         $this->assertCount(1, $pair[1]->getChildren());
         $new = $pair[1]->getChild(0);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTThrowStatement', $pair[1]);
+        $this->assertInstanceOf(ASTThrowStatement::class, $pair[1]);
         $this->assertSame('new', $new->getImage());
         $this->assertSame(['\InvalidArgumentException', ''], array_map(
             static fn($node) => $node->getImage(),
             $new->getChildren(),
         ));
         $this->assertSame([
-            ['PDepend\\Source\\AST\\ASTLiteral', 'Invalid code ['],
-            ['PDepend\\Source\\AST\\ASTVariable', '$in'],
-            ['PDepend\\Source\\AST\\ASTLiteral', ']'],
+            [ASTLiteral::class, 'Invalid code ['],
+            [ASTVariable::class, '$in'],
+            [ASTLiteral::class, ']'],
         ], array_map(
             static fn($node) => [$node::class, $node->getImage()],
             $new->getChild(1)->getChild(0)->getChildren(),
@@ -221,7 +231,7 @@ class MatchExpressionTest extends PHPParserVersion80TestCase
 
     public function testMatchExpressionWithTooManyArguments(): void
     {
-        $this->expectException(\PDepend\Source\Parser\UnexpectedTokenException::class);
+        $this->expectException(UnexpectedTokenException::class);
         $this->expectExceptionMessage('Unexpected token: ,, line: 5, col: 25');
 
         $this->parseCodeResourceForTest();

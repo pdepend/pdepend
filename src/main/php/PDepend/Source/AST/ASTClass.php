@@ -127,9 +127,9 @@ class ASTClass extends AbstractASTClassOrInterface
         if ($this->properties === null) {
             $this->properties = [];
 
-            $declarations = $this->findChildrenOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
+            $declarations = $this->findChildrenOfType(ASTFieldDeclaration::class);
             foreach ($declarations as $declaration) {
-                $declarators = $declaration->findChildrenOfType('PDepend\\Source\\AST\\ASTVariableDeclarator');
+                $declarators = $declaration->findChildrenOfType(ASTVariableDeclarator::class);
 
                 foreach ($declarators as $declarator) {
                     $property = new ASTProperty($declaration, $declarator);

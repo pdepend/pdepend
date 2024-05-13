@@ -71,9 +71,9 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         /** @var ASTEnum $enum */
         $deserializedEnum = unserialize($serializedClass);
 
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTEnum', $deserializedEnum);
+        $this->assertInstanceOf(ASTEnum::class, $deserializedEnum);
         $this->assertSame('test', $deserializedEnum->getName());
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $deserializedEnum->getType());
+        $this->assertInstanceOf(ASTScalarType::class, $deserializedEnum->getType());
         $this->assertSame('string', $deserializedEnum->getType()->getImage());
     }
 
@@ -100,9 +100,9 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         }
 
         $this->assertSame([
-            'PDepend\Source\AST\ASTEnum' => ['test'],
-            'PDepend\Source\AST\ASTClass' => ['test'],
-            'PDepend\Source\AST\ASTNamespace' => ['+global', '+global'],
+            ASTEnum::class => ['test'],
+            ASTClass::class => ['test'],
+            ASTNamespace::class => ['+global', '+global'],
         ], $nodes);
     }
 

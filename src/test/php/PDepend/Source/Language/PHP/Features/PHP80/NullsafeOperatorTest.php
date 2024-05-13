@@ -41,7 +41,10 @@
 namespace PDepend\Source\Language\PHP\Features\PHP80;
 
 use PDepend\Source\AST\ASTEchoStatement;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
@@ -60,7 +63,7 @@ class NullsafeOperatorTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTVariableDeclarator $variable */
         $variable = $method->getFirstChildOfType(
-            'PDepend\\Source\\AST\\ASTVariableDeclarator'
+            ASTVariableDeclarator::class
         );
 
         $this->assertSame('$obj', $variable->getImage());
@@ -71,14 +74,14 @@ class NullsafeOperatorTest extends PHPParserVersion80TestCase
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
         /** @var ASTEchoStatement $variable */
-        $echo = $method->getFirstChildOfType('PDepend\\Source\\AST\\ASTEchoStatement');
+        $echo = $method->getFirstChildOfType(ASTEchoStatement::class);
         $chain = [];
         $node = $echo;
 
-        while ($node = $node->getFirstChildOfType('PDepend\\Source\\AST\\ASTMemberPrimaryPrefix')) {
-            if ($variable = $node->getFirstChildOfType('PDepend\\Source\\AST\\ASTVariable')) {
+        while ($node = $node->getFirstChildOfType(ASTMemberPrimaryPrefix::class)) {
+            if ($variable = $node->getFirstChildOfType(ASTVariable::class)) {
                 $chain[] = $variable->getImage();
-            } elseif ($property = $node->getFirstChildOfType('PDepend\\Source\\AST\\ASTPropertyPostfix')) {
+            } elseif ($property = $node->getFirstChildOfType(ASTPropertyPostfix::class)) {
                 $chain[] = $property->getImage();
             }
 

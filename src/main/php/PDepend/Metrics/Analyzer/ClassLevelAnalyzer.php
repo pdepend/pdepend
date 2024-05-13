@@ -147,7 +147,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      */
     public function getRequiredAnalyzers()
     {
-        return ['PDepend\\Metrics\\Analyzer\\CyclomaticComplexityAnalyzer'];
+        return [CyclomaticComplexityAnalyzer::class];
     }
 
     /**

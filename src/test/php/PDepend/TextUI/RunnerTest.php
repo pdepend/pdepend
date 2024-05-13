@@ -44,6 +44,9 @@ namespace PDepend\TextUI;
 
 use Exception;
 use PDepend\AbstractTestCase;
+use PDepend\Engine;
+use PDepend\Input\ExcludePathFilter;
+use PDepend\Input\ExtensionFilter;
 use PDepend\Input\Filter;
 use PDepend\Report\ReportGeneratorFactory;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
@@ -122,7 +125,7 @@ class RunnerTest extends AbstractTestCase
     {
         /** @var Filter[] $record */
         $record = [];
-        $engine = $this->getMockBuilder('PDepend\\Engine')
+        $engine = $this->getMockBuilder(Engine::class)
             ->disableOriginalConstructor()
             ->getMock();
         $engine->expects($this->exactly(2))
@@ -144,15 +147,15 @@ class RunnerTest extends AbstractTestCase
         }
 
         $this->assertCount(2, $record);
-        $this->assertInstanceOf('PDepend\\Input\\ExtensionFilter', $record[0]);
-        $this->assertInstanceOf('PDepend\\Input\\ExcludePathFilter', $record[1]);
+        $this->assertInstanceOf(ExtensionFilter::class, $record[0]);
+        $this->assertInstanceOf(ExcludePathFilter::class, $record[1]);
     }
 
     public function testSetExcludeNamespaces(): void
     {
         /** @var object[] $record */
         $record = [];
-        $engine = $this->getMockBuilder('PDepend\\Engine')
+        $engine = $this->getMockBuilder(Engine::class)
             ->disableOriginalConstructor()
             ->getMock();
         $engine->expects($this->exactly(2))
@@ -177,9 +180,9 @@ class RunnerTest extends AbstractTestCase
         }
 
         $this->assertCount(3, $record);
-        $this->assertInstanceOf('PDepend\\Input\\ExtensionFilter', $record[0]);
-        $this->assertInstanceOf('PDepend\\Input\\ExcludePathFilter', $record[1]);
-        $this->assertInstanceOf('PDepend\\Source\\AST\\ASTArtifactList\\PackageArtifactFilter', $record[2]);
+        $this->assertInstanceOf(ExtensionFilter::class, $record[0]);
+        $this->assertInstanceOf(ExcludePathFilter::class, $record[1]);
+        $this->assertInstanceOf(PackageArtifactFilter::class, $record[2]);
     }
 
     /**

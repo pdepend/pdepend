@@ -74,7 +74,7 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
      *
      * @param string $testCase
      * @param bool $ignoreAnnotations
-     * @return \PDepend\Source\AST\ASTNamespace[]
+     * @return ASTNamespace[]
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {

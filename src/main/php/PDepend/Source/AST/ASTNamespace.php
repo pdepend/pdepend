@@ -142,7 +142,7 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function getTraits()
     {
-        return $this->getTypesOfType('PDepend\\Source\\AST\\ASTTrait');
+        return $this->getTypesOfType(ASTTrait::class);
     }
 
     /**
@@ -153,7 +153,7 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function getClasses()
     {
-        return $this->getTypesOfType('PDepend\\Source\\AST\\ASTClass');
+        return $this->getTypesOfType(ASTClass::class);
     }
 
     /**
@@ -164,7 +164,7 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function getEnums()
     {
-        return $this->getTypesOfType('PDepend\\Source\\AST\\ASTEnum');
+        return $this->getTypesOfType(ASTEnum::class);
     }
 
     /**
@@ -175,7 +175,7 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function getInterfaces()
     {
-        return $this->getTypesOfType('PDepend\\Source\\AST\\ASTInterface');
+        return $this->getTypesOfType(ASTInterface::class);
     }
 
     /**
