@@ -134,6 +134,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * Closes the logger process and writes the output file.
      *
      * @throws NoLogOutputException If the no log target exists.
+     * @throws RuntimeException
      */
     public function close(): void
     {
@@ -153,14 +154,26 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
         $svg->loadXML($template);
 
         $layer = $svg->getElementById('jdepend.layer');
+        if (!$layer) {
+            throw new RuntimeException('Missing jdepend.layer element');
+        }
 
         $bad = $svg->getElementById('jdepend.bad');
+        if (!$bad?->parentNode) {
+            throw new RuntimeException('Missing jdepend.bad element');
+        }
         $bad->removeAttribute('xml:id');
 
         $good = $svg->getElementById('jdepend.good');
+        if (!$good?->parentNode) {
+            throw new RuntimeException('Missing jdepend.good element');
+        }
         $good->removeAttribute('xml:id');
 
         $legendTemplate = $svg->getElementById('jdepend.legend');
+        if (!$legendTemplate?->parentNode) {
+            throw new RuntimeException('Missing legend parent element');
+        }
         $legendTemplate->removeAttribute('xml:id');
 
         foreach ($this->getItems() as $item) {

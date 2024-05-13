@@ -49,6 +49,7 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use RuntimeException;
 
 /**
  * This visitor generates the metrics for the analyzed namespaces.
@@ -147,12 +148,17 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
 
     /**
      * Visits a method node.
+     *
+     * @throws RuntimeException
      */
     public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
         $type = $method->getParent();
+        if (!$type) {
+            throw new RuntimeException('Method does not have a parent.');
+        }
         foreach ($method->getDependencies() as $dependency) {
             $this->collectDependencies($type, $dependency);
         }
