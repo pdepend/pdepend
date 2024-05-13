@@ -127,7 +127,10 @@ class CloverReport implements Report
         if (0 === $executed && 1 === $executable && 0 < ($endLine - $startLine)) {
             return 100;
         }
-        return $executed / max(1, $executable) * 100;
+        if ($executable === 0) {
+            return 0;
+        }
+        return $executed / $executable * 100;
     }
 
     /**
