@@ -59,19 +59,17 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * The internal used cache instance.
      *
-     * @var CacheDriver|null
      * @since 0.10.0
      */
-    protected $cache = null;
+    protected CacheDriver $cache;
 
     /**
      * A reference instance for the return value of this callable. By
      * default and for any scalar type this property is <b>null</b>.
      *
-     * @var ASTClassOrInterfaceReference|null
      * @since 0.9.5
      */
-    protected $returnClassReference = null;
+    protected ?ASTClassOrInterfaceReference $returnClassReference = null;
 
     /**
      * List of all exceptions classes referenced by this callable.
@@ -97,9 +95,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     protected $nodes = [];
 
     /**
-     * @var ASTParameter[]|null
+     * @var ASTParameter[]
      */
-    private $parameters = null;
+    private array $parameters;
 
     /**
      * The magic sleep method will be called by the PHP engine when this class
@@ -336,14 +334,14 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns an array with all method/function parameters.
      *
-     * @return ASTParameter[]|null
+     * @return ASTParameter[]
      */
     public function getParameters()
     {
-        if ($this->parameters === null) {
+        if (!isset($this->parameters)) {
             $this->initParameters();
         }
-        return $this->parameters;
+        return $this->parameters ?? null;
     }
 
     /**

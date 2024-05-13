@@ -51,16 +51,14 @@ namespace PDepend\Source\AST;
 class ASTEnumCase extends AbstractASTNode implements ASTArtifact
 {
     /**
-     * The enum definition of this case or <b>null</b>.
-     *
-     * @var ASTEnum|null
+     * The enum definition of this case.
      */
-    protected $enum = null;
+    protected ASTEnum $enum;
 
     /**
-     * Returns the enum definition of this case or <b>null</b>.
+     * Returns the enum definition of this case.
      *
-     * @return ?ASTEnum
+     * @return ASTEnum
      */
     public function getEnum()
     {

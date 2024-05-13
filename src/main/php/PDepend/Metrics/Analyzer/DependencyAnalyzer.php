@@ -95,7 +95,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      *
      * @var array<string, array<string, mixed>>
      */
-    private $nodeMetrics = null;
+    private array $nodeMetrics;
 
     /**
      * Nodes in which the current analyzed dependency is used.
@@ -136,7 +136,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     public function analyze($namespaces): void
     {
-        if ($this->nodeMetrics === null) {
+        if (!isset($this->nodeMetrics)) {
             $this->fireStartAnalyzer();
 
             $this->nodeMetrics = [];

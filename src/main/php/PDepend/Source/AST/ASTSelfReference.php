@@ -63,19 +63,17 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
     /**
      * The currently used builder context.
      *
-     * @var BuilderContext
      * @since 0.10.0
      */
-    protected $context = null;
+    protected ?BuilderContext $context = null;
 
     /**
      * The full qualified class name, including the namespace or namespace name.
      *
-     * @var string
      * @since 0.10.0
      * @todo  To reduce memory usage, move property into new metadata string
      */
-    protected $qualifiedName = null;
+    protected string $qualifiedName;
 
     /**
      * Constructs a new type holder instance.

@@ -56,10 +56,8 @@ class ASTVariableDeclarator extends ASTExpression
 {
     /**
      * The initial declaration value for this node or <b>null</b>.
-     *
-     * @var ASTValue|null
      */
-    protected $value = null;
+    protected ?ASTValue $value = null;
 
     /**
      * The magic sleep method will be called by PHP's runtime environment right

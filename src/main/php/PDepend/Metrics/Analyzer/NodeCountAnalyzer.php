@@ -112,7 +112,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      *
      * @var array<string, array<string, int>>
      */
-    private $nodeMetrics = null;
+    private array $nodeMetrics;
 
     /**
      * This method will return an <b>array</b> with all generated metric values
@@ -170,7 +170,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     public function analyze($namespaces): void
     {
         // Check for previous run
-        if ($this->nodeMetrics === null) {
+        if (!isset($this->nodeMetrics)) {
             $this->fireStartAnalyzer();
 
             $this->nodeMetrics = [];

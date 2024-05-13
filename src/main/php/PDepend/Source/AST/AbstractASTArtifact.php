@@ -62,10 +62,8 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * The unique identifier for this function.
-     *
-     * @var string|null
      */
-    protected $id = null;
+    protected ?string $id = null;
 
     /**
      * The line number where the item declaration starts.
@@ -89,17 +87,13 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * The source file for this item.
-     *
-     * @var ASTCompilationUnit|null
      */
-    protected $compilationUnit = null;
+    protected ?ASTCompilationUnit $compilationUnit = null;
 
     /**
      * The comment for this type.
-     *
-     * @var string|null
      */
-    protected $comment = null;
+    protected ?string $comment = null;
 
     /**
      * Constructs a new item for the given <b>$name</b>.

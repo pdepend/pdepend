@@ -65,10 +65,8 @@ class ASTParameter extends AbstractASTArtifact
 {
     /**
      * The parent function or method instance.
-     *
-     * @var AbstractASTCallable
      */
-    private $declaringFunction = null;
+    private AbstractASTCallable $declaringFunction;
 
     /**
      * The parameter position.

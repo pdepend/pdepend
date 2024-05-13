@@ -65,17 +65,13 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * The parent node of this node or <b>null</b> when this node is the root
      * of a node tree.
-     *
-     * @var ASTNode|null
      */
-    protected $parent = null;
+    protected ?ASTNode $parent = null;
 
     /**
      * An optional doc comment for this node.
-     *
-     * @var string
      */
-    protected $comment = null;
+    protected ?string $comment = null;
 
     /**
      * Metadata for this node instance, serialized in a string. This string

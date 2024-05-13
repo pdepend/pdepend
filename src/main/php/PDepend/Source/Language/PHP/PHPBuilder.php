@@ -178,28 +178,27 @@ class PHPBuilder implements Builder
     /**
      * The internal used cache instance.
      *
-     * @var CacheDriver
      * @since 0.10.0
      */
-    protected $cache = null;
+    private CacheDriver $cache;
 
     /**
      * The ast builder context.
      *
      * @since 0.10.0
      */
-    protected BuilderContext $context;
+    private BuilderContext $context;
 
     /**
      * Default package which contains all functions and classes with an unknown
      * scope.
      */
-    protected ASTNamespace $defaultPackage;
+    private ASTNamespace $defaultPackage;
 
     /**
      * Default source file that acts as a dummy.
      */
-    protected ASTCompilationUnit $defaultCompilationUnit;
+    private ASTCompilationUnit $defaultCompilationUnit;
 
     /**
      * This property holds all packages found during the parsing phase.
@@ -207,7 +206,7 @@ class PHPBuilder implements Builder
      * @var ASTNamespace[]
      * @since 0.9.12
      */
-    private $preparedNamespaces = null;
+    private array $preparedNamespaces;
 
     /**
      * All generated {@link ASTTrait} objects
@@ -1980,7 +1979,7 @@ class PHPBuilder implements Builder
      */
     public function getNamespaces()
     {
-        if ($this->preparedNamespaces === null) {
+        if (!isset($this->preparedNamespaces)) {
             $this->preparedNamespaces = $this->getPreparedNamespaces();
         }
         return new ASTArtifactList($this->preparedNamespaces);

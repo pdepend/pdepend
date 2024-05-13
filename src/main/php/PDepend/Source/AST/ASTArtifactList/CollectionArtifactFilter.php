@@ -57,17 +57,13 @@ final class CollectionArtifactFilter implements ArtifactFilter
 {
     /**
      * Singleton instance of this filter.
-     *
-     * @var CollectionArtifactFilter
      */
-    private static $instance = null;
+    private static CollectionArtifactFilter $instance;
 
     /**
      * An optional configured filter instance.
-     *
-     * @var ArtifactFilter
      */
-    private $filter = null;
+    private ?ArtifactFilter $filter = null;
 
     /**
      * Singleton method for this filter class.
@@ -76,7 +72,7 @@ final class CollectionArtifactFilter implements ArtifactFilter
      */
     public static function getInstance()
     {
-        if (self::$instance === null) {
+        if (!isset(self::$instance)) {
             self::$instance = new CollectionArtifactFilter();
         }
         return self::$instance;

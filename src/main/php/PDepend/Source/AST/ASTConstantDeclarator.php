@@ -81,17 +81,13 @@ class ASTConstantDeclarator extends AbstractASTNode
 {
     /**
      * The type of the constant if explicitly specified, <b>null</b> else.
-     *
-     * @var ASTType|null
      */
-    protected $type = null;
+    protected ?ASTType $type = null;
 
     /**
      * The initial declaration value for this node or <b>null</b>.
-     *
-     * @var ASTValue|null
      */
-    protected $value = null;
+    protected ?ASTValue $value = null;
 
     /**
      * Magic sleep method that returns an array with those property names that

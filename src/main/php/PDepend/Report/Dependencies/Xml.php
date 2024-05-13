@@ -75,7 +75,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var ASTArtifactList<ASTNamespace>
      */
-    protected $code = null;
+    protected ASTArtifactList $code;
 
     /**
      * Set of all analyzed files.
@@ -85,10 +85,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     protected $fileSet = [];
     /**
      * The log output file.
-     *
-     * @var string
      */
-    private $logFile = null;
+    private string $logFile;
 
     /**
      * @var ClassDependencyAnalyzer|null
@@ -158,7 +156,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     public function close(): void
     {
-        if ($this->logFile === null) {
+        if (!isset($this->logFile)) {
             throw new NoLogOutputException($this);
         }
 

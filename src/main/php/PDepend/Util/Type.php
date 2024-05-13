@@ -135,7 +135,7 @@ final class Type
      *
      * @var array<string, string>
      */
-    private static $typeNameToExtension = null;
+    private static array $typeNameToExtension;
 
     /**
      * Hash with all internal namespaces/extensions. Key and value are identical
@@ -144,7 +144,7 @@ final class Type
      * @var array<string, string>
      * @since 0.9.10
      */
-    private static $internalNamespaces = null;
+    private static array $internalNamespaces;
 
     /**
      * List of scalar php types.
@@ -282,7 +282,7 @@ final class Type
      */
     public static function getInternalNamespaces()
     {
-        if (self::$internalNamespaces === null) {
+        if (!isset(self::$internalNamespaces)) {
             self::$internalNamespaces = [];
             foreach (self::initTypeToExtension() as $namespace) {
                 self::$internalNamespaces[$namespace] = $namespace;
@@ -387,7 +387,7 @@ final class Type
     private static function initTypeToExtension()
     {
         // Skip when already done.
-        if (self::$typeNameToExtension !== null) {
+        if (isset(self::$typeNameToExtension)) {
             return self::$typeNameToExtension;
         }
 

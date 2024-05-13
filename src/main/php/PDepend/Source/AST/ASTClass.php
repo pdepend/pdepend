@@ -58,7 +58,7 @@ class ASTClass extends AbstractASTClassOrInterface
      *
      * @var ASTProperty[]
      */
-    private $properties = null;
+    private array $properties;
 
 
     /**
@@ -124,7 +124,7 @@ class ASTClass extends AbstractASTClassOrInterface
      */
     public function getProperties()
     {
-        if ($this->properties === null) {
+        if (!isset($this->properties)) {
             $this->properties = [];
 
             $declarations = $this->findChildrenOfType(ASTFieldDeclaration::class);

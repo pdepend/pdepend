@@ -52,10 +52,8 @@ class ConfigurationInstance
 {
     /**
      * The unique configuration instance.
-     *
-     * @var Configuration|null
      */
-    private static $configuration = null;
+    private static ?Configuration $configuration = null;
 
     /**
      * Returns a configured config instance or <b>null</b>.

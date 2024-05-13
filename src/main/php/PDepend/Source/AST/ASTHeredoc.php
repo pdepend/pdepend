@@ -54,10 +54,8 @@ class ASTHeredoc extends ASTExpression
 {
     /**
      * Delimiter used for this heredoc instance.
-     *
-     * @var string
      */
-    protected $delimiter = null;
+    protected string $delimiter;
 
     /**
      * Sets the delimiter used for this heredoc instance.

@@ -55,10 +55,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * The parent for this class node.
      *
-     * @var ASTClassReference|null
      * @since 0.9.5
      */
-    protected $parentClassReference = null;
+    protected ?ASTClassReference $parentClassReference = null;
 
     /**
      * List of all interfaces implemented/extended by the this type.
@@ -72,14 +71,14 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @var array<string, mixed>
      */
-    protected $constants = null;
+    protected ?array $constants = null;
 
     /**
      * An <b>array</b> with all constant declarators defined in this class or interface.
      *
      * @var array<string, ASTConstantDeclarator>
      */
-    protected $constantDeclarators = null;
+    protected array $constantDeclarators;
 
     /**
      * The magic sleep method is called by the PHP runtime environment before an
@@ -231,7 +230,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      */
     public function getConstantDeclarators()
     {
-        if ($this->constantDeclarators === null) {
+        if (!isset($this->constantDeclarators)) {
             $this->initConstantDeclarators();
         }
         return $this->constantDeclarators;

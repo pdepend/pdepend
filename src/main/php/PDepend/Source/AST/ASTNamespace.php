@@ -73,10 +73,8 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Does this namespace contain user defined functions, classes or interfaces?
-     *
-     * @var bool
      */
-    private $userDefined = null;
+    private bool $userDefined;
 
     /**
      * Constructs a new namespace for the given <b>$name</b>
@@ -109,7 +107,7 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function isUserDefined()
     {
-        if ($this->userDefined === null) {
+        if (!isset($this->userDefined)) {
             $this->userDefined = $this->checkUserDefined();
         }
         return $this->userDefined;

@@ -69,7 +69,7 @@ class GlobalBuilderContext implements BuilderContext
      *
      * @var Builder<mixed>
      */
-    protected static $builder = null;
+    protected static Builder $builder;
 
     /**
      * Constructs a new builder context instance.
