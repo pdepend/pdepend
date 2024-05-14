@@ -94,6 +94,8 @@ class PackageArtifactFilter implements ArtifactFilter
             $namespace = $node->getNamespace()->getName();
         } elseif ($node instanceof ASTNamespace) {
             $namespace = $node->getName();
+        } else {
+            return false;
         }
 
         return (preg_match($this->pattern, $namespace) === 0);

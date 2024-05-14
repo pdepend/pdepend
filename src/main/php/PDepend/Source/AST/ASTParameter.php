@@ -367,7 +367,7 @@ class ASTParameter extends AbstractASTArtifact
      */
     public function getDefaultValue(): mixed
     {
-        $value = $this->variableDeclarator->getValue();
+        $value = $this->variableDeclarator?->getValue();
 
         return $value === null ? null : $value->getValue();
     }

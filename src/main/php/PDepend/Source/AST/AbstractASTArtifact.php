@@ -63,7 +63,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * The unique identifier for this function.
      */
-    protected ?string $id = null;
+    protected string $id;
 
     /**
      * The line number where the item declaration starts.
@@ -143,7 +143,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      */
     public function getId()
     {
-        if ($this->id === null) {
+        if (!isset($this->id)) {
             $this->id = md5(uniqid('', true));
         }
         return $this->id;
@@ -266,7 +266,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Sets the raw doc comment for this node.
      *
-     * @param string $comment
+     * @param ?string $comment
      */
     public function setComment($comment): void
     {

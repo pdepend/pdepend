@@ -92,7 +92,7 @@ class FileCacheDriver implements CacheDriver
     /**
      * Unique key for this cache instance.
      *
-     * @var string
+     * @var ?string
      * @since 1.0.0
      */
     private $cacheKey;
@@ -109,7 +109,7 @@ class FileCacheDriver implements CacheDriver
     public function __construct($root, $ttl = self::DEFAULT_TTL, $cacheKey = null)
     {
         $this->directory = new FileCacheDirectory($root);
-        $this->version = preg_replace('(^(\d+\.\d+).*)', '\\1', PHP_VERSION);
+        $this->version = preg_replace('(^(\d+\.\d+).*)', '\\1', PHP_VERSION) ?? PHP_VERSION;
 
         $this->cacheKey = $cacheKey;
 
@@ -176,7 +176,7 @@ class FileCacheDriver implements CacheDriver
      * <b>NULL</b>.
      *
      * @param string $key The cache key for the given data.
-     * @param string $hash Optional hash that will be used for verification.
+     * @param ?string $hash Optional hash that will be used for verification.
      */
     public function restore($key, $hash = null): mixed
     {
@@ -192,14 +192,14 @@ class FileCacheDriver implements CacheDriver
      * to stored hash value. If both hashes are equal this method returns the
      * cached entry. Otherwise this method returns <b>NULL</b>.
      *
-     * @param string $file The cache file name.
-     * @param string $hash The verification hash.
+     * @param string  $file The cache file name.
+     * @param ?string $hash The verification hash.
      */
     protected function restoreFile($file, $hash): mixed
     {
         // unserialize() throws E_NOTICE when data is corrupt
         $data = @unserialize($this->read($file));
-        if ($data !== false && $data['hash'] === $hash) {
+        if ($data !== false && ($hash === null || $data['hash'] === $hash)) {
             return $data['data'];
         }
         return null;

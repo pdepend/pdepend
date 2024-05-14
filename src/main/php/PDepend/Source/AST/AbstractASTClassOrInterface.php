@@ -369,7 +369,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
 
         foreach ($declarators as $declarator) {
             $image = $declarator->getImage();
-            $value = $declarator->getValue()->getValue();
+            $value = $declarator->getValue()?->getValue();
 
             $this->constants[$image] = $value;
         }

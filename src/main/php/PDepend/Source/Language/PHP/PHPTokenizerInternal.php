@@ -660,7 +660,7 @@ class PHPTokenizerInternal implements FullTokenizer
     {
         $this->tokenize();
 
-        if ($this->index > 0 && $this->index < $this->count - 1) {
+        if ($this->index > 0 && $this->index < $this->count - 1 && $this->tokens) {
             return $this->tokens[$this->index - 1];
         }
 
@@ -676,7 +676,7 @@ class PHPTokenizerInternal implements FullTokenizer
     {
         $this->tokenize();
 
-        if ($this->index < $this->count - 1) {
+        if ($this->index < $this->count - 1 && $this->tokens) {
             return $this->tokens[$this->index];
         }
 
@@ -693,7 +693,7 @@ class PHPTokenizerInternal implements FullTokenizer
     {
         $this->tokenize();
 
-        if ($this->index < $this->count) {
+        if ($this->index < $this->count && $this->tokens) {
             return $this->tokens[$this->index++];
         }
 
@@ -776,7 +776,7 @@ class PHPTokenizerInternal implements FullTokenizer
     {
         $this->tokenize();
 
-        if ($this->index > 1) {
+        if ($this->index > 1 && $this->tokens) {
             return $this->tokens[$this->index - 2]->type;
         }
         return self::T_BOF;

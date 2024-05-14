@@ -408,7 +408,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      */
     public function isCached()
     {
-        return $this->compilationUnit->isCached();
+        return $this->compilationUnit?->isCached() ?? false;
     }
 
     /**
@@ -424,16 +424,18 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
             ASTFormalParameters::class,
         );
 
-        $formalParameters = $formalParameters->findChildrenOfType(
-            ASTFormalParameter::class,
-        );
+        if ($formalParameters) {
+            $formalParameters = $formalParameters->findChildrenOfType(
+                ASTFormalParameter::class,
+            );
 
-        foreach ($formalParameters as $formalParameter) {
-            $parameter = new ASTParameter($formalParameter);
-            $parameter->setDeclaringFunction($this);
-            $parameter->setPosition(count($parameters));
+            foreach ($formalParameters as $formalParameter) {
+                $parameter = new ASTParameter($formalParameter);
+                $parameter->setDeclaringFunction($this);
+                $parameter->setPosition(count($parameters));
 
-            $parameters[] = $parameter;
+                $parameters[] = $parameter;
+            }
         }
 
         $optional = true;

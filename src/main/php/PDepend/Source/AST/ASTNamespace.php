@@ -88,16 +88,6 @@ class ASTNamespace extends AbstractASTArtifact
     }
 
     /**
-     * Returns a id for this code node.
-     *
-     * @return string
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
      * Returns <b>true</b> when at least one artifact <b>function</b> or a
      * <b>class/method</b> is user defined. Otherwise this method will return
      * <b>false</b>.

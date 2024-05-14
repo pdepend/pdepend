@@ -130,7 +130,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartClass($class);
 
-        $class->getCompilationUnit()->accept($this);
+        $class->getCompilationUnit()?->accept($this);
 
         foreach ($class->getProperties() as $property) {
             $property->accept($this);
@@ -149,7 +149,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartEnum($enum);
 
-        $enum->getCompilationUnit()->accept($this);
+        $enum->getCompilationUnit()?->accept($this);
 
         foreach ($enum->getProperties() as $property) {
             $property->accept($this);
@@ -170,7 +170,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartTrait($trait);
 
-        $trait->getCompilationUnit()->accept($this);
+        $trait->getCompilationUnit()?->accept($this);
 
         foreach ($trait->getMethods() as $method) {
             $method->accept($this);
@@ -195,7 +195,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartFunction($function);
 
-        $function->getCompilationUnit()->accept($this);
+        $function->getCompilationUnit()?->accept($this);
 
         foreach ($function->getParameters() as $parameter) {
             $parameter->accept($this);
@@ -211,7 +211,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartInterface($interface);
 
-        $interface->getCompilationUnit()->accept($this);
+        $interface->getCompilationUnit()?->accept($this);
 
         foreach ($interface->getMethods() as $method) {
             $method->accept($this);

@@ -8640,7 +8640,7 @@ abstract class AbstractPHPParser
     protected function getUnexpectedTokenException($token)
     {
         if ($token instanceof Token) {
-            return new UnexpectedTokenException($token, $this->tokenizer->getSourceFile());
+            return new UnexpectedTokenException($token, $this->tokenizer->getSourceFile() ?? 'unknown');
         }
 
         return new TokenStreamEndException($this->tokenizer);

@@ -144,11 +144,11 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Sets the image for this ast node.
      *
-     * @param string $image
+     * @param ?string $image
      */
     public function setImage($image): void
     {
-        $this->setMetadata(4, $image);
+        $this->setMetadata(4, $image ?? '');
     }
 
     /**
@@ -475,7 +475,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Sets the raw doc comment for this node.
      *
-     * @param string $comment The doc comment block for this node.
+     * @param ?string $comment The doc comment block for this node.
      */
     public function setComment($comment): void
     {

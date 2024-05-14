@@ -359,7 +359,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function isCached()
     {
-        return $this->compilationUnit->isCached();
+        return $this->compilationUnit?->isCached() ?? false;
     }
 
     /**
