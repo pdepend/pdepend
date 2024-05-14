@@ -71,8 +71,9 @@ class FileUtilTest extends AbstractTestCase
      */
     public function testGetUserHomeDirReturnsExpectedDirectory(): void
     {
+        $homeDir = getenv('HOME') ?: getenv('HOMEDRIVE') . getenv('HOMEPATH');
         static::assertEquals(
-            getenv('HOME'),
+            $homeDir,
             FileUtil::getUserHomeDir()
         );
     }
