@@ -12,6 +12,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  *
  * @ticket 713
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseIssetExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser::parseVariableList
  * @group regressiontest
  */
 class ParserBug713Test extends AbstractRegressionTest
