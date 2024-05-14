@@ -172,6 +172,7 @@ class ImageConvert
             // Fetch all font-size expressions
             preg_match_all('/font-size:\s*(\d+)/', $svg, $fontSizes);
             $fontSizes = array_unique($fontSizes[1]);
+            $fontSizes = array_map(intval(...), $fontSizes);
 
             $resize = ($fontSize - max($fontSizes));
             foreach ($fontSizes as $fontSize) {
