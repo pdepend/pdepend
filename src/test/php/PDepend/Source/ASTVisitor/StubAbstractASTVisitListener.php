@@ -56,14 +56,14 @@ class StubAbstractASTVisitListener extends AbstractASTVisitListener
 
     public function startVisitNode(AbstractASTArtifact $node): void
     {
-        $this->nodes[$node->getName() . '#start'] = true;
+        $this->nodes[$node->getImage() . '#start'] = true;
 
         parent::startVisitNode($node);
     }
 
     public function endVisitNode(AbstractASTArtifact $node): void
     {
-        $this->nodes[$node->getName() . '#end'] = true;
+        $this->nodes[$node->getImage() . '#end'] = true;
 
         parent::endVisitNode($node);
     }

@@ -188,7 +188,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
         foreach ($namespaces[0]->getClasses() as $class) {
             $metrics = $analyzer->getNodeMetrics($class);
 
-            $actual[$class->getName()] = $metrics['dit'];
+            $actual[$class->getImage()] = $metrics['dit'];
         }
         ksort($actual);
 

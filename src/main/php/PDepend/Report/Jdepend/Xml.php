@@ -213,7 +213,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $classXml->setAttribute('sourceFile', (string) $class->getCompilationUnit());
         $classXml->appendChild(
             $doc->createTextNode(
-                Utf8Util::ensureEncoding($class->getName()),
+                Utf8Util::ensureEncoding($class->getImage()),
             ),
         );
 
@@ -244,7 +244,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $classXml->setAttribute('sourceFile', (string) $interface->getCompilationUnit());
         $classXml->appendChild(
             $doc->createTextNode(
-                Utf8Util::ensureEncoding($interface->getName()),
+                Utf8Util::ensureEncoding($interface->getImage()),
             ),
         );
 
@@ -276,7 +276,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $this->abstractClasses = $doc->createElement('AbstractClasses');
 
         $packageXml = $doc->createElement('Package');
-        $packageXml->setAttribute('name', Utf8Util::ensureEncoding($namespace->getName()));
+        $packageXml->setAttribute('name', Utf8Util::ensureEncoding($namespace->getImage()));
 
         $statsXml = $doc->createElement('Stats');
         $statsXml->appendChild($doc->createElement('TotalClasses'))
@@ -301,7 +301,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             $efferentXml = $doc->createElement('Package');
             $efferentXml->appendChild(
                 $doc->createTextNode(
-                    Utf8Util::ensureEncoding($efferent->getName()),
+                    Utf8Util::ensureEncoding($efferent->getImage()),
                 ),
             );
 
@@ -313,7 +313,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             $afferentXml = $doc->createElement('Package');
             $afferentXml->appendChild(
                 $doc->createTextNode(
-                    Utf8Util::ensureEncoding($afferent->getName()),
+                    Utf8Util::ensureEncoding($afferent->getImage()),
                 ),
             );
 
@@ -328,13 +328,13 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         if (($cycles = $this->analyzer->getCycle($namespace)) !== null) {
             $cycleXml = $doc->createElement('Package');
-            $cycleXml->setAttribute('Name', Utf8Util::ensureEncoding($namespace->getName()));
+            $cycleXml->setAttribute('Name', Utf8Util::ensureEncoding($namespace->getImage()));
 
             foreach ($cycles as $cycle) {
                 $cycleXml->appendChild($doc->createElement('Package'))
                     ->appendChild(
                         $doc->createTextNode(
-                            Utf8Util::ensureEncoding($cycle->getName()),
+                            Utf8Util::ensureEncoding($cycle->getImage()),
                         ),
                     );
             }

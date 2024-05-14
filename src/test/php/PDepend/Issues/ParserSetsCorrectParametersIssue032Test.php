@@ -83,7 +83,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
     {
         $actual = [];
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
-            $actual[] = $parameter->getName();
+            $actual[] = $parameter->getImage();
         }
         static::assertEquals(['$foo', '$bar', '$foobar'], $actual);
     }
@@ -128,7 +128,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
     {
         $actual = [];
         foreach ($this->getParametersOfFirstMethod() as $parameter) {
-            $actual[] = $parameter->getName();
+            $actual[] = $parameter->getImage();
         }
         static::assertEquals(['$foo', '$bar', '$foobar'], $actual);
     }

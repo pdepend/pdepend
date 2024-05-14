@@ -104,7 +104,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         ];
 
         foreach ($namespaces[0]->getFunctions() as $function) {
-            $actual[$function->getName()] = $analyzer->getNodeBasisMetrics($function);
+            $actual[$function->getImage()] = $analyzer->getNodeBasisMetrics($function);
         }
 
         ksort($expected);
@@ -151,7 +151,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         ];
 
         foreach ($namespaces[0]->getFunctions() as $function) {
-            $actual[$function->getName()] = $analyzer->getNodeMetrics($function);
+            $actual[$function->getImage()] = $analyzer->getNodeMetrics($function);
         }
 
         ksort($expected);
@@ -181,7 +181,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         ];
 
         foreach ($methods as $method) {
-            $actual[$method->getName()] = $analyzer->getNodeBasisMetrics($method);
+            $actual[$method->getImage()] = $analyzer->getNodeBasisMetrics($method);
         }
 
         ksort($expected);
@@ -231,7 +231,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         ];
 
         foreach ($methods as $method) {
-            $actual[$method->getName()] = $analyzer->getNodeMetrics($method);
+            $actual[$method->getImage()] = $analyzer->getNodeMetrics($method);
         }
 
         ksort($expected);

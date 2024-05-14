@@ -127,7 +127,7 @@ class ASTFunction extends AbstractASTCallable
      */
     public function setNamespace(ASTNamespace $namespace): void
     {
-        $this->namespaceName = $namespace->getName();
+        $this->namespaceName = $namespace->getImage();
         $this->namespace = $namespace;
     }
 

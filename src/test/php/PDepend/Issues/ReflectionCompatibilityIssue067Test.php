@@ -81,7 +81,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $expected = ['$foo' => true, '$bar' => false, '$foobar' => true];
         $actual = [];
         foreach ($parameters as $parameter) {
-            $actual[$parameter->getName()] = $parameter->isPassedByReference();
+            $actual[$parameter->getImage()] = $parameter->isPassedByReference();
         }
         static::assertEquals($expected, $actual);
     }
@@ -105,7 +105,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $expected = ['$foo' => true, '$bar' => true];
         $actual = [];
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
-            $actual[$parameter->getName()] = $parameter->isPassedByReference();
+            $actual[$parameter->getImage()] = $parameter->isPassedByReference();
         }
         static::assertEquals($expected, $actual);
     }

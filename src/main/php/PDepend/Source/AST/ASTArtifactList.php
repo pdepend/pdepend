@@ -140,7 +140,7 @@ class ASTArtifactList implements ArrayAccess, Countable, Iterator
      */
     public function key(): string
     {
-        return $this->artifacts[$this->offset]->getName();
+        return $this->artifacts[$this->offset]->getImage();
     }
 
     /**

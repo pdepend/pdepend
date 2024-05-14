@@ -130,7 +130,7 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             $this->nodes[$node->getId()] = [
                 'in' => [],
                 'out' => [],
-                'name' => $node->getName(),
+                'name' => $node->getImage(),
                 'type' => $node::class,
             ];
         }

@@ -296,7 +296,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
         $actual = [];
         foreach ($namespace->getInterfaces() as $interface) {
-            $actual[$interface->getName()] = $current->isSubtypeOf($interface);
+            $actual[$interface->getImage()] = $current->isSubtypeOf($interface);
         }
 
         ksort($expected);

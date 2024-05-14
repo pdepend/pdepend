@@ -199,7 +199,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
 
         static::assertEquals(
             'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
-            $methods['foo']->getParent()->getName()
+            $methods['foo']->getParent()->getImage()
         );
     }
 
@@ -289,7 +289,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testTraitHasExpectedPackage(): void
     {
         $trait = $this->getFirstTraitForTest();
-        static::assertEquals('org.pdepend', $trait->getNamespace()->getName());
+        static::assertEquals('org.pdepend', $trait->getNamespace()->getImage());
     }
 
     /**
@@ -298,7 +298,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testTraitHasExpectedNamespace(): void
     {
         $trait = $this->getFirstTraitForTest();
-        static::assertEquals('org\pdepend\code', $trait->getNamespace()->getName());
+        static::assertEquals('org\pdepend\code', $trait->getNamespace()->getImage());
     }
 
     /**

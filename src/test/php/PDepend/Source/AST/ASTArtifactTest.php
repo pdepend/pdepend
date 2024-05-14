@@ -61,7 +61,7 @@ class ASTArtifactTest extends AbstractTestCase
     public function testGetNameReturnsValueOfFirstConstructorArgument(): void
     {
         $item = $this->getItemMock();
-        static::assertEquals(__CLASS__, $item->getName());
+        static::assertEquals(__CLASS__, $item->getImage());
     }
 
     /**
@@ -74,7 +74,7 @@ class ASTArtifactTest extends AbstractTestCase
         $item = $this->getItemMock();
         $item->setName(__FUNCTION__);
 
-        static::assertEquals(__FUNCTION__, $item->getName());
+        static::assertEquals(__FUNCTION__, $item->getImage());
     }
 
     /**

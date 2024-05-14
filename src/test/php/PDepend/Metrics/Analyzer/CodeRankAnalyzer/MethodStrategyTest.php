@@ -74,11 +74,11 @@ class MethodStrategyTest extends AbstractTestCase
 
         foreach ($namespaces as $namespace) {
             foreach ($namespace->getClasses() as $class) {
-                static::assertArrayHasKey($class->getName(), $idMap);
-                $idMap[$class->getName()] = $class->getId();
+                static::assertArrayHasKey($class->getImage(), $idMap);
+                $idMap[$class->getImage()] = $class->getId();
             }
-            if (array_key_exists($namespace->getName(), $idMap)) {
-                $idMap[$namespace->getName()] = $namespace->getId();
+            if (array_key_exists($namespace->getImage(), $idMap)) {
+                $idMap[$namespace->getImage()] = $namespace->getId();
             }
         }
 

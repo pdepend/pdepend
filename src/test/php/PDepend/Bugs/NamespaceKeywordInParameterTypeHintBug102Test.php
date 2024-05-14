@@ -63,7 +63,7 @@ class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractRegressionTe
         $parameters = $this->getFirstFunctionForTestCase()
             ->getParameters();
 
-        static::assertEquals('foo\bar', $parameters[0]->getClass()->getNamespace()->getName());
+        static::assertEquals('foo\bar', $parameters[0]->getClass()->getNamespace()->getImage());
     }
 
     /**
@@ -74,6 +74,6 @@ class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractRegressionTe
         $parameters = $this->getFirstClassMethodForTestCase()
             ->getParameters();
 
-        static::assertEquals('foo\bar', $parameters[0]->getClass()->getNamespace()->getName());
+        static::assertEquals('foo\bar', $parameters[0]->getClass()->getNamespace()->getImage());
     }
 }

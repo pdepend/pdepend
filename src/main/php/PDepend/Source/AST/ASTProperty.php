@@ -109,7 +109,7 @@ class ASTProperty extends AbstractASTArtifact
             'Property [%s%s %s ]%s',
             $visibility,
             $static,
-            $this->getName(),
+            $this->getImage(),
             PHP_EOL,
         );
     }
@@ -119,7 +119,7 @@ class ASTProperty extends AbstractASTArtifact
      *
      * @return string
      */
-    public function getName()
+    public function getImage()
     {
         return $this->variableDeclarator->getImage();
     }

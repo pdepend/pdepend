@@ -91,7 +91,7 @@ class ASTTrait extends ASTClass
         $methods = $this->getTraitMethods();
 
         foreach ($this->getMethods() as $method) {
-            $methods[strtolower($method->getName())] = $method;
+            $methods[strtolower($method->getImage())] = $method;
         }
 
         return $methods;

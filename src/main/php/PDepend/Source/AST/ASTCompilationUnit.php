@@ -151,7 +151,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      *
      * @return string|null
      */
-    public function getName()
+    public function getImage()
     {
         return $this->fileName;
     }

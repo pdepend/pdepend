@@ -64,7 +64,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetDeclaringClass(): void
     {
         $property = $this->getFirstPropertyInClass();
-        static::assertEquals(__FUNCTION__, $property->getDeclaringClass()->getName());
+        static::assertEquals(__FUNCTION__, $property->getDeclaringClass()->getImage());
     }
 
     /**
@@ -73,7 +73,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassForPropertyWithNamespacedRootType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        static::assertEquals('Foo', $property->getClass()->getName());
+        static::assertEquals('Foo', $property->getClass()->getImage());
     }
 
     /**
@@ -82,7 +82,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassForPropertyWithNamespacedType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        static::assertEquals('Baz', $property->getClass()->getName());
+        static::assertEquals('Baz', $property->getClass()->getImage());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassForPropertyWithNamespacedArrayRootType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        static::assertEquals('Foo', $property->getClass()->getName());
+        static::assertEquals('Foo', $property->getClass()->getImage());
     }
 
     /**
@@ -100,7 +100,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassForPropertyWithNamespacedArrayType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        static::assertEquals('Baz', $property->getClass()->getName());
+        static::assertEquals('Baz', $property->getClass()->getImage());
     }
 
     /**

@@ -130,7 +130,7 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
             $this->nodes[$node->getId()] = [
                 'in' => [],
                 'out' => [],
-                'name' => $node->getName(),
+                'name' => $node->getImage(),
                 'type' => $node::class,
             ];
         }

@@ -338,18 +338,18 @@ class RunnerTest extends AbstractTestCase
                 'exceptions' => [],
             ];
             foreach ($namespace->getFunctions() as $function) {
-                $statistics['functions'][] = $function->getName();
+                $statistics['functions'][] = $function->getImage();
                 foreach ($function->getExceptionClasses() as $exception) {
-                    $statistics['exceptions'][] = $exception->getName();
+                    $statistics['exceptions'][] = $exception->getImage();
                 }
             }
 
             foreach ($namespace->getClasses() as $class) {
-                $statistics['classes'][] = $class->getName();
+                $statistics['classes'][] = $class->getImage();
             }
 
             foreach ($namespace->getInterfaces() as $interface) {
-                $statistics['interfaces'][] = $interface->getName();
+                $statistics['interfaces'][] = $interface->getImage();
             }
 
             sort($statistics['functions']);
@@ -357,7 +357,7 @@ class RunnerTest extends AbstractTestCase
             sort($statistics['interfaces']);
             sort($statistics['exceptions']);
 
-            $actual[$namespace->getName()] = $statistics;
+            $actual[$namespace->getImage()] = $statistics;
         }
         ksort($actual);
 

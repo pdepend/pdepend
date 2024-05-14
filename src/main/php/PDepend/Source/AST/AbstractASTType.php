@@ -333,7 +333,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     public function setNamespace(ASTNamespace $namespace): void
     {
         $this->namespace = $namespace;
-        $this->namespaceName = $namespace->getName();
+        $this->namespaceName = $namespace->getImage();
     }
 
     /**
@@ -403,7 +403,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
                     }
                 }
 
-                $name = strtolower($method->getName());
+                $name = strtolower($method->getImage());
 
                 if (!isset($methods[$name]) || isset($priorMethods[$name])) {
                     $methods[$name] = $method;

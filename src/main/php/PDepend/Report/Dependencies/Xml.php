@@ -218,7 +218,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $typeXml = $doc->createElement($typeIdentifier);
-        $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
+        $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getImage()));
         $xml->appendChild($typeXml);
 
         $this->xmlStack[] = $typeXml;
@@ -259,7 +259,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $packageXml = $doc->createElement('package');
-        $packageXml->setAttribute('name', Utf8Util::ensureEncoding($namespace->getName()));
+        $packageXml->setAttribute('name', Utf8Util::ensureEncoding($namespace->getImage()));
 
         $this->xmlStack[] = $packageXml;
 
@@ -301,7 +301,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         foreach ($this->dependencyAnalyzer->getEfferents($node) as $type) {
             $typeXml = $doc->createElement('type');
             $typeXml->setAttribute('namespace', Utf8Util::ensureEncoding($type->getNamespaceName()));
-            $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
+            $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getImage()));
 
             $efferentXml->appendChild($typeXml);
         }
@@ -311,7 +311,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         foreach ($this->dependencyAnalyzer->getAfferents($node) as $type) {
             $typeXml = $doc->createElement('type');
             $typeXml->setAttribute('namespace', Utf8Util::ensureEncoding($type->getNamespaceName()));
-            $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
+            $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getImage()));
 
             $afferentXml->appendChild($typeXml);
         }

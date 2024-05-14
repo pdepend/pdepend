@@ -65,11 +65,11 @@ class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegression
 
         static::assertSame(1, $namespace->getClasses()->count());
         $class = $namespace->getClasses()->current();
-        static::assertSame('Bar', $class->getName());
+        static::assertSame('Bar', $class->getImage());
 
         static::assertSame(1, $namespace->getInterfaces()->count());
         $interface = $namespace->getInterfaces()->current();
-        static::assertSame('IFoo', $interface->getName());
+        static::assertSame('IFoo', $interface->getImage());
 
         static::assertSame(1, $class->getMethods()->count());
         $method = $class->getMethods()->current();
@@ -91,10 +91,10 @@ class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegression
         $classes = $namespace->getClasses();
         static::assertSame(2, $classes->count());
         $class1 = $classes->current();
-        static::assertSame('Foo', $class1->getName());
+        static::assertSame('Foo', $class1->getImage());
         $classes->next();
         $class2 = $classes->current();
-        static::assertSame('Bar', $class2->getName());
+        static::assertSame('Bar', $class2->getImage());
 
         static::assertSame(1, $class2->getMethods()->count());
         $method = $class2->getMethods()->current();

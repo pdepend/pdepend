@@ -241,7 +241,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 'abstraction' => $metrics['a'],
                 'instability' => $metrics['i'],
                 'distance' => $metrics['d'],
-                'name' => Utf8Util::ensureEncoding($namespace->getName()),
+                'name' => Utf8Util::ensureEncoding($namespace->getImage()),
             ];
         }
 

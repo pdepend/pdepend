@@ -412,7 +412,7 @@ class Engine
             throw new RuntimeException($msg);
         }
         foreach ($this->namespaces as $namespace) {
-            if ($namespace->getName() === $name) {
+            if ($namespace->getImage() === $name) {
                 return $namespace;
             }
         }

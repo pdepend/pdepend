@@ -393,9 +393,9 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
             if (count($namespace->getTypes()) === 0) {
                 continue;
             }
-            $expected[] = [$namespace, $this->input[$namespace->getName()]];
+            $expected[] = [$namespace, $this->input[$namespace->getImage()]];
             foreach ($namespace->getTypes() as $type) {
-                $expected[] = [$type, $this->input[$type->getName()]];
+                $expected[] = [$type, $this->input[$type->getImage()]];
             }
         }
 
@@ -454,7 +454,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $actual = [];
         foreach ($namespaces[0]->getTypes() as $type) {
             $metrics = $analyzer->getNodeMetrics($type);
-            $actual[$type->getName()] = round($metrics[$metricName], 5);
+            $actual[$type->getImage()] = round($metrics[$metricName], 5);
         }
 
         return $actual;

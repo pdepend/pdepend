@@ -126,7 +126,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedRootClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        static::assertEquals('Foo', $method->getReturnClass()->getName());
+        static::assertEquals('Foo', $method->getReturnClass()->getImage());
     }
 
     /**
@@ -135,7 +135,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        static::assertEquals('Baz', $method->getReturnClass()->getName());
+        static::assertEquals('Baz', $method->getReturnClass()->getImage());
     }
 
     /**
@@ -144,7 +144,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedArrayRootClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        static::assertEquals('Foo', $method->getReturnClass()->getName());
+        static::assertEquals('Foo', $method->getReturnClass()->getImage());
     }
 
     /**
@@ -153,7 +153,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedArrayClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        static::assertEquals('Baz', $method->getReturnClass()->getName());
+        static::assertEquals('Baz', $method->getReturnClass()->getImage());
     }
 
     /**
@@ -164,7 +164,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = $this->getFirstMethodInClass();
         static::assertEquals(
             'Exception',
-            $method->getExceptionClasses()->current()->getName()
+            $method->getExceptionClasses()->current()->getImage()
         );
     }
 
@@ -176,7 +176,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = $this->getFirstMethodInClass();
         static::assertEquals(
             'ErrorException',
-            $method->getExceptionClasses()->current()->getName()
+            $method->getExceptionClasses()->current()->getImage()
         );
     }
 
@@ -188,7 +188,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = $this->getFirstMethodInClass();
         static::assertEquals(
             'ASTBuilder',
-            $method->getDependencies()->current()->getName()
+            $method->getDependencies()->current()->getImage()
         );
     }
 
@@ -200,7 +200,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = $this->getFirstMethodInClass();
         static::assertEquals(
             'ASTBuilder',
-            $method->getDependencies()->current()->getName()
+            $method->getDependencies()->current()->getImage()
         );
     }
 

@@ -633,7 +633,7 @@ class PHPBuilder implements Builder
     public function buildAstSelfReference(AbstractASTClassOrInterface $type)
     {
         Log::debug(
-            'Creating: \\PDepend\\Source\\AST\\ASTSelfReference(' . $type->getName() . ')',
+            'Creating: \\PDepend\\Source\\AST\\ASTSelfReference(' . $type->getImage() . ')',
         );
 
         return new ASTSelfReference($this->context, $type);
@@ -2331,7 +2331,7 @@ class PHPBuilder implements Builder
     public function restoreTrait(ASTTrait $trait): void
     {
         $this->storeTrait(
-            $trait->getName(),
+            $trait->getImage(),
             $trait->getNamespaceName(),
             $trait,
         );
@@ -2345,7 +2345,7 @@ class PHPBuilder implements Builder
     public function restoreClass(ASTClass $class): void
     {
         $this->storeClass(
-            $class->getName(),
+            $class->getImage(),
             $class->getNamespaceName(),
             $class,
         );
@@ -2359,7 +2359,7 @@ class PHPBuilder implements Builder
     public function restoreEnum(ASTEnum $enum): void
     {
         $this->storeEnum(
-            $enum->getName(),
+            $enum->getImage(),
             $enum->getNamespaceName(),
             $enum,
         );
@@ -2373,7 +2373,7 @@ class PHPBuilder implements Builder
     public function restoreInterface(ASTInterface $interface): void
     {
         $this->storeInterface(
-            $interface->getName(),
+            $interface->getImage(),
             $interface->getNamespaceName(),
             $interface,
         );

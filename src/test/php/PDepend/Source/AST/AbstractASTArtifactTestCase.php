@@ -65,7 +65,7 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
         $item = $this->createItem();
         $item->setName(__METHOD__);
 
-        static::assertEquals(__METHOD__, $item->getName());
+        static::assertEquals(__METHOD__, $item->getImage());
     }
 
     /**

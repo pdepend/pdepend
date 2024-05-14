@@ -130,7 +130,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
         $reference = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTClassReference::class, $reference);
-        static::assertEquals('Foo', $reference->getType()->getName());
+        static::assertEquals('Foo', $reference->getType()->getImage());
     }
 
     /**
@@ -143,7 +143,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
         $self = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTSelfReference::class, $self);
-        static::assertEquals(__FUNCTION__, $self->getType()->getName());
+        static::assertEquals(__FUNCTION__, $self->getType()->getImage());
     }
 
     /**
@@ -156,7 +156,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
         $parent = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTParentReference::class, $parent);
-        static::assertEquals(__FUNCTION__ . 'Parent', $parent->getType()->getName());
+        static::assertEquals(__FUNCTION__ . 'Parent', $parent->getType()->getImage());
     }
 
     /**
@@ -169,7 +169,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
         $reference = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTClassReference::class, $reference);
-        static::assertEquals('Bar', $reference->getType()->getName());
+        static::assertEquals('Bar', $reference->getType()->getImage());
     }
 
     /**
@@ -182,7 +182,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
         $reference = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTClassReference::class, $reference);
-        static::assertEquals('Bar', $reference->getType()->getName());
+        static::assertEquals('Bar', $reference->getType()->getImage());
     }
 
     /**
@@ -195,7 +195,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
         $reference = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTClassReference::class, $reference);
-        static::assertEquals('Foo', $reference->getType()->getName());
+        static::assertEquals('Foo', $reference->getType()->getImage());
     }
 
     /**
@@ -238,7 +238,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
         $reference = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTStaticReference::class, $reference);
-        static::assertEquals(__FUNCTION__, $reference->getType()->getName());
+        static::assertEquals(__FUNCTION__, $reference->getType()->getImage());
     }
 
     /**

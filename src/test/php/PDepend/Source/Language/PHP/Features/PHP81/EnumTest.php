@@ -65,25 +65,25 @@ class EnumTest extends PHPParserVersion81TestCase
 
         static::assertCount(4, $types);
         static::assertInstanceOf(ASTInterface::class, $types[0]);
-        static::assertSame('HasColor', $types[0]->getName());
+        static::assertSame('HasColor', $types[0]->getImage());
         static::assertInstanceOf(ASTEnum::class, $types[1]);
-        static::assertSame('Suit', $types[1]->getName());
+        static::assertSame('Suit', $types[1]->getImage());
         static::assertInstanceOf(ASTClass::class, $types[2]);
-        static::assertSame('UseEnum', $types[2]->getName());
+        static::assertSame('UseEnum', $types[2]->getImage());
         static::assertInstanceOf(ASTEnum::class, $types[3]);
-        static::assertSame('SpecialCases', $types[3]->getName());
+        static::assertSame('SpecialCases', $types[3]->getImage());
 
         $methods = $types[1]->getMethods();
 
         static::assertCount(1, $methods);
-        static::assertSame('getColor', $methods[0]->getName());
+        static::assertSame('getColor', $methods[0]->getImage());
 
         $methods = $types[2]->getMethods();
 
         static::assertCount(3, $methods);
-        static::assertSame('foo', $methods[0]->getName());
-        static::assertSame('getSuiteColor', $methods[1]->getName());
-        static::assertSame('areDiamondsRed', $methods[2]->getName());
+        static::assertSame('foo', $methods[0]->getImage());
+        static::assertSame('getSuiteColor', $methods[1]->getImage());
+        static::assertSame('areDiamondsRed', $methods[2]->getImage());
 
         /** @var ASTParameter[] $parameters */
         $parameters = $methods[1]->getParameters();
@@ -93,7 +93,7 @@ class EnumTest extends PHPParserVersion81TestCase
         $enum = $parameters[0]->getClass();
 
         static::assertInstanceOf(ASTEnum::class, $enum);
-        static::assertSame('Suit', $enum->getName());
+        static::assertSame('Suit', $enum->getImage());
         static::assertSame('string', $enum->getType()->getImage());
         static::assertTrue($enum->isBacked());
         static::assertTrue($enum->isFinal());
@@ -107,7 +107,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 'HasColor' => 'HasColor',
             ],
             array_map(
-                static fn(ASTInterface $interface) => $interface->getName(),
+                static fn(ASTInterface $interface) => $interface->getImage(),
                 iterator_to_array($enum->getInterfaces())
             )
         );
@@ -119,7 +119,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 'getcolor' => 'getColor',
             ],
             array_map(
-                static fn(ASTMethod $interface) => $interface->getName(),
+                static fn(ASTMethod $interface) => $interface->getImage(),
                 $enum->getAllMethods()
             )
         );

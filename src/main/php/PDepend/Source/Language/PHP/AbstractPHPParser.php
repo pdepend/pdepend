@@ -505,7 +505,7 @@ abstract class AbstractPHPParser
                 (string) $this->compilationUnit,
                 sprintf(
                     'Constant can\'t be declared private or protected in interface "%s".',
-                    $this->classOrInterface->getName()
+                    $this->classOrInterface->getImage()
                 )
             );
         }
@@ -5692,7 +5692,7 @@ abstract class AbstractPHPParser
                 sprintf(
                     'The keyword "parent" was used as type hint but the ' .
                     'class "%s" does not declare a parent.',
-                    $this->classOrInterface->getName(),
+                    $this->classOrInterface->getImage(),
                 ),
             );
         }
@@ -6673,7 +6673,7 @@ abstract class AbstractPHPParser
     {
         $modifier = 0;
 
-        if ($callable instanceof ASTMethod && $callable->getName() === '__construct') {
+        if ($callable instanceof ASTMethod && $callable->getImage() === '__construct') {
             $modifier = $this->parseConstructFormalParameterModifiers();
         }
 
