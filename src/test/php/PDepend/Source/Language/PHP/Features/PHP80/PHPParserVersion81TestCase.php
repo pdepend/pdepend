@@ -52,7 +52,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @group unittest
  */
-abstract class PHPParserVersion80TestCase extends AbstractTestCase
+abstract class PHPParserVersion81TestCase extends AbstractTestCase
 {
     /**
      * @return AbstractPHPParser

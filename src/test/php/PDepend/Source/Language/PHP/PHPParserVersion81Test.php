@@ -40,12 +40,17 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use OutOfBoundsException;
 use PDepend\AbstractTestCase;
+use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTArrayIndexExpression;
 use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTClosure;
 use PDepend\Source\AST\ASTCompoundExpression;
 use PDepend\Source\AST\ASTConstantDeclarator;
 use PDepend\Source\AST\ASTConstantDefinition;
@@ -53,15 +58,22 @@ use PDepend\Source\AST\ASTConstantPostfix;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTFormalParameter;
+use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\AST\ASTFunctionPostfix;
+use PDepend\Source\AST\ASTHeredoc;
+use PDepend\Source\AST\ASTInstanceOfExpression;
 use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTReturnStatement;
+use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTSelfReference;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Parser\InvalidStateException;
 use PDepend\Source\Parser\TokenStreamEndException;
@@ -81,7 +93,7 @@ use ReflectionMethod;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @group unittest
  */
-class PHPParserVersion72Test extends AbstractTestCase
+class PHPParserVersion81Test extends AbstractTestCase
 {
     /**
      * testParserAllowsKeywordCallableAsPropertyName
@@ -984,6 +996,519 @@ class PHPParserVersion72Test extends AbstractTestCase
         $namespaces = $this->parseCodeResourceForTest();
         static::assertGreaterThan(0, count($namespaces));
         static::assertContainsOnlyInstancesOf(ASTNamespace::class, $namespaces);
+    }
+
+    public function testHereDocAndNowDoc(): void
+    {
+        /** @var ASTHeredoc $heredoc */
+        $heredoc = $this->getFirstNodeOfTypeInFunction('', 'PDepend\\Source\\AST\\ASTArray');
+        $arrayElements = $heredoc->getChildren();
+        $children = $arrayElements[0]->getChildren();
+        $children = $children[0]->getChildren();
+
+        /** @var ASTLiteral $literal */
+        $literal = $children[0];
+
+        static::assertSame('foobar!', $literal->getImage());
+
+        $children = $arrayElements[1]->getChildren();
+        $children = $children[0]->getChildren();
+
+        /** @var ASTLiteral $literal */
+        $literal = $children[0];
+
+        static::assertSame('second,', $literal->getImage());
+    }
+
+    public function testDestructuringArrayReference(): void
+    {
+        $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
+        $statements = $functionChildren[1]->getChildren();
+        $assignments = $statements[1]->getChildren();
+        $listElements = $assignments[0]->getChildren();
+        $children = $listElements[0]->getChildren();
+
+        /** @var ASTArrayElement $aElement */
+        $aElement = $children[0];
+        $arrayElement = $children[1];
+        $children = $arrayElement->getChildren();
+        $subElements = $children[0]->getChildren();
+
+        /** @var ASTArrayElement $bElement */
+        $bElement = $subElements[0];
+
+        /** @var ASTArrayElement $cElement */
+        $cElement = $subElements[1];
+
+        $aElements = $aElement->getChildren();
+
+        /** @var ASTVariable $aVariable */
+        $aVariable = $aElements[0];
+
+        $bElements = $bElement->getChildren();
+
+        /** @var ASTVariable $bVariable */
+        $bVariable = $bElements[0];
+
+        $cElements = $cElement->getChildren();
+
+        /** @var ASTVariable $cVariable */
+        $cVariable = $cElements[0];
+
+        static::assertTrue($aElement->isByReference());
+        static::assertSame('$a', $aVariable->getImage());
+
+        static::assertFalse($bElement->isByReference());
+        static::assertSame('$b', $bVariable->getImage());
+
+        static::assertTrue($cElement->isByReference());
+        static::assertSame('$c', $cVariable->getImage());
+    }
+
+    public function testInstanceOfLiterals(): void
+    {
+        $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
+        $statements = $functionChildren[1]->getChildren();
+        $expressions = $statements[0]->getChildren();
+        $expression = $expressions[0]->getChildren();
+
+        /** @var ASTLiteral $instanceOf */
+        $literal = $expression[0];
+
+        /** @var ASTInstanceOfExpression $instanceOf */
+        $instanceOf = $expression[1];
+
+        /** @var ASTClassOrInterfaceReference[] $variables */
+        $variables = $instanceOf->getChildren();
+
+        static::assertCount(2, $expression);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTLiteral', $literal);
+        static::assertSame('false', $literal->getImage());
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTClassOrInterfaceReference', $variables[0]);
+        static::assertSame('DateTimeInterface', $variables[0]->getImage());
+    }
+
+    public function testTrailingCommasInCall(): void
+    {
+        $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
+        $statements = $functionChildren[1]->getChildren();
+
+        /** @var ASTFunctionPostfix[] $calls */
+        $calls = $statements[0]->getChildren();
+
+        static::assertCount(1, $calls);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTFunctionPostfix', $calls[0]);
+
+        $children = $calls[0]->getChildren();
+
+        /** @var ASTArguments $arguments */
+        $arguments = $children[1];
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTArguments', $arguments);
+
+        $arguments = $arguments->getChildren();
+
+        static::assertCount(1, $arguments);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTVariable', $arguments[0]);
+        static::assertSame('$i', $arguments[0]->getImage());
+    }
+
+    public function testTrailingCommasInUnsetCall(): void
+    {
+        $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
+        $statements = $functionChildren[1]->getChildren();
+
+        /** @var ASTFunctionPostfix[] $calls */
+        $calls = $statements[0]->getChildren();
+
+        static::assertCount(1, $calls);
+        static::assertSame('$i', $calls[0]->getImage());
+    }
+
+    public function testTypedProperties(): void
+    {
+        /** @var ASTClass $class */
+        $class = $this->getFirstClassForTestCase();
+        $children = $class->getChildren();
+
+        /** @var ASTFieldDeclaration $mixedDeclaration */
+        $mixedDeclaration = array_shift($children);
+
+        static::assertFalse($mixedDeclaration->hasType());
+
+        $message = null;
+
+        try {
+            $mixedDeclaration->getType();
+        } catch (OutOfBoundsException $exception) {
+            $message = $exception->getMessage();
+        }
+
+        static::assertSame('The parameter does not have a type specification.', $message);
+
+        /** @var array[] $declarations */
+        $declarations = array_map(function (ASTFieldDeclaration $child) {
+            $childChildren = $child->getChildren();
+
+            return [
+                $child->hasType() ? $child->getType() : null,
+                $childChildren[1],
+            ];
+        }, $children);
+
+        foreach ([
+            ['int', '$id'],
+            ['float', '$money'],
+            ['bool', '$active'],
+            ['string', '$name'],
+            ['array', '$list', 'PDepend\\Source\\AST\\ASTTypeArray'],
+            ['self', '$parent', 'PDepend\\Source\\AST\\ASTSelfReference'],
+            ['callable', '$event', 'PDepend\\Source\\AST\\ASTTypeCallable'],
+            ['\Closure', '$fqn', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['iterable', '$actions', 'PDepend\\Source\\AST\\ASTTypeIterable'],
+            ['object', '$bag', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['Role', '$role', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['?int', '$idN'],
+            ['?float', '$moneyN'],
+            ['?bool', '$activeN'],
+            ['?string', '$nameN'],
+            ['?array', '$listN', 'PDepend\\Source\\AST\\ASTTypeArray'],
+            ['?self', '$parentN', 'PDepend\\Source\\AST\\ASTSelfReference'],
+            ['?callable', '$eventN', 'PDepend\\Source\\AST\\ASTTypeCallable'],
+            ['?\Closure', '$fqnN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['?iterable', '$actionsN', 'PDepend\\Source\\AST\\ASTTypeIterable'],
+            ['?object', '$bagN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ['?Role', '$roleN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+        ] as $index => $expected) {
+            [$expectedType, $expectedVariable] = $expected;
+            $expectedTypeClass = $expected[2] ?? 'PDepend\\Source\\AST\\ASTScalarType';
+            [$type, $variable] = $declarations[$index];
+
+            static::assertInstanceOf(
+                $expectedTypeClass,
+                $type,
+                "Wrong type for $expectedType $expectedVariable"
+            );
+            static::assertSame(ltrim($expectedType, '?'), $type->getImage());
+            static::assertInstanceOf(
+                'PDepend\\Source\\AST\\ASTVariableDeclarator',
+                $variable,
+                "Wrong variable for $expectedType $expectedVariable"
+            );
+            static::assertSame($expectedVariable, $variable->getImage());
+        }
+    }
+
+    public function testSingleTypedProperty(): void
+    {
+        /** @var ASTClass $class */
+        $class = $this->getFirstClassForTestCase();
+
+        /** @var ASTFieldDeclaration $field */
+        $field = $class->getChild(0);
+        static::assertTrue($field->hasType());
+        static::assertSame('int', $field->getType()->getImage());
+        static::assertTrue($field->isPrivate());
+        static::assertFalse($field->isProtected());
+        static::assertFalse($field->isPublic());
+    }
+
+    public function testTypedPropertiesSyntaxError(): void
+    {
+        $this->expectException(
+            'PDepend\\Source\\Parser\\UnexpectedTokenException'
+        );
+        $this->expectExceptionMessage(
+            'Unexpected token: string, line: 4, col: 16, file:'
+        );
+
+        $this->parseCodeResourceForTest();
+    }
+
+    public function testArrowFunctions(): void
+    {
+        /** @var ASTClosure $closure */
+        $closure = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTFunctionPostfix'
+        )->getChild(1)->getChild(0);
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTClosure', $closure);
+
+        /** @var ASTFormalParameters $parameters */
+        $parameters = $closure->getChild(0);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $parameters);
+        static::assertCount(1, $parameters->getChildren());
+
+        /** @var ASTFormalParameter $parameter */
+        $parameter = $parameters->getChild(0);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameter', $parameter);
+
+        /** @var ASTVariableDeclarator $parameter */
+        $variableDeclarator = $parameter->getChild(0);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variableDeclarator);
+        static::assertSame('$number', $variableDeclarator->getImage());
+
+        /** @var ASTReturnStatement $parameters */
+        $return = $closure->getChild(1);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTReturnStatement', $return);
+        static::assertSame('=>', $return->getImage());
+        static::assertCount(1, $return->getChildren());
+
+        /** @var ASTExpression $expression */
+        $expression = $return->getChild(0);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
+        static::assertSame([
+            'PDepend\\Source\\AST\\ASTVariable',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+        ], array_map('get_class', $expression->getChildren()));
+        static::assertSame([
+            '$number',
+            '*',
+            '2',
+        ], array_map(fn(ASTNode $node) => $node->getImage(), $expression->getChildren()));
+    }
+
+    public function testArrowFunctionsWithReturnType(): void
+    {
+        /** @var ASTClosure $closure */
+        $closure = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTFunctionPostfix'
+        )->getChild(1)->getChild(0);
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTClosure', $closure);
+
+        /** @var ASTFormalParameters $parameters */
+        $parameters = $closure->getChild(0);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameters', $parameters);
+        static::assertCount(1, $parameters->getChildren());
+
+        /** @var ASTFormalParameter $parameter */
+        $parameter = $parameters->getChild(0);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTFormalParameter', $parameter);
+
+        /** @var ASTVariableDeclarator $parameter */
+        $variableDeclarator = $parameter->getChild(0);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTVariableDeclarator', $variableDeclarator);
+        static::assertSame('$number', $variableDeclarator->getImage());
+
+        /** @var ASTScalarType $parameters */
+        $type = $closure->getChild(1);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTScalarType', $type);
+        static::assertSame('int', $type->getImage());
+
+        /** @var ASTReturnStatement $parameters */
+        $return = $closure->getChild(2);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTReturnStatement', $return);
+        static::assertSame('=>', $return->getImage());
+        static::assertCount(1, $return->getChildren());
+
+        /** @var ASTExpression $expression */
+        $expression = $return->getChild(0);
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTExpression', $expression);
+        static::assertSame([
+            'PDepend\\Source\\AST\\ASTVariable',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+        ], array_map('get_class', $expression->getChildren()));
+        static::assertSame([
+            '$number',
+            '*',
+            '2',
+        ], array_map(fn(ASTNode $node) => $node->getImage(), $expression->getChildren()));
+    }
+
+    public function testTypeCovarianceAndArgumentTypeContravariance(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testNullCoalescingAssignmentOperator(): void
+    {
+        /** @var ASTAssignmentExpression $assignment */
+        $assignment = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTAssignmentExpression'
+        );
+
+        static::assertSame('??=', $assignment->getImage());
+    }
+
+    public function testUnpackingInsideArrays(): void
+    {
+        $expression = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTArray'
+        );
+        static::assertSame([
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+            'PDepend\\Source\\AST\\ASTArrayElement',
+        ], array_map('get_class', $expression->getChildren()));
+
+        /** @var ASTNode[] $elements */
+        $elements = array_map(fn($node) => $node->getChild(0), $expression->getChildren());
+        static::assertSame([
+            'PDepend\Source\AST\ASTLiteral',
+            'PDepend\Source\AST\ASTLiteral',
+            'PDepend\Source\AST\ASTExpression',
+            'PDepend\Source\AST\ASTLiteral',
+            'PDepend\Source\AST\ASTLiteral',
+        ], array_map('get_class', $elements));
+
+        /** @var ASTExpression $expression */
+        $expression = $elements[2];
+        static::assertSame([
+            '...',
+            '$numbers',
+        ], array_map(fn(ASTNode $node) => $node->getImage(), $expression->getChildren()));
+    }
+
+    public function testNumericLiteralSeparator(): void
+    {
+        $expression = $this->getFirstNodeOfTypeInFunction(
+            $this->getCallingTestMethod(),
+            'PDepend\\Source\\AST\\ASTExpression'
+        );
+        static::assertSame([
+            'PDepend\\Source\\AST\\ASTLiteral',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+            'PDepend\\Source\\AST\\ASTExpression',
+            'PDepend\\Source\\AST\\ASTLiteral',
+        ], array_map('get_class', $expression->getChildren()));
+
+        static::assertSame('6.674_083e-11', $expression->getChild(0)->getImage());
+        static::assertSame('299_792_458', $expression->getChild(2)->getImage());
+        static::assertSame('0xCAFE_F00D', $expression->getChild(4)->getImage());
+        static::assertSame('0b0101_1111', $expression->getChild(6)->getImage());
+    }
+
+    public function testReadOnlyNamedImport(): void
+    {
+        $this->expectException(OutOfBoundsException::class);
+
+        $this->parseCodeResourceForTest()->current();
+    }
+
+    /**
+     * testCatchWithoutVariable
+     */
+    public function testCatchWithoutVariable(): void
+    {
+        $catchStatement = $this->getFirstMethodForTestCase()->getFirstChildOfType(
+            'PDepend\\Source\\AST\\ASTCatchStatement'
+        );
+
+        static::assertCount(2, $catchStatement->getChildren());
+    }
+
+    /**
+     * testFunctionReturnTypeHintStatic
+     */
+    public function testFunctionReturnTypeHintStatic(): void
+    {
+        $type = $this->getFirstMethodForTestCase()->getReturnType();
+
+        static::assertFalse($type->isScalar());
+        static::assertSame('static', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintNullableStatic
+     */
+    public function testFunctionReturnTypeHintNullableStatic(): void
+    {
+        $type = $this->getFirstMethodForTestCase()->getReturnType();
+
+        static::assertFalse($type->isScalar());
+        static::assertSame('static', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintStaticWithComments
+     */
+    public function testFunctionReturnTypeHintStaticWithComments(): void
+    {
+        $type = $this->getFirstMethodForTestCase()->getReturnType();
+
+        static::assertFalse($type->isScalar());
+        static::assertSame('static', $type->getImage());
+    }
+
+    /**
+     * testFunctionParameterTypeHintByReferenceVariableArguments
+     */
+    public function testFunctionParameterTypeHintByReferenceVariableArguments(): void
+    {
+        $parameters = $this->getFirstFunctionForTestCase()->getParameters();
+        $parameter = $parameters[0];
+        $formalParameter = $parameter->getFormalParameter();
+        $type = $formalParameter->getType();
+
+        static::assertFalse($type->isIntersection());
+        static::assertTrue($formalParameter->isPassedByReference());
+        static::assertTrue($formalParameter->isVariableArgList());
+    }
+
+    public function testTrailingCommaInClosureUseList(): void
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * testTrailingCommaInParameterList
+     */
+    public function testTrailingCommaInParameterList(): void
+    {
+        $method = $this->getFirstMethodForTestCase();
+
+        static::assertCount(2, $method->getParameters());
+    }
+
+    public function testNullableTypedProperties(): void
+    {
+        /** @var ASTClass $class */
+        $class = $this->getFirstClassForTestCase();
+        $children = $class->getChildren();
+
+        static::assertTrue($children[0]->hasType());
+
+        /** @var array[] $declarations */
+        $declarations = array_map(function (ASTFieldDeclaration $child) {
+            $childChildren = $child->getChildren();
+
+            return [
+                $child->hasType() ? $child->getType() : null,
+                $childChildren[1],
+            ];
+        }, $children);
+
+        foreach ([
+            ['null|int|float', '$number', 'PDepend\\Source\\AST\\ASTUnionType'],
+        ] as $index => $expected) {
+            [$expectedType, $expectedVariable, $expectedTypeClass] = $expected;
+            [$type, $variable] = $declarations[$index];
+
+            static::assertInstanceOf(
+                $expectedTypeClass,
+                $type,
+                "Wrong type for $expectedType $expectedVariable"
+            );
+            static::assertSame(ltrim($expectedType, '?'), $type->getImage());
+            static::assertInstanceOf(
+                'PDepend\\Source\\AST\\ASTVariableDeclarator',
+                $variable,
+                "Wrong variable for $expectedType $expectedVariable"
+            );
+            static::assertSame($expectedVariable, $variable->getImage());
+        }
     }
 
     /**

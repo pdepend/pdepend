@@ -51,7 +51,7 @@ use PDepend\Source\Parser\TokenException;
  * @group unittest
  * @group php8
  */
-class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
+class ConstructorPropertyPromotionTest extends PHPParserVersion81TestCase
 {
     public function testConstructorPropertyPromotion(): void
     {
