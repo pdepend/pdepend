@@ -21,7 +21,7 @@
         "easy-doc/easy-doc": "0.0.0 || ^1.2.3",
         "friendsofphp/php-cs-fixer": "^3.54",
         "gregwar/rst": "^1.0",
-        "phpstan/phpstan": "~1.10.67",
+        "phpstan/phpstan": "~1.11.0",
         "phpunit/phpunit": "^10.5.20",
         "squizlabs/php_codesniffer": "^2.0.0"
     },
