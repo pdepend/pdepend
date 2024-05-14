@@ -8693,7 +8693,7 @@ abstract class AbstractPHPParser
     {
         $this->tokenStack->push();
 
-        if (Tokens::T_FN === $this->tokenizer->peek()) {
+        if ($this->tokenizer->peek() === Tokens::T_FN) {
             $this->consumeToken(Tokens::T_FN);
         }
 
