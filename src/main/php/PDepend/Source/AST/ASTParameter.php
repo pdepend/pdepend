@@ -113,7 +113,7 @@ class ASTParameter extends AbstractASTArtifact
         if ($this->isArray() === true) {
             $typeHint = ' array';
         } elseif ($this->getClass() !== null) {
-            $typeHint = ' ' . $this->getClass()->getName();
+            $typeHint = ' ' . $this->getClass()->getImage();
         }
 
         $default = '';
@@ -143,7 +143,7 @@ class ASTParameter extends AbstractASTArtifact
             $required,
             $typeHint,
             $reference,
-            $this->getName(),
+            $this->getImage(),
             $default,
         );
     }
@@ -153,7 +153,7 @@ class ASTParameter extends AbstractASTArtifact
      *
      * @return string
      */
-    public function getName()
+    public function getImage()
     {
         return $this->variableDeclarator->getImage();
     }

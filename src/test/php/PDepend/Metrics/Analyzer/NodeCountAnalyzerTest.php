@@ -164,7 +164,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics = [];
         foreach ($namespaces as $namespace) {
-            $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
+            $metrics[$namespace->getImage()] = $analyzer->getNodeMetrics($namespace);
         }
 
         static::assertEquals(
@@ -201,7 +201,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics = [];
         foreach ($namespaces as $namespace) {
-            $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
+            $metrics[$namespace->getImage()] = $analyzer->getNodeMetrics($namespace);
         }
 
         static::assertEquals(
@@ -238,7 +238,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics = [];
         foreach ($namespaces as $namespace) {
-            $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
+            $metrics[$namespace->getImage()] = $analyzer->getNodeMetrics($namespace);
         }
 
         static::assertEquals(
@@ -275,7 +275,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics = [];
         foreach ($namespaces as $namespace) {
-            $metrics[$namespace->getName()] = $analyzer->getNodeMetrics($namespace);
+            $metrics[$namespace->getImage()] = $analyzer->getNodeMetrics($namespace);
         }
 
         static::assertEquals(

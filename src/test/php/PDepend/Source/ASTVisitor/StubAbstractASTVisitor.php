@@ -70,7 +70,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      */
     public function visitClass(ASTClass $class): void
     {
-        $this->visits[] = $class->getName();
+        $this->visits[] = $class->getImage();
 
         parent::visitClass($class);
     }
@@ -90,7 +90,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      */
     public function visitFunction(ASTFunction $function): void
     {
-        $this->visits[] = $function->getName();
+        $this->visits[] = $function->getImage();
 
         parent::visitFunction($function);
     }
@@ -100,7 +100,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      */
     public function visitInterface(ASTInterface $interface): void
     {
-        $this->visits[] = $interface->getName();
+        $this->visits[] = $interface->getImage();
 
         parent::visitInterface($interface);
     }
@@ -110,7 +110,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      */
     public function visitMethod(ASTMethod $method): void
     {
-        $this->visits[] = $method->getName();
+        $this->visits[] = $method->getImage();
 
         parent::visitMethod($method);
     }
@@ -122,7 +122,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      */
     public function visitNamespace(ASTNamespace $namespace): void
     {
-        $this->visits[] = $namespace->getName();
+        $this->visits[] = $namespace->getImage();
 
         parent::visitNamespace($namespace);
     }
@@ -132,7 +132,7 @@ class StubAbstractASTVisitor extends AbstractASTVisitor
      */
     public function visitProperty(ASTProperty $property): void
     {
-        $this->visits[] = $property->getName();
+        $this->visits[] = $property->getImage();
 
         parent::visitProperty($property);
     }

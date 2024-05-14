@@ -313,13 +313,13 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         $properties = [];
         // Collect all properties of the context class
         foreach ($class->getProperties() as $prop) {
-            $properties[$prop->getName()] = true;
+            $properties[$prop->getImage()] = true;
         }
 
         foreach ($class->getParentClasses() as $parent) {
             foreach ($parent->getProperties() as $prop) {
-                if (!$prop->isPrivate() && !isset($properties[$prop->getName()])) {
-                    $properties[$prop->getName()] = true;
+                if (!$prop->isPrivate() && !isset($properties[$prop->getImage()])) {
+                    $properties[$prop->getImage()] = true;
                 }
             }
         }
@@ -342,7 +342,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
                 if ($method->isPrivate()) {
                     continue;
                 }
-                if (isset($ccn[$name = $method->getName()])) {
+                if (isset($ccn[$name = $method->getImage()])) {
                     continue;
                 }
                 $ccn[$name] = $this->cyclomaticAnalyzer->getCcn2($method);
@@ -374,7 +374,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         $ccn = [];
 
         foreach ($type->getMethods() as $method) {
-            $ccn[$method->getName()] = $this->cyclomaticAnalyzer->getCcn2($method);
+            $ccn[$method->getImage()] = $this->cyclomaticAnalyzer->getCcn2($method);
         }
 
         return $ccn;

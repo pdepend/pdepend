@@ -282,7 +282,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
 
         $parentMethodNames = [];
         foreach ($parentClass->getAllMethods() as $method) {
-            $parentMethodNames[$method->getName()] = $method->isAbstract();
+            $parentMethodNames[$method->getImage()] = $method->isAbstract();
         }
 
         $numberOfAddedMethods = 0;
@@ -293,8 +293,8 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
                 continue;
             }
 
-            if (isset($parentMethodNames[$method->getName()])) {
-                if (!$parentMethodNames[$method->getName()]) {
+            if (isset($parentMethodNames[$method->getImage()])) {
+                if (!$parentMethodNames[$method->getImage()]) {
                     ++$numberOfOverwrittenMethods;
                 }
             } else {

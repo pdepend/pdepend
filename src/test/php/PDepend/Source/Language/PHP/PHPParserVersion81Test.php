@@ -809,9 +809,9 @@ class PHPParserVersion81Test extends AbstractTestCase
         $classes = $namespaces[0]->getClasses();
         $methods = $classes[0]->getMethods();
 
-        static::assertSame('trait', $methods[0]->getName());
-        static::assertSame('callable', $methods[1]->getName());
-        static::assertSame('insteadof', $methods[2]->getName());
+        static::assertSame('trait', $methods[0]->getImage());
+        static::assertSame('callable', $methods[1]->getImage());
+        static::assertSame('insteadof', $methods[2]->getImage());
     }
 
     public function testKeywordsAsConstants(): void

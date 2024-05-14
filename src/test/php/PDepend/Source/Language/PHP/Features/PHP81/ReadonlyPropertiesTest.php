@@ -69,7 +69,7 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
     {
         $class = $this->getFirstClassForTestCase();
         $constructor = $class->getMethods()->offsetGet(0);
-        static::assertSame('__construct', $constructor->getName());
+        static::assertSame('__construct', $constructor->getImage());
 
         $parameters = $constructor->getParameters();
         $parameter = $parameters[0];
@@ -104,7 +104,7 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
 
         /** @var ASTMethod $constructor */
         $constructor = $class->getMethods()->offsetGet(0);
-        static::assertSame('__construct', $constructor->getName());
+        static::assertSame('__construct', $constructor->getImage());
         $constructorNodes = $constructor->getChildren();
         $assignment = $constructorNodes[1]->getChild(0)->getChild(0);
 
@@ -117,7 +117,7 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
         static::assertSame('readonly', $methodPostfix->getImage());
 
         $method = $class->getMethods()->offsetGet(1);
-        static::assertSame('readonly', $method->getName());
+        static::assertSame('readonly', $method->getImage());
 
         $methodNodes = $method->getChildren();
         $constantCall = $methodNodes[1]->getChild(0)->getChild(0);

@@ -57,15 +57,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
 class ASTCompilationUnitTest extends AbstractTestCase
 {
     /**
-     * testGetNameReturnsTheFileName
-     */
-    public function testGetNameReturnsTheFileName(): void
-    {
-        $file = new ASTCompilationUnit(__FILE__);
-        static::assertEquals(__FILE__, $file->getName());
-    }
-
-    /**
      * testGetFileNameReturnsTheFileName
      */
     public function testGetFileNameReturnsTheFileName(): void

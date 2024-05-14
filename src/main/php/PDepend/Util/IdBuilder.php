@@ -104,7 +104,7 @@ class IdBuilder
     protected function forOffsetItem(AbstractASTArtifact $artifact, $prefix)
     {
         $fileHash = $artifact->getCompilationUnit()?->getId() ?? 'default';
-        $itemHash = $this->hash($prefix . ':' . strtolower($artifact->getName()));
+        $itemHash = $this->hash($prefix . ':' . strtolower($artifact->getImage()));
 
         $offset = $this->getOffsetInFile($fileHash, $itemHash);
 
@@ -118,7 +118,7 @@ class IdBuilder
      */
     public function forMethod(ASTMethod $method)
     {
-        $hash = $this->hash(strtolower($method->getName()));
+        $hash = $this->hash(strtolower($method->getImage()));
 
         $parent = $method->getParent();
         if (!$parent) {

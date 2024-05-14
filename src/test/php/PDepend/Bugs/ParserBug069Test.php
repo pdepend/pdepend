@@ -68,7 +68,7 @@ class ParserBug069Test extends AbstractRegressionTestCase
             ->current()
             ->getNamespace();
 
-        static::assertEquals('PDepend', $namespace->getName());
+        static::assertEquals('PDepend', $namespace->getImage());
     }
 
     /**
@@ -85,7 +85,7 @@ class ParserBug069Test extends AbstractRegressionTestCase
             ->current()
             ->getNamespace();
 
-        static::assertEquals('PDepend', $namespace->getName());
+        static::assertEquals('PDepend', $namespace->getImage());
     }
 
     /**
@@ -119,7 +119,7 @@ class ParserBug069Test extends AbstractRegressionTestCase
             ->current()
             ->getNamespace();
 
-        static::assertEquals('PDepend', $namespace->getName());
+        static::assertEquals('PDepend', $namespace->getImage());
     }
 
     /**
@@ -136,6 +136,6 @@ class ParserBug069Test extends AbstractRegressionTestCase
             ->current()
             ->getNamespace();
 
-        static::assertEquals('PDepend', $namespace->getName());
+        static::assertEquals('PDepend', $namespace->getImage());
     }
 }

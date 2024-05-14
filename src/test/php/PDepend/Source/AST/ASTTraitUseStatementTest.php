@@ -191,7 +191,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $this->getFirstTraitUseStatementInClass();
         $methods = $useStmt->getAllMethods();
 
-        static::assertEquals('foo', $methods[0]->getName());
+        static::assertEquals('foo', $methods[0]->getImage());
     }
 
     /**
@@ -292,7 +292,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
         static::assertEquals(
             'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
-            $methods[0]->getParent()->getName()
+            $methods[0]->getParent()->getImage()
         );
     }
 

@@ -111,7 +111,7 @@ class CohesionAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
     public function visitProperty(ASTProperty $property)
     {
         $this->fireStartProperty($property);
-        echo ltrim($property->getName(), '$'), PHP_EOL;
+        echo ltrim($property->getImage(), '$'), PHP_EOL;
         $this->fireEndProperty($property);
     }
 

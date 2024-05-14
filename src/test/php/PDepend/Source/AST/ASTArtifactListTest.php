@@ -212,7 +212,7 @@ class ASTArtifactListTest extends AbstractTestCase
         $this->expectException(OutOfBoundsException::class);
 
         $iterator = new ASTArtifactList([]);
-        $iterator[0]->getName();
+        $iterator[0]->getImage();
     }
 
     /**

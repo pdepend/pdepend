@@ -89,10 +89,10 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
             ->getClasses();
 
         $d = $classes[0];
-        static::assertSame('D', $d->getName());
+        static::assertSame('D', $d->getImage());
 
         $f = $classes[1];
-        static::assertSame('F', $f->getName());
+        static::assertSame('F', $f->getImage());
 
         $properties = $f->getProperties();
         static::assertSame(1, $properties->count());
@@ -102,7 +102,7 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
         static::assertSame('E::Foo->name', $this->constructImage($property->getDefaultValue()));
 
         $g = $classes[2];
-        static::assertSame('G', $g->getName());
+        static::assertSame('G', $g->getImage());
 
         /** @var ASTConstantDefinition[] $constants */
         $constants = $g->getChildren();

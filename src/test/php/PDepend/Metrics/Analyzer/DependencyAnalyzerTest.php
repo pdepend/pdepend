@@ -119,7 +119,7 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
 
         $actual = [];
         foreach ($namespaces as $namespace) {
-            $actual[$namespace->getName()] = $visitor->getStats($namespace);
+            $actual[$namespace->getImage()] = $visitor->getStats($namespace);
         }
 
         static::assertEquals($this->input, $actual);

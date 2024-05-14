@@ -75,7 +75,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsStringAsClassName(): void
     {
         $class = $this->getFirstTypeForTestCase();
-        static::assertSame('SimpleClassName', $class->getName());
+        static::assertSame('SimpleClassName', $class->getImage());
     }
 
     /**
@@ -84,7 +84,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsStringAsInterfaceName(): void
     {
         $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('SimpleInterfaceName', $interface->getName());
+        static::assertSame('SimpleInterfaceName', $interface->getImage());
     }
 
     /**
@@ -93,7 +93,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNullAsClassName(): void
     {
         $class = $this->getFirstTypeForTestCase();
-        static::assertSame('Null', $class->getName());
+        static::assertSame('Null', $class->getImage());
     }
 
     /**
@@ -102,7 +102,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNullAsInterfaceName(): void
     {
         $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('Null', $interface->getName());
+        static::assertSame('Null', $interface->getImage());
     }
 
     /**
@@ -111,7 +111,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTrueAsClassName(): void
     {
         $class = $this->getFirstTypeForTestCase();
-        static::assertSame('True', $class->getName());
+        static::assertSame('True', $class->getImage());
     }
 
     /**
@@ -120,7 +120,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTrueAsInterfaceName(): void
     {
         $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('True', $interface->getName());
+        static::assertSame('True', $interface->getImage());
     }
 
     /**
@@ -129,7 +129,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsFalseAsClassName(): void
     {
         $class = $this->getFirstTypeForTestCase();
-        static::assertSame('False', $class->getName());
+        static::assertSame('False', $class->getImage());
     }
 
     /**
@@ -138,7 +138,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsFalseAsInterfaceName(): void
     {
         $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('False', $interface->getName());
+        static::assertSame('False', $interface->getImage());
     }
 
     /**
@@ -147,7 +147,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsInsteadofAsClassName(): void
     {
         $class = $this->getFirstTypeForTestCase();
-        static::assertSame('insteadof', $class->getName());
+        static::assertSame('insteadof', $class->getImage());
     }
 
     /**
@@ -156,7 +156,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsInsteadofAsFunctionName(): void
     {
         $function = $this->getFirstFunctionForTestCase();
-        static::assertSame('insteadOf', $function->getName());
+        static::assertSame('insteadOf', $function->getImage());
     }
 
     /**
@@ -165,7 +165,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsInsteadofAsInterfaceName(): void
     {
         $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('insteadof', $interface->getName());
+        static::assertSame('insteadof', $interface->getImage());
     }
 
     /**
@@ -174,7 +174,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsInsteadofAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertSame('insteadOf', $method->getName());
+        static::assertSame('insteadOf', $method->getImage());
     }
 
     /**
@@ -192,7 +192,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsUseAsClassName(): void
     {
         $class = $this->getFirstTypeForTestCase();
-        static::assertSame('Use', $class->getName());
+        static::assertSame('Use', $class->getImage());
     }
 
     /**
@@ -201,7 +201,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsUseAsInterfaceName(): void
     {
         $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('Use', $interface->getName());
+        static::assertSame('Use', $interface->getImage());
     }
 
     /**
@@ -212,7 +212,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNamespaceAsClassName(): void
     {
         $class = $this->getFirstTypeForTestCase();
-        static::assertSame('Namespace', $class->getName());
+        static::assertSame('Namespace', $class->getImage());
     }
 
     /**
@@ -223,7 +223,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNamespaceAsInterfaceName(): void
     {
         $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('Namespace', $interface->getName());
+        static::assertSame('Namespace', $interface->getImage());
     }
 
     /**
@@ -234,7 +234,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNamespaceConstantAsClassName(): void
     {
         $class = $this->getFirstTypeForTestCase();
-        static::assertSame('__NAMESPACE__', $class->getName());
+        static::assertSame('__NAMESPACE__', $class->getImage());
     }
 
     /**
@@ -245,7 +245,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNamespaceConstantAsInterfaceName(): void
     {
         $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('__NAMESPACE__', $interface->getName());
+        static::assertSame('__NAMESPACE__', $interface->getImage());
     }
 
     /**
@@ -256,7 +256,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTraitAsClassName(): void
     {
         $class = $this->getFirstTypeForTestCase();
-        static::assertSame('Trait', $class->getName());
+        static::assertSame('Trait', $class->getImage());
     }
 
     /**
@@ -267,7 +267,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTraitAsInterfaceName(): void
     {
         $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('Trait', $interface->getName());
+        static::assertSame('Trait', $interface->getImage());
     }
 
     /**
@@ -278,7 +278,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTraitConstantAsClassName(): void
     {
         $class = $this->getFirstTypeForTestCase();
-        static::assertSame('__TRAIT__', $class->getName());
+        static::assertSame('__TRAIT__', $class->getImage());
     }
 
     /**
@@ -289,7 +289,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTraitConstantAsInterfaceName(): void
     {
         $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('__TRAIT__', $interface->getName());
+        static::assertSame('__TRAIT__', $interface->getImage());
     }
 
     /**
@@ -298,7 +298,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsGotoKeywordAsClassName(): void
     {
         $class = $this->getFirstClassForTestCase();
-        static::assertEquals('Goto', $class->getName());
+        static::assertEquals('Goto', $class->getImage());
     }
 
     /**
@@ -307,7 +307,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsGotoKeywordAsInterfaceName(): void
     {
         $class = $this->getFirstInterfaceForTestCase();
-        static::assertEquals('Goto', $class->getName());
+        static::assertEquals('Goto', $class->getImage());
     }
 
     /**
@@ -318,7 +318,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsDirConstantAsClassName(): void
     {
         $class = $this->getFirstClassForTestCase();
-        static::assertEquals('__DIR__', $class->getName());
+        static::assertEquals('__DIR__', $class->getImage());
     }
 
     /**
@@ -329,7 +329,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsDirConstantAsInterfaceName(): void
     {
         $class = $this->getFirstInterfaceForTestCase();
-        static::assertEquals('__DIR__', $class->getName());
+        static::assertEquals('__DIR__', $class->getImage());
     }
 
     /**
@@ -362,7 +362,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsStringAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('myMethodName', $method->getName());
+        static::assertEquals('myMethodName', $method->getImage());
     }
 
     /**
@@ -371,7 +371,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsUseKeywordAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('Use', $method->getName());
+        static::assertEquals('Use', $method->getImage());
     }
 
     /**
@@ -380,7 +380,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsGotoKeywordAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('Goto', $method->getName());
+        static::assertEquals('Goto', $method->getImage());
     }
 
     /**
@@ -389,7 +389,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsSelfKeywordAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('self', $method->getName());
+        static::assertEquals('self', $method->getImage());
     }
 
     /**
@@ -398,7 +398,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNullAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('null', $method->getName());
+        static::assertEquals('null', $method->getImage());
     }
 
     /**
@@ -407,7 +407,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTrueAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('true', $method->getName());
+        static::assertEquals('true', $method->getImage());
     }
 
     /**
@@ -416,7 +416,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsFalseAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('false', $method->getName());
+        static::assertEquals('false', $method->getImage());
     }
 
     /**
@@ -425,7 +425,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsDirConstantAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('__DIR__', $method->getName());
+        static::assertEquals('__DIR__', $method->getImage());
     }
 
     /**
@@ -436,7 +436,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNamespaceKeywordAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('nameSpace', $method->getName());
+        static::assertEquals('nameSpace', $method->getImage());
     }
 
     /**
@@ -447,7 +447,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNamespaceConstantAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('__NAMESPACE__', $method->getName());
+        static::assertEquals('__NAMESPACE__', $method->getImage());
     }
 
     /**
@@ -456,7 +456,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsParentKeywordAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('Parent', $method->getName());
+        static::assertEquals('Parent', $method->getImage());
     }
 
     /**
@@ -609,7 +609,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsGotoAsFunctionName(): void
     {
         $function = $this->getFirstFunctionForTestCase();
-        static::assertEquals('goto', $function->getName());
+        static::assertEquals('goto', $function->getImage());
     }
 
     /**
@@ -620,7 +620,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsDirConstantAsFunctionName(): void
     {
         $function = $this->getFirstFunctionForTestCase();
-        static::assertEquals('__DIR__', $function->getName());
+        static::assertEquals('__DIR__', $function->getImage());
     }
 
     /**
@@ -631,7 +631,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNamespaceKeywordAsFunctionName(): void
     {
         $method = $this->getFirstFunctionForTestCase();
-        static::assertEquals('namespace', $method->getName());
+        static::assertEquals('namespace', $method->getImage());
     }
 
     /**
@@ -642,7 +642,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsNamespaceConstantAsFunctionName(): void
     {
         $method = $this->getFirstFunctionForTestCase();
-        static::assertEquals('__NAMESPACE__', $method->getName());
+        static::assertEquals('__NAMESPACE__', $method->getImage());
     }
 
     /**
@@ -651,7 +651,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTraitAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('trait', $method->getName());
+        static::assertEquals('trait', $method->getImage());
     }
 
     /**
@@ -660,7 +660,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTraitConstantAsMethodName(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertEquals('__trait__', $method->getName());
+        static::assertEquals('__trait__', $method->getImage());
     }
 
     /**
@@ -669,7 +669,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTraitAsFunctionName(): void
     {
         $function = $this->getFirstFunctionForTestCase();
-        static::assertEquals('trait', $function->getName());
+        static::assertEquals('trait', $function->getImage());
     }
 
     /**
@@ -678,7 +678,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testParserAcceptsTraitConstantAsFunctionName(): void
     {
         $function = $this->getFirstFunctionForTestCase();
-        static::assertEquals('__TRAIT__', $function->getName());
+        static::assertEquals('__TRAIT__', $function->getImage());
     }
 
     /**

@@ -184,7 +184,7 @@ class XmlTest extends AbstractTestCase
             ->getMock();
         $type
             ->expects(static::any())
-            ->method('getName')
+            ->method('getImage')
             ->will(static::returnValue('class'));
         $type
             ->expects(static::any())

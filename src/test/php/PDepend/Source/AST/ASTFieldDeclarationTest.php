@@ -64,7 +64,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
         $declaration = $this->getFirstFieldDeclarationInClass();
 
         $reference = $declaration->getChild(0);
-        static::assertEquals(__FUNCTION__, $reference->getType()->getName());
+        static::assertEquals(__FUNCTION__, $reference->getType()->getImage());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
         $type = $reference->getType();
 
-        static::assertEquals('Sindelfingen', $type->getName());
+        static::assertEquals('Sindelfingen', $type->getImage());
 
         return $type;
     }

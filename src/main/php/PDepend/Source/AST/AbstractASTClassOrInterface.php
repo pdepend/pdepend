@@ -282,7 +282,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         $methods = [];
         foreach ($this->getInterfaces() as $interface) {
             foreach ($interface->getAllMethods() as $method) {
-                $methods[strtolower($method->getName())] = $method;
+                $methods[strtolower($method->getImage())] = $method;
             }
         }
 
@@ -293,11 +293,11 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         }
 
         foreach ($this->getTraitMethods() as $method) {
-            $methods[strtolower($method->getName())] = $method;
+            $methods[strtolower($method->getImage())] = $method;
         }
 
         foreach ($this->getMethods() as $method) {
-            $methods[strtolower($method->getName())] = $method;
+            $methods[strtolower($method->getImage())] = $method;
         }
 
         return $methods;

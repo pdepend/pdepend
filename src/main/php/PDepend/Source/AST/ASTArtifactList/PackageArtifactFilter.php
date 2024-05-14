@@ -89,11 +89,11 @@ class PackageArtifactFilter implements ArtifactFilter
         //       ASTMethod and ASTProperty, but when PDepend supports more node
         //       types, this could produce errors.
         if ($node instanceof AbstractASTClassOrInterface) {
-            $namespace = $node->getNamespace()->getName();
+            $namespace = $node->getNamespace()->getImage();
         } elseif ($node instanceof ASTFunction) {
-            $namespace = $node->getNamespace()->getName();
+            $namespace = $node->getNamespace()->getImage();
         } elseif ($node instanceof ASTNamespace) {
-            $namespace = $node->getName();
+            $namespace = $node->getImage();
         } else {
             return false;
         }

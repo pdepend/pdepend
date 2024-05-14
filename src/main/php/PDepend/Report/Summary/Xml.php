@@ -288,7 +288,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $typeXml = $doc->createElement($typeIdentifier);
-        $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
+        $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getImage()));
         $typeXml->setAttribute('fqname', Utf8Util::ensureEncoding($type->getNamespacedName()));
         $typeXml->setAttribute('start', (string) $type->getStartLine());
         $typeXml->setAttribute('end', (string) $type->getEndLine());
@@ -328,7 +328,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $functionXml = $doc->createElement('function');
-        $functionXml->setAttribute('name', Utf8Util::ensureEncoding($function->getName()));
+        $functionXml->setAttribute('name', Utf8Util::ensureEncoding($function->getImage()));
         $functionXml->setAttribute('start', (string) $function->getStartLine());
         $functionXml->setAttribute('end', (string) $function->getEndLine());
 
@@ -364,7 +364,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $methodXml = $doc->createElement('method');
-        $methodXml->setAttribute('name', Utf8Util::ensureEncoding($method->getName()));
+        $methodXml->setAttribute('name', Utf8Util::ensureEncoding($method->getImage()));
         $methodXml->setAttribute('start', (string) $method->getStartLine());
         $methodXml->setAttribute('end', (string) $method->getEndLine());
 
@@ -391,7 +391,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $packageXml = $doc->createElement('package');
-        $packageXml->setAttribute('name', Utf8Util::ensureEncoding($namespace->getName()));
+        $packageXml->setAttribute('name', Utf8Util::ensureEncoding($namespace->getImage()));
 
         $this->writeNodeMetrics($packageXml, $namespace);
 

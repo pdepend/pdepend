@@ -319,7 +319,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         static::assertEquals(
             'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
-            $methods['foo']->getParent()->getName()
+            $methods['foo']->getParent()->getImage()
         );
     }
 
@@ -777,7 +777,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testCreateNewClassInstance(): void
     {
         $class = new ASTClass(__CLASS__);
-        static::assertEquals(__CLASS__, $class->getName());
+        static::assertEquals(__CLASS__, $class->getImage());
     }
 
     /**
@@ -935,7 +935,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         $actual = [];
         foreach ($class->getInterfaces() as $interface) {
-            $actual[] = $interface->getName();
+            $actual[] = $interface->getImage();
         }
         sort($actual);
 
@@ -957,7 +957,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         $actual = [];
         foreach ($class->getInterfaces() as $interface) {
-            $actual[$interface->getName()] = $interface->getName();
+            $actual[$interface->getImage()] = $interface->getImage();
         }
         sort($actual);
 
@@ -974,7 +974,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         $actual = [];
         foreach ($class->getInterfaces() as $interface) {
-            $actual[] = $interface->getName();
+            $actual[] = $interface->getImage();
         }
         sort($actual);
 
@@ -994,7 +994,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         $actual = [];
         foreach ($types as $type) {
-            $actual[$type->getName()] = $class->isSubtypeOf($type);
+            $actual[$type->getImage()] = $class->isSubtypeOf($type);
         }
         ksort($actual);
 
@@ -1023,7 +1023,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         $actual = [];
         foreach ($types as $type) {
-            $actual[$type->getName()] = $class->isSubtypeOf($type);
+            $actual[$type->getImage()] = $class->isSubtypeOf($type);
         }
         ksort($actual);
 
@@ -1052,7 +1052,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         $actual = [];
         foreach ($types as $type) {
-            $actual[$type->getName()] = $class->isSubtypeOf($type);
+            $actual[$type->getImage()] = $class->isSubtypeOf($type);
         }
         ksort($actual);
 
@@ -1282,7 +1282,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             ->getParentClasses();
 
         foreach ($classes as $i => $class) {
-            $classes[$i] = $class->getName();
+            $classes[$i] = $class->getImage();
         }
 
         static::assertEquals(

@@ -114,7 +114,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testCreateNewFunctionInstance(): void
     {
         $function = $this->createItem();
-        static::assertEquals('createItem', $function->getName());
+        static::assertEquals('createItem', $function->getImage());
     }
 
     /**
@@ -162,7 +162,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function = $this->getFirstFunctionForTestCaseInternal();
         $type = $function->getReturnClass();
 
-        static::assertEquals('Sindelfingen', $type->getName());
+        static::assertEquals('Sindelfingen', $type->getImage());
 
         return $type;
     }
@@ -531,7 +531,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
         static::assertEquals(
             'Baz',
-            $copy->getNamespace()->getClasses()->current()->getName()
+            $copy->getNamespace()->getClasses()->current()->getImage()
         );
     }
 

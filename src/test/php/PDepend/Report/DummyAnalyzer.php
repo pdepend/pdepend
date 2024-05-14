@@ -96,8 +96,8 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      */
     public function getNodeMetrics(ASTArtifact $artifact)
     {
-        if (isset($this->nodeMetrics[$artifact->getName()])) {
-            return $this->nodeMetrics[$artifact->getName()];
+        if (isset($this->nodeMetrics[$artifact->getImage()])) {
+            return $this->nodeMetrics[$artifact->getImage()];
         }
 
         return [];

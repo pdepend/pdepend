@@ -113,7 +113,7 @@ class EngineTest extends AbstractTestCase
         ];
 
         foreach ($metrics as $metric) {
-            unset($expected[$metric->getName()]);
+            unset($expected[$metric->getImage()]);
         }
 
         static::assertCount(0, $expected);
@@ -156,12 +156,12 @@ class EngineTest extends AbstractTestCase
         $namespaces = $engine->analyze();
 
         static::assertEquals(2, $namespaces->count());
-        static::assertEquals('pdepend.test', $namespaces->current()->getName());
+        static::assertEquals('pdepend.test', $namespaces->current()->getImage());
 
         $function = $namespaces->current()->getFunctions()->current();
 
         static::assertNotNull($function);
-        static::assertEquals('foo', $function->getName());
+        static::assertEquals('foo', $function->getImage());
         static::assertEquals(0, $function->getExceptionClasses()->count());
     }
 

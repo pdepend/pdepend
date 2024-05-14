@@ -101,16 +101,6 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     }
 
     /**
-     * Returns the source image of this ast node.
-     *
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->getName();
-    }
-
-    /**
      * Returns the start line for this ast node.
      *
      * @return int

@@ -254,7 +254,7 @@ class PHPBuilderTest extends AbstractTestCase
     public function testGetTraitReturnsDummyIfNoMatchingTraitExists(): void
     {
         $builder = $this->createBuilder();
-        static::assertEquals(__FUNCTION__, $builder->getTrait(__FUNCTION__)->getName());
+        static::assertEquals(__FUNCTION__, $builder->getTrait(__FUNCTION__)->getImage());
     }
 
     /**
@@ -317,7 +317,7 @@ class PHPBuilderTest extends AbstractTestCase
         $builder = $this->createBuilder();
         static::assertEquals(
             __FUNCTION__,
-            $builder->getClass(__FUNCTION__)->getName()
+            $builder->getClass(__FUNCTION__)->getImage()
         );
     }
 
@@ -382,7 +382,7 @@ class PHPBuilderTest extends AbstractTestCase
         $builder = $this->createBuilder();
         static::assertEquals(
             __FUNCTION__,
-            $builder->getInterface(__FUNCTION__)->getName()
+            $builder->getInterface(__FUNCTION__)->getImage()
         );
     }
 
@@ -611,7 +611,7 @@ class PHPBuilderTest extends AbstractTestCase
         $builder = $this->createBuilder();
         static::assertEquals(
             __FUNCTION__,
-            $builder->getClassOrInterface(__FUNCTION__)->getName()
+            $builder->getClassOrInterface(__FUNCTION__)->getImage()
         );
     }
 
@@ -625,7 +625,7 @@ class PHPBuilderTest extends AbstractTestCase
         $builder = $this->createBuilder();
         static::assertEquals(
             '+reflection',
-            $builder->getClassOrInterface('Reflection')->getNamespace()->getName()
+            $builder->getClassOrInterface('Reflection')->getNamespace()->getImage()
         );
     }
 
@@ -639,7 +639,7 @@ class PHPBuilderTest extends AbstractTestCase
         $builder = $this->createBuilder();
         static::assertEquals(
             'foo\bar',
-            $builder->getClassOrInterface('\foo\bar\Baz')->getNamespace()->getName()
+            $builder->getClassOrInterface('\foo\bar\Baz')->getNamespace()->getImage()
         );
     }
 

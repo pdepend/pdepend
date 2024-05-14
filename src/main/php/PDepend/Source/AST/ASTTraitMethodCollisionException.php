@@ -33,9 +33,9 @@ class ASTTraitMethodCollisionException extends RuntimeException
             sprintf(
                 'Trait method %s has not been applied, because there are ' .
                 'collisions with other trait methods on %s\%s.',
-                $method->getName(),
-                preg_replace('(\W+)', '\\', $type->getNamespace()->getName()),
-                $type->getName(),
+                $method->getImage(),
+                preg_replace('(\W+)', '\\', $type->getNamespace()->getImage()),
+                $type->getImage(),
             ),
         );
     }

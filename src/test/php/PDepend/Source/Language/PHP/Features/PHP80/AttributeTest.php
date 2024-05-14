@@ -66,6 +66,6 @@ class AttributeTest extends PHPParserVersion81TestCase
         $bMethod = $methods['b'];
         $parameters = $bMethod->getParameters();
 
-        static::assertSame('$bar', $parameters[0]->getName());
+        static::assertSame('$bar', $parameters[0]->getImage());
     }
 }

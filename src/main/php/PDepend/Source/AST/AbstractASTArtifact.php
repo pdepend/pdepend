@@ -106,16 +106,6 @@ abstract class AbstractASTArtifact implements ASTArtifact
     }
 
     /**
-     * Returns the item name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * Sets the item name.
      *
      * @param string $name The item name.
@@ -166,7 +156,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      */
     public function setCompilationUnit(ASTCompilationUnit $compilationUnit): void
     {
-        if ($this->compilationUnit?->getName() === null) {
+        if ($this->compilationUnit?->getFileName() === null) {
             $this->compilationUnit = $compilationUnit;
         }
     }

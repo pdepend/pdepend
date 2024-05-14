@@ -51,14 +51,6 @@ namespace PDepend\Source\AST;
 interface ASTArtifact extends ASTNode
 {
     /**
-     * Returns the artifact name.
-     *
-     * @return string
-     * @deprecated Use getImage() inherit from ASTNode class.
-     */
-    public function getName();
-
-    /**
      * Returns a id for this code node.
      *
      * @return string

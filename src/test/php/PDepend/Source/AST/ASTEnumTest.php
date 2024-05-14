@@ -72,7 +72,7 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         $deserializedEnum = unserialize($serializedClass);
 
         static::assertInstanceOf(ASTEnum::class, $deserializedEnum);
-        static::assertSame('test', $deserializedEnum->getName());
+        static::assertSame('test', $deserializedEnum->getImage());
         static::assertInstanceOf(ASTScalarType::class, $deserializedEnum->getType());
         static::assertSame('string', $deserializedEnum->getType()->getImage());
     }
@@ -124,7 +124,7 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
 
         $method = new ASTMethod('foobar');
         $method->addChild(new ASTFormalParameters());
-        $method->setReturnClassReference($builder->buildAstClassOrInterfaceReference($enum->getName()));
+        $method->setReturnClassReference($builder->buildAstClassOrInterfaceReference($enum->getImage()));
 
         $enum->addMethod($method);
 

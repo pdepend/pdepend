@@ -71,7 +71,7 @@ class ParserBug016Test extends AbstractRegressionTestCase
         $dependencies = $function->getDependencies();
 
         static::assertEquals(1, $dependencies->count());
-        static::assertEquals('SplObjectStorage', $dependencies[0]->getName());
+        static::assertEquals('SplObjectStorage', $dependencies[0]->getImage());
     }
 
     /**

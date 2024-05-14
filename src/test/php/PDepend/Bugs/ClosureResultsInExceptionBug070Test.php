@@ -106,9 +106,9 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
             ->current()
             ->getFunctions();
 
-        static::assertEquals('bar', $functions->current()->getName());
+        static::assertEquals('bar', $functions->current()->getImage());
         $functions->next();
-        static::assertEquals('foo', $functions->current()->getName());
+        static::assertEquals('foo', $functions->current()->getImage());
     }
 
     /**
@@ -121,6 +121,6 @@ class ClosureResultsInExceptionBug070Test extends AbstractRegressionTestCase
             ->getFunctions()
             ->current();
 
-        static::assertEquals('foo', $function->getName());
+        static::assertEquals('foo', $function->getImage());
     }
 }

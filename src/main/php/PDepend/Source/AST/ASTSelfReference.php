@@ -93,7 +93,7 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
     public function __sleep()
     {
         $this->qualifiedName = $this->getType()->getNamespaceName() . '\\' .
-                               $this->getType()->getName();
+                               $this->getType()->getImage();
 
         return array_merge(['qualifiedName'], parent::__sleep());
     }

@@ -120,7 +120,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
         $actual = [];
         foreach ($functions as $function) {
-            $actual[$function->getName()] = $analyzer->getNodeMetrics($function);
+            $actual[$function->getImage()] = $analyzer->getNodeMetrics($function);
         }
 
         ksort($expected);

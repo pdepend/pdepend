@@ -90,9 +90,4 @@ class ASTEnumCase extends AbstractASTNode implements ASTArtifact
 
         return null;
     }
-
-    public function getName()
-    {
-        return $this->getImage();
-    }
 }
