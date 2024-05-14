@@ -69,7 +69,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node->setImage(__FUNCTION__);
 
         $constant = $node::class . '::IMAGE';
-        $this->assertEquals(defined($constant) ? constant($constant) : __FUNCTION__, $node->getImage());
+        static::assertEquals(defined($constant) ? constant($constant) : __FUNCTION__, $node->getImage());
     }
 
     /**
@@ -78,7 +78,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testGetCommentReturnsNullByDefault(): void
     {
         $node = $this->createNodeInstance();
-        $this->assertNull($node->getComment());
+        static::assertNull($node->getComment());
     }
 
     /**
@@ -89,7 +89,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->createNodeInstance();
         $node->setComment('/** Manuel */');
 
-        $this->assertEquals('/** Manuel */', $node->getComment());
+        static::assertEquals('/** Manuel */', $node->getComment());
     }
 
     /**
@@ -102,7 +102,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->createNodeInstance();
         $node->prependChild($child = $this->getNodeMock());
 
-        $this->assertSame($child, $node->getChild(0));
+        static::assertSame($child, $node->getChild(0));
     }
 
     /**
@@ -116,7 +116,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node->prependChild($child0 = $this->getNodeMock());
         $node->prependChild($child1 = $this->getNodeMock());
 
-        $this->assertSame($child0, $node->getChild(1));
+        static::assertSame($child0, $node->getChild(1));
     }
 
     /**
@@ -130,7 +130,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node->prependChild($child0 = $this->getNodeMock());
         $node->prependChild($child1 = $this->getNodeMock());
 
-        $this->assertSame($child1, $node->getChild(0));
+        static::assertSame($child1, $node->getChild(0));
     }
 
     /**
@@ -141,7 +141,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testGetParentReturnsNullByDefault(): void
     {
         $node = $this->createNodeInstance();
-        $this->assertNull($node->getParent());
+        static::assertNull($node->getParent());
     }
 
     /**
@@ -154,7 +154,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->createNodeInstance();
         $node->setParent($parent = $this->getNodeMock());
 
-        $this->assertSame($parent, $node->getParent());
+        static::assertSame($parent, $node->getParent());
     }
 
     /**
@@ -165,7 +165,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testGetParentsOfTypeReturnsEmptyArrayByDefault(): void
     {
         $node = $this->createNodeInstance();
-        $this->assertSame(
+        static::assertSame(
             [],
             $node->getParentsOfType(ASTScope::class)
         );
@@ -190,7 +190,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $parent1->addChild($parent2);
         $parent0->addChild($parent1);
 
-        $this->assertSame(
+        static::assertSame(
             [$parent0, $parent2],
             $node->getParentsOfType(ASTScope::class)
         );
@@ -204,7 +204,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testGetChildrenReturnsEmptyArrayByDefault(): void
     {
         $node = $this->createNodeInstance();
-        $this->assertSame([], $node->getChildren());
+        static::assertSame([], $node->getChildren());
     }
 
     /**
@@ -218,7 +218,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node->addChild($child0 = $this->getNodeMock());
         $node->addChild($child1 = $this->getNodeMock());
 
-        $this->assertSame([$child0, $child1], $node->getChildren());
+        static::assertSame([$child0, $child1], $node->getChildren());
     }
 
     /**
@@ -249,7 +249,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node->addChild($child1 = $this->getNodeMock());
         $node->addChild($child2 = $this->getNodeMock());
 
-        $this->assertSame($child1, $node->getChild(1));
+        static::assertSame($child1, $node->getChild(1));
     }
 
     /**
@@ -259,7 +259,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testGetFirstChildOfTypeReturnsNullByDefault(): void
     {
-        $this->assertNull(
+        static::assertNull(
             $this->getNodeMock()->getFirstChildOfType(
                 ASTArguments::class
             )
@@ -280,7 +280,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->getNodeMock();
         $node->addChild($child0);
 
-        $this->assertSame(
+        static::assertSame(
             $child0,
             $node->getFirstChildOfType(ASTIndexExpression::class)
         );
@@ -304,7 +304,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node->addChild($child0);
         $child0->addChild($child1);
 
-        $this->assertSame(
+        static::assertSame(
             $child1,
             $node->getFirstChildOfType(ASTArguments::class)
         );
@@ -318,7 +318,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testFindChildrenOfTypeReturnsEmptyArrayByDefault(): void
     {
         $node = $this->getNodeMock();
-        $this->assertSame(
+        static::assertSame(
             [],
             $node->findChildrenOfType(ASTNode::class)
         );
@@ -338,7 +338,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node->addChild($child0);
         $node->addChild($child1);
 
-        $this->assertSame(
+        static::assertSame(
             [$child1],
             $node->findChildrenOfType(ASTScope::class)
         );
@@ -358,7 +358,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node->addChild($child0);
         $child0->addChild($child1);
 
-        $this->assertSame(
+        static::assertSame(
             [$child1],
             $node->findChildrenOfType(ASTScope::class)
         );
@@ -380,7 +380,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $child0->addChild($child1);
         $child1->addChild($child2);
 
-        $this->assertSame(
+        static::assertSame(
             [$child0, $child1, $child2],
             $node->findChildrenOfType(ASTScope::class)
         );
@@ -392,7 +392,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testGetStartColumnReturnsZeroByDefault(): void
     {
         $node = $this->getNodeMock();
-        $this->assertSame(0, $node->getStartColumn());
+        static::assertSame(0, $node->getStartColumn());
     }
 
     /**
@@ -403,7 +403,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->getNodeMock();
         $node->configureLinesAndColumns(0, 0, 42, 0);
 
-        $this->assertEquals(42, $node->getStartColumn());
+        static::assertEquals(42, $node->getStartColumn());
     }
 
     /**
@@ -412,7 +412,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testGetStartLineReturnsZeroByDefault(): void
     {
         $node = $this->getNodeMock();
-        $this->assertSame(0, $node->getStartLine());
+        static::assertSame(0, $node->getStartLine());
     }
 
     /**
@@ -423,7 +423,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->getNodeMock();
         $node->configureLinesAndColumns(42, 0, 0, 0);
 
-        $this->assertEquals(42, $node->getStartLine());
+        static::assertEquals(42, $node->getStartLine());
     }
 
     /**
@@ -432,7 +432,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testGetEndColumnReturnsZeroByDefault(): void
     {
         $node = $this->getNodeMock();
-        $this->assertSame(0, $node->getEndColumn());
+        static::assertSame(0, $node->getEndColumn());
     }
 
     /**
@@ -443,7 +443,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->getNodeMock();
         $node->configureLinesAndColumns(0, 0, 0, 42);
 
-        $this->assertEquals(42, $node->getEndColumn());
+        static::assertEquals(42, $node->getEndColumn());
     }
 
     /**
@@ -452,7 +452,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testGetEndLineReturnsZeroByDefault(): void
     {
         $node = $this->getNodeMock();
-        $this->assertSame(0, $node->getEndLine());
+        static::assertSame(0, $node->getEndLine());
     }
 
     /**
@@ -463,7 +463,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->getNodeMock();
         $node->configureLinesAndColumns(0, 42, 0, 0);
 
-        $this->assertEquals(42, $node->getEndLine());
+        static::assertEquals(42, $node->getEndLine());
     }
 
     /**
@@ -476,7 +476,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->getNodeMock();
         $node->configureLinesAndColumns(13, 17, 23, 42);
 
-        $this->assertEquals(13, $node->getStartLine());
+        static::assertEquals(13, $node->getStartLine());
     }
 
     /**
@@ -489,7 +489,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->getNodeMock();
         $node->configureLinesAndColumns(13, 17, 23, 42);
 
-        $this->assertEquals(17, $node->getEndLine());
+        static::assertEquals(17, $node->getEndLine());
     }
 
     /**
@@ -502,7 +502,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->getNodeMock();
         $node->configureLinesAndColumns(13, 17, 23, 42);
 
-        $this->assertEquals(23, $node->getStartColumn());
+        static::assertEquals(23, $node->getStartColumn());
     }
 
     /**
@@ -515,7 +515,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->getNodeMock();
         $node->configureLinesAndColumns(13, 17, 23, 42);
 
-        $this->assertEquals(42, $node->getEndColumn());
+        static::assertEquals(42, $node->getEndColumn());
     }
 
     /**
@@ -526,7 +526,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $node = $this->getNodeMock();
-        $this->assertEquals(['comment', 'metadata', 'nodes'], $node->__sleep());
+        static::assertEquals(['comment', 'metadata', 'nodes'], $node->__sleep());
     }
 
     /**
@@ -542,7 +542,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
 
         $copy = unserialize(serialize($node));
 
-        $this->assertSame($copy, $copy->getChild(1)->getParent());
+        static::assertSame($copy, $copy->getChild(1)->getParent());
     }
 
     /**
@@ -569,7 +569,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $parent->prependChild($child2);
         $parent->prependChild($child1);
 
-        $this->assertSame($child2, $parent->getChild(1));
+        static::assertSame($child2, $parent->getChild(1));
     }
 
     /**
@@ -577,13 +577,13 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testAcceptInvokesVisitOnGivenVisitor(): void
     {
-        $methodName = 'visit' . substr(get_class($this), 22, -4);
+        $methodName = 'visit' . substr(static::class, 22, -4);
 
         $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->getMock();
-        $visitor->expects($this->once())
+        $visitor->expects(static::once())
             ->method('__call')
-            ->with($this->equalTo($methodName));
+            ->with(static::equalTo($methodName));
 
         $node = $this->createNodeInstance();
         $node->accept($visitor);
@@ -594,17 +594,17 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testAcceptReturnsReturnValueOfVisitMethod(): void
     {
-        $methodName = 'visit' . substr(get_class($this), 22, -4);
+        $methodName = 'visit' . substr(static::class, 22, -4);
 
         $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->getMock();
-        $visitor->expects($this->once())
+        $visitor->expects(static::once())
             ->method('__call')
-            ->with($this->equalTo($methodName))
-            ->will($this->returnValue(42));
+            ->with(static::equalTo($methodName))
+            ->will(static::returnValue(42));
 
         $node = $this->createNodeInstance();
-        $this->assertEquals(42, $node->accept($visitor));
+        static::assertEquals(42, $node->accept($visitor));
     }
 
     /**
@@ -615,15 +615,15 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node2 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('PDepend_Source_AST_ASTNode_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->never())
+        $node2->expects(static::never())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node = $this->createNodeInstance();
         $node->addChild($node2);
 
         $child = $node->getFirstChildOfType($node2::class);
-        $this->assertSame($node2, $child);
+        static::assertSame($node2, $child);
     }
 
     /**
@@ -634,21 +634,21 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node1 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('PDepend_Source_AST_ASTNode_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->never())
+        $node1->expects(static::never())
             ->method('getFirstChildOfType');
 
         $node3 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('PDepend_Source_AST_ASTNode_' . md5(microtime()))
             ->getMock();
-        $node3->expects($this->once())
+        $node3->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue($node1));
+            ->will(static::returnValue($node1));
 
         $node = $this->createNodeInstance();
         $node->addChild($node3);
 
         $child = $node->getFirstChildOfType($node1::class);
-        $this->assertSame($node1, $child);
+        static::assertSame($node1, $child);
     }
 
     /**
@@ -661,14 +661,14 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node2 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName($name)
             ->getMock();
-        $node2->expects($this->once())
+        $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node = $this->createNodeInstance();
         $node->addChild($node2);
 
-        $this->assertNull($node->getFirstChildOfType($name . '_'));
+        static::assertNull($node->getFirstChildOfType($name . '_'));
     }
 
     /**
@@ -681,15 +681,15 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node2 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName($name)
             ->getMock();
-        $node2->expects($this->once())
+        $node2->expects(static::once())
             ->method('findChildrenOfType')
-            ->will($this->returnValue([]));
+            ->will(static::returnValue([]));
 
         $node = $this->createNodeInstance();
         $node->addChild($node2);
 
         $children = $node->findChildrenOfType($name);
-        $this->assertSame([$node2], $children);
+        static::assertSame([$node2], $children);
     }
 
     /**
@@ -711,12 +711,13 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     protected function createNodeInstance()
     {
-        $class = substr(get_class($this), 0, -4);
+        $class = substr(static::class, 0, -4);
 
         $reflection = new ReflectionClass($class);
         if ($reflection->isAbstract()) {
             return $this->getAbstractClassMock($class, [__METHOD__]);
         }
+
         return $reflection->newInstanceArgs([__METHOD__]);
     }
 

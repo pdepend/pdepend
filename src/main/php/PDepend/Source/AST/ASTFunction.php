@@ -64,6 +64,7 @@ class ASTFunction extends AbstractASTCallable
      * to restore the parent namespace while we unserialize a cached object tree.
      */
     protected ?string $namespaceName = null;
+
     /**
      * The parent namespace for this function.
      *
@@ -107,6 +108,7 @@ class ASTFunction extends AbstractASTCallable
     public function setContext(BuilderContext $context)
     {
         $this->context = $context;
+
         return $this;
     }
 

@@ -64,7 +64,7 @@ class ASTParameterTest extends AbstractTestCase
     public function testGetIdReturnsExpectedObjectHash(): void
     {
         $parameters = $this->getFirstMethodInClass()->getParameters();
-        $this->assertEquals(spl_object_hash($parameters[0]), $parameters[0]->getId());
+        static::assertEquals(spl_object_hash($parameters[0]), $parameters[0]->getId());
     }
 
     /**
@@ -73,7 +73,7 @@ class ASTParameterTest extends AbstractTestCase
     public function testParameterAllowsNullForSimpleVariableIssue67(): void
     {
         $parameters = $this->getFirstMethodInClass()->getParameters();
-        $this->assertTrue($parameters[0]->allowsNull());
+        static::assertTrue($parameters[0]->allowsNull());
     }
 
     /**
@@ -83,7 +83,7 @@ class ASTParameterTest extends AbstractTestCase
     public function testParameterAllowsNullForSimpleVariablePassedByReferenceIssue67(): void
     {
         $parameters = $this->getFirstMethodInClass()->getParameters();
-        $this->assertTrue($parameters[0]->allowsNull());
+        static::assertTrue($parameters[0]->allowsNull());
     }
 
     /**
@@ -93,7 +93,7 @@ class ASTParameterTest extends AbstractTestCase
     public function testParameterNotAllowsNullForArrayHintVariableIssue67(): void
     {
         $parameters = $this->getFirstMethodInClass()->getParameters();
-        $this->assertFalse($parameters[0]->allowsNull());
+        static::assertFalse($parameters[0]->allowsNull());
     }
 
     /**
@@ -103,7 +103,7 @@ class ASTParameterTest extends AbstractTestCase
     public function testParameterAllowsNullForArrayHintVariableIssue67(): void
     {
         $parameters = $this->getFirstMethodInClass()->getParameters();
-        $this->assertTrue($parameters[0]->allowsNull());
+        static::assertTrue($parameters[0]->allowsNull());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTParameterTest extends AbstractTestCase
     public function testParameterNotAllowsNullForTypeHintVariableIssue67(): void
     {
         $parameters = $this->getFirstMethodInClass()->getParameters();
-        $this->assertFalse($parameters[0]->allowsNull());
+        static::assertFalse($parameters[0]->allowsNull());
     }
 
     /**
@@ -123,7 +123,7 @@ class ASTParameterTest extends AbstractTestCase
     public function testParameterAllowsNullForTypeHintVariableIssue67(): void
     {
         $parameter = $this->getFirstMethodInClass()->getParameters();
-        $this->assertTrue($parameter[0]->allowsNull());
+        static::assertTrue($parameter[0]->allowsNull());
     }
 
     /**
@@ -133,7 +133,7 @@ class ASTParameterTest extends AbstractTestCase
     public function testParameterDeclaringClassReturnsNullForFunctionIssue67(): void
     {
         $parameter = $this->getFirstFunctionForTestCase()->getParameters();
-        $this->assertNull($parameter[0]->getDeclaringClass());
+        static::assertNull($parameter[0]->getDeclaringClass());
     }
 
     /**
@@ -151,7 +151,7 @@ class ASTParameterTest extends AbstractTestCase
             ->current()
             ->getParameters();
 
-        $this->assertSame($class, $parameters[0]->getDeclaringClass());
+        static::assertSame($class, $parameters[0]->getDeclaringClass());
     }
 
     /**
@@ -168,7 +168,7 @@ class ASTParameterTest extends AbstractTestCase
             ->current()
             ->getParameters();
 
-        $this->assertSame($class, $parameters[0]->getClass());
+        static::assertSame($class, $parameters[0]->getClass());
     }
 
     /**
@@ -177,7 +177,7 @@ class ASTParameterTest extends AbstractTestCase
     public function testParameterReturnNullForTypeWhenNoASTClassOrInterfaceReferenceWasSet(): void
     {
         $parameters = $this->getFirstMethodInClass()->getParameters();
-        $this->assertNull($parameters[0]->getClass());
+        static::assertNull($parameters[0]->getClass());
     }
 
     /**
@@ -187,7 +187,7 @@ class ASTParameterTest extends AbstractTestCase
     {
         $function = $this->getFirstFunctionForTestCase();
         $parameters = $function->getParameters();
-        $this->assertSame($function, $parameters[0]->getDeclaringFunction());
+        static::assertSame($function, $parameters[0]->getDeclaringFunction());
     }
 
     /**
@@ -197,7 +197,7 @@ class ASTParameterTest extends AbstractTestCase
     {
         $method = $this->getFirstMethodInClass();
         $parameters = $method->getParameters();
-        $this->assertSame($method, $parameters[0]->getDeclaringFunction());
+        static::assertSame($method, $parameters[0]->getDeclaringFunction());
     }
 
     /**
@@ -224,9 +224,9 @@ class ASTParameterTest extends AbstractTestCase
     {
         $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->getMock();
-        $visitor->expects($this->once())
+        $visitor->expects(static::once())
             ->method('visitParameter')
-            ->with($this->isInstanceOf(ASTParameter::class));
+            ->with(static::isInstanceOf(ASTParameter::class));
 
         $formalParameter = $this->getMockBuilder(ASTFormalParameter::class)
             ->getMock();

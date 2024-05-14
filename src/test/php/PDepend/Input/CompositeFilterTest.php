@@ -67,7 +67,7 @@ class CompositeFilterTest extends AbstractTestCase
 
         $composite->accept(__DIR__, __DIR__);
 
-        $this->assertTrue($filter0->invoked);
+        static::assertTrue($filter0->invoked);
     }
 
     /**
@@ -84,7 +84,7 @@ class CompositeFilterTest extends AbstractTestCase
 
         $composite->accept(__DIR__, __DIR__);
 
-        $this->assertTrue($filter1->invoked);
+        static::assertTrue($filter1->invoked);
     }
 
     /**
@@ -101,6 +101,6 @@ class CompositeFilterTest extends AbstractTestCase
 
         $composite->accept(__DIR__, __DIR__);
 
-        $this->assertFalse($filter1->invoked);
+        static::assertFalse($filter1->invoked);
     }
 }

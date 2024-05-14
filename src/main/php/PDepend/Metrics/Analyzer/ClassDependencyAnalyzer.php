@@ -59,21 +59,15 @@ use RuntimeException;
  */
 class ClassDependencyAnalyzer extends AbstractAnalyzer
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     private const
         M_AFFERENT_COUPLING = 'ca',
         M_EFFERENT_COUPLING = 'ce';
 
-    /**
-     * @var array<string, AbstractASTClassOrInterface>
-     */
+    /** @var array<string, AbstractASTClassOrInterface> */
     private array $nodeSet = [];
 
-    /**
-     * @var array<string, array<string, array<int, string>>>
-     */
+    /** @var array<string, array<string, array<int, string>>> */
     private array $nodeRelations = [];
 
     /**
@@ -129,6 +123,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         if (isset($this->afferentNodes[$node->getId()])) {
             $afferents = $this->afferentNodes[$node->getId()];
         }
+
         return $afferents;
     }
 
@@ -143,6 +138,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         if (isset($this->efferentNodes[$node->getId()])) {
             $efferents = $this->efferentNodes[$node->getId()];
         }
+
         return $efferents;
     }
 
@@ -219,7 +215,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         $this->initTypeMetric($typeA);
         $this->initTypeMetric($typeB);
 
-        if (!in_array($idB, $this->nodeRelations[$idA][self::M_EFFERENT_COUPLING])) {
+        if (!in_array($idB, $this->nodeRelations[$idA][self::M_EFFERENT_COUPLING], true)) {
             $this->nodeRelations[$idA][self::M_EFFERENT_COUPLING][] = $idB;
             $this->nodeRelations[$idB][self::M_AFFERENT_COUPLING][] = $idA;
         }
@@ -278,6 +274,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
     {
         if (in_array($node, $list, true)) {
             $list[] = $node;
+
             return true;
         }
 
@@ -292,6 +289,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         if (is_int($idx = array_search($node, $list, true))) {
             unset($list[$idx]);
         }
+
         return false;
     }
 }

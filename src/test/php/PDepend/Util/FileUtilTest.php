@@ -60,7 +60,7 @@ class FileUtilTest extends AbstractTestCase
      */
     public function testGetSysTempDirReturnsExpectedDirectory(): void
     {
-        $this->assertEquals(
+        static::assertEquals(
             sys_get_temp_dir(),
             FileUtil::getSysTempDir()
         );
@@ -71,7 +71,7 @@ class FileUtilTest extends AbstractTestCase
      */
     public function testGetUserHomeDirReturnsExpectedDirectory(): void
     {
-        $this->assertEquals(
+        static::assertEquals(
             getenv('HOME'),
             FileUtil::getUserHomeDir()
         );
@@ -82,7 +82,7 @@ class FileUtilTest extends AbstractTestCase
      */
     public function testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory(): void
     {
-        $this->assertEquals(
+        static::assertEquals(
             getenv('HOME'),
             FileUtil::getUserHomeDirOrSysTempDir()
         );

@@ -67,8 +67,8 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTestCase
             ->getProperties()
             ->current();
 
-        $this->assertSame(5, $property->getStartLine());
-        $this->assertSame(5, $property->getEndLine());
+        static::assertSame(5, $property->getStartLine());
+        static::assertSame(5, $property->getEndLine());
     }
 
     /**
@@ -83,8 +83,8 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTestCase
             ->getProperties()
             ->current();
 
-        $this->assertSame(9, $property->getStartLine());
-        $this->assertSame(9, $property->getEndLine());
+        static::assertSame(9, $property->getStartLine());
+        static::assertSame(9, $property->getEndLine());
     }
 
     /**
@@ -98,8 +98,8 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTestCase
             ->getProperties()
             ->current();
 
-        $this->assertSame(3, $property->getStartLine());
-        $this->assertSame(7, $property->getEndLine());
+        static::assertSame(3, $property->getStartLine());
+        static::assertSame(7, $property->getEndLine());
     }
 
     /**
@@ -113,7 +113,7 @@ class IncorrectPropertyEndlineBug068Test extends AbstractRegressionTestCase
             ->getProperties()
             ->current();
 
-        $this->assertSame(8, $property->getStartLine());
-        $this->assertSame(13, $property->getEndLine());
+        static::assertSame(8, $property->getStartLine());
+        static::assertSame(13, $property->getEndLine());
     }
 }

@@ -45,9 +45,9 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFunctionPostfix} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTInvocation
  * @covers \PDepend\Source\AST\ASTFunctionPostfix
+ * @covers \PDepend\Source\AST\ASTInvocation
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -67,7 +67,7 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     public function testGetImageForVariableFunction(): void
     {
         $postfix = $this->getFirstFunctionPostfixInFunction();
-        $this->assertEquals('$function', $postfix->getImage());
+        static::assertEquals('$function', $postfix->getImage());
     }
 
     /**
@@ -82,7 +82,7 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     public function testGetImageForArrayIndexedVariableFunction(): void
     {
         $postfix = $this->getFirstFunctionPostfixInFunction();
-        $this->assertEquals('$function', $postfix->getImage());
+        static::assertEquals('$function', $postfix->getImage());
     }
 
     /**
@@ -203,7 +203,7 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     public function testFunctionPostfixHasExpectedStartLine(): void
     {
         $init = $this->getFirstFunctionPostfixInFunction();
-        $this->assertEquals(4, $init->getStartLine());
+        static::assertEquals(4, $init->getStartLine());
     }
 
     /**
@@ -212,7 +212,7 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     public function testFunctionPostfixHasExpectedStartColumn(): void
     {
         $init = $this->getFirstFunctionPostfixInFunction();
-        $this->assertEquals(5, $init->getStartColumn());
+        static::assertEquals(5, $init->getStartColumn());
     }
 
     /**
@@ -221,7 +221,7 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     public function testFunctionPostfixHasExpectedEndLine(): void
     {
         $init = $this->getFirstFunctionPostfixInFunction();
-        $this->assertEquals(8, $init->getEndLine());
+        static::assertEquals(8, $init->getEndLine());
     }
 
     /**
@@ -230,7 +230,7 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     public function testFunctionPostfixHasExpectedEndColumn(): void
     {
         $init = $this->getFirstFunctionPostfixInFunction();
-        $this->assertEquals(13, $init->getEndColumn());
+        static::assertEquals(13, $init->getEndColumn());
     }
 
     /**

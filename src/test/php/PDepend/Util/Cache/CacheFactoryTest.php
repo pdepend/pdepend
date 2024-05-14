@@ -67,7 +67,7 @@ class CacheFactoryTest extends AbstractTestCase
         $factory = new CacheFactory(
             $this->createConfigurationFixture()
         );
-        $this->assertInstanceOf(CacheDriver::class, $factory->create());
+        static::assertInstanceOf(CacheDriver::class, $factory->create());
     }
 
     /**
@@ -82,7 +82,7 @@ class CacheFactoryTest extends AbstractTestCase
         $cache0 = $factory->create();
         $cache1 = $factory->create();
 
-        $this->assertSame($cache0, $cache1);
+        static::assertSame($cache0, $cache1);
     }
 
     /**
@@ -97,7 +97,7 @@ class CacheFactoryTest extends AbstractTestCase
         $cache0 = $factory->create();
         $cache1 = $factory->create(__FUNCTION__);
 
-        $this->assertNotSame($cache0, $cache1);
+        static::assertNotSame($cache0, $cache1);
     }
 
     /**
@@ -107,7 +107,7 @@ class CacheFactoryTest extends AbstractTestCase
     {
         $this->changeWorkingDirectory();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             FileCacheDriver::class,
             $this->createFactoryFixture()->create()
         );
@@ -120,7 +120,7 @@ class CacheFactoryTest extends AbstractTestCase
     {
         $this->changeWorkingDirectory();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             MemoryCacheDriver::class,
             $this->createFactoryFixture()->create()
         );
@@ -149,6 +149,7 @@ class CacheFactoryTest extends AbstractTestCase
     {
         $application = new Application();
         $application->setConfigurationFile(getcwd() . '/pdepend.xml');
+
         return new CacheFactory($application->getConfiguration());
     }
 }

@@ -70,6 +70,6 @@ class ParserBug017Test extends AbstractRegressionTestCase
         $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
 
-        $this->assertEquals('OutOfBoundsException', $dependencies[0]->getName());
+        static::assertEquals('OutOfBoundsException', $dependencies[0]->getName());
     }
 }

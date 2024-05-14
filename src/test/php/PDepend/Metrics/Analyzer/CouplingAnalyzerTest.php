@@ -65,7 +65,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
             ->getMock();
 
         $analyzer = new CouplingAnalyzer();
-        $this->assertEquals(
+        static::assertEquals(
             [],
             $analyzer->getNodeMetrics($astArtifact)
         );
@@ -86,7 +86,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $metrics = array_keys($analyzer->getNodeMetrics($classes[0]));
         sort($metrics);
 
-        $this->assertEquals(['ca', 'cbo', 'ce'], $metrics);
+        static::assertEquals(['ca', 'cbo', 'ce'], $metrics);
     }
 
     /**
@@ -94,7 +94,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaWithoutDependencies(): void
     {
-        $this->assertEquals(0, $this->calculateTypeMetric('ca'));
+        static::assertEquals(0, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -102,7 +102,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaWithObjectInstantiation(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ca'));
+        static::assertEquals(1, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -110,7 +110,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaWithStaticReference(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ca'));
+        static::assertEquals(1, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -118,7 +118,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaWithReturnReference(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ca'));
+        static::assertEquals(1, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -126,7 +126,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaWithExceptionReference(): void
     {
-        $this->assertEquals(2, $this->calculateTypeMetric('ca'));
+        static::assertEquals(2, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -134,7 +134,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaWithPropertyReference(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ca'));
+        static::assertEquals(1, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -142,7 +142,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaWithoutDuplicateCount(): void
     {
-        $this->assertEquals(2, $this->calculateTypeMetric('ca'));
+        static::assertEquals(2, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -150,7 +150,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaForParameterTypes(): void
     {
-        $this->assertEquals(3, $this->calculateTypeMetric('ca'));
+        static::assertEquals(3, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -158,7 +158,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaForParentTypeReference(): void
     {
-        $this->assertEquals(0, $this->calculateTypeMetric('ca'));
+        static::assertEquals(0, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -166,7 +166,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaForChildTypeReference(): void
     {
-        $this->assertEquals(2, $this->calculateTypeMetric('ca'));
+        static::assertEquals(2, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -174,7 +174,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionReference(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ca'));
+        static::assertEquals(1, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -182,7 +182,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionException(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ca'));
+        static::assertEquals(1, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -190,7 +190,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionReturnType(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ca'));
+        static::assertEquals(1, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -198,7 +198,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionParameter(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ca'));
+        static::assertEquals(1, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -206,7 +206,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctions(): void
     {
-        $this->assertEquals(3, $this->calculateTypeMetric('ca'));
+        static::assertEquals(3, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -214,7 +214,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCaForFunctionCountsTypeOnce(): void
     {
-        $this->assertEquals(2, $this->calculateTypeMetric('ca'));
+        static::assertEquals(2, $this->calculateTypeMetric('ca'));
     }
 
     /**
@@ -222,7 +222,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboWithoutDependencies(): void
     {
-        $this->assertEquals(0, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(0, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -230,7 +230,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboWithObjectInstantiation(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(1, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -238,7 +238,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboWithStaticReference(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(1, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -246,7 +246,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboWithReturnReference(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(1, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -254,7 +254,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboWithExceptionReference(): void
     {
-        $this->assertEquals(2, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(2, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -262,7 +262,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboWithPropertyReference(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(1, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -270,7 +270,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboWithoutDuplicateCount(): void
     {
-        $this->assertEquals(2, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(2, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -278,7 +278,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboForParameterTypes(): void
     {
-        $this->assertEquals(3, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(3, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -286,7 +286,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboForParentTypeReference(): void
     {
-        $this->assertEquals(0, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(0, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -294,7 +294,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboForChildTypeReference(): void
     {
-        $this->assertEquals(2, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(2, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -302,7 +302,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboForUseInSameNamespace(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(1, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -310,7 +310,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCboForUseInPartialSameNamespace(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('cbo'));
+        static::assertEquals(1, $this->calculateTypeMetric('cbo'));
     }
 
     /**
@@ -318,7 +318,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeWithoutDependencies(): void
     {
-        $this->assertEquals(0, $this->calculateTypeMetric('ce'));
+        static::assertEquals(0, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -326,7 +326,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeWithObjectInstantiation(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ce'));
+        static::assertEquals(1, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -334,7 +334,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeWithStaticReference(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ce'));
+        static::assertEquals(1, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -342,7 +342,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeWithReturnReference(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ce'));
+        static::assertEquals(1, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -350,7 +350,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeWithExceptionReference(): void
     {
-        $this->assertEquals(2, $this->calculateTypeMetric('ce'));
+        static::assertEquals(2, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -358,7 +358,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeWithPropertyReference(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ce'));
+        static::assertEquals(1, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -366,7 +366,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeWithoutDuplicateCount(): void
     {
-        $this->assertEquals(2, $this->calculateTypeMetric('ce'));
+        static::assertEquals(2, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -374,7 +374,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeForParameterTypes(): void
     {
-        $this->assertEquals(3, $this->calculateTypeMetric('ce'));
+        static::assertEquals(3, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -382,7 +382,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeForParentTypeReference(): void
     {
-        $this->assertEquals(0, $this->calculateTypeMetric('ce'));
+        static::assertEquals(0, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -390,7 +390,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeForChildTypeReference(): void
     {
-        $this->assertEquals(2, $this->calculateTypeMetric('ce'));
+        static::assertEquals(2, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -398,7 +398,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeForUseInSameNamespace(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ce'));
+        static::assertEquals(1, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -406,7 +406,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsExpectedCeForUseInPartialSameNamespace(): void
     {
-        $this->assertEquals(1, $this->calculateTypeMetric('ce'));
+        static::assertEquals(1, $this->calculateTypeMetric('ce'));
     }
 
     /**
@@ -424,6 +424,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($types[0]);
+
         return $metrics[$name];
     }
 
@@ -435,7 +436,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['calls', 'fanout'];
         $actual = array_keys($this->calculateProjectMetrics());
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -447,7 +448,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['calls' => 10, 'fanout' => 7];
         $actual = $this->calculateProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -459,7 +460,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['calls' => 10, 'fanout' => 9];
         $actual = $this->calculateProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -471,7 +472,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['calls' => 0, 'fanout' => 3];
         $actual = $this->calculateProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -483,7 +484,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['calls' => 10, 'fanout' => 12];
         $actual = $this->calculateProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -495,7 +496,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['calls' => 30, 'fanout' => 31];
         $actual = $this->calculateProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -507,7 +508,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     public function testGetNodeMetricsForTrait()
     {
         $metrics = $this->calculateTraitMetrics();
-        $this->assertIsArray($metrics);
+        static::assertIsArray($metrics);
 
         return $metrics;
     }
@@ -522,7 +523,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics): void
     {
-        $this->assertEquals(['ca', 'cbo', 'ce'], array_keys($metrics));
+        static::assertEquals(['ca', 'cbo', 'ce'], array_keys($metrics));
     }
 
     /**
@@ -535,7 +536,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCEMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(4, $metrics['ce']);
+        static::assertEquals(4, $metrics['ce']);
     }
 
     /**
@@ -548,7 +549,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCBOMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(4, $metrics['cbo']);
+        static::assertEquals(4, $metrics['cbo']);
     }
 
     /**
@@ -561,7 +562,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCAMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(0, $metrics['ca']);
+        static::assertEquals(0, $metrics['ca']);
     }
 
     /**
@@ -576,7 +577,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($this->parseCodeResourceForTest());
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertIsArray($metrics);
+        static::assertIsArray($metrics);
 
         return $metrics;
     }
@@ -591,7 +592,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetProjectMetricsForTraitReturnsExpectedMetricSet(array $metrics): void
     {
-        $this->assertEquals(['calls', 'fanout'], array_keys($metrics));
+        static::assertEquals(['calls', 'fanout'], array_keys($metrics));
     }
 
     /**
@@ -604,7 +605,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCallsMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(7, $metrics['calls']);
+        static::assertEquals(7, $metrics['calls']);
     }
 
     /**
@@ -617,7 +618,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateFanoutMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(4, $metrics['fanout']);
+        static::assertEquals(4, $metrics['fanout']);
     }
 
     /**
@@ -653,7 +654,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['calls' => $calls, 'fanout' => $fanout];
         $actual = $this->calculateProjectMetrics($testCase);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -666,7 +667,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      */
     private function calculateProjectMetrics($testCase = null)
     {
-        $testCase = ($testCase ? $testCase : $this->getCallingTestMethod());
+        $testCase = ($testCase ?: $this->getCallingTestMethod());
 
         $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($this->parseTestCaseSource($testCase));

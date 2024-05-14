@@ -82,6 +82,7 @@ class CompositeFilter implements Filter
                 return false;
             }
         }
+
         return true;
     }
 }

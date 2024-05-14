@@ -45,7 +45,7 @@ namespace PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AbstractMetricsTestCase;
 
 /**
- * Test cases for the {@link  \PDepend\Metrics\Analyzer\CrapIndexAnalyzer} class.
+ * Test cases for the {@link \PDepend\Metrics\Analyzer\CrapIndexAnalyzer} class.
  *
  * @covers \PDepend\Metrics\Analyzer\CrapIndexAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
@@ -64,7 +64,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
         $actual = $analyzer->getRequiredAnalyzers();
         $expected = [CyclomaticComplexityAnalyzer::class];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -74,7 +74,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     {
         $analyzer = new CrapIndexAnalyzer();
 
-        $this->assertFalse($analyzer->isEnabled());
+        static::assertFalse($analyzer->isEnabled());
     }
 
     /**
@@ -85,7 +85,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
         $options = ['coverage-report' => $this->createCloverReportFile()];
         $analyzer = new CrapIndexAnalyzer($options);
 
-        $this->assertTrue($analyzer->isEnabled());
+        static::assertTrue($analyzer->isEnabled());
     }
 
     /**
@@ -94,7 +94,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerIgnoresAbstractMethods(): void
     {
         $metrics = $this->calculateCrapIndex(__METHOD__, 42);
-        $this->assertSame([], $metrics);
+        static::assertSame([], $metrics);
     }
 
     /**
@@ -103,7 +103,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerIgnoresInterfaceMethods(): void
     {
         $metrics = $this->calculateCrapIndex(__METHOD__, 42);
-        $this->assertSame([], $metrics);
+        static::assertSame([], $metrics);
     }
 
     /**
@@ -156,7 +156,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     private function doTestCrapIndexCalculation($testCase, $ccn, $crapIndex): void
     {
         $metrics = $this->calculateCrapIndex($testCase, $ccn);
-        $this->assertEqualsWithDelta($crapIndex, $metrics['crap'], 0.005);
+        static::assertEqualsWithDelta($crapIndex, $metrics['crap'], 0.005);
     }
 
     /**
@@ -186,6 +186,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
                     ->current()
             );
         }
+
         return $analyzer->getNodeMetrics(
             $namespaces->current()
                 ->getFunctions()
@@ -220,9 +221,9 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     {
         $mock = $this->getMockBuilder(CyclomaticComplexityAnalyzer::class)
             ->getMock();
-        $mock->expects($this->any())
+        $mock->expects(static::any())
             ->method('getCCN2')
-            ->will($this->returnValue($ccn));
+            ->will(static::returnValue($ccn));
 
         return $mock;
     }

@@ -98,7 +98,7 @@ class DefaultListenerTest extends AbstractTestCase
         ksort($actual);
         ksort($expected);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -124,7 +124,7 @@ class DefaultListenerTest extends AbstractTestCase
             realpath($GLOBALS['argv'][0]) . '#end' => true,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -150,7 +150,7 @@ class DefaultListenerTest extends AbstractTestCase
             realpath($GLOBALS['argv'][0]) . '#end' => true,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -176,7 +176,7 @@ class DefaultListenerTest extends AbstractTestCase
             realpath($GLOBALS['argv'][0]) . '#end' => true,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -200,7 +200,7 @@ class DefaultListenerTest extends AbstractTestCase
             __FUNCTION__ . '#end' => true,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -211,7 +211,7 @@ class DefaultListenerTest extends AbstractTestCase
         $listener = $this->getMockBuilder(AbstractASTVisitListener::class)
             ->onlyMethods(['startVisitNode'])
             ->getMock();
-        $listener->expects($this->once())
+        $listener->expects(static::once())
             ->method('startVisitNode');
 
         $parameter = $this->getMockBuilder(ASTParameter::class)
@@ -228,7 +228,7 @@ class DefaultListenerTest extends AbstractTestCase
         $listener = $this->getMockBuilder(AbstractASTVisitListener::class)
             ->onlyMethods(['endVisitNode'])
             ->getMock();
-        $listener->expects($this->once())
+        $listener->expects(static::once())
             ->method('endVisitNode');
 
         $parameter = $this->getMockBuilder(ASTParameter::class)
@@ -247,7 +247,7 @@ class DefaultListenerTest extends AbstractTestCase
         $listener = $this->getMockBuilder(AbstractASTVisitListener::class)
             ->onlyMethods(['startVisitNode'])
             ->getMock();
-        $listener->expects($this->once())
+        $listener->expects(static::once())
             ->method('startVisitNode');
 
         $listener->startVisitTrait(new ASTTrait('MyTrait'));
@@ -263,7 +263,7 @@ class DefaultListenerTest extends AbstractTestCase
         $listener = $this->getMockBuilder(AbstractASTVisitListener::class)
             ->onlyMethods(['endVisitNode'])
             ->getMock();
-        $listener->expects($this->once())
+        $listener->expects(static::once())
             ->method('endVisitNode');
 
         $listener->endVisitTrait(new ASTTrait('MyTrait'));

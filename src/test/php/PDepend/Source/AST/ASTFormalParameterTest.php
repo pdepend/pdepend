@@ -47,8 +47,8 @@ use OutOfBoundsException;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFormalParameter} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTFormalParameter
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -64,7 +64,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
         $parameter = new ASTFormalParameter();
         $parameter->addChild(new ASTVariableDeclarator());
 
-        $this->assertFalse($parameter->hasType());
+        static::assertFalse($parameter->hasType());
     }
 
     /**
@@ -76,7 +76,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
         $parameter->addChild(new ASTScalarType('int'));
         $parameter->addChild(new ASTVariableDeclarator());
 
-        $this->assertTrue($parameter->hasType());
+        static::assertTrue($parameter->hasType());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
         $parameter->addChild($scalar = new ASTScalarType('float'));
         $parameter->addChild(new ASTVariableDeclarator());
 
-        $this->assertSame($scalar, $parameter->getType());
+        static::assertSame($scalar, $parameter->getType());
     }
 
     /**
@@ -110,7 +110,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testIsVariableArgListReturnsFalseByDefault(): void
     {
         $parameter = $this->getFirstFormalParameterInFunction();
-        $this->assertFalse($parameter->isVariableArgList());
+        static::assertFalse($parameter->isVariableArgList());
     }
 
     /**
@@ -119,7 +119,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testIsVariableArgListReturnsTrue(): void
     {
         $parameter = $this->getFirstFormalParameterInFunction();
-        $this->assertTrue($parameter->isVariableArgList());
+        static::assertTrue($parameter->isVariableArgList());
     }
 
     /**
@@ -128,7 +128,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testIsVariableArgListWithArrayTypeHint(): void
     {
         $parameter = $this->getFirstFormalParameterInFunction();
-        $this->assertTrue($parameter->isVariableArgList());
+        static::assertTrue($parameter->isVariableArgList());
     }
 
     /**
@@ -137,7 +137,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testIsVariableArgListWithClassTypeHint(): void
     {
         $parameter = $this->getFirstFormalParameterInFunction();
-        $this->assertTrue($parameter->isVariableArgList());
+        static::assertTrue($parameter->isVariableArgList());
     }
 
     /**
@@ -146,7 +146,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testIsVariableArgListPassedByReference(): void
     {
         $parameter = $this->getFirstFormalParameterInFunction();
-        $this->assertTrue($parameter->isVariableArgList());
+        static::assertTrue($parameter->isVariableArgList());
     }
 
     /**
@@ -155,7 +155,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testIsPassedByReferenceReturnsFalseByDefault(): void
     {
         $param = new ASTFormalParameter();
-        $this->assertFalse($param->isPassedByReference());
+        static::assertFalse($param->isPassedByReference());
     }
 
     /**
@@ -166,7 +166,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
         $param = new ASTFormalParameter();
         $param->setPassedByReference();
 
-        $this->assertTrue($param->isPassedByReference());
+        static::assertTrue($param->isPassedByReference());
     }
 
     /**
@@ -175,7 +175,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testSimpleParameterIsFlaggedAsPassedByReference(): void
     {
         $param = $this->getFirstFormalParameterInFunction();
-        $this->assertTrue($param->isPassedByReference());
+        static::assertTrue($param->isPassedByReference());
     }
 
     /**
@@ -184,7 +184,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testParameterWithTypeHintIsFlaggedAsPassedByReference(): void
     {
         $param = $this->getFirstFormalParameterInFunction();
-        $this->assertTrue($param->isPassedByReference());
+        static::assertTrue($param->isPassedByReference());
     }
 
     /**
@@ -193,7 +193,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testParameterWithDefaultValueIsFlaggedAsPassedByReference(): void
     {
         $param = $this->getFirstFormalParameterInFunction();
-        $this->assertTrue($param->isPassedByReference());
+        static::assertTrue($param->isPassedByReference());
     }
 
     /**
@@ -203,13 +203,13 @@ class ASTFormalParameterTest extends ASTNodeTestCase
      */
     public function testFormalParameterWithArrayTypeHint(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTypeArray::class,
             $this->getFirstFormalParameterInFunction()->getChild(0)
         );
     }
 
-    //public function
+    // public function
 
     /**
      * testMagicSleepReturnsExpectedSetOfPropertyNames
@@ -217,7 +217,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $param = $this->createNodeInstance();
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'modifiers',
                 'comment',
@@ -234,7 +234,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testFormalParameterHasExpectedStartLine(): void
     {
         $param = $this->getFirstFormalParameterInFunction();
-        $this->assertEquals(3, $param->getStartLine());
+        static::assertEquals(3, $param->getStartLine());
     }
 
     /**
@@ -243,7 +243,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testFormalParameterHasExpectedStartColumn(): void
     {
         $param = $this->getFirstFormalParameterInFunction();
-        $this->assertEquals(5, $param->getStartColumn());
+        static::assertEquals(5, $param->getStartColumn());
     }
 
     /**
@@ -252,7 +252,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testFormalParameterHasExpectedEndLine(): void
     {
         $param = $this->getFirstFormalParameterInFunction();
-        $this->assertEquals(6, $param->getEndLine());
+        static::assertEquals(6, $param->getEndLine());
     }
 
     /**
@@ -261,7 +261,7 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     public function testFormalParameterHasExpectedEndColumn(): void
     {
         $param = $this->getFirstFormalParameterInFunction();
-        $this->assertEquals(20, $param->getEndColumn());
+        static::assertEquals(20, $param->getEndColumn());
     }
 
     /**

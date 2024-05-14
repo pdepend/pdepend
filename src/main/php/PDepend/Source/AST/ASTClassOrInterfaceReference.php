@@ -55,9 +55,7 @@ use PDepend\Source\Builder\BuilderContext;
  */
 class ASTClassOrInterfaceReference extends ASTType
 {
-    /**
-     * The global AST builder context.
-     */
+    /** The global AST builder context. */
     protected ?BuilderContext $context = null;
 
     /**
@@ -103,6 +101,7 @@ class ASTClassOrInterfaceReference extends ASTType
                 $this->getImage(),
             );
         }
+
         return $this->typeInstance;
     }
 }

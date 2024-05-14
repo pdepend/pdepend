@@ -69,7 +69,7 @@ class PHPParserVersion80Test extends AbstractTestCase
             ASTCatchStatement::class
         );
 
-        $this->assertCount(2, $catchStatement->getChildren());
+        static::assertCount(2, $catchStatement->getChildren());
     }
 
     /**
@@ -79,8 +79,8 @@ class PHPParserVersion80Test extends AbstractTestCase
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
 
-        $this->assertFalse($type->isScalar());
-        $this->assertSame('static', $type->getImage());
+        static::assertFalse($type->isScalar());
+        static::assertSame('static', $type->getImage());
     }
 
     /**
@@ -90,8 +90,8 @@ class PHPParserVersion80Test extends AbstractTestCase
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
 
-        $this->assertFalse($type->isScalar());
-        $this->assertSame('static', $type->getImage());
+        static::assertFalse($type->isScalar());
+        static::assertSame('static', $type->getImage());
     }
 
     /**
@@ -101,8 +101,8 @@ class PHPParserVersion80Test extends AbstractTestCase
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
 
-        $this->assertFalse($type->isScalar());
-        $this->assertSame('static', $type->getImage());
+        static::assertFalse($type->isScalar());
+        static::assertSame('static', $type->getImage());
     }
 
     /**
@@ -115,9 +115,9 @@ class PHPParserVersion80Test extends AbstractTestCase
         $formalParameter = $parameter->getFormalParameter();
         $type = $formalParameter->getType();
 
-        $this->assertFalse($type->isIntersection());
-        $this->assertTrue($formalParameter->isPassedByReference());
-        $this->assertTrue($formalParameter->isVariableArgList());
+        static::assertFalse($type->isIntersection());
+        static::assertTrue($formalParameter->isPassedByReference());
+        static::assertTrue($formalParameter->isVariableArgList());
     }
 
     public function testTrailingCommaInClosureUseList(): void
@@ -132,7 +132,7 @@ class PHPParserVersion80Test extends AbstractTestCase
     {
         $method = $this->getFirstMethodForTestCase();
 
-        $this->assertCount(2, $method->getParameters());
+        static::assertCount(2, $method->getParameters());
     }
 
     public function testNullableTypedProperties(): void
@@ -141,7 +141,7 @@ class PHPParserVersion80Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $children = $class->getChildren();
 
-        $this->assertTrue($children[0]->hasType());
+        static::assertTrue($children[0]->hasType());
 
         /** @var array[] $declarations */
         $declarations = array_map(function (ASTFieldDeclaration $child) {
@@ -159,18 +159,18 @@ class PHPParserVersion80Test extends AbstractTestCase
             [$expectedType, $expectedVariable, $expectedTypeClass] = $expected;
             [$type, $variable] = $declarations[$index];
 
-            $this->assertInstanceOf(
+            static::assertInstanceOf(
                 $expectedTypeClass,
                 $type,
                 "Wrong type for $expectedType $expectedVariable"
             );
-            $this->assertSame(ltrim($expectedType, '?'), $type->getImage());
-            $this->assertInstanceOf(
+            static::assertSame(ltrim($expectedType, '?'), $type->getImage());
+            static::assertInstanceOf(
                 ASTVariableDeclarator::class,
                 $variable,
                 "Wrong variable for $expectedType $expectedVariable"
             );
-            $this->assertSame($expectedVariable, $variable->getImage());
+            static::assertSame($expectedVariable, $variable->getImage());
         }
     }
 

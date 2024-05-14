@@ -65,9 +65,7 @@ use RuntimeException;
  */
 class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGenerator
 {
-    /**
-     * The output file name.
-     */
+    /** The output file name. */
     private string $logFile;
 
     /**
@@ -77,9 +75,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      */
     private ASTArtifactList $code;
 
-    /**
-     * The context analyzer instance.
-     */
+    /** The context analyzer instance. */
     private DependencyAnalyzer $analyzer;
 
     /**
@@ -127,6 +123,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
 
             return true;
         }
+
         return false;
     }
 

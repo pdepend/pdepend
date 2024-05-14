@@ -74,7 +74,7 @@ class PropertyStrategyTest extends AbstractTestCase
 
         foreach ($namespaces as $namespace) {
             foreach ($namespace->getClasses() as $class) {
-                $this->assertArrayHasKey($class->getName(), $idMap);
+                static::assertArrayHasKey($class->getName(), $idMap);
                 $idMap[$class->getName()] = $class->getId();
             }
             if (array_key_exists($namespace->getName(), $idMap)) {
@@ -150,6 +150,6 @@ class PropertyStrategyTest extends AbstractTestCase
 
         $actual = $strategy->getCollectedNodes();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 }

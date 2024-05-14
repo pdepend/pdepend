@@ -60,10 +60,9 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 abstract class PHPParserVersion82 extends AbstractPHPParser
 {
-    /**
-     * Since PHP 8.2, readonly is allowed as class modifier.
-     */
+    /** Since PHP 8.2, readonly is allowed as class modifier. */
     protected const READONLY_CLASS_ALLOWED = true;
+
     /** @var array<int, int> */
     protected $possiblePropertyTypes = [
         Tokens::T_STRING,

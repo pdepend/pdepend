@@ -48,8 +48,8 @@ use PDepend\Source\Parser\UnexpectedTokenException;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTSwitchStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTSwitchStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -65,7 +65,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
         $stmt = $this->getFirstSwitchStatementInFunction();
         $children = $stmt->getChildren();
 
-        $this->assertInstanceOf(ASTExpression::class, $children[0]);
+        static::assertInstanceOf(ASTExpression::class, $children[0]);
     }
 
     /**
@@ -76,8 +76,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
         $stmt = $this->getFirstSwitchStatementInFunction();
         $children = $stmt->getChildren();
 
-        $this->assertInstanceOf(ASTSwitchLabel::class, $children[1]);
-        $this->assertInstanceOf(ASTSwitchLabel::class, $children[2]);
+        static::assertInstanceOf(ASTSwitchLabel::class, $children[1]);
+        static::assertInstanceOf(ASTSwitchLabel::class, $children[2]);
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     public function testSwitchStatement()
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
-        $this->assertInstanceOf(ASTSwitchStatement::class, $stmt);
+        static::assertInstanceOf(ASTSwitchStatement::class, $stmt);
 
         return $stmt;
     }
@@ -103,7 +103,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementHasExpectedStartLine($stmt): void
     {
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -115,7 +115,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementHasExpectedStartColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -127,7 +127,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementHasExpectedEndLine($stmt): void
     {
-        $this->assertEquals(8, $stmt->getEndLine());
+        static::assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -139,7 +139,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementHasExpectedEndColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getEndColumn());
+        static::assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
@@ -187,7 +187,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     public function testSwitchStatementWithAlternativeScope()
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
-        $this->assertInstanceOf(ASTSwitchStatement::class, $stmt);
+        static::assertInstanceOf(ASTSwitchStatement::class, $stmt);
 
         return $stmt;
     }
@@ -201,7 +201,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementAlternativeScopeHasExpectedStartLine($stmt): void
     {
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -213,7 +213,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementAlternativeScopeHasExpectedStartColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -225,7 +225,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementAlternativeScopeHasExpectedEndLine($stmt): void
     {
-        $this->assertEquals(25, $stmt->getEndLine());
+        static::assertEquals(25, $stmt->getEndLine());
     }
 
     /**
@@ -237,7 +237,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementAlternativeScopeHasExpectedEndColumn($stmt): void
     {
-        $this->assertEquals(14, $stmt->getEndColumn());
+        static::assertEquals(14, $stmt->getEndColumn());
     }
 
     /**
@@ -246,7 +246,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     public function testSwitchStatementTerminatedByPhpCloseTag(): void
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
-        $this->assertEquals(9, $stmt->getEndColumn());
+        static::assertEquals(9, $stmt->getEndColumn());
     }
 
     /**
@@ -258,7 +258,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     public function testSwitchStatementWithNestedNonePhpCode()
     {
         $switch = $this->getFirstSwitchStatementInFunction();
-        $this->assertInstanceOf(ASTSwitchStatement::class, $switch);
+        static::assertInstanceOf(ASTSwitchStatement::class, $switch);
 
         return $switch;
     }
@@ -272,7 +272,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementWithNestedNonePhpCodeStartLine(ASTSwitchStatement $switch): void
     {
-        $this->assertSame(5, $switch->getStartLine());
+        static::assertSame(5, $switch->getStartLine());
     }
 
     /**
@@ -284,7 +284,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementWithNestedNonePhpCodeEndLine(ASTSwitchStatement $switch): void
     {
-        $this->assertSame(16, $switch->getEndLine());
+        static::assertSame(16, $switch->getEndLine());
     }
 
     /**
@@ -296,7 +296,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementWithNestedNonePhpCodeStartColumn(ASTSwitchStatement $switch): void
     {
-        $this->assertSame(7, $switch->getStartColumn());
+        static::assertSame(7, $switch->getStartColumn());
     }
 
     /**
@@ -308,7 +308,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
      */
     public function testSwitchStatementWithNestedNonePhpCodeEndColumn(ASTSwitchStatement $switch): void
     {
-        $this->assertSame(16, $switch->getEndColumn());
+        static::assertSame(16, $switch->getEndColumn());
     }
 
     /**

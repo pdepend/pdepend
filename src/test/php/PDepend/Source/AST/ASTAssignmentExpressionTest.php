@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTAssignmentExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTAssignmentExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -144,7 +144,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('=', $expr->getImage());
+        static::assertEquals('=', $expr->getImage());
     }
 
     /**
@@ -155,7 +155,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithAndEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('&=', $expr->getImage());
+        static::assertEquals('&=', $expr->getImage());
     }
 
     /**
@@ -166,7 +166,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithConcatEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('.=', $expr->getImage());
+        static::assertEquals('.=', $expr->getImage());
     }
 
     /**
@@ -177,7 +177,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithDivEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('/=', $expr->getImage());
+        static::assertEquals('/=', $expr->getImage());
     }
 
     /**
@@ -188,7 +188,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithMinusEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('-=', $expr->getImage());
+        static::assertEquals('-=', $expr->getImage());
     }
 
     /**
@@ -199,7 +199,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithModEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('%=', $expr->getImage());
+        static::assertEquals('%=', $expr->getImage());
     }
 
     /**
@@ -210,7 +210,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithMulEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('*=', $expr->getImage());
+        static::assertEquals('*=', $expr->getImage());
     }
 
     /**
@@ -221,7 +221,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithOrEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('|=', $expr->getImage());
+        static::assertEquals('|=', $expr->getImage());
     }
 
     /**
@@ -232,7 +232,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithPlusEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('+=', $expr->getImage());
+        static::assertEquals('+=', $expr->getImage());
     }
 
     /**
@@ -243,7 +243,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithXorEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('^=', $expr->getImage());
+        static::assertEquals('^=', $expr->getImage());
     }
 
     /**
@@ -254,7 +254,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithShiftLeftEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('<<=', $expr->getImage());
+        static::assertEquals('<<=', $expr->getImage());
     }
 
     /**
@@ -265,7 +265,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testAssignmentExpressionWithShiftRightEqual(): void
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertEquals('>>=', $expr->getImage());
+        static::assertEquals('>>=', $expr->getImage());
     }
 
     /**
@@ -277,7 +277,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testVariableAssignmentExpression()
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertInstanceOf(ASTAssignmentExpression::class, $expr);
+        static::assertInstanceOf(ASTAssignmentExpression::class, $expr);
 
         return $expr;
     }
@@ -291,7 +291,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testVariableAssignmentExpressionHasExpectedStartLine($expr): void
     {
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -303,7 +303,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testVariableAssignmentExpressionHasExpectedStartColumn($expr): void
     {
-        $this->assertEquals(5, $expr->getStartColumn());
+        static::assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -315,7 +315,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testVariableAssignmentExpressionHasExpectedEndLine($expr): void
     {
-        $this->assertEquals(6, $expr->getEndLine());
+        static::assertEquals(6, $expr->getEndLine());
     }
 
     /**
@@ -327,7 +327,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testVariableAssignmentExpressionHasExpectedEndColumn($expr): void
     {
-        $this->assertEquals(5, $expr->getEndColumn());
+        static::assertEquals(5, $expr->getEndColumn());
     }
 
     /**
@@ -339,7 +339,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testStaticPropertyAssignmentExpression()
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertInstanceOf(ASTAssignmentExpression::class, $expr);
+        static::assertInstanceOf(ASTAssignmentExpression::class, $expr);
 
         return $expr;
     }
@@ -353,7 +353,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedStartLine($expr): void
     {
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -365,7 +365,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedStartColumn($expr): void
     {
-        $this->assertEquals(5, $expr->getStartColumn());
+        static::assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -377,7 +377,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedEndLine($expr): void
     {
-        $this->assertEquals(4, $expr->getEndLine());
+        static::assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -389,7 +389,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testStaticPropertyAssignmentExpressionHasExpectedEndColumn($expr): void
     {
-        $this->assertEquals(60, $expr->getEndColumn());
+        static::assertEquals(60, $expr->getEndColumn());
     }
 
     /**
@@ -401,7 +401,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testObjectPropertyAssignmentExpression()
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertInstanceOf(ASTAssignmentExpression::class, $expr);
+        static::assertInstanceOf(ASTAssignmentExpression::class, $expr);
 
         return $expr;
     }
@@ -415,7 +415,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedStartLine($expr): void
     {
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -427,7 +427,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedStartColumn($expr): void
     {
-        $this->assertEquals(5, $expr->getStartColumn());
+        static::assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -439,7 +439,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedEndLine($expr): void
     {
-        $this->assertEquals(5, $expr->getEndLine());
+        static::assertEquals(5, $expr->getEndLine());
     }
 
     /**
@@ -451,7 +451,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testObjectPropertyAssignmentExpressionHasExpectedEndColumn($expr): void
     {
-        $this->assertEquals(15, $expr->getEndColumn());
+        static::assertEquals(15, $expr->getEndColumn());
     }
 
     /**
@@ -463,7 +463,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     public function testChainedPropertyAssignmentExpression()
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
-        $this->assertInstanceOf(ASTAssignmentExpression::class, $expr);
+        static::assertInstanceOf(ASTAssignmentExpression::class, $expr);
 
         return $expr;
     }
@@ -477,7 +477,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedStartLine($expr): void
     {
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -489,7 +489,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedStartColumn($expr): void
     {
-        $this->assertEquals(5, $expr->getStartColumn());
+        static::assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -501,7 +501,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedEndColumn($expr): void
     {
-        $this->assertEquals(23, $expr->getEndColumn());
+        static::assertEquals(23, $expr->getEndColumn());
     }
 
     /**
@@ -513,7 +513,7 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
      */
     public function testChainedPropertyAssignmentExpressionHasExpectedEndLine($expr): void
     {
-        $this->assertEquals(8, $expr->getEndLine());
+        static::assertEquals(8, $expr->getEndLine());
     }
 
     /**

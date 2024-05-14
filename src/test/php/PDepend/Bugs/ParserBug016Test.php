@@ -70,8 +70,8 @@ class ParserBug016Test extends AbstractRegressionTestCase
         $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
 
-        $this->assertEquals(1, $dependencies->count());
-        $this->assertEquals('SplObjectStorage', $dependencies[0]->getName());
+        static::assertEquals(1, $dependencies->count());
+        static::assertEquals('SplObjectStorage', $dependencies[0]->getName());
     }
 
     /**
@@ -95,6 +95,6 @@ class ParserBug016Test extends AbstractRegressionTestCase
         $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
 
-        $this->assertEquals(0, $dependencies->count());
+        static::assertEquals(0, $dependencies->count());
     }
 }

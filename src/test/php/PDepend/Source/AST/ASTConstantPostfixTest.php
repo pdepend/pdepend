@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTConstantPostfix} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTConstantPostfix
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
     public function testConstantPostfixStructureForSimpleStaticAccess(): void
     {
         $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertEquals('BAZ', $postfix->getImage());
+        static::assertEquals('BAZ', $postfix->getImage());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
     public function testConstantPostfixStructureForStaticAccessOnVariable(): void
     {
         $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTIdentifier::class, $postfix->getChild(0));
+        static::assertInstanceOf(ASTIdentifier::class, $postfix->getChild(0));
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
     public function testConstantPostfixHasExpectedStartLine(): void
     {
         $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertEquals(4, $postfix->getStartLine());
+        static::assertEquals(4, $postfix->getStartLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
     public function testConstantPostfixHasExpectedStartColumn(): void
     {
         $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertEquals(11, $postfix->getStartColumn());
+        static::assertEquals(11, $postfix->getStartColumn());
     }
 
     /**
@@ -96,7 +96,7 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
     public function testConstantPostfixHasExpectedEndLine(): void
     {
         $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertEquals(4, $postfix->getEndLine());
+        static::assertEquals(4, $postfix->getEndLine());
     }
 
     /**
@@ -105,7 +105,7 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
     public function testConstantPostfixHasExpectedEndColumn(): void
     {
         $postfix = $this->getFirstConstantPostfixInFunction(__METHOD__);
-        $this->assertEquals(13, $postfix->getEndColumn());
+        static::assertEquals(13, $postfix->getEndColumn());
     }
 
     /**

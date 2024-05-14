@@ -73,7 +73,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
             ->getFirstChildOfType(ASTFieldDeclaration::class)
             ->getFirstChildOfType(ASTType::class);
 
-        $this->assertEquals($expected, $type->getImage());
+        static::assertEquals($expected, $type->getImage());
     }
 
     /**
@@ -85,7 +85,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
             ->getFirstChildOfType(ASTFieldDeclaration::class)
             ->getFirstChildOfType(ASTType::class);
 
-        $this->assertTrue($type->isArray());
+        static::assertTrue($type->isArray());
     }
 
     /**
@@ -97,7 +97,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
             ->getFirstChildOfType(ASTFieldDeclaration::class)
             ->getFirstChildOfType(ASTType::class);
 
-        $this->assertTrue($type->isArray());
+        static::assertTrue($type->isArray());
     }
 
     /**
@@ -109,15 +109,15 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
     public static function dataProviderParserSetsExpectedPrimitivePropertyType()
     {
         return [
-            ['int',     'integer'],
+            ['int', 'integer'],
             ['INTEger', 'integer'],
-            ['float',   'float'],
-            ['real',    'float'],
-            ['double',  'float'],
-            ['bool',    'boolean'],
+            ['float', 'float'],
+            ['real', 'float'],
+            ['double', 'float'],
+            ['bool', 'boolean'],
             ['boolean', 'boolean'],
-            ['false',   'boolean'],
-            ['true',    'boolean'],
+            ['false', 'boolean'],
+            ['true', 'boolean'],
         ];
     }
 }

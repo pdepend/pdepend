@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend;
 
@@ -54,7 +54,7 @@ use PDepend\Source\Tokenizer\Tokenizer;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-interface ProcessListener extends ASTVisitListener, AnalyzerListener
+interface ProcessListener extends AnalyzerListener, ASTVisitListener
 {
     /**
      * Is called when PDepend starts the file parsing process.

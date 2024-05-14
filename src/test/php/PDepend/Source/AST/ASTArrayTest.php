@@ -46,8 +46,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArray} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTArray
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
@@ -104,7 +104,7 @@ class ASTArrayTest extends ASTNodeTestCase
     public function testArrayHasExpectedStartLine(): void
     {
         $array = $this->getFirstArrayInFunction();
-        $this->assertEquals(4, $array->getStartLine());
+        static::assertEquals(4, $array->getStartLine());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTArrayTest extends ASTNodeTestCase
     public function testArrayHasExpectedStartColumn(): void
     {
         $array = $this->getFirstArrayInFunction();
-        $this->assertEquals(12, $array->getStartColumn());
+        static::assertEquals(12, $array->getStartColumn());
     }
 
     /**
@@ -122,7 +122,7 @@ class ASTArrayTest extends ASTNodeTestCase
     public function testArrayHasExpectedEndLine(): void
     {
         $array = $this->getFirstArrayInFunction();
-        $this->assertEquals(13, $array->getEndLine());
+        static::assertEquals(13, $array->getEndLine());
     }
 
     /**
@@ -131,7 +131,7 @@ class ASTArrayTest extends ASTNodeTestCase
     public function testArrayHasExpectedEndColumn(): void
     {
         $array = $this->getFirstArrayInFunction();
-        $this->assertEquals(5, $array->getEndColumn());
+        static::assertEquals(5, $array->getEndColumn());
     }
 
     /**

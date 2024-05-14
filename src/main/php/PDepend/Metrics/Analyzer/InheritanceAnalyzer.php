@@ -65,13 +65,11 @@ use PDepend\Source\AST\ASTNamespace;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class InheritanceAnalyzer extends AbstractAnalyzer implements
-    AnalyzerNodeAware,
     AnalyzerFilterAware,
+    AnalyzerNodeAware,
     AnalyzerProjectAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     private const
         M_AVERAGE_NUMBER_DERIVED_CLASSES = 'andc',
         M_AVERAGE_HIERARCHY_HEIGHT = 'ahh',
@@ -144,6 +142,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
+
         return [];
     }
 

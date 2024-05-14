@@ -61,12 +61,12 @@ class TreeBuilderTest extends AbstractTestCase
     {
         $treeBuilder = new TreeBuilder();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ArrayNodeDefinition::class,
             $treeBuilder->getRootNode()
         );
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             SymfonyTreeBuilder::class,
             $treeBuilder->getTreeBuilder()
         );

@@ -82,6 +82,6 @@ class ExtensionFilter implements Filter
 
         $extension = pathinfo($relative, PATHINFO_EXTENSION);
 
-        return in_array($extension, $this->extensions);
+        return in_array($extension, $this->extensions, true);
     }
 }

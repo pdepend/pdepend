@@ -75,9 +75,7 @@ use PDepend\Util\MathUtil;
  */
 class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     private const M_NPATH_COMPLEXITY = 'npath';
 
     /**
@@ -118,6 +116,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         if (isset($this->metrics[$artifact->getId()])) {
             $metric = [self::M_NPATH_COMPLEXITY => $this->metrics[$artifact->getId()]];
         }
+
         return $metric;
     }
 
@@ -417,6 +416,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         if (($npath = $this->sumComplexity($node)) === '0') {
             return $data;
         }
+
         return MathUtil::mul($npath, $data);
     }
 
@@ -448,6 +448,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
                 $npath = MathUtil::add($npath, $label);
             }
         }
+
         return MathUtil::mul($npath, $data);
     }
 
@@ -489,6 +490,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
                 $npath = MathUtil::add($npath, $stmt);
             }
         }
+
         return MathUtil::mul($npath, $data);
     }
 
@@ -548,6 +550,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
                 $sum = MathUtil::add($sum, $expr);
             }
         }
+
         return $sum;
     }
 }

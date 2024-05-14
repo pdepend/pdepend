@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTIdentifier} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTIdentifier
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTIdentifierTest extends ASTNodeTestCase
     public function testIdentifierHasExpectedStartLine(): void
     {
         $param = $this->getFirstIdentifierInFunction(__METHOD__);
-        $this->assertEquals(4, $param->getStartLine());
+        static::assertEquals(4, $param->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTIdentifierTest extends ASTNodeTestCase
     public function testIdentifierHasExpectedStartColumn(): void
     {
         $param = $this->getFirstIdentifierInFunction(__METHOD__);
-        $this->assertEquals(22, $param->getStartColumn());
+        static::assertEquals(22, $param->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTIdentifierTest extends ASTNodeTestCase
     public function testIdentifierHasExpectedEndLine(): void
     {
         $param = $this->getFirstIdentifierInFunction(__METHOD__);
-        $this->assertEquals(4, $param->getEndLine());
+        static::assertEquals(4, $param->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTIdentifierTest extends ASTNodeTestCase
     public function testIdentifierHasExpectedEndColumn(): void
     {
         $param = $this->getFirstIdentifierInFunction(__METHOD__);
-        $this->assertEquals(29, $param->getEndColumn());
+        static::assertEquals(29, $param->getEndColumn());
     }
 
     /**

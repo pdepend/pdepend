@@ -63,7 +63,7 @@ class ParserSetsIncorrectStartLineBug101Test extends AbstractRegressionTestCase
             ->getClasses()
             ->current();
 
-        $this->assertEquals(2, $class->getStartLine());
+        static::assertEquals(2, $class->getStartLine());
     }
 
     /**
@@ -76,6 +76,6 @@ class ParserSetsIncorrectStartLineBug101Test extends AbstractRegressionTestCase
             ->getClasses()
             ->current();
 
-        $this->assertEquals(8, $class->getEndLine());
+        static::assertEquals(8, $class->getEndLine());
     }
 }

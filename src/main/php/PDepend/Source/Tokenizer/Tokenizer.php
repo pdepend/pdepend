@@ -52,14 +52,10 @@ use PDepend\Source\AST\ASTCompilationUnit;
  */
 interface Tokenizer
 {
-    /**
-     * Marks the end of the token stream.
-     */
+    /** Marks the end of the token stream. */
     public const T_EOF = -1;
 
-    /**
-     * Marks the beginning of the token stream.
-     */
+    /** Marks the beginning of the token stream. */
     public const T_BOF = -2;
 
     /**

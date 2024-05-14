@@ -60,46 +60,52 @@ class IntersectionTypesTest extends PHPParserVersion81TestCase
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTFormalParameter $parameter */
         $parameter = $method->getFirstChildOfType(ASTFormalParameter::class);
         $children = $parameter->getChildren();
 
-        $this->assertInstanceOf(ASTIntersectionType::class, $children[0]);
+        static::assertInstanceOf(ASTIntersectionType::class, $children[0]);
+
         /** @var ASTIntersectionType $intersectionType */
         $intersectionType = $children[0];
-        $this->assertSame('Iterator&\Countable&\ArrayAccess', $intersectionType->getImage());
+        static::assertSame('Iterator&\Countable&\ArrayAccess', $intersectionType->getImage());
 
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $children[1]);
+        static::assertInstanceOf(ASTVariableDeclarator::class, $children[1]);
+
         /** @var ASTVariableDeclarator $variable */
         $variable = $children[1];
-        $this->assertSame('$iterator', $variable->getImage());
+        static::assertSame('$iterator', $variable->getImage());
     }
 
     public function testIntersectionTypesWithByReference(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTFormalParameter $parameter */
         $parameter = $method->getFirstChildOfType(ASTFormalParameter::class);
         $children = $parameter->getChildren();
 
-        $this->assertInstanceOf(ASTIntersectionType::class, $children[0]);
+        static::assertInstanceOf(ASTIntersectionType::class, $children[0]);
+
         /** @var ASTIntersectionType $intersectionType */
         $intersectionType = $children[0];
-        $this->assertSame('Iterator&\Countable&\ArrayAccess', $intersectionType->getImage());
+        static::assertSame('Iterator&\Countable&\ArrayAccess', $intersectionType->getImage());
     }
 
     public function testIntersectionTypesAsReturn(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTType $return */
         $return = $method->getFirstChildOfType(
             ASTType::class
         );
 
-        $this->assertInstanceOf(ASTIntersectionType::class, $return);
-        $this->assertSame('Iterator&\Countable&\ArrayAccess', $return->getImage());
+        static::assertInstanceOf(ASTIntersectionType::class, $return);
+        static::assertSame('Iterator&\Countable&\ArrayAccess', $return->getImage());
     }
 
     public function testIntersectionTypesCantBeMixedWithUnionTypes(): void

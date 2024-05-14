@@ -63,9 +63,7 @@ use PDepend\Source\AST\ASTNamespace;
  */
 class ChartTest extends AbstractTestCase
 {
-    /**
-     * Temporary output file.
-     */
+    /** Temporary output file. */
     private string $outputFile;
 
     /**
@@ -92,14 +90,13 @@ class ChartTest extends AbstractTestCase
         parent::tearDown();
     }
 
-
     /**
      * Tests that the logger returns the expected set of analyzers.
      */
     public function testReturnsExceptedAnalyzers(): void
     {
         $logger = new Chart();
-        $this->assertEquals(['pdepend.analyzer.dependency'], $logger->getAcceptedAnalyzers());
+        static::assertEquals(['pdepend.analyzer.dependency'], $logger->getAcceptedAnalyzers());
     }
 
     /**
@@ -120,7 +117,7 @@ class ChartTest extends AbstractTestCase
     public function testChartLogAcceptsValidAnalyzer(): void
     {
         $logger = new Chart();
-        $this->assertTrue($logger->log(new DependencyAnalyzer()));
+        static::assertTrue($logger->log(new DependencyAnalyzer()));
     }
 
     /**
@@ -129,7 +126,7 @@ class ChartTest extends AbstractTestCase
     public function testChartLogRejectsInvalidAnalyzer(): void
     {
         $logger = new Chart();
-        $this->assertFalse($logger->log(new DummyAnalyzer()));
+        static::assertFalse($logger->log(new DummyAnalyzer()));
     }
 
     /**
@@ -148,7 +145,7 @@ class ChartTest extends AbstractTestCase
         $logger->log($analyzer);
         $logger->close();
 
-        $this->assertFileExists($this->outputFile);
+        static::assertFileExists($this->outputFile);
     }
 
     /**
@@ -173,8 +170,8 @@ class ChartTest extends AbstractTestCase
         $xpath = new DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
 
-        $this->assertEquals(1, $xpath->query("//s:ellipse[@title='package0']")->length);
-        $this->assertEquals(1, $xpath->query("//s:ellipse[@title='package1']")->length);
+        static::assertEquals(1, $xpath->query("//s:ellipse[@title='package0']")->length);
+        static::assertEquals(1, $xpath->query("//s:ellipse[@title='package1']")->length);
     }
 
     /**
@@ -199,7 +196,7 @@ class ChartTest extends AbstractTestCase
         $xpath = new DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
 
-        $this->assertEquals(0, $xpath->query("//s:ellipse[@title='package1']")->length);
+        static::assertEquals(0, $xpath->query("//s:ellipse[@title='package1']")->length);
     }
 
     /**
@@ -211,10 +208,10 @@ class ChartTest extends AbstractTestCase
 
         $analyzer = $this->getMockBuilder(DependencyAnalyzer::class)
             ->getMock();
-        $analyzer->expects($this->atLeastOnce())
+        $analyzer->expects(static::atLeastOnce())
             ->method('getStats')
             ->will(
-                $this->returnCallback(
+                static::returnCallback(
                     function (AbstractASTArtifact $node) use ($nodes) {
                         $data = [
                             $nodes[0]->getId() => [
@@ -236,6 +233,7 @@ class ChartTest extends AbstractTestCase
                         if (isset($data[$node->getId()])) {
                             return $data[$node->getId()];
                         }
+
                         return [];
                     }
                 )
@@ -259,14 +257,14 @@ class ChartTest extends AbstractTestCase
         $ellipseA = $xpath->query("//s:ellipse[@title='package0']")->item(0);
         $matrixA = $ellipseA->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixA, $matches);
-        $this->assertEquals(1, $matches[1]);
-        $this->assertEquals(1, $matches[4]);
+        static::assertEquals(1, $matches[1]);
+        static::assertEquals(1, $matches[4]);
 
         $ellipseB = $xpath->query("//s:ellipse[@title='package1']")->item(0);
         $matrixB = $ellipseB->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixB, $matches);
-        $this->assertEqualsWithDelta(0.3333333, $matches[1], 0.000001);
-        $this->assertEqualsWithDelta(0.3333333, $matches[4], 0.000001);
+        static::assertEqualsWithDelta(0.3333333, $matches[1], 0.000001);
+        static::assertEqualsWithDelta(0.3333333, $matches[4], 0.000001);
     }
 
     /**
@@ -291,14 +289,14 @@ class ChartTest extends AbstractTestCase
         $logger->setArtifacts($nodes);
         $logger->log($analyzer);
 
-        $this->assertFileDoesNotExist($fileName);
+        static::assertFileDoesNotExist($fileName);
         $logger->close();
-        $this->assertFileExists($fileName);
+        static::assertFileExists($fileName);
 
         $info = getimagesize($fileName);
-        //$this->assertEquals(390, $info[0]);
-        //$this->assertEquals(250, $info[1]);
-        $this->assertEquals('image/png', $info['mime']);
+        // $this->assertEquals(390, $info[0]);
+        // $this->assertEquals(250, $info[1]);
+        static::assertEquals('image/png', $info['mime']);
 
         unlink($fileName);
     }
@@ -315,6 +313,7 @@ class ChartTest extends AbstractTestCase
                 'package' . $i
             );
         }
+
         return $packages;
     }
 
@@ -330,9 +329,9 @@ class ChartTest extends AbstractTestCase
             ->setConstructorArgs([$packageName])
             ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTNamespace')
             ->getMock();
-        $packageA->expects($this->atLeastOnce())
+        $packageA->expects(static::atLeastOnce())
             ->method('isUserDefined')
-            ->will($this->returnValue($userDefined));
+            ->will(static::returnValue($userDefined));
 
         return $packageA;
     }

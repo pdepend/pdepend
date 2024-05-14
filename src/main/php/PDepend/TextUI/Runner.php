@@ -59,14 +59,10 @@ use RuntimeException;
  */
 class Runner
 {
-    /**
-     * Marks the default success exit.
-     */
+    /** Marks the default success exit. */
     public const SUCCESS_EXIT = 0;
 
-    /**
-     * Marks an internal exception exit.
-     */
+    /** Marks an internal exception exit. */
     public const EXCEPTION_EXIT = 2;
 
     /**
@@ -135,14 +131,10 @@ class Runner
      */
     private $parseErrors = [];
 
-    /**
-     * @var ReportGeneratorFactory
-     */
+    /** @var ReportGeneratorFactory */
     private $reportGeneratorFactory;
 
-    /**
-     * @var Engine
-     */
+    /** @var Engine */
     private $engine;
 
     public function __construct(ReportGeneratorFactory $reportGeneratorFactory, Engine $engine)

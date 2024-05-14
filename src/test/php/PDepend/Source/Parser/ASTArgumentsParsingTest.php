@@ -175,7 +175,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
         $arguments = $this->getFirstArgumentsOfFunction();
 
         $allocation = $arguments->getChild(0);
-        $this->assertInstanceOf(ASTAllocationExpression::class, $allocation);
+        static::assertInstanceOf(ASTAllocationExpression::class, $allocation);
     }
 
     /**
@@ -188,7 +188,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
         $postfix = $arguments->getFirstChildOfType(
             ASTFunctionPostfix::class
         );
-        $this->assertInstanceOf(ASTFunctionPostfix::class, $postfix);
+        static::assertInstanceOf(ASTFunctionPostfix::class, $postfix);
     }
 
     /**
@@ -199,7 +199,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
         $arguments = $this->getFirstArgumentsOfFunction();
 
         $child = $arguments->getChild(0);
-        $this->assertInstanceOf(ASTVariable::class, $child);
+        static::assertInstanceOf(ASTVariable::class, $child);
     }
 
     /**
@@ -212,7 +212,7 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
         $postfixes = $arguments->findChildrenOfType(
             ASTMethodPostfix::class
         );
-        $this->assertCount(1, $postfixes);
+        static::assertCount(1, $postfixes);
     }
 
     /**

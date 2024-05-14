@@ -55,14 +55,10 @@ use PDepend\AbstractTestCase;
  */
 class FileCacheGarbageCollectorTest extends AbstractTestCase
 {
-    /**
-     * Temporary cache directory.
-     */
+    /** Temporary cache directory. */
     protected string $cacheDir;
 
-    /**
-     * Cache TTL
-     */
+    /** Cache TTL */
     protected int $cacheTtl = FileCacheGarbageCollector::DEFAULT_TTL;
 
     /**
@@ -84,7 +80,7 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         $this->createFile();
 
         $garbageCollector = new FileCacheGarbageCollector($this->cacheDir, $this->cacheTtl);
-        $this->assertSame(0, $garbageCollector->garbageCollect());
+        static::assertSame(0, $garbageCollector->garbageCollect());
     }
 
     public function testRemovesOutdatedFiles(): void
@@ -95,7 +91,7 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         $this->createFile($time, $time);
 
         $garbageCollector = new FileCacheGarbageCollector($this->cacheDir, $this->cacheTtl);
-        $this->assertSame(2, $garbageCollector->garbageCollect());
+        static::assertSame(2, $garbageCollector->garbageCollect());
     }
 
     public function testKeepsFilesWithRecentATime(): void
@@ -106,7 +102,7 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         $this->createFile($time);
 
         $garbageCollector = new FileCacheGarbageCollector($this->cacheDir, $this->cacheTtl);
-        $this->assertSame(1, $garbageCollector->garbageCollect());
+        static::assertSame(1, $garbageCollector->garbageCollect());
     }
 
     public function testKeepsFilesWithRecentMTime(): void
@@ -117,7 +113,7 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         $this->createFile(0, $time);
 
         $garbageCollector = new FileCacheGarbageCollector($this->cacheDir, $this->cacheTtl);
-        $this->assertSame(1, $garbageCollector->garbageCollect());
+        static::assertSame(1, $garbageCollector->garbageCollect());
     }
 
     protected function createFile($mtime = 0, $atime = 0)

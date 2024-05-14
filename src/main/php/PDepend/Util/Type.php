@@ -53,17 +53,14 @@ use ReflectionExtension;
  */
 final class Type
 {
-    /**
-     * Constants for valid php data types.
-     */
+    /** Constants for valid php data types. */
     public const
         PHP_TYPE_BOOLEAN = 'boolean',
         PHP_TYPE_FLOAT = 'float',
         PHP_TYPE_INTEGER = 'integer',
         PHP_TYPE_STRING = 'string';
-    /**
-     * Constants with valid php data type identifiers.
-     */
+
+    /** Constants with valid php data type identifiers. */
     private const
         IMAGE_ARRAY = 'array',
         IMAGE_BOOL = 'bool',
@@ -80,9 +77,7 @@ final class Type
         IMAGE_STDCLASS = 'stdclass',
         IMAGE_VOID = 'void';
 
-    /**
-     * Constants with the metaphone representation of multiple php data types.
-     */
+    /** Constants with the metaphone representation of multiple php data types. */
     private const
         IMAGE_METAPHONE_ARRAY = 'AR',
         IMAGE_METAPHONE_BOOL = 'BL',
@@ -100,9 +95,7 @@ final class Type
         IMAGE_METAPHONE_UNKNOWN = 'UNKNN',
         IMAGE_METAPHONE_UNKNOWN_TYPE = 'UNKNNTP';
 
-    /**
-     * Constants with the soundex representation of multiple php data types.
-     */
+    /** Constants with the soundex representation of multiple php data types. */
     private const
         IMAGE_SOUNDEX_ARRAY = 'A600',
         IMAGE_SOUNDEX_BOOL = 'B450',
@@ -119,9 +112,7 @@ final class Type
         IMAGE_SOUNDEX_STDCLASS = 'S324',
         IMAGE_SOUNDEX_UNKNOWN = 'U525';
 
-    /**
-     * Constants for other types/keywords frequently used.
-     */
+    /** Constants for other types/keywords frequently used. */
     private const
         IMAGE_OTHER_NULL = 'null',
         IMAGE_OTHER_FALSE = 'false',
@@ -271,6 +262,7 @@ final class Type
         if (isset(self::$typeNameToExtension[$normalizedName])) {
             return self::$typeNameToExtension[$normalizedName];
         }
+
         return null;
     }
 
@@ -288,6 +280,7 @@ final class Type
                 self::$internalNamespaces[$namespace] = $namespace;
             }
         }
+
         return self::$internalNamespaces;
     }
 
@@ -302,6 +295,7 @@ final class Type
     public static function isInternalPackage($packageName)
     {
         $packageNames = self::getInternalNamespaces();
+
         return isset($packageNames[strtolower($packageName)]);
     }
 
@@ -322,6 +316,7 @@ final class Type
         if (isset(self::$scalarTypes[$image]) === true) {
             return true;
         }
+
         return isset(self::$scalarTypes[soundex($image)]);
     }
 
@@ -360,6 +355,7 @@ final class Type
         if (isset(self::$primitiveTypes[$image]) === true) {
             return self::$primitiveTypes[$image];
         }
+
         return null;
     }
 

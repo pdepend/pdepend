@@ -52,9 +52,7 @@ use RuntimeException;
  */
 class ExtensionManager
 {
-    /**
-     * @var array<Extension>
-     */
+    /** @var array<Extension> */
     private $extensions = [];
 
     /**

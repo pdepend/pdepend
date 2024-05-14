@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link ASTPostfixExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTPostfixExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -233,7 +233,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     public function testIncrementPostfixExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $expr->getStartLine());
+        static::assertEquals(5, $expr->getStartLine());
     }
 
     /**
@@ -242,7 +242,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     public function testIncrementPostfixExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(9, $expr->getStartColumn());
+        static::assertEquals(9, $expr->getStartColumn());
     }
 
     /**
@@ -251,7 +251,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     public function testIncrementPostfixExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(7, $expr->getEndLine());
+        static::assertEquals(7, $expr->getEndLine());
     }
 
     /**
@@ -260,7 +260,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     public function testIncrementPostfixExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(14, $expr->getEndColumn());
+        static::assertEquals(14, $expr->getEndColumn());
     }
 
     /**
@@ -289,7 +289,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     public function testDecrementPostfixExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(7, $expr->getStartLine());
+        static::assertEquals(7, $expr->getStartLine());
     }
 
     /**
@@ -298,7 +298,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     public function testDecrementPostfixExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(17, $expr->getStartColumn());
+        static::assertEquals(17, $expr->getStartColumn());
     }
 
     /**
@@ -307,7 +307,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     public function testDecrementPostfixExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(9, $expr->getEndLine());
+        static::assertEquals(9, $expr->getEndLine());
     }
 
     /**
@@ -316,7 +316,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     public function testDecrementPostfixExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstPostfixExpressionInFunction(__METHOD__);
-        $this->assertEquals(10, $expr->getEndColumn());
+        static::assertEquals(10, $expr->getEndColumn());
     }
 
     /**

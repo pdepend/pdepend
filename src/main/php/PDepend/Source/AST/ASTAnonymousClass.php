@@ -223,6 +223,7 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
     protected function getMetadata($index)
     {
         $metadata = explode(':', $this->metadata, $this->getMetadataSize());
+
         return $metadata[$index];
     }
 

@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Metrics\Analyzer;
 
@@ -62,26 +62,24 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      * @var array<string, array>
      */
     private $input = [
-        'package1' => ['cr' => 0.2775,     'rcr' => 0.385875],
-        'package2' => ['cr' => 0.15,       'rcr' => 0.47799375],
-        'package3' => ['cr' => 0.385875,   'rcr' => 0.2775],
+        'package1' => ['cr' => 0.2775, 'rcr' => 0.385875],
+        'package2' => ['cr' => 0.15, 'rcr' => 0.47799375],
+        'package3' => ['cr' => 0.385875, 'rcr' => 0.2775],
         'core' => ['cr' => 0.47799375, 'rcr' => 0.15],
-        'pkg1Foo' => ['cr' => 0.15,       'rcr' => 0.181875],
-        'pkg2FooI' => ['cr' => 0.15,       'rcr' => 0.181875],
-        'pkg2Bar' => ['cr' => 0.15,       'rcr' => 0.1755],
-        'pkg2Foobar' => ['cr' => 0.15,       'rcr' => 0.1755],
-        'pkg1Barfoo' => ['cr' => 0.15,       'rcr' => 0.207375],
-        'pkg2Barfoo' => ['cr' => 0.15,       'rcr' => 0.207375],
-        'pkg1Foobar' => ['cr' => 0.15,       'rcr' => 0.411375],
-        'pkg1FooI' => ['cr' => 0.5325,     'rcr' => 0.15],
-        'pkg1Bar' => ['cr' => 0.59625,    'rcr' => 0.15],
-        'pkg3FooI' => ['cr' => 0.21375,    'rcr' => 0.2775],
-        'Iterator' => ['cr' => 0.3316875,  'rcr' => 0.15],
+        'pkg1Foo' => ['cr' => 0.15, 'rcr' => 0.181875],
+        'pkg2FooI' => ['cr' => 0.15, 'rcr' => 0.181875],
+        'pkg2Bar' => ['cr' => 0.15, 'rcr' => 0.1755],
+        'pkg2Foobar' => ['cr' => 0.15, 'rcr' => 0.1755],
+        'pkg1Barfoo' => ['cr' => 0.15, 'rcr' => 0.207375],
+        'pkg2Barfoo' => ['cr' => 0.15, 'rcr' => 0.207375],
+        'pkg1Foobar' => ['cr' => 0.15, 'rcr' => 0.411375],
+        'pkg1FooI' => ['cr' => 0.5325, 'rcr' => 0.15],
+        'pkg1Bar' => ['cr' => 0.59625, 'rcr' => 0.15],
+        'pkg3FooI' => ['cr' => 0.21375, 'rcr' => 0.2775],
+        'Iterator' => ['cr' => 0.3316875, 'rcr' => 0.15],
     ];
 
-    /**
-     * The code rank analyzer.
-     */
+    /** The code rank analyzer. */
     private CodeRankAnalyzer $analyzer;
 
     /**
@@ -98,7 +96,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
             'Bar' => 0.2775,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -115,7 +113,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
             'Bar' => 0.15,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -126,7 +124,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testCodeRankOfNamespacedSameNameInheritanceExample(): void
     {
         $actual = $this->getCodeRankForTestCase();
-        $this->assertEquals(['Foo' => 0.15], $actual);
+        static::assertEquals(['Foo' => 0.15], $actual);
     }
 
     /**
@@ -139,7 +137,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $options = ['coderank-mode' => ['property']];
         $actual = $this->getCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' => 0.15], $actual);
+        static::assertEquals(['Foo' => 0.15], $actual);
     }
 
     /**
@@ -152,7 +150,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $options = ['coderank-mode' => ['property']];
         $actual = $this->getReverseCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' => 0.2775], $actual);
+        static::assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
@@ -165,7 +163,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $options = ['coderank-mode' => ['method']];
         $actual = $this->getCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' => 0.15], $actual);
+        static::assertEquals(['Foo' => 0.15], $actual);
     }
 
     /**
@@ -178,7 +176,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $options = ['coderank-mode' => ['method']];
         $actual = $this->getReverseCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' => 0.2775], $actual);
+        static::assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
@@ -191,7 +189,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $options = ['coderank-mode' => ['method']];
         $actual = $this->getReverseCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' => 0.2775], $actual);
+        static::assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
@@ -204,7 +202,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $options = ['coderank-mode' => ['method']];
         $actual = $this->getReverseCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' => 0.2775], $actual);
+        static::assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
@@ -217,7 +215,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $options = ['coderank-mode' => ['method']];
         $actual = $this->getCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' => 0.15], $actual);
+        static::assertEquals(['Foo' => 0.15], $actual);
     }
 
     /**
@@ -230,7 +228,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $options = ['coderank-mode' => ['method']];
         $actual = $this->getReverseCodeRankForTestCase($options);
 
-        $this->assertEquals(['Foo' => 0.2775], $actual);
+        static::assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
@@ -241,14 +239,14 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     public function testReverseCodeRankOfNamespacedSameNameInheritanceExample(): void
     {
         $actual = $this->getReverseCodeRankForTestCase();
-        $this->assertEquals(['Foo' => 0.2775], $actual);
+        static::assertEquals(['Foo' => 0.2775], $actual);
     }
 
     /**
      * testCodeRankOfOrderExampleWithInheritanceAndMethodStrategy
      *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
+     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
     public function testCodeRankOfOrderExampleWithInheritanceAndMethodStrategy(): void
     {
@@ -263,14 +261,14 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
             'Order' => 0.15,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
      * testReverseCodeRankOfOrderExampleWithInheritanceAndMethodStrategy
      *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
+     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
     public function testReverseCodeRankOfOrderExampleWithInheritanceAndMethodStrategy(): void
     {
@@ -285,14 +283,14 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
             'Order' => 0.26794,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
      * testCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy
      *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
+     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
     public function testCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy(): void
     {
@@ -307,14 +305,14 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
             'Order' => 0.15,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
      * testReverseCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy
      *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
+     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
     public function testReverseCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy(): void
     {
@@ -329,15 +327,15 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
             'Order' => 0.26794,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
      * testCodeRankOfInternalInterfaceExample
      *
+     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
     public function testCodeRankOfInternalInterfaceExample(): void
     {
@@ -351,15 +349,15 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
             'Order' => 0.15,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
      * testReverseCodeRankOfInternalInterfaceExample
      *
+     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
     public function testReverseCodeRankOfInternalInterfaceExample(): void
     {
@@ -372,16 +370,16 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
             'Order' => 0.26794,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
      * Tests the result of the class rank calculation against previous computed
      * values.
      *
+     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
     public function testGetNodeMetrics(): void
     {
@@ -404,21 +402,21 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         foreach ($expected as $key => $info) {
             $metrics = $this->analyzer->getNodeMetrics($info[0]);
 
-            $this->assertEqualsWithDelta($info[1]['cr'], $metrics['cr'], 0.00005);
-            $this->assertEqualsWithDelta($info[1]['rcr'], $metrics['rcr'], 0.00005);
+            static::assertEqualsWithDelta($info[1]['cr'], $metrics['cr'], 0.00005);
+            static::assertEqualsWithDelta($info[1]['rcr'], $metrics['rcr'], 0.00005);
 
             unset($expected[$key]);
         }
-        $this->assertCount(0, $expected);
+        static::assertCount(0, $expected);
     }
 
     /**
      * Tests that {@link \PDepend\Metrics\Analyzer\CodeRankAnalyzer::getNodeMetrics()}
      * returns an empty <b>array</b> for an unknown identifier.
      *
+     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
     public function testGetNodeMetricsInvalidIdentifier(): void
     {
@@ -430,8 +428,8 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $class = new ASTClass('PDepend');
         $metrics = $this->analyzer->getNodeMetrics($class);
 
-        $this->assertIsArray($metrics);
-        $this->assertCount(0, $metrics);
+        static::assertIsArray($metrics);
+        static::assertCount(0, $metrics);
     }
 
     protected function getCodeRankForTestCase(array $options = [])
@@ -458,6 +456,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
             $metrics = $analyzer->getNodeMetrics($type);
             $actual[$type->getName()] = round($metrics[$metricName], 5);
         }
+
         return $actual;
     }
 }

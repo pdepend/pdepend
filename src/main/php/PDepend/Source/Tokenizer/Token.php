@@ -50,34 +50,22 @@ namespace PDepend\Source\Tokenizer;
  */
 class Token
 {
-    /**
-     * The token type identifier.
-     */
+    /** The token type identifier. */
     public int $type;
 
-    /**
-     * The token image/textual representation.
-     */
+    /** The token image/textual representation. */
     public string $image;
 
-    /**
-     * The start line number for this token.
-     */
+    /** The start line number for this token. */
     public int $startLine;
 
-    /**
-     * The end line number for this token.
-     */
+    /** The end line number for this token. */
     public int $endLine;
 
-    /**
-     * The start column number for this token.
-     */
+    /** The start column number for this token. */
     public int $startColumn;
 
-    /**
-     * The end column number for this token.
-     */
+    /** The end column number for this token. */
     public int $endColumn;
 
     /**

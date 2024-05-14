@@ -65,13 +65,10 @@ use PDepend\Util\Coverage\Report;
  */
 class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerNodeAware
 {
-    /**
-     * The report option name.
-     */
+    /** The report option name. */
     public const REPORT_OPTION = 'coverage-report';
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+
+    /** Metrics provided by the analyzer implementation. */
     private const
         M_CRAP_INDEX = 'crap',
         M_COVERAGE = 'cov';
@@ -112,6 +109,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
         if (isset($this->metrics[$artifact->getId()])) {
             return $this->metrics[$artifact->getId()];
         }
+
         return [];
     }
 
@@ -209,9 +207,11 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
 
         if ($coverage === 0.0) {
             return $complexity ** 2 + $complexity;
-        } elseif ($coverage > 99.5) {
+        }
+        if ($coverage > 99.5) {
             return $complexity;
         }
+
         return $complexity ** 2 * (1 - $coverage / 100) ** 3 + $complexity;
     }
 
@@ -236,6 +236,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
         if (!isset($this->report)) {
             $this->report = $this->createCoverageReport();
         }
+
         return $this->report;
     }
 
@@ -247,6 +248,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     private function createCoverageReport()
     {
         $factory = new Factory();
+
         return $factory->create($this->options['coverage-report']);
     }
 }

@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFinallyStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTFinallyStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     public function testFinallyStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstFinallyStatementInFunction(__METHOD__);
-        $this->assertEquals(8, $stmt->getStartLine());
+        static::assertEquals(8, $stmt->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     public function testFinallyStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstFinallyStatementInFunction(__METHOD__);
-        $this->assertEquals(7, $stmt->getStartColumn());
+        static::assertEquals(7, $stmt->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     public function testFinallyStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstFinallyStatementInFunction(__METHOD__);
-        $this->assertEquals(10, $stmt->getEndLine());
+        static::assertEquals(10, $stmt->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     public function testFinallyStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstFinallyStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getEndColumn());
+        static::assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
@@ -96,7 +96,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     public function testOnlyFinallyStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstFinallyStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $stmt->getStartLine());
+        static::assertEquals(6, $stmt->getStartLine());
     }
 
     /**
@@ -105,7 +105,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     public function testOnlyFinallyStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstFinallyStatementInFunction(__METHOD__);
-        $this->assertEquals(7, $stmt->getStartColumn());
+        static::assertEquals(7, $stmt->getStartColumn());
     }
 
     /**
@@ -114,7 +114,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     public function testOnlyFinallyStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstFinallyStatementInFunction(__METHOD__);
-        $this->assertEquals(8, $stmt->getEndLine());
+        static::assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -123,7 +123,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     public function testOnlyFinallyStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstFinallyStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getEndColumn());
+        static::assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
@@ -132,7 +132,7 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
     public function testChildOfFinallyStatementIsScopeStatement(): void
     {
         $stmt = $this->getFirstFinallyStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(0));
+        static::assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(0));
     }
 
     /**

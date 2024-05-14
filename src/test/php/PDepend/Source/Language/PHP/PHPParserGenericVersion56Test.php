@@ -73,7 +73,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
+        static::assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -84,7 +84,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
+        static::assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -95,7 +95,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
+        static::assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -106,7 +106,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
+        static::assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -119,7 +119,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
+        static::assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -132,7 +132,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
+        static::assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -145,7 +145,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
+        static::assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -158,7 +158,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $class = $this->getFirstInterfaceForTestCase();
         $const = $class->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDefinition::class, $const);
+        static::assertInstanceOf(ASTConstantDefinition::class, $const);
     }
 
     /**
@@ -169,7 +169,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $node = $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType(ASTFormalParameter::class);
 
-        $this->assertNotNull($node);
+        static::assertNotNull($node);
     }
 
     /**
@@ -180,7 +180,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType(ASTConstantDeclarator::class);
 
-        $this->assertNotNull($node);
+        static::assertNotNull($node);
     }
 
     /**
@@ -191,7 +191,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType(ASTFieldDeclaration::class);
 
-        $this->assertNotNull($node);
+        static::assertNotNull($node);
     }
 
     /**
@@ -202,7 +202,7 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType(ASTReturnStatement::class);
 
-        $this->assertSame('**', $node->getChild(0)->getChild(1)->getImage());
+        static::assertSame('**', $node->getChild(0)->getChild(1)->getImage());
     }
 
     /**
@@ -213,11 +213,11 @@ class PHPParserGenericVersion56Test extends AbstractTestCase
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType(ASTFieldDeclaration::class);
 
-        $this->assertNotNull($node);
+        static::assertNotNull($node);
     }
 
     public function testEllipsisOperatorInFunctionCall(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
     }
 }

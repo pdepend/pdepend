@@ -62,9 +62,7 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     public const
         M_HALSTEAD_LENGTH = 'hnt', // N = N1 + N2 (total operators + operands)
         M_HALSTEAD_VOCABULARY = 'hnd', // n = n1 + n2 (distinct operators + operands)
@@ -206,6 +204,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                     // Ignore next token as operand but count as operator instead.
                     $skipUntil = $tokens[$i + 1]->type;
                     $operators[] = $tokens[$i + 1]->image;
+
                     break;
 
                 case Tokens::T_IF:
@@ -231,6 +230,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                      * so we'll have to skip that one.
                      */
                     $skipUntil = Tokens::T_PARENTHESIS_OPEN;
+
                     break;
 
                 case Tokens::T_COLON:
@@ -276,6 +276,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
 
                     // Skip next part (would be seen as operand)
                     $skipUntil = $tokens[$i + 1]->type;
+
                     break;
 
                 case Tokens::T_START_HEREDOC:
@@ -302,6 +303,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                     // one should be included in operators.
                     $skipUntil = Tokens::T_CURLY_BRACE_OPEN;
                     $operators[] = '{';
+
                     break;
 
                 case Tokens::T_VAR:
@@ -312,7 +314,9 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                      * when they appear with operators in expressions.
                      */
                     $skipUntil = Tokens::T_SEMICOLON;
+
                     break;
+
                 case Tokens::T_STRING:
                     // `define` is T_STRING, just like any other identifier.
                     if ($token->image === 'define') {
@@ -321,6 +325,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                     } else {
                         $operands[] = $token->image;
                     }
+
                     break;
 
                 case Tokens::T_CONSTANT_ENCAPSED_STRING:
@@ -338,11 +343,13 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
                 case Tokens::T_DIR:
                 case Tokens::T_ENCAPSED_AND_WHITESPACE: // content of HEREDOC
                     $operands[] = $token->image;
+
                     break;
 
                 default:
                     // Everything else is an operator.
                     $operators[] = $token->image;
+
                     break;
             }
         }

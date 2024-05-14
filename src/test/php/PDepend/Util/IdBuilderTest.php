@@ -70,7 +70,7 @@ class IdBuilderTest extends AbstractTestCase
         $file = new ASTCompilationUnit(__FILE__);
         $builder = new IdBuilder();
 
-        $this->assertMatchesRegularExpression('/^[a-z0-9]{11}$/', $builder->forFile($file));
+        static::assertMatchesRegularExpression('/^[a-z0-9]{11}$/', $builder->forFile($file));
     }
 
     /**
@@ -81,20 +81,20 @@ class IdBuilderTest extends AbstractTestCase
         $builder = new IdBuilder();
 
         $unitStub0 = $this->getMockBuilder(ASTCompilationUnit::class)
-                ->disableOriginalConstructor()
-                ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
         $unitStub0->method('getFileName')
-                ->willReturn(__FILE__);
+            ->willReturn(__FILE__);
         $identifier0 = $builder->forFile($unitStub0);
 
         $unitStub1 = $this->getMockBuilder(ASTCompilationUnit::class)
-                ->disableOriginalConstructor()
-                ->getMock();
+            ->disableOriginalConstructor()
+            ->getMock();
         $unitStub1->method('getFileName')
-                ->willReturn(strtolower(__FILE__));
+            ->willReturn(strtolower(__FILE__));
         $identifier1 = $builder->forFile($unitStub1);
 
-        $this->assertNotEquals($identifier0, $identifier1);
+        static::assertNotEquals($identifier0, $identifier1);
     }
 
     /**
@@ -110,7 +110,7 @@ class IdBuilderTest extends AbstractTestCase
 
         $builder = new IdBuilder();
 
-        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forClassOrInterface($class));
+        static::assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forClassOrInterface($class));
     }
 
     /**
@@ -127,7 +127,7 @@ class IdBuilderTest extends AbstractTestCase
         $builder = new IdBuilder();
         $builder->forClassOrInterface($class);
 
-        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-01$/', $builder->forClassOrInterface($class));
+        static::assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-01$/', $builder->forClassOrInterface($class));
     }
 
     /**
@@ -147,7 +147,7 @@ class IdBuilderTest extends AbstractTestCase
         $builder = new IdBuilder();
         $builder->forClassOrInterface($class1);
 
-        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forClassOrInterface($class2));
+        static::assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forClassOrInterface($class2));
     }
 
     /**
@@ -167,7 +167,7 @@ class IdBuilderTest extends AbstractTestCase
         $builder0 = new IdBuilder();
         $builder1 = new IdBuilder();
 
-        $this->assertEquals(
+        static::assertEquals(
             $builder0->forClassOrInterface($class0),
             $builder1->forClassOrInterface($class1)
         );
@@ -190,7 +190,7 @@ class IdBuilderTest extends AbstractTestCase
         $builder0 = new IdBuilder();
         $builder1 = new IdBuilder();
 
-        $this->assertEquals(
+        static::assertEquals(
             $builder0->forClassOrInterface($interface0),
             $builder1->forClassOrInterface($interface1)
         );
@@ -209,7 +209,7 @@ class IdBuilderTest extends AbstractTestCase
 
         $builder = new IdBuilder();
 
-        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function));
+        static::assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function));
     }
 
     /**
@@ -229,7 +229,7 @@ class IdBuilderTest extends AbstractTestCase
         $builder0 = new IdBuilder();
         $builder1 = new IdBuilder();
 
-        $this->assertEquals(
+        static::assertEquals(
             $builder0->forFunction($function0),
             $builder1->forFunction($function1)
         );
@@ -248,7 +248,7 @@ class IdBuilderTest extends AbstractTestCase
 
         $builder = new IdBuilder();
 
-        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}$/', $builder->forMethod($method));
+        static::assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}$/', $builder->forMethod($method));
     }
 
     /**
@@ -265,7 +265,7 @@ class IdBuilderTest extends AbstractTestCase
         $builder = new IdBuilder();
         $builder->forFunction($function);
 
-        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-01$/', $builder->forFunction($function));
+        static::assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-01$/', $builder->forFunction($function));
     }
 
     /**
@@ -285,7 +285,7 @@ class IdBuilderTest extends AbstractTestCase
         $builder = new IdBuilder();
         $builder->forFunction($function1);
 
-        $this->assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function2));
+        static::assertMatchesRegularExpression('/^FooBar\-[a-z0-9]{11}\-00$/', $builder->forFunction($function2));
     }
 
     /**
@@ -308,7 +308,7 @@ class IdBuilderTest extends AbstractTestCase
         $builder0 = new IdBuilder();
         $builder1 = new IdBuilder();
 
-        $this->assertEquals(
+        static::assertEquals(
             $builder0->forMethod($method0),
             $builder1->forMethod($method1)
         );

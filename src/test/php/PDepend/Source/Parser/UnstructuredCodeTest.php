@@ -60,7 +60,7 @@ class UnstructuredCodeTest extends AbstractParserTestCase
      */
     public function testParserHandlesNonPhpCodeInFileProlog(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -69,7 +69,7 @@ class UnstructuredCodeTest extends AbstractParserTestCase
     public function testParserHandlesConditionalClassDeclaration(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $this->assertEquals(5, $class->getEndLine());
+        static::assertEquals(5, $class->getEndLine());
     }
 
     /**
@@ -78,7 +78,7 @@ class UnstructuredCodeTest extends AbstractParserTestCase
     public function testParserHandlesConditionalInterfaceDeclaration(): void
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertEquals(6, $interface->getEndLine());
+        static::assertEquals(6, $interface->getEndLine());
     }
 
     /**
@@ -87,6 +87,6 @@ class UnstructuredCodeTest extends AbstractParserTestCase
     public function testParserHandlesConditionalFunctionDeclaration(): void
     {
         $function = $this->getFirstFunctionForTestCase();
-        $this->assertEquals(6, $function->getEndLine());
+        static::assertEquals(6, $function->getEndLine());
     }
 }

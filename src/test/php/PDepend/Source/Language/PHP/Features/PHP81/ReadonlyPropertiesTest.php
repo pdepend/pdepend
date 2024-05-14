@@ -58,35 +58,35 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
         $class = $this->getFirstClassForTestCase();
         $property = $class->getChild(0);
 
-        $this->assertSame('string', $property->getChild(0)->getImage());
-        $this->assertSame('$bar', $property->getChild(1)->getImage());
+        static::assertSame('string', $property->getChild(0)->getImage());
+        static::assertSame('$bar', $property->getChild(1)->getImage());
 
         $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
-        $this->assertSame(0, ($expectedModifiers & $property->getModifiers()));
+        static::assertSame(0, $expectedModifiers & $property->getModifiers());
     }
 
     public function testReadonlyPropertyInConstructor(): void
     {
         $class = $this->getFirstClassForTestCase();
         $constructor = $class->getMethods()->offsetGet(0);
-        $this->assertSame('__construct', $constructor->getName());
+        static::assertSame('__construct', $constructor->getName());
 
         $parameters = $constructor->getParameters();
         $parameter = $parameters[0];
 
-        $this->assertSame('string', $parameter->getFormalParameter()->getChild(0)->getImage());
-        $this->assertSame('$bar', $parameter->getFormalParameter()->getChild(1)->getImage());
+        static::assertSame('string', $parameter->getFormalParameter()->getChild(0)->getImage());
+        static::assertSame('$bar', $parameter->getFormalParameter()->getChild(1)->getImage());
 
         $expectedModifiers = State::IS_PUBLIC | State::IS_READONLY;
-        $this->assertSame($expectedModifiers, $parameter->getFormalParameter()->getModifiers());
+        static::assertSame($expectedModifiers, $parameter->getFormalParameter()->getModifiers());
 
         $parameter = $parameters[1];
 
-        $this->assertSame('int|float', $parameter->getFormalParameter()->getChild(0)->getImage());
-        $this->assertSame('$foo', $parameter->getFormalParameter()->getChild(1)->getImage());
+        static::assertSame('int|float', $parameter->getFormalParameter()->getChild(0)->getImage());
+        static::assertSame('$foo', $parameter->getFormalParameter()->getChild(1)->getImage());
 
         $expectedModifiers = State::IS_PUBLIC | State::IS_READONLY;
-        $this->assertSame($expectedModifiers, $parameter->getFormalParameter()->getModifiers());
+        static::assertSame($expectedModifiers, $parameter->getFormalParameter()->getModifiers());
     }
 
     public function testReadonlyNameUsedElsewhere(): void
@@ -94,33 +94,33 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
         $class = $this->getFirstClassForTestCase();
 
         $constant = $class->getChild(0);
-        $this->assertSame('readonly', $constant->getChild(0)->getImage());
+        static::assertSame('readonly', $constant->getChild(0)->getImage());
 
         $propertyPostfix = $class->getChild(1);
-        $this->assertSame('$readonly', $propertyPostfix->getChild(1)->getImage());
+        static::assertSame('$readonly', $propertyPostfix->getChild(1)->getImage());
 
         $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
-        $this->assertSame(0, ($expectedModifiers & $propertyPostfix->getModifiers()));
+        static::assertSame(0, $expectedModifiers & $propertyPostfix->getModifiers());
 
         /** @var ASTMethod $constructor */
         $constructor = $class->getMethods()->offsetGet(0);
-        $this->assertSame('__construct', $constructor->getName());
+        static::assertSame('__construct', $constructor->getName());
         $constructorNodes = $constructor->getChildren();
         $assignment = $constructorNodes[1]->getChild(0)->getChild(0);
 
         $propertyPostfix = $assignment->getChild(0)->getChild(1);
-        self::assertInstanceOf(ASTPropertyPostfix::class, $propertyPostfix);
-        $this->assertSame('readonly', $propertyPostfix->getImage());
+        static::assertInstanceOf(ASTPropertyPostfix::class, $propertyPostfix);
+        static::assertSame('readonly', $propertyPostfix->getImage());
 
         $methodPostfix = $assignment->getChild(1)->getChild(1);
-        self::assertInstanceOf(ASTMethodPostfix::class, $methodPostfix);
-        $this->assertSame('readonly', $methodPostfix->getImage());
+        static::assertInstanceOf(ASTMethodPostfix::class, $methodPostfix);
+        static::assertSame('readonly', $methodPostfix->getImage());
 
         $method = $class->getMethods()->offsetGet(1);
-        $this->assertSame('readonly', $method->getName());
+        static::assertSame('readonly', $method->getName());
 
         $methodNodes = $method->getChildren();
         $constantCall = $methodNodes[1]->getChild(0)->getChild(0);
-        $this->assertSame('readonly', $constantCall->getChild(1)->getImage());
+        static::assertSame('readonly', $constantCall->getChild(1)->getImage());
     }
 }

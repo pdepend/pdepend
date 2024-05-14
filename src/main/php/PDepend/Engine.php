@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend;
 
@@ -93,9 +93,7 @@ class Engine
      */
     protected Configuration $configuration;
 
-    /**
-     * Prefix for PHP streams.
-     */
+    /** Prefix for PHP streams. */
     protected string $phpStreamPrefix = 'php://';
 
     /**
@@ -133,14 +131,10 @@ class Engine
      */
     private $generators = [];
 
-    /**
-     * A composite filter for input files.
-     */
+    /** A composite filter for input files. */
     private CompositeFilter $fileFilter;
 
-    /**
-     * A filter for namespace.
-     */
+    /** A filter for namespace. */
     private ArtifactFilter $codeFilter;
 
     /**
@@ -180,9 +174,7 @@ class Engine
      */
     private $cacheFactory;
 
-    /**
-     * @var AnalyzerFactory
-     */
+    /** @var AnalyzerFactory */
     private $analyzerFactory;
 
     /**
@@ -357,6 +349,7 @@ class Engine
     {
         if (!isset($this->namespaces)) {
             $msg = 'countClasses() doesn\'t work before the source was analyzed.';
+
             throw new RuntimeException($msg);
         }
 
@@ -364,6 +357,7 @@ class Engine
         foreach ($this->namespaces as $namespace) {
             $classes += count($namespace->getTypes());
         }
+
         return $classes;
     }
 
@@ -388,6 +382,7 @@ class Engine
     {
         if (!isset($this->namespaces)) {
             $msg = 'countNamespaces() doesn\'t work before the source was analyzed.';
+
             throw new RuntimeException($msg);
         }
 
@@ -397,6 +392,7 @@ class Engine
                 ++$count;
             }
         }
+
         return $count;
     }
 
@@ -412,6 +408,7 @@ class Engine
     {
         if (!isset($this->namespaces)) {
             $msg = 'getNamespace() doesn\'t work before the source was analyzed.';
+
             throw new RuntimeException($msg);
         }
         foreach ($this->namespaces as $namespace) {
@@ -419,6 +416,7 @@ class Engine
                 return $namespace;
             }
         }
+
         throw new OutOfBoundsException(sprintf('Unknown namespace "%s".', $name));
     }
 
@@ -432,8 +430,10 @@ class Engine
     {
         if (!isset($this->namespaces)) {
             $msg = 'getNamespaces() doesn\'t work before the source was analyzed.';
+
             throw new RuntimeException($msg);
         }
+
         return $this->namespaces;
     }
 

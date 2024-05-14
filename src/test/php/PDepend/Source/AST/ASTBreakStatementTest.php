@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTBreakStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTBreakStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
     public function testBreakStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartLine());
+        static::assertEquals(5, $stmt->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
     public function testBreakStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
-        $this->assertEquals(9, $stmt->getStartColumn());
+        static::assertEquals(9, $stmt->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
     public function testBreakStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
-        $this->assertEquals(7, $stmt->getEndLine());
+        static::assertEquals(7, $stmt->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
     public function testBreakStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
-        $this->assertEquals(17, $stmt->getEndColumn());
+        static::assertEquals(17, $stmt->getEndColumn());
     }
 
     /**

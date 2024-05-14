@@ -67,7 +67,7 @@ class ParserBug059Test extends AbstractRegressionTestCase
             ->current()
             ->getCompilationUnit();
 
-        $this->assertEquals(
+        static::assertEquals(
             $this->createCodeResourceUriForTest(),
             $compilationUnit->getFileName()
         );
@@ -86,7 +86,7 @@ class ParserBug059Test extends AbstractRegressionTestCase
             ->current()
             ->getCompilationUnit();
 
-        $this->assertSame(
+        static::assertSame(
             $this->createCodeResourceUriForTest(),
             $compilationUnit->getFileName()
         );
@@ -105,7 +105,7 @@ class ParserBug059Test extends AbstractRegressionTestCase
             ->current()
             ->getCompilationUnit();
 
-        $this->assertSame(
+        static::assertSame(
             $this->createCodeResourceUriForTest(),
             $compilationUnit->getFileName()
         );

@@ -47,14 +47,12 @@ use PDepend\Source\Parser\InvalidStateException;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTPropertyPostfix} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @covers \PDepend\Source\AST\ASTPropertyPostfix
  *
  * @group unittest
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTPropertyPostfix
+ * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
@@ -66,7 +64,7 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testGetImageForArrayIndexedRegularProperty(): void
     {
         $postfix = $this->getFirstPropertyPostfixInFunction();
-        $this->assertEquals('property', $postfix->getImage());
+        static::assertEquals('property', $postfix->getImage());
     }
 
     /**
@@ -75,7 +73,7 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testGetImageForMultiDimensionalArrayIndexedRegularProperty(): void
     {
         $postfix = $this->getFirstPropertyPostfixInFunction();
-        $this->assertEquals('property', $postfix->getImage());
+        static::assertEquals('property', $postfix->getImage());
     }
 
     /**
@@ -84,7 +82,7 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testGetImageForVariableProperty(): void
     {
         $postfix = $this->getFirstPropertyPostfixInFunction();
-        $this->assertEquals('$property', $postfix->getImage());
+        static::assertEquals('$property', $postfix->getImage());
     }
 
     /**
@@ -93,7 +91,7 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testGetImageForArrayIndexedVariableProperty(): void
     {
         $postfix = $this->getFirstPropertyPostfixInFunction();
-        $this->assertEquals('$property', $postfix->getImage());
+        static::assertEquals('$property', $postfix->getImage());
     }
 
     /**
@@ -357,7 +355,7 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixHasExpectedStartLine(): void
     {
         $postfix = $this->getFirstPropertyPostfixInFunction(__METHOD__);
-        $this->assertEquals(4, $postfix->getStartLine());
+        static::assertEquals(4, $postfix->getStartLine());
     }
 
     /**
@@ -366,7 +364,7 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixHasExpectedStartColumn(): void
     {
         $postfix = $this->getFirstPropertyPostfixInFunction(__METHOD__);
-        $this->assertEquals(21, $postfix->getStartColumn());
+        static::assertEquals(21, $postfix->getStartColumn());
     }
 
     /**
@@ -375,7 +373,7 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixHasExpectedEndLine(): void
     {
         $postfix = $this->getFirstPropertyPostfixInFunction(__METHOD__);
-        $this->assertEquals(4, $postfix->getEndLine());
+        static::assertEquals(4, $postfix->getEndLine());
     }
 
     /**
@@ -384,7 +382,7 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
     public function testPropertyPostfixHasExpectedEndColumn(): void
     {
         $postfix = $this->getFirstPropertyPostfixInFunction(__METHOD__);
-        $this->assertEquals(23, $postfix->getEndColumn());
+        static::assertEquals(23, $postfix->getEndColumn());
     }
 
     /**

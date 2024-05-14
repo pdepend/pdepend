@@ -46,8 +46,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitAdaptation} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTraitAdaptation
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
@@ -65,7 +65,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
     public function testTraitAdaptation()
     {
         $scope = $this->getFirstTraitAdaptationInClass();
-        $this->assertInstanceOf(ASTTraitAdaptation::class, $scope);
+        static::assertInstanceOf(ASTTraitAdaptation::class, $scope);
 
         return $scope;
     }
@@ -79,7 +79,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
      */
     public function testTraitAdaptationHasExpectedStartLine($scope): void
     {
-        $this->assertEquals(5, $scope->getStartLine());
+        static::assertEquals(5, $scope->getStartLine());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
      */
     public function testTraitAdaptationHasExpectedStartColumn($scope): void
     {
-        $this->assertEquals(32, $scope->getStartColumn());
+        static::assertEquals(32, $scope->getStartColumn());
     }
 
     /**
@@ -103,7 +103,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
      */
     public function testTraitAdaptationHasExpectedEndLine($scope): void
     {
-        $this->assertEquals(9, $scope->getEndLine());
+        static::assertEquals(9, $scope->getEndLine());
     }
 
     /**
@@ -115,7 +115,7 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
      */
     public function testTraitAdaptationHasExpectedEndColumn($scope): void
     {
-        $this->assertEquals(5, $scope->getEndColumn());
+        static::assertEquals(5, $scope->getEndColumn());
     }
 
     /**

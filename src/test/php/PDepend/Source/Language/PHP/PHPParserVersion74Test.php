@@ -88,10 +88,11 @@ class PHPParserVersion74Test extends AbstractTestCase
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
         $children = $class->getChildren();
+
         /** @var ASTFieldDeclaration $mixedDeclaration */
         $mixedDeclaration = array_shift($children);
 
-        $this->assertFalse($mixedDeclaration->hasType());
+        static::assertFalse($mixedDeclaration->hasType());
 
         $message = null;
 
@@ -101,7 +102,7 @@ class PHPParserVersion74Test extends AbstractTestCase
             $message = $exception->getMessage();
         }
 
-        $this->assertSame('The parameter does not have a type specification.', $message);
+        static::assertSame('The parameter does not have a type specification.', $message);
 
         /** @var array[] $declarations */
         $declarations = array_map(function (ASTFieldDeclaration $child) {
@@ -141,18 +142,18 @@ class PHPParserVersion74Test extends AbstractTestCase
             $expectedTypeClass = $expected[2] ?? ASTScalarType::class;
             [$type, $variable] = $declarations[$index];
 
-            $this->assertInstanceOf(
+            static::assertInstanceOf(
                 $expectedTypeClass,
                 $type,
                 "Wrong type for $expectedType $expectedVariable"
             );
-            $this->assertSame(ltrim($expectedType, '?'), $type->getImage());
-            $this->assertInstanceOf(
+            static::assertSame(ltrim($expectedType, '?'), $type->getImage());
+            static::assertInstanceOf(
                 ASTVariableDeclarator::class,
                 $variable,
                 "Wrong variable for $expectedType $expectedVariable"
             );
-            $this->assertSame($expectedVariable, $variable->getImage());
+            static::assertSame($expectedVariable, $variable->getImage());
         }
     }
 
@@ -160,13 +161,14 @@ class PHPParserVersion74Test extends AbstractTestCase
     {
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
+
         /** @var ASTFieldDeclaration $field */
         $field = $class->getChild(0);
-        $this->assertTrue($field->hasType());
-        $this->assertSame('int', $field->getType()->getImage());
-        $this->assertTrue($field->isPrivate());
-        $this->assertFalse($field->isProtected());
-        $this->assertFalse($field->isPublic());
+        static::assertTrue($field->hasType());
+        static::assertSame('int', $field->getType()->getImage());
+        static::assertTrue($field->isPrivate());
+        static::assertFalse($field->isProtected());
+        static::assertFalse($field->isPublic());
     }
 
     public function testTypedPropertiesSyntaxError(): void
@@ -189,32 +191,37 @@ class PHPParserVersion74Test extends AbstractTestCase
             ASTFunctionPostfix::class
         )->getChild(1)->getChild(0);
 
-        $this->assertInstanceOf(ASTClosure::class, $closure);
+        static::assertInstanceOf(ASTClosure::class, $closure);
+
         /** @var ASTFormalParameters $parameters */
         $parameters = $closure->getChild(0);
-        $this->assertInstanceOf(ASTFormalParameters::class, $parameters);
-        $this->assertCount(1, $parameters->getChildren());
+        static::assertInstanceOf(ASTFormalParameters::class, $parameters);
+        static::assertCount(1, $parameters->getChildren());
+
         /** @var ASTFormalParameter $parameter */
         $parameter = $parameters->getChild(0);
-        $this->assertInstanceOf(ASTFormalParameter::class, $parameter);
+        static::assertInstanceOf(ASTFormalParameter::class, $parameter);
+
         /** @var ASTVariableDeclarator $parameter */
         $variableDeclarator = $parameter->getChild(0);
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
-        $this->assertSame('$number', $variableDeclarator->getImage());
+        static::assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
+        static::assertSame('$number', $variableDeclarator->getImage());
+
         /** @var ASTReturnStatement $parameters */
         $return = $closure->getChild(1);
-        $this->assertInstanceOf(ASTReturnStatement::class, $return);
-        $this->assertSame('=>', $return->getImage());
-        $this->assertCount(1, $return->getChildren());
+        static::assertInstanceOf(ASTReturnStatement::class, $return);
+        static::assertSame('=>', $return->getImage());
+        static::assertCount(1, $return->getChildren());
+
         /** @var ASTExpression $expression */
         $expression = $return->getChild(0);
-        $this->assertInstanceOf(ASTExpression::class, $expression);
-        $this->assertSame([
+        static::assertInstanceOf(ASTExpression::class, $expression);
+        static::assertSame([
             ASTVariable::class,
             ASTExpression::class,
             ASTLiteral::class,
         ], array_map('get_class', $expression->getChildren()));
-        $this->assertSame([
+        static::assertSame([
             '$number',
             '*',
             '2',
@@ -232,36 +239,42 @@ class PHPParserVersion74Test extends AbstractTestCase
             ASTFunctionPostfix::class
         )->getChild(1)->getChild(0);
 
-        $this->assertInstanceOf(ASTClosure::class, $closure);
+        static::assertInstanceOf(ASTClosure::class, $closure);
+
         /** @var ASTFormalParameters $parameters */
         $parameters = $closure->getChild(0);
-        $this->assertInstanceOf(ASTFormalParameters::class, $parameters);
-        $this->assertCount(1, $parameters->getChildren());
+        static::assertInstanceOf(ASTFormalParameters::class, $parameters);
+        static::assertCount(1, $parameters->getChildren());
+
         /** @var ASTFormalParameter $parameter */
         $parameter = $parameters->getChild(0);
-        $this->assertInstanceOf(ASTFormalParameter::class, $parameter);
+        static::assertInstanceOf(ASTFormalParameter::class, $parameter);
+
         /** @var ASTVariableDeclarator $parameter */
         $variableDeclarator = $parameter->getChild(0);
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
-        $this->assertSame('$number', $variableDeclarator->getImage());
+        static::assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
+        static::assertSame('$number', $variableDeclarator->getImage());
+
         /** @var ASTScalarType $parameters */
         $type = $closure->getChild(1);
-        $this->assertInstanceOf(ASTScalarType::class, $type);
-        $this->assertSame('int', $type->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $type);
+        static::assertSame('int', $type->getImage());
+
         /** @var ASTReturnStatement $parameters */
         $return = $closure->getChild(2);
-        $this->assertInstanceOf(ASTReturnStatement::class, $return);
-        $this->assertSame('=>', $return->getImage());
-        $this->assertCount(1, $return->getChildren());
+        static::assertInstanceOf(ASTReturnStatement::class, $return);
+        static::assertSame('=>', $return->getImage());
+        static::assertCount(1, $return->getChildren());
+
         /** @var ASTExpression $expression */
         $expression = $return->getChild(0);
-        $this->assertInstanceOf(ASTExpression::class, $expression);
-        $this->assertSame([
+        static::assertInstanceOf(ASTExpression::class, $expression);
+        static::assertSame([
             ASTVariable::class,
             ASTExpression::class,
             ASTLiteral::class,
         ], array_map('get_class', $expression->getChildren()));
-        $this->assertSame([
+        static::assertSame([
             '$number',
             '*',
             '2',
@@ -273,7 +286,7 @@ class PHPParserVersion74Test extends AbstractTestCase
 
     public function testTypeCovarianceAndArgumentTypeContravariance(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
     }
 
     public function testNullCoalescingAssignmentOperator(): void
@@ -284,7 +297,7 @@ class PHPParserVersion74Test extends AbstractTestCase
             ASTAssignmentExpression::class
         );
 
-        $this->assertSame('??=', $assignment->getImage());
+        static::assertSame('??=', $assignment->getImage());
     }
 
     public function testUnpackingInsideArrays(): void
@@ -293,28 +306,30 @@ class PHPParserVersion74Test extends AbstractTestCase
             $this->getCallingTestMethod(),
             ASTArray::class
         );
-        $this->assertSame([
+        static::assertSame([
             ASTArrayElement::class,
             ASTArrayElement::class,
             ASTArrayElement::class,
             ASTArrayElement::class,
             ASTArrayElement::class,
         ], array_map('get_class', $expression->getChildren()));
+
         /** @var ASTNode[] $elements */
         $elements = array_map(
             static fn($node) => $node->getChild(0),
             $expression->getChildren(),
         );
-        $this->assertSame([
+        static::assertSame([
             ASTLiteral::class,
             ASTLiteral::class,
             ASTExpression::class,
             ASTLiteral::class,
             ASTLiteral::class,
         ], array_map('get_class', $elements));
+
         /** @var ASTExpression $expression */
         $expression = $elements[2];
-        $this->assertSame([
+        static::assertSame([
             '...',
             '$numbers',
         ], array_map(
@@ -329,7 +344,7 @@ class PHPParserVersion74Test extends AbstractTestCase
             $this->getCallingTestMethod(),
             ASTExpression::class
         );
-        $this->assertSame([
+        static::assertSame([
             ASTLiteral::class,
             ASTExpression::class,
             ASTLiteral::class,
@@ -339,10 +354,10 @@ class PHPParserVersion74Test extends AbstractTestCase
             ASTLiteral::class,
         ], array_map('get_class', $expression->getChildren()));
 
-        $this->assertSame('6.674_083e-11', $expression->getChild(0)->getImage());
-        $this->assertSame('299_792_458', $expression->getChild(2)->getImage());
-        $this->assertSame('0xCAFE_F00D', $expression->getChild(4)->getImage());
-        $this->assertSame('0b0101_1111', $expression->getChild(6)->getImage());
+        static::assertSame('6.674_083e-11', $expression->getChild(0)->getImage());
+        static::assertSame('299_792_458', $expression->getChild(2)->getImage());
+        static::assertSame('0xCAFE_F00D', $expression->getChild(4)->getImage());
+        static::assertSame('0b0101_1111', $expression->getChild(6)->getImage());
     }
 
     /**
@@ -360,31 +375,31 @@ class PHPParserVersion74Test extends AbstractTestCase
         /** @var ASTConstantDefinition[] $sontants */
         $constants = $class->getChildren();
 
-        $this->assertCount(2, $constants);
-        $this->assertInstanceOf(ASTConstantDefinition::class, $constants[0]);
-        $this->assertInstanceOf(ASTConstantDefinition::class, $constants[1]);
+        static::assertCount(2, $constants);
+        static::assertInstanceOf(ASTConstantDefinition::class, $constants[0]);
+        static::assertInstanceOf(ASTConstantDefinition::class, $constants[1]);
 
         /** @var ASTConstantDeclarator[] $declarators */
         $declarators = $constants[1]->getChildren();
 
-        $this->assertCount(1, $declarators);
-        $this->assertInstanceOf(ASTConstantDeclarator::class, $declarators[0]);
+        static::assertCount(1, $declarators);
+        static::assertInstanceOf(ASTConstantDeclarator::class, $declarators[0]);
 
         /** @var ASTExpression $expression */
         $expression = $declarators[0]->getValue()->getValue();
 
-        $this->assertInstanceOf(ASTExpression::class, $expression);
+        static::assertInstanceOf(ASTExpression::class, $expression);
 
         $nodes = $expression->getChildren();
-        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $nodes[0]);
-        $this->assertInstanceOf(ASTExpression::class, $nodes[1]);
-        $this->assertSame('+', $nodes[1]->getImage());
-        $this->assertInstanceOf(ASTArray::class, $nodes[2]);
+        static::assertInstanceOf(ASTMemberPrimaryPrefix::class, $nodes[0]);
+        static::assertInstanceOf(ASTExpression::class, $nodes[1]);
+        static::assertSame('+', $nodes[1]->getImage());
+        static::assertInstanceOf(ASTArray::class, $nodes[2]);
 
         $nodes = $nodes[0]->getChildren();
-        $this->assertInstanceOf(ASTSelfReference::class, $nodes[0]);
-        $this->assertInstanceOf(ASTConstantPostfix::class, $nodes[1]);
-        $this->assertSame('A', $nodes[1]->getImage());
+        static::assertInstanceOf(ASTSelfReference::class, $nodes[0]);
+        static::assertInstanceOf(ASTConstantPostfix::class, $nodes[1]);
+        static::assertSame('A', $nodes[1]->getImage());
     }
 
     public function testReadOnlyNamedImport(): void

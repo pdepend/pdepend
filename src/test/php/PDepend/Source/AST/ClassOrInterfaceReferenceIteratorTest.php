@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  * @since 1.0.0
+ * @since 1.0.0
  */
 
 namespace PDepend\Source\AST;
@@ -72,16 +72,16 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
         $reference1 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $reference1->expects($this->once())
+        $reference1->expects(static::once())
             ->method('getType')
-            ->will($this->returnValue($class1));
+            ->will(static::returnValue($class1));
 
         $reference2 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $reference2->expects($this->once())
+        $reference2->expects(static::once())
             ->method('getType')
-            ->will($this->returnValue($class2));
+            ->will(static::returnValue($class2));
 
         $references = [$reference1, $reference2];
 
@@ -91,7 +91,7 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
             $types[] = $type->getId();
         }
 
-        $this->assertEquals([$class1->getId(), $class2->getId()], $types);
+        static::assertEquals([$class1->getId(), $class2->getId()], $types);
     }
 
     /**
@@ -108,16 +108,16 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
         $reference1 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $reference1->expects($this->once())
+        $reference1->expects(static::once())
             ->method('getType')
-            ->will($this->returnValue($class1));
+            ->will(static::returnValue($class1));
 
         $reference2 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $reference2->expects($this->once())
+        $reference2->expects(static::once())
             ->method('getType')
-            ->will($this->returnValue($class2));
+            ->will(static::returnValue($class2));
 
         $references = [$reference1, $reference2];
 
@@ -127,6 +127,6 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
             $types[] = $type->getId();
         }
 
-        $this->assertEquals([$class1->getId()], $types);
+        static::assertEquals([$class1->getId()], $types);
     }
 }

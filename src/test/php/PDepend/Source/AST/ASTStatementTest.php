@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ASTStatementTest extends ASTNodeTestCase
     public function testStatement()
     {
         $stmt = $this->getFirstStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTStatement::class, $stmt);
+        static::assertInstanceOf(ASTStatement::class, $stmt);
 
         return $stmt;
     }
@@ -77,7 +77,7 @@ class ASTStatementTest extends ASTNodeTestCase
      */
     public function testStatementHasExpectedStartLine($stmt): void
     {
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTStatementTest extends ASTNodeTestCase
      */
     public function testStatementHasExpectedStartColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTStatementTest extends ASTNodeTestCase
      */
     public function testStatementHasExpectedEndLine($stmt): void
     {
-        $this->assertEquals(8, $stmt->getEndLine());
+        static::assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTStatementTest extends ASTNodeTestCase
      */
     public function testStatementHasExpectedEndColumn($stmt): void
     {
-        $this->assertEquals(6, $stmt->getEndColumn());
+        static::assertEquals(6, $stmt->getEndColumn());
     }
 
     /**

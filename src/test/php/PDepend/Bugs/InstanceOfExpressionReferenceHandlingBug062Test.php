@@ -63,18 +63,18 @@ class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegression
     {
         $namespace = $this->parseCodeResourceForTest()->current();
 
-        $this->assertSame(1, $namespace->getClasses()->count());
+        static::assertSame(1, $namespace->getClasses()->count());
         $class = $namespace->getClasses()->current();
-        $this->assertSame('Bar', $class->getName());
+        static::assertSame('Bar', $class->getName());
 
-        $this->assertSame(1, $namespace->getInterfaces()->count());
+        static::assertSame(1, $namespace->getInterfaces()->count());
         $interface = $namespace->getInterfaces()->current();
-        $this->assertSame('IFoo', $interface->getName());
+        static::assertSame('IFoo', $interface->getName());
 
-        $this->assertSame(1, $class->getMethods()->count());
+        static::assertSame(1, $class->getMethods()->count());
         $method = $class->getMethods()->current();
 
-        $this->assertSame(
+        static::assertSame(
             $interface,
             $method->getDependencies()->current()
         );
@@ -89,15 +89,15 @@ class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegression
         $namespace = $this->parseCodeResourceForTest()->current();
 
         $classes = $namespace->getClasses();
-        $this->assertSame(2, $classes->count());
+        static::assertSame(2, $classes->count());
         $class1 = $classes->current();
-        $this->assertSame('Foo', $class1->getName());
+        static::assertSame('Foo', $class1->getName());
         $classes->next();
         $class2 = $classes->current();
-        $this->assertSame('Bar', $class2->getName());
+        static::assertSame('Bar', $class2->getName());
 
-        $this->assertSame(1, $class2->getMethods()->count());
+        static::assertSame(1, $class2->getMethods()->count());
         $method = $class2->getMethods()->current();
-        $this->assertSame($class1, $method->getDependencies()->current());
+        static::assertSame($class1, $method->getDependencies()->current());
     }
 }

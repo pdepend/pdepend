@@ -111,7 +111,7 @@ class ASTFormalParameter extends AbstractASTNode
 
     /**
      * This method can be used to mark this parameter as passed by reference.
-    @since 2.0.7
+     * @since 2.0.7
      */
     public function setVariableArgList(): void
     {

@@ -130,6 +130,7 @@ class CloverReport implements Report
         if ($executable === 0) {
             return 0;
         }
+
         return $executed / $executable * 100;
     }
 
@@ -144,6 +145,7 @@ class CloverReport implements Report
         if (isset($this->fileLineCoverage[$fileName])) {
             return $this->fileLineCoverage[$fileName];
         }
+
         return [];
     }
 }

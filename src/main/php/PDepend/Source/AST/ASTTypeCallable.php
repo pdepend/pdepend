@@ -52,9 +52,7 @@ namespace PDepend\Source\AST;
  */
 class ASTTypeCallable extends ASTType
 {
-    /**
-     * The visual image for this node type.
-     */
+    /** The visual image for this node type. */
     public const IMAGE = 'callable';
 
     /**

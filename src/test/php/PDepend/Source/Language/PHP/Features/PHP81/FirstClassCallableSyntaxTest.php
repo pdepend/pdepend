@@ -61,24 +61,25 @@ class FirstClassCallableSyntaxTest extends PHPParserVersion81TestCase
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
-        $this->assertInstanceOf(ASTTypeCallable::class, $children[1]);
+        static::assertInstanceOf(ASTTypeCallable::class, $children[1]);
         $children = $children[2]->getChildren();
-        $this->assertCount(1, $children);
+        static::assertCount(1, $children);
         $return = $children[0];
-        $this->assertInstanceOf(ASTReturnStatement::class, $return);
+        static::assertInstanceOf(ASTReturnStatement::class, $return);
         $children = $return->getChildren();
-        $this->assertCount(1, $children);
+        static::assertCount(1, $children);
         $prefix = $children[0];
-        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $prefix);
+        static::assertInstanceOf(ASTMemberPrimaryPrefix::class, $prefix);
         $children = $prefix->getChildren();
-        $this->assertInstanceOf(ASTVariable::class, $children[0]);
+        static::assertInstanceOf(ASTVariable::class, $children[0]);
+
         /** @var ASTMethodPostfix $methodPostFix */
         $methodPostFix = $children[1];
-        $this->assertInstanceOf(ASTMethodPostfix::class, $methodPostFix);
-        $this->assertSame('getTime', $methodPostFix->getImage());
+        static::assertInstanceOf(ASTMethodPostfix::class, $methodPostFix);
+        static::assertSame('getTime', $methodPostFix->getImage());
         $children = $methodPostFix->getChildren();
-        $this->assertCount(2, $children);
-        $this->assertInstanceOf(ASTIdentifier::class, $children[0]);
-        $this->assertInstanceOf(ASTArguments::class, $children[1]);
+        static::assertCount(2, $children);
+        static::assertInstanceOf(ASTIdentifier::class, $children[0]);
+        static::assertInstanceOf(ASTArguments::class, $children[1]);
     }
 }

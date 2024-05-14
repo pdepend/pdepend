@@ -45,9 +45,9 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTMethodPostfix} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTInvocation
  * @covers \PDepend\Source\AST\ASTMethodPostfix
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -67,7 +67,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testGetImageForVariableMethod(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals('$method', $postfix->getImage());
+        static::assertEquals('$method', $postfix->getImage());
     }
 
     /**
@@ -82,7 +82,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testGetImageForVariableStaticMethod(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals('$method', $postfix->getImage());
+        static::assertEquals('$method', $postfix->getImage());
     }
 
     /**
@@ -97,7 +97,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testGetImageForArrayIndexedVariableStaticMethod(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals('$method', $postfix->getImage());
+        static::assertEquals('$method', $postfix->getImage());
     }
 
     /**
@@ -112,7 +112,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testGetImageForMultiArrayIndexedVariableStaticMethod(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals('$method', $postfix->getImage());
+        static::assertEquals('$method', $postfix->getImage());
     }
 
     /**
@@ -172,9 +172,9 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
         $this->assertGraph(
             $this->getFirstMethodPostfixInFunction(),
             [
-                ASTCompoundExpression::class . " ()", [
+                ASTCompoundExpression::class . ' ()', [
                     ASTLiteral::class . " ('method')"],
-                ASTArguments::class . " ()",
+                ASTArguments::class . ' ()',
             ]
         );
     }
@@ -202,9 +202,9 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
         $this->assertGraph(
             $this->getFirstMethodPostfixInFunction(),
             [
-                ASTCompoundVariable::class . " ($)", [
+                ASTCompoundVariable::class . ' ($)', [
                     ASTLiteral::class . " ('method')"],
-                ASTArguments::class . " ()",
+                ASTArguments::class . ' ()',
             ]
         );
     }
@@ -262,9 +262,9 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
         $this->assertGraph(
             $this->getFirstMethodPostfixInFunction(),
             [
-                ASTCompoundExpression::class . " ()", [
+                ASTCompoundExpression::class . ' ()', [
                     ASTLiteral::class . " ('method')"],
-                ASTArguments::class . " ()",
+                ASTArguments::class . ' ()',
             ]
         );
     }
@@ -292,9 +292,9 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
         $this->assertGraph(
             $this->getFirstMethodPostfixInFunction(),
             [
-                ASTCompoundVariable::class . " ($)", [
+                ASTCompoundVariable::class . ' ($)', [
                     ASTLiteral::class . " ('method')"],
-                ASTArguments::class . " ()",
+                ASTArguments::class . ' ()',
             ]
         );
     }
@@ -335,7 +335,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testObjectMethodPostfixHasExpectedStartLine(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals(6, $postfix->getStartLine());
+        static::assertEquals(6, $postfix->getStartLine());
     }
 
     /**
@@ -344,7 +344,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testObjectMethodPostfixHasExpectedStartColumn(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals(13, $postfix->getStartColumn());
+        static::assertEquals(13, $postfix->getStartColumn());
     }
 
     /**
@@ -353,7 +353,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testObjectMethodPostfixHasExpectedEndLine(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals(7, $postfix->getEndLine());
+        static::assertEquals(7, $postfix->getEndLine());
     }
 
     /**
@@ -362,7 +362,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testObjectMethodPostfixHasExpectedEndColumn(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals(17, $postfix->getEndColumn());
+        static::assertEquals(17, $postfix->getEndColumn());
     }
 
     /**
@@ -371,7 +371,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testClassMethodPostfixHasExpectedStartLine(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals(6, $postfix->getStartLine());
+        static::assertEquals(6, $postfix->getStartLine());
     }
 
     /**
@@ -380,7 +380,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testClassMethodPostfixHasExpectedStartColumn(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals(13, $postfix->getStartColumn());
+        static::assertEquals(13, $postfix->getStartColumn());
     }
 
     /**
@@ -389,7 +389,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testClassMethodPostfixHasExpectedEndLine(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals(7, $postfix->getEndLine());
+        static::assertEquals(7, $postfix->getEndLine());
     }
 
     /**
@@ -398,7 +398,7 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
     public function testClassMethodPostfixHasExpectedEndColumn(): void
     {
         $postfix = $this->getFirstMethodPostfixInFunction();
-        $this->assertEquals(17, $postfix->getEndColumn());
+        static::assertEquals(17, $postfix->getEndColumn());
     }
 
     /**

@@ -61,9 +61,7 @@ class ASTValue
      */
     private $valueAvailable = false;
 
-    /**
-     * The parsed PHP-value,
-     */
+    /** The parsed PHP-value, */
     private mixed $value = null;
 
     /**

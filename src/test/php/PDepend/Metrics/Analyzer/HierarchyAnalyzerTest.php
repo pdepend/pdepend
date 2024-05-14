@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Metrics\Analyzer;
 
@@ -65,7 +65,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(2, $metrics['leafs']);
+        static::assertEquals(2, $metrics['leafs']);
     }
 
     /**
@@ -77,7 +77,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(1, $metrics['clsa']);
+        static::assertEquals(1, $metrics['clsa']);
     }
 
     /**
@@ -89,7 +89,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(2, $metrics['clsc']);
+        static::assertEquals(2, $metrics['clsc']);
     }
 
     /**
@@ -101,7 +101,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(1, $metrics['roots']);
+        static::assertEquals(1, $metrics['roots']);
     }
 
     /**
@@ -113,7 +113,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(0, $metrics['leafs']);
+        static::assertEquals(0, $metrics['leafs']);
     }
 
     /**
@@ -127,7 +127,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->visitClass($class);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals([], $metrics);
+        static::assertEquals([], $metrics);
     }
 
     /**
@@ -139,7 +139,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
         $class = new ASTClass('PDepend');
         $analyzer = $this->createAnalyzer();
 
-        $this->assertSame([], $analyzer->getNodeMetrics($class));
+        static::assertSame([], $analyzer->getNodeMetrics($class));
     }
 
     /**

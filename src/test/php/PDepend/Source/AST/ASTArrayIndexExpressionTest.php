@@ -45,9 +45,9 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArrayIndexExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTIndexExpression
  * @covers \PDepend\Source\AST\ASTArrayIndexExpression
+ * @covers \PDepend\Source\AST\ASTIndexExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -327,7 +327,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
     public function testArrayIndexExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstArrayIndexExpressionInFunction();
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -336,7 +336,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
     public function testArrayIndexExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstArrayIndexExpressionInFunction();
-        $this->assertEquals(10, $expr->getStartColumn());
+        static::assertEquals(10, $expr->getStartColumn());
     }
 
     /**
@@ -345,7 +345,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
     public function testArrayIndexExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstArrayIndexExpressionInFunction();
-        $this->assertEquals(6, $expr->getEndLine());
+        static::assertEquals(6, $expr->getEndLine());
     }
 
     /**
@@ -354,7 +354,7 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
     public function testArrayIndexExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstArrayIndexExpressionInFunction();
-        $this->assertEquals(13, $expr->getEndColumn());
+        static::assertEquals(13, $expr->getEndColumn());
     }
 
     /**

@@ -70,7 +70,7 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
         $function = $this->getFirstFunctionForTestCase();
         $dependency = $function->getDependencies()->current();
 
-        $this->assertSame('Bar', $dependency->getName());
+        static::assertSame('Bar', $dependency->getName());
     }
 
     /**
@@ -90,7 +90,7 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
         $function = $this->getFirstFunctionForTestCase();
         $dependency = $function->getDependencies()->current();
 
-        $this->assertSame('Bar', $dependency->getName());
+        static::assertSame('Bar', $dependency->getName());
     }
 
     /**
@@ -112,7 +112,7 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
         $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
 
-        $this->assertSame(0, $dependencies->count());
+        static::assertSame(0, $dependencies->count());
     }
 
     /**
@@ -133,6 +133,6 @@ class HandlingOfIdeStyleDependenciesInCommentsIssue087Test extends AbstractFeatu
         $function = $this->getFirstFunctionForTestCase();
         $dependencies = $function->getDependencies();
 
-        $this->assertSame(0, $dependencies->count());
+        static::assertSame(0, $dependencies->count());
     }
 }

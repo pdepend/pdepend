@@ -61,24 +61,16 @@ use PDepend\Source\AST\ASTNamespace;
  */
 class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     private const M_MAINTAINABILITY_INDEX = 'mi';
 
-    /**
-     * @var CyclomaticComplexityAnalyzer
-     */
+    /** @var CyclomaticComplexityAnalyzer */
     private $analyzersCCN;
 
-    /**
-     * @var HalsteadAnalyzer
-     */
+    /** @var HalsteadAnalyzer */
     private $analyzersHalstead;
 
-    /**
-     * @var NodeLocAnalyzer
-     */
+    /** @var NodeLocAnalyzer */
     private $analyzersLOC;
 
     /**

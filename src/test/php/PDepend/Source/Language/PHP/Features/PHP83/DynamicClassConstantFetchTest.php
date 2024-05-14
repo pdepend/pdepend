@@ -48,8 +48,8 @@ use PDepend\Source\AST\ASTSelfReference;
 use PDepend\Source\AST\ASTVariable;
 
 /**
- * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
+ * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -62,26 +62,27 @@ class DynamicClassConstantFetchTest extends PHPParserVersion83TestCase
     {
         $method = $this->getFirstClassMethodForTestCase();
         $children = $method->getChildren();
+
         /** @var ASTScope $scope */
         $scope = $children[2];
 
-        $this->assertInstanceOf(ASTScope::class, $scope);
+        static::assertInstanceOf(ASTScope::class, $scope);
 
         /** @var ASTMemberPrimaryPrefix $return */
         $member = $scope->getChild(0)->getChild(0);
 
-        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $member);
+        static::assertInstanceOf(ASTMemberPrimaryPrefix::class, $member);
         $children = $member->getChildren();
 
-        $this->assertCount(2, $children);
-        $this->assertInstanceOf(ASTSelfReference::class, $children[0]);
-        $this->assertInstanceOf(ASTPropertyPostfix::class, $children[1]);
+        static::assertCount(2, $children);
+        static::assertInstanceOf(ASTSelfReference::class, $children[0]);
+        static::assertInstanceOf(ASTPropertyPostfix::class, $children[1]);
         $children = $children[1]->getChildren();
-        $this->assertCount(1, $children);
-        $this->assertInstanceOf(ASTCompoundExpression::class, $children[0]);
+        static::assertCount(1, $children);
+        static::assertInstanceOf(ASTCompoundExpression::class, $children[0]);
         $children = $children[0]->getChildren();
-        $this->assertCount(1, $children);
-        $this->assertInstanceOf(ASTVariable::class, $children[0]);
-        $this->assertSame('$bar', $children[0]->getImage());
+        static::assertCount(1, $children);
+        static::assertInstanceOf(ASTVariable::class, $children[0]);
+        static::assertSame('$bar', $children[0]->getImage());
     }
 }

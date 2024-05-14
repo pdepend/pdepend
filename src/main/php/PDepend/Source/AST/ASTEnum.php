@@ -232,7 +232,8 @@ class ASTEnum extends AbstractASTClassOrInterface
     {
         if ($type === $this) {
             return true;
-        } elseif ($type instanceof ASTInterface) {
+        }
+        if ($type instanceof ASTInterface) {
             foreach ($this->getInterfaces() as $interface) {
                 if ($interface === $type) {
                     return true;
@@ -242,8 +243,10 @@ class ASTEnum extends AbstractASTClassOrInterface
             if ($parent === $type) {
                 return true;
             }
+
             return $parent->isSubtypeOf($type);
         }
+
         return false;
     }
 

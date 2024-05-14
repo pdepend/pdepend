@@ -58,14 +58,10 @@ use PDepend\Util\Cache\CacheDriver;
  */
 class FileCacheDirectoryTest extends AbstractTestCase
 {
-    /**
-     * Temporary cache directory.
-     */
+    /** Temporary cache directory. */
     protected string $cacheDir;
 
-    /**
-     * File with the cache version information.
-     */
+    /** File with the cache version information. */
     protected string $versionFile;
 
     /**
@@ -86,7 +82,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
     public function testCreatesNotExistingCacheDirectory(): void
     {
         new FileCacheDirectory($this->cacheDir);
-        $this->assertFileExists($this->cacheDir);
+        static::assertFileExists($this->cacheDir);
     }
 
     /**
@@ -95,7 +91,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
     public function testAddsCacheVersionFileToNewlyCreatedCache(): void
     {
         new FileCacheDirectory($this->cacheDir);
-        $this->assertFileExists($this->versionFile);
+        static::assertFileExists($this->versionFile);
     }
 
     /**
@@ -104,7 +100,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
     public function testCacheVersionFileContainsExpectedVersionString(): void
     {
         new FileCacheDirectory($this->cacheDir);
-        $this->assertEquals(
+        static::assertEquals(
             CacheDriver::VERSION,
             file_get_contents($this->versionFile)
         );
@@ -119,7 +115,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
         file_put_contents($this->versionFile, '1234567890');
 
         new FileCacheDirectory($this->cacheDir);
-        $this->assertEquals(
+        static::assertEquals(
             CacheDriver::VERSION,
             file_get_contents($this->versionFile)
         );
@@ -137,7 +133,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
         file_put_contents($this->versionFile, '1234567890');
 
         new FileCacheDirectory($this->cacheDir);
-        $this->assertFileDoesNotExist($cacheFile);
+        static::assertFileDoesNotExist($cacheFile);
     }
 
     /**
@@ -151,7 +147,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
         file_put_contents($this->versionFile, '1234567890');
 
         new FileCacheDirectory($this->cacheDir);
-        $this->assertFileDoesNotExist($cacheDir);
+        static::assertFileDoesNotExist($cacheDir);
     }
 
     /**
@@ -167,7 +163,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
         file_put_contents($this->versionFile, '1234567890');
 
         new FileCacheDirectory($this->cacheDir);
-        $this->assertFileDoesNotExist("{$this->cacheDir}/test");
+        static::assertFileDoesNotExist("{$this->cacheDir}/test");
     }
 
     /**
@@ -178,7 +174,7 @@ class FileCacheDirectoryTest extends AbstractTestCase
         $dir = new FileCacheDirectory($this->cacheDir);
         $path = $dir->createCacheDirectory('abcdef0123456789');
 
-        $this->assertEquals("{$this->cacheDir}/ab", $path);
+        static::assertEquals("{$this->cacheDir}/ab", $path);
     }
 
     /**
@@ -187,6 +183,6 @@ class FileCacheDirectoryTest extends AbstractTestCase
     public function testCreateCacheDirectoryAlsoCreatesThePhysicalDirectory(): void
     {
         $dir = new FileCacheDirectory($this->cacheDir);
-        $this->assertFileExists($dir->createCacheDirectory('abcdef0123456789'));
+        static::assertFileExists($dir->createCacheDirectory('abcdef0123456789'));
     }
 }

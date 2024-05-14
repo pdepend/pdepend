@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCompoundExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTCompoundExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
     public function testExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
-        $this->assertSame(4, $expr->getStartLine());
+        static::assertSame(4, $expr->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
     public function testExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
-        $this->assertSame(19, $expr->getStartColumn());
+        static::assertSame(19, $expr->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
     public function testExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
-        $this->assertSame(5, $expr->getEndLine());
+        static::assertSame(5, $expr->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
     public function testExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstExpressionInFunction(__METHOD__);
-        $this->assertSame(13, $expr->getEndColumn());
+        static::assertSame(13, $expr->getEndColumn());
     }
 
     /**

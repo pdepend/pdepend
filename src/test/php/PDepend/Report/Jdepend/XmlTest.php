@@ -59,19 +59,13 @@ use PDepend\Source\AST\ASTArtifactList;
  */
 class XmlTest extends AbstractTestCase
 {
-    /**
-     * Test code structure.
-     */
+    /** Test code structure. */
     protected ASTArtifactList $packages;
 
-    /**
-     * Test dependency analyzer.
-     */
+    /** Test dependency analyzer. */
     protected DependencyAnalyzer $analyzer;
 
-    /**
-     * The temporary file name for the logger result.
-     */
+    /** The temporary file name for the logger result. */
     protected string $resultFile;
 
     /**
@@ -103,7 +97,7 @@ class XmlTest extends AbstractTestCase
         $actual = $logger->getAcceptedAnalyzers();
         $expected = ['pdepend.analyzer.dependency'];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -130,8 +124,8 @@ class XmlTest extends AbstractTestCase
     {
         $logger = new Xml();
 
-        $this->assertFalse($logger->log(new DummyAnalyzer()));
-        $this->assertTrue($logger->log(new DependencyAnalyzer()));
+        static::assertFalse($logger->log(new DummyAnalyzer()));
+        static::assertTrue($logger->log(new DependencyAnalyzer()));
     }
 
     /**

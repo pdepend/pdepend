@@ -63,44 +63,44 @@ class EnumTest extends PHPParserVersion81TestCase
             ->current()
             ->getTypes();
 
-        $this->assertCount(4, $types);
-        $this->assertInstanceOf(ASTInterface::class, $types[0]);
-        $this->assertSame('HasColor', $types[0]->getName());
-        $this->assertInstanceOf(ASTEnum::class, $types[1]);
-        $this->assertSame('Suit', $types[1]->getName());
-        $this->assertInstanceOf(ASTClass::class, $types[2]);
-        $this->assertSame('UseEnum', $types[2]->getName());
-        $this->assertInstanceOf(ASTEnum::class, $types[3]);
-        $this->assertSame('SpecialCases', $types[3]->getName());
+        static::assertCount(4, $types);
+        static::assertInstanceOf(ASTInterface::class, $types[0]);
+        static::assertSame('HasColor', $types[0]->getName());
+        static::assertInstanceOf(ASTEnum::class, $types[1]);
+        static::assertSame('Suit', $types[1]->getName());
+        static::assertInstanceOf(ASTClass::class, $types[2]);
+        static::assertSame('UseEnum', $types[2]->getName());
+        static::assertInstanceOf(ASTEnum::class, $types[3]);
+        static::assertSame('SpecialCases', $types[3]->getName());
 
         $methods = $types[1]->getMethods();
 
-        $this->assertCount(1, $methods);
-        $this->assertSame('getColor', $methods[0]->getName());
+        static::assertCount(1, $methods);
+        static::assertSame('getColor', $methods[0]->getName());
 
         $methods = $types[2]->getMethods();
 
-        $this->assertCount(3, $methods);
-        $this->assertSame('foo', $methods[0]->getName());
-        $this->assertSame('getSuiteColor', $methods[1]->getName());
-        $this->assertSame('areDiamondsRed', $methods[2]->getName());
+        static::assertCount(3, $methods);
+        static::assertSame('foo', $methods[0]->getName());
+        static::assertSame('getSuiteColor', $methods[1]->getName());
+        static::assertSame('areDiamondsRed', $methods[2]->getName());
 
         /** @var ASTParameter[] $parameters */
         $parameters = $methods[1]->getParameters();
-        $this->assertCount(1, $parameters);
+        static::assertCount(1, $parameters);
 
         /** @var ASTEnum $enum */
         $enum = $parameters[0]->getClass();
 
-        $this->assertInstanceOf(ASTEnum::class, $enum);
-        $this->assertSame('Suit', $enum->getName());
-        $this->assertSame('string', $enum->getType()->getImage());
-        $this->assertTrue($enum->isBacked());
-        $this->assertTrue($enum->isFinal());
-        $this->assertFalse($enum->isAnonymous());
-        $this->assertFalse($enum->isAbstract());
-        $this->assertCount(0, $enum->getProperties());
-        $this->assertSame(
+        static::assertInstanceOf(ASTEnum::class, $enum);
+        static::assertSame('Suit', $enum->getName());
+        static::assertSame('string', $enum->getType()->getImage());
+        static::assertTrue($enum->isBacked());
+        static::assertTrue($enum->isFinal());
+        static::assertFalse($enum->isAnonymous());
+        static::assertFalse($enum->isAbstract());
+        static::assertCount(0, $enum->getProperties());
+        static::assertSame(
             [
                 'UnitEnum' => 'UnitEnum',
                 'BackedEnum' => 'BackedEnum',
@@ -111,7 +111,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 iterator_to_array($enum->getInterfaces())
             )
         );
-        $this->assertSame(
+        static::assertSame(
             [
                 'cases' => 'cases',
                 'from' => 'from',
@@ -124,8 +124,8 @@ class EnumTest extends PHPParserVersion81TestCase
             )
         );
         $cases = $enum->getCases();
-        $this->assertInstanceOf(ASTArtifactList::class, $cases);
-        $this->assertSame(
+        static::assertInstanceOf(ASTArtifactList::class, $cases);
+        static::assertSame(
             [
                 'HEARTS' => "'hearts'",
                 'DIAMONDS' => "'diamonds'",

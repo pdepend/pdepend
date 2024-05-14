@@ -56,16 +56,12 @@ use UnexpectedValueException;
  */
 class FileCacheGarbageCollector
 {
-    public const DEFAULT_TTL = 2592000; //30 days
+    public const DEFAULT_TTL = 2592000; // 30 days
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $cacheDir;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $expirationTimestamp;
 
     /**
@@ -99,13 +95,13 @@ class FileCacheGarbageCollector
             foreach ($files as $file) {
                 if ($this->isCollectibleFile($file)) {
                     $this->garbageCollectFile($file);
-                    $count += 1;
+                    ++$count;
                 }
             }
 
             return $count;
         } catch (UnexpectedValueException $e) {
-            /* This may happen if PHPMD and PDepend run in parallel */
+            // This may happen if PHPMD and PDepend run in parallel
             return $count;
         }
     }

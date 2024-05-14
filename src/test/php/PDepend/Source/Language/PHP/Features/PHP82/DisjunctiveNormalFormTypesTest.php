@@ -60,15 +60,15 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $method = $this->getFirstMethodForTestCase();
         $type = $method->getReturnType();
 
-        $this->assertInstanceOf(ASTUnionType::class, $type);
+        static::assertInstanceOf(ASTUnionType::class, $type);
         $children = $type->getChildren();
 
-        $this->assertCount(2, $children);
-        $this->assertInstanceOf(ASTIntersectionType::class, $children[0]);
-        $this->assertSame('A&B', $children[0]->getImage());
+        static::assertCount(2, $children);
+        static::assertInstanceOf(ASTIntersectionType::class, $children[0]);
+        static::assertSame('A&B', $children[0]->getImage());
 
-        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[1]);
-        $this->assertSame('D', $children[1]->getImage());
+        static::assertInstanceOf(ASTClassOrInterfaceReference::class, $children[1]);
+        static::assertSame('D', $children[1]->getImage());
     }
 
     public function testReturnParenthesesLast(): void
@@ -76,18 +76,18 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $method = $this->getFirstMethodForTestCase();
         $type = $method->getReturnType();
 
-        $this->assertInstanceOf(ASTUnionType::class, $type);
+        static::assertInstanceOf(ASTUnionType::class, $type);
         $children = $type->getChildren();
 
-        $this->assertCount(3, $children);
-        $this->assertInstanceOf(ASTScalarType::class, $children[0]);
-        $this->assertSame('null', $children[0]->getImage());
+        static::assertCount(3, $children);
+        static::assertInstanceOf(ASTScalarType::class, $children[0]);
+        static::assertSame('null', $children[0]->getImage());
 
-        $this->assertInstanceOf(ASTUnionType::class, $children[1]);
-        $this->assertSame('A|B|C', $children[1]->getImage());
+        static::assertInstanceOf(ASTUnionType::class, $children[1]);
+        static::assertSame('A|B|C', $children[1]->getImage());
 
-        $this->assertInstanceOf(ASTIntersectionType::class, $children[2]);
-        $this->assertSame('D&E&F', $children[2]->getImage());
+        static::assertInstanceOf(ASTIntersectionType::class, $children[2]);
+        static::assertSame('D&E&F', $children[2]->getImage());
     }
 
     public function testReturnNestedParentheses(): void
@@ -95,63 +95,63 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
         $method = $this->getFirstMethodForTestCase();
         $type = $method->getReturnType();
 
-        $this->assertInstanceOf(ASTUnionType::class, $type);
-        $this->assertSame('(A&B&C)|true|(D&((E&F)|G))', $type->getImage());
+        static::assertInstanceOf(ASTUnionType::class, $type);
+        static::assertSame('(A&B&C)|true|(D&((E&F)|G))', $type->getImage());
     }
 
     public function testParameterParenthesesFirst(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $parameters = $method->getParameters();
-        $this->assertCount(1, $parameters);
+        static::assertCount(1, $parameters);
         $parameter = $parameters[0];
         $type = $parameter->getFormalParameter()->getType();
 
-        $this->assertInstanceOf(ASTUnionType::class, $type);
+        static::assertInstanceOf(ASTUnionType::class, $type);
         $children = $type->getChildren();
 
-        $this->assertCount(3, $children);
-        $this->assertInstanceOf(ASTIntersectionType::class, $children[0]);
-        $this->assertSame('A&B', $children[0]->getImage());
+        static::assertCount(3, $children);
+        static::assertInstanceOf(ASTIntersectionType::class, $children[0]);
+        static::assertSame('A&B', $children[0]->getImage());
 
-        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[1]);
-        $this->assertSame('D', $children[1]->getImage());
+        static::assertInstanceOf(ASTClassOrInterfaceReference::class, $children[1]);
+        static::assertSame('D', $children[1]->getImage());
 
-        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[1]);
-        $this->assertSame('null', $children[2]->getImage());
+        static::assertInstanceOf(ASTClassOrInterfaceReference::class, $children[1]);
+        static::assertSame('null', $children[2]->getImage());
     }
 
     public function testParameterParenthesesLast(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $parameters = $method->getParameters();
-        $this->assertCount(1, $parameters);
+        static::assertCount(1, $parameters);
         $parameter = $parameters[0];
         $type = $parameter->getFormalParameter()->getType();
 
-        $this->assertInstanceOf(ASTUnionType::class, $type);
+        static::assertInstanceOf(ASTUnionType::class, $type);
         $children = $type->getChildren();
 
-        $this->assertCount(3, $children);
-        $this->assertInstanceOf(ASTScalarType::class, $children[0]);
-        $this->assertSame('null', $children[0]->getImage());
+        static::assertCount(3, $children);
+        static::assertInstanceOf(ASTScalarType::class, $children[0]);
+        static::assertSame('null', $children[0]->getImage());
 
-        $this->assertInstanceOf(ASTUnionType::class, $children[1]);
-        $this->assertSame('A|B|C', $children[1]->getImage());
+        static::assertInstanceOf(ASTUnionType::class, $children[1]);
+        static::assertSame('A|B|C', $children[1]->getImage());
 
-        $this->assertInstanceOf(ASTIntersectionType::class, $children[2]);
-        $this->assertSame('D&E&F', $children[2]->getImage());
+        static::assertInstanceOf(ASTIntersectionType::class, $children[2]);
+        static::assertSame('D&E&F', $children[2]->getImage());
     }
 
     public function testParameterNestedParentheses(): void
     {
         $method = $this->getFirstMethodForTestCase();
         $parameters = $method->getParameters();
-        $this->assertCount(1, $parameters);
+        static::assertCount(1, $parameters);
         $parameter = $parameters[0];
         $type = $parameter->getFormalParameter()->getType();
 
-        $this->assertInstanceOf(ASTUnionType::class, $type);
-        $this->assertSame('(A&B&C)|true|(D&((E&F)|G))', $type->getImage());
+        static::assertInstanceOf(ASTUnionType::class, $type);
+        static::assertSame('(A&B&C)|true|(D&((E&F)|G))', $type->getImage());
     }
 }

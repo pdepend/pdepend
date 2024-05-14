@@ -69,6 +69,7 @@ class Factory
         if (isset($sxml->project)) {
             return new CloverReport($sxml);
         }
+
         throw new RuntimeException('Unsupported coverage report format.');
     }
 
@@ -89,8 +90,10 @@ class Factory
 
         if ($sxml === false) {
             $xmlError = libxml_get_last_error();
+
             throw new RuntimeException($xmlError ? trim($xmlError->message) : 'Unknown error');
         }
+
         return $sxml;
     }
 }

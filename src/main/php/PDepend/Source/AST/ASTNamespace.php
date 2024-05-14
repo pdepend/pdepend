@@ -66,14 +66,10 @@ class ASTNamespace extends AbstractASTArtifact
      */
     protected $functions = [];
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     protected $packageAnnotation = false;
 
-    /**
-     * Does this namespace contain user defined functions, classes or interfaces?
-     */
+    /** Does this namespace contain user defined functions, classes or interfaces? */
     private bool $userDefined;
 
     /**
@@ -100,6 +96,7 @@ class ASTNamespace extends AbstractASTArtifact
         if (!isset($this->userDefined)) {
             $this->userDefined = $this->checkUserDefined();
         }
+
         return $this->userDefined;
     }
 
@@ -118,6 +115,7 @@ class ASTNamespace extends AbstractASTArtifact
                 return true;
             }
         }
+
         return (count($this->functions) > 0);
     }
 
@@ -184,6 +182,7 @@ class ASTNamespace extends AbstractASTArtifact
                 $types[] = $type;
             }
         }
+
         return new ASTArtifactList($types);
     }
 

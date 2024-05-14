@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTPreDecrementExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTPreDecrementExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -144,7 +144,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
     public function testPreDecrementExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -153,7 +153,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
     public function testPreDecrementExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(12, $expr->getStartColumn());
+        static::assertEquals(12, $expr->getStartColumn());
     }
 
     /**
@@ -162,7 +162,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
     public function testPreDecrementExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(7, $expr->getEndLine());
+        static::assertEquals(7, $expr->getEndLine());
     }
 
     /**
@@ -171,7 +171,7 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
     public function testPreDecrementExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstPreDecrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(21, $expr->getEndColumn());
+        static::assertEquals(21, $expr->getEndColumn());
     }
 
     /**

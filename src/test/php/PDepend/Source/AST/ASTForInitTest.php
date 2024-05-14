@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTForInit} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTForInit
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTForInitTest extends ASTNodeTestCase
     public function testForInitHasExpectedStartLine(): void
     {
         $init = $this->getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(4, $init->getStartLine());
+        static::assertEquals(4, $init->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTForInitTest extends ASTNodeTestCase
     public function testForInitHasExpectedStartColumn(): void
     {
         $init = $this->getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(10, $init->getStartColumn());
+        static::assertEquals(10, $init->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTForInitTest extends ASTNodeTestCase
     public function testForInitHasExpectedEndLine(): void
     {
         $init = $this->getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(4, $init->getEndLine());
+        static::assertEquals(4, $init->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTForInitTest extends ASTNodeTestCase
     public function testForInitHasExpectedEndColumn(): void
     {
         $init = $this->getFirstForInitInFunction(__METHOD__);
-        $this->assertEquals(24, $init->getEndColumn());
+        static::assertEquals(24, $init->getEndColumn());
     }
 
     /**

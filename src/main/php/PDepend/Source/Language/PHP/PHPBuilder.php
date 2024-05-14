@@ -195,9 +195,7 @@ class PHPBuilder implements Builder
      */
     private ASTNamespace $defaultPackage;
 
-    /**
-     * Default source file that acts as a dummy.
-     */
+    /** Default source file that acts as a dummy. */
     private ASTCompilationUnit $defaultCompilationUnit;
 
     /**
@@ -293,6 +291,7 @@ class PHPBuilder implements Builder
     public function setCache(CacheDriver $cache)
     {
         $this->cache = $cache;
+
         return $this;
     }
 
@@ -354,6 +353,7 @@ class PHPBuilder implements Builder
         if ($classOrInterface !== null) {
             return $classOrInterface;
         }
+
         return $this->buildClassInternal($qualifiedName);
     }
 
@@ -391,6 +391,7 @@ class PHPBuilder implements Builder
         if ($trait === null) {
             $trait = $this->buildTraitInternal($qualifiedName);
         }
+
         return $trait;
     }
 
@@ -557,6 +558,7 @@ class PHPBuilder implements Builder
         if ($interface === null) {
             $interface = $this->buildInterfaceInternal($qualifiedName);
         }
+
         return $interface;
     }
 
@@ -596,6 +598,7 @@ class PHPBuilder implements Builder
 
             $this->namespaces[$name] = new ASTNamespace($name);
         }
+
         return $this->namespaces[$name];
     }
 
@@ -946,7 +949,6 @@ class PHPBuilder implements Builder
     {
         return $this->buildAstNodeInstance(ASTArrayElement::class);
     }
-
 
     /**
      * Builds a new instanceof expression node.
@@ -1982,6 +1984,7 @@ class PHPBuilder implements Builder
         if (!isset($this->preparedNamespaces)) {
             $this->preparedNamespaces = $this->getPreparedNamespaces();
         }
+
         return new ASTArtifactList($this->preparedNamespaces);
     }
 
@@ -2003,6 +2006,7 @@ class PHPBuilder implements Builder
         ) {
             unset($namespaces[self::DEFAULT_NAMESPACE]);
         }
+
         return $namespaces;
     }
 
@@ -2070,6 +2074,7 @@ class PHPBuilder implements Builder
         if ($trait === null) {
             $trait = $this->findType($this->traits, $qualifiedName);
         }
+
         return $trait;
     }
 
@@ -2146,6 +2151,7 @@ class PHPBuilder implements Builder
                 $qualifiedName,
             );
         }
+
         return $interface;
     }
 
@@ -2213,6 +2219,7 @@ class PHPBuilder implements Builder
         if ($class === null) {
             $class = $this->findType($this->classes, $qualifiedName);
         }
+
         return $class;
     }
 
@@ -2301,6 +2308,7 @@ class PHPBuilder implements Builder
                 }
             }
         }
+
         return $copiedTypes;
     }
 
@@ -2504,7 +2512,6 @@ class PHPBuilder implements Builder
         $this->internal = $internal;
     }
 
-
     /**
      * Returns <b>true</b> if the given package is the default package.
      *
@@ -2534,6 +2541,7 @@ class PHPBuilder implements Builder
         if (($pos = strrpos($qualifiedName, '\\')) !== false) {
             return substr($qualifiedName, $pos + 1);
         }
+
         return $qualifiedName;
     }
 
@@ -2562,9 +2570,11 @@ class PHPBuilder implements Builder
     {
         if (($pos = strrpos($qualifiedName, '\\')) !== false) {
             return ltrim(substr($qualifiedName, 0, $pos), '\\');
-        } elseif (Type::isInternalType($qualifiedName)) {
+        }
+        if (Type::isInternalType($qualifiedName)) {
             return Type::getTypePackage($qualifiedName);
         }
+
         return self::DEFAULT_NAMESPACE;
     }
 

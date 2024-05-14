@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\AST;
 
@@ -65,7 +65,7 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
         $item = $this->createItem();
         $item->setName(__METHOD__);
 
-        $this->assertEquals(__METHOD__, $item->getName());
+        static::assertEquals(__METHOD__, $item->getName());
     }
 
     /**

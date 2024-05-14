@@ -57,6 +57,6 @@ class ClosureAsArrayElement126Test extends AbstractRegressionTestCase
      */
     public function testParserHandlesClosureAsArrayElement(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
     }
 }

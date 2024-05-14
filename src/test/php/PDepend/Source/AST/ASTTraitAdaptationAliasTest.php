@@ -46,8 +46,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitAdaptationAlias} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTraitAdaptationAlias
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
@@ -62,7 +62,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testGetNewNameReturnsNullByDefault(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
-        $this->assertNull($alias->getNewName());
+        static::assertNull($alias->getNewName());
     }
 
     /**
@@ -71,7 +71,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testGetNewNameReturnsExpectedValue(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
-        $this->assertEquals('myMethodAlias', $alias->getNewName());
+        static::assertEquals('myMethodAlias', $alias->getNewName());
     }
 
     /**
@@ -80,7 +80,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testGetNewModifierReturnsMinusOneByDefault(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
-        $this->assertEquals(-1, $alias->getNewModifier());
+        static::assertEquals(-1, $alias->getNewModifier());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testGetNewModifierReturnsExpectedIsPublicValue(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PUBLIC,
             $alias->getNewModifier()
         );
@@ -101,7 +101,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testGetNewModifierReturnsExpectedIsProtectedValue(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PROTECTED,
             $alias->getNewModifier()
         );
@@ -113,7 +113,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames(): void
     {
         $alias = new ASTTraitAdaptationAlias();
-        $this->assertSame(
+        static::assertSame(
             [
                 'newName',
                 'newModifier',
@@ -131,7 +131,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testGetNewModifierReturnsExpectedIsPrivateValue(): void
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
-        $this->assertEquals(State::IS_PRIVATE, $alias->getNewModifier());
+        static::assertEquals(State::IS_PRIVATE, $alias->getNewModifier());
     }
 
     /**
@@ -143,7 +143,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testTraitAdaptationAlias()
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
-        $this->assertInstanceOf(ASTTraitAdaptationAlias::class, $alias);
+        static::assertInstanceOf(ASTTraitAdaptationAlias::class, $alias);
 
         return $alias;
     }
@@ -157,7 +157,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      */
     public function testTraitAdaptationAliasHasExpectedStartLine($alias): void
     {
-        $this->assertEquals(6, $alias->getStartLine());
+        static::assertEquals(6, $alias->getStartLine());
     }
 
     /**
@@ -169,7 +169,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      */
     public function testTraitAdaptationAliasHasExpectedStartColumn($alias): void
     {
-        $this->assertEquals(9, $alias->getStartColumn());
+        static::assertEquals(9, $alias->getStartColumn());
     }
 
     /**
@@ -181,7 +181,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      */
     public function testTraitAdaptationAliasHasExpectedEndLine($alias): void
     {
-        $this->assertEquals(6, $alias->getEndLine());
+        static::assertEquals(6, $alias->getEndLine());
     }
 
     /**
@@ -193,7 +193,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      */
     public function testTraitAdaptationAliasHasExpectedEndColumn($alias): void
     {
-        $this->assertEquals(46, $alias->getEndColumn());
+        static::assertEquals(46, $alias->getEndColumn());
     }
 
     /**
@@ -218,7 +218,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     public function testTraitReference()
     {
         $reference = $this->getFirstTraitReferenceInClass();
-        $this->assertInstanceOf(ASTTraitReference::class, $reference);
+        static::assertInstanceOf(ASTTraitReference::class, $reference);
 
         return $reference;
     }
@@ -232,7 +232,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      */
     public function testTraitReferenceHasExpectedStartLine($reference): void
     {
-        $this->assertEquals(7, $reference->getStartLine());
+        static::assertEquals(7, $reference->getStartLine());
     }
 
     /**
@@ -244,7 +244,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      */
     public function testTraitReferenceHasExpectedStartColumn($reference): void
     {
-        $this->assertEquals(9, $reference->getStartColumn());
+        static::assertEquals(9, $reference->getStartColumn());
     }
 
     /**
@@ -256,7 +256,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      */
     public function testTraitReferenceHasExpectedEndLine($reference): void
     {
-        $this->assertEquals(7, $reference->getEndLine());
+        static::assertEquals(7, $reference->getEndLine());
     }
 
     /**
@@ -268,7 +268,7 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
      */
     public function testTraitReferenceHasExpectedEndColumn($reference): void
     {
-        $this->assertEquals(36, $reference->getEndColumn());
+        static::assertEquals(36, $reference->getEndColumn());
     }
 
     /**

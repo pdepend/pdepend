@@ -65,7 +65,7 @@ class ExtensionFilterTest extends AbstractTestCase
         $actual = $this->createFilteredFileList(['php4']);
         $expected = ['file4.php4'];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -76,14 +76,14 @@ class ExtensionFilterTest extends AbstractTestCase
         $actual = $this->createFilteredFileList(['inc', 'php']);
         $expected = ['file1.inc', 'file2.php'];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function testExtensionFilterAcceptsPhpProtocol(): void
     {
         $filter = new ExtensionFilter(['abc']);
 
-        $this->assertTrue($filter->accept('', 'php://def'));
+        static::assertTrue($filter->accept('', 'php://def'));
     }
 
     /**

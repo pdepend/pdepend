@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend;
 
@@ -110,32 +110,32 @@ class ParserTest extends AbstractTestCase
         $tmp = $this->parseCodeResourceForTest();
         $namespaces = [];
 
-        $this->assertCount(4, $tmp);
+        static::assertCount(4, $tmp);
 
         foreach ($tmp as $namespace) {
-            $this->assertArrayHasKey($namespace->getName(), $expected);
+            static::assertArrayHasKey($namespace->getName(), $expected);
             unset($expected[$namespace->getName()]);
             $namespaces[$namespace->getName()] = $namespace;
         }
-        $this->assertCount(0, $expected);
+        static::assertCount(0, $expected);
 
-        $this->assertSame(1, $namespaces['pkg1']->getFunctions()->count());
-        $this->assertSame(1, $namespaces['pkg1']->getTypes()->count());
-        $this->assertFalse($namespaces['pkg1']->getTypes()->current()->isAbstract());
+        static::assertSame(1, $namespaces['pkg1']->getFunctions()->count());
+        static::assertSame(1, $namespaces['pkg1']->getTypes()->count());
+        static::assertFalse($namespaces['pkg1']->getTypes()->current()->isAbstract());
 
-        $this->assertSame(1, $namespaces['pkg2']->getTypes()->count());
-        $this->assertTrue($namespaces['pkg2']->getTypes()->current()->isAbstract());
-        $this->assertSame(
+        static::assertSame(1, $namespaces['pkg2']->getTypes()->count());
+        static::assertTrue($namespaces['pkg2']->getTypes()->current()->isAbstract());
+        static::assertSame(
             123456781234567812345678,
             $namespaces['pkg2']->getTypes()->current()->getConstant('BIZ')
         );
-        $this->assertSame(
+        static::assertSame(
             0x12345678123456781,
             $namespaces['pkg2']->getTypes()->current()->getConstant('FOOBAR')
         );
 
-        $this->assertSame(1, $namespaces['pkg3']->getTypes()->count());
-        $this->assertTrue($namespaces['pkg3']->getTypes()->current()->isAbstract());
+        static::assertSame(1, $namespaces['pkg3']->getTypes()->count());
+        static::assertTrue($namespaces['pkg3']->getTypes()->current()->isAbstract());
     }
 
     /**
@@ -197,7 +197,7 @@ class ParserTest extends AbstractTestCase
             RuntimeException::class
         );
         $this->expectExceptionMessage(
-            "Unexpected token: Bar, line: 3, col: 18, file: "
+            'Unexpected token: Bar, line: 3, col: 18, file: '
         );
 
         $this->parseCodeResourceForTest();
@@ -211,7 +211,7 @@ class ParserTest extends AbstractTestCase
         $namespaces = $this->parseCodeResourceForTest();
         $functions = $namespaces[1]->getFunctions();
 
-        $this->assertEquals(7, $functions[0]->getStartLine());
+        static::assertEquals(7, $functions[0]->getStartLine());
     }
 
     /**
@@ -251,7 +251,7 @@ class ParserTest extends AbstractTestCase
         $namespaces = $this->parseSource('/Parser/parser-sets-expected-function-tokens.php');
         $functions = $namespaces[0]->getFunctions();
 
-        $this->assertEquals($tokens, $functions[0]->getTokens());
+        static::assertEquals($tokens, $functions[0]->getTokens());
     }
 
     /**
@@ -260,16 +260,16 @@ class ParserTest extends AbstractTestCase
     public function testParserSetsCorrectFileComment(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
-        $this->assertEquals(1, $namespaces->count()); // default
+        static::assertEquals(1, $namespaces->count()); // default
 
         $namespace = $namespaces[0];
-        $this->assertEquals('default\package', $namespace->getName());
+        static::assertEquals('default\package', $namespace->getName());
 
         $class = $namespace->getClasses()->current();
-        $this->assertNotNull($class);
+        static::assertNotNull($class);
 
         $actual = $class->getCompilationUnit()->getComment();
-        $this->assertNotNull($actual);
+        static::assertNotNull($actual);
 
         $expected = "/**\n"
                   . " * FANOUT := 12\n"
@@ -277,9 +277,9 @@ class ParserTest extends AbstractTestCase
                   . " *\n"
                   . " * @package default\n"
                   . " * @subpackage package\n"
-                  . " */";
+                  . ' */';
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -288,16 +288,16 @@ class ParserTest extends AbstractTestCase
     public function testParserDoesntReuseTypeComment(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
-        $this->assertEquals(1, $namespaces->count()); // +global
+        static::assertEquals(1, $namespaces->count()); // +global
 
         $namespace = $namespaces[0];
-        $this->assertEquals('+global', $namespace->getName());
+        static::assertEquals('+global', $namespace->getName());
 
         $class = $namespace->getClasses()->current();
-        $this->assertNotNull($class);
+        static::assertNotNull($class);
 
         $actual = $class->getCompilationUnit()->getComment();
-        $this->assertNull($actual);
+        static::assertNull($actual);
     }
 
     /**
@@ -306,16 +306,16 @@ class ParserTest extends AbstractTestCase
     public function testParserDoesntReuseFunctionComment(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
-        $this->assertEquals(1, $namespaces->count()); // +global
+        static::assertEquals(1, $namespaces->count()); // +global
 
         $namespace = $namespaces[0];
-        $this->assertEquals('+global', $namespace->getName());
+        static::assertEquals('+global', $namespace->getName());
 
         $function = $namespace->getFunctions()->current();
-        $this->assertNotNull($function);
+        static::assertNotNull($function);
 
         $actual = $function->getCompilationUnit()->getComment();
-        $this->assertNull($actual);
+        static::assertNull($actual);
     }
 
     /**
@@ -323,7 +323,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectClassStartLineNumber(): void
     {
-        $this->assertEquals(30, $this->getClassForTest()->getStartLine());
+        static::assertEquals(30, $this->getClassForTest()->getStartLine());
     }
 
     /**
@@ -331,7 +331,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectClassEndLineNumber(): void
     {
-        $this->assertEquals(49, $this->getClassForTest()->getEndLine());
+        static::assertEquals(49, $this->getClassForTest()->getEndLine());
     }
 
     /**
@@ -341,9 +341,9 @@ class ParserTest extends AbstractTestCase
     {
         $methods = $this->getClassMethodsForTest();
 
-        $this->assertEquals(43, $methods->current()->getStartLine());
+        static::assertEquals(43, $methods->current()->getStartLine());
         $methods->next();
-        $this->assertEquals(44, $methods->current()->getStartLine());
+        static::assertEquals(44, $methods->current()->getStartLine());
     }
 
     /**
@@ -353,9 +353,9 @@ class ParserTest extends AbstractTestCase
     {
         $methods = $this->getClassMethodsForTest();
 
-        $this->assertEquals(43, $methods->current()->getEndLine());
+        static::assertEquals(43, $methods->current()->getEndLine());
         $methods->next();
-        $this->assertEquals(48, $methods->current()->getEndLine());
+        static::assertEquals(48, $methods->current()->getEndLine());
     }
 
     /**
@@ -363,7 +363,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectInterfaceStartLineNumber(): void
     {
-        $this->assertEquals(15, $this->getInterfaceForTest()->getStartLine());
+        static::assertEquals(15, $this->getInterfaceForTest()->getStartLine());
     }
 
     /**
@@ -371,7 +371,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectInterfaceEndLineNumber(): void
     {
-        $this->assertEquals(18, $this->getInterfaceForTest()->getEndLine());
+        static::assertEquals(18, $this->getInterfaceForTest()->getEndLine());
     }
 
     /**
@@ -381,7 +381,7 @@ class ParserTest extends AbstractTestCase
     public function testParserSetsCorrectInterfaceMethodStartLineNumbers(): void
     {
         $methods = $this->getInterfaceMethodsForTest();
-        $this->assertEquals(17, $methods->current()->getStartLine());
+        static::assertEquals(17, $methods->current()->getStartLine());
     }
 
     /**
@@ -390,7 +390,7 @@ class ParserTest extends AbstractTestCase
     public function testParserSetsCorrectInterfaceMethodEndLineNumbers(): void
     {
         $methods = $this->getInterfaceMethodsForTest();
-        $this->assertEquals(17, $methods->current()->getEndLine());
+        static::assertEquals(17, $methods->current()->getEndLine());
     }
 
     /**
@@ -399,7 +399,7 @@ class ParserTest extends AbstractTestCase
     public function testParserSetsAllInterfaceMethodsAbstract(): void
     {
         $methods = $this->getInterfaceMethodsForTest();
-        $this->assertTrue($methods->current()->isAbstract());
+        static::assertTrue($methods->current()->isAbstract());
     }
 
     /**
@@ -412,7 +412,7 @@ class ParserTest extends AbstractTestCase
             ->getClasses()
             ->current();
 
-        $this->assertCount(3, $class->getInterfaces());
+        static::assertCount(3, $class->getInterfaces());
     }
 
     /**
@@ -425,7 +425,7 @@ class ParserTest extends AbstractTestCase
             ->getInterfaces()
             ->current();
 
-        $this->assertCount(3, $class->getInterfaces());
+        static::assertCount(3, $class->getInterfaces());
     }
 
     /**
@@ -441,7 +441,7 @@ class ParserTest extends AbstractTestCase
             ->getMethods()
             ->current();
 
-        $this->assertEquals(17, $method->getStartLine());
+        static::assertEquals(17, $method->getStartLine());
     }
 
     /**
@@ -452,7 +452,7 @@ class ParserTest extends AbstractTestCase
         $methods = $this->getClassForTest()->getMethods();
         // TODO: Replace this loop with an array(<method>=><abstract>)
         foreach ($methods as $method) {
-            $this->assertFalse($method->isAbstract());
+            static::assertFalse($method->isAbstract());
         }
     }
 
@@ -462,11 +462,11 @@ class ParserTest extends AbstractTestCase
     public function testParserMarksAbstractMethodAsAbstract(): void
     {
         $method = $this->getClassForTest()
-                       ->getParentClass()
-                       ->getMethods()
-                       ->current();
+            ->getParentClass()
+            ->getMethods()
+            ->current();
 
-        $this->assertTrue($method->isAbstract());
+        static::assertTrue($method->isAbstract());
     }
 
     /**
@@ -480,9 +480,9 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $dependencies = $function->getDependencies();
-        $this->assertEquals('PDepend1', $dependencies->current()->getNamespace()->getName());
+        static::assertEquals('PDepend1', $dependencies->current()->getNamespace()->getName());
         $dependencies->next();
-        $this->assertEquals('PDepend2', $dependencies->current()->getNamespace()->getName());
+        static::assertEquals('PDepend2', $dependencies->current()->getNamespace()->getName());
     }
 
     /**
@@ -506,7 +506,7 @@ class ParserTest extends AbstractTestCase
         $namespaces = $this->parseCodeResourceForTest();
 
         $functions = $namespaces[0]->getFunctions();
-        $this->assertCount(3, $functions);
+        static::assertCount(3, $functions);
 
         return $functions;
     }
@@ -518,7 +518,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsFunctionReturnTypeToNull($functions): void
     {
-        $this->assertSame(
+        static::assertSame(
             [
                 'function' => 'func1',
                 'returnClass' => null,
@@ -537,7 +537,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsExpectedFunctionReturnTypeOfFunctionTwo($functions): void
     {
-        $this->assertSame(
+        static::assertSame(
             [
                 'function' => 'func2',
                 'returnClass' => 'SplObjectStore',
@@ -556,7 +556,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsExpectedFunctionReturnTypeOfFunctionThree($functions): void
     {
-        $this->assertSame(
+        static::assertSame(
             [
                 'function' => 'func3',
                 'returnClass' => 'SplObjectStore',
@@ -584,7 +584,7 @@ class ParserTest extends AbstractTestCase
             }
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'func1 throws RuntimeException',
                 'func2 throws OutOfRangeException',
@@ -609,7 +609,7 @@ class ParserTest extends AbstractTestCase
             $actual[] = $function->getReturnClass();
         }
 
-        $this->assertSame([0, null, 0, null, 0, null], $actual);
+        static::assertSame([0, null, 0, null, 0, null], $actual);
     }
 
     /**
@@ -643,7 +643,7 @@ class ParserTest extends AbstractTestCase
             $actual[] = $method->getReturnClass() ? $method->getReturnClass()->getName() : null;
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             ['__construct', null, 'method1', 'SplObjectStore', 'method2', 'SplSubject'],
             $actual
         );
@@ -668,7 +668,7 @@ class ParserTest extends AbstractTestCase
             }
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 '__construct',
                 'RuntimeException',
@@ -698,7 +698,7 @@ class ParserTest extends AbstractTestCase
             $actual[] = $method->getReturnClass();
         }
 
-        $this->assertSame([0, null, 0, null, 0, null], $actual);
+        static::assertSame([0, null, 0, null, 0, null], $actual);
     }
 
     /**
@@ -735,12 +735,12 @@ class ParserTest extends AbstractTestCase
             ];
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 ['public' => false, 'protected' => false, 'private' => true],
-                ['public' => true,  'protected' => false, 'private' => false],
-                ['public' => false, 'protected' => true,  'private' => false],
-                ['public' => false, 'protected' => true,  'private' => false],
+                ['public' => true, 'protected' => false, 'private' => false],
+                ['public' => false, 'protected' => true, 'private' => false],
+                ['public' => false, 'protected' => true, 'private' => false],
             ],
             $actual
         );
@@ -763,7 +763,7 @@ class ParserTest extends AbstractTestCase
             $actual[$node->getName()] = $className;
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 '$property1' => 'MyPropertyClass2',
                 '$property2' => 'MyPropertyClass2',
@@ -796,7 +796,7 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getClass();
 
-        $this->assertEquals('Runtime', $class->getName());
+        static::assertEquals('Runtime', $class->getName());
     }
 
     /**
@@ -819,7 +819,7 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getClass();
 
-        $this->assertEquals('Session', $type->getName());
+        static::assertEquals('Session', $type->getName());
     }
 
     /**
@@ -842,7 +842,7 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getReturnClass();
 
-        $this->assertSame('Runtime', $type->getName());
+        static::assertSame('Runtime', $type->getName());
     }
 
     /**
@@ -865,7 +865,7 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getReturnClass();
 
-        $this->assertSame('Session', $type->getName());
+        static::assertSame('Session', $type->getName());
     }
 
     /**
@@ -884,7 +884,7 @@ class ParserTest extends AbstractTestCase
             $actual[] = $property->getClass();
         }
 
-        $this->assertEquals([null, null, null, null, null, null], $actual);
+        static::assertEquals([null, null, null, null, null, null], $actual);
     }
 
     /**
@@ -906,7 +906,7 @@ class ParserTest extends AbstractTestCase
             $actual[] = $type->getComment();
         }
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -915,7 +915,7 @@ class ParserTest extends AbstractTestCase
     public function testParserSubpackageSupport(): void
     {
         $namespace = $this->parseCodeResourceForTest()->current();
-        $this->assertEquals('PHP\Depend', $namespace->getName());
+        static::assertEquals('PHP\Depend', $namespace->getName());
     }
 
     /**
@@ -927,7 +927,7 @@ class ParserTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $this->assertCount(2, $namespaces);
+        static::assertCount(2, $namespaces);
 
         return $namespaces;
     }
@@ -940,7 +940,7 @@ class ParserTest extends AbstractTestCase
     public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace($namespaces): void
     {
         $functions = $namespaces[0]->getFunctions();
-        $this->assertCount(2, $functions);
+        static::assertCount(2, $functions);
     }
 
     /**
@@ -951,7 +951,7 @@ class ParserTest extends AbstractTestCase
     public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace($namespaces): void
     {
         $functions = $namespaces[1]->getFunctions();
-        $this->assertCount(1, $functions);
+        static::assertCount(1, $functions);
     }
 
     /**
@@ -963,7 +963,7 @@ class ParserTest extends AbstractTestCase
     {
         $functions = $namespaces[0]->getFunctions();
 
-        $this->assertEquals('PHP\\Depend', $functions[0]->getNamespace()->getName());
+        static::assertEquals('PHP\\Depend', $functions[0]->getNamespace()->getName());
     }
 
     /**
@@ -975,7 +975,7 @@ class ParserTest extends AbstractTestCase
     {
         $functions = $namespaces[0]->getFunctions();
 
-        $this->assertEquals('PHP\\Depend', $functions[1]->getNamespace()->getName());
+        static::assertEquals('PHP\\Depend', $functions[1]->getNamespace()->getName());
     }
 
     /**
@@ -987,7 +987,7 @@ class ParserTest extends AbstractTestCase
     {
         $functions = $namespaces[1]->getFunctions();
 
-        $this->assertEquals('PDepend\\Test', $functions[0]->getNamespace()->getName());
+        static::assertEquals('PDepend\\Test', $functions[0]->getNamespace()->getName());
     }
 
     /**
@@ -1000,7 +1000,7 @@ class ParserTest extends AbstractTestCase
             ->getClasses()
             ->current();
 
-        $this->assertTrue($class->isAbstract());
+        static::assertTrue($class->isAbstract());
     }
 
     /**
@@ -1013,7 +1013,7 @@ class ParserTest extends AbstractTestCase
             ->getClasses()
             ->current();
 
-        $this->assertSame(
+        static::assertSame(
             State::IS_EXPLICIT_ABSTRACT,
             $class->getModifiers() & State::IS_EXPLICIT_ABSTRACT
         );
@@ -1029,7 +1029,7 @@ class ParserTest extends AbstractTestCase
             ->getClasses()
             ->current();
 
-        $this->assertTrue($class->isFinal());
+        static::assertTrue($class->isFinal());
     }
 
     /**
@@ -1042,7 +1042,7 @@ class ParserTest extends AbstractTestCase
             ->getClasses()
             ->current();
 
-        $this->assertSame(State::IS_FINAL, $class->getModifiers() & State::IS_FINAL);
+        static::assertSame(State::IS_FINAL, $class->getModifiers() & State::IS_FINAL);
     }
 
     /**
@@ -1068,7 +1068,7 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $foreach = $method->getFirstChildOfType(ASTForeachStatement::class);
-        $this->assertNotNull($foreach);
+        static::assertNotNull($foreach);
     }
 
     /**
@@ -1143,9 +1143,9 @@ class ParserTest extends AbstractTestCase
     {
         $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
 
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
-        $this->assertInstanceOf(ASTParentReference::class, $parameters[0]->getDefaultValue());
-        $this->assertSame('parent', $parameters[0]->getDefaultValue()->getImage());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertInstanceOf(ASTParentReference::class, $parameters[0]->getDefaultValue());
+        static::assertSame('parent', $parameters[0]->getDefaultValue()->getImage());
     }
 
     /**
@@ -1155,7 +1155,7 @@ class ParserTest extends AbstractTestCase
     public function testParserHandlesParentKeywordInMethodParameterDefaultValue(): void
     {
         $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -1164,7 +1164,7 @@ class ParserTest extends AbstractTestCase
     public function testParserHandlesSelfKeywordAsParameterTypeHint(): void
     {
         $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
-        $this->assertNotNull($parameters[0]);
+        static::assertNotNull($parameters[0]);
     }
 
     /**
@@ -1177,8 +1177,8 @@ class ParserTest extends AbstractTestCase
         $methods = $classes[1]->getMethods();
         $parameters = $methods[0]->getParameters();
 
-        $this->assertSame($classes[0], $parameters[0]->getClass());
-        $this->assertNotSame($classes[1], $parameters[0]->getClass());
+        static::assertSame($classes[0], $parameters[0]->getClass());
+        static::assertNotSame($classes[1], $parameters[0]->getClass());
     }
 
     /**
@@ -1191,7 +1191,7 @@ class ParserTest extends AbstractTestCase
         $methods = $class->getMethods();
         $parameters = $methods[0]->getParameters();
 
-        $this->assertSame($class, $parameters[0]->getClass());
+        static::assertSame($class, $parameters[0]->getClass());
     }
 
     /**
@@ -1200,7 +1200,7 @@ class ParserTest extends AbstractTestCase
     public function testParserStripsLeadingSlashFromNamespacedClassName(): void
     {
         $namespace = $this->parseCodeResourceForTest()->current();
-        $this->assertEquals('foo', $namespace->getName());
+        static::assertEquals('foo', $namespace->getName());
     }
 
     /**
@@ -1212,7 +1212,7 @@ class ParserTest extends AbstractTestCase
             ->getParentClass()
             ->getNamespace();
 
-        $this->assertEquals('foo\bar\baz', $namespace->getName());
+        static::assertEquals('foo\bar\baz', $namespace->getName());
     }
 
     /**
@@ -1224,7 +1224,7 @@ class ParserTest extends AbstractTestCase
             ->getParentClass()
             ->getNamespace();
 
-        $this->assertEquals('bar', $namespace->getName());
+        static::assertEquals('bar', $namespace->getName());
     }
 
     /**
@@ -1258,7 +1258,7 @@ class ParserTest extends AbstractTestCase
         $string = $function->getFirstChildOfType(ASTString::class);
         $image = $string->getChild(0)->getImage();
 
-        $this->assertEquals('\$foobar', $image);
+        static::assertEquals('\$foobar', $image);
     }
 
     /**
@@ -1274,7 +1274,7 @@ class ParserTest extends AbstractTestCase
         $string = $function->getFirstChildOfType(ASTString::class);
         $image = $string->getChild(0)->getImage();
 
-        $this->assertEquals('\\\\\"', $image);
+        static::assertEquals('\\\\\"', $image);
     }
 
     /**
@@ -1290,7 +1290,7 @@ class ParserTest extends AbstractTestCase
         $string = $function->getFirstChildOfType(ASTString::class);
         $variable = $string->getChild(0);
 
-        $this->assertInstanceOf(ASTVariable::class, $variable);
+        static::assertInstanceOf(ASTVariable::class, $variable);
     }
 
     /**
@@ -1306,7 +1306,7 @@ class ParserTest extends AbstractTestCase
         $string = $function->getFirstChildOfType(ASTString::class);
         $variable = $string->getChild(0);
 
-        $this->assertInstanceOf(ASTVariable::class, $variable);
+        static::assertInstanceOf(ASTVariable::class, $variable);
     }
 
     /**
@@ -1322,7 +1322,7 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $string = $method->getFirstChildOfType(ASTString::class);
-        $this->assertInstanceOf(ASTLiteral::class, $string->getChild(1));
+        static::assertInstanceOf(ASTLiteral::class, $string->getChild(1));
     }
 
     /**
@@ -1337,10 +1337,10 @@ class ParserTest extends AbstractTestCase
         $tokenizer->setSourceFile(__FILE__);
 
         $cache = $this->createCacheFixture();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('restore')
-            ->will($this->returnValue(true));
-        $cache->expects($this->never())
+            ->will(static::returnValue(true));
+        $cache->expects(static::never())
             ->method('store');
 
         $parser = new PHPParserGeneric(
@@ -1427,7 +1427,7 @@ class ParserTest extends AbstractTestCase
             ->getFunctions()
             ->current();
 
-        $this->assertEquals(
+        static::assertEquals(
             $function->getComment(),
             "/**\n * This is the function docblock for foo\n *\n */"
         );
@@ -1468,6 +1468,7 @@ class ParserTest extends AbstractTestCase
     protected function getClassForTest()
     {
         $namespaces = $this->parseCodeResourceForTest();
+
         return $namespaces[1]->getTypes()->current();
     }
 
@@ -1479,6 +1480,7 @@ class ParserTest extends AbstractTestCase
     protected function getClassMethodsForTest()
     {
         $namespaces = $this->parseCodeResourceForTest();
+
         return $namespaces[1]->getClasses()->current()->getMethods();
     }
 
@@ -1489,7 +1491,7 @@ class ParserTest extends AbstractTestCase
      */
     protected function doTestParserSetsCorrectDocComment(ASTArtifactList $nodes, $indent = 1): void
     {
-        $ws = str_repeat(" ", 4 * $indent);
+        $ws = str_repeat(' ', 4 * $indent);
 
         $expected = [
             "/**\n{$ws} * This is one comment.\n{$ws} */",
@@ -1503,6 +1505,6 @@ class ParserTest extends AbstractTestCase
             $actual[] = $callable->getComment();
         }
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 }

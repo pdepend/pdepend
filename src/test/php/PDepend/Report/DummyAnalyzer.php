@@ -99,6 +99,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
         if (isset($this->nodeMetrics[$artifact->getName()])) {
             return $this->nodeMetrics[$artifact->getName()];
         }
+
         return [];
     }
 

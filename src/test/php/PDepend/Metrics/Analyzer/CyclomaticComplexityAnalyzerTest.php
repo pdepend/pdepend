@@ -83,7 +83,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder(ASTArtifact::class)
             ->getMock();
-        $this->assertEquals(0, $analyzer->getCcn($astArtifact));
+        static::assertEquals(0, $analyzer->getCcn($astArtifact));
     }
 
     /**
@@ -94,7 +94,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder(ASTArtifact::class)
             ->getMock();
-        $this->assertEquals(0, $analyzer->getCcn2($astArtifact));
+        static::assertEquals(0, $analyzer->getCcn2($astArtifact));
     }
 
     /**
@@ -120,7 +120,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -134,7 +134,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['ccn' => 12, 'ccn2' => 16];
         $actual = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -163,7 +163,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -178,7 +178,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['ccn' => 2, 'ccn2' => 2];
         $actual = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -192,7 +192,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $this->assertEquals(3, $analyzer->getCcn($functions[0]));
+        static::assertEquals(3, $analyzer->getCcn($functions[0]));
     }
 
     /**
@@ -206,7 +206,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
 
-        $this->assertEquals(3, $analyzer->getCcn2($functions[0]));
+        static::assertEquals(3, $analyzer->getCcn2($functions[0]));
     }
 
     /**
@@ -220,7 +220,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['ccn' => 3, 'ccn2' => 3];
         $actual = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -234,7 +234,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['ccn' => 4, 'ccn2' => 4];
         $actual = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -248,7 +248,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['ccn' => 2, 'ccn2' => 4];
         $actual = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -262,7 +262,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['ccn' => 2, 'ccn2' => 4];
         $actual = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -276,7 +276,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['ccn' => 24, 'ccn2' => 32];
         $actual = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -290,7 +290,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
         $expected = ['ccn' => 3, 'ccn2' => 3];
         $actual = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -313,7 +313,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($functions[0]);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**
@@ -337,7 +337,7 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($methods[0]);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**

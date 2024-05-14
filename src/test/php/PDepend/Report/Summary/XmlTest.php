@@ -67,9 +67,7 @@ class XmlTest extends AbstractTestCase
      */
     protected ASTArtifactList $namespaces;
 
-    /**
-     * The temporary file name for the logger result.
-     */
+    /** The temporary file name for the logger result. */
     protected string $resultFile;
 
     /**
@@ -115,7 +113,7 @@ class XmlTest extends AbstractTestCase
             'pdepend.analyzer.maintainability',
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -146,7 +144,7 @@ class XmlTest extends AbstractTestCase
         $logger = new Xml();
         $actual = $logger->log($analyzer);
 
-        $this->assertTrue($actual);
+        static::assertTrue($actual);
     }
 
     /**
@@ -160,7 +158,7 @@ class XmlTest extends AbstractTestCase
         $logger = new Xml();
         $actual = $logger->log($analyzer);
 
-        $this->assertTrue($actual);
+        static::assertTrue($actual);
     }
 
     /**
@@ -178,7 +176,7 @@ class XmlTest extends AbstractTestCase
         $log->close();
 
         $fileName = 'xml-log-without-metrics.xml';
-        $this->assertXmlStringEqualsXmlString(
+        static::assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(__DIR__ . "/_expected/{$fileName}"),
             $this->getNormalizedPathXml($this->resultFile)
         );
@@ -205,7 +203,7 @@ class XmlTest extends AbstractTestCase
         $log->close();
 
         $fileName = 'project-aware-result-set-without-code.xml';
-        $this->assertXmlStringEqualsXmlString(
+        static::assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(__DIR__ . "/_expected/{$fileName}"),
             $this->getNormalizedPathXml($this->resultFile)
         );
@@ -231,7 +229,7 @@ class XmlTest extends AbstractTestCase
         $log->close();
 
         $fileName = 'node-and-project-aware-result-set.xml';
-        $this->assertXmlStringEqualsXmlString(
+        static::assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(__DIR__ . "/_expected/{$fileName}"),
             $this->getNormalizedPathXml($this->resultFile)
         );
@@ -247,17 +245,17 @@ class XmlTest extends AbstractTestCase
         $this->namespaces = $this->parseSource($fixture);
 
         $input = [
-            ['loc' => 42],  ['ncloc' => 23],
-            ['loc' => 9],   ['ncloc' => 7],
+            ['loc' => 42], ['ncloc' => 23],
+            ['loc' => 9], ['ncloc' => 7],
             ['loc' => 101], ['ncloc' => 99],
-            ['loc' => 90],  ['ncloc' => 80],
-            ['loc' => 50],  ['ncloc' => 45],
-            ['loc' => 30],  ['ncloc' => 22],
-            ['loc' => 9],   ['ncloc' => 9],
-            ['loc' => 3],   ['ncloc' => 3],
-            ['loc' => 42],  ['ncloc' => 23],
-            ['loc' => 33],  ['ncloc' => 20],
-            ['loc' => 9],   ['ncloc' => 7],
+            ['loc' => 90], ['ncloc' => 80],
+            ['loc' => 50], ['ncloc' => 45],
+            ['loc' => 30], ['ncloc' => 22],
+            ['loc' => 9], ['ncloc' => 9],
+            ['loc' => 3], ['ncloc' => 3],
+            ['loc' => 42], ['ncloc' => 23],
+            ['loc' => 33], ['ncloc' => 20],
+            ['loc' => 9], ['ncloc' => 7],
         ];
 
         $metricsOne = [];
@@ -290,7 +288,7 @@ class XmlTest extends AbstractTestCase
 
         $log->close();
 
-        $this->assertXmlStringEqualsXmlString(
+        static::assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(__DIR__ . "/_expected/{$expectation}"),
             $this->getNormalizedPathXml($this->resultFile)
         );

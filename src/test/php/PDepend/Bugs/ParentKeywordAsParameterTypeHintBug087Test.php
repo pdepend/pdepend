@@ -69,7 +69,7 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestC
             ->current()
             ->getParameters();
 
-        $this->assertSame('Bar', $parameters[0]->getClass()->getName());
+        static::assertSame('Bar', $parameters[0]->getClass()->getName());
     }
 
     /**

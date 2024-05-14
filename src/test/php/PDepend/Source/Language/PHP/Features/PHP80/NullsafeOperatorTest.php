@@ -60,18 +60,20 @@ class NullsafeOperatorTest extends PHPParserVersion80TestCase
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTVariableDeclarator $variable */
         $variable = $method->getFirstChildOfType(
             ASTVariableDeclarator::class
         );
 
-        $this->assertSame('$obj', $variable->getImage());
+        static::assertSame('$obj', $variable->getImage());
     }
 
     public function testNullsafeOperatorChain(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTEchoStatement $variable */
         $echo = $method->getFirstChildOfType(ASTEchoStatement::class);
         $chain = [];
@@ -87,6 +89,6 @@ class NullsafeOperatorTest extends PHPParserVersion80TestCase
             $chain[] = $node->getImage();
         }
 
-        $this->assertSame(['$this', '->', 'a', '?->', 'b', '->'], $chain);
+        static::assertSame(['$this', '->', 'a', '?->', 'b', '->'], $chain);
     }
 }

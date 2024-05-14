@@ -72,9 +72,8 @@ class DependExcludePathFilterTest extends AbstractTestCase
             new ExcludePathFilter([$pattern])
         );
 
-        $this->assertCount(0, $pdepend->analyze());
+        static::assertCount(0, $pdepend->analyze());
     }
-
 
     /**
      * testPDependFiltersByRelativePath
@@ -92,7 +91,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
             new ExcludePathFilter([$pattern])
         );
 
-        $this->assertCount(0, $pdepend->analyze());
+        static::assertCount(0, $pdepend->analyze());
     }
 
     /**
@@ -106,7 +105,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pattern = $directory . DIRECTORY_SEPARATOR . 'Integration';
 
         if (str_starts_with($directory, '/scratch/')) {
-            $this->markTestSkipped('Not sure why, but this test fails @CloudBees');
+            static::markTestSkipped('Not sure why, but this test fails @CloudBees');
         }
 
         $pdepend = $this->createEngineFixture();
@@ -115,7 +114,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
             new ExcludePathFilter([$pattern])
         );
 
-        $this->assertCount(
+        static::assertCount(
             1,
             $pdepend->analyze(),
             sprintf(
@@ -142,6 +141,6 @@ class DependExcludePathFilterTest extends AbstractTestCase
             new ExcludePathFilter([$pattern])
         );
 
-        $this->assertCount(1, $pdepend->analyze());
+        static::assertCount(1, $pdepend->analyze());
     }
 }

@@ -88,6 +88,7 @@ class Configuration
         if (isset($this->settings->{$name})) {
             return $this->settings->{$name};
         }
+
         throw new OutOfRangeException(
             sprintf("A configuration option '%s' not exists.", $name),
         );

@@ -80,6 +80,7 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 
         if (($depClass = $property->getClass()) === null) {
             $this->fireEndProperty($property);
+
             return;
         }
 

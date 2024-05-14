@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\AST;
 
@@ -62,7 +62,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testGetNameReturnsTheFileName(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertEquals(__FILE__, $file->getName());
+        static::assertEquals(__FILE__, $file->getName());
     }
 
     /**
@@ -71,7 +71,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testGetFileNameReturnsTheFileName(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertEquals(__FILE__, $file->getFileName());
+        static::assertEquals(__FILE__, $file->getFileName());
     }
 
     /**
@@ -80,7 +80,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testGetIdReturnsNullByDefault(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertNull($file->getId());
+        static::assertNull($file->getId());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->setId(__FUNCTION__);
 
-        $this->assertEquals(__FUNCTION__, $compilationUnit->getId());
+        static::assertEquals(__FUNCTION__, $compilationUnit->getId());
     }
 
     /**
@@ -100,7 +100,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testGetDocCommentReturnsNullByDefault(): void
     {
         $file = new ASTCompilationUnit(null);
-        $this->assertNull($file->getComment());
+        static::assertNull($file->getComment());
     }
 
     /**
@@ -111,7 +111,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
         $file = new ASTCompilationUnit(null);
         $file->setComment('/** Manuel */');
 
-        $this->assertEquals('/** Manuel */', $file->getComment());
+        static::assertEquals('/** Manuel */', $file->getComment());
     }
 
     /**
@@ -120,13 +120,13 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testGetTokensDelegatesCallToCacheRestoreWithFileId(): void
     {
         $cache = $this->createCacheFixture();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('type')
-            ->with($this->equalTo('tokens'))
-            ->will($this->returnValue($cache));
-        $cache->expects($this->once())
+            ->with(static::equalTo('tokens'))
+            ->will(static::returnValue($cache));
+        $cache->expects(static::once())
             ->method('restore')
-            ->with($this->equalTo(__FUNCTION__));
+            ->with(static::equalTo(__FUNCTION__));
 
         $compilationUnit = new ASTCompilationUnit(null);
         $compilationUnit->setCache($cache);
@@ -141,13 +141,13 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testSetTokensDelegatesCallToCacheStoreWithFileId(): void
     {
         $cache = $this->createCacheFixture();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('type')
-            ->with($this->equalTo('tokens'))
-            ->will($this->returnValue($cache));
-        $cache->expects($this->once())
+            ->with(static::equalTo('tokens'))
+            ->will(static::returnValue($cache));
+        $cache->expects(static::once())
             ->method('store')
-            ->with($this->equalTo(__FUNCTION__), $this->equalTo([1, 2, 3]));
+            ->with(static::equalTo(__FUNCTION__), static::equalTo([1, 2, 3]));
 
         $compilationUnit = new ASTCompilationUnit(null);
         $compilationUnit->setCache($cache);
@@ -163,9 +163,9 @@ class ASTCompilationUnitTest extends AbstractTestCase
     {
         $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->getMock();
-        $visitor->expects($this->once())
+        $visitor->expects(static::once())
             ->method('visitCompilationUnit')
-            ->with($this->isInstanceOf(ASTCompilationUnit::class));
+            ->with(static::isInstanceOf(ASTCompilationUnit::class));
 
         $file = new ASTCompilationUnit(null);
         $file->accept($visitor);
@@ -177,7 +177,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testMagicStringMethodReturnsEmptyStringWhenFileNameIsNull(): void
     {
         $file = new ASTCompilationUnit(null);
-        $this->assertSame('', $file->__toString());
+        static::assertSame('', $file->__toString());
     }
 
     /**
@@ -186,7 +186,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testMagicStringMethodReturnInjectedFileNameValue(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertEquals(__FILE__, $file->__toString());
+        static::assertEquals(__FILE__, $file->__toString());
     }
 
     /**
@@ -195,7 +195,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testMagicSleepMethodReturnsExpectedSetOfPropertyNames(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'cache',
                 'childNodes',
@@ -218,9 +218,9 @@ class ASTCompilationUnitTest extends AbstractTestCase
             ->onlyMethods(['setCompilationUnit'])
             ->setConstructorArgs([__CLASS__])
             ->getMock();
-        $node->expects($this->once())
+        $node->expects(static::once())
             ->method('setCompilationUnit')
-            ->with($this->isInstanceOf(ASTCompilationUnit::class));
+            ->with(static::isInstanceOf(ASTCompilationUnit::class));
 
         $compilationUnit = new ASTCompilationUnit(__FILE__);
         $compilationUnit->addChild($node);
@@ -233,7 +233,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testIsCachedReturnsFalseByDefault(): void
     {
         $file = new ASTCompilationUnit(null);
-        $this->assertFalse($file->isCached());
+        static::assertFalse($file->isCached());
     }
 
     /**
@@ -244,7 +244,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
         $file = new ASTCompilationUnit(null);
         serialize($file);
 
-        $this->assertFalse($file->isCached());
+        static::assertFalse($file->isCached());
     }
 
     /**
@@ -255,7 +255,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
         $file = new ASTCompilationUnit(null);
         $file = unserialize(serialize($file));
 
-        $this->assertTrue($file->isCached());
+        static::assertTrue($file->isCached());
     }
 
     /**
@@ -264,7 +264,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testGetStartLineReturnsZeroWhenSourceFileNotExists(): void
     {
         $file = new ASTCompilationUnit(null);
-        $this->assertSame(0, $file->getStartLine());
+        static::assertSame(0, $file->getStartLine());
     }
 
     /**
@@ -273,7 +273,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testGetStartLineReturnsOneWhenSourceFileExists(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertEquals(1, $file->getStartLine());
+        static::assertEquals(1, $file->getStartLine());
     }
 
     /**
@@ -282,7 +282,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testGetEndLineReturnsZeroWhenSourceFileNotExists(): void
     {
         $file = new ASTCompilationUnit(null);
-        $this->assertSame(0, $file->getEndLine());
+        static::assertSame(0, $file->getEndLine());
     }
 
     /**
@@ -291,7 +291,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testGetEndLineReturnsOneWhenSourceFileExists(): void
     {
         $file = new ASTCompilationUnit(__FILE__);
-        $this->assertSame($this->getEndLineOfThisFile(), $file->getEndLine());
+        static::assertSame($this->getEndLineOfThisFile(), $file->getEndLine());
     }
 
     /**
@@ -300,7 +300,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     public function testGetSourceReturnsNullWhenSourceFileNotExists(): void
     {
         $file = new ASTCompilationUnit(null);
-        $this->assertNull($file->getSource());
+        static::assertNull($file->getSource());
     }
 
     /**
@@ -313,7 +313,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
         $actual = $file->getSource();
         $expected = file_get_contents($this->createCodeResourceUriForTest());
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     private function getEndLineOfThisFile()

@@ -60,7 +60,6 @@ class ASTClass extends AbstractASTClassOrInterface
      */
     private array $properties;
 
-
     /**
      * The magic wakeup method will be called by PHP's runtime environment when
      * a serialized instance of this class was unserialized. This implementation
@@ -153,7 +152,8 @@ class ASTClass extends AbstractASTClassOrInterface
     {
         if ($type === $this) {
             return true;
-        } elseif ($type instanceof ASTInterface) {
+        }
+        if ($type instanceof ASTInterface) {
             foreach ($this->getInterfaces() as $interface) {
                 if ($interface === $type) {
                     return true;
@@ -163,8 +163,10 @@ class ASTClass extends AbstractASTClassOrInterface
             if ($parent === $type) {
                 return true;
             }
+
             return $parent->isSubtypeOf($type);
         }
+
         return false;
     }
 
