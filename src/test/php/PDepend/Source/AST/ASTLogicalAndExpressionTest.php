@@ -46,8 +46,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTLogicalAndExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTLogicalAndExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.8
@@ -62,7 +62,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
     public function testLogicalAndExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -71,7 +71,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
     public function testLogicalAndExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(18, $expr->getStartColumn());
+        static::assertEquals(18, $expr->getStartColumn());
     }
 
     /**
@@ -80,7 +80,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
     public function testLogicalAndExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getEndLine());
+        static::assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
     public function testLogicalAndExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
-        $this->assertEquals(20, $expr->getEndColumn());
+        static::assertEquals(20, $expr->getEndColumn());
     }
 
     /**

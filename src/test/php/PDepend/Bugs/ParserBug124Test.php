@@ -83,6 +83,6 @@ class ParserBug124Test extends AbstractRegressionTestCase
             Tokens::T_SEMICOLON,
         ];
 
-        $this->assertEquals($tokenTypes, $actual);
+        static::assertEquals($tokenTypes, $actual);
     }
 }

@@ -68,9 +68,7 @@ class XmlTest extends AbstractTestCase
      */
     protected ASTArtifactList $namespaces;
 
-    /**
-     * The temporary file name for the logger result.
-     */
+    /** The temporary file name for the logger result. */
     protected string $resultFile;
 
     /**
@@ -104,7 +102,7 @@ class XmlTest extends AbstractTestCase
             'pdepend.analyzer.class_dependency',
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -135,7 +133,7 @@ class XmlTest extends AbstractTestCase
         $logger = new Xml();
         $actual = $logger->log($analyzer);
 
-        $this->assertFalse($actual);
+        static::assertFalse($actual);
     }
 
     /**
@@ -149,7 +147,7 @@ class XmlTest extends AbstractTestCase
         $logger = new Xml();
         $actual = $logger->log($analyzer);
 
-        $this->assertTrue($actual);
+        static::assertTrue($actual);
     }
 
     /**
@@ -167,7 +165,7 @@ class XmlTest extends AbstractTestCase
         $log->close();
 
         $fileName = 'xml-log-without-metrics.xml';
-        $this->assertXmlStringEqualsXmlString(
+        static::assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(__DIR__ . "/_expected/{$fileName}"),
             $this->getNormalizedPathXml($this->resultFile)
         );
@@ -185,24 +183,24 @@ class XmlTest extends AbstractTestCase
             ->disableOriginalConstructor()
             ->getMock();
         $type
-            ->expects($this->any())
+            ->expects(static::any())
             ->method('getName')
-            ->will($this->returnValue('class'));
+            ->will(static::returnValue('class'));
         $type
-            ->expects($this->any())
+            ->expects(static::any())
             ->method('getNamespaceName')
-            ->will($this->returnValue('namespace'));
+            ->will(static::returnValue('namespace'));
 
         $analyzer = $this->getMockBuilder(ClassDependencyAnalyzer::class)
             ->getMock();
         $analyzer
-            ->expects($this->any())
+            ->expects(static::any())
             ->method('getEfferents')
-            ->will($this->returnValue([$type]));
+            ->will(static::returnValue([$type]));
         $analyzer
-            ->expects($this->any())
+            ->expects(static::any())
             ->method('getAfferents')
-            ->will($this->returnValue([$type, $type]));
+            ->will(static::returnValue([$type, $type]));
 
         $log = new Xml();
         $log->log($analyzer);
@@ -211,7 +209,7 @@ class XmlTest extends AbstractTestCase
         $log->close();
 
         $fileName = 'xml-log-with-metrics.xml';
-        $this->assertXmlStringEqualsXmlString(
+        static::assertXmlStringEqualsXmlString(
             $this->getNormalizedPathXml(__DIR__ . "/_expected/{$fileName}"),
             $this->getNormalizedPathXml($this->resultFile)
         );

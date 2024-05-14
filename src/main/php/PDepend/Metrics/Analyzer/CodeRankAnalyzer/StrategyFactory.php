@@ -52,19 +52,13 @@ use InvalidArgumentException;
  */
 class StrategyFactory
 {
-    /**
-     * The identifier for the inheritance strategy.
-     */
+    /** The identifier for the inheritance strategy. */
     private const STRATEGY_INHERITANCE = 'inheritance';
 
-    /**
-     * The identifier for the property strategy.
-     */
+    /** The identifier for the property strategy. */
     private const STRATEGY_PROPERTY = 'property';
 
-    /**
-     * The identifier for the method strategy.
-     */
+    /** The identifier for the method strategy. */
     private const STRATEGY_METHOD = 'method';
 
     /**

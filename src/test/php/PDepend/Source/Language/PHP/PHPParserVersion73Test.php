@@ -72,17 +72,19 @@ class PHPParserVersion73Test extends AbstractTestCase
         $arrayElements = $heredoc->getChildren();
         $children = $arrayElements[0]->getChildren();
         $children = $children[0]->getChildren();
+
         /** @var ASTLiteral $literal */
         $literal = $children[0];
 
-        $this->assertSame('foobar!', $literal->getImage());
+        static::assertSame('foobar!', $literal->getImage());
 
         $children = $arrayElements[1]->getChildren();
         $children = $children[0]->getChildren();
+
         /** @var ASTLiteral $literal */
         $literal = $children[0];
 
-        $this->assertSame('second,', $literal->getImage());
+        static::assertSame('second,', $literal->getImage());
     }
 
     public function testDestructuringArrayReference(): void
@@ -92,36 +94,42 @@ class PHPParserVersion73Test extends AbstractTestCase
         $assignments = $statements[1]->getChildren();
         $listElements = $assignments[0]->getChildren();
         $children = $listElements[0]->getChildren();
+
         /** @var ASTArrayElement $aElement */
         $aElement = $children[0];
         $arrayElement = $children[1];
         $children = $arrayElement->getChildren();
         $subElements = $children[0]->getChildren();
+
         /** @var ASTArrayElement $bElement */
         $bElement = $subElements[0];
+
         /** @var ASTArrayElement $cElement */
         $cElement = $subElements[1];
 
         $aElements = $aElement->getChildren();
+
         /** @var ASTVariable $aVariable */
         $aVariable = $aElements[0];
 
         $bElements = $bElement->getChildren();
+
         /** @var ASTVariable $bVariable */
         $bVariable = $bElements[0];
 
         $cElements = $cElement->getChildren();
+
         /** @var ASTVariable $cVariable */
         $cVariable = $cElements[0];
 
-        $this->assertTrue($aElement->isByReference());
-        $this->assertSame('$a', $aVariable->getImage());
+        static::assertTrue($aElement->isByReference());
+        static::assertSame('$a', $aVariable->getImage());
 
-        $this->assertFalse($bElement->isByReference());
-        $this->assertSame('$b', $bVariable->getImage());
+        static::assertFalse($bElement->isByReference());
+        static::assertSame('$b', $bVariable->getImage());
 
-        $this->assertTrue($cElement->isByReference());
-        $this->assertSame('$c', $cVariable->getImage());
+        static::assertTrue($cElement->isByReference());
+        static::assertSame('$c', $cVariable->getImage());
     }
 
     public function testInstanceOfLiterals(): void
@@ -130,52 +138,58 @@ class PHPParserVersion73Test extends AbstractTestCase
         $statements = $functionChildren[1]->getChildren();
         $expressions = $statements[0]->getChildren();
         $expression = $expressions[0]->getChildren();
+
         /** @var ASTLiteral $instanceOf */
         $literal = $expression[0];
+
         /** @var ASTInstanceOfExpression $instanceOf */
         $instanceOf = $expression[1];
+
         /** @var ASTClassOrInterfaceReference[] $variables */
         $variables = $instanceOf->getChildren();
 
-        $this->assertCount(2, $expression);
-        $this->assertInstanceOf(ASTLiteral::class, $literal);
-        $this->assertSame('false', $literal->getImage());
-        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $variables[0]);
-        $this->assertSame('DateTimeInterface', $variables[0]->getImage());
+        static::assertCount(2, $expression);
+        static::assertInstanceOf(ASTLiteral::class, $literal);
+        static::assertSame('false', $literal->getImage());
+        static::assertInstanceOf(ASTClassOrInterfaceReference::class, $variables[0]);
+        static::assertSame('DateTimeInterface', $variables[0]->getImage());
     }
 
     public function testTrailingCommasInCall(): void
     {
         $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
         $statements = $functionChildren[1]->getChildren();
+
         /** @var ASTFunctionPostfix[] $calls */
         $calls = $statements[0]->getChildren();
 
-        $this->assertCount(1, $calls);
-        $this->assertInstanceOf(ASTFunctionPostfix::class, $calls[0]);
+        static::assertCount(1, $calls);
+        static::assertInstanceOf(ASTFunctionPostfix::class, $calls[0]);
 
         $children = $calls[0]->getChildren();
+
         /** @var ASTArguments $arguments */
         $arguments = $children[1];
 
-        $this->assertInstanceOf(ASTArguments::class, $arguments);
+        static::assertInstanceOf(ASTArguments::class, $arguments);
 
         $arguments = $arguments->getChildren();
 
-        $this->assertCount(1, $arguments);
-        $this->assertInstanceOf(ASTVariable::class, $arguments[0]);
-        $this->assertSame('$i', $arguments[0]->getImage());
+        static::assertCount(1, $arguments);
+        static::assertInstanceOf(ASTVariable::class, $arguments[0]);
+        static::assertSame('$i', $arguments[0]->getImage());
     }
 
     public function testTrailingCommasInUnsetCall(): void
     {
         $functionChildren = $this->getFirstFunctionForTestCase()->getChildren();
         $statements = $functionChildren[1]->getChildren();
+
         /** @var ASTFunctionPostfix[] $calls */
         $calls = $statements[0]->getChildren();
 
-        $this->assertCount(1, $calls);
-        $this->assertSame('$i', $calls[0]->getImage());
+        static::assertCount(1, $calls);
+        static::assertSame('$i', $calls[0]->getImage());
     }
 
     /**

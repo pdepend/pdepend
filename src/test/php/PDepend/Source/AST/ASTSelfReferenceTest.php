@@ -50,8 +50,8 @@ use PDepend\Source\Parser\InvalidStateException;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTSelfReference} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTSelfReference
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -72,7 +72,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
             ->getMock();
 
         $reference = new ASTSelfReference($context, $target);
-        $this->assertSame($target, $reference->getType());
+        static::assertSame($target, $reference->getType());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
 
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
-        $builder->expects($this->once())
+        $builder->expects(static::once())
             ->method('getClassOrInterface');
 
         $context = new GlobalBuilderContext($builder);
@@ -123,7 +123,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     public function testMagicSelfReturnsExpectedSetOfPropertyNames(): void
     {
         $reference = $this->createNodeInstance();
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'qualifiedName',
                 'context',
@@ -143,7 +143,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     public function testGetImageReturnsExpectedValue(): void
     {
         $reference = $this->createNodeInstance();
-        $this->assertEquals('self', $reference->getImage());
+        static::assertEquals('self', $reference->getImage());
     }
 
     /**
@@ -155,7 +155,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     public function testSelfReference()
     {
         $reference = $this->getFirstSelfReferenceInClass();
-        $this->assertInstanceOf(ASTSelfReference::class, $reference);
+        static::assertInstanceOf(ASTSelfReference::class, $reference);
 
         return $reference;
     }
@@ -169,7 +169,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     public function testSelfReferenceHasExpectedStartLine($reference): void
     {
-        $this->assertEquals(5, $reference->getStartLine());
+        static::assertEquals(5, $reference->getStartLine());
     }
 
     /**
@@ -181,7 +181,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     public function testSelfReferenceHasExpectedStartColumn($reference): void
     {
-        $this->assertEquals(13, $reference->getStartColumn());
+        static::assertEquals(13, $reference->getStartColumn());
     }
 
     /**
@@ -193,7 +193,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     public function testSelfReferenceHasExpectedEndLine($reference): void
     {
-        $this->assertEquals(5, $reference->getEndLine());
+        static::assertEquals(5, $reference->getEndLine());
     }
 
     /**
@@ -205,7 +205,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     public function testSelfReferenceHasExpectedEndColumn($reference): void
     {
-        $this->assertEquals(16, $reference->getEndColumn($reference));
+        static::assertEquals(16, $reference->getEndColumn($reference));
     }
 
     /**

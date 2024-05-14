@@ -61,14 +61,14 @@ class CouplingAnalyzerBug014Test extends AbstractRegressionTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        $this->assertEquals(1, $namespaces->count());
-        $this->assertEquals(1, $namespaces->current()->getFunctions()->count());
+        static::assertEquals(1, $namespaces->count());
+        static::assertEquals(1, $namespaces->current()->getFunctions()->count());
 
         $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
 
-        $this->assertEquals(3, $project['calls']);
+        static::assertEquals(3, $project['calls']);
     }
 }

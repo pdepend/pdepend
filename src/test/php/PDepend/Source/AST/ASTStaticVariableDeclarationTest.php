@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStaticVariableDeclaration} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTStaticVariableDeclaration
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     public function testStaticVariableDeclaration()
     {
         $declaration = $this->getFirstStaticVariableDeclarationInFunction();
-        $this->assertInstanceOf(ASTStaticVariableDeclaration::class, $declaration);
+        static::assertInstanceOf(ASTStaticVariableDeclaration::class, $declaration);
 
         return $declaration;
     }
@@ -77,7 +77,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
      */
     public function testStaticVariableDeclarationHasExpectedStartLine($declaration): void
     {
-        $this->assertSame(4, $declaration->getStartLine());
+        static::assertSame(4, $declaration->getStartLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
      */
     public function testStaticVariableDeclarationHasExpectedStartColumn($declaration): void
     {
-        $this->assertSame(5, $declaration->getStartColumn());
+        static::assertSame(5, $declaration->getStartColumn());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
      */
     public function testStaticVariableDeclarationHasExpectedEndLine($declaration): void
     {
-        $this->assertSame(5, $declaration->getEndLine());
+        static::assertSame(5, $declaration->getEndLine());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
      */
     public function testStaticVariableDeclarationHasExpectedEndColumn($declaration): void
     {
-        $this->assertSame(23, $declaration->getEndColumn());
+        static::assertSame(23, $declaration->getEndColumn());
     }
 
     /**

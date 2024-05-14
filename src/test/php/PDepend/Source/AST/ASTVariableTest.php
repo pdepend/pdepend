@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTVariable} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTVariable
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTVariableTest extends ASTNodeTestCase
     public function testIsThisReturnsTrueForThisImageName(): void
     {
         $variable = new ASTVariable('$this');
-        $this->assertTrue($variable->isThis());
+        static::assertTrue($variable->isThis());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTVariableTest extends ASTNodeTestCase
     public function testIsThisReturnsFalseForThisImageButDifferentCase(): void
     {
         $variable = new ASTVariable('$This');
-        $this->assertFalse($variable->isThis());
+        static::assertFalse($variable->isThis());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTVariableTest extends ASTNodeTestCase
     public function testIsThisReturnsFalseForDifferentImage(): void
     {
         $variable = new ASTVariable('$foo');
-        $this->assertFalse($variable->isThis());
+        static::assertFalse($variable->isThis());
     }
 
     /**
@@ -98,7 +98,7 @@ class ASTVariableTest extends ASTNodeTestCase
     public function testVariable()
     {
         $variable = $this->getFirstVariableInClass();
-        $this->assertInstanceOf(ASTVariable::class, $variable);
+        static::assertInstanceOf(ASTVariable::class, $variable);
 
         return $variable;
     }
@@ -112,7 +112,7 @@ class ASTVariableTest extends ASTNodeTestCase
      */
     public function testVariableHasExpectedStartLine($variable): void
     {
-        $this->assertEquals(6, $variable->getStartLine());
+        static::assertEquals(6, $variable->getStartLine());
     }
 
     /**
@@ -124,7 +124,7 @@ class ASTVariableTest extends ASTNodeTestCase
      */
     public function testVariableHasExpectedStartColumn($variable): void
     {
-        $this->assertEquals(9, $variable->getStartColumn());
+        static::assertEquals(9, $variable->getStartColumn());
     }
 
     /**
@@ -136,7 +136,7 @@ class ASTVariableTest extends ASTNodeTestCase
      */
     public function testVariableHasExpectedEndLine($variable): void
     {
-        $this->assertEquals(6, $variable->getEndLine());
+        static::assertEquals(6, $variable->getEndLine());
     }
 
     /**
@@ -148,7 +148,7 @@ class ASTVariableTest extends ASTNodeTestCase
      */
     public function testVariableHasExpectedEndColumn($variable): void
     {
-        $this->assertEquals(10, $variable->getEndColumn());
+        static::assertEquals(10, $variable->getEndColumn());
     }
 
     /**

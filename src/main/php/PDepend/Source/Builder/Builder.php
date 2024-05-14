@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\Builder;
 
@@ -168,9 +168,7 @@ use PDepend\Util\Cache\CacheDriver;
  */
 interface Builder extends IteratorAggregate
 {
-    /**
-     * The default package name.
-     */
+    /** The default package name. */
     public const DEFAULT_NAMESPACE = '+global';
 
     /**

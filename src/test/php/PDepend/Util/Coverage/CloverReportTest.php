@@ -65,7 +65,7 @@ class CloverReportTest extends AbstractTestCase
         $report = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(0, $coverage);
+        static::assertEquals(0, $coverage);
     }
 
     /**
@@ -76,7 +76,7 @@ class CloverReportTest extends AbstractTestCase
         $report = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(50, $coverage);
+        static::assertEquals(50, $coverage);
     }
 
     /**
@@ -87,7 +87,7 @@ class CloverReportTest extends AbstractTestCase
         $report = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(100, $coverage);
+        static::assertEquals(100, $coverage);
     }
 
     /**
@@ -98,7 +98,7 @@ class CloverReportTest extends AbstractTestCase
         $report = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(100, $coverage);
+        static::assertEquals(100, $coverage);
     }
 
     /**
@@ -109,7 +109,7 @@ class CloverReportTest extends AbstractTestCase
         $report = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(0, $coverage);
+        static::assertEquals(0, $coverage);
     }
 
     /**
@@ -120,7 +120,7 @@ class CloverReportTest extends AbstractTestCase
         $report = $this->createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(0, $coverage);
+        static::assertEquals(0, $coverage);
     }
 
     /**
@@ -131,7 +131,7 @@ class CloverReportTest extends AbstractTestCase
         $report = $this->createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(50, $coverage);
+        static::assertEquals(50, $coverage);
     }
 
     /**
@@ -142,7 +142,7 @@ class CloverReportTest extends AbstractTestCase
         $report = $this->createNamespacedCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(100, $coverage);
+        static::assertEquals(100, $coverage);
     }
 
     /**
@@ -153,7 +153,7 @@ class CloverReportTest extends AbstractTestCase
         $report = $this->createCloverReport();
         $coverage = $report->getCoverage($this->createMethodMock(__FUNCTION__));
 
-        $this->assertEquals(0, $coverage);
+        static::assertEquals(0, $coverage);
     }
 
     /**
@@ -164,6 +164,7 @@ class CloverReportTest extends AbstractTestCase
     private function createCloverReport()
     {
         $sxml = simplexml_load_file(__DIR__ . '/_files/clover.xml');
+
         return new CloverReport($sxml);
     }
 
@@ -175,6 +176,7 @@ class CloverReportTest extends AbstractTestCase
     private function createNamespacedCloverReport()
     {
         $sxml = simplexml_load_file(__DIR__ . '/_files/clover-namespaced.xml');
+
         return new CloverReport($sxml);
     }
 
@@ -191,22 +193,22 @@ class CloverReportTest extends AbstractTestCase
         $file = $this->getMockBuilder(ASTCompilationUnit::class)
             ->setConstructorArgs([null])
             ->getMock();
-        $file->expects($this->any())
+        $file->expects(static::any())
             ->method('getFileName')
-            ->will($this->returnValue('/' . $name . '.php'));
+            ->will(static::returnValue('/' . $name . '.php'));
 
         $method = $this->getMockBuilder(ASTMethod::class)
             ->setConstructorArgs([$name])
             ->getMock();
-        $method->expects($this->once())
+        $method->expects(static::once())
             ->method('getCompilationUnit')
-            ->will($this->returnValue($file));
-        $method->expects($this->once())
+            ->will(static::returnValue($file));
+        $method->expects(static::once())
             ->method('getStartLine')
-            ->will($this->returnValue($startLine));
-        $method->expects($this->once())
+            ->will(static::returnValue($startLine));
+        $method->expects(static::once())
             ->method('getEndLine')
-            ->will($this->returnValue($endLine));
+            ->will(static::returnValue($endLine));
 
         return $method;
     }

@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTThrowStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTThrowStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ASTThrowStatementTest extends ASTNodeTestCase
     public function testThrowStatement()
     {
         $stmt = $this->getFirstThrowStatementInFunction();
-        $this->assertInstanceOf(ASTThrowStatement::class, $stmt);
+        static::assertInstanceOf(ASTThrowStatement::class, $stmt);
 
         return $stmt;
     }
@@ -77,7 +77,7 @@ class ASTThrowStatementTest extends ASTNodeTestCase
      */
     public function testThrowStatementHasExpectedStartLine($stmt): void
     {
-        $this->assertSame(4, $stmt->getStartLine());
+        static::assertSame(4, $stmt->getStartLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTThrowStatementTest extends ASTNodeTestCase
      */
     public function testThrowStatementHasExpectedStartColumn($stmt): void
     {
-        $this->assertSame(5, $stmt->getStartColumn());
+        static::assertSame(5, $stmt->getStartColumn());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTThrowStatementTest extends ASTNodeTestCase
      */
     public function testThrowStatementHasExpectedEndLine($stmt): void
     {
-        $this->assertSame(5, $stmt->getEndLine());
+        static::assertSame(5, $stmt->getEndLine());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTThrowStatementTest extends ASTNodeTestCase
      */
     public function testThrowStatementHasExpectedEndColumn($stmt): void
     {
-        $this->assertSame(38, $stmt->getEndColumn());
+        static::assertSame(38, $stmt->getEndColumn());
     }
 
     /**

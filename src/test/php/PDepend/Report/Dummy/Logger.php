@@ -55,9 +55,7 @@ use PDepend\Source\AST\ASTArtifactList;
  */
 class Logger implements CodeAwareGenerator, FileAwareGenerator
 {
-    /**
-     * The output file name.
-     */
+    /** The output file name. */
     private string $logFile;
 
     /**
@@ -121,6 +119,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
     public function log(Analyzer $analyzer)
     {
         $this->input['analyzers'][] = $analyzer;
+
         return true;
     }
 

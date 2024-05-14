@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTUnsetStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTUnsetStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     public function testUnsetStatement()
     {
         $stmt = $this->getFirstUnsetStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTUnsetStatement::class, $stmt);
+        static::assertInstanceOf(ASTUnsetStatement::class, $stmt);
 
         return $stmt;
     }
@@ -77,7 +77,7 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
      */
     public function testUnsetStatementHasExpectedStartLine($stmt): void
     {
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
      */
     public function testUnsetStatementHasExpectedStartColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
      */
     public function testUnsetStatementHasExpectedEndLine($stmt): void
     {
-        $this->assertEquals(6, $stmt->getEndLine());
+        static::assertEquals(6, $stmt->getEndLine());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
      */
     public function testUnsetStatementHasExpectedEndColumn($stmt): void
     {
-        $this->assertEquals(22, $stmt->getEndColumn());
+        static::assertEquals(22, $stmt->getEndColumn());
     }
 
     /**

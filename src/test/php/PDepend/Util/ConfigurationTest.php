@@ -69,7 +69,7 @@ class ConfigurationTest extends AbstractTestCase
 
         $configuration = new Configuration($settings);
 
-        $this->assertEquals(42, $configuration->foo);
+        static::assertEquals(42, $configuration->foo);
     }
 
     /**
@@ -107,7 +107,7 @@ class ConfigurationTest extends AbstractTestCase
 
         $configuration = new Configuration($settings);
 
-        $this->assertTrue(isset($configuration->foo));
+        static::assertTrue(isset($configuration->foo));
     }
 
     /**
@@ -120,6 +120,6 @@ class ConfigurationTest extends AbstractTestCase
 
         $configuration = new Configuration($settings);
 
-        $this->assertFalse(isset($configuration->bar));
+        static::assertFalse(isset($configuration->bar));
     }
 }

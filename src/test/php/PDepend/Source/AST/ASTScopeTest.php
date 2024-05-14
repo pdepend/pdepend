@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTScope} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTScope
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ASTScopeTest extends ASTNodeTestCase
     public function testScope()
     {
         $scope = $this->getFirstScopeInFunction();
-        $this->assertInstanceOf(ASTScope::class, $scope);
+        static::assertInstanceOf(ASTScope::class, $scope);
 
         return $scope;
     }
@@ -77,7 +77,7 @@ class ASTScopeTest extends ASTNodeTestCase
      */
     public function testScopeHasExpectedStartLine($scope): void
     {
-        $this->assertEquals(3, $scope->getStartLine());
+        static::assertEquals(3, $scope->getStartLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTScopeTest extends ASTNodeTestCase
      */
     public function testScopeHasExpectedStartColumn($scope): void
     {
-        $this->assertEquals(1, $scope->getStartColumn());
+        static::assertEquals(1, $scope->getStartColumn());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTScopeTest extends ASTNodeTestCase
      */
     public function testScopeHasExpectedEndLine($scope): void
     {
-        $this->assertEquals(8, $scope->getEndLine());
+        static::assertEquals(8, $scope->getEndLine());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTScopeTest extends ASTNodeTestCase
      */
     public function testScopeHasExpectedEndColumn($scope): void
     {
-        $this->assertEquals(1, $scope->getEndColumn());
+        static::assertEquals(1, $scope->getEndColumn());
     }
 
     /**

@@ -65,7 +65,7 @@ class ParserBug008Test extends AbstractRegressionTestCase
         $classes = $namespace->getClasses();
         $methods = $classes[0]->getMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             ['classes' => 1, 'methods' => 1],
             ['classes' => count($classes), 'methods' => count($methods)]
         );

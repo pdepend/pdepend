@@ -71,9 +71,7 @@ use PDepend\Source\AST\ASTNamespace;
  */
 class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware, AnalyzerProjectAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     private const
         M_NUMBER_OF_ABSTRACT_CLASSES = 'clsa',
         M_NUMBER_OF_CONCRETE_CLASSES = 'clsc',
@@ -201,6 +199,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
+
         return [];
     }
 

@@ -59,9 +59,7 @@ use Random\RandomException;
  */
 class MemoryCacheDriver implements CacheDriver
 {
-    /**
-     * Default cache entry type.
-     */
+    /** Default cache entry type. */
     private const ENTRY_TYPE = 'cache';
 
     /**
@@ -78,9 +76,7 @@ class MemoryCacheDriver implements CacheDriver
      */
     protected $type = self::ENTRY_TYPE;
 
-    /**
-     * Unique identifier within the same cache instance.
-     */
+    /** Unique identifier within the same cache instance. */
     protected string $staticId;
 
     /**
@@ -137,6 +133,7 @@ class MemoryCacheDriver implements CacheDriver
     public function type($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -172,6 +169,7 @@ class MemoryCacheDriver implements CacheDriver
         if (isset($this->cache[$cacheKey]) && $this->cache[$cacheKey][0] === $hash) {
             return $this->cache[$cacheKey][1];
         }
+
         return null;
     }
 

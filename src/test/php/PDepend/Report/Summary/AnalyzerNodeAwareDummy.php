@@ -118,6 +118,7 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
+
         return [];
     }
 

@@ -57,16 +57,16 @@ class Utf8UtilTest extends AbstractTestCase
 {
     public function testEnsureEncoding(): void
     {
-        self::assertSame('🚀', Utf8Util::ensureEncoding('🚀'));
-        self::assertSame('', Utf8Util::ensureEncoding(''));
-        self::assertSame(
+        static::assertSame('🚀', Utf8Util::ensureEncoding('🚀'));
+        static::assertSame('', Utf8Util::ensureEncoding(''));
+        static::assertSame(
             'Été für baño',
-            Utf8Util::ensureEncoding(base64_decode('w4l0w6kgZsO8ciBiYcOxbw==')),
+            Utf8Util::ensureEncoding(base64_decode('w4l0w6kgZsO8ciBiYcOxbw==', true)),
             'Éüñ UTF-8 should stay Éüñ UTF-8'
         );
-        self::assertSame(
+        static::assertSame(
             'Été für baño',
-            Utf8Util::ensureEncoding(base64_decode('yXTpIGb8ciBiYfFv')),
+            Utf8Util::ensureEncoding(base64_decode('yXTpIGb8ciBiYfFv', true)),
             'Éüñ ISO-8859-1 should become Éüñ UTF-8'
         );
     }

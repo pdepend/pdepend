@@ -63,177 +63,184 @@ class ThrowExpressionTest extends PHPParserVersion80TestCase
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTReturnStatement[] $returns */
         $returns = $method->findChildrenOfType(ASTReturnStatement::class);
 
         $expression = $returns[0]->getChild(0);
-        $this->assertInstanceOf(ASTExpression::class, $expression);
+        static::assertInstanceOf(ASTExpression::class, $expression);
 
         $value = $expression->getChild(0);
-        $this->assertInstanceOf(ASTVariable::class, $value);
-        $this->assertSame('$value', $value->getImage());
+        static::assertInstanceOf(ASTVariable::class, $value);
+        static::assertSame('$value', $value->getImage());
 
         $throw = $expression->getChild(2);
-        $this->assertInstanceOf(ASTThrowStatement::class, $throw);
+        static::assertInstanceOf(ASTThrowStatement::class, $throw);
 
         $exceptionClass = $throw->findChildrenOfType(ASTClassReference::class);
-        $this->assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
+        static::assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
 
         $exceptionMessage = $throw->findChildrenOfType(ASTLiteral::class);
-        $this->assertSame('\'should not be null\'', $exceptionMessage[0]->getImage());
+        static::assertSame('\'should not be null\'', $exceptionMessage[0]->getImage());
     }
 
     public function testShorthandTernaryOperator(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTReturnStatement[] $returns */
         $returns = $method->findChildrenOfType(ASTReturnStatement::class);
 
         $expression = $returns[0]->getChild(0);
-        $this->assertInstanceOf(ASTExpression::class, $expression);
+        static::assertInstanceOf(ASTExpression::class, $expression);
 
         $value = $expression->getChild(0);
-        $this->assertInstanceOf(ASTVariable::class, $value);
-        $this->assertSame('$value', $value->getImage());
+        static::assertInstanceOf(ASTVariable::class, $value);
+        static::assertSame('$value', $value->getImage());
 
         $ternary = $expression->getChild(1);
         $throw = $ternary->getChild(0);
-        $this->assertInstanceOf(ASTThrowStatement::class, $throw);
+        static::assertInstanceOf(ASTThrowStatement::class, $throw);
 
         $exceptionClass = $throw->findChildrenOfType(ASTClassReference::class);
-        $this->assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
+        static::assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
 
         $exceptionMessage = $throw->findChildrenOfType(ASTLiteral::class);
-        $this->assertSame('\'should not be empty\'', $exceptionMessage[0]->getImage());
+        static::assertSame('\'should not be empty\'', $exceptionMessage[0]->getImage());
     }
 
     public function testTernaryOperator(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTReturnStatement[] $returns */
         $returns = $method->findChildrenOfType(ASTReturnStatement::class);
 
         $expression = $returns[0]->getChild(0);
-        $this->assertInstanceOf(ASTExpression::class, $expression);
+        static::assertInstanceOf(ASTExpression::class, $expression);
 
         $value = $expression->getChild(0);
-        $this->assertInstanceOf(ASTVariable::class, $value);
-        $this->assertSame('$value', $value->getImage());
+        static::assertInstanceOf(ASTVariable::class, $value);
+        static::assertSame('$value', $value->getImage());
 
         $ternary = $expression->getChild(1);
 
         $throw = $ternary->getChild(0);
-        $this->assertInstanceOf(ASTThrowStatement::class, $throw);
+        static::assertInstanceOf(ASTThrowStatement::class, $throw);
 
         $exceptionClass = $throw->findChildrenOfType(ASTClassReference::class);
-        $this->assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
+        static::assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
 
         $exceptionMessage = $throw->findChildrenOfType(ASTLiteral::class);
-        $this->assertSame('\'should be empty\'', $exceptionMessage[0]->getImage());
+        static::assertSame('\'should be empty\'', $exceptionMessage[0]->getImage());
 
         $elseValue = $ternary->getChild(1);
-        $this->assertInstanceOf(ASTVariable::class, $elseValue);
-        $this->assertSame('$value', $elseValue->getImage());
+        static::assertInstanceOf(ASTVariable::class, $elseValue);
+        static::assertSame('$value', $elseValue->getImage());
     }
 
     public function testThrowFromArrowFunction(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTReturnStatement[] $returns */
         $returns = $method->findChildrenOfType(ASTReturnStatement::class);
 
         $closure = $returns[0]->getChild(0);
-        $this->assertInstanceOf(ASTClosure::class, $closure);
+        static::assertInstanceOf(ASTClosure::class, $closure);
 
         $throw = $closure->getChild(1)->getChild(0);
-        $this->assertInstanceOf(ASTThrowStatement::class, $throw);
+        static::assertInstanceOf(ASTThrowStatement::class, $throw);
 
         $exceptionClass = $throw->findChildrenOfType(ASTClassReference::class);
-        $this->assertSame('\\BadMethodCallException', $exceptionClass[0]->getImage());
+        static::assertSame('\\BadMethodCallException', $exceptionClass[0]->getImage());
 
         $exceptionMessage = $throw->findChildrenOfType(ASTLiteral::class);
-        $this->assertSame('\'not implemented\'', $exceptionMessage[0]->getImage());
+        static::assertSame('\'not implemented\'', $exceptionMessage[0]->getImage());
     }
 
     public function testThrowFromArrowFunctionAsParameter(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTReturnStatement[] $returns */
         $returns = $method->findChildrenOfType(ASTReturnStatement::class);
 
         $expression = $returns[0]->getChild(0);
-        $this->assertInstanceOf(ASTExpression::class, $expression);
+        static::assertInstanceOf(ASTExpression::class, $expression);
 
         $value = $expression->getChild(0);
-        $this->assertInstanceOf(ASTVariable::class, $value);
-        $this->assertSame('$value', $value->getImage());
+        static::assertInstanceOf(ASTVariable::class, $value);
+        static::assertSame('$value', $value->getImage());
 
         $throw = $expression->getChild(2);
-        $this->assertInstanceOf(ASTThrowStatement::class, $throw);
+        static::assertInstanceOf(ASTThrowStatement::class, $throw);
 
         $exceptionClass = $throw->findChildrenOfType(ASTClassReference::class);
-        $this->assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
+        static::assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
 
         $exceptionMessage = $throw->findChildrenOfType(ASTLiteral::class);
-        $this->assertSame('\'should not be null\'', $exceptionMessage[0]->getImage());
+        static::assertSame('\'should not be null\'', $exceptionMessage[0]->getImage());
 
         $expression = $returns[1]->getChild(0);
-        $this->assertInstanceOf(ASTExpression::class, $expression);
+        static::assertInstanceOf(ASTExpression::class, $expression);
 
         $value = $expression->getChild(0);
-        $this->assertInstanceOf(ASTVariable::class, $value);
-        $this->assertSame('$value', $value->getImage());
+        static::assertInstanceOf(ASTVariable::class, $value);
+        static::assertSame('$value', $value->getImage());
 
         $throw = $expression->getChild(1)->getChild(0);
-        $this->assertInstanceOf(ASTThrowStatement::class, $throw);
+        static::assertInstanceOf(ASTThrowStatement::class, $throw);
 
         $exceptionClass = $throw->findChildrenOfType(ASTClassReference::class);
-        $this->assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
+        static::assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
 
         $exceptionMessage = $throw->findChildrenOfType(ASTLiteral::class);
-        $this->assertSame('\'should not be empty\'', $exceptionMessage[0]->getImage());
+        static::assertSame('\'should not be empty\'', $exceptionMessage[0]->getImage());
 
         $expression = $returns[2]->getChild(0);
-        $this->assertInstanceOf(ASTExpression::class, $expression);
+        static::assertInstanceOf(ASTExpression::class, $expression);
 
         $value = $expression->getChild(0);
-        $this->assertInstanceOf(ASTVariable::class, $value);
-        $this->assertSame('$value', $value->getImage());
+        static::assertInstanceOf(ASTVariable::class, $value);
+        static::assertSame('$value', $value->getImage());
 
         $throw = $expression->getChild(2);
-        $this->assertInstanceOf(ASTThrowStatement::class, $throw);
+        static::assertInstanceOf(ASTThrowStatement::class, $throw);
 
         $exceptionClass = $throw->findChildrenOfType(ASTClassReference::class);
-        $this->assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
+        static::assertSame('\\InvalidArgumentException', $exceptionClass[0]->getImage());
 
-        $this->assertEmpty($throw->findChildrenOfType(ASTLiteral::class));
+        static::assertEmpty($throw->findChildrenOfType(ASTLiteral::class));
 
         $methods = $this->getFirstTypeForTestCase()
             ->getMethods();
+
         /** @var ASTMethod $arrayAccessMethod */
         $arrayAccessMethod = $methods[2];
+
         /** @var ASTReturnStatement $return */
         $return = $arrayAccessMethod->getFirstChildOfType(ASTReturnStatement::class);
         $value = $return->getChild(0);
-        $this->assertInstanceOf(ASTArrayIndexExpression::class, $value);
+        static::assertInstanceOf(ASTArrayIndexExpression::class, $value);
 
         $children = $value->getChildren();
 
-        $this->assertCount(2, $children);
-        $this->assertInstanceOf(ASTVariable::class, $children[0]);
-        $this->assertSame('$a', $children[0]->getImage());
-        $this->assertInstanceOf(ASTExpression::class, $children[1]);
+        static::assertCount(2, $children);
+        static::assertInstanceOf(ASTVariable::class, $children[0]);
+        static::assertSame('$a', $children[0]->getImage());
+        static::assertInstanceOf(ASTExpression::class, $children[1]);
 
         $children = $children[1]->getChildren();
-        $this->assertCount(3, $children);
-        $this->assertInstanceOf(ASTVariable::class, $children[0]);
-        $this->assertSame('$value', $children[0]->getImage());
-        $this->assertInstanceOf(ASTExpression::class, $children[1]);
-        $this->assertSame('??', $children[1]->getImage());
-        $this->assertInstanceOf(ASTThrowStatement::class, $children[2]);
+        static::assertCount(3, $children);
+        static::assertInstanceOf(ASTVariable::class, $children[0]);
+        static::assertSame('$value', $children[0]->getImage());
+        static::assertInstanceOf(ASTExpression::class, $children[1]);
+        static::assertSame('??', $children[1]->getImage());
+        static::assertInstanceOf(ASTThrowStatement::class, $children[2]);
     }
 }

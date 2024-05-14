@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTVariableDeclarator} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTVariableDeclarator
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     public function testGetValueReturnsNullByDefault(): void
     {
         $declarator = new ASTVariableDeclarator();
-        $this->assertNull($declarator->getValue());
+        static::assertNull($declarator->getValue());
     }
 
     /**
@@ -71,7 +71,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
         $declarator = new ASTVariableDeclarator();
         $declarator->setValue(new ASTValue());
 
-        $this->assertInstanceOf(ASTValue::class, $declarator->getValue());
+        static::assertInstanceOf(ASTValue::class, $declarator->getValue());
     }
 
     /**
@@ -80,7 +80,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $declarator = new ASTVariableDeclarator();
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'value',
                 'comment',
@@ -100,7 +100,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     public function testVariableDeclarator()
     {
         $declarator = $this->getFirstVariableDeclaratorInFunction();
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $declarator);
+        static::assertInstanceOf(ASTVariableDeclarator::class, $declarator);
 
         return $declarator;
     }
@@ -112,7 +112,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
      */
     public function testVariableDeclaratorHasExpectedStartLine(ASTVariableDeclarator $declarator): void
     {
-        $this->assertEquals(4, $declarator->getStartLine());
+        static::assertEquals(4, $declarator->getStartLine());
     }
 
     /**
@@ -122,7 +122,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
      */
     public function testVariableDeclaratorHasExpectedStartColumn(ASTVariableDeclarator $declarator): void
     {
-        $this->assertEquals(12, $declarator->getStartColumn());
+        static::assertEquals(12, $declarator->getStartColumn());
     }
 
     /**
@@ -132,7 +132,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
      */
     public function testVariableDeclaratorHasExpectedEndLine(ASTVariableDeclarator $declarator): void
     {
-        $this->assertEquals(4, $declarator->getEndLine());
+        static::assertEquals(4, $declarator->getEndLine());
     }
 
     /**
@@ -142,7 +142,7 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
      */
     public function testVariableDeclaratorHasExpectedEndColumn(ASTVariableDeclarator $declarator): void
     {
-        $this->assertEquals(17, $declarator->getEndColumn());
+        static::assertEquals(17, $declarator->getEndColumn());
     }
 
     /**

@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend;
 
@@ -71,6 +71,7 @@ class EngineTest extends AbstractTestCase
         $engine = $this->createEngineFixture();
         $engine->addDirectory($dir);
     }
+
     /**
      * Tests that the {@link \PDepend\Engine::addDirectory()} method
      * with an existing directory.
@@ -90,7 +91,7 @@ class EngineTest extends AbstractTestCase
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter(['php']));
 
-        $this->assertInstanceOf('Iterator', $engine->analyze());
+        static::assertInstanceOf('Iterator', $engine->analyze());
     }
 
     /**
@@ -115,7 +116,7 @@ class EngineTest extends AbstractTestCase
             unset($expected[$metric->getName()]);
         }
 
-        $this->assertCount(0, $expected);
+        static::assertCount(0, $expected);
     }
 
     /**
@@ -139,7 +140,7 @@ class EngineTest extends AbstractTestCase
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->addFileFilter(new Input\ExtensionFilter([__METHOD__]));
 
-        $this->assertCount(0, $engine->analyze());
+        static::assertCount(0, $engine->analyze());
     }
 
     /**
@@ -154,14 +155,14 @@ class EngineTest extends AbstractTestCase
         $engine->setWithoutAnnotations();
         $namespaces = $engine->analyze();
 
-        $this->assertEquals(2, $namespaces->count());
-        $this->assertEquals('pdepend.test', $namespaces->current()->getName());
+        static::assertEquals(2, $namespaces->count());
+        static::assertEquals('pdepend.test', $namespaces->current()->getName());
 
         $function = $namespaces->current()->getFunctions()->current();
 
-        $this->assertNotNull($function);
-        $this->assertEquals('foo', $function->getName());
-        $this->assertEquals(0, $function->getExceptionClasses()->count());
+        static::assertNotNull($function);
+        static::assertEquals('foo', $function->getName());
+        static::assertEquals(0, $function->getExceptionClasses()->count());
     }
 
     /**
@@ -175,7 +176,7 @@ class EngineTest extends AbstractTestCase
         $engine->addFileFilter(new Input\ExtensionFilter(['php']));
         $engine->analyze();
 
-        $this->assertEquals(10, $engine->countClasses());
+        static::assertEquals(10, $engine->countClasses());
     }
 
     /**
@@ -206,7 +207,7 @@ class EngineTest extends AbstractTestCase
         $engine->addDirectory($this->createCodeResourceUriForTest());
         $engine->analyze();
 
-        $this->assertEquals(4, $engine->countNamespaces());
+        static::assertEquals(4, $engine->countNamespaces());
     }
 
     /**
@@ -246,7 +247,7 @@ class EngineTest extends AbstractTestCase
         $className = ASTNamespace::class;
 
         foreach ($namespaces as $namespace) {
-            $this->assertInstanceOf($className, $engine->getNamespace($namespace));
+            static::assertInstanceOf($className, $engine->getNamespace($namespace));
         }
     }
 
@@ -300,9 +301,9 @@ class EngineTest extends AbstractTestCase
         $namespace1 = $engine->analyze();
         $namespace2 = $engine->getNamespaces();
 
-        $this->assertNotNull($namespace1);
+        static::assertNotNull($namespace1);
 
-        $this->assertSame($namespace1, $namespace2);
+        static::assertSame($namespace1, $namespace2);
     }
 
     /**
@@ -335,7 +336,7 @@ class EngineTest extends AbstractTestCase
         $engine->analyze();
 
         $namespaces = $engine->getNamespaces();
-        $this->assertCount(1, $namespaces);
+        static::assertCount(1, $namespaces);
 
         return $namespaces[0];
     }
@@ -345,7 +346,7 @@ class EngineTest extends AbstractTestCase
      */
     public function testSupportForSingleFileIssue90ExpectedNumberOfClasses(ASTNamespace $namespace): void
     {
-        $this->assertCount(1, $namespace->getClasses());
+        static::assertCount(1, $namespace->getClasses());
     }
 
     /**
@@ -353,7 +354,7 @@ class EngineTest extends AbstractTestCase
      */
     public function testSupportForSingleFileIssue90ExpectedNumberOfInterfaces(ASTNamespace $namespace): void
     {
-        $this->assertCount(1, $namespace->getInterfaces());
+        static::assertCount(1, $namespace->getInterfaces());
     }
 
     /**

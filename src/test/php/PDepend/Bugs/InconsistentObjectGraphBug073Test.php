@@ -67,12 +67,12 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
         $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces[0];
-        $this->assertEquals(2, $namespace->getTypes()->count());
-        $this->assertEquals(2, $namespace->getClasses()->count());
+        static::assertEquals(2, $namespace->getTypes()->count());
+        static::assertEquals(2, $namespace->getClasses()->count());
 
         $namespace = $namespaces[1];
-        $this->assertEquals(1, $namespace->getTypes()->count());
-        $this->assertEquals(1, $namespace->getInterfaces()->count());
+        static::assertEquals(1, $namespace->getTypes()->count());
+        static::assertEquals(1, $namespace->getInterfaces()->count());
     }
 
     /**
@@ -89,9 +89,9 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
         $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
-        $this->assertEquals(3, $namespace->getTypes()->count());
-        $this->assertEquals(2, $namespace->getClasses()->count());
-        $this->assertEquals(1, $namespace->getInterfaces()->count());
+        static::assertEquals(3, $namespace->getTypes()->count());
+        static::assertEquals(2, $namespace->getClasses()->count());
+        static::assertEquals(1, $namespace->getInterfaces()->count());
     }
 
     /**
@@ -108,14 +108,14 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
         $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces[0];
-        $this->assertEquals(2, $namespace->getTypes()->count());
-        $this->assertEquals(1, $namespace->getClasses()->count());
-        $this->assertEquals(1, $namespace->getInterfaces()->count());
+        static::assertEquals(2, $namespace->getTypes()->count());
+        static::assertEquals(1, $namespace->getClasses()->count());
+        static::assertEquals(1, $namespace->getInterfaces()->count());
 
         $namespaces->next();
         $namespace = $namespaces[1];
-        $this->assertEquals(1, $namespace->getTypes()->count());
-        $this->assertEquals(1, $namespace->getClasses()->count());
+        static::assertEquals(1, $namespace->getTypes()->count());
+        static::assertEquals(1, $namespace->getClasses()->count());
     }
 
     /**
@@ -132,9 +132,9 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
         $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
-        $this->assertEquals(3, $namespace->getTypes()->count());
-        $this->assertEquals(2, $namespace->getClasses()->count());
-        $this->assertEquals(1, $namespace->getInterfaces()->count());
+        static::assertEquals(3, $namespace->getTypes()->count());
+        static::assertEquals(2, $namespace->getClasses()->count());
+        static::assertEquals(1, $namespace->getInterfaces()->count());
     }
 
     /**
@@ -151,13 +151,13 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
         $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
-        $this->assertEquals(2, $namespace->getTypes()->count());
-        $this->assertEquals(2, $namespace->getClasses()->count());
+        static::assertEquals(2, $namespace->getTypes()->count());
+        static::assertEquals(2, $namespace->getClasses()->count());
 
         $namespaces->next();
         $namespace = $namespaces->current();
-        $this->assertEquals(1, $namespace->getTypes()->count());
-        $this->assertEquals(1, $namespace->getClasses()->count());
+        static::assertEquals(1, $namespace->getTypes()->count());
+        static::assertEquals(1, $namespace->getClasses()->count());
     }
 
     /**
@@ -174,13 +174,13 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
         $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
-        $this->assertEquals(2, $namespace->getTypes()->count());
-        $this->assertEquals(2, $namespace->getInterfaces()->count());
+        static::assertEquals(2, $namespace->getTypes()->count());
+        static::assertEquals(2, $namespace->getInterfaces()->count());
 
         $namespaces->next();
         $namespace = $namespaces->current();
-        $this->assertEquals(1, $namespace->getTypes()->count());
-        $this->assertEquals(1, $namespace->getInterfaces()->count());
+        static::assertEquals(1, $namespace->getTypes()->count());
+        static::assertEquals(1, $namespace->getInterfaces()->count());
     }
 
     /**
@@ -201,13 +201,13 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
         $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
-        $this->assertEquals(2, $namespace->getTypes()->count());
-        $this->assertEquals(2, $namespace->getClasses()->count());
+        static::assertEquals(2, $namespace->getTypes()->count());
+        static::assertEquals(2, $namespace->getClasses()->count());
 
         $namespaces->next();
         $namespace = $namespaces->current();
-        $this->assertEquals(1, $namespace->getTypes()->count());
-        $this->assertEquals(1, $namespace->getInterfaces()->count());
+        static::assertEquals(1, $namespace->getTypes()->count());
+        static::assertEquals(1, $namespace->getInterfaces()->count());
     }
 
     /**
@@ -228,14 +228,14 @@ class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
         $namespaces = $this->parseCodeResourceForTest();
 
         $namespace = $namespaces->current();
-        $this->assertEquals(2, $namespace->getTypes()->count());
-        $this->assertEquals(1, $namespace->getClasses()->count());
-        $this->assertEquals(1, $namespace->getInterfaces()->count());
+        static::assertEquals(2, $namespace->getTypes()->count());
+        static::assertEquals(1, $namespace->getClasses()->count());
+        static::assertEquals(1, $namespace->getInterfaces()->count());
 
         $namespaces->next();
         $namespace = $namespaces->current();
-        $this->assertEquals(1, $namespace->getTypes()->count());
-        $this->assertEquals(1, $namespace->getClasses()->count());
+        static::assertEquals(1, $namespace->getTypes()->count());
+        static::assertEquals(1, $namespace->getClasses()->count());
     }
 
     /**

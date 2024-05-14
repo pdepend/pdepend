@@ -47,8 +47,8 @@ use PDepend\Source\Builder\BuilderContext;
 /**
  * description
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTClassOrInterfaceReference
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -66,7 +66,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
             __CLASS__
         );
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'context',
                 'comment',
@@ -83,10 +83,10 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testGetTypeDelegatesToBuilderContextGetClassOrInterface(): void
     {
         $context = $this->getBuilderContextMock();
-        $context->expects($this->once())
+        $context->expects(static::once())
             ->method('getClassOrInterface')
-            ->with($this->equalTo(__CLASS__))
-            ->will($this->returnValue($this));
+            ->with(static::equalTo(__CLASS__))
+            ->will(static::returnValue($this));
 
         $reference = new ASTClassOrInterfaceReference(
             $context,
@@ -102,10 +102,10 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testGetTypeCachesReturnValueOfBuilderContextGetClassOrInterface(): void
     {
         $context = $this->getBuilderContextMock();
-        $context->expects($this->exactly(1))
+        $context->expects(static::exactly(1))
             ->method('getClassOrInterface')
-            ->with($this->equalTo(__CLASS__))
-            ->will($this->returnValue($this));
+            ->with(static::equalTo(__CLASS__))
+            ->will(static::returnValue($this));
 
         $reference = new ASTClassOrInterfaceReference(
             $context,
@@ -121,7 +121,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceHasExpectedStartLine(): void
     {
         $reference = $this->getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(2, $reference->getStartLine());
+        static::assertEquals(2, $reference->getStartLine());
     }
 
     /**
@@ -130,7 +130,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceHasExpectedStartColumn(): void
     {
         $reference = $this->getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(14, $reference->getStartColumn());
+        static::assertEquals(14, $reference->getStartColumn());
     }
 
     /**
@@ -139,7 +139,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceHasExpectedEndLine(): void
     {
         $reference = $this->getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(2, $reference->getEndLine());
+        static::assertEquals(2, $reference->getEndLine());
     }
 
     /**
@@ -148,7 +148,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceHasExpectedEndColumn(): void
     {
         $reference = $this->getFirstReferenceInFunction(__METHOD__);
-        $this->assertEquals(29, $reference->getEndColumn());
+        static::assertEquals(29, $reference->getEndColumn());
     }
 
     /**
@@ -159,7 +159,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceInInterfaceExtendsHasExpectedStartLine(): void
     {
         $reference = $this->getFirstReferenceInInterface();
-        $this->assertEquals(3, $reference->getStartLine());
+        static::assertEquals(3, $reference->getStartLine());
     }
 
     /**
@@ -170,7 +170,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceInInterfaceExtendsHasExpectedStartColumn(): void
     {
         $reference = $this->getFirstReferenceInInterface();
-        $this->assertEquals(13, $reference->getStartColumn());
+        static::assertEquals(13, $reference->getStartColumn());
     }
 
     /**
@@ -181,7 +181,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceInInterfaceExtendsHasExpectedEndLine(): void
     {
         $reference = $this->getFirstReferenceInInterface();
-        $this->assertEquals(3, $reference->getEndLine());
+        static::assertEquals(3, $reference->getEndLine());
     }
 
     /**
@@ -192,7 +192,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceInInterfaceExtendsHasExpectedEndColumn(): void
     {
         $reference = $this->getFirstReferenceInInterface();
-        $this->assertEquals(15, $reference->getEndColumn());
+        static::assertEquals(15, $reference->getEndColumn());
     }
 
     /**
@@ -203,7 +203,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceInClassImplementsHasExpectedStartLine(): void
     {
         $reference = $this->getFirstReferenceInClass();
-        $this->assertEquals(2, $reference->getStartLine());
+        static::assertEquals(2, $reference->getStartLine());
     }
 
     /**
@@ -214,7 +214,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceInClassImplementsHasExpectedStartColumn(): void
     {
         $reference = $this->getFirstReferenceInClass();
-        $this->assertEquals(68, $reference->getStartColumn());
+        static::assertEquals(68, $reference->getStartColumn());
     }
 
     /**
@@ -225,7 +225,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceInClassImplementsHasExpectedEndLine(): void
     {
         $reference = $this->getFirstReferenceInClass();
-        $this->assertEquals(2, $reference->getEndLine());
+        static::assertEquals(2, $reference->getEndLine());
     }
 
     /**
@@ -236,7 +236,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     public function testReferenceInClassImplementsHasExpectedEndColumn(): void
     {
         $reference = $this->getFirstReferenceInClass();
-        $this->assertEquals(68, $reference->getEndColumn());
+        static::assertEquals(68, $reference->getEndColumn());
     }
 
     /**

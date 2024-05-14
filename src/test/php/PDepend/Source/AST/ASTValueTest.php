@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  * @since 0.10.2
+ * @since 0.10.2
  */
 
 namespace PDepend\Source\AST;
@@ -63,7 +63,7 @@ class ASTValueTest extends AbstractTestCase
     public function testIsValueAvailableReturnsFalseByDefault(): void
     {
         $value = new ASTValue();
-        $this->assertFalse($value->isValueAvailable());
+        static::assertFalse($value->isValueAvailable());
     }
 
     /**
@@ -74,7 +74,7 @@ class ASTValueTest extends AbstractTestCase
         $value = new ASTValue();
         $value->setValue(42);
 
-        $this->assertTrue($value->isValueAvailable());
+        static::assertTrue($value->isValueAvailable());
     }
 
     /**
@@ -85,7 +85,7 @@ class ASTValueTest extends AbstractTestCase
         $value = new ASTValue();
         $value->setValue(null);
 
-        $this->assertTrue($value->isValueAvailable());
+        static::assertTrue($value->isValueAvailable());
     }
 
     /**
@@ -94,7 +94,7 @@ class ASTValueTest extends AbstractTestCase
     public function testGetValueReturnsNullByDefault(): void
     {
         $value = new ASTValue();
-        $this->assertNull($value->getValue());
+        static::assertNull($value->getValue());
     }
 
     /**
@@ -105,7 +105,7 @@ class ASTValueTest extends AbstractTestCase
         $value = new ASTValue();
         $value->setValue(42);
 
-        $this->assertEquals(42, $value->getValue());
+        static::assertEquals(42, $value->getValue());
     }
 
     /**
@@ -117,6 +117,6 @@ class ASTValueTest extends AbstractTestCase
         $value->setValue(42);
         $value->setValue(23);
 
-        $this->assertEquals(42, $value->getValue());
+        static::assertEquals(42, $value->getValue());
     }
 }

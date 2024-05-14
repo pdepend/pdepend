@@ -59,7 +59,7 @@ class ASTTypeTest extends ASTNodeTestCase
     public function testIsArrayReturnsFalseByDefault(): void
     {
         $type = new ASTType();
-        $this->assertFalse($type->isArray());
+        static::assertFalse($type->isArray());
     }
 
     /**
@@ -68,6 +68,6 @@ class ASTTypeTest extends ASTNodeTestCase
     public function testIsPrimitiveReturnsFalseByDefault(): void
     {
         $type = new ASTType();
-        $this->assertFalse($type->isScalar());
+        static::assertFalse($type->isScalar());
     }
 }

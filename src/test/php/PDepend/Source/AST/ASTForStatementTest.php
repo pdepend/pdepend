@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTForStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTForStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $stmt->getEndLine());
+        static::assertEquals(6, $stmt->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getEndColumn());
+        static::assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
@@ -96,7 +96,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForExpressionHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getChild(1)->getStartLine());
+        static::assertEquals(4, $stmt->getChild(1)->getStartLine());
     }
 
     /**
@@ -105,7 +105,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForExpressionHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(27, $stmt->getChild(1)->getStartColumn());
+        static::assertEquals(27, $stmt->getChild(1)->getStartColumn());
     }
 
     /**
@@ -114,7 +114,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForExpressionHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getChild(1)->getEndLine());
+        static::assertEquals(4, $stmt->getChild(1)->getEndLine());
     }
 
     /**
@@ -123,7 +123,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForExpressionHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(33, $stmt->getChild(1)->getEndColumn());
+        static::assertEquals(33, $stmt->getChild(1)->getEndColumn());
     }
 
     /**
@@ -132,7 +132,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testFirstChildOfForStatementIsInstanceOfForInit(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTForInit::class, $stmt->getChild(0));
+        static::assertInstanceOf(ASTForInit::class, $stmt->getChild(0));
     }
 
     /**
@@ -141,16 +141,15 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testFirstChildOfForStatementCanBeLeftBlank(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTExpression::class, $stmt->getChild(0));
+        static::assertInstanceOf(ASTExpression::class, $stmt->getChild(0));
     }
-
 
     /**
      * testParserHandlesBooleanLiteralInForInit
      */
     public function testParserHandlesBooleanLiteralInForInit(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -159,7 +158,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testSecondChildOfForStatementIsInstanceOfExpression(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTExpression::class, $stmt->getChild(1));
+        static::assertInstanceOf(ASTExpression::class, $stmt->getChild(1));
     }
 
     /**
@@ -168,7 +167,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testSecondChildOfForStatementCanBeLeftBlank(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTForUpdate::class, $stmt->getChild(1));
+        static::assertInstanceOf(ASTForUpdate::class, $stmt->getChild(1));
     }
 
     /**
@@ -177,7 +176,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testThirdChildOfForStatementIsInstanceOfForUpdate(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTForUpdate::class, $stmt->getChild(2));
+        static::assertInstanceOf(ASTForUpdate::class, $stmt->getChild(2));
     }
 
     /**
@@ -186,7 +185,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testThirdChildOfForStatementCanBeLeftBlank(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(2));
+        static::assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(2));
     }
 
     /**
@@ -195,7 +194,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testFourthChildOfForStatementIsInstanceOfScopeStatement(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(3));
+        static::assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(3));
     }
 
     /**
@@ -204,7 +203,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testFourthChildOfForStatementIsInstanceOfStatement(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTStatement::class, $stmt->getChild(3));
+        static::assertInstanceOf(ASTStatement::class, $stmt->getChild(3));
     }
 
     /**
@@ -217,7 +216,7 @@ class ASTForStatementTest extends ASTNodeTestCase
         $actual = [$class->getStartLine(), $class->getEndLine()];
         $expected = [5, 14];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -230,7 +229,7 @@ class ASTForStatementTest extends ASTNodeTestCase
         $actual = [$class->getStartLine(), $class->getEndLine()];
         $expected = [5, 14];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -239,7 +238,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForStatementAlternativeScopeHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -248,7 +247,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForStatementAlternativeScopeHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -257,7 +256,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForStatementAlternativeScopeHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(12, $stmt->getEndLine());
+        static::assertEquals(12, $stmt->getEndLine());
     }
 
     /**
@@ -266,7 +265,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForStatementAlternativeScopeHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(11, $stmt->getEndColumn());
+        static::assertEquals(11, $stmt->getEndColumn());
     }
 
     /**
@@ -275,7 +274,7 @@ class ASTForStatementTest extends ASTNodeTestCase
     public function testForStatementTerminatedByPhpCloseTag(): void
     {
         $stmt = $this->getFirstForStatementInFunction(__METHOD__);
-        $this->assertEquals(9, $stmt->getEndColumn());
+        static::assertEquals(9, $stmt->getEndColumn());
     }
 
     /**
@@ -296,7 +295,7 @@ class ASTForStatementTest extends ASTNodeTestCase
         $actual = [$class->getStartLine(), $class->getEndLine()];
         $expected = [5, 14];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -304,7 +303,7 @@ class ASTForStatementTest extends ASTNodeTestCase
      */
     public function testParserHandlesParenthesisExpressionInForUpdate(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -312,7 +311,7 @@ class ASTForStatementTest extends ASTNodeTestCase
      */
     public function testParserHandlesBooleanLiteralInForUpdate(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**

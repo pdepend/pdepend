@@ -64,6 +64,7 @@ class ASTTrait extends ASTClass
 
         $this->context->registerTrait($this);
     }
+
     /**
      * Returns all properties for this class.
      *

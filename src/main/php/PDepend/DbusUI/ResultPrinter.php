@@ -142,9 +142,9 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
 
         $dbus = new Dbus(Dbus::BUS_SESSION);
         $proxy = $dbus->createProxy(
-            "org.freedesktop.Notifications", // connection name
-            "/org/freedesktop/Notifications", // object
-            "org.freedesktop.Notifications", // interface
+            'org.freedesktop.Notifications', // connection name
+            '/org/freedesktop/Notifications', // object
+            'org.freedesktop.Notifications', // interface
         );
         $proxy->Notify(
             'PDepend',
@@ -154,7 +154,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
             sprintf(
                 '%d files analyzed in %s minutes...',
                 $this->parsedFiles,
-                (date('i:s', time() - $this->startTime)),
+                date('i:s', time() - $this->startTime),
             ),
             new DBusArray(Dbus::STRING, []),
             new DBusDict(Dbus::VARIANT, []),

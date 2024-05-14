@@ -64,6 +64,7 @@ class ASTElseIfStatement extends ASTStatement
         if (count($this->nodes) === 3) {
             return (count($this->nodes) === 3);
         }
+
         return false;
     }
 }

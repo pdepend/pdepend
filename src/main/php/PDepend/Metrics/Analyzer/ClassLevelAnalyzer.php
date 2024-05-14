@@ -71,9 +71,7 @@ use RuntimeException;
  */
 class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, AnalyzerFilterAware, AnalyzerNodeAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     public const M_IMPLEMENTED_INTERFACES = 'impl',
         M_CLASS_INTERFACE_SIZE = 'cis',
         M_CLASS_SIZE = 'csz',
@@ -107,9 +105,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      */
     private array $nodeMetrics;
 
-    /**
-     * The internal used cyclomatic complexity analyzer.
-     */
+    /** The internal used cyclomatic complexity analyzer. */
     private CyclomaticComplexityAnalyzer $cyclomaticAnalyzer;
 
     /**
@@ -177,6 +173,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             $metrics = $this->nodeMetrics[$artifact->getId()];
         }
+
         return $metrics;
     }
 
@@ -326,6 +323,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
                 }
             }
         }
+
         return count($properties);
     }
 
@@ -344,7 +342,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
                 if ($method->isPrivate()) {
                     continue;
                 }
-                if (isset($ccn[($name = $method->getName())])) {
+                if (isset($ccn[$name = $method->getName()])) {
                     continue;
                 }
                 $ccn[$name] = $this->cyclomaticAnalyzer->getCcn2($method);

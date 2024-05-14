@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTLogicalXorExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTLogicalXorExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
     public function testLogicalXorExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
     public function testLogicalXorExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
-        $this->assertEquals(18, $expr->getStartColumn());
+        static::assertEquals(18, $expr->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
     public function testLogicalXorExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getEndLine());
+        static::assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
     public function testLogicalXorExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
-        $this->assertEquals(20, $expr->getEndColumn());
+        static::assertEquals(20, $expr->getEndColumn());
     }
 
     /**

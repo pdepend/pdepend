@@ -52,9 +52,7 @@ namespace PDepend\Source\AST;
  */
 class ASTNamedArgument extends AbstractASTNode
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $name;
 
     /**

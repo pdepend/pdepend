@@ -62,7 +62,7 @@ class ExplicitOctalNotationTest extends PHPParserVersion81TestCase
             $class->getConstantDeclarators()
         );
 
-        $this->assertSame([
+        static::assertSame([
             'THOUSAND' => 1000,
             'HEXADECIMAL' => 15,
             'IMPLICIT_OCTAL' => 14,
@@ -70,7 +70,7 @@ class ExplicitOctalNotationTest extends PHPParserVersion81TestCase
             'BINARY' => 6,
         ], $values);
 
-        $this->assertSame(
+        static::assertSame(
             '0o170',
             $this->getFirstMethodForTestCase()
                 ->getFirstChildOfType(ASTLiteral::class)->getImage()

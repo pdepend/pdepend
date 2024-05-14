@@ -45,14 +45,12 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTPropertyPostfix} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @covers \PDepend\Source\AST\ASTClassFqnPostfix
  *
  * @group unittest
  *
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTClassFqnPostfix
+ * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
@@ -64,7 +62,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     public function testGetImage(): void
     {
         $postfix = $this->getFirstClassFqnPostfixInClass();
-        $this->assertEquals('class', $postfix->getImage());
+        static::assertEquals('class', $postfix->getImage());
     }
 
     /**
@@ -87,7 +85,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     public function testGetImageWorksCaseInsensitive(): void
     {
         $postfix = $this->getFirstClassFqnPostfixInClass();
-        $this->assertEquals('class', $postfix->getImage());
+        static::assertEquals('class', $postfix->getImage());
     }
 
     /**
@@ -141,24 +139,24 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
      */
     public function testClassFqnPostfixAsPropertyInitializer(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
 
         /** @var ASTFieldDeclaration $fieldDeclaration */
         $fieldDeclaration = $this->getFirstClassForTestCase(__METHOD__)->getChild(0);
 
-        $this->assertInstanceOf(ASTFieldDeclaration::class, $fieldDeclaration);
+        static::assertInstanceOf(ASTFieldDeclaration::class, $fieldDeclaration);
 
         /** @var ASTVariableDeclarator $variableDeclarator */
         $variableDeclarator = $fieldDeclaration->getChild(0);
 
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
-        $this->assertTrue($variableDeclarator->getValue()->isValueAvailable());
+        static::assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
+        static::assertTrue($variableDeclarator->getValue()->isValueAvailable());
 
         /** @var ASTClassOrInterfaceReference $classReference */
         $classReference = $variableDeclarator->getValue()->getValue();
-        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $classReference);
+        static::assertInstanceOf(ASTClassOrInterfaceReference::class, $classReference);
 
-        $this->assertSame('\\Iterator', $classReference->getImage());
+        static::assertSame('\\Iterator', $classReference->getImage());
     }
 
     /**
@@ -170,24 +168,24 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
      */
     public function testClassFqnPostfixAsPropertyInitializerWithSelf(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
 
         /** @var ASTFieldDeclaration $fieldDeclaration */
         $fieldDeclaration = $this->getFirstClassForTestCase(__METHOD__)->getChild(0);
 
-        $this->assertInstanceOf(ASTFieldDeclaration::class, $fieldDeclaration);
+        static::assertInstanceOf(ASTFieldDeclaration::class, $fieldDeclaration);
 
         /** @var ASTVariableDeclarator $variableDeclarator */
         $variableDeclarator = $fieldDeclaration->getChild(0);
 
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
-        $this->assertTrue($variableDeclarator->getValue()->isValueAvailable());
+        static::assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
+        static::assertTrue($variableDeclarator->getValue()->isValueAvailable());
 
         /** @var ASTSelfReference $classReference */
         $classReference = $variableDeclarator->getValue()->getValue();
-        $this->assertInstanceOf(ASTSelfReference::class, $classReference);
+        static::assertInstanceOf(ASTSelfReference::class, $classReference);
 
-        $this->assertSame('self', $classReference->getImage());
+        static::assertSame('self', $classReference->getImage());
     }
 
     /**
@@ -195,15 +193,15 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
      */
     public function testClassFqnPostfixAsParameterInitializer(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
 
         /** @var ASTParameter[] $parameters */
         $parameters = $this->getFirstClassMethodForTestCase(__METHOD__)->getParameters();
-        $this->assertCount(1, $parameters);
+        static::assertCount(1, $parameters);
 
-        $this->assertInstanceOf(ASTParameter::class, $parameters[0]);
+        static::assertInstanceOf(ASTParameter::class, $parameters[0]);
 
-        $this->assertSame('testClassFqnPostfixAsParameterInitializer', $parameters[0]->getDefaultValue()->getImage());
+        static::assertSame('testClassFqnPostfixAsParameterInitializer', $parameters[0]->getDefaultValue()->getImage());
     }
 
     /**
@@ -211,15 +209,15 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
      */
     public function testClassFqnPostfixAsParameterInitializerWithSelf(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
 
         /** @var ASTParameter[] $parameters */
         $parameters = $this->getFirstClassMethodForTestCase(__METHOD__)->getParameters();
-        $this->assertCount(1, $parameters);
+        static::assertCount(1, $parameters);
 
-        $this->assertInstanceOf(ASTParameter::class, $parameters[0]);
+        static::assertInstanceOf(ASTParameter::class, $parameters[0]);
 
-        $this->assertSame('self', $parameters[0]->getDefaultValue()->getImage());
+        static::assertSame('self', $parameters[0]->getDefaultValue()->getImage());
     }
 
     /**
@@ -227,17 +225,17 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
      */
     public function testClassFqnPostfixAsConstantInitializer(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
 
         /** @var ASTConstantDefinition $constantDefinition */
         $constantDefinition = $this->getFirstClassForTestCase()->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDefinition::class, $constantDefinition);
+        static::assertInstanceOf(ASTConstantDefinition::class, $constantDefinition);
 
         /** @var ASTConstantDeclarator $constantDefinition */
         $constantDeclarator = $constantDefinition->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
+        static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
     }
 
     /**
@@ -245,17 +243,17 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
      */
     public function testClassFqnPostfixAsConstantInitializerWithSelf(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
 
         /** @var ASTConstantDefinition $constantDefinition */
         $constantDefinition = $this->getFirstClassForTestCase()->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDefinition::class, $constantDefinition);
+        static::assertInstanceOf(ASTConstantDefinition::class, $constantDefinition);
 
         /** @var ASTConstantDeclarator $constantDefinition */
         $constantDeclarator = $constantDefinition->getChild(0);
 
-        $this->assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
+        static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
     }
 
     /**
@@ -264,7 +262,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     public function testClassFqnPostfixHasExpectedStartLine(): void
     {
         $postfix = $this->getFirstClassFqnPostfixInClass(__METHOD__);
-        $this->assertEquals(6, $postfix->getStartLine());
+        static::assertEquals(6, $postfix->getStartLine());
     }
 
     /**
@@ -273,7 +271,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     public function testClassFqnPostfixHasExpectedStartColumn(): void
     {
         $postfix = $this->getFirstClassFqnPostfixInClass(__METHOD__);
-        $this->assertEquals(26, $postfix->getStartColumn());
+        static::assertEquals(26, $postfix->getStartColumn());
     }
 
     /**
@@ -282,7 +280,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     public function testClassFqnPostfixHasExpectedEndLine(): void
     {
         $postfix = $this->getFirstClassFqnPostfixInClass(__METHOD__);
-        $this->assertEquals(6, $postfix->getEndLine());
+        static::assertEquals(6, $postfix->getEndLine());
     }
 
     /**
@@ -291,7 +289,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
     public function testClassFqnPostfixHasExpectedEndColumn(): void
     {
         $postfix = $this->getFirstClassFqnPostfixInClass(__METHOD__);
-        $this->assertEquals(63, $postfix->getEndColumn());
+        static::assertEquals(63, $postfix->getEndColumn());
     }
 
     /**
@@ -316,6 +314,7 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
             ASTClassFqnPostfix::class
         );
     }
+
     /**
      * Returns a node instance for the currently executed test case.
      *

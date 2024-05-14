@@ -50,9 +50,7 @@ namespace PDepend\Source\AST;
  */
 class ASTProperty extends AbstractASTArtifact
 {
-    /**
-     * The parent type object.
-     */
+    /** The parent type object. */
     private ASTClass $declaringClass;
 
     /**
@@ -197,6 +195,7 @@ class ASTProperty extends AbstractASTArtifact
         if ($typeNode === null) {
             return false;
         }
+
         return $typeNode->isArray();
     }
 
@@ -215,6 +214,7 @@ class ASTProperty extends AbstractASTArtifact
         if ($typeNode === null) {
             return false;
         }
+
         return $typeNode->isScalar();
     }
 
@@ -233,6 +233,7 @@ class ASTProperty extends AbstractASTArtifact
         if ($reference === null) {
             return null;
         }
+
         return $reference->getType();
     }
 
@@ -324,6 +325,7 @@ class ASTProperty extends AbstractASTArtifact
         if ($value === null) {
             return false;
         }
+
         return $value->isValueAvailable();
     }
 
@@ -339,6 +341,7 @@ class ASTProperty extends AbstractASTArtifact
         if ($value === null) {
             return null;
         }
+
         return $value->getValue();
     }
 }

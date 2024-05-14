@@ -47,8 +47,8 @@ use PDepend\Source\Parser\TokenStreamEndException;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTLiteral} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTLiteral
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -62,7 +62,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithBooleanTrueExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('True', $literal->getImage());
+        static::assertEquals('True', $literal->getImage());
     }
 
     /**
@@ -71,7 +71,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithBooleanFalseExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('False', $literal->getImage());
+        static::assertEquals('False', $literal->getImage());
     }
 
     /**
@@ -80,7 +80,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithIntegerExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('42', $literal->getImage());
+        static::assertEquals('42', $literal->getImage());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithSignedIntegerExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('42', $literal->getImage());
+        static::assertEquals('42', $literal->getImage());
     }
 
     /**
@@ -98,7 +98,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithFloatExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('42.23', $literal->getImage());
+        static::assertEquals('42.23', $literal->getImage());
     }
 
     /**
@@ -107,7 +107,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithSignedFloatExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('42.23', $literal->getImage());
+        static::assertEquals('42.23', $literal->getImage());
     }
 
     /**
@@ -116,7 +116,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithNullExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('NULL', $literal->getImage());
+        static::assertEquals('NULL', $literal->getImage());
     }
 
     /**
@@ -127,7 +127,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithZeroIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('0', $literal->getImage());
+        static::assertEquals('0', $literal->getImage());
     }
 
     /**
@@ -138,7 +138,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithZeroOctalIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('00', $literal->getImage());
+        static::assertEquals('00', $literal->getImage());
     }
 
     /**
@@ -149,7 +149,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithZeroHexIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('0x0', $literal->getImage());
+        static::assertEquals('0x0', $literal->getImage());
     }
 
     /**
@@ -161,7 +161,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithZeroBinaryIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('0b0', $literal->getImage());
+        static::assertEquals('0b0', $literal->getImage());
     }
 
     /**
@@ -172,7 +172,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithNonZeroOctalIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('02342', $literal->getImage());
+        static::assertEquals('02342', $literal->getImage());
     }
 
     /**
@@ -183,7 +183,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithNonZeroHexIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('0x926', $literal->getImage());
+        static::assertEquals('0x926', $literal->getImage());
     }
 
     /**
@@ -195,7 +195,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithNonZeroBinaryIntegerValue(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('0b100100100110', $literal->getImage());
+        static::assertEquals('0b100100100110', $literal->getImage());
     }
 
     /**
@@ -208,10 +208,11 @@ class ASTLiteralTest extends ASTNodeTestCase
     {
         $class = $this->getFirstClassForTestCase();
         $properties = $class->getProperties();
+
         /** @var ASTProperty $property */
         $property = $properties[0];
 
-        $this->assertSame(0.0, $property->getDefaultValue());
+        static::assertSame(0.0, $property->getDefaultValue());
     }
 
     /**
@@ -222,7 +223,7 @@ class ASTLiteralTest extends ASTNodeTestCase
     public function testLiteralWithCurlyBraceFollowedByCompoundExpression(): void
     {
         $literal = $this->getFirstLiteralInFunction();
-        $this->assertEquals('{', $literal->getImage());
+        static::assertEquals('{', $literal->getImage());
     }
 
     /**

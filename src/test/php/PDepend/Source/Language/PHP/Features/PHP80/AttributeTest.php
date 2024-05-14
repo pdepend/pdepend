@@ -57,13 +57,15 @@ class AttributeTest extends PHPParserVersion80TestCase
         $types = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes();
+
         /** @var ASTClass $class */
         $class = $types[1];
         $methods = $class->getAllMethods();
+
         /** @var ASTMethod $bMethod */
         $bMethod = $methods['b'];
         $parameters = $bMethod->getParameters();
 
-        $this->assertSame('$bar', $parameters[0]->getName());
+        static::assertSame('$bar', $parameters[0]->getName());
     }
 }

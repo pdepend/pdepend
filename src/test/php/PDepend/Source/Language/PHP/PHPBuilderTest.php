@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\Language\PHP;
 
@@ -162,7 +162,7 @@ class PHPBuilderTest extends AbstractTestCase
         $namespace = $builder->buildNamespace(__CLASS__);
         $namespace->addType($builder->buildClass(__CLASS__));
 
-        $this->assertCount(2, $builder->getNamespaces());
+        static::assertCount(2, $builder->getNamespaces());
     }
 
     /**
@@ -178,7 +178,7 @@ class PHPBuilderTest extends AbstractTestCase
         $builder->buildNamespace(__CLASS__);
         $builder->buildFunction(__CLASS__);
 
-        $this->assertCount(2, $builder->getNamespaces());
+        static::assertCount(2, $builder->getNamespaces());
     }
 
     /**
@@ -196,7 +196,7 @@ class PHPBuilderTest extends AbstractTestCase
         $namespace = $builder->buildNamespace(__CLASS__);
         $namespace->addType($builder->buildClass(__CLASS__));
 
-        $this->assertEquals(1, $builder->getNamespaces()->count());
+        static::assertEquals(1, $builder->getNamespaces()->count());
     }
 
     /**
@@ -211,7 +211,7 @@ class PHPBuilderTest extends AbstractTestCase
         $function->setNamespace($namespace);
 
         $builder->restoreFunction($function);
-        $this->assertCount(1, $namespace->getFunctions());
+        static::assertCount(1, $namespace->getFunctions());
     }
 
     /**
@@ -222,7 +222,7 @@ class PHPBuilderTest extends AbstractTestCase
         $function = $this->getMockBuilder(ASTFunction::class)
             ->setConstructorArgs([__FUNCTION__])
             ->getMock();
-        $function->expects($this->once())
+        $function->expects(static::once())
             ->method('getNamespaceName');
 
         $builder = $this->createBuilder();
@@ -243,7 +243,7 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreTrait($trait);
 
-        $this->assertSame($trait, $builder->getTrait(__FUNCTION__));
+        static::assertSame($trait, $builder->getTrait(__FUNCTION__));
     }
 
     /**
@@ -254,7 +254,7 @@ class PHPBuilderTest extends AbstractTestCase
     public function testGetTraitReturnsDummyIfNoMatchingTraitExists(): void
     {
         $builder = $this->createBuilder();
-        $this->assertEquals(__FUNCTION__, $builder->getTrait(__FUNCTION__)->getName());
+        static::assertEquals(__FUNCTION__, $builder->getTrait(__FUNCTION__)->getName());
     }
 
     /**
@@ -269,7 +269,7 @@ class PHPBuilderTest extends AbstractTestCase
         $trait1 = $builder->buildTrait('PDepend1\Parser');
         $trait2 = $builder->buildTrait('PDepend2\Parser');
 
-        $this->assertNotSame($trait1, $trait2);
+        static::assertNotSame($trait1, $trait2);
     }
 
     /**
@@ -286,7 +286,7 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreTrait($trait);
 
-        $this->assertSame(
+        static::assertSame(
             $trait->getNamespace(),
             $builder->getTrait('Parser')->getNamespace()
         );
@@ -304,7 +304,7 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreClass($class);
 
-        $this->assertSame($class, $builder->getClass(__FUNCTION__));
+        static::assertSame($class, $builder->getClass(__FUNCTION__));
     }
 
     /**
@@ -315,7 +315,7 @@ class PHPBuilderTest extends AbstractTestCase
     public function testGetClassReturnsDummyIfNoMatchingClassExists(): void
     {
         $builder = $this->createBuilder();
-        $this->assertEquals(
+        static::assertEquals(
             __FUNCTION__,
             $builder->getClass(__FUNCTION__)->getName()
         );
@@ -333,7 +333,7 @@ class PHPBuilderTest extends AbstractTestCase
         $class1 = $builder->buildClass('PDepend1\Parser');
         $class2 = $builder->buildClass('PDepend2\Parser');
 
-        $this->assertNotSame($class1, $class2);
+        static::assertNotSame($class1, $class2);
     }
 
     /**
@@ -350,7 +350,7 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreClass($class1);
 
-        $this->assertSame(
+        static::assertSame(
             $class1->getNamespace(),
             $builder->getClass('Parser')->getNamespace()
         );
@@ -369,7 +369,7 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreInterface($interface);
 
-        $this->assertSame($interface, $builder->getInterface(__FUNCTION__));
+        static::assertSame($interface, $builder->getInterface(__FUNCTION__));
     }
 
     /**
@@ -380,7 +380,7 @@ class PHPBuilderTest extends AbstractTestCase
     public function testGetInterfaceReturnsDummyIfNoMatchingInterfaceExists(): void
     {
         $builder = $this->createBuilder();
-        $this->assertEquals(
+        static::assertEquals(
             __FUNCTION__,
             $builder->getInterface(__FUNCTION__)->getName()
         );
@@ -402,11 +402,11 @@ class PHPBuilderTest extends AbstractTestCase
         $class = $builder->buildClass('Parser');
         $namespace1->addType($class);
 
-        $this->assertEquals(1, $namespace1->getTypes()->count());
+        static::assertEquals(1, $namespace1->getTypes()->count());
 
         $builder->buildInterface('Parser');
 
-        $this->assertEquals(1, $namespace1->getTypes()->count());
+        static::assertEquals(1, $namespace1->getTypes()->count());
     }
 
     /**
@@ -420,7 +420,7 @@ class PHPBuilderTest extends AbstractTestCase
         $interfaces1 = $builder->buildInterface('PDepend1\ParserI');
         $interfaces2 = $builder->buildInterface('PDepend2\ParserI');
 
-        $this->assertNotSame($interfaces1, $interfaces2);
+        static::assertNotSame($interfaces1, $interfaces2);
     }
 
     /**
@@ -435,8 +435,8 @@ class PHPBuilderTest extends AbstractTestCase
         $interface1 = $builder->buildInterface('PDepend\ParserI');
         $interface2 = $builder->buildInterface('PDepend\ParserI');
 
-        $this->assertNotSame($interface1, $interface2);
-        $this->assertSame(
+        static::assertNotSame($interface1, $interface2);
+        static::assertSame(
             $interface1->getNamespace(),
             $interface2->getNamespace()
         );
@@ -456,8 +456,8 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreInterface($interface);
 
-        $this->assertSame($builder->getInterface('ParserI'), $interface);
-        $this->assertSame(
+        static::assertSame($builder->getInterface('ParserI'), $interface);
+        static::assertSame(
             $builder->getInterface('ParserI')->getNamespace(),
             $interface->getNamespace()
         );
@@ -468,7 +468,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildMethod(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTMethod::class,
             $this->createBuilder()->buildMethod('method')
         );
@@ -483,7 +483,7 @@ class PHPBuilderTest extends AbstractTestCase
         $namespace1 = $builder->buildNamespace('package1');
         $namespace2 = $builder->buildNamespace('package1');
 
-        $this->assertSame($namespace1, $namespace2);
+        static::assertSame($namespace1, $namespace2);
     }
 
     /**
@@ -504,7 +504,7 @@ class PHPBuilderTest extends AbstractTestCase
             $actual[$name] = $namespace;
         }
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     /**
@@ -526,7 +526,7 @@ class PHPBuilderTest extends AbstractTestCase
             $actual[$name] = $namespace;
         }
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     /**
@@ -547,8 +547,8 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreClass($class1);
 
-        $this->assertNotSame($class0, $class1);
-        $this->assertSame($class0, $builder->getClass('FooBar'));
+        static::assertNotSame($class0, $class1);
+        static::assertSame($class0, $builder->getClass('FooBar'));
     }
 
     /**
@@ -564,8 +564,8 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreInterface($interface);
 
-        $this->assertNotSame($interface, $builder->buildInterface('FooBar'));
-        $this->assertSame($interface, $builder->getInterface('FooBar'));
+        static::assertNotSame($interface, $builder->buildInterface('FooBar'));
+        static::assertSame($interface, $builder->getInterface('FooBar'));
     }
 
     /**
@@ -580,7 +580,7 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreClass($class);
 
-        $this->assertSame($class, $builder->getClass('pDepend_parser'));
+        static::assertSame($class, $builder->getClass('pDepend_parser'));
     }
 
     /**
@@ -595,7 +595,7 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreInterface($interface);
 
-        $this->assertSame(
+        static::assertSame(
             $interface,
             $builder->getInterface('PDepend_Source_Tokenizer_ToKeNiZeR')
         );
@@ -609,7 +609,7 @@ class PHPBuilderTest extends AbstractTestCase
     public function testGetClassOrInterfaceReturnsDummyIfNoMatchingTypeExists(): void
     {
         $builder = $this->createBuilder();
-        $this->assertEquals(
+        static::assertEquals(
             __FUNCTION__,
             $builder->getClassOrInterface(__FUNCTION__)->getName()
         );
@@ -623,7 +623,7 @@ class PHPBuilderTest extends AbstractTestCase
     public function testGetClassOrInterfaceReturnsClassInExtensionPackage(): void
     {
         $builder = $this->createBuilder();
-        $this->assertEquals(
+        static::assertEquals(
             '+reflection',
             $builder->getClassOrInterface('Reflection')->getNamespace()->getName()
         );
@@ -637,7 +637,7 @@ class PHPBuilderTest extends AbstractTestCase
     public function testGetClassOrInterfaceStripsLeadingBackslashFromClass(): void
     {
         $builder = $this->createBuilder();
-        $this->assertEquals(
+        static::assertEquals(
             'foo\bar',
             $builder->getClassOrInterface('\foo\bar\Baz')->getNamespace()->getName()
         );
@@ -655,7 +655,7 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreInterface($interface);
 
-        $this->assertSame(
+        static::assertSame(
             $interface,
             $builder->getClassOrInterface('PDepend_Source_Tokenizer_ToKeNiZeR')
         );
@@ -673,7 +673,7 @@ class PHPBuilderTest extends AbstractTestCase
 
         $builder->restoreClass($class);
 
-        $this->assertSame($class, $builder->getClassOrInterface('pDepend_parser'));
+        static::assertSame($class, $builder->getClassOrInterface('pDepend_parser'));
     }
 
     /**
@@ -813,7 +813,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTCommentReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTComment::class,
             $this->createBuilder()->buildAstComment('// Hello')
         );
@@ -824,7 +824,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTScalarTypeReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTScalarType::class,
             $this->createBuilder()->buildAstScalarType('1')
         );
@@ -835,7 +835,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTTypeArrayReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTypeArray::class,
             $this->createBuilder()->buildAstTypeArray()
         );
@@ -848,7 +848,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTTypeCallableReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTypeCallable::class,
             $this->createBuilder()->buildAstTypeCallable()
         );
@@ -861,7 +861,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTTypeIterableReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTypeIterable::class,
             $this->createBuilder()->buildAstTypeIterable()
         );
@@ -872,7 +872,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTHeredocReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTHeredoc::class,
             $this->createBuilder()->buildAstHeredoc()
         );
@@ -883,7 +883,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTIdentifierReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTIdentifier::class,
             $this->createBuilder()->buildAstIdentifier('ID')
         );
@@ -894,7 +894,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTLiteralReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTLiteral::class,
             $this->createBuilder()->buildAstLiteral('false')
         );
@@ -905,7 +905,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTStringReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTString::class,
             $this->createBuilder()->buildAstString()
         );
@@ -918,7 +918,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTArrayReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTArray::class,
             $this->createBuilder()->buildAstArray()
         );
@@ -931,7 +931,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTArrayElementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTArrayElement::class,
             $this->createBuilder()->buildAstArrayElement()
         );
@@ -942,7 +942,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTScopeReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTScope::class,
             $this->createBuilder()->buildAstScope()
         );
@@ -953,7 +953,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTVariableReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTVariable::class,
             $this->createBuilder()->buildAstVariable('$name')
         );
@@ -964,7 +964,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTVariableVariableReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTVariableVariable::class,
             $this->createBuilder()->buildAstVariableVariable('$$x')
         );
@@ -975,7 +975,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTCompoundVariableReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTCompoundVariable::class,
             $this->createBuilder()->buildAstCompoundVariable('${x}')
         );
@@ -986,7 +986,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTFieldDeclarationReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTFieldDeclaration::class,
             $this->createBuilder()->buildAstFieldDeclaration()
         );
@@ -997,7 +997,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTConstantReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTConstant::class,
             $this->createBuilder()->buildAstConstant('X')
         );
@@ -1008,7 +1008,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTConstantDeclaratorReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTConstantDeclarator::class,
             $this->createBuilder()->buildAstConstantDeclarator('X')
         );
@@ -1019,7 +1019,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTConstantDefinitionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTConstantDefinition::class,
             $this->createBuilder()->buildAstConstantDefinition('X')
         );
@@ -1030,7 +1030,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTConstantPostfixReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTConstantPostfix::class,
             $this->createBuilder()->buildAstConstantPostfix('X')
         );
@@ -1041,7 +1041,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTClassFqnPostfixReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTClassFqnPostfix::class,
             $this->createBuilder()->buildAstClassFqnPostfix()
         );
@@ -1052,7 +1052,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTAssignmentExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTAssignmentExpression::class,
             $this->createBuilder()->buildAstAssignmentExpression('=')
         );
@@ -1065,7 +1065,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTShiftLeftExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTShiftLeftExpression::class,
             $this->createBuilder()->buildAstShiftLeftExpression()
         );
@@ -1078,7 +1078,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTShiftRightExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTShiftRightExpression::class,
             $this->createBuilder()->buildAstShiftRightExpression()
         );
@@ -1089,7 +1089,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTBooleanAndExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTBooleanAndExpression::class,
             $this->createBuilder()->buildAstBooleanAndExpression()
         );
@@ -1100,7 +1100,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTBooleanOrExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTBooleanOrExpression::class,
             $this->createBuilder()->buildAstBooleanOrExpression()
         );
@@ -1111,7 +1111,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTCastExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTCastExpression::class,
             $this->createBuilder()->buildAstCastExpression('(boolean)')
         );
@@ -1122,7 +1122,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTCloneExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTCloneExpression::class,
             $this->createBuilder()->buildAstCloneExpression('clone')
         );
@@ -1133,7 +1133,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTCompoundExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTCompoundExpression::class,
             $this->createBuilder()->buildAstCompoundExpression()
         );
@@ -1144,7 +1144,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTConditionalExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTConditionalExpression::class,
             $this->createBuilder()->buildAstConditionalExpression()
         );
@@ -1155,7 +1155,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTEvalExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTEvalExpression::class,
             $this->createBuilder()->buildAstEvalExpression('eval')
         );
@@ -1166,7 +1166,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTExitExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTExitExpression::class,
             $this->createBuilder()->buildAstExitExpression('exit')
         );
@@ -1177,7 +1177,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTExpression::class,
             $this->createBuilder()->buildAstExpression()
         );
@@ -1188,7 +1188,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTIncludeExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTIncludeExpression::class,
             $this->createBuilder()->buildAstIncludeExpression()
         );
@@ -1199,7 +1199,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTInstanceOfExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTInstanceOfExpression::class,
             $this->createBuilder()->buildAstInstanceOfExpression('instanceof')
         );
@@ -1210,7 +1210,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTIssetExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTIssetExpression::class,
             $this->createBuilder()->buildAstIssetExpression()
         );
@@ -1221,7 +1221,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTListExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTListExpression::class,
             $this->createBuilder()->buildAstListExpression('list')
         );
@@ -1232,7 +1232,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTLogicalAndExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTLogicalAndExpression::class,
             $this->createBuilder()->buildAstLogicalAndExpression('AND')
         );
@@ -1243,7 +1243,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTLogicalOrExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTLogicalOrExpression::class,
             $this->createBuilder()->buildAstLogicalOrExpression('OR')
         );
@@ -1254,7 +1254,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTLogicalXorExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTLogicalXorExpression::class,
             $this->createBuilder()->buildAstLogicalXorExpression('XOR')
         );
@@ -1265,7 +1265,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTRequireExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTRequireExpression::class,
             $this->createBuilder()->buildAstRequireExpression()
         );
@@ -1276,7 +1276,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTStringIndexExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTStringIndexExpression::class,
             $this->createBuilder()->buildAstStringIndexExpression()
         );
@@ -1287,7 +1287,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTUnaryExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTUnaryExpression::class,
             $this->createBuilder()->buildAstUnaryExpression('+')
         );
@@ -1298,7 +1298,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTBreakStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTBreakStatement::class,
             $this->createBuilder()->buildAstBreakStatement('break')
         );
@@ -1309,7 +1309,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTCatchStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTCatchStatement::class,
             $this->createBuilder()->buildAstCatchStatement('catch')
         );
@@ -1320,7 +1320,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTFinallyStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTFinallyStatement::class,
             $this->createBuilder()->buildAstFinallyStatement()
         );
@@ -1331,7 +1331,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTDeclareStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTDeclareStatement::class,
             $this->createBuilder()->buildAstDeclareStatement()
         );
@@ -1342,7 +1342,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTIfStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTIfStatement::class,
             $this->createBuilder()->buildAstIfStatement('if')
         );
@@ -1353,7 +1353,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTElseIfStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTElseIfStatement::class,
             $this->createBuilder()->buildAstElseIfStatement('elseif')
         );
@@ -1364,7 +1364,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTContinueStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTContinueStatement::class,
             $this->createBuilder()->buildAstContinueStatement('continue')
         );
@@ -1375,7 +1375,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTDoWhileStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTDoWhileStatement::class,
             $this->createBuilder()->buildAstDoWhileStatement('while')
         );
@@ -1386,7 +1386,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTForStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTForStatement::class,
             $this->createBuilder()->buildAstForStatement('for')
         );
@@ -1397,7 +1397,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTForInitReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTForInit::class,
             $this->createBuilder()->buildAstForInit()
         );
@@ -1408,7 +1408,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTForUpdateReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTForUpdate::class,
             $this->createBuilder()->buildAstForUpdate()
         );
@@ -1419,7 +1419,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTForeachStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTForeachStatement::class,
             $this->createBuilder()->buildAstForeachStatement('foreach')
         );
@@ -1430,7 +1430,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTFormalParametersReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTFormalParameters::class,
             $this->createBuilder()->buildAstFormalParameters()
         );
@@ -1441,7 +1441,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTFormalParameterReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTFormalParameter::class,
             $this->createBuilder()->buildAstFormalParameter()
         );
@@ -1452,7 +1452,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTGlobalStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTGlobalStatement::class,
             $this->createBuilder()->buildAstGlobalStatement()
         );
@@ -1463,7 +1463,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTGotoStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTGotoStatement::class,
             $this->createBuilder()->buildAstGotoStatement('goto')
         );
@@ -1474,7 +1474,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTLabelStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTLabelStatement::class,
             $this->createBuilder()->buildAstLabelStatement('LABEL')
         );
@@ -1485,7 +1485,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTReturnStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTReturnStatement::class,
             $this->createBuilder()->buildAstReturnStatement('return')
         );
@@ -1496,7 +1496,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTScopeStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTScopeStatement::class,
             $this->createBuilder()->buildAstScopeStatement()
         );
@@ -1507,7 +1507,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTStatement::class,
             $this->createBuilder()->buildAstStatement()
         );
@@ -1520,7 +1520,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTTraitUseStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTraitUseStatement::class,
             $this->createBuilder()->buildAstTraitUseStatement()
         );
@@ -1533,7 +1533,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTTraitAdaptationReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTraitAdaptation::class,
             $this->createBuilder()->buildAstTraitAdaptation()
         );
@@ -1546,7 +1546,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTTraitAdaptationAliasReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTraitAdaptationAlias::class,
             $this->createBuilder()->buildAstTraitAdaptationAlias(__CLASS__)
         );
@@ -1559,7 +1559,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTTraitAdaptationPrecedenceReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTraitAdaptationPrecedence::class,
             $this->createBuilder()->buildAstTraitAdaptationPrecedence(__CLASS__)
         );
@@ -1570,7 +1570,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTSwitchStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTSwitchStatement::class,
             $this->createBuilder()->buildAstSwitchStatement()
         );
@@ -1581,7 +1581,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTThrowStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTThrowStatement::class,
             $this->createBuilder()->buildAstThrowStatement('throw')
         );
@@ -1592,7 +1592,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTTryStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTryStatement::class,
             $this->createBuilder()->buildAstTryStatement('try')
         );
@@ -1603,7 +1603,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTUnsetStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTUnsetStatement::class,
             $this->createBuilder()->buildAstUnsetStatement()
         );
@@ -1614,7 +1614,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTWhileStatementReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTWhileStatement::class,
             $this->createBuilder()->buildAstWhileStatement('while')
         );
@@ -1625,7 +1625,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTArrayIndexExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTArrayIndexExpression::class,
             $this->createBuilder()->buildAstArrayIndexExpression()
         );
@@ -1636,7 +1636,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTClosureReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTClosure::class,
             $this->createBuilder()->buildAstClosure()
         );
@@ -1647,7 +1647,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTParentReferenceReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTParentReference::class,
             $this->createBuilder()->buildAstParentReference(
                 $this->createBuilder()->buildAstClassOrInterfaceReference(__CLASS__)
@@ -1660,7 +1660,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTSelfReferenceReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTSelfReference::class,
             $this->createBuilder()->buildAstSelfReference(
                 $this->createBuilder()->buildClass(__CLASS__)
@@ -1673,7 +1673,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTStaticReferenceReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTStaticReference::class,
             $this->createBuilder()->buildAstStaticReference(
                 $this->createBuilder()->buildClass(__CLASS__)
@@ -1688,7 +1688,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTTraitReferenceReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTraitReference::class,
             $this->createBuilder()->buildAstTraitReference(__CLASS__)
         );
@@ -1699,7 +1699,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTClassOrInterfaceReferenceReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTClassOrInterfaceReference::class,
             $this->createBuilder()->buildAstClassOrInterfaceReference(__CLASS__)
         );
@@ -1710,7 +1710,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTClassReferenceReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTClassReference::class,
             $this->createBuilder()->buildAstClassReference(__CLASS__)
         );
@@ -1724,7 +1724,7 @@ class PHPBuilderTest extends AbstractTestCase
         $builder = $this->createBuilder();
         $instance = $builder->buildAstScalarType(__FUNCTION__);
 
-        $this->assertInstanceOf(ASTScalarType::class, $instance);
+        static::assertInstanceOf(ASTScalarType::class, $instance);
     }
 
     /**
@@ -1735,7 +1735,7 @@ class PHPBuilderTest extends AbstractTestCase
         $object = $this->createBuilder()
             ->buildAstAllocationExpression(__FUNCTION__);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTAllocationExpression::class,
             $object
         );
@@ -1746,7 +1746,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTArgumentsReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTArguments::class,
             $this->createBuilder()->buildAstArguments()
         );
@@ -1757,7 +1757,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTSwitchLabel(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTSwitchLabel::class,
             $this->createBuilder()->buildAstSwitchLabel('m')
         );
@@ -1768,7 +1768,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTEchoStatetmentReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTEchoStatement::class,
             $this->createBuilder()->buildAstEchoStatement('echo')
         );
@@ -1779,7 +1779,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTVariableDeclaratorReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTVariableDeclarator::class,
             $this->createBuilder()->buildAstVariableDeclarator('foo')
         );
@@ -1790,7 +1790,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTStaticVariableDeclarationReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTStaticVariableDeclaration::class,
             $this->createBuilder()->buildAstStaticVariableDeclaration('$foo')
         );
@@ -1801,7 +1801,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTPostfixExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTPostfixExpression::class,
             $this->createBuilder()->buildAstPostfixExpression('++')
         );
@@ -1812,7 +1812,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTPreDecrementExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTPreDecrementExpression::class,
             $this->createBuilder()->buildAstPreDecrementExpression()
         );
@@ -1823,7 +1823,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTPreIncrementExpressionReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTPreIncrementExpression::class,
             $this->createBuilder()->buildAstPreIncrementExpression()
         );
@@ -1836,7 +1836,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTMemberPrimaryPrefixReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTMemberPrimaryPrefix::class,
             $this->createBuilder()->buildAstMemberPrimaryPrefix('::')
         );
@@ -1849,7 +1849,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTMethodPostfixReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTMethodPostfix::class,
             $this->createBuilder()->buildAstMethodPostfix('foo')
         );
@@ -1860,7 +1860,7 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testBuildASTFunctionPostfixReturnsExpectedType(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTFunctionPostfix::class,
             $this->createBuilder()->buildAstFunctionPostfix('foo')
         );

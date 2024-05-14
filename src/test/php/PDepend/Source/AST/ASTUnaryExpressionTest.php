@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTUnaryExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTUnaryExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     public function testUnaryExpression()
     {
         $expr = $this->getFirstUnaryExpressionInFunction();
-        $this->assertInstanceOf(ASTUnaryExpression::class, $expr);
+        static::assertInstanceOf(ASTUnaryExpression::class, $expr);
 
         return $expr;
     }
@@ -77,7 +77,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionHasExpectedStartLine($expr): void
     {
-        $this->assertSame(4, $expr->getStartLine());
+        static::assertSame(4, $expr->getStartLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionHasExpectedEndLine($expr): void
     {
-        $this->assertSame(5, $expr->getEndLine());
+        static::assertSame(5, $expr->getEndLine());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionHasExpectedStartColumn($expr): void
     {
-        $this->assertSame(22, $expr->getStartColumn());
+        static::assertSame(22, $expr->getStartColumn());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionHasExpectedEndColumn($expr): void
     {
-        $this->assertSame(14, $expr->getEndColumn());
+        static::assertSame(14, $expr->getEndColumn());
     }
 
     /**
@@ -122,7 +122,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     public function testUnaryExpressionNot()
     {
         $expr = $this->getFirstUnaryExpressionInFunction();
-        $this->assertInstanceOf(ASTUnaryExpression::class, $expr);
+        static::assertInstanceOf(ASTUnaryExpression::class, $expr);
 
         return $expr;
     }
@@ -132,7 +132,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionNotHasExpectedStartLine(ASTUnaryExpression $expr): void
     {
-        $this->assertSame(4, $expr->getStartLine());
+        static::assertSame(4, $expr->getStartLine());
     }
 
     /**
@@ -140,7 +140,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionNotHasExpectedEndLine(ASTUnaryExpression $expr): void
     {
-        $this->assertSame(6, $expr->getEndLine());
+        static::assertSame(6, $expr->getEndLine());
     }
 
     /**
@@ -148,7 +148,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionNotHasExpectedStartColumn(ASTUnaryExpression $expr): void
     {
-        $this->assertSame(12, $expr->getStartColumn());
+        static::assertSame(12, $expr->getStartColumn());
     }
 
     /**
@@ -156,7 +156,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionNotHasExpectedEndColumn(ASTUnaryExpression $expr): void
     {
-        $this->assertSame(5, $expr->getEndColumn());
+        static::assertSame(5, $expr->getEndColumn());
     }
 
     /**
@@ -165,7 +165,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     public function testUnaryExpressionSuppressWarning()
     {
         $expr = $this->getFirstUnaryExpressionInFunction();
-        $this->assertInstanceOf(ASTUnaryExpression::class, $expr);
+        static::assertInstanceOf(ASTUnaryExpression::class, $expr);
 
         return $expr;
     }
@@ -175,7 +175,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionSuppressWarningHasExpectedStartLine(ASTUnaryExpression $expr): void
     {
-        $this->assertSame(4, $expr->getStartLine());
+        static::assertSame(4, $expr->getStartLine());
     }
 
     /**
@@ -183,7 +183,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionSuppressWarningHasExpectedEndLine(ASTUnaryExpression $expr): void
     {
-        $this->assertSame(4, $expr->getEndLine());
+        static::assertSame(4, $expr->getEndLine());
     }
 
     /**
@@ -191,7 +191,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionSuppressWarningHasExpectedStartColumn(ASTUnaryExpression $expr): void
     {
-        $this->assertSame(12, $expr->getStartColumn());
+        static::assertSame(12, $expr->getStartColumn());
     }
 
     /**
@@ -199,7 +199,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
      */
     public function testUnaryExpressionSuppressWarningHasExpectedEndColumn(ASTUnaryExpression $expr): void
     {
-        $this->assertSame(47, $expr->getEndColumn());
+        static::assertSame(47, $expr->getEndColumn());
     }
 
     /**

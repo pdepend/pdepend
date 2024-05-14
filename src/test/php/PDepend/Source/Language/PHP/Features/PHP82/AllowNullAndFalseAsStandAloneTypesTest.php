@@ -81,62 +81,64 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
             $expectedTypeClass = $expected[2] ?? ASTScalarType::class;
             [$type, $variable] = $declarations[$index];
 
-            $this->assertInstanceOf(
+            static::assertInstanceOf(
                 $expectedTypeClass,
                 $type,
                 "Wrong type for $expectedType $expectedVariable"
             );
-            $this->assertSame(ltrim($expectedType, '?'), $type->getImage());
-            $this->assertInstanceOf(
+            static::assertSame(ltrim($expectedType, '?'), $type->getImage());
+            static::assertInstanceOf(
                 ASTVariableDeclarator::class,
                 $variable,
                 "Wrong variable for $expectedType $expectedVariable"
             );
-            $this->assertSame($expectedVariable, $variable->getImage());
+            static::assertSame($expectedVariable, $variable->getImage());
         }
     }
 
     public function testReturnTypes(): void
     {
         $class = $this->getFirstClassForTestCase();
+
         /** @var ASTMethod[] $methods */
         $methods = $class->getMethods();
         $nullish = $methods[0]->getReturnType();
         $falsy = $methods[1]->getReturnType();
 
-        $this->assertInstanceOf(ASTScalarType::class, $nullish);
-        $this->assertSame('null', $nullish->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $nullish);
+        static::assertSame('null', $nullish->getImage());
 
-        $this->assertInstanceOf(ASTScalarType::class, $falsy);
-        $this->assertSame('false', $falsy->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $falsy);
+        static::assertSame('false', $falsy->getImage());
     }
 
     public function testParameters(): void
     {
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTParameter[] $methods */
         $parameters = $method->getParameters();
         $nullish = $parameters[0];
         $falsy = $parameters[1];
 
-        $this->assertTrue($nullish->allowsNull());
-        $this->assertFalse($falsy->allowsNull());
+        static::assertTrue($nullish->allowsNull());
+        static::assertFalse($falsy->allowsNull());
 
         $nullish = $nullish->getFormalParameter()->getType();
         $falsy = $falsy->getFormalParameter()->getType();
 
-        $this->assertInstanceOf(ASTScalarType::class, $nullish);
-        $this->assertSame('null', $nullish->getImage());
-        $this->assertSame(3, $nullish->getStartLine());
-        $this->assertSame(29, $nullish->getStartColumn());
-        $this->assertSame(3, $nullish->getEndLine());
-        $this->assertSame(32, $nullish->getEndColumn());
+        static::assertInstanceOf(ASTScalarType::class, $nullish);
+        static::assertSame('null', $nullish->getImage());
+        static::assertSame(3, $nullish->getStartLine());
+        static::assertSame(29, $nullish->getStartColumn());
+        static::assertSame(3, $nullish->getEndLine());
+        static::assertSame(32, $nullish->getEndColumn());
 
-        $this->assertInstanceOf(ASTScalarType::class, $falsy);
-        $this->assertSame('false', $falsy->getImage());
-        $this->assertSame(3, $falsy->getStartLine());
-        $this->assertSame(44, $falsy->getStartColumn());
-        $this->assertSame(3, $falsy->getEndLine());
-        $this->assertSame(48, $falsy->getEndColumn());
+        static::assertInstanceOf(ASTScalarType::class, $falsy);
+        static::assertSame('false', $falsy->getImage());
+        static::assertSame(3, $falsy->getStartLine());
+        static::assertSame(44, $falsy->getStartColumn());
+        static::assertSame(3, $falsy->getEndLine());
+        static::assertSame(48, $falsy->getEndColumn());
     }
 }

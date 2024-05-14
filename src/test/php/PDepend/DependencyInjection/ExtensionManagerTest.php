@@ -50,8 +50,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * Test cases for the {@link \PDepend\Application} class.
  *
- * @covers \PDepend\DependencyInjection\ExtensionManager
  * @covers \PDepend\DependencyInjection\Extension
+ * @covers \PDepend\DependencyInjection\ExtensionManager
  * @covers \PDepend\DependencyInjection\TreeBuilder
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -64,7 +64,7 @@ class ExtensionManagerTest extends AbstractTestCase
     {
         $extensionManager = new ExtensionManager();
 
-        $this->assertSame([], $extensionManager->getActivatedExtensions());
+        static::assertSame([], $extensionManager->getActivatedExtensions());
 
         $message = null;
 
@@ -74,11 +74,11 @@ class ExtensionManagerTest extends AbstractTestCase
             $message = $exception->getMessage();
         }
 
-        $this->assertSame(
+        static::assertSame(
             'Cannot find extension class "CannotFindIt" for PDepend. Maybe the plugin is not installed?',
             $message
         );
-        $this->assertSame([], $extensionManager->getActivatedExtensions());
+        static::assertSame([], $extensionManager->getActivatedExtensions());
 
         $message = null;
 
@@ -88,25 +88,25 @@ class ExtensionManagerTest extends AbstractTestCase
             $message = $exception->getMessage();
         }
 
-        $this->assertSame(
+        static::assertSame(
             'Class "PDepend\\DependencyInjection\\ExtensionManager" is not a valid Extension',
             $message
         );
-        $this->assertSame([], $extensionManager->getActivatedExtensions());
+        static::assertSame([], $extensionManager->getActivatedExtensions());
 
         $extensionManager->activateExtension(TestExtension::class);
         $extensions = $extensionManager->getActivatedExtensions();
 
-        $this->assertSame(['test'], array_keys($extensions));
+        static::assertSame(['test'], array_keys($extensions));
 
         $extension = $extensions['test'];
 
-        $this->assertInstanceOf(TestExtension::class, $extension);
-        $this->assertSame([], $extension->getCompilerPasses());
+        static::assertInstanceOf(TestExtension::class, $extension);
+        static::assertSame([], $extension->getCompilerPasses());
 
         $container = new ContainerBuilder();
         $extension->load(['foo' => 'bar'], $container);
 
-        $this->assertSame(['foo' => 'bar'], $container->getParameter('test.parameters'));
+        static::assertSame(['foo' => 'bar'], $container->getParameter('test.parameters'));
     }
 }

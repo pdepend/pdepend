@@ -63,9 +63,7 @@ namespace PDepend\Source\AST;
  */
 class ASTParameter extends AbstractASTArtifact
 {
-    /**
-     * The parent function or method instance.
-     */
+    /** The parent function or method instance. */
     private AbstractASTCallable $declaringFunction;
 
     /**
@@ -82,14 +80,10 @@ class ASTParameter extends AbstractASTArtifact
      */
     private $optional = false;
 
-    /**
-     * The wrapped formal parameter instance.
-     */
+    /** The wrapped formal parameter instance. */
     private ASTFormalParameter $formalParameter;
 
-    /**
-     * The wrapped variable declarator instance.
-     */
+    /** The wrapped variable declarator instance. */
     private ?ASTVariableDeclarator $variableDeclarator;
 
     /**
@@ -218,6 +212,7 @@ class ASTParameter extends AbstractASTArtifact
         if ($this->declaringFunction instanceof ASTMethod) {
             return $this->declaringFunction->getParent();
         }
+
         return null;
     }
 
@@ -256,6 +251,7 @@ class ASTParameter extends AbstractASTArtifact
         if ($classReference === null) {
             return null;
         }
+
         return $classReference->getType();
     }
 
@@ -281,6 +277,7 @@ class ASTParameter extends AbstractASTArtifact
     public function isArray()
     {
         $node = $this->formalParameter->getChild(0);
+
         return ($node instanceof ASTTypeArray);
     }
 
@@ -353,6 +350,7 @@ class ASTParameter extends AbstractASTArtifact
         if ($value === null) {
             return false;
         }
+
         return $value->isValueAvailable();
     }
 

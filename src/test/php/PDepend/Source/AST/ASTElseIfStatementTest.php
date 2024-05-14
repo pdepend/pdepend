@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTElseIfStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTElseIfStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testHasElseMethodReturnsFalseByDefault(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertFalse($stmt->hasElse());
+        static::assertFalse($stmt->hasElse());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testHasElseMethodReturnsTrueWhenElseIfBranchExists(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertTrue($stmt->hasElse());
+        static::assertTrue($stmt->hasElse());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testHasElseMethodReturnsTrueWhenElseBranchWithIfExists(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertTrue($stmt->hasElse());
+        static::assertTrue($stmt->hasElse());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testHasElseMethodReturnsTrueWhenElseBranchExists(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertTrue($stmt->hasElse());
+        static::assertTrue($stmt->hasElse());
     }
 
     /**
@@ -96,7 +96,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testElseIfStatementGraphWithBooleanExpressions(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertCount(2, $stmt->getChildren());
+        static::assertCount(2, $stmt->getChildren());
     }
 
     /**
@@ -105,7 +105,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testFirstChildOfElseIfStatementIsInstanceOfExpression(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTExpression::class, $stmt->getChild(0));
+        static::assertInstanceOf(ASTExpression::class, $stmt->getChild(0));
     }
 
     /**
@@ -114,7 +114,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testSecondChildOfElseIfStatementIsInstanceOfScopeStatement(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(1));
+        static::assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(1));
     }
 
     /**
@@ -123,7 +123,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testElseIfStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $stmt->getStartLine());
+        static::assertEquals(6, $stmt->getStartLine());
     }
 
     /**
@@ -132,7 +132,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testElseIfStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(7, $stmt->getStartColumn());
+        static::assertEquals(7, $stmt->getStartColumn());
     }
 
     /**
@@ -141,7 +141,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testElseIfStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(8, $stmt->getEndLine());
+        static::assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -150,7 +150,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testElseIfStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getEndColumn());
+        static::assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
@@ -159,7 +159,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testElseIfStatementWithoutScopeStatementBody(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTForeachStatement::class, $stmt->getChild(1));
+        static::assertInstanceOf(ASTForeachStatement::class, $stmt->getChild(1));
     }
 
     /**
@@ -168,7 +168,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testElseIfStatementAlternativeScopeHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $stmt->getStartLine());
+        static::assertEquals(6, $stmt->getStartLine());
     }
 
     /**
@@ -177,7 +177,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testElseIfStatementAlternativeScopeHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -186,7 +186,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testElseIfStatementAlternativeScopeHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(11, $stmt->getEndLine());
+        static::assertEquals(11, $stmt->getEndLine());
     }
 
     /**
@@ -195,7 +195,7 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
     public function testElseIfStatementAlternativeScopeHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstElseIfStatementInFunction(__METHOD__);
-        $this->assertEquals(9, $stmt->getEndColumn());
+        static::assertEquals(9, $stmt->getEndColumn());
     }
 
     /**

@@ -61,36 +61,37 @@ class InInitializersTest extends PHPParserVersion81TestCase
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
 
-        $this->assertInstanceOf(ASTFormalParameters::class, $children[0]);
+        static::assertInstanceOf(ASTFormalParameters::class, $children[0]);
 
         /** @var ASTFormalParameters $parametersBag */
         $parametersBag = $children[0];
+
         /** @var ASTFormalParameter[] $parameters */
         $parameters = $parametersBag->getChildren();
 
-        $this->assertCount(1, $parameters);
+        static::assertCount(1, $parameters);
 
         $classRef = $parameters[0];
 
-        $this->assertInstanceOf(ASTFormalParameter::class, $classRef);
-        $this->assertTrue($classRef->isPromoted());
-        $this->assertTrue($classRef->isPublic());
+        static::assertInstanceOf(ASTFormalParameter::class, $classRef);
+        static::assertTrue($classRef->isPromoted());
+        static::assertTrue($classRef->isPublic());
 
         /** @var ASTVariableDeclarator $variable */
         $variable = $classRef->getChild(1);
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $variable);
+        static::assertInstanceOf(ASTVariableDeclarator::class, $variable);
 
         /** @var ASTValue $defaultValue */
         $defaultValue = $variable->getValue();
 
-        $this->assertInstanceOf(ASTValue::class, $defaultValue);
-        $this->assertTrue($defaultValue->isValueAvailable());
+        static::assertInstanceOf(ASTValue::class, $defaultValue);
+        static::assertTrue($defaultValue->isValueAvailable());
 
         /** @var ASTAllocationExpression $expression */
         $expression = $defaultValue->getValue();
 
-        $this->assertInstanceOf(ASTAllocationExpression::class, $expression);
-        $this->assertSame('Bar', $expression->getChild(0)->getImage());
+        static::assertInstanceOf(ASTAllocationExpression::class, $expression);
+        static::assertSame('Bar', $expression->getChild(0)->getImage());
     }
 
     public function testInInitializersMultipleProperties(): void
@@ -98,88 +99,89 @@ class InInitializersTest extends PHPParserVersion81TestCase
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
 
-        $this->assertInstanceOf(ASTFormalParameters::class, $children[0]);
+        static::assertInstanceOf(ASTFormalParameters::class, $children[0]);
 
         /** @var ASTFormalParameters $parametersBag */
         $parametersBag = $children[0];
+
         /** @var ASTFormalParameter[] $parameters */
         $parameters = $parametersBag->getChildren();
 
-        $this->assertCount(4, $parameters);
+        static::assertCount(4, $parameters);
 
         $classRef = $parameters[0];
 
-        $this->assertInstanceOf(ASTFormalParameter::class, $classRef);
-        $this->assertTrue($classRef->isPromoted());
-        $this->assertTrue($classRef->isPublic());
+        static::assertInstanceOf(ASTFormalParameter::class, $classRef);
+        static::assertTrue($classRef->isPromoted());
+        static::assertTrue($classRef->isPublic());
 
         /** @var ASTClassOrInterfaceReference $variable */
         $type = $classRef->getChild(0);
-        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $type);
-        $this->assertSame('Bar', $type->getImage());
+        static::assertInstanceOf(ASTClassOrInterfaceReference::class, $type);
+        static::assertSame('Bar', $type->getImage());
 
         /** @var ASTVariableDeclarator $variable */
         $variable = $classRef->getChild(1);
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $variable);
+        static::assertInstanceOf(ASTVariableDeclarator::class, $variable);
 
         /** @var ASTValue $defaultValue */
         $defaultValue = $variable->getValue();
 
-        $this->assertInstanceOf(ASTValue::class, $defaultValue);
-        $this->assertTrue($defaultValue->isValueAvailable());
+        static::assertInstanceOf(ASTValue::class, $defaultValue);
+        static::assertTrue($defaultValue->isValueAvailable());
 
         /** @var ASTAllocationExpression $expression */
         $expression = $defaultValue->getValue();
 
-        $this->assertInstanceOf(ASTAllocationExpression::class, $expression);
-        $this->assertSame('Bar', $expression->getChild(0)->getImage());
+        static::assertInstanceOf(ASTAllocationExpression::class, $expression);
+        static::assertSame('Bar', $expression->getChild(0)->getImage());
 
         $str = $parameters[1];
 
-        $this->assertInstanceOf(ASTFormalParameter::class, $str);
-        $this->assertTrue($str->isPromoted());
-        $this->assertTrue($str->isProtected());
+        static::assertInstanceOf(ASTFormalParameter::class, $str);
+        static::assertTrue($str->isPromoted());
+        static::assertTrue($str->isProtected());
 
         /** @var ASTScalarType $variable */
         $type = $str->getChild(0);
-        $this->assertInstanceOf(ASTScalarType::class, $type);
-        $this->assertSame('string', $type->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $type);
+        static::assertSame('string', $type->getImage());
 
         /** @var ASTVariableDeclarator $variable */
         $variable = $str->getChild(1);
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $variable);
+        static::assertInstanceOf(ASTVariableDeclarator::class, $variable);
 
         /** @var ASTValue $defaultValue */
         $defaultValue = $variable->getValue();
 
-        $this->assertInstanceOf(ASTValue::class, $defaultValue);
-        $this->assertTrue($defaultValue->isValueAvailable());
+        static::assertInstanceOf(ASTValue::class, $defaultValue);
+        static::assertTrue($defaultValue->isValueAvailable());
 
         /** @var ASTAllocationExpression $expression */
         $expression = $defaultValue->getValue();
 
-        $this->assertSame('abc', $expression);
+        static::assertSame('abc', $expression);
 
         $classRef = $parameters[2];
 
-        $this->assertInstanceOf(ASTFormalParameter::class, $classRef);
-        $this->assertFalse($classRef->isPromoted());
-        $this->assertFalse($classRef->isPublic());
+        static::assertInstanceOf(ASTFormalParameter::class, $classRef);
+        static::assertFalse($classRef->isPromoted());
+        static::assertFalse($classRef->isPublic());
 
         /** @var ASTVariableDeclarator $variable */
         $variable = $classRef->getChild(0);
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $variable);
+        static::assertInstanceOf(ASTVariableDeclarator::class, $variable);
 
         /** @var ASTValue $defaultValue */
         $defaultValue = $variable->getValue();
 
-        $this->assertInstanceOf(ASTValue::class, $defaultValue);
-        $this->assertTrue($defaultValue->isValueAvailable());
+        static::assertInstanceOf(ASTValue::class, $defaultValue);
+        static::assertTrue($defaultValue->isValueAvailable());
 
         /** @var ASTAllocationExpression $expression */
         $expression = $defaultValue->getValue();
 
-        $this->assertInstanceOf(ASTAllocationExpression::class, $expression);
-        $this->assertSame('Biz', $expression->getChild(0)->getImage());
+        static::assertInstanceOf(ASTAllocationExpression::class, $expression);
+        static::assertSame('Biz', $expression->getChild(0)->getImage());
     }
 }

@@ -60,7 +60,7 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
  * @implements \Iterator<int|string, T>
  * @implements \ArrayAccess<int|string, T>
  */
-class ASTArtifactList implements ArrayAccess, Iterator, Countable
+class ASTArtifactList implements ArrayAccess, Countable, Iterator
 {
     /**
      * List of {@link ASTArtifact} objects in
@@ -126,11 +126,12 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
      * @return T
      * @throws OutOfBoundsException
      */
-    public function current(): false|ASTArtifact
+    public function current(): ASTArtifact|false
     {
         if ($this->offset >= $this->count) {
-            throw new OutOfBoundsException("The offset does not exist.");
+            throw new OutOfBoundsException('The offset does not exist.');
         }
+
         return $this->artifacts[$this->offset];
     }
 
@@ -194,6 +195,7 @@ class ASTArtifactList implements ArrayAccess, Iterator, Countable
         if (isset($this->artifacts[$offset])) {
             return $this->artifacts[$offset];
         }
+
         throw new OutOfBoundsException("The offset {$offset} does not exist.");
     }
 

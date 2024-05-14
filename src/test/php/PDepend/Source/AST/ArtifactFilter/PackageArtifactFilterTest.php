@@ -66,7 +66,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
     public function testFilterAcceptsPackage(): void
     {
         $filter = new PackageArtifactFilter([__FUNCTION__, __METHOD__]);
-        $this->assertTrue($filter->accept(new ASTNamespace(__CLASS__)));
+        static::assertTrue($filter->accept(new ASTNamespace(__CLASS__)));
     }
 
     /**
@@ -75,7 +75,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
     public function testFilterNotAcceptsPackage(): void
     {
         $filter = new PackageArtifactFilter([__CLASS__, __FUNCTION__]);
-        $this->assertFalse($filter->accept(new ASTNamespace(__CLASS__)));
+        static::assertFalse($filter->accept(new ASTNamespace(__CLASS__)));
     }
 
     /**
@@ -84,8 +84,8 @@ class PackageArtifactFilterTest extends AbstractTestCase
     public function testFilterAcceptsAndNotAcceptsExpectedPackage(): void
     {
         $filter = new PackageArtifactFilter([__CLASS__]);
-        $this->assertFalse($filter->accept(new ASTNamespace(__CLASS__)));
-        $this->assertTrue($filter->accept(new ASTNamespace(__FUNCTION__)));
+        static::assertFalse($filter->accept(new ASTNamespace(__CLASS__)));
+        static::assertTrue($filter->accept(new ASTNamespace(__FUNCTION__)));
     }
 
     /**
@@ -97,7 +97,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $class = $namespace->addType(new ASTClass('Clazz'));
 
         $filter = new PackageArtifactFilter([__CLASS__]);
-        $this->assertTrue($filter->accept($class));
+        static::assertTrue($filter->accept($class));
     }
 
     /**
@@ -109,7 +109,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $class = $namespace->addType(new ASTClass('Clazz'));
 
         $filter = new PackageArtifactFilter([__FUNCTION__]);
-        $this->assertFalse($filter->accept($class));
+        static::assertFalse($filter->accept($class));
     }
 
     /**
@@ -121,7 +121,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $interface = $namespace->addType(new ASTInterface('Iface'));
 
         $filter = new PackageArtifactFilter([__CLASS__]);
-        $this->assertTrue($filter->accept($interface));
+        static::assertTrue($filter->accept($interface));
     }
 
     /**
@@ -133,7 +133,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $interface = $namespace->addType(new ASTInterface('Iface'));
 
         $filter = new PackageArtifactFilter([__FUNCTION__]);
-        $this->assertFalse($filter->accept($interface));
+        static::assertFalse($filter->accept($interface));
     }
 
     /**
@@ -145,7 +145,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $function = $namespace->addFunction(new ASTFunction('Func'));
 
         $filter = new PackageArtifactFilter([__CLASS__]);
-        $this->assertTrue($filter->accept($function));
+        static::assertTrue($filter->accept($function));
     }
 
     /**
@@ -157,7 +157,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $function = $namespace->addFunction(new ASTFunction('Func'));
 
         $filter = new PackageArtifactFilter([__FUNCTION__]);
-        $this->assertFalse($filter->accept($function));
+        static::assertFalse($filter->accept($function));
     }
 
     /**
@@ -168,7 +168,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $pdepend = new ASTNamespace('PDepend_Code');
 
         $filter = new PackageArtifactFilter(['ezc*', 'Zend_*']);
-        $this->assertTrue($filter->accept($pdepend));
+        static::assertTrue($filter->accept($pdepend));
     }
 
     /**
@@ -179,7 +179,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $ezcGraph = new ASTNamespace('ezcGraph');
 
         $filter = new PackageArtifactFilter(['ezc*', 'Zend_*']);
-        $this->assertFalse($filter->accept($ezcGraph));
+        static::assertFalse($filter->accept($ezcGraph));
     }
 
     /**
@@ -192,7 +192,7 @@ class PackageArtifactFilterTest extends AbstractTestCase
         $pdepend = new ASTNamespace('PDepend_Code');
 
         $filter = new PackageArtifactFilter(['ezc*', 'Zend_*']);
-        $this->assertFalse($filter->accept($zendFW));
-        $this->assertTrue($filter->accept($pdepend));
+        static::assertFalse($filter->accept($zendFW));
+        static::assertTrue($filter->accept($pdepend));
     }
 }

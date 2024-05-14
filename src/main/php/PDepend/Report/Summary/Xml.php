@@ -85,9 +85,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * @var ASTCompilationUnit[]
      */
     protected $fileSet = [];
-    /**
-     * The log output file.
-     */
+
+    /** The log output file. */
     private string $logFile;
 
     /**
@@ -178,6 +177,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
             $accepted = true;
         }
+
         return $accepted;
     }
 
@@ -204,7 +204,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             $metrics->setAttribute($name, $value);
         }
 
-        array_push($this->xmlStack, $metrics);
+        $this->xmlStack[] = $metrics;
 
         foreach ($this->code as $node) {
             $node->accept($this);
@@ -298,7 +298,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $xml->appendChild($typeXml);
 
-        array_push($this->xmlStack, $typeXml);
+        $this->xmlStack[] = $typeXml;
 
         foreach ($type->getMethods() as $method) {
             $method->accept($this);
@@ -395,7 +395,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $this->writeNodeMetrics($packageXml, $namespace);
 
-        array_push($this->xmlStack, $packageXml);
+        $this->xmlStack[] = $packageXml;
 
         foreach ($namespace->getTypes() as $type) {
             $type->accept($this);

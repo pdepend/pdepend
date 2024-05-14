@@ -220,6 +220,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         if ($this->constants === null) {
             $this->initConstants();
         }
+
         return $this->constants;
     }
 
@@ -233,6 +234,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         if (!isset($this->constantDeclarators)) {
             $this->initConstantDeclarators();
         }
+
         return $this->constantDeclarators;
     }
 
@@ -249,6 +251,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         if ($this->constants === null) {
             $this->initConstants();
         }
+
         return array_key_exists($name, $this->constants);
     }
 
@@ -264,6 +267,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
         if ($this->hasConstant($name) === true) {
             return $this->constants[$name];
         }
+
         return false;
     }
 

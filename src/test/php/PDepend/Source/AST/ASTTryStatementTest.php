@@ -47,8 +47,8 @@ use PDepend\Source\Parser\UnexpectedTokenException;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTryStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTryStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -65,7 +65,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
     public function testTryStatement()
     {
         $stmt = $this->getFirstTryStatementInFunction();
-        $this->assertInstanceOf(ASTTryStatement::class, $stmt);
+        static::assertInstanceOf(ASTTryStatement::class, $stmt);
 
         return $stmt;
     }
@@ -79,7 +79,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
      */
     public function testTryStatementHasExpectedStartLine($stmt): void
     {
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
      */
     public function testTryStatementHasExpectedStartColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -103,7 +103,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
      */
     public function testTryStatementHasExpectedEndLine($stmt): void
     {
-        $this->assertEquals(8, $stmt->getEndLine());
+        static::assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -115,7 +115,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
      */
     public function testTryStatementHasExpectedEndColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getEndColumn());
+        static::assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
@@ -127,7 +127,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
      */
     public function testFirstChildOfTryStatementIsInstanceOfScopeStatement($stmt): void
     {
-        $this->assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(0));
+        static::assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(0));
     }
 
     /**
@@ -139,7 +139,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
      */
     public function testSecondChildOfTryStatementIsInstanceOfCatchStatement($stmt): void
     {
-        $this->assertInstanceOf(ASTCatchStatement::class, $stmt->getChild(1));
+        static::assertInstanceOf(ASTCatchStatement::class, $stmt->getChild(1));
     }
 
     /**
@@ -160,7 +160,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
             ASTCatchStatement::class,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**

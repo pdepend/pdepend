@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTYieldStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTForeachStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     public function testYield(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTYieldStatement::class, $stmt);
+        static::assertInstanceOf(ASTYieldStatement::class, $stmt);
     }
 
     /**
@@ -70,15 +70,15 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
 
-        $this->assertInstanceOf(ASTYieldStatement::class, $stmt);
+        static::assertInstanceOf(ASTYieldStatement::class, $stmt);
         $assignment = $stmt->getParent();
-        $this->assertInstanceOf(ASTAssignmentExpression::class, $assignment);
-        $this->assertSame('$result', $assignment->getChild(0)->getImage());
+        static::assertInstanceOf(ASTAssignmentExpression::class, $assignment);
+        static::assertSame('$result', $assignment->getChild(0)->getImage());
 
-        $this->assertSame([
+        static::assertSame([
             ASTLiteral::class,
         ], array_map('get_class', $stmt->getChildren()));
-        $this->assertSame('23', $stmt->getChild(0)->getImage());
+        static::assertSame('23', $stmt->getChild(0)->getImage());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     public function testYieldWithLiteral(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTLiteral::class, $stmt->getChild(0));
+        static::assertInstanceOf(ASTLiteral::class, $stmt->getChild(0));
     }
 
     /**
@@ -96,7 +96,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     public function testYieldWithVariable(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTVariable::class, $stmt->getChild(0));
+        static::assertInstanceOf(ASTVariable::class, $stmt->getChild(0));
     }
 
     /**
@@ -105,8 +105,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     public function testYieldWithKeyValue(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTVariable::class, $stmt->getChild(0));
-        $this->assertInstanceOf(ASTVariable::class, $stmt->getChild(1));
+        static::assertInstanceOf(ASTVariable::class, $stmt->getChild(0));
+        static::assertInstanceOf(ASTVariable::class, $stmt->getChild(1));
     }
 
     /**
@@ -115,8 +115,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     public function testYieldWithFunctionCalls(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTFunctionPostfix::class, $stmt->getChild(0));
-        $this->assertInstanceOf(ASTFunctionPostfix::class, $stmt->getChild(1));
+        static::assertInstanceOf(ASTFunctionPostfix::class, $stmt->getChild(0));
+        static::assertInstanceOf(ASTFunctionPostfix::class, $stmt->getChild(1));
     }
 
     /**
@@ -125,7 +125,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     public function testYieldInsideForeach(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
-        $this->assertInstanceOf(ASTForeachStatement::class, $stmt->getParent()->getParent());
+        static::assertInstanceOf(ASTForeachStatement::class, $stmt->getParent()->getParent());
     }
 
     /**
@@ -138,7 +138,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
         $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
         $nodes = $stmt->getChildren();
 
-        $this->assertCount(2, $nodes);
+        static::assertCount(2, $nodes);
 
         return $nodes;
     }
@@ -152,8 +152,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldKeyValueChildNodes(array $nodes): void
     {
-        $this->assertEquals('$id', $nodes[0]->getImage());
-        $this->assertEquals('$line', $nodes[1]->getImage());
+        static::assertEquals('$id', $nodes[0]->getImage());
+        static::assertEquals('$line', $nodes[1]->getImage());
     }
 
     /**
@@ -166,7 +166,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
         $yield = $this->getFirstYieldStatementInFunction(__METHOD__);
         $nodes = $yield->getChildren();
 
-        $this->assertCount(1, $nodes);
+        static::assertCount(1, $nodes);
 
         return $yield;
     }
@@ -178,7 +178,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldValueAssignmentSimpleParent(ASTStatement $yield): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTAssignmentExpression::class,
             $yield->getParent()->getParent()
         );
@@ -194,7 +194,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
         $yield = $this->getFirstYieldStatementInFunction(__METHOD__);
         $nodes = $yield->getChildren();
 
-        $this->assertCount(2, $nodes);
+        static::assertCount(2, $nodes);
 
         return $yield;
     }
@@ -206,7 +206,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldValueAssignmentKeyValueParent(ASTYieldStatement $yield): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTAssignmentExpression::class,
             $yield->getParent()->getParent()->getParent()
         );
@@ -221,8 +221,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     {
         $nodes = $yield->getChildren();
 
-        $this->assertEquals('"key"', $nodes[0]->getImage());
-        $this->assertEquals('2', $nodes[1]->getImage());
+        static::assertEquals('"key"', $nodes[0]->getImage());
+        static::assertEquals('2', $nodes[1]->getImage());
     }
 
     /**

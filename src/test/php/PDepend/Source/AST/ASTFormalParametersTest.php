@@ -46,8 +46,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFormalParameterss} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTFormalParameters
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.10.0
@@ -62,7 +62,7 @@ class ASTFormalParametersTest extends ASTNodeTestCase
     public function testFormalParametersHasExpectedStartLine(): void
     {
         $param = $this->getFirstFormalParametersInFunction(__METHOD__);
-        $this->assertEquals(2, $param->getStartLine());
+        static::assertEquals(2, $param->getStartLine());
     }
 
     /**
@@ -71,7 +71,7 @@ class ASTFormalParametersTest extends ASTNodeTestCase
     public function testFormalParametersHasExpectedStartColumn(): void
     {
         $param = $this->getFirstFormalParametersInFunction(__METHOD__);
-        $this->assertEquals(52, $param->getStartColumn());
+        static::assertEquals(52, $param->getStartColumn());
     }
 
     /**
@@ -80,7 +80,7 @@ class ASTFormalParametersTest extends ASTNodeTestCase
     public function testFormalParametersHasExpectedEndLine(): void
     {
         $param = $this->getFirstFormalParametersInFunction(__METHOD__);
-        $this->assertEquals(6, $param->getEndLine());
+        static::assertEquals(6, $param->getEndLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTFormalParametersTest extends ASTNodeTestCase
     public function testFormalParametersHasExpectedEndColumn(): void
     {
         $param = $this->getFirstFormalParametersInFunction(__METHOD__);
-        $this->assertEquals(1, $param->getEndColumn());
+        static::assertEquals(1, $param->getEndColumn());
     }
 
     /**

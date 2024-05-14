@@ -57,14 +57,10 @@ use PDepend\Util\Cache\CacheDriver;
  */
 abstract class AbstractASTType extends AbstractASTArtifact
 {
-    /**
-     * The internal used cache instance.
-     */
+    /** The internal used cache instance. */
     protected CacheDriver $cache;
 
-    /**
-     * The currently used builder context.
-     */
+    /** The currently used builder context. */
     protected BuilderContext $context;
 
     /**
@@ -104,9 +100,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     protected $methods = [];
 
-    /**
-     * The parent namespace for this class.
-     */
+    /** The parent namespace for this class. */
     private ?ASTNamespace $namespace = null;
 
     /**
@@ -167,6 +161,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     public function setCache(CacheDriver $cache)
     {
         $this->cache = $cache;
+
         return $this;
     }
 
@@ -178,13 +173,12 @@ abstract class AbstractASTType extends AbstractASTArtifact
     public function setContext(BuilderContext $context)
     {
         $this->context = $context;
+
         return $this;
     }
 
     /**
      * Adds a parsed child node to this node.
-     *
-     * @access private
      */
     public function addChild(ASTNode $node): void
     {
@@ -309,6 +303,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
         if (null === $this->namespace || $this->namespace->isPackageAnnotation()) {
             return $this->name;
         }
+
         return sprintf('%s\\%s', $this->namespaceName, $this->name);
     }
 
@@ -376,7 +371,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @return bool
      * @since  1.0.6
      */
-    abstract public function isSubtypeOf(AbstractASTType $type);
+    abstract public function isSubtypeOf(self $type);
 
     /**
      * Returns an array with {@link ASTMethod} objects
@@ -412,11 +407,13 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
                 if (!isset($methods[$name]) || isset($priorMethods[$name])) {
                     $methods[$name] = $method;
+
                     continue;
                 }
 
                 if ($methods[$name]->isAbstract()) {
                     $methods[$name] = $method;
+
                     continue;
                 }
 

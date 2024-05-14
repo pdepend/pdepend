@@ -53,9 +53,7 @@ namespace PDepend\Source\AST;
  */
 class ASTStaticReference extends ASTSelfReference
 {
-    /**
-     * The source image of this node.
-     */
+    /** The source image of this node. */
     public const IMAGE = 'static';
 
     /**

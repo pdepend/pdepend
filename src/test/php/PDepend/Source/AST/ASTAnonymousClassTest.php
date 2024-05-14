@@ -47,8 +47,8 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCatchStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTAnonymousClass
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -59,25 +59,25 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
     public function testAnonymousClassHasExpectedStartLine(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     public function testAnonymousClassHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
-        $this->assertEquals(16, $expr->getStartColumn());
+        static::assertEquals(16, $expr->getStartColumn());
     }
 
     public function testAnonymousClassHasExpectedEndLine(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
-        $this->assertEquals(9, $expr->getEndLine());
+        static::assertEquals(9, $expr->getEndLine());
     }
 
     public function testAnonymousClassHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
-        $this->assertEquals(5, $expr->getEndColumn());
+        static::assertEquals(5, $expr->getEndColumn());
     }
 
     /**
@@ -88,7 +88,7 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
         $class = new ASTAnonymousClass(__CLASS__);
         $class->setCache(new MemoryCacheDriver());
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'metadata',
                 'constants',

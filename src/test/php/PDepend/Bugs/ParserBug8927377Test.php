@@ -64,7 +64,7 @@ class ParserBug8927377Test extends AbstractRegressionTestCase
     public function testPropertyPostfixHasExpectedStartLine(): void
     {
         $postfix = $this->getFirstPropertyPostfixInClass();
-        $this->assertEquals(6, $postfix->getStartLine());
+        static::assertEquals(6, $postfix->getStartLine());
     }
 
     /**
@@ -73,7 +73,7 @@ class ParserBug8927377Test extends AbstractRegressionTestCase
     public function testPropertyPostfixHasExpectedEndLine(): void
     {
         $postfix = $this->getFirstPropertyPostfixInClass();
-        $this->assertEquals(6, $postfix->getEndLine());
+        static::assertEquals(6, $postfix->getEndLine());
     }
 
     /**
@@ -82,7 +82,7 @@ class ParserBug8927377Test extends AbstractRegressionTestCase
     public function testPropertyPostfixHasExpectedStartColumn(): void
     {
         $postfix = $this->getFirstPropertyPostfixInClass();
-        $this->assertEquals(16, $postfix->getStartColumn());
+        static::assertEquals(16, $postfix->getStartColumn());
     }
 
     /**
@@ -91,7 +91,7 @@ class ParserBug8927377Test extends AbstractRegressionTestCase
     public function testPropertyPostfixHasExpectedEndColumn(): void
     {
         $postfix = $this->getFirstPropertyPostfixInClass();
-        $this->assertEquals(18, $postfix->getEndColumn());
+        static::assertEquals(18, $postfix->getEndColumn());
     }
 
     /**

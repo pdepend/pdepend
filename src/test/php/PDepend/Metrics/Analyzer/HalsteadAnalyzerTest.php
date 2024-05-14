@@ -83,7 +83,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder(ASTArtifact::class)
             ->getMock();
-        $this->assertEquals([], $analyzer->getNodeMetrics($astArtifact));
+        static::assertEquals([], $analyzer->getNodeMetrics($astArtifact));
     }
 
     /**
@@ -110,7 +110,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -136,7 +136,6 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
                 'ht' => 8.333333333333334,
                 'hb' => 0.009410360288810284,
                 'hi' => 6.0,
-
             ],
             'pdepend2' => [
                 'hnt' => 6,
@@ -158,7 +157,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         ksort($expected);
         ksort($actual);
 
-        $this->assertEqualsWithDelta($expected, $actual, 0.01);
+        static::assertEqualsWithDelta($expected, $actual, 0.01);
     }
 
     /**
@@ -188,7 +187,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -238,7 +237,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
         ksort($expected);
         ksort($actual);
 
-        $this->assertEqualsWithDelta($expected, $actual, 0.01);
+        static::assertEqualsWithDelta($expected, $actual, 0.01);
     }
 
     /**
@@ -261,7 +260,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($functions[0]);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**
@@ -285,7 +284,7 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($methods[0]);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**

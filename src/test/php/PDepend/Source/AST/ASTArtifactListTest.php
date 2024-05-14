@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\AST;
 
@@ -72,7 +72,7 @@ class ASTArtifactListTest extends AbstractTestCase
 
         $it = new ASTArtifactList($nodes);
 
-        $this->assertEquals(4, $it->count());
+        static::assertEquals(4, $it->count());
     }
 
     /**
@@ -94,7 +94,7 @@ class ASTArtifactListTest extends AbstractTestCase
             $actual[] = $codeNode;
         }
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -119,7 +119,7 @@ class ASTArtifactListTest extends AbstractTestCase
             $actual[] = $codeNode;
         }
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -142,7 +142,7 @@ class ASTArtifactListTest extends AbstractTestCase
             $actual[] = $iterator->key();
         }
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -153,7 +153,7 @@ class ASTArtifactListTest extends AbstractTestCase
         $this->expectException(OutOfBoundsException::class);
 
         $iterator = new ASTArtifactList([]);
-        $this->assertFalse($iterator->valid());
+        static::assertFalse($iterator->valid());
         $iterator->current();
     }
 
@@ -165,7 +165,7 @@ class ASTArtifactListTest extends AbstractTestCase
     public function testArrayBehaviorOffsetExistsReturnsFalse(): void
     {
         $iterator = new ASTArtifactList([]);
-        $this->assertFalse(isset($iterator[1]));
+        static::assertFalse(isset($iterator[1]));
     }
 
     /**
@@ -182,7 +182,7 @@ class ASTArtifactListTest extends AbstractTestCase
                 new ASTTrait('Trait'),
             ]
         );
-        $this->assertTrue(isset($iterator[1]));
+        static::assertTrue(isset($iterator[1]));
     }
 
     /**
@@ -199,7 +199,7 @@ class ASTArtifactListTest extends AbstractTestCase
                 $trait = new ASTTrait('Trait'),
             ]
         );
-        $this->assertSame($interface, $iterator[1]);
+        static::assertSame($interface, $iterator[1]);
     }
 
     /**

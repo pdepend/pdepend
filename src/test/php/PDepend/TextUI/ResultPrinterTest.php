@@ -80,7 +80,7 @@ class ResultPrinterTest extends AbstractTestCase
 
         $expected = ".                                                                1\n\n";
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -106,7 +106,7 @@ class ResultPrinterTest extends AbstractTestCase
         $expected = "............................................................    60\n"
                   . ".............                                                   73\n\n";
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -131,7 +131,7 @@ class ResultPrinterTest extends AbstractTestCase
         $expected = "............................................................  1200\n"
                   . "..........                                                    1401\n\n";
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -156,7 +156,7 @@ class ResultPrinterTest extends AbstractTestCase
         $expected = "............................................................  1200\n"
                   . "............................................................  2400\n\n";
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     public function testStartParseProcess(): void
@@ -213,10 +213,10 @@ class ResultPrinterTest extends AbstractTestCase
     private static function expectOutput($expected, $action): void
     {
         ob_start();
-        call_user_func($action);
+        $action();
         $output = ob_get_contents();
         ob_end_clean();
 
-        self::assertSame($expected, trim($output));
+        static::assertSame($expected, trim($output));
     }
 }

@@ -50,9 +50,7 @@ namespace PDepend\Util;
  */
 class ConfigurationInstance
 {
-    /**
-     * The unique configuration instance.
-     */
+    /** The unique configuration instance. */
     private static ?Configuration $configuration = null;
 
     /**

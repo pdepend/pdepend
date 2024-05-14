@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\AST;
 
@@ -48,9 +48,9 @@ use PDepend\Source\ASTVisitor\StubASTVisitor;
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTMethod class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\AbstractASTCallable
  * @covers \PDepend\Source\AST\ASTMethod
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -64,7 +64,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testIsCachedReturnsFalseByDefault(): void
     {
         $method = $this->createItem();
-        $this->assertFalse($method->isCached());
+        static::assertFalse($method->isCached());
     }
 
     /**
@@ -75,7 +75,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = $this->createItem();
         serialize($method);
 
-        $this->assertFalse($method->isCached());
+        static::assertFalse($method->isCached());
     }
 
     /**
@@ -84,7 +84,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testReturnValueOfMagicSleepContainsContextProperty(): void
     {
         $method = new ASTMethod('method');
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'modifiers',
                 'cache',
@@ -108,7 +108,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testParserNotSetsAbstractFlagOnMethod(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertFalse($method->isAbstract());
+        static::assertFalse($method->isAbstract());
     }
 
     /**
@@ -117,7 +117,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testParserSetsAbstractFlagOnMethod(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertTrue($method->isAbstract());
+        static::assertTrue($method->isAbstract());
     }
 
     /**
@@ -126,7 +126,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedRootClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertEquals('Foo', $method->getReturnClass()->getName());
+        static::assertEquals('Foo', $method->getReturnClass()->getName());
     }
 
     /**
@@ -135,7 +135,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertEquals('Baz', $method->getReturnClass()->getName());
+        static::assertEquals('Baz', $method->getReturnClass()->getName());
     }
 
     /**
@@ -144,7 +144,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedArrayRootClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertEquals('Foo', $method->getReturnClass()->getName());
+        static::assertEquals('Foo', $method->getReturnClass()->getName());
     }
 
     /**
@@ -153,7 +153,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedArrayClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertEquals('Baz', $method->getReturnClass()->getName());
+        static::assertEquals('Baz', $method->getReturnClass()->getName());
     }
 
     /**
@@ -162,7 +162,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetExceptionsForMethodWithNamespacedRootClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertEquals(
+        static::assertEquals(
             'Exception',
             $method->getExceptionClasses()->current()->getName()
         );
@@ -174,7 +174,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetExceptionsForMethodWithNamespacedClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertEquals(
+        static::assertEquals(
             'ErrorException',
             $method->getExceptionClasses()->current()->getName()
         );
@@ -186,7 +186,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testInlineDependencyForMethodWithNamespacedRootClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertEquals(
+        static::assertEquals(
             'ASTBuilder',
             $method->getDependencies()->current()->getName()
         );
@@ -198,7 +198,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testInlineDependencyForMethodWithNamespacedClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertEquals(
+        static::assertEquals(
             'ASTBuilder',
             $method->getDependencies()->current()->getName()
         );
@@ -210,7 +210,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testReturnsReferenceReturnsExpectedTrue(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertTrue($method->returnsReference());
+        static::assertTrue($method->returnsReference());
     }
 
     /**
@@ -219,7 +219,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testReturnsReferenceReturnsExpectedFalse(): void
     {
         $method = $this->getFirstMethodInClass();
-        $this->assertFalse($method->returnsReference());
+        static::assertFalse($method->returnsReference());
     }
 
     /**
@@ -228,7 +228,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetStaticVariablesReturnsEmptyArrayByDefault(): void
     {
         $method = new ASTMethod('method');
-        $this->assertEquals([], $method->getStaticVariables());
+        static::assertEquals([], $method->getStaticVariables());
     }
 
     /**
@@ -238,7 +238,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     {
         $method = $this->getFirstMethodInClass();
 
-        $this->assertEquals(
+        static::assertEquals(
             ['a' => 42, 'b' => 23],
             $method->getStaticVariables()
         );
@@ -251,7 +251,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     {
         $method = $this->getFirstMethodInClass();
 
-        $this->assertEquals(
+        static::assertEquals(
             ['a' => 42, 'b' => 23, 'c' => 17],
             $method->getStaticVariables()
         );
@@ -284,7 +284,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = new ASTMethod(__FUNCTION__);
         $method->setParent($class);
 
-        $this->assertSame($file, $method->getCompilationUnit());
+        static::assertSame($file, $method->getCompilationUnit());
     }
 
     /**
@@ -293,7 +293,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testByDefaultGetParentReturnsNull(): void
     {
         $method = new ASTMethod('method');
-        $this->assertNull($method->getParent());
+        static::assertNull($method->getParent());
     }
 
     /**
@@ -306,7 +306,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
         $method->setParent($class);
         $method->setParent(null);
-        $this->assertNull($method->getParent());
+        static::assertNull($method->getParent());
     }
 
     /**
@@ -319,7 +319,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = new ASTMethod('method');
 
         $method->setParent($class);
-        $this->assertSame($class, $method->getParent());
+        static::assertSame($class, $method->getParent());
     }
 
     /**
@@ -331,7 +331,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $visitor = new StubASTVisitor();
         $method->accept($visitor);
 
-        $this->assertSame($method, $visitor->method);
+        static::assertSame($method, $visitor->method);
     }
 
     /**
@@ -355,7 +355,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = new ASTMethod('method');
         $method->setModifiers(State::IS_PUBLIC);
 
-        $this->assertTrue(
+        static::assertTrue(
             $method->isPublic() &&
             !$method->isProtected() &&
             !$method->isPrivate()
@@ -370,7 +370,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetModifiersReturnsZeroByDefault(): void
     {
         $method = new ASTMethod('method');
-        $this->assertSame(0, $method->getModifiers());
+        static::assertSame(0, $method->getModifiers());
     }
 
     /**
@@ -383,7 +383,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = new ASTMethod('method');
         $method->setModifiers(State::IS_ABSTRACT);
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_ABSTRACT,
             $method->getModifiers()
         );
@@ -395,7 +395,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testIsStaticDefaultByReturnsFalse(): void
     {
         $method = new ASTMethod('method');
-        $this->assertFalse($method->isStatic());
+        static::assertFalse($method->isStatic());
     }
 
     /**
@@ -410,7 +410,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             State::IS_STATIC
         );
 
-        $this->assertTrue($method->isStatic());
+        static::assertTrue($method->isStatic());
     }
 
     /**
@@ -419,7 +419,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testIsFinalByDefaultReturnsFalse(): void
     {
         $method = new ASTMethod('method');
-        $this->assertFalse($method->isFinal());
+        static::assertFalse($method->isFinal());
     }
 
     /**
@@ -434,7 +434,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             State::IS_FINAL
         );
 
-        $this->assertTrue($method->isFinal());
+        static::assertTrue($method->isFinal());
     }
 
     /**
@@ -450,7 +450,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             State::IS_FINAL
         );
 
-        $this->assertTrue($method->isFinal() && $method->isStatic());
+        static::assertTrue($method->isFinal() && $method->isStatic());
     }
 
     /**
@@ -462,7 +462,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = new ASTMethod('method');
         $method->setModifiers(State::IS_PROTECTED);
 
-        $this->assertTrue(
+        static::assertTrue(
             $method->isProtected() &&
             !$method->isPublic() &&
             !$method->isPrivate()
@@ -478,7 +478,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $method = new ASTMethod('method');
         $method->setModifiers(State::IS_PRIVATE);
 
-        $this->assertTrue(
+        static::assertTrue(
             $method->isPrivate() &&
             !$method->isPublic() &&
             !$method->isProtected()
@@ -491,7 +491,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testIsPublicByDefaultReturnsFalse(): void
     {
         $method = new ASTMethod('method');
-        $this->assertFalse($method->isPublic());
+        static::assertFalse($method->isPublic());
     }
 
     /**
@@ -502,23 +502,23 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->once())
+        $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->never())
+        $node2->expects(static::never())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $method = new ASTMethod('Method');
         $method->addChild($node1);
         $method->addChild($node2);
 
         $child = $method->getFirstChildOfType($node2::class);
-        $this->assertSame($node2, $child);
+        static::assertSame($node2, $child);
     }
 
     /**
@@ -529,29 +529,29 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->never())
+        $node1->expects(static::never())
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->once())
+        $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node3 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node3->expects($this->once())
+        $node3->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue($node1));
+            ->will(static::returnValue($node1));
 
         $method = new ASTMethod('Method');
         $method->addChild($node2);
         $method->addChild($node3);
 
         $child = $method->getFirstChildOfType($node1::class);
-        $this->assertSame($node1, $child);
+        static::assertSame($node1, $child);
     }
 
     /**
@@ -562,16 +562,16 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->once())
+        $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->once())
+        $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $method = new ASTMethod('Method');
         $method->addChild($node1);
@@ -580,7 +580,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $child = $method->getFirstChildOfType(
             'Class_' . __FUNCTION__ . '_' . md5(microtime())
         );
-        $this->assertNull($child);
+        static::assertNull($child);
     }
 
     /**
@@ -591,23 +591,23 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->once())
+        $node1->expects(static::once())
             ->method('findChildrenOfType')
-            ->will($this->returnValue([]));
+            ->will(static::returnValue([]));
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->once())
+        $node2->expects(static::once())
             ->method('findChildrenOfType')
-            ->will($this->returnValue([]));
+            ->will(static::returnValue([]));
 
         $method = new ASTMethod('Method');
         $method->addChild($node1);
         $method->addChild($node2);
 
         $children = $method->findChildrenOfType($node2::class);
-        $this->assertSame([$node2], $children);
+        static::assertSame([$node2], $children);
     }
 
     /**
@@ -618,7 +618,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -632,7 +632,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getReturnClass(),
             $copy->getReturnClass()
         );
@@ -646,7 +646,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -660,7 +660,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getExceptionClasses()->current(),
             $copy->getExceptionClasses()->current()
         );
@@ -674,7 +674,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );

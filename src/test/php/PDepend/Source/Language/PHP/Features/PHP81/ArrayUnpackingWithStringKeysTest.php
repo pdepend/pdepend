@@ -61,18 +61,18 @@ class ArrayUnpackingWithStringKeysTest extends PHPParserVersion81TestCase
     {
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
-        $this->assertInstanceOf(ASTTypeArray::class, $children[1]);
+        static::assertInstanceOf(ASTTypeArray::class, $children[1]);
         $children = $children[2]->getChildren();
-        $this->assertCount(1, $children);
+        static::assertCount(1, $children);
         $return = $children[0];
-        $this->assertInstanceOf(ASTReturnStatement::class, $return);
+        static::assertInstanceOf(ASTReturnStatement::class, $return);
         $children = $return->getChildren();
-        $this->assertCount(1, $children);
+        static::assertCount(1, $children);
         $array = $children[0];
-        $this->assertInstanceOf(ASTArray::class, $array);
+        static::assertInstanceOf(ASTArray::class, $array);
         $children = $array->getChildren();
-        $this->assertCount(2, $children);
-        $this->assertInstanceOf(ASTArrayElement::class, $children[0]);
-        $this->assertInstanceOf(ASTArrayElement::class, $children[1]);
+        static::assertCount(2, $children);
+        static::assertInstanceOf(ASTArrayElement::class, $children[0]);
+        static::assertInstanceOf(ASTArrayElement::class, $children[1]);
     }
 }

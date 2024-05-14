@@ -65,7 +65,7 @@ class CollectionArtifactFilterTest extends AbstractTestCase
     public function testAcceptsReturnsTrueByDefault(): void
     {
         $collection = new CollectionArtifactFilter();
-        $this->assertTrue($collection->accept(new ASTClass(__CLASS__)));
+        static::assertTrue($collection->accept(new ASTClass(__CLASS__)));
     }
 
     /**
@@ -77,10 +77,9 @@ class CollectionArtifactFilterTest extends AbstractTestCase
 
         $filter = $this->getMockBuilder(ArtifactFilter::class)
             ->getMock();
-        $filter->expects($this->once())
+        $filter->expects(static::once())
             ->method('accept')
-            ->with($this->equalTo($class));
-
+            ->with(static::equalTo($class));
 
         $collection = new CollectionArtifactFilter();
         $collection->setFilter($filter);

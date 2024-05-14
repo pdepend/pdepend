@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Metrics\Analyzer;
 
@@ -56,9 +56,7 @@ use PDepend\Source\Builder\Builder;
  */
 class DependencyAnalyzerTest extends AbstractMetricsTestCase
 {
-    /**
-     * The used node builder.
-     */
+    /** The used node builder. */
     protected Builder $builder;
 
     /**
@@ -124,6 +122,6 @@ class DependencyAnalyzerTest extends AbstractMetricsTestCase
             $actual[$namespace->getName()] = $visitor->getStats($namespace);
         }
 
-        $this->assertEquals($this->input, $actual);
+        static::assertEquals($this->input, $actual);
     }
 }

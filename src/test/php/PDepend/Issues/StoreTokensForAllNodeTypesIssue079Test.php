@@ -72,7 +72,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             ->current()
             ->getParameters();
 
-        $this->assertEquals(4, $parameters[0]->getStartLine());
+        static::assertEquals(4, $parameters[0]->getStartLine());
     }
 
     /**
@@ -88,7 +88,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             ->current()
             ->getParameters();
 
-        $this->assertEquals(11, $parameters[0]->getEndLine());
+        static::assertEquals(11, $parameters[0]->getEndLine());
     }
 
     /**
@@ -115,7 +115,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
         ];
 
-        $this->assertEquals($expected, $function->getTokens());
+        static::assertEquals($expected, $function->getTokens());
     }
 
     /**
@@ -151,7 +151,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 1, 1),
         ];
 
-        $this->assertEquals($expected, $function->getTokens());
+        static::assertEquals($expected, $function->getTokens());
     }
 
     /**
@@ -169,7 +169,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
         $tokens = $function->getTokens();
         $token = reset($tokens);
 
-        $this->assertEquals($token->startLine, $function->getStartLine());
+        static::assertEquals($token->startLine, $function->getStartLine());
     }
 
     /**
@@ -187,7 +187,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
         $tokens = $function->getTokens();
         $token = end($tokens);
 
-        $this->assertEquals($token->endLine, $function->getEndLine());
+        static::assertEquals($token->endLine, $function->getEndLine());
     }
 
     /**
@@ -217,7 +217,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         ];
 
-        $this->assertEquals($expected, $method->getTokens());
+        static::assertEquals($expected, $method->getTokens());
     }
 
     /**
@@ -248,7 +248,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         ];
 
-        $this->assertEquals($expected, $method->getTokens());
+        static::assertEquals($expected, $method->getTokens());
     }
 
     /**
@@ -280,7 +280,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 10, 10, 5, 5),
         ];
 
-        $this->assertEquals($expected, $method->getTokens());
+        static::assertEquals($expected, $method->getTokens());
     }
 
     /**
@@ -300,7 +300,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
         $tokens = $method->getTokens();
         $token = reset($tokens);
 
-        $this->assertEquals($token->startLine, $method->getStartLine());
+        static::assertEquals($token->startLine, $method->getStartLine());
     }
 
     /**
@@ -320,7 +320,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
         $tokens = $method->getTokens();
         $token = end($tokens);
 
-        $this->assertEquals($token->endLine, $method->getEndLine());
+        static::assertEquals($token->endLine, $method->getEndLine());
     }
 
     /**
@@ -349,7 +349,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         ];
 
-        $this->assertEquals($expected, $class->getTokens());
+        static::assertEquals($expected, $class->getTokens());
     }
 
     /**
@@ -379,7 +379,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         ];
 
-        $this->assertEquals($expected, $class->getTokens());
+        static::assertEquals($expected, $class->getTokens());
     }
 
     /**
@@ -409,7 +409,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         ];
 
-        $this->assertEquals($expected, $class->getTokens());
+        static::assertEquals($expected, $class->getTokens());
     }
 
     /**
@@ -437,6 +437,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 5, 5, 1, 1),
         ];
 
-        $this->assertEquals($expected, $interface->getTokens());
+        static::assertEquals($expected, $interface->getTokens());
     }
 }

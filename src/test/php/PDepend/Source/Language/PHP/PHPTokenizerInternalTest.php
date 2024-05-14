@@ -65,7 +65,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testTokenizerReturnsExpectedConstantForTraitKeyword(): void
     {
-        $this->assertEquals(
+        static::assertEquals(
             [
                 Tokens::T_OPEN_TAG,
                 Tokens::T_TRAIT,
@@ -94,7 +94,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      */
     public function testTokenizerReturnsExpectedConstantForTraitMagicConstant(): void
     {
-        $this->assertEquals(
+        static::assertEquals(
             [
                 Tokens::T_OPEN_TAG,
                 Tokens::T_TRAIT,
@@ -158,7 +158,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_CURLY_BRACE_CLOSE,
         ];
 
-        $this->assertEquals($expected, $this->getTokenTypesForTest());
+        static::assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -204,7 +204,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             $actual[] = [$token->type, $token->startLine];
         }
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -216,7 +216,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());
 
-        $this->assertEquals(Tokenizer::T_BOF, $tokenizer->prev());
+        static::assertEquals(Tokenizer::T_BOF, $tokenizer->prev());
     }
 
     /**
@@ -260,7 +260,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_CLOSE_TAG,
         ];
 
-        $this->assertEquals($expected, $this->getTokenTypesForTest());
+        static::assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -290,7 +290,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_CURLY_BRACE_CLOSE,
         ];
 
-        $this->assertEquals($expected, $this->getTokenTypesForTest());
+        static::assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -332,7 +332,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_CURLY_BRACE_CLOSE,
         ];
 
-        $this->assertEquals($expected, $this->getTokenTypesForTest());
+        static::assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -341,7 +341,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
     public function testTokenizerWithInlineHtmlBug24(): void
     {
         if (! ini_get('short_open_tag')) {
-            $this->markTestSkipped('Must enable short_open_tag');
+            static::markTestSkipped('Must enable short_open_tag');
         }
 
         $tokenizer = new PHPTokenizerInternal();
@@ -362,7 +362,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             [Tokens::T_OPEN_TAG_WITH_ECHO, 7],
             [Tokens::T_STRING, 7],
             [Tokens::T_SEMICOLON, 7],
-            [Tokens::T_CLOSE_TAG,  7],
+            [Tokens::T_CLOSE_TAG, 7],
             [Tokens::T_NO_PHP, 7],
             [Tokens::T_OPEN_TAG, 8],
             [Tokens::T_ECHO, 8],
@@ -389,7 +389,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             $actual[] = [$token->type, $token->startLine];
         }
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     /**
@@ -398,7 +398,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
     public function testTokenizerCalculatesCorrectColumnForInlinePhpIssue88(): void
     {
         if (! ini_get('short_open_tag')) {
-            $this->markTestSkipped('Must enable short_open_tag');
+            static::markTestSkipped('Must enable short_open_tag');
         }
 
         $tokenizer = new PHPTokenizerInternal();
@@ -431,7 +431,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             ];
         }
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     /**
@@ -462,11 +462,11 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             ];
         }
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
 
         $list = $this->parseCodeResourceForTest();
 
-        $this->assertInstanceOf(ASTArtifactList::class, $list);
+        static::assertInstanceOf(ASTArtifactList::class, $list);
     }
 
     /**
@@ -505,7 +505,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             ];
         }
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     /**
@@ -532,7 +532,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             [Tokens::T_SEMICOLON, 15, 15],
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -558,7 +558,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             [Tokens::T_SEMICOLON],
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -576,7 +576,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
             Tokens::T_SEMICOLON,
         ];
 
-        $this->assertEquals($expected, $this->getTokenTypesForTest());
+        static::assertEquals($expected, $this->getTokenTypesForTest());
     }
 
     /**
@@ -594,6 +594,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
         while (is_object($token = $tokenizer->next())) {
             $types[] = $token->type;
         }
+
         return $types;
     }
 }

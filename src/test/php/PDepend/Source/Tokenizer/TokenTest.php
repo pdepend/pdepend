@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\Tokenizer;
 
@@ -61,7 +61,7 @@ class TokenTest extends AbstractTestCase
     public function testConstructorSetsTypeProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        $this->assertEquals(1, $token->type);
+        static::assertEquals(1, $token->type);
     }
 
     /**
@@ -70,7 +70,7 @@ class TokenTest extends AbstractTestCase
     public function testConstructorSetsImageProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        $this->assertEquals(2, $token->image);
+        static::assertEquals(2, $token->image);
     }
 
     /**
@@ -79,7 +79,7 @@ class TokenTest extends AbstractTestCase
     public function testConstructorSetsStartLineProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        $this->assertEquals(4, $token->startLine);
+        static::assertEquals(4, $token->startLine);
     }
 
     /**
@@ -88,7 +88,7 @@ class TokenTest extends AbstractTestCase
     public function testConstructorSetsEndLineProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        $this->assertEquals(8, $token->endLine);
+        static::assertEquals(8, $token->endLine);
     }
 
     /**
@@ -97,7 +97,7 @@ class TokenTest extends AbstractTestCase
     public function testConstructorSetsStartColumnProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        $this->assertEquals(16, $token->startColumn);
+        static::assertEquals(16, $token->startColumn);
     }
 
     /**
@@ -106,6 +106,6 @@ class TokenTest extends AbstractTestCase
     public function testConstructorSetsEndColumnProperty(): void
     {
         $token = new Token(1, 2, 4, 8, 16, 32);
-        $this->assertEquals(32, $token->endColumn);
+        static::assertEquals(32, $token->endColumn);
     }
 }

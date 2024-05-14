@@ -58,34 +58,35 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
 
-        $this->assertInstanceOf(ASTFormalParameters::class, $children[0]);
+        static::assertInstanceOf(ASTFormalParameters::class, $children[0]);
 
         /** @var ASTFormalParameters $parametersBag */
         $parametersBag = $children[0];
+
         /** @var ASTFormalParameter[] $parameters */
         $parameters = $parametersBag->getChildren();
 
-        $this->assertCount(4, $parameters);
+        static::assertCount(4, $parameters);
 
-        $this->assertTrue($parameters[0]->isPromoted());
-        $this->assertFalse($parameters[0]->isPublic());
-        $this->assertFalse($parameters[0]->isProtected());
-        $this->assertTrue($parameters[0]->isPrivate());
+        static::assertTrue($parameters[0]->isPromoted());
+        static::assertFalse($parameters[0]->isPublic());
+        static::assertFalse($parameters[0]->isProtected());
+        static::assertTrue($parameters[0]->isPrivate());
 
-        $this->assertTrue($parameters[1]->isPromoted());
-        $this->assertFalse($parameters[1]->isPublic());
-        $this->assertTrue($parameters[1]->isProtected());
-        $this->assertFalse($parameters[1]->isPrivate());
+        static::assertTrue($parameters[1]->isPromoted());
+        static::assertFalse($parameters[1]->isPublic());
+        static::assertTrue($parameters[1]->isProtected());
+        static::assertFalse($parameters[1]->isPrivate());
 
-        $this->assertTrue($parameters[2]->isPromoted());
-        $this->assertTrue($parameters[2]->isPublic());
-        $this->assertFalse($parameters[2]->isProtected());
-        $this->assertFalse($parameters[2]->isPrivate());
+        static::assertTrue($parameters[2]->isPromoted());
+        static::assertTrue($parameters[2]->isPublic());
+        static::assertFalse($parameters[2]->isProtected());
+        static::assertFalse($parameters[2]->isPrivate());
 
-        $this->assertFalse($parameters[3]->isPromoted());
-        $this->assertFalse($parameters[3]->isPublic());
-        $this->assertFalse($parameters[3]->isProtected());
-        $this->assertFalse($parameters[3]->isPrivate());
+        static::assertFalse($parameters[3]->isPromoted());
+        static::assertFalse($parameters[3]->isPublic());
+        static::assertFalse($parameters[3]->isProtected());
+        static::assertFalse($parameters[3]->isPrivate());
     }
 
     public function testConstructorPropertyPromotionWithComments(): void
@@ -93,34 +94,35 @@ class ConstructorPropertyPromotionTest extends PHPParserVersion80TestCase
         $method = $this->getFirstMethodForTestCase();
         $children = $method->getChildren();
 
-        $this->assertInstanceOf(ASTFormalParameters::class, $children[0]);
+        static::assertInstanceOf(ASTFormalParameters::class, $children[0]);
 
         /** @var ASTFormalParameters $parametersBag */
         $parametersBag = $children[0];
+
         /** @var ASTFormalParameter[] $parameters */
         $parameters = $parametersBag->getChildren();
 
-        $this->assertCount(4, $parameters);
+        static::assertCount(4, $parameters);
 
-        $this->assertTrue($parameters[0]->isPromoted());
-        $this->assertFalse($parameters[0]->isPublic());
-        $this->assertFalse($parameters[0]->isProtected());
-        $this->assertTrue($parameters[0]->isPrivate());
+        static::assertTrue($parameters[0]->isPromoted());
+        static::assertFalse($parameters[0]->isPublic());
+        static::assertFalse($parameters[0]->isProtected());
+        static::assertTrue($parameters[0]->isPrivate());
 
-        $this->assertTrue($parameters[1]->isPromoted());
-        $this->assertFalse($parameters[1]->isPublic());
-        $this->assertTrue($parameters[1]->isProtected());
-        $this->assertFalse($parameters[1]->isPrivate());
+        static::assertTrue($parameters[1]->isPromoted());
+        static::assertFalse($parameters[1]->isPublic());
+        static::assertTrue($parameters[1]->isProtected());
+        static::assertFalse($parameters[1]->isPrivate());
 
-        $this->assertTrue($parameters[2]->isPromoted());
-        $this->assertTrue($parameters[2]->isPublic());
-        $this->assertFalse($parameters[2]->isProtected());
-        $this->assertFalse($parameters[2]->isPrivate());
+        static::assertTrue($parameters[2]->isPromoted());
+        static::assertTrue($parameters[2]->isPublic());
+        static::assertFalse($parameters[2]->isProtected());
+        static::assertFalse($parameters[2]->isPrivate());
 
-        $this->assertFalse($parameters[3]->isPromoted());
-        $this->assertFalse($parameters[3]->isPublic());
-        $this->assertFalse($parameters[3]->isProtected());
-        $this->assertFalse($parameters[3]->isPrivate());
+        static::assertFalse($parameters[3]->isPromoted());
+        static::assertFalse($parameters[3]->isPublic());
+        static::assertFalse($parameters[3]->isProtected());
+        static::assertFalse($parameters[3]->isPrivate());
     }
 
     public function testPropertyPromotionOnRandomMethod(): void

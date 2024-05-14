@@ -61,7 +61,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
     public function testTypeMethodReturnsSameObjectInstance(): void
     {
         $driver = $this->createDriver();
-        $this->assertSame($driver, $driver->type(__FUNCTION__));
+        static::assertSame($driver, $driver->type(__FUNCTION__));
     }
 
     /**
@@ -70,7 +70,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
     public function testRestoreMethodReturnsNullByDefault(): void
     {
         $driver = $this->createDriver();
-        $this->assertNull($driver->restore(__FUNCTION__));
+        static::assertNull($driver->restore(__FUNCTION__));
     }
 
     /**
@@ -81,7 +81,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
         $driver = $this->createDriver();
         $driver->store(__FUNCTION__, __METHOD__);
 
-        $this->assertEquals(__METHOD__, $driver->restore(__FUNCTION__));
+        static::assertEquals(__METHOD__, $driver->restore(__FUNCTION__));
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
         $driver = $this->createDriver();
         $driver->store(__FUNCTION__, __METHOD__, '#42');
 
-        $this->assertEquals(__METHOD__, $driver->restore(__FUNCTION__, '#42'));
+        static::assertEquals(__METHOD__, $driver->restore(__FUNCTION__, '#42'));
     }
 
     /**
@@ -103,7 +103,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
         $driver = $this->createDriver();
         $driver->store(__FUNCTION__, __METHOD__);
 
-        $this->assertNull($driver->restore(__FUNCTION__, '#42'));
+        static::assertNull($driver->restore(__FUNCTION__, '#42'));
     }
 
     /**
@@ -114,7 +114,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
         $driver = $this->createDriver();
         $driver->type('type')->store(__FUNCTION__, __CLASS__);
 
-        $this->assertEquals(__CLASS__, $driver->type('type')->restore(__FUNCTION__));
+        static::assertEquals(__CLASS__, $driver->type('type')->restore(__FUNCTION__));
     }
 
     /**
@@ -126,7 +126,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
         $driver->store(__FUNCTION__, __METHOD__);
         $driver->type('type')->store(__FUNCTION__, __CLASS__);
 
-        $this->assertEquals(__METHOD__, $driver->restore(__FUNCTION__));
+        static::assertEquals(__METHOD__, $driver->restore(__FUNCTION__));
     }
 
     /**
@@ -141,7 +141,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
         $driver->store($key, $data);
         $driver->remove($key);
 
-        $this->assertNull($driver->restore($key));
+        static::assertNull($driver->restore($key));
     }
 
     /**
@@ -156,7 +156,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
         $driver->store($key, $data);
         $driver->remove(__FUNCTION__);
 
-        $this->assertNull($driver->restore($key));
+        static::assertNull($driver->restore($key));
     }
 
     /**
@@ -171,7 +171,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
         $driver->type('foo')->store($key, $data);
         $driver->remove($key);
 
-        $this->assertNull($driver->type('foo')->restore($key));
+        static::assertNull($driver->type('foo')->restore($key));
     }
 
     /**
@@ -186,7 +186,7 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
         $driver->store($key, $data);
         $driver->remove($key . '.no-match');
 
-        $this->assertSame($data, $driver->restore($key));
+        static::assertSame($data, $driver->restore($key));
     }
 
     /**

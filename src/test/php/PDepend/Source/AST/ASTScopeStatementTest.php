@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTScopeStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTScopeStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     public function testParserHandlesInlineScopeStatement()
     {
         $stmt = $this->getFirstScopeStatementInFunction();
-        $this->assertCount(1, $stmt->getChildren());
+        static::assertCount(1, $stmt->getChildren());
 
         return $stmt;
     }
@@ -79,7 +79,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testInlineScopeStatementHasExpectedStartLine($stmt)
     {
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
 
         return $stmt;
     }
@@ -95,7 +95,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testInlineScopeStatementHasExpectedStartColumn($stmt)
     {
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
 
         return $stmt;
     }
@@ -111,7 +111,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testInlineScopeStatementHasExpectedEndLine($stmt)
     {
-        $this->assertEquals(5, $stmt->getEndLine());
+        static::assertEquals(5, $stmt->getEndLine());
 
         return $stmt;
     }
@@ -127,7 +127,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testInlineScopeStatementHasExpectedEndColumn($stmt)
     {
-        $this->assertEquals(20, $stmt->getEndColumn());
+        static::assertEquals(20, $stmt->getEndColumn());
     }
 
     /**
@@ -139,7 +139,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     public function testScopeStatement()
     {
         $stmt = $this->getFirstScopeStatementInFunction();
-        $this->assertInstanceOf(ASTScopeStatement::class, $stmt);
+        static::assertInstanceOf(ASTScopeStatement::class, $stmt);
 
         return $stmt;
     }
@@ -153,7 +153,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testScopeStatementHasExpectedStartLine($stmt): void
     {
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -165,7 +165,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testScopeStatementHasExpectedStartColumn($stmt): void
     {
-        $this->assertEquals(34, $stmt->getStartColumn());
+        static::assertEquals(34, $stmt->getStartColumn());
     }
 
     /**
@@ -177,7 +177,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testScopeStatementHasExpectedEndLine($stmt): void
     {
-        $this->assertEquals(6, $stmt->getEndLine());
+        static::assertEquals(6, $stmt->getEndLine());
     }
 
     /**
@@ -189,7 +189,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testScopeStatementHasExpectedEndColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getEndColumn());
+        static::assertEquals(5, $stmt->getEndColumn());
     }
 
     /**
@@ -201,7 +201,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     public function testScopeStatementWithAlternative()
     {
         $stmt = $this->getFirstScopeStatementInFunction();
-        $this->assertInstanceOf(ASTScopeStatement::class, $stmt);
+        static::assertInstanceOf(ASTScopeStatement::class, $stmt);
 
         return $stmt;
     }
@@ -215,7 +215,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testScopeStatementWithAlternativeHasExpectedStartLine($stmt): void
     {
-        $this->assertEquals(6, $stmt->getStartLine());
+        static::assertEquals(6, $stmt->getStartLine());
     }
 
     /**
@@ -227,7 +227,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testScopeStatementWithAlternativeHasExpectedStartColumn($stmt): void
     {
-        $this->assertEquals(13, $stmt->getStartColumn());
+        static::assertEquals(13, $stmt->getStartColumn());
     }
 
     /**
@@ -239,7 +239,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testScopeStatementWithAlternativeHasExpectedEndLine($stmt): void
     {
-        $this->assertEquals(17, $stmt->getEndLine());
+        static::assertEquals(17, $stmt->getEndLine());
     }
 
     /**
@@ -251,7 +251,7 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      */
     public function testScopeStatementWithAlternativeHasExpectedEndColumn($stmt): void
     {
-        $this->assertEquals(15, $stmt->getEndColumn());
+        static::assertEquals(15, $stmt->getEndColumn());
     }
 
     /**

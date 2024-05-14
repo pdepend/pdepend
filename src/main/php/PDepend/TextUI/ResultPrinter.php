@@ -57,9 +57,7 @@ use PDepend\Source\Tokenizer\Tokenizer;
  */
 class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
 {
-    /**
-     * The step size.
-     */
+    /** The step size. */
     private const STEP_SIZE = 20;
 
     /**

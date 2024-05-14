@@ -75,7 +75,7 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
             $actual[] = $token->type;
         }
 
-        $this->assertEquals($tokenTypes, $actual, "$sourceFile content does not match.");
+        static::assertEquals($tokenTypes, $actual, "$sourceFile content does not match.");
     }
 
     /**

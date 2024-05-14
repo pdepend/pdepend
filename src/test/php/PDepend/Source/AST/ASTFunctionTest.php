@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\AST;
 
@@ -49,9 +49,9 @@ use PDepend\Source\Tokenizer\Token;
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTFunction class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\AbstractASTCallable
  * @covers \PDepend\Source\AST\ASTFunction
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -65,7 +65,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testReturnsReferenceReturnsExpectedTrue(): void
     {
         $function = $this->getFirstFunctionForTestCaseInternal();
-        $this->assertTrue($function->returnsReference());
+        static::assertTrue($function->returnsReference());
     }
 
     /**
@@ -74,7 +74,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testReturnsReferenceReturnsExpectedFalse(): void
     {
         $function = $this->getFirstFunctionForTestCaseInternal();
-        $this->assertFalse($function->returnsReference());
+        static::assertFalse($function->returnsReference());
     }
 
     /**
@@ -83,7 +83,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testGetStaticVariablesReturnsEmptyArrayByDefault(): void
     {
         $function = $this->createItem();
-        $this->assertEquals([], $function->getStaticVariables());
+        static::assertEquals([], $function->getStaticVariables());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      */
     public function testGetStaticVariablesReturnsFirstSetOfStaticVariables(): void
     {
-        $this->assertEquals(
+        static::assertEquals(
             ['a' => 42, 'b' => 23],
             $this->getFirstFunctionForTestCaseInternal()->getStaticVariables()
         );
@@ -102,7 +102,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      */
     public function testGetStaticVariablesReturnsMergeOfAllStaticVariables(): void
     {
-        $this->assertEquals(
+        static::assertEquals(
             ['a' => 42, 'b' => 23, 'c' => 17],
             $this->getFirstFunctionForTestCaseInternal()->getStaticVariables()
         );
@@ -114,7 +114,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testCreateNewFunctionInstance(): void
     {
         $function = $this->createItem();
-        $this->assertEquals('createItem', $function->getName());
+        static::assertEquals('createItem', $function->getName());
     }
 
     /**
@@ -123,7 +123,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testGetNamespaceReturnsNullByDefault(): void
     {
         $function = $this->createItem();
-        $this->assertNull($function->getNamespace());
+        static::assertNull($function->getNamespace());
     }
 
     /**
@@ -137,7 +137,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function->setNamespace($namespace);
         $function->unsetNamespace();
 
-        $this->assertNull($function->getNamespace());
+        static::assertNull($function->getNamespace());
     }
 
     /**
@@ -149,7 +149,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function->setNamespace(new ASTNamespace(__FUNCTION__));
         $function->unsetNamespace();
 
-        $this->assertNull($function->getNamespaceName());
+        static::assertNull($function->getNamespaceName());
     }
 
     /**
@@ -162,7 +162,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function = $this->getFirstFunctionForTestCaseInternal();
         $type = $function->getReturnClass();
 
-        $this->assertEquals('Sindelfingen', $type->getName());
+        static::assertEquals('Sindelfingen', $type->getName());
 
         return $type;
     }
@@ -172,7 +172,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      */
     public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type): void
     {
-        $this->assertEquals('Java\\Style', $type->getNamespaceName());
+        static::assertEquals('Java\\Style', $type->getNamespaceName());
     }
 
     /**
@@ -183,7 +183,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $namespace = $this->getMockBuilder(ASTNamespace::class)
             ->setConstructorArgs([__FUNCTION__])
             ->getMock();
-        $namespace->expects($this->never())
+        $namespace->expects(static::never())
             ->method('addFunction');
 
         $function = $this->createItem();
@@ -200,7 +200,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function = $this->createItem();
 
         $function->setNamespace($namespace);
-        $this->assertSame($namespace, $function->getNamespace());
+        static::assertSame($namespace, $function->getNamespace());
     }
 
     /**
@@ -208,7 +208,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      */
     public function testGetNamespaceNameReturnsNullByDefault(): void
     {
-        $this->assertNull($this->createItem()->getNamespaceName());
+        static::assertNull($this->createItem()->getNamespaceName());
     }
 
     /**
@@ -219,7 +219,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function = $this->createItem();
         $function->setNamespace(new ASTNamespace(__FUNCTION__));
 
-        $this->assertEquals(__FUNCTION__, $function->getNamespaceName());
+        static::assertEquals(__FUNCTION__, $function->getNamespaceName());
     }
 
     /**
@@ -228,7 +228,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testIsCachedReturnsFalseByDefault(): void
     {
         $function = $this->createItem();
-        $this->assertFalse($function->isCached());
+        static::assertFalse($function->isCached());
     }
 
     /**
@@ -239,7 +239,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function = $this->createItem();
         serialize($function);
 
-        $this->assertFalse($function->isCached());
+        static::assertFalse($function->isCached());
     }
 
     /**
@@ -248,7 +248,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $function = $this->createItem();
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'context',
                 'namespaceName',
@@ -275,12 +275,12 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $tokens = [new Token(1, '$foo', 3, 3, 0, 0)];
 
         $cache = $this->createCacheFixture();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('type')
-            ->will($this->returnValue($cache));
-        $cache->expects($this->once())
+            ->will(static::returnValue($cache));
+        $cache->expects(static::once())
             ->method('store')
-            ->with($this->isType('string'), $this->equalTo($tokens));
+            ->with(static::isType('string'), static::equalTo($tokens));
 
         $function = $this->createItem();
         $function->setCache($cache)
@@ -293,13 +293,13 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testGetTokensDelegatesToCacheRestoreMethod(): void
     {
         $cache = $this->createCacheFixture();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('type')
-            ->will($this->returnValue($cache));
-        $cache->expects($this->once())
+            ->will(static::returnValue($cache));
+        $cache->expects(static::once())
             ->method('restore')
-            ->with($this->isType('string'))
-            ->will($this->returnValue([]));
+            ->with(static::isType('string'))
+            ->will(static::returnValue([]));
 
         $function = $this->createItem();
         $function->setCache($cache)
@@ -312,18 +312,18 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     public function testGetTokensReturnsArrayEvenWhenCacheReturnsNull(): void
     {
         $cache = $this->createCacheFixture();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('type')
-            ->will($this->returnValue($cache));
-        $cache->expects($this->once())
+            ->will(static::returnValue($cache));
+        $cache->expects(static::once())
             ->method('restore')
-            ->with($this->isType('string'))
-            ->will($this->returnValue(null));
+            ->with(static::isType('string'))
+            ->will(static::returnValue(null));
 
         $function = $this->createItem();
         $function->setCache($cache);
 
-        $this->assertSame([], $function->getTokens());
+        static::assertSame([], $function->getTokens());
     }
 
     /**
@@ -334,23 +334,23 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->once())
+        $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->never())
+        $node2->expects(static::never())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $function = $this->createItem();
         $function->addChild($node1);
         $function->addChild($node2);
 
         $child = $function->getFirstChildOfType($node2::class);
-        $this->assertSame($node2, $child);
+        static::assertSame($node2, $child);
     }
 
     /**
@@ -361,29 +361,29 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->never())
+        $node1->expects(static::never())
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->once())
+        $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node3 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node3->expects($this->once())
+        $node3->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue($node1));
+            ->will(static::returnValue($node1));
 
         $function = $this->createItem();
         $function->addChild($node2);
         $function->addChild($node3);
 
         $child = $function->getFirstChildOfType($node1::class);
-        $this->assertSame($node1, $child);
+        static::assertSame($node1, $child);
     }
 
     /**
@@ -394,23 +394,23 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->once())
+        $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->once())
+        $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $function = $this->createItem();
         $function->addChild($node1);
         $function->addChild($node2);
 
         $child = $function->getFirstChildOfType('PDepend\\Class' . md5(microtime()));
-        $this->assertNull($child);
+        static::assertNull($child);
     }
 
     /**
@@ -421,23 +421,23 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->once())
+        $node1->expects(static::once())
             ->method('findChildrenOfType')
-            ->will($this->returnValue([]));
+            ->will(static::returnValue([]));
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->once())
+        $node2->expects(static::once())
             ->method('findChildrenOfType')
-            ->will($this->returnValue([]));
+            ->will(static::returnValue([]));
 
         $function = $this->createItem();
         $function->addChild($node1);
         $function->addChild($node2);
 
         $children = $function->findChildrenOfType($node2::class);
-        $this->assertSame([$node2], $children);
+        static::assertSame([$node2], $children);
     }
 
     /**
@@ -448,7 +448,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -462,7 +462,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getReturnClass(),
             $copy->getReturnClass()
         );
@@ -476,7 +476,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -490,7 +490,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getExceptionClasses()->current(),
             $copy->getExceptionClasses()->current()
         );
@@ -504,7 +504,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getDependencies()->current(),
             $copy->getDependencies()->current()
         );
@@ -518,7 +518,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame($orig->getNamespace(), $copy->getNamespace());
+        static::assertSame($orig->getNamespace(), $copy->getNamespace());
     }
 
     /**
@@ -529,7 +529,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertEquals(
+        static::assertEquals(
             'Baz',
             $copy->getNamespace()->getClasses()->current()->getName()
         );
@@ -543,7 +543,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertCount(1, $copy->getNamespace()->getFunctions());
+        static::assertCount(1, $copy->getNamespace()->getFunctions());
     }
 
     /**
@@ -554,7 +554,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame($copy, $orig->getNamespace()->getFunctions()->current());
+        static::assertSame($copy, $orig->getNamespace()->getFunctions()->current());
     }
 
     /**
@@ -566,7 +566,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $visitor = new StubASTVisitor();
 
         $function->accept($visitor);
-        $this->assertSame($function, $visitor->function);
+        static::assertSame($function, $visitor->function);
     }
 
     /**

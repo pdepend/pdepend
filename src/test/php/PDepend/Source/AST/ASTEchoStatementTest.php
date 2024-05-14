@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTEchoStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTEchoStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTEchoStatementTest extends ASTNodeTestCase
     public function testEchoStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTEchoStatementTest extends ASTNodeTestCase
     public function testEchoStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTEchoStatementTest extends ASTNodeTestCase
     public function testEchoStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
-        $this->assertEquals(6, $stmt->getEndLine());
+        static::assertEquals(6, $stmt->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTEchoStatementTest extends ASTNodeTestCase
     public function testEchoStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
-        $this->assertEquals(26, $stmt->getEndColumn());
+        static::assertEquals(26, $stmt->getEndColumn());
     }
 
     /**

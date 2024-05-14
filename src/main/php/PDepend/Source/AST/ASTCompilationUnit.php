@@ -61,9 +61,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     protected CacheDriver $cache;
 
-    /**
-     * The source file name/path.
-     */
+    /** The source file name/path. */
     protected ?string $fileName = null;
 
     /**
@@ -82,9 +80,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     protected $cached = false;
 
-    /**
-     * Normalized code in this file.
-     */
+    /** Normalized code in this file. */
     private ?string $source = null;
 
     /**
@@ -189,6 +185,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     public function setCache(CacheDriver $cache)
     {
         $this->cache = $cache;
+
         return $this;
     }
 
@@ -200,6 +197,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     public function getSource()
     {
         $this->readSource();
+
         return $this->source;
     }
 
@@ -255,6 +253,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
         if ($this->startLine === 0) {
             $this->readSource();
         }
+
         return $this->startLine;
     }
 
@@ -271,6 +270,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
         if ($this->endLine === 0) {
             $this->readSource();
         }
+
         return $this->endLine;
     }
 

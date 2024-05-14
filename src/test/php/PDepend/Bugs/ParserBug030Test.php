@@ -204,6 +204,6 @@ class ParserBug030Test extends AbstractRegressionTestCase
         foreach ($testClass->getTokens() as $token) {
             $actual[] = [$token->type, $token->startLine];
         }
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 }

@@ -84,9 +84,7 @@ use PDepend\Source\AST\ASTProperty;
  */
 class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     private const
         M_CALLS = 'calls',
         M_FANOUT = 'fanout',
@@ -174,6 +172,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
+
         return [];
     }
 
@@ -354,7 +353,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      */
     private function calculateCoupling(
         AbstractASTType $declaringType,
-        AbstractASTType $coupledType = null,
+        ?AbstractASTType $coupledType = null,
     ): void {
         $this->initDependencyMap($declaringType);
 

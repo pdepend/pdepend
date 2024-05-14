@@ -46,8 +46,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTShiftLeftExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTShiftLeftExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.1
@@ -62,7 +62,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
     public function testShiftLeftExpressionReturnsExpectedImage(): void
     {
         $expr = new ASTShiftLeftExpression();
-        $this->assertEquals('<<', $expr->getImage());
+        static::assertEquals('<<', $expr->getImage());
     }
 
     /**
@@ -73,7 +73,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
     public function testShiftLeftExpression()
     {
         $expr = $this->getFirstShiftLeftExpressionInFunction();
-        $this->assertInstanceOf(ASTShiftLeftExpression::class, $expr);
+        static::assertInstanceOf(ASTShiftLeftExpression::class, $expr);
 
         return $expr;
     }
@@ -87,7 +87,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
      */
     public function testShiftLeftExpressionHasExpectedStartLine($expr): void
     {
-        $this->assertEquals(6, $expr->getStartLine());
+        static::assertEquals(6, $expr->getStartLine());
     }
 
     /**
@@ -99,7 +99,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
      */
     public function testShiftLeftExpressionHasExpectedStartColumn($expr): void
     {
-        $this->assertEquals(13, $expr->getStartColumn());
+        static::assertEquals(13, $expr->getStartColumn());
     }
 
     /**
@@ -111,7 +111,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
      */
     public function testShiftLeftExpressionHasExpectedEndLine($expr): void
     {
-        $this->assertEquals(6, $expr->getEndLine());
+        static::assertEquals(6, $expr->getEndLine());
     }
 
     /**
@@ -123,7 +123,7 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
      */
     public function testShiftLeftExpressionHasExpectedEndColumn($expr): void
     {
-        $this->assertEquals(14, $expr->getEndColumn());
+        static::assertEquals(14, $expr->getEndColumn());
     }
 
     /**

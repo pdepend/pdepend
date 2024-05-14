@@ -102,6 +102,7 @@ class TokenStack
         foreach ($tokens as $token) {
             $this->tokens[] = $token;
         }
+
         return $tokens;
     }
 

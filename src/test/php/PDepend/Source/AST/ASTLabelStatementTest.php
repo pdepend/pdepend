@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTLabelStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTLabelStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTLabelStatementTest extends ASTNodeTestCase
     public function testLabelStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
-        $this->assertSame(4, $stmt->getStartLine());
+        static::assertSame(4, $stmt->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTLabelStatementTest extends ASTNodeTestCase
     public function testLabelStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
-        $this->assertSame(5, $stmt->getStartColumn());
+        static::assertSame(5, $stmt->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTLabelStatementTest extends ASTNodeTestCase
     public function testLabelStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
-        $this->assertSame(4, $stmt->getEndLine());
+        static::assertSame(4, $stmt->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTLabelStatementTest extends ASTNodeTestCase
     public function testLabelStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
-        $this->assertSame(14, $stmt->getEndColumn());
+        static::assertSame(14, $stmt->getEndColumn());
     }
 
     /**

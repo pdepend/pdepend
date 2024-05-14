@@ -79,50 +79,53 @@ class TrueTypeTest extends PHPParserVersion82TestCase
             $expectedTypeClass = $expected[2] ?? ASTScalarType::class;
             [$type, $variable] = $declarations[$index];
 
-            $this->assertInstanceOf(
+            static::assertInstanceOf(
                 $expectedTypeClass,
                 $type,
                 "Wrong type for $expectedType $expectedVariable"
             );
-            $this->assertSame(ltrim($expectedType, '?'), $type->getImage());
-            $this->assertInstanceOf(
+            static::assertSame(ltrim($expectedType, '?'), $type->getImage());
+            static::assertInstanceOf(
                 ASTVariableDeclarator::class,
                 $variable,
                 "Wrong variable for $expectedType $expectedVariable"
             );
-            $this->assertSame($expectedVariable, $variable->getImage());
+            static::assertSame($expectedVariable, $variable->getImage());
         }
     }
 
     public function testReturnTypes(): void
     {
         $class = $this->getFirstClassForTestCase();
+
         /** @var ASTMethod[] $methods */
         $methods = $class->getMethods();
+
         /** @var ASTScalarType $truthy */
         $truthy = $methods[0]->getReturnType();
 
-        $this->assertInstanceOf(ASTScalarType::class, $truthy);
-        $this->assertSame('true', $truthy->getImage());
-        $this->assertTrue($truthy->isTrue());
+        static::assertInstanceOf(ASTScalarType::class, $truthy);
+        static::assertSame('true', $truthy->getImage());
+        static::assertTrue($truthy->isTrue());
     }
 
     public function testParameters(): void
     {
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTParameter[] $methods */
         $parameters = $method->getParameters();
         $truthy = $parameters[0];
 
-        $this->assertFalse($truthy->allowsNull());
+        static::assertFalse($truthy->allowsNull());
 
         $truthy = $truthy->getFormalParameter()->getType();
 
-        $this->assertInstanceOf(ASTScalarType::class, $truthy);
-        $this->assertSame('true', $truthy->getImage());
-        $this->assertSame(3, $truthy->getStartLine());
-        $this->assertSame(29, $truthy->getStartColumn());
-        $this->assertSame(3, $truthy->getEndLine());
-        $this->assertSame(32, $truthy->getEndColumn());
+        static::assertInstanceOf(ASTScalarType::class, $truthy);
+        static::assertSame('true', $truthy->getImage());
+        static::assertSame(3, $truthy->getStartLine());
+        static::assertSame(29, $truthy->getStartColumn());
+        static::assertSame(3, $truthy->getEndLine());
+        static::assertSame(32, $truthy->getEndColumn());
     }
 }

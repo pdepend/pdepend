@@ -61,11 +61,9 @@ use RuntimeException;
  */
 class FileCacheDriver implements CacheDriver
 {
-    public const DEFAULT_TTL = 2592000; //30 days
+    public const DEFAULT_TTL = 2592000; // 30 days
 
-    /**
-     * Default cache entry type.
-     */
+    /** Default cache entry type. */
     private const ENTRY_TYPE = 'cache';
 
     /**
@@ -130,6 +128,7 @@ class FileCacheDriver implements CacheDriver
     public function type($type)
     {
         $this->type = $type;
+
         return $this;
     }
 
@@ -184,6 +183,7 @@ class FileCacheDriver implements CacheDriver
         if (file_exists($file)) {
             return $this->restoreFile($file, $hash);
         }
+
         return null;
     }
 
@@ -202,6 +202,7 @@ class FileCacheDriver implements CacheDriver
         if ($data !== false && ($hash === null || $data['hash'] === $hash)) {
             return $data['data'];
         }
+
         return null;
     }
 
@@ -286,6 +287,7 @@ class FileCacheDriver implements CacheDriver
         }
 
         $path = $this->directory->createCacheDirectory($key);
+
         return "{$path}/{$key}";
     }
 

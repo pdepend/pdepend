@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTReturnStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTReturnStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     public function testReturnStatement()
     {
         $stmt = $this->getFirstReturnStatementInFunction();
-        $this->assertInstanceOf(ASTReturnStatement::class, $stmt);
+        static::assertInstanceOf(ASTReturnStatement::class, $stmt);
 
         return $stmt;
     }
@@ -77,7 +77,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
      */
     public function testReturnStatementHasExpectedStartLine($stmt): void
     {
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
      */
     public function testReturnStatementHasExpectedStartColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
      */
     public function testReturnStatementHasExpectedEndLine($stmt): void
     {
-        $this->assertEquals(7, $stmt->getEndLine());
+        static::assertEquals(7, $stmt->getEndLine());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
      */
     public function testReturnStatementHasExpectedEndColumn($stmt): void
     {
-        $this->assertEquals(6, $stmt->getEndColumn());
+        static::assertEquals(6, $stmt->getEndColumn());
     }
 
     /**
@@ -122,7 +122,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     public function testParserHandlesEmptyReturnStatement(): void
     {
         $stmt = $this->getFirstReturnStatementInFunction();
-        $this->assertEquals(12, $stmt->getEndColumn());
+        static::assertEquals(12, $stmt->getEndColumn());
     }
 
     /**
@@ -131,7 +131,7 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     public function testParserHandlesReturnStatementWithSimpleBoolean(): void
     {
         $stmt = $this->getFirstReturnStatementInFunction();
-        $this->assertEquals(17, $stmt->getEndColumn());
+        static::assertEquals(17, $stmt->getEndColumn());
     }
 
     /**

@@ -118,7 +118,7 @@ class RunnerTest extends AbstractTestCase
             $this->createCodeResourceUriForTest()
         );
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     public function testSetExcludeDirectories(): void
@@ -128,12 +128,12 @@ class RunnerTest extends AbstractTestCase
         $engine = $this->getMockBuilder(Engine::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $engine->expects($this->exactly(2))
+        $engine->expects(static::exactly(2))
             ->method('addFileFilter')
             ->willReturnCallback(function (Filter $excludePathFilter) use (&$record): void {
                 $record[] = $excludePathFilter;
             });
-        $engine->expects($this->exactly(0))
+        $engine->expects(static::exactly(0))
             ->method('setCodeFilter');
         $container = new Container();
 
@@ -146,9 +146,9 @@ class RunnerTest extends AbstractTestCase
             // noop
         }
 
-        $this->assertCount(2, $record);
-        $this->assertInstanceOf(ExtensionFilter::class, $record[0]);
-        $this->assertInstanceOf(ExcludePathFilter::class, $record[1]);
+        static::assertCount(2, $record);
+        static::assertInstanceOf(ExtensionFilter::class, $record[0]);
+        static::assertInstanceOf(ExcludePathFilter::class, $record[1]);
     }
 
     public function testSetExcludeNamespaces(): void
@@ -158,12 +158,12 @@ class RunnerTest extends AbstractTestCase
         $engine = $this->getMockBuilder(Engine::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $engine->expects($this->exactly(2))
+        $engine->expects(static::exactly(2))
             ->method('addFileFilter')
             ->willReturnCallback(function (Filter $excludePathFilter) use (&$record): void {
                 $record[] = $excludePathFilter;
             });
-        $engine->expects($this->once())
+        $engine->expects(static::once())
             ->method('setCodeFilter')
             ->willReturnCallback(function (PackageArtifactFilter $excludePathFilter) use (&$record): void {
                 $record[] = $excludePathFilter;
@@ -179,10 +179,10 @@ class RunnerTest extends AbstractTestCase
             // noop
         }
 
-        $this->assertCount(3, $record);
-        $this->assertInstanceOf(ExtensionFilter::class, $record[0]);
-        $this->assertInstanceOf(ExcludePathFilter::class, $record[1]);
-        $this->assertInstanceOf(PackageArtifactFilter::class, $record[2]);
+        static::assertCount(3, $record);
+        static::assertInstanceOf(ExtensionFilter::class, $record[0]);
+        static::assertInstanceOf(ExcludePathFilter::class, $record[1]);
+        static::assertInstanceOf(PackageArtifactFilter::class, $record[2]);
     }
 
     /**
@@ -214,7 +214,7 @@ class RunnerTest extends AbstractTestCase
             $this->createCodeResourceUriForTest()
         );
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     /**
@@ -250,7 +250,7 @@ class RunnerTest extends AbstractTestCase
             $this->createCodeResourceUriForTest()
         );
 
-        $this->assertSame($expected, $actual);
+        static::assertSame($expected, $actual);
     }
 
     /**
@@ -264,7 +264,7 @@ class RunnerTest extends AbstractTestCase
 
         $this->silentRun($runner);
 
-        $this->assertFalse($runner->hasParseErrors());
+        static::assertFalse($runner->hasParseErrors());
     }
 
     /**
@@ -278,7 +278,7 @@ class RunnerTest extends AbstractTestCase
 
         $this->silentRun($runner);
 
-        $this->assertTrue($runner->hasParseErrors());
+        static::assertTrue($runner->hasParseErrors());
     }
 
     /**
@@ -295,7 +295,7 @@ class RunnerTest extends AbstractTestCase
         ob_end_clean();
 
         $errors = $runner->getParseErrors();
-        $this->assertStringContainsString('Unexpected token: }, line: 10, col: 1, file: ', $errors[0]);
+        static::assertStringContainsString('Unexpected token: }, line: 10, col: 1, file: ', $errors[0]);
     }
 
     /**

@@ -63,12 +63,12 @@ class AnalyzerIteratorTest extends AbstractTestCase
     {
         $analyzer = $this->getMockBuilder(DummyAnalyzer::class)
             ->getMock();
-        $analyzer->expects($this->exactly(2))
+        $analyzer->expects(static::exactly(2))
             ->method('isEnabled')
-            ->will($this->returnValue(true));
+            ->will(static::returnValue(true));
 
         $iterator = new AnalyzerIterator([$analyzer, $analyzer]);
-        $this->assertEquals(2, iterator_count($iterator));
+        static::assertEquals(2, iterator_count($iterator));
     }
 
     /**
@@ -81,6 +81,6 @@ class AnalyzerIteratorTest extends AbstractTestCase
             ->willReturnOnConsecutiveCalls(true, false);
 
         $iterator = new AnalyzerIterator([$analyzer, $analyzer]);
-        $this->assertCount(1, $iterator);
+        static::assertCount(1, $iterator);
     }
 }

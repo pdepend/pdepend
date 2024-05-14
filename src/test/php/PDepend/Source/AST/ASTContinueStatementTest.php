@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTContinueStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTContinueStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
     public function testContinueStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
-        $this->assertEquals(5, $stmt->getStartLine());
+        static::assertEquals(5, $stmt->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
     public function testContinueStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
-        $this->assertEquals(9, $stmt->getStartColumn());
+        static::assertEquals(9, $stmt->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
     public function testContinueStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
-        $this->assertEquals(7, $stmt->getEndLine());
+        static::assertEquals(7, $stmt->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
     public function testContinueStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
-        $this->assertEquals(17, $stmt->getEndColumn());
+        static::assertEquals(17, $stmt->getEndColumn());
     }
 
     /**

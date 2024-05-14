@@ -68,9 +68,8 @@ class ReportGeneratorFactory
      * @var array<string, ReportGenerator>
      */
     protected $instances = [];
-    /**
-     * @var TaggedContainerInterface
-     */
+
+    /** @var TaggedContainerInterface */
     private $container;
 
     /**
@@ -117,6 +116,7 @@ class ReportGeneratorFactory
 
             $this->instances[$identifier] = $logger;
         }
+
         return $this->instances[$identifier];
     }
 }

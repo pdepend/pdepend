@@ -58,14 +58,10 @@ use Throwable;
  */
 class Command
 {
-    /**
-     * Marks a cli error exit.
-     */
+    /** Marks a cli error exit. */
     public const CLI_ERROR = 1742;
 
-    /**
-     * Marks an input error exit.
-     */
+    /** Marks an input error exit. */
     public const INPUT_ERROR = 1743;
 
     /**
@@ -82,9 +78,7 @@ class Command
      */
     private array $source = [];
 
-    /**
-     * The used text ui runner.
-     */
+    /** The used text ui runner. */
     private Runner $runner;
 
     private Application $application;
@@ -101,25 +95,30 @@ class Command
         try {
             if ($this->parseArguments() === false) {
                 $this->printHelp();
+
                 return self::CLI_ERROR;
             }
         } catch (Exception $e) {
             echo $e->getMessage(), PHP_EOL, PHP_EOL;
 
             $this->printHelp();
+
             return self::CLI_ERROR;
         }
 
         if (isset($this->options['--help'])) {
             $this->printHelp();
+
             return Runner::SUCCESS_EXIT;
         }
         if (isset($this->options['--usage'])) {
             $this->printUsage();
+
             return Runner::SUCCESS_EXIT;
         }
         if (isset($this->options['--version'])) {
             $this->printVersion();
+
             return Runner::SUCCESS_EXIT;
         }
 
@@ -149,6 +148,7 @@ class Command
                 echo $e->getMessage(), PHP_EOL, PHP_EOL;
 
                 $this->printHelp();
+
                 return self::CLI_ERROR;
             }
         }
@@ -179,15 +179,18 @@ class Command
 
                 if (isset($analyzerOptions[$option]['value']) && is_bool($value)) {
                     echo 'Option ' . $option . ' requires a value.' . PHP_EOL;
+
                     return self::INPUT_ERROR;
-                } elseif ($analyzerOptions[$option]['value'] === 'file'
+                }
+                if ($analyzerOptions[$option]['value'] === 'file'
                     && file_exists($value) === false
                 ) {
                     echo 'Specified file ' . $option . '=' . $value
                         . ' not exists.' . PHP_EOL;
 
                     return self::INPUT_ERROR;
-                } elseif ($analyzerOptions[$option]['value'] === '*[,...]') {
+                }
+                if ($analyzerOptions[$option]['value'] === '*[,...]') {
                     $value = array_map('trim', explode(',', $value));
                 }
                 $this->runner->addOption(substr($option, 2), $value);
@@ -219,6 +222,7 @@ class Command
         if (count($options) > 0) {
             $this->printHelp();
             echo "Unknown option '", key($options), "' given.", PHP_EOL;
+
             return self::CLI_ERROR;
         }
 
@@ -284,6 +288,7 @@ class Command
                 echo 'Unknown error, no $argv array available.';
             }
             echo PHP_EOL, PHP_EOL;
+
             return false;
         }
 
@@ -368,7 +373,7 @@ class Command
 
         // Check for the bad documentation option
         if (isset($this->options['--bad-documentation'])) {
-            echo "Option --bad-documentation is ambiguous.", PHP_EOL;
+            echo 'Option --bad-documentation is ambiguous.', PHP_EOL;
 
             unset($this->options['--bad-documentation']);
         }
@@ -576,7 +581,7 @@ class Command
      */
     private function printDbusOption($length): void
     {
-        if (extension_loaded("dbus") === false) {
+        if (extension_loaded('dbus') === false) {
             return;
         }
 
@@ -604,8 +609,8 @@ class Command
     private function printStatistics($startTime): void
     {
         $duration = time() - $startTime;
-        $hours = intval($duration / 3600);
-        $minutes = intval(($duration - $hours * 3600) / 60);
+        $hours = (int) ($duration / 3600);
+        $minutes = (int) (($duration - $hours * 3600) / 60);
         $seconds = $duration % 60;
         echo PHP_EOL, 'Time: ', sprintf('%d:%02d:%02d', $hours, $minutes, $seconds);
         if (function_exists('memory_get_peak_usage')) {

@@ -113,8 +113,10 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
         $id = $node->getId();
         if ($node->isCached() && isset($this->metricsCached[$id])) {
             $this->metrics[$id] = $this->metricsCached[$id];
+
             return true;
         }
+
         return false;
     }
 
@@ -125,7 +127,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     {
         $this->metricsCached = (array) $this->cache
             ->type('metrics')
-            ->restore(get_class($this));
+            ->restore(static::class);
     }
 
     /**
@@ -136,7 +138,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     {
         $this->cache
             ->type('metrics')
-            ->store(get_class($this), $this->metrics);
+            ->store(static::class, $this->metrics);
 
         $this->metricsCached = [];
     }

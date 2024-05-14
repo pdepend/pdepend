@@ -47,8 +47,8 @@ use PDepend\Source\Parser\TokenStreamEndException;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCompoundVariable} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTCompoundVariable
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -64,7 +64,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
         $variable = $this->getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
-        $this->assertInstanceOf(ASTString::class, $string);
+        static::assertInstanceOf(ASTString::class, $string);
     }
 
     /**
@@ -75,7 +75,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
         $variable = $this->getFirstVariableInFunction(__METHOD__);
 
         $literal = $variable->getChild(0);
-        $this->assertEquals("'FOO{\$bar}'", $literal->getImage());
+        static::assertEquals("'FOO{\$bar}'", $literal->getImage());
     }
 
     /**
@@ -86,7 +86,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
         $variable = $this->getFirstVariableInFunction(__METHOD__);
 
         $string = $variable->getChild(0);
-        $this->assertInstanceOf(ASTString::class, $string);
+        static::assertInstanceOf(ASTString::class, $string);
     }
 
     /**
@@ -122,7 +122,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
     public function testCompoundVariableHasExpectedStartLine(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
-        $this->assertSame(4, $variable->getStartLine());
+        static::assertSame(4, $variable->getStartLine());
     }
 
     /**
@@ -131,7 +131,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
     public function testCompoundVariableHasExpectedStartColumn(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
-        $this->assertSame(5, $variable->getStartColumn());
+        static::assertSame(5, $variable->getStartColumn());
     }
 
     /**
@@ -140,7 +140,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
     public function testCompoundVariableHasExpectedEndLine(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
-        $this->assertSame(7, $variable->getEndLine());
+        static::assertSame(7, $variable->getEndLine());
     }
 
     /**
@@ -149,7 +149,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
     public function testCompoundVariableHasExpectedEndColumn(): void
     {
         $variable = $this->getFirstVariableInFunction(__METHOD__);
-        $this->assertSame(11, $variable->getEndColumn());
+        static::assertSame(11, $variable->getEndColumn());
     }
 
     /**

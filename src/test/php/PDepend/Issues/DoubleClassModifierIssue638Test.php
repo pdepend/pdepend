@@ -73,9 +73,9 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
         ];
 
-        $this->assertEquals($expected, $class->getTokens());
-        $this->assertSame(0, (~State::IS_READONLY & $class->getModifiers()));
-        $this->assertTrue($class->isReadonly());
+        static::assertEquals($expected, $class->getTokens());
+        static::assertSame(0, ~State::IS_READONLY & $class->getModifiers());
+        static::assertTrue($class->isReadonly());
     }
 
     /**
@@ -93,9 +93,9 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
         ];
 
-        $this->assertEquals($expected, $class->getTokens());
-        $this->assertSame(0, (~State::IS_EXPLICIT_ABSTRACT & $class->getModifiers()));
-        $this->assertTrue($class->isAbstract());
+        static::assertEquals($expected, $class->getTokens());
+        static::assertSame(0, ~State::IS_EXPLICIT_ABSTRACT & $class->getModifiers());
+        static::assertTrue($class->isAbstract());
     }
 
     /**
@@ -113,9 +113,9 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
         ];
 
-        $this->assertEquals($expected, $class->getTokens());
-        $this->assertSame(0, (~State::IS_FINAL & $class->getModifiers()));
-        $this->assertTrue($class->isFinal());
+        static::assertEquals($expected, $class->getTokens());
+        static::assertSame(0, ~State::IS_FINAL & $class->getModifiers());
+        static::assertTrue($class->isFinal());
     }
 
     /**
@@ -134,13 +134,13 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
         ];
 
-        $this->assertEquals($expected, $class->getTokens());
+        static::assertEquals($expected, $class->getTokens());
 
         $expectedModifiers = ~State::IS_READONLY & ~State::IS_EXPLICIT_ABSTRACT;
-        $this->assertSame(0, ($expectedModifiers & $class->getModifiers()));
+        static::assertSame(0, $expectedModifiers & $class->getModifiers());
 
-        $this->assertTrue($class->isReadonly());
-        $this->assertTrue($class->isAbstract());
+        static::assertTrue($class->isReadonly());
+        static::assertTrue($class->isAbstract());
     }
 
     /**
@@ -159,13 +159,13 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
         ];
 
-        $this->assertEquals($expected, $class->getTokens());
+        static::assertEquals($expected, $class->getTokens());
 
         $expectedModifiers = ~State::IS_READONLY & ~State::IS_EXPLICIT_ABSTRACT;
-        $this->assertSame(0, ($expectedModifiers & $class->getModifiers()));
+        static::assertSame(0, $expectedModifiers & $class->getModifiers());
 
-        $this->assertTrue($class->isReadonly());
-        $this->assertTrue($class->isAbstract());
+        static::assertTrue($class->isReadonly());
+        static::assertTrue($class->isAbstract());
     }
 
     /**
@@ -184,13 +184,13 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
         ];
 
-        $this->assertEquals($expected, $class->getTokens());
+        static::assertEquals($expected, $class->getTokens());
 
         $expectedModifiers = ~State::IS_READONLY & ~State::IS_FINAL;
-        $this->assertSame(0, ($expectedModifiers & $class->getModifiers()));
+        static::assertSame(0, $expectedModifiers & $class->getModifiers());
 
-        $this->assertTrue($class->isFinal());
-        $this->assertTrue($class->isReadonly());
+        static::assertTrue($class->isFinal());
+        static::assertTrue($class->isReadonly());
     }
 
     /**
@@ -209,13 +209,13 @@ class DoubleClassModifierIssue638Test extends AbstractFeatureTestCase
             new Token(Tokens::T_CURLY_BRACE_CLOSE, '}', 4, 4, 1, 1),
         ];
 
-        $this->assertEquals($expected, $class->getTokens());
+        static::assertEquals($expected, $class->getTokens());
 
         $expectedModifiers = ~State::IS_READONLY & ~State::IS_FINAL;
-        $this->assertSame(0, ($expectedModifiers & $class->getModifiers()));
+        static::assertSame(0, $expectedModifiers & $class->getModifiers());
 
-        $this->assertTrue($class->isFinal());
-        $this->assertTrue($class->isReadonly());
+        static::assertTrue($class->isFinal());
+        static::assertTrue($class->isReadonly());
     }
 
     /**

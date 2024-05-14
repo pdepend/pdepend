@@ -69,7 +69,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
             $actual[] = $reference->getImage();
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'Foo\Bar\Bar',
                 '\Bar\Baz',
@@ -94,7 +94,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
             $actual[] = $reference->getImage();
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'Foo\Bar\Bar',
                 '\Bar\Baz',
@@ -126,7 +126,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
             $actual[] = $reference->getImage();
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'Bar\Baz\Bar',
                 'Bar\Baz\Baz',
@@ -160,7 +160,7 @@ class NamespaceResovingTest extends AbstractParserTestCase
             $actual[] = $reference->getImage();
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 '\Bar',
                 '\Foo\Bar',
