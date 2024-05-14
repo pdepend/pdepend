@@ -99,6 +99,7 @@ use PDepend\Source\AST\ASTIncludeExpression;
 use PDepend\Source\AST\ASTIndexExpression;
 use PDepend\Source\AST\ASTInstanceOfExpression;
 use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTIntersectionType;
 use PDepend\Source\AST\ASTIssetExpression;
 use PDepend\Source\AST\ASTLabelStatement;
 use PDepend\Source\AST\ASTListExpression;
@@ -174,7 +175,7 @@ use PDepend\Util\Log;
 use PDepend\Util\Type;
 
 /**
- * The php source parser.
+ * The php source parser implementation that supports features up to PHP version 8.1.
  *
  * With the default settings the parser includes annotations, better known as
  * doc comment tags, in the generated result. This means it extracts the type
@@ -201,22 +202,21 @@ abstract class AbstractPHPParser
 {
     /**
      * Regular expression for integer numbers representation.
-     * (Add support for octal explicit notation.)
      *
      * @see https://php.net/manual/en/language.types.integer.php
-     * @see https://github.com/php/doc-en/blob/085c38d45e466691062b4444c71f4dbe4198f884/language/types/integer.xml#L79-L91
+     * @see https://github.com/php/doc-en/blob/d494ffa4d9f83b60fe66972ec2c0cf0301513b4a/language/types/integer.xml#L77-L89
      */
-    protected const REGEXP_INTEGER = '/^(
+    protected const REGEXP_INTEGER = '(
                        0
                        |
                        [1-9][0-9]*(?:_[0-9]+)*
                        |
                        0[xX][0-9a-fA-F]+(?:_[0-9a-fA-F]+)*
                        |
-                       0[0-7]+(?:_[0-7]+)*
+                       0[oO]?[0-7]+(?:_[0-7]+)*
                        |
                        0[bB][01]+(?:_[01]+)*
-                     )$/x';
+                     )x';
 
     /**
      * Tell if readonly is allowed as class modifier in the current PHP level.
@@ -478,6 +478,7 @@ abstract class AbstractPHPParser
             case 'float':
             case 'string':
             case 'void':
+            case 'never':
                 return $this->builder->buildAstScalarType($image);
             case 'callable':
                 return $this->builder->buildAstTypeCallable();
@@ -5176,6 +5177,11 @@ abstract class AbstractPHPParser
      */
     protected function parseArgumentList(ASTArguments $arguments)
     {
+        $this->consumeComments();
+
+        // peek if there's an ellipsis to determine variadic placeholder
+        $ellipsis = Tokens::T_ELLIPSIS === $this->tokenizer->peek();
+
         while (true) {
             $this->consumeComments();
 
@@ -5192,6 +5198,11 @@ abstract class AbstractPHPParser
             if (!$expr || !$this->addChildToList($arguments, $expr)) {
                 break;
             }
+        }
+
+        // ellipsis and no further arguments => variadic placeholder foo(...)
+        if ($ellipsis === true && count($arguments->getChildren()) === 0) {
+            $arguments->setVariadicPlaceholder();
         }
 
         return $arguments;
@@ -6351,6 +6362,18 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * @return int
+     */
+    private function checkReadonlyToken()
+    {
+        if ($this->addTokenToStackIfType(Tokens::T_READONLY)) {
+            return State::IS_READONLY;
+        }
+
+        return 0;
+    }
+
+    /**
      * Parse the modifiers for construct parameter
      *
      * @return int
@@ -6363,7 +6386,7 @@ abstract class AbstractPHPParser
             Tokens::T_PRIVATE => State::IS_PRIVATE,
         );
 
-        $modifier = 0;
+        $modifier = $this->checkReadonlyToken();
         $token = $this->tokenizer->peek();
 
         if (isset($states[$token])) {
@@ -6373,7 +6396,7 @@ abstract class AbstractPHPParser
             $this->tokenStack->add($next);
         }
 
-        return $modifier;
+        return $modifier | $this->checkReadonlyToken();
     }
 
     /**
@@ -6911,14 +6934,53 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * @param ASTType $firstType
+     *
+     * @return ASTIntersectionType
+     */
+    protected function parseIntersectionTypeHint($firstType)
+    {
+        $token = $this->tokenizer->currentToken();
+        $types = array($firstType);
+
+        while ($this->tokenizer->peekNext() !== Tokens::T_VARIABLE && $this->addTokenToStackIfType(Tokens::T_BITWISE_AND)) {
+            $types[] = $this->parseSingleTypeHint();
+        }
+
+        $intersectionType = $this->builder->buildAstIntersectionType();
+        foreach ($types as $type) {
+            // no scalars are allowed as intersection types
+            if ($type instanceof ASTScalarType) {
+                throw new ParserException(
+                    $type->getImage() . ' can not be used in an intersection type',
+                    0,
+                    $this->getUnexpectedTokenException($token)
+                );
+            }
+
+            $intersectionType->addChild($type);
+        }
+
+        return $intersectionType;
+    }
+
+    /**
      * @param ASTType $type
      *
      * @return ASTType
      */
     protected function parseTypeHintCombination($type)
     {
-        if ($this->tokenizer->peek() === Tokens::T_BITWISE_OR) {
+        $peek = $this->tokenizer->peek();
+
+        if ($peek === Tokens::T_BITWISE_OR) {
             return $this->parseUnionTypeHint($type);
+        }
+
+        $peekNext = $this->tokenizer->peekNext();
+        // sniff for &, but avoid by_reference &$variable and &...$variables.
+        if ($peek === Tokens::T_BITWISE_AND && $peekNext !== Tokens::T_VARIABLE && $peekNext !== Tokens::T_ELLIPSIS) {
+            return $this->parseIntersectionTypeHint($type);
         }
 
         return $type;
@@ -7388,6 +7450,7 @@ abstract class AbstractPHPParser
             case 'callable':
             case 'iterable':
             case 'void':
+            case 'never':
                 return true;
         }
 
@@ -7876,13 +7939,21 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * Parse a default value after a parameter, static variable or constant declaration.
+     * This method will parse a default value after a parameter/static variable/constant
+     * declaration.
      *
      * @return ASTValue
      * @since 2.11.0
      */
     protected function parseVariableDefaultValue()
     {
+        if ($this->tokenizer->peek() === Tokens::T_NEW) {
+            $defaultValue = new ASTValue();
+            $defaultValue->setValue($this->parseAllocationExpression());
+
+            return $defaultValue;
+        }
+
         return $this->parseStaticValueOrStaticArray();
     }
 
@@ -8674,6 +8745,7 @@ abstract class AbstractPHPParser
 
         throw $this->getUnexpectedNextTokenException();
     }
+
     /**
      * Parses enum declaration. available since PHP 8.1. Ex.:
      *  enum Suit: string { case HEARTS = 'hearts'; }
@@ -8683,7 +8755,15 @@ abstract class AbstractPHPParser
      */
     protected function parseEnumDeclaration()
     {
-        throw $this->getUnexpectedNextTokenException();
+        $this->tokenStack->push();
+
+        $enum = $this->parseEnumSignature();
+        $enum = $this->parseTypeBody($enum);
+        $enum->setTokens($this->tokenStack->pop());
+
+        $this->reset();
+
+        return $enum;
     }
 
     /**

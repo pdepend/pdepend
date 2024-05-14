@@ -58,7 +58,7 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.12
  */
-abstract class PHPParserVersion82 extends PHPParserVersion81
+abstract class PHPParserVersion82 extends AbstractPHPParser
 {
     /**
      * Since PHP 8.2, readonly is allowed as class modifier.

@@ -49,9 +49,8 @@ use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion81
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
  * @group unittest
  * @group php8.1
  */
