@@ -38,15 +38,13 @@ jobs:
       id: composer-cache
       uses: actions/cache@v4
       with:
-        path: |
-            vendor
-            ocular.phar
+        path: vendor
         key: ${{ runner.os }}-coverage-${{ matrix.php }}-${{ matrix.setup }}-${{ hashFiles('composer.json') }}
 
     - name: Install dependencies
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: |
-        composer require scrutinizer/ocular --no-update --no-interaction
+        composer require scrutinizer/ocular --no-update --no-interaction --dev
         composer update --prefer-dist --no-progress --prefer-${{ matrix.setup }}
 
     - name: Coverage
