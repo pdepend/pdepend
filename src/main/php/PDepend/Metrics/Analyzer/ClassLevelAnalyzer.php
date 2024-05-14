@@ -246,12 +246,18 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
 
     /**
      * Visits a method node.
+     *
+     * @throws RuntimeException
      */
     public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
 
-        $id = $method->getParent()->getId();
+        $parent = $method->getParent();
+        if (!$parent) {
+            throw new RuntimeException('Method has no parent.');
+        }
+        $id = $parent->getId();
 
         $ccn = $this->cyclomaticAnalyzer->getCcn2($method);
 

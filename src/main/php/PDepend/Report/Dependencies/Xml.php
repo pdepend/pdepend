@@ -60,6 +60,7 @@ use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 use PDepend\Util\Utf8Util;
+use RuntimeException;
 
 /**
  * This logger generates a summary xml document with aggregated project, class,
@@ -198,6 +199,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Generates the XML for a class or trait node.
      *
      * @param string $typeIdentifier
+     *
+     * @throws RuntimeException
      */
     private function generateTypeXml(AbstractASTClassOrInterface $type, $typeIdentifier): void
     {
@@ -211,6 +214,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $doc = $xml->ownerDocument;
+        if (!$doc) {
+            throw new RuntimeException('Missing owner docuemtn');
+        }
 
         $typeXml = $doc->createElement($typeIdentifier);
         $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
@@ -249,6 +255,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $doc = $xml->ownerDocument;
+        if (!$doc) {
+            throw new RuntimeException('Missing owner docuemtn');
+        }
 
         $packageXml = $doc->createElement('package');
         $packageXml->setAttribute('name', Utf8Util::ensureEncoding($namespace->getName()));
@@ -274,6 +283,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Aggregates all dependencies for the given <b>$node</b> instance and adds them
      * to the <b>\DOMElement</b>
+     *
+     * @throws RuntimeException
      */
     protected function writeNodeDependencies(DOMElement $xml, AbstractASTArtifact $node): void
     {
@@ -282,6 +293,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $doc = $xml->ownerDocument;
+        if (!$doc) {
+            throw new RuntimeException('Missing owner docuemtn');
+        }
 
         $efferentXml = $doc->createElement('efferent');
         $xml->appendChild($efferentXml);
@@ -315,11 +329,16 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @param DOMElement $xml The parent xml element.
      * @param ?ASTCompilationUnit $compilationUnit The code file instance.
+     * @throws RuntimeException
      */
     protected function writeFileReference(DOMElement $xml, ?ASTCompilationUnit $compilationUnit = null): void
     {
         if (in_array($compilationUnit, $this->fileSet, true) === false) {
             $this->fileSet[] = $compilationUnit;
+        }
+
+        if (!$xml->ownerDocument) {
+            throw new RuntimeException('Missing owner docuemtn');
         }
 
         $fileXml = $xml->ownerDocument->createElement('file');

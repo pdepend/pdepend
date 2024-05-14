@@ -47,6 +47,7 @@ use PDepend\Source\Tokenizer\FullTokenizer;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
+use RuntimeException;
 
 // @codeCoverageIgnoreStart
 
@@ -920,6 +921,8 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Tokenizes the content of the source file with {@link token_get_all()} and
      * filters this token stream.
+     *
+     * @throws RuntimeException
      */
     private function tokenize(): void
     {
@@ -933,6 +936,9 @@ class PHPTokenizerInternal implements FullTokenizer
 
         // No longer replacing short open tags since some want to track them.
         $source = $this->sourceFile->getSource();
+        if (!$source) {
+            throw new RuntimeException('No source was given');
+        }
 
         $tokens = $this->substituteTokens(token_get_all($source));
 

@@ -190,7 +190,11 @@ class Pyramid implements FileAwareGenerator
 
         $items = array_merge($metrics, $proportions);
         foreach ($items as $name => $value) {
-            $svg->getElementById("pdepend.{$name}")->nodeValue = $value;
+            $node = $svg->getElementById("pdepend.{$name}");
+            if (!$node) {
+                throw new RuntimeException("Document is missing the pdepend.{$name} elsement");
+            }
+            $node->nodeValue = $value;
 
             if (($threshold = $this->computeThreshold($name, $value)) === null) {
                 continue;

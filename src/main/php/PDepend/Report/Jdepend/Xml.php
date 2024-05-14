@@ -57,6 +57,7 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 use PDepend\Util\Utf8Util;
+use RuntimeException;
 
 /**
  * Generates an xml document with the aggregated metrics. The format is borrowed
@@ -204,6 +205,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
     /**
      * Visits a class node.
+     *
+     * @throws RuntimeException
      */
     public function visitClass(ASTClass $class): void
     {
@@ -212,6 +215,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $doc = $this->packages->ownerDocument;
+        if (!$doc) {
+            throw new RuntimeException('Missing owner docuemtn');
+        }
 
         $classXml = $doc->createElement('Class');
         $classXml->setAttribute('sourceFile', (string) $class->getCompilationUnit());
@@ -230,6 +236,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
     /**
      * Visits a code interface object.
+     *
+     * @throws RuntimeException
      */
     public function visitInterface(ASTInterface $interface): void
     {
@@ -238,6 +246,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $doc = $this->abstractClasses->ownerDocument;
+        if (!$doc) {
+            throw new RuntimeException('Missing owner docuemtn');
+        }
 
         $classXml = $doc->createElement('Class');
         $classXml->setAttribute('sourceFile', (string) $interface->getCompilationUnit());
@@ -252,6 +263,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
     /**
      * Visits a package node.
+     *
+     * @throws RuntimeException
      */
     public function visitNamespace(ASTNamespace $namespace): void
     {
@@ -265,6 +278,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $doc = $this->packages->ownerDocument;
+        if (!$doc) {
+            throw new RuntimeException('Missing owner docuemtn');
+        }
 
         $this->concreteClasses = $doc->createElement('ConcreteClasses');
         $this->abstractClasses = $doc->createElement('AbstractClasses');
