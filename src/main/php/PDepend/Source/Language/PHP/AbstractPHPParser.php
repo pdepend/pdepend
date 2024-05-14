@@ -326,7 +326,7 @@ abstract class AbstractPHPParser
     protected Tokenizer $tokenizer;
 
     /** @var array<int, int> */
-    protected $possiblePropertyTypes = array(
+    protected $possiblePropertyTypes = [
         Tokens::T_STRING,
         Tokens::T_ARRAY,
         Tokens::T_QUESTION_MARK,
@@ -335,7 +335,7 @@ abstract class AbstractPHPParser
         Tokens::T_SELF,
         Tokens::T_NULL,
         Tokens::T_FALSE,
-    );
+    ];
 
     /**
      * The name of the last detected namespace.
@@ -4265,7 +4265,7 @@ abstract class AbstractPHPParser
      */
     protected function isListUnpacking($tokenType = null)
     {
-        return in_array($tokenType ?: $this->tokenizer->peek(), array(Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN));
+        return in_array($tokenType ?: $this->tokenizer->peek(), [Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN]);
     }
 
     /**
@@ -8116,7 +8116,7 @@ abstract class AbstractPHPParser
      */
     protected function parseStaticValueVersionSpecific(ASTValue $value)
     {
-        $expressions = array();
+        $expressions = [];
 
         while (($tokenType = $this->tokenizer->peek()) != Tokenizer::T_EOF) {
             switch ($tokenType) {
@@ -8305,7 +8305,7 @@ abstract class AbstractPHPParser
     {
         $this->tokenStack->push();
 
-        if (Tokens::T_FN === $this->tokenizer->peek()) {
+        if ($this->tokenizer->peek() === Tokens::T_FN) {
             $this->consumeToken(Tokens::T_FN);
         }
 

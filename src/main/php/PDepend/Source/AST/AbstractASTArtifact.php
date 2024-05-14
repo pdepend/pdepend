@@ -215,7 +215,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         return null;
     }
 
-    public function findChildrenOfType($targetType, array &$results = array())
+    public function findChildrenOfType($targetType, array &$results = [])
     {
         $children = $this->getChildren();
         foreach ($children as $node) {
@@ -240,7 +240,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     public function getParentsOfType($parentType)
     {
-        $parents = array();
+        $parents = [];
 
         $parentNode = $this->parent;
         while (is_object($parentNode)) {
