@@ -57,26 +57,18 @@ use PDepend\Source\AST\ASTNamespace;
  */
 class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     private const
         M_CODE_RANK = 'cr',
         M_REVERSE_CODE_RANK = 'rcr';
 
-    /**
-     * The used damping factor.
-     */
+    /** The used damping factor. */
     private const DAMPING_FACTOR = 0.85;
 
-    /**
-     * Number of loops for the code range calculation.
-     */
+    /** Number of loops for the code range calculation. */
     private const ALGORITHM_LOOPS = 25;
 
-    /**
-     * Option key for the code rank mode.
-     */
+    /** Option key for the code rank mode. */
     private const STRATEGY_OPTION = 'coderank-mode';
 
     /**
@@ -174,6 +166,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             return $this->nodeMetrics[$artifact->getId()];
         }
+
         return [];
     }
 
@@ -222,9 +215,10 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
 
                     $rank += ($previousRank / $refCount);
                 }
-                $ranks[$name] = ((1.0 - $dampingFactory)) + $dampingFactory * $rank;
+                $ranks[$name] = (1.0 - $dampingFactory) + $dampingFactory * $rank;
             }
         }
+
         return $ranks;
     }
 }

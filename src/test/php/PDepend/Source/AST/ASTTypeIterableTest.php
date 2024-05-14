@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTypeIterable} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTypeIterable
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     public function testIterableType()
     {
         $type = $this->getFirstArrayTypeInFunction();
-        $this->assertInstanceOf(ASTTypeIterable::class, $type);
+        static::assertInstanceOf(ASTTypeIterable::class, $type);
 
         return $type;
     }
@@ -77,7 +77,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      */
     public function testIterableTypeHasExpectedStartLine($type): void
     {
-        $this->assertEquals(2, $type->getStartLine());
+        static::assertEquals(2, $type->getStartLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      */
     public function testIterableTypeHasExpectedStartColumn($type): void
     {
-        $this->assertEquals(24, $type->getStartColumn());
+        static::assertEquals(24, $type->getStartColumn());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      */
     public function testIterableTypeHasExpectedEndLine($type): void
     {
-        $this->assertEquals(2, $type->getEndLine());
+        static::assertEquals(2, $type->getEndLine());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
      */
     public function testIterableTypeHasExpectedEndColumn($type): void
     {
-        $this->assertEquals(31, $type->getEndColumn());
+        static::assertEquals(31, $type->getEndColumn());
     }
 
     /**
@@ -122,7 +122,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     public function testIsArrayReturnsTrue(): void
     {
         $type = new ASTTypeIterable();
-        $this->assertTrue($type->isArray());
+        static::assertTrue($type->isArray());
     }
 
     /**
@@ -131,7 +131,7 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     public function testIsPrimitiveReturnsFalse(): void
     {
         $type = new ASTTypeIterable();
-        $this->assertFalse($type->isScalar());
+        static::assertFalse($type->isScalar());
     }
 
     /**

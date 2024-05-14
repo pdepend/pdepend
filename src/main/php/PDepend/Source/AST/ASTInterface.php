@@ -107,13 +107,15 @@ class ASTInterface extends AbstractASTClassOrInterface
     {
         if ($type === $this) {
             return true;
-        } elseif ($type instanceof ASTInterface) {
+        }
+        if ($type instanceof self) {
             foreach ($this->getInterfaces() as $interface) {
                 if ($interface === $type) {
                     return true;
                 }
             }
         }
+
         return false;
     }
 

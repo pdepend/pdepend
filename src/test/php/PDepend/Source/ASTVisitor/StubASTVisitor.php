@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\ASTVisitor;
 
@@ -183,7 +183,6 @@ class StubASTVisitor implements ASTVisitor
     {
         $this->trait = $trait;
     }
-
 
     /**
      * Visits a code interface object.

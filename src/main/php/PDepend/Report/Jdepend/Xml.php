@@ -96,33 +96,22 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     protected $nodeMetrics = [];
 
-    /**
-     * The dependency result set.
-     */
+    /** The dependency result set. */
     protected DependencyAnalyzer $analyzer;
 
-    /**
-     * The Packages dom element.
-     */
+    /** The Packages dom element. */
     protected DOMNode $packages;
 
-    /**
-     * The Cycles dom element.
-     */
+    /** The Cycles dom element. */
     protected DOMNode $cycles;
 
-    /**
-     * The concrete classes element for the current package.
-     */
+    /** The concrete classes element for the current package. */
     protected DOMElement $concreteClasses;
 
-    /**
-     * The abstract classes element for the current package.
-     */
+    /** The abstract classes element for the current package. */
     protected DOMElement $abstractClasses;
-    /**
-     * The output log file.
-     */
+
+    /** The output log file. */
     private string $logFile;
 
     /**
@@ -170,6 +159,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
             return true;
         }
+
         return false;
     }
 

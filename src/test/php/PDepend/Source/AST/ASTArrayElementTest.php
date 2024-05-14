@@ -46,8 +46,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArrayElement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTArrayElement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
@@ -226,7 +226,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
     public function testArrayElementByReferenceReturnsFalseByDefault(): void
     {
         $array = $this->getFirstArrayElementInFunction();
-        $this->assertFalse($array->isByReference());
+        static::assertFalse($array->isByReference());
     }
 
     /**
@@ -235,7 +235,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
     public function testArrayElementByReferenceReturnsTrueForValue(): void
     {
         $array = $this->getFirstArrayElementInFunction();
-        $this->assertTrue($array->isByReference());
+        static::assertTrue($array->isByReference());
     }
 
     /**
@@ -244,7 +244,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
     public function testArrayElementByReferenceReturnsFalseForKeyValue(): void
     {
         $array = $this->getFirstArrayElementInFunction();
-        $this->assertFalse($array->isByReference());
+        static::assertFalse($array->isByReference());
     }
 
     /**
@@ -253,7 +253,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
     public function testArrayElementByReferenceReturnsTrueForKeyValue(): void
     {
         $array = $this->getFirstArrayElementInFunction();
-        $this->assertTrue($array->isByReference());
+        static::assertTrue($array->isByReference());
     }
 
     /**
@@ -262,7 +262,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
     public function testArrayElementHasExpectedStartLine(): void
     {
         $array = $this->getFirstArrayElementInFunction();
-        $this->assertEquals(5, $array->getStartLine());
+        static::assertEquals(5, $array->getStartLine());
     }
 
     /**
@@ -271,7 +271,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
     public function testArrayElementHasExpectedStartColumn(): void
     {
         $array = $this->getFirstArrayElementInFunction();
-        $this->assertEquals(9, $array->getStartColumn());
+        static::assertEquals(9, $array->getStartColumn());
     }
 
     /**
@@ -280,7 +280,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
     public function testArrayElementHasExpectedEndLine(): void
     {
         $array = $this->getFirstArrayElementInFunction();
-        $this->assertEquals(11, $array->getEndLine());
+        static::assertEquals(11, $array->getEndLine());
     }
 
     /**
@@ -289,7 +289,7 @@ class ASTArrayElementTest extends ASTNodeTestCase
     public function testArrayElementHasExpectedEndColumn(): void
     {
         $array = $this->getFirstArrayElementInFunction();
-        $this->assertEquals(29, $array->getEndColumn());
+        static::assertEquals(29, $array->getEndColumn());
     }
 
     /**

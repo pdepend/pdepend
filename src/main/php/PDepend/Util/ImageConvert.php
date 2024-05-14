@@ -113,7 +113,7 @@ class ImageConvert
      */
     protected static function hasImagickConvert()
     {
-        // @codeCoverageIgnoreStart
+        /** @codeCoverageIgnoreStart */
         $desc = [
             0 => ['pipe', 'r'],
             1 => ['pipe', 'w'],
@@ -127,6 +127,7 @@ class ImageConvert
 
             return (0 === proc_close($proc));
         }
+
         return false;
         // @codeCoverageIgnoreEnd
     }

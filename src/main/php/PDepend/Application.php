@@ -63,14 +63,10 @@ use Symfony\Component\DependencyInjection\TaggedContainerInterface;
  */
 class Application
 {
-    /**
-     * @var TaggedContainerInterface|null
-     **/
+    /** @var TaggedContainerInterface|null */
     private $container;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $configurationFile;
 
     /**

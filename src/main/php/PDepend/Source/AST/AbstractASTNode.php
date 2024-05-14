@@ -68,9 +68,7 @@ abstract class AbstractASTNode implements ASTNode
      */
     protected ?ASTNode $parent = null;
 
-    /**
-     * An optional doc comment for this node.
-     */
+    /** An optional doc comment for this node. */
     protected ?string $comment = null;
 
     /**
@@ -134,11 +132,11 @@ abstract class AbstractASTNode implements ASTNode
      */
     public function accept(ASTVisitor $visitor, $data = [])
     {
-        $methodName = 'visit' . substr(get_class($this), 22);
+        $methodName = 'visit' . substr(static::class, 22);
         $callable = [$visitor, $methodName];
         assert(is_callable($callable));
 
-        return call_user_func($callable, $this, $data);
+        return $callable($this, $data);
     }
 
     /**
@@ -295,6 +293,7 @@ abstract class AbstractASTNode implements ASTNode
     protected function getMetadata($index)
     {
         $metadata = explode(':', $this->metadata, $this->getMetadataSize());
+
         return $metadata[$index];
     }
 
@@ -337,11 +336,12 @@ abstract class AbstractASTNode implements ASTNode
         if (isset($this->nodes[$index])) {
             return $this->nodes[$index];
         }
+
         throw new OutOfBoundsException(
             sprintf(
                 'No node found at index %d in node of type: %s',
                 $index,
-                get_class($this),
+                static::class,
             ),
         );
     }
@@ -376,6 +376,7 @@ abstract class AbstractASTNode implements ASTNode
                 return $child;
             }
         }
+
         return null;
     }
 
@@ -400,6 +401,7 @@ abstract class AbstractASTNode implements ASTNode
             }
             $node->findChildrenOfType($targetType, $results);
         }
+
         return $results;
     }
 
@@ -450,6 +452,7 @@ abstract class AbstractASTNode implements ASTNode
             }
             $parentNode = $parentNode->getParent();
         }
+
         return $parents;
     }
 

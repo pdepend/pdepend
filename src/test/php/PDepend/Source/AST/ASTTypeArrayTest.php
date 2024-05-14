@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTypeArray} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTypeArray
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     public function testArrayType()
     {
         $type = $this->getFirstArrayTypeInFunction();
-        $this->assertInstanceOf(ASTTypeArray::class, $type);
+        static::assertInstanceOf(ASTTypeArray::class, $type);
 
         return $type;
     }
@@ -77,7 +77,7 @@ class ASTTypeArrayTest extends ASTNodeTestCase
      */
     public function testArrayTypeHasExpectedStartLine($type): void
     {
-        $this->assertEquals(2, $type->getStartLine());
+        static::assertEquals(2, $type->getStartLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTTypeArrayTest extends ASTNodeTestCase
      */
     public function testArrayTypeHasExpectedStartColumn($type): void
     {
-        $this->assertEquals(14, $type->getStartColumn());
+        static::assertEquals(14, $type->getStartColumn());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTTypeArrayTest extends ASTNodeTestCase
      */
     public function testArrayTypeHasExpectedEndLine($type): void
     {
-        $this->assertEquals(2, $type->getEndLine());
+        static::assertEquals(2, $type->getEndLine());
     }
 
     /**
@@ -113,7 +113,7 @@ class ASTTypeArrayTest extends ASTNodeTestCase
      */
     public function testArrayTypeHasExpectedEndColumn($type): void
     {
-        $this->assertEquals(18, $type->getEndColumn());
+        static::assertEquals(18, $type->getEndColumn());
     }
 
     /**
@@ -122,7 +122,7 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     public function testIsArrayReturnsTrue(): void
     {
         $type = new ASTTypeArray();
-        $this->assertTrue($type->isArray());
+        static::assertTrue($type->isArray());
     }
 
     /**
@@ -131,7 +131,7 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     public function testIsPrimitiveReturnsFalse(): void
     {
         $type = new ASTTypeArray();
-        $this->assertFalse($type->isScalar());
+        static::assertFalse($type->isScalar());
     }
 
     /**

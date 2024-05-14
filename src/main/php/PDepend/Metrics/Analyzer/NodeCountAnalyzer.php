@@ -62,9 +62,7 @@ use PDepend\Source\AST\ASTNamespace;
  */
 class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware, AnalyzerNodeAware, AnalyzerProjectAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     private const
         M_NUMBER_OF_PACKAGES = 'nop',
         M_NUMBER_OF_CLASSES = 'noc',
@@ -135,6 +133,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         if (isset($this->nodeMetrics[$artifact->getId()])) {
             $metrics = $this->nodeMetrics[$artifact->getId()];
         }
+
         return $metrics;
     }
 
@@ -292,7 +291,6 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
             self::M_NUMBER_OF_METHODS => 0,
             self::M_NUMBER_OF_FUNCTIONS => 0,
         ];
-
 
         foreach ($namespace->getClasses() as $class) {
             $class->accept($this);

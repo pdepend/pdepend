@@ -53,9 +53,7 @@ use SplFileInfo;
  */
 class Iterator extends FilterIterator
 {
-    /**
-     * The associated filter object.
-     */
+    /** The associated filter object. */
     protected Filter $filter;
 
     /**
@@ -88,6 +86,7 @@ class Iterator extends FilterIterator
         if ($this->getInnerIterator()->current()->isDir()) {
             return false;
         }
+
         return $this->filter->accept($this->getLocalPath(), $this->getFullPath());
     }
 
@@ -114,6 +113,7 @@ class Iterator extends FilterIterator
         if ($this->rootPath && str_starts_with($this->getFullPath(), $this->rootPath)) {
             return substr($this->getFullPath(), strlen($this->rootPath));
         }
+
         return $this->getFullPath();
     }
 }

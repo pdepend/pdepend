@@ -52,9 +52,7 @@ namespace PDepend\Source\AST;
  */
 class ASTShiftLeftExpression extends ASTExpression
 {
-    /**
-     * The default image for this node.
-     */
+    /** The default image for this node. */
     public const IMAGE = '<<';
 
     /**

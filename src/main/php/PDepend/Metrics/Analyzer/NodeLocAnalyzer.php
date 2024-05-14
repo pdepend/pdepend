@@ -79,13 +79,11 @@ use PDepend\Source\Tokenizer\Tokens;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
-    AnalyzerNodeAware,
     AnalyzerFilterAware,
+    AnalyzerNodeAware,
     AnalyzerProjectAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     public const
         M_LINES_OF_CODE = 'loc',
         M_COMMENT_LINES_OF_CODE = 'cloc',
@@ -153,6 +151,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         if (isset($this->metrics[$artifact->getId()])) {
             $metrics = $this->metrics[$artifact->getId()];
         }
+
         return $metrics;
     }
 
@@ -211,6 +210,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         if ($this->restoreFromCache($class)) {
             $this->fireEndClass($class);
+
             return;
         }
 
@@ -250,6 +250,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         if ($this->restoreFromCache($compilationUnit)) {
             $this->updateProjectMetrics($id);
             $this->fireEndFile($compilationUnit);
+
             return;
         }
 
@@ -282,6 +283,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         if ($this->restoreFromCache($function)) {
             $this->fireEndFunction($function);
+
             return;
         }
 
@@ -319,6 +321,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         if ($this->restoreFromCache($interface)) {
             $this->fireEndInterface($interface);
+
             return;
         }
 
@@ -347,6 +350,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
         if ($this->restoreFromCache($method)) {
             $this->fireEndMethod($method);
+
             return;
         }
 
@@ -439,8 +443,8 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
             switch ($token->type) {
                 // These statement are terminated by a semicolon
-                //case Tokens::T_RETURN:
-                //case Tokens::T_THROW:
+                // case Tokens::T_RETURN:
+                // case Tokens::T_THROW:
                 case Tokens::T_IF:
                 case Tokens::T_TRY:
                 case Tokens::T_CASE:
@@ -454,11 +458,14 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
                 case Tokens::T_FUNCTION:
                 case Tokens::T_SEMICOLON:
                     ++$llines;
+
                     break;
+
                 case Tokens::T_DO:
                 case Tokens::T_FOR:
                     // Because statements at least require one semicolon
                     --$llines;
+
                     break;
             }
 
@@ -471,6 +478,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
             }
             unset($lines);
         }
+
         return [count($clines), count($elines), $llines];
     }
 }

@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend;
 
@@ -155,6 +155,7 @@ abstract class AbstractTestCase extends TestCase
         if (is_file($resource)) {
             return dirname($resource);
         }
+
         return $resource;
     }
 
@@ -395,6 +396,7 @@ abstract class AbstractTestCase extends TestCase
             $actual[] = $child::class;
             $actual = self::collectChildNodes($child, $actual);
         }
+
         return $actual;
     }
 
@@ -406,7 +408,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected static function assertGraphEquals(ASTNode $node, array $expected): void
     {
-        self::assertEquals($expected, self::collectChildNodes($node));
+        static::assertEquals($expected, self::collectChildNodes($node));
     }
 
     /**
@@ -424,6 +426,7 @@ abstract class AbstractTestCase extends TestCase
                 $graph[] = self::collectGraph($child);
             }
         }
+
         return $graph;
     }
 
@@ -437,7 +440,7 @@ abstract class AbstractTestCase extends TestCase
     protected static function assertGraph(ASTNode $node, $graph): void
     {
         $actual = self::collectGraph($node);
-        self::assertEquals($graph, $actual);
+        static::assertEquals($graph, $actual);
     }
 
     /**
@@ -562,7 +565,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function createClassFixture($name = null)
     {
-        $name = $name ? $name : get_class($this);
+        $name = $name ?: static::class;
 
         $class = new ASTClass($name);
         $class->setCompilationUnit(new ASTCompilationUnit($GLOBALS['argv'][0]));
@@ -583,7 +586,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function createInterfaceFixture($name = null)
     {
-        $name = $name ? $name : get_class($this);
+        $name = $name ?: static::class;
 
         $interface = new ASTInterface($name);
         $interface->setCompilationUnit(new ASTCompilationUnit($GLOBALS['argv'][0]));
@@ -601,7 +604,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function createTraitFixture($name = null)
     {
-        $name = $name ? $name : get_class($this);
+        $name = $name ?: static::class;
 
         $trait = new ASTTrait($name);
         $trait->setCache(new MemoryCacheDriver());
@@ -618,7 +621,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function createFunctionFixture($name = null)
     {
-        $name = $name ? $name : get_class($this);
+        $name = $name ?: static::class;
 
         $function = new ASTFunction($name);
         $function->setCompilationUnit(new ASTCompilationUnit($GLOBALS['argv'][0]));
@@ -637,7 +640,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function createMethodFixture($name = null)
     {
-        $name = $name ? $name : get_class($this);
+        $name = $name ?: static::class;
 
         $method = new ASTMethod($name);
         $method->setCache(new MemoryCacheDriver());
@@ -672,6 +675,7 @@ abstract class AbstractTestCase extends TestCase
         if (file_exists($uri) === false) {
             throw new ErrorException("File '{$fileName}' does not exists.");
         }
+
         return $uri;
     }
 
@@ -688,19 +692,19 @@ abstract class AbstractTestCase extends TestCase
             $parts = explode('\\', $class);
         }
 
-
         // Strip first two parts
         array_shift($parts);
 
         if (!preg_match('(Version\d+Test$)', end($parts)) && preg_match('(\D(\d+Test)$)', end($parts), $match)) {
             array_pop($parts);
-            array_push($parts, $match[1]);
+            $parts[] = $match[1];
 
             // TODO: Fix this workaround for the existing lower case directories
             array_unshift($parts, strtolower(array_shift($parts)));
         }
 
         $fileName = substr(implode(DIRECTORY_SEPARATOR, $parts), 0, -4) . DIRECTORY_SEPARATOR . $method;
+
         try {
             return self::createCodeResourceURI($fileName);
         } catch (ErrorException $e) {
@@ -720,7 +724,8 @@ abstract class AbstractTestCase extends TestCase
                 return "{$frame['class']}::{$frame['function']}";
             }
         }
-        throw new ErrorException("No calling test case found.");
+
+        throw new ErrorException('No calling test case found.');
     }
 
     /**
@@ -847,6 +852,7 @@ abstract class AbstractTestCase extends TestCase
 
             $parser->parse();
         }
+
         return $builder->getNamespaces();
     }
 
@@ -874,13 +880,13 @@ abstract class AbstractTestCase extends TestCase
     protected function requireImagick(array $requiredFormats = ['PNG', 'SVG']): void
     {
         if (extension_loaded('imagick') === false) {
-            $this->markTestSkipped('No pecl/imagick extension.');
+            static::markTestSkipped('No pecl/imagick extension.');
         }
 
         $formats = Imagick::queryFormats();
 
         if (count(array_intersect($requiredFormats, $formats)) < count($requiredFormats)) {
-            $this->markTestSkipped('Imagick PNG and SVG support are not both installed.');
+            static::markTestSkipped('Imagick PNG and SVG support are not both installed.');
         }
     }
 }

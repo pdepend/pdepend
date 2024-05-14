@@ -77,6 +77,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
         if ($testCase === null) {
             $testCase = $this->getTestCaseMethod();
         }
+
         return $this->parseTestCaseSource($testCase);
     }
 
@@ -94,6 +95,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
         if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
             throw new ErrorException('Unexpected class name format');
         }
+
         return $this->parseSource('issues/' . $match[1] . '/' . $method . '.php');
     }
 
@@ -110,6 +112,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
                 return $frame['class'] . '::' . $frame['function'];
             }
         }
+
         throw new ErrorException('Cannot locate test case method.');
     }
 }

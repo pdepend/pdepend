@@ -54,48 +54,30 @@ use ReflectionProperty;
  */
 interface State
 {
-    /**
-     * Marks a class or interface as implicit abstract.
-     */
+    /** Marks a class or interface as implicit abstract. */
     public const IS_IMPLICIT_ABSTRACT = ReflectionClass::IS_IMPLICIT_ABSTRACT;
 
-    /**
-     * Marks a class or interface as explicit abstract.
-     */
+    /** Marks a class or interface as explicit abstract. */
     public const IS_EXPLICIT_ABSTRACT = ReflectionClass::IS_EXPLICIT_ABSTRACT;
 
-    /**
-     * Marks a node as public.
-     */
+    /** Marks a node as public. */
     public const IS_PUBLIC = ReflectionMethod::IS_PUBLIC;
 
-    /**
-     * Marks a node as protected.
-     */
+    /** Marks a node as protected. */
     public const IS_PROTECTED = ReflectionMethod::IS_PROTECTED;
 
-    /**
-     * Marks a node as private.
-     */
+    /** Marks a node as private. */
     public const IS_PRIVATE = ReflectionMethod::IS_PRIVATE;
 
-    /**
-     * Marks a node as abstract.
-     */
+    /** Marks a node as abstract. */
     public const IS_ABSTRACT = ReflectionMethod::IS_ABSTRACT;
 
-    /**
-     * Marks a node as final.
-     */
+    /** Marks a node as final. */
     public const IS_FINAL = ReflectionMethod::IS_FINAL;
 
-    /**
-     * Marks a node as static.
-     */
+    /** Marks a node as static. */
     public const IS_STATIC = ReflectionMethod::IS_STATIC;
 
-    /**
-     * Marks a node as readonly.
-     */
+    /** Marks a node as readonly. */
     public const IS_READONLY = ReflectionProperty::IS_READONLY;
 }

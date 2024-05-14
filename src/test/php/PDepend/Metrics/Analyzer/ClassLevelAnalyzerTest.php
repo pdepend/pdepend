@@ -93,7 +93,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     public function testGetRequiredAnalyzersReturnsExpectedClassNames(): void
     {
         $analyzer = new ClassLevelAnalyzer();
-        $this->assertEquals(
+        static::assertEquals(
             [CyclomaticComplexityAnalyzer::class],
             $analyzer->getRequiredAnalyzers()
         );
@@ -104,7 +104,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsReturnsArrayWithExpectedSetOfMetrics(): void
     {
-        $this->assertEquals(
+        static::assertEquals(
             ['impl', 'cis', 'csz', 'npm', 'vars', 'varsi', 'varsnp', 'wmc', 'wmci', 'wmcnp'],
             array_keys($this->calculateClassMetrics())
         );
@@ -115,7 +115,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateIMPLMetric(): void
     {
-        $this->assertEquals(4, $this->calculateClassMetric('impl'));
+        static::assertEquals(4, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -123,7 +123,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateIMPLMetric1(): void
     {
-        $this->assertEquals(6, $this->calculateClassMetric('impl'));
+        static::assertEquals(6, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -131,7 +131,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateIMPLMetric2(): void
     {
-        $this->assertEquals(2, $this->calculateClassMetric('impl'));
+        static::assertEquals(2, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -139,7 +139,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateIMPLMetricContainsUnknownImplementedInterface(): void
     {
-        $this->assertEquals(1, $this->calculateClassMetric('impl'));
+        static::assertEquals(1, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -147,7 +147,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateIMPLMetricContainsUnknownIndirectImplementedInterface(): void
     {
-        $this->assertEquals(1, $this->calculateClassMetric('impl'));
+        static::assertEquals(1, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -155,7 +155,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateIMPLMetricContainsInternalImplementedInterface(): void
     {
-        $this->assertEquals(1, $this->calculateClassMetric('impl'));
+        static::assertEquals(1, $this->calculateClassMetric('impl'));
     }
 
     /**
@@ -163,7 +163,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCISMetricZeroInheritance(): void
     {
-        $this->assertEquals(2, $this->calculateClassMetric('cis'));
+        static::assertEquals(2, $this->calculateClassMetric('cis'));
     }
 
     /**
@@ -171,7 +171,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCISMetricOneLevelInheritance(): void
     {
-        $this->assertEquals(2, $this->calculateClassMetric('cis'));
+        static::assertEquals(2, $this->calculateClassMetric('cis'));
     }
 
     /**
@@ -179,7 +179,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCISMetricTwoLevelInheritance(): void
     {
-        $this->assertEquals(3, $this->calculateClassMetric('cis'));
+        static::assertEquals(3, $this->calculateClassMetric('cis'));
     }
 
     /**
@@ -187,7 +187,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCISMetricOnlyCountsMethodsAndNotSumsComplexity(): void
     {
-        $this->assertEquals(2, $this->calculateClassMetric('cis'));
+        static::assertEquals(2, $this->calculateClassMetric('cis'));
     }
 
     /**
@@ -195,7 +195,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCSZMetricZeroInheritance(): void
     {
-        $this->assertEquals(6, $this->calculateClassMetric('csz'));
+        static::assertEquals(6, $this->calculateClassMetric('csz'));
     }
 
     /**
@@ -203,7 +203,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCSZMetricOneLevelInheritance(): void
     {
-        $this->assertEquals(4, $this->calculateClassMetric('csz'));
+        static::assertEquals(4, $this->calculateClassMetric('csz'));
     }
 
     /**
@@ -211,7 +211,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCSZMetricOnlyCountsMethodsAndNotSumsComplexity(): void
     {
-        $this->assertEquals(2, $this->calculateClassMetric('csz'));
+        static::assertEquals(2, $this->calculateClassMetric('csz'));
     }
 
     /**
@@ -219,7 +219,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateNpmMetricForEmptyClass(): void
     {
-        $this->assertEquals(0, $this->calculateClassMetric('npm'));
+        static::assertEquals(0, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -227,7 +227,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateNpmMetricForClassWithPublicMethod(): void
     {
-        $this->assertEquals(1, $this->calculateClassMetric('npm'));
+        static::assertEquals(1, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -235,7 +235,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateNpmMetricForClassWithPublicMethods(): void
     {
-        $this->assertEquals(3, $this->calculateClassMetric('npm'));
+        static::assertEquals(3, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -243,7 +243,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateNpmMetricForClassWithPublicStaticMethod(): void
     {
-        $this->assertEquals(1, $this->calculateClassMetric('npm'));
+        static::assertEquals(1, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -251,7 +251,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateNpmMetricForClassWithProtectedMethod(): void
     {
-        $this->assertEquals(0, $this->calculateClassMetric('npm'));
+        static::assertEquals(0, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -259,7 +259,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateNpmMetricForClassWithPrivateMethod(): void
     {
-        $this->assertEquals(0, $this->calculateClassMetric('npm'));
+        static::assertEquals(0, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -267,7 +267,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateNpmMetricForClassWithAllVisibilityMethods(): void
     {
-        $this->assertEquals(1, $this->calculateClassMetric('npm'));
+        static::assertEquals(1, $this->calculateClassMetric('npm'));
     }
 
     /**
@@ -275,7 +275,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateVARSMetricZeroInheritance(): void
     {
-        $this->assertEquals(1, $this->calculateClassMetric('vars'));
+        static::assertEquals(1, $this->calculateClassMetric('vars'));
     }
 
     /**
@@ -283,7 +283,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateVARSMetricOneLevelInheritance(): void
     {
-        $this->assertEquals(3, $this->calculateClassMetric('vars'));
+        static::assertEquals(3, $this->calculateClassMetric('vars'));
     }
 
     /**
@@ -291,7 +291,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateVARSiMetric(): void
     {
-        $this->assertEquals(4, $this->calculateClassMetric('varsi'));
+        static::assertEquals(4, $this->calculateClassMetric('varsi'));
     }
 
     /**
@@ -299,7 +299,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateVARSiMetricWithInheritance(): void
     {
-        $this->assertEquals(5, $this->calculateClassMetric('varsi'));
+        static::assertEquals(5, $this->calculateClassMetric('varsi'));
     }
 
     /**
@@ -307,7 +307,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateVARSnpMetric(): void
     {
-        $this->assertEquals(2, $this->calculateClassMetric('varsnp'));
+        static::assertEquals(2, $this->calculateClassMetric('varsnp'));
     }
 
     /**
@@ -315,7 +315,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateVARSnpMetricWithInheritance(): void
     {
-        $this->assertEquals(1, $this->calculateClassMetric('varsnp'));
+        static::assertEquals(1, $this->calculateClassMetric('varsnp'));
     }
 
     /**
@@ -323,7 +323,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCMetric(): void
     {
-        $this->assertEquals(3, $this->calculateClassMetric('wmc'));
+        static::assertEquals(3, $this->calculateClassMetric('wmc'));
     }
 
     /**
@@ -331,7 +331,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCMetricOneLevelInheritance(): void
     {
-        $this->assertEquals(3, $this->calculateClassMetric('wmc'));
+        static::assertEquals(3, $this->calculateClassMetric('wmc'));
     }
 
     /**
@@ -339,7 +339,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCMetricTwoLevelInheritance(): void
     {
-        $this->assertEquals(3, $this->calculateClassMetric('wmc'));
+        static::assertEquals(3, $this->calculateClassMetric('wmc'));
     }
 
     /**
@@ -347,7 +347,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCiMetric(): void
     {
-        $this->assertEquals(3, $this->calculateClassMetric('wmci'));
+        static::assertEquals(3, $this->calculateClassMetric('wmci'));
     }
 
     /**
@@ -355,7 +355,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCiMetricOneLevelInheritance(): void
     {
-        $this->assertEquals(4, $this->calculateClassMetric('wmci'));
+        static::assertEquals(4, $this->calculateClassMetric('wmci'));
     }
 
     /**
@@ -363,7 +363,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCiMetricTwoLevelInheritance(): void
     {
-        $this->assertEquals(5, $this->calculateClassMetric('wmci'));
+        static::assertEquals(5, $this->calculateClassMetric('wmci'));
     }
 
     /**
@@ -371,7 +371,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCnpMetric(): void
     {
-        $this->assertEquals(1, $this->calculateClassMetric('wmcnp'));
+        static::assertEquals(1, $this->calculateClassMetric('wmcnp'));
     }
 
     /**
@@ -379,7 +379,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCnpMetricOneLevelInheritance(): void
     {
-        $this->assertEquals(2, $this->calculateClassMetric('wmcnp'));
+        static::assertEquals(2, $this->calculateClassMetric('wmcnp'));
     }
 
     /**
@@ -387,7 +387,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCnpMetricTwoLevelInheritance(): void
     {
-        $this->assertEquals(1, $this->calculateClassMetric('wmcnp'));
+        static::assertEquals(1, $this->calculateClassMetric('wmcnp'));
     }
 
     /**
@@ -399,6 +399,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     private function calculateClassMetric($name): mixed
     {
         $metrics = $this->calculateClassMetrics();
+
         return $metrics[$name];
     }
 
@@ -432,7 +433,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     {
         $metrics = $this->calculateTraitMetrics();
 
-        $this->assertIsArray($metrics);
+        static::assertIsArray($metrics);
 
         return $metrics;
     }
@@ -447,7 +448,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics): void
     {
-        $this->assertEquals(
+        static::assertEquals(
             ['impl', 'cis', 'csz', 'npm', 'vars', 'varsi', 'varsnp', 'wmc', 'wmci', 'wmcnp'],
             array_keys($metrics)
         );
@@ -463,7 +464,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateIMPLMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(0, $metrics['impl']);
+        static::assertEquals(0, $metrics['impl']);
     }
 
     /**
@@ -476,7 +477,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCISMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(2, $metrics['cis']);
+        static::assertEquals(2, $metrics['cis']);
     }
 
     /**
@@ -489,7 +490,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateCSZMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(3, $metrics['csz']);
+        static::assertEquals(3, $metrics['csz']);
     }
 
     /**
@@ -502,7 +503,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateNpmMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(2, $metrics['npm']);
+        static::assertEquals(2, $metrics['npm']);
     }
 
     /**
@@ -515,7 +516,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateVARSMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(0, $metrics['vars']);
+        static::assertEquals(0, $metrics['vars']);
     }
 
     /**
@@ -528,7 +529,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateVARSiMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(0, $metrics['varsi']);
+        static::assertEquals(0, $metrics['varsi']);
     }
 
     /**
@@ -541,7 +542,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateVARSnpMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(0, $metrics['varsnp']);
+        static::assertEquals(0, $metrics['varsnp']);
     }
 
     /**
@@ -554,7 +555,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(10, $metrics['wmc']);
+        static::assertEquals(10, $metrics['wmc']);
     }
 
     /**
@@ -567,7 +568,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCiMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(10, $metrics['wmci']);
+        static::assertEquals(10, $metrics['wmci']);
     }
 
     /**
@@ -580,7 +581,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculateWMCnpMetricForTrait(array $metrics): void
     {
-        $this->assertEquals(8, $metrics['wmcnp']);
+        static::assertEquals(8, $metrics['wmcnp']);
     }
 
     /**

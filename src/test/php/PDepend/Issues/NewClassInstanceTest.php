@@ -75,7 +75,7 @@ class NewClassInstanceTest extends AbstractFeatureTestCase
         $scope = $children[1];
         $instructions = $scope->getChildren();
 
-        $this->assertCount(5, $instructions);
+        static::assertCount(5, $instructions);
         $self = $this;
 
         $expressions = array_map(function (ASTStatement $statement) use ($self) {
@@ -95,14 +95,13 @@ class NewClassInstanceTest extends AbstractFeatureTestCase
             return $children[0];
         }, array_slice($instructions, 1, 3));
 
+        static::assertInstanceOf(ASTVariable::class, $expressions[0]);
+        static::assertEquals('$class', $expressions[0]->getImage());
 
-        $this->assertInstanceOf(ASTVariable::class, $expressions[0]);
-        $this->assertEquals('$class', $expressions[0]->getImage());
+        static::assertInstanceOf(ASTVariable::class, $expressions[1]);
+        static::assertEquals('$class', $expressions[1]->getImage());
 
-        $this->assertInstanceOf(ASTVariable::class, $expressions[1]);
-        $this->assertEquals('$class', $expressions[1]->getImage());
-
-        $this->assertInstanceOf(ASTLiteral::class, $expressions[2]);
-        $this->assertEquals("'stdClass'", $expressions[2]->getImage());
+        static::assertInstanceOf(ASTLiteral::class, $expressions[2]);
+        static::assertEquals("'stdClass'", $expressions[2]->getImage());
     }
 }

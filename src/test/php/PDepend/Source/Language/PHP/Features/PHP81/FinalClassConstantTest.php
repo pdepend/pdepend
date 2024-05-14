@@ -57,10 +57,10 @@ class FinalClassConstantTest extends PHPParserVersion81TestCase
         $constantDeclarators = $class->getConstantDeclarators();
 
         $constantDeclarator = $constantDeclarators['BAR'];
-        $this->assertSame('BAR', $constantDeclarator->getImage());
+        static::assertSame('BAR', $constantDeclarator->getImage());
 
         $constantDefinition = $constantDeclarator->getParent();
         $expectedModifiers = ~State::IS_PRIVATE & ~State::IS_FINAL;
-        $this->assertSame(0, ($expectedModifiers & $constantDefinition->getModifiers()));
+        static::assertSame(0, $expectedModifiers & $constantDefinition->getModifiers());
     }
 }

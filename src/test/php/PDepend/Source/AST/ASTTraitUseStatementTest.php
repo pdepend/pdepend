@@ -49,8 +49,8 @@ use ReflectionMethod;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitUseStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTTraitUseStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
@@ -70,7 +70,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         );
         $methods = $useStmt->getAllMethods();
 
-        $this->assertFalse($useStmt->hasExcludeFor($methods[0]));
+        static::assertFalse($useStmt->hasExcludeFor($methods[0]));
     }
 
     /**
@@ -84,7 +84,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         );
         $methods = $useStmt->getAllMethods();
 
-        $this->assertFalse($useStmt->hasExcludeFor($methods[0]));
+        static::assertFalse($useStmt->hasExcludeFor($methods[0]));
     }
 
     /**
@@ -98,7 +98,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         );
         $methods = $useStmt->getAllMethods();
 
-        $this->assertTrue($useStmt->hasExcludeFor($methods[0]));
+        static::assertTrue($useStmt->hasExcludeFor($methods[0]));
     }
 
     /**
@@ -112,7 +112,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         );
         $methods = $useStmt->getAllMethods();
 
-        $this->assertTrue($useStmt->hasExcludeFor($methods[0]));
+        static::assertTrue($useStmt->hasExcludeFor($methods[0]));
     }
 
     /**
@@ -130,7 +130,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $getTraitMethods->setAccessible(true);
         $methods = $getTraitMethods->invoke($class);
 
-        $this->assertSame(['test'], array_keys($methods));
+        static::assertSame(['test'], array_keys($methods));
     }
 
     /**
@@ -148,7 +148,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $getTraitMethods->setAccessible(true);
         $methods = $getTraitMethods->invoke($class);
 
-        $this->assertSame(['testa', 'testb'], array_keys($methods));
+        static::assertSame(['testa', 'testb'], array_keys($methods));
     }
 
     /**
@@ -159,7 +159,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $this->getFirstTraitUseStatementInClass();
         $methods = $useStmt->getAllMethods();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTrait::class,
             $methods[0]->getParent()
         );
@@ -175,7 +175,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $this->getFirstTraitUseStatementInClass();
         $methods = $useStmt->getAllMethods();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTTrait::class,
             $methods[0]->getParent()
         );
@@ -191,7 +191,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $this->getFirstTraitUseStatementInClass();
         $methods = $useStmt->getAllMethods();
 
-        $this->assertEquals('foo', $methods[0]->getName());
+        static::assertEquals('foo', $methods[0]->getName());
     }
 
     /**
@@ -200,7 +200,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testGetAllMethodsWithAliasedMethodCollision(): void
     {
         $useStmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertCount(2, $useStmt->getAllMethods());
+        static::assertCount(2, $useStmt->getAllMethods());
     }
 
     /**
@@ -209,7 +209,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testGetAllMethodsWithAliasedMethodTwice(): void
     {
         $useStmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertCount(2, $useStmt->getAllMethods());
+        static::assertCount(2, $useStmt->getAllMethods());
     }
 
     /**
@@ -220,7 +220,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $this->getFirstTraitUseStatementInClass();
         $methods = $useStmt->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PUBLIC,
             $methods[0]->getModifiers()
         );
@@ -234,7 +234,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $this->getFirstTraitUseStatementInClass();
         $methods = $useStmt->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PROTECTED,
             $methods[0]->getModifiers()
         );
@@ -248,7 +248,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $this->getFirstTraitUseStatementInClass();
         $methods = $useStmt->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PRIVATE,
             $methods[0]->getModifiers()
         );
@@ -262,7 +262,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $this->getFirstTraitUseStatementInClass();
         $methods = $useStmt->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PROTECTED | State::IS_ABSTRACT,
             $methods[0]->getModifiers()
         );
@@ -276,7 +276,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $this->getFirstTraitUseStatementInClass();
         $methods = $useStmt->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PUBLIC | State::IS_STATIC,
             $methods[0]->getModifiers()
         );
@@ -290,7 +290,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $this->getFirstTraitUseStatementInClass();
         $methods = $useStmt->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
             $methods[0]->getParent()->getName()
         );
@@ -302,7 +302,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testGetAllMethodsExcludeTraitMethodWithPrecedence(): void
     {
         $useStmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertCount(2, $useStmt->getAllMethods());
+        static::assertCount(2, $useStmt->getAllMethods());
     }
 
     /**
@@ -311,7 +311,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatementWithSimpleAliasHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertEquals(6, $stmt->getEndLine());
+        static::assertEquals(6, $stmt->getEndLine());
     }
 
     /**
@@ -320,7 +320,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatementWithSimpleAliasHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertEquals(21, $stmt->getEndColumn());
+        static::assertEquals(21, $stmt->getEndColumn());
     }
 
     /**
@@ -329,7 +329,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatementWithQualifiedAliasHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertEquals(6, $stmt->getEndLine());
+        static::assertEquals(6, $stmt->getEndLine());
     }
 
     /**
@@ -338,7 +338,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatementWithQualifiedAliasHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertEquals(21, $stmt->getEndColumn());
+        static::assertEquals(21, $stmt->getEndColumn());
     }
 
     /**
@@ -347,7 +347,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatementWithSingleInsteadofHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertEquals(9, $stmt->getEndLine());
+        static::assertEquals(9, $stmt->getEndLine());
     }
 
     /**
@@ -356,7 +356,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatementWithSingleInsteadofHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertEquals(93, $stmt->getEndColumn());
+        static::assertEquals(93, $stmt->getEndColumn());
     }
 
     /**
@@ -365,7 +365,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatementWithMultipleInsteadofHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertEquals(11, $stmt->getEndLine());
+        static::assertEquals(11, $stmt->getEndLine());
     }
 
     /**
@@ -374,7 +374,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatementWithMultipleInsteadofHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertEquals(97, $stmt->getEndColumn());
+        static::assertEquals(97, $stmt->getEndColumn());
     }
 
     /**
@@ -386,7 +386,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatement()
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
-        $this->assertInstanceOf(ASTTraitUseStatement::class, $stmt);
+        static::assertInstanceOf(ASTTraitUseStatement::class, $stmt);
 
         return $stmt;
     }
@@ -400,7 +400,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testTraitUseStatementHasExpectedStartLine($stmt): void
     {
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -412,7 +412,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testTraitUseStatementHasExpectedStartColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -424,7 +424,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testTraitUseStatementHasExpectedEndLine($stmt): void
     {
-        $this->assertEquals(9, $stmt->getEndLine());
+        static::assertEquals(9, $stmt->getEndLine());
     }
 
     /**
@@ -436,7 +436,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testTraitUseStatementHasExpectedEndColumn($stmt): void
     {
-        $this->assertEquals(13, $stmt->getEndColumn());
+        static::assertEquals(13, $stmt->getEndColumn());
     }
 
     /**
@@ -448,7 +448,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testTraitUseStatementInTrait()
     {
         $stmt = $this->getFirstTraitUseStatementInTrait();
-        $this->assertInstanceOf(ASTTraitUseStatement::class, $stmt);
+        static::assertInstanceOf(ASTTraitUseStatement::class, $stmt);
 
         return $stmt;
     }
@@ -462,7 +462,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testTraitUseStatementInTraitHasExpectedStartLine($stmt): void
     {
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -474,7 +474,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testTraitUseStatementInTraitHasExpectedStartColumn($stmt): void
     {
-        $this->assertEquals(5, $stmt->getStartColumn());
+        static::assertEquals(5, $stmt->getStartColumn());
     }
 
     /**
@@ -486,7 +486,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testTraitUseStatementInTraitHasExpectedEndLine($stmt): void
     {
-        $this->assertEquals(4, $stmt->getEndLine());
+        static::assertEquals(4, $stmt->getEndLine());
     }
 
     /**
@@ -498,7 +498,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testTraitUseStatementInTraitHasExpectedEndColumn($stmt): void
     {
-        $this->assertEquals(19, $stmt->getEndColumn());
+        static::assertEquals(19, $stmt->getEndColumn());
     }
 
     /**

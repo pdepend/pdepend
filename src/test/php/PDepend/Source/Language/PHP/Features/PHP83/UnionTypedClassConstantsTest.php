@@ -55,8 +55,8 @@ use PDepend\Source\AST\ASTValue;
 use PDepend\Source\Parser\UnexpectedTokenException;
 
 /**
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion83
  * @covers \PDepend\Source\AST\ASTConstantDeclarator
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion83
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -69,34 +69,36 @@ class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
     {
         /** @var ASTInterface $interface */
         $interface = $this->getFirstInterfaceForTestCase();
+
         /** @var ASTConstantDeclarator $constant */
         $constantDeclarator = $interface->getChild(0)->getChild(0);
+
         /** @var ASTUnionType $type */
         $type = $constantDeclarator->getType();
-        $this->assertCount(3, $type->getChildren());
-        $this->assertInstanceOf(ASTUnionType::class, $type);
-        $this->assertInstanceOf(ASTScalarType::class, $type->getChild(0));
-        $this->assertSame('string', $type->getChild(0)->getImage());
-        $this->assertInstanceOf(ASTScalarType::class, $type->getChild(1));
-        $this->assertSame('int', $type->getChild(1)->getImage());
-        $this->assertInstanceOf(ASTScalarType::class, $type->getChild(2));
-        $this->assertSame('null', $type->getChild(2)->getImage());
+        static::assertCount(3, $type->getChildren());
+        static::assertInstanceOf(ASTUnionType::class, $type);
+        static::assertInstanceOf(ASTScalarType::class, $type->getChild(0));
+        static::assertSame('string', $type->getChild(0)->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $type->getChild(1));
+        static::assertSame('int', $type->getChild(1)->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $type->getChild(2));
+        static::assertSame('null', $type->getChild(2)->getImage());
 
         /** @var ASTValue $value */
         $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf(ASTValue::class, $value);
+        static::assertInstanceOf(ASTValue::class, $value);
 
         /** @var ASTMemberPrimaryPrefix $constant */
         $constant = $interface->getConstant('TEST');
-        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $constant);
-        $this->assertSame($constant, $value->getValue());
+        static::assertInstanceOf(ASTMemberPrimaryPrefix::class, $constant);
+        static::assertSame($constant, $value->getValue());
 
         $children = $constant->getChildren();
-        $this->assertCount(2, $children);
-        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[0]);
-        $this->assertSame('E', $children[0]->getImage());
-        $this->assertInstanceOf(ASTConstantPostfix::class, $children[1]);
-        $this->assertSame('TEST', $children[1]->getImage());
+        static::assertCount(2, $children);
+        static::assertInstanceOf(ASTClassOrInterfaceReference::class, $children[0]);
+        static::assertSame('E', $children[0]->getImage());
+        static::assertInstanceOf(ASTConstantPostfix::class, $children[1]);
+        static::assertSame('TEST', $children[1]->getImage());
     }
 
     public function testEnum(): void
@@ -106,28 +108,30 @@ class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
             ->current()
             ->getEnums()
             ->current();
+
         /** @var ASTConstantDeclarator $constant */
         $constantDeclarator = $enum->getChild(0)->getChild(0);
+
         /** @var ASTUnionType $type */
         $type = $constantDeclarator->getType();
-        $this->assertCount(3, $type->getChildren());
-        $this->assertInstanceOf(ASTUnionType::class, $type);
-        $this->assertInstanceOf(ASTScalarType::class, $type->getChild(0));
-        $this->assertSame('string', $type->getChild(0)->getImage());
-        $this->assertInstanceOf(ASTScalarType::class, $type->getChild(1));
-        $this->assertSame('int', $type->getChild(1)->getImage());
-        $this->assertInstanceOf(ASTScalarType::class, $type->getChild(2));
-        $this->assertSame('null', $type->getChild(2)->getImage());
+        static::assertCount(3, $type->getChildren());
+        static::assertInstanceOf(ASTUnionType::class, $type);
+        static::assertInstanceOf(ASTScalarType::class, $type->getChild(0));
+        static::assertSame('string', $type->getChild(0)->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $type->getChild(1));
+        static::assertSame('int', $type->getChild(1)->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $type->getChild(2));
+        static::assertSame('null', $type->getChild(2)->getImage());
 
         /** @var ASTValue $value */
         $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf(ASTValue::class, $value);
+        static::assertInstanceOf(ASTValue::class, $value);
 
         /** @var ASTLiteral $constant */
         $constant = $enum->getConstant('TEST');
-        $this->assertInstanceOf(ASTLiteral::class, $constant);
-        $this->assertSame($constant, $value->getValue());
-        $this->assertSame('"Test1"', $constant->getImage());
+        static::assertInstanceOf(ASTLiteral::class, $constant);
+        static::assertSame($constant, $value->getValue());
+        static::assertSame('"Test1"', $constant->getImage());
     }
 
     public function testTrait(): void
@@ -137,32 +141,34 @@ class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
             ->current()
             ->getTraits()
             ->current();
+
         /** @var ASTConstantDeclarator $constant */
         $constantDeclarator = $trait->getChild(0)->getChild(0);
+
         /** @var ASTUnionType $type */
         /** @var ASTUnionType $type */
         $type = $constantDeclarator->getType();
-        $this->assertCount(2, $type->getChildren());
-        $this->assertInstanceOf(ASTUnionType::class, $type);
-        $this->assertInstanceOf(ASTScalarType::class, $type->getChild(0));
-        $this->assertSame('string', $type->getChild(0)->getImage());
-        $this->assertInstanceOf(ASTScalarType::class, $type->getChild(1));
-        $this->assertSame('int', $type->getChild(1)->getImage());
+        static::assertCount(2, $type->getChildren());
+        static::assertInstanceOf(ASTUnionType::class, $type);
+        static::assertInstanceOf(ASTScalarType::class, $type->getChild(0));
+        static::assertSame('string', $type->getChild(0)->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $type->getChild(1));
+        static::assertSame('int', $type->getChild(1)->getImage());
 
         /** @var ASTValue $value */
         $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf(ASTValue::class, $value);
+        static::assertInstanceOf(ASTValue::class, $value);
 
         /** @var ASTMemberPrimaryPrefix $constant */
         $constant = $trait->getConstant('TEST');
-        $this->assertSame($constant, $value->getValue());
+        static::assertSame($constant, $value->getValue());
 
         $children = $constant->getChildren();
-        $this->assertCount(2, $children);
-        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[0]);
-        $this->assertSame('E', $children[0]->getImage());
-        $this->assertInstanceOf(ASTConstantPostfix::class, $children[1]);
-        $this->assertSame('TEST', $children[1]->getImage());
+        static::assertCount(2, $children);
+        static::assertInstanceOf(ASTClassOrInterfaceReference::class, $children[0]);
+        static::assertSame('E', $children[0]->getImage());
+        static::assertInstanceOf(ASTConstantPostfix::class, $children[1]);
+        static::assertSame('TEST', $children[1]->getImage());
     }
 
     public function testClass(): void
@@ -170,50 +176,56 @@ class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
         $classes = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses();
+
         /** @var ASTClass $class */
         $class = $classes[0];
+
         /** @var ASTConstantDeclarator $constant */
         $constantDeclarator = $class->getChild(2)->getChild(0);
+
         /** @var ASTUnionType $type */
         $type = $constantDeclarator->getType();
-        $this->assertCount(2, $type->getChildren());
-        $this->assertInstanceOf(ASTUnionType::class, $type);
-        $this->assertInstanceOf(ASTScalarType::class, $type->getChild(0));
-        $this->assertSame('string', $type->getChild(0)->getImage());
-        $this->assertInstanceOf(ASTScalarType::class, $type->getChild(1));
-        $this->assertSame('int', $type->getChild(1)->getImage());
+        static::assertCount(2, $type->getChildren());
+        static::assertInstanceOf(ASTUnionType::class, $type);
+        static::assertInstanceOf(ASTScalarType::class, $type->getChild(0));
+        static::assertSame('string', $type->getChild(0)->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $type->getChild(1));
+        static::assertSame('int', $type->getChild(1)->getImage());
 
         /** @var ASTValue $value */
         $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf(ASTValue::class, $value);
+        static::assertInstanceOf(ASTValue::class, $value);
 
         /** @var ASTMemberPrimaryPrefix $constant */
         $constant = $class->getConstant('TEST');
-        $this->assertSame($constant, $value->getValue());
+        static::assertSame($constant, $value->getValue());
 
         $children = $constant->getChildren();
-        $this->assertCount(2, $children);
-        $this->assertInstanceOf(ASTClassOrInterfaceReference::class, $children[0]);
-        $this->assertSame('E', $children[0]->getImage());
-        $this->assertInstanceOf(ASTConstantPostfix::class, $children[1]);
-        $this->assertSame('TEST', $children[1]->getImage());
+        static::assertCount(2, $children);
+        static::assertInstanceOf(ASTClassOrInterfaceReference::class, $children[0]);
+        static::assertSame('E', $children[0]->getImage());
+        static::assertInstanceOf(ASTConstantPostfix::class, $children[1]);
+        static::assertSame('TEST', $children[1]->getImage());
 
         /** @var ASTClass $class */
         $class = $classes[1];
+
         /** @var ASTConstantDeclarator $constant */
         $constantDeclarator = $class->getChild(1)->getChild(0);
+
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();
-        $this->assertInstanceOf(ASTScalarType::class, $type);
-        $this->assertSame('string', $type->getImage());
+        static::assertInstanceOf(ASTScalarType::class, $type);
+        static::assertSame('string', $type->getImage());
+
         /** @var ASTValue $value */
         $value = $constantDeclarator->getValue();
-        $this->assertInstanceOf(ASTValue::class, $value);
+        static::assertInstanceOf(ASTValue::class, $value);
 
         /** @var ASTMemberPrimaryPrefix $constant */
         $constant = $class->getConstant('TEST');
-        $this->assertSame($constant, $value->getValue());
-        $this->assertSame('"Test2"', $constant->getImage());
+        static::assertSame($constant, $value->getValue());
+        static::assertSame('"Test2"', $constant->getImage());
     }
 
     public function testBroken(): void

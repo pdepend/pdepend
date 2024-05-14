@@ -60,19 +60,13 @@ abstract class AbstractASTArtifact implements ASTArtifact
      */
     protected $name = '';
 
-    /**
-     * The unique identifier for this function.
-     */
+    /** The unique identifier for this function. */
     protected string $id;
 
-    /**
-     * The line number where the item declaration starts.
-     */
+    /** The line number where the item declaration starts. */
     protected int $startLine = 0;
 
-    /**
-     * The line number where the item declaration ends.
-     */
+    /** The line number where the item declaration ends. */
     protected int $endLine = 0;
 
     protected int $startColumn = 0;
@@ -85,14 +79,10 @@ abstract class AbstractASTArtifact implements ASTArtifact
      */
     protected ?ASTNode $parent = null;
 
-    /**
-     * The source file for this item.
-     */
+    /** The source file for this item. */
     protected ?ASTCompilationUnit $compilationUnit = null;
 
-    /**
-     * The comment for this type.
-     */
+    /** The comment for this type. */
     protected ?string $comment = null;
 
     /**
@@ -146,6 +136,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         if (!isset($this->id)) {
             $this->id = md5(uniqid('', true));
         }
+
         return $this->id;
     }
 
@@ -186,11 +177,12 @@ abstract class AbstractASTArtifact implements ASTArtifact
         if (isset($children[$index])) {
             return $children[$index];
         }
+
         throw new OutOfBoundsException(
             sprintf(
                 'No node found at index %d in node of type: %s',
                 $index,
-                get_class($this)
+                static::class
             )
         );
     }
@@ -215,7 +207,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         return null;
     }
 
-    public function findChildrenOfType($targetType, array &$results = array())
+    public function findChildrenOfType($targetType, array &$results = [])
     {
         $children = $this->getChildren();
         foreach ($children as $node) {
@@ -240,7 +232,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     public function getParentsOfType($parentType)
     {
-        $parents = array();
+        $parents = [];
 
         $parentNode = $this->parent;
         while (is_object($parentNode)) {
@@ -249,6 +241,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
             }
             $parentNode = $parentNode->getParent();
         }
+
         return $parents;
     }
 
@@ -319,10 +312,10 @@ abstract class AbstractASTArtifact implements ASTArtifact
      */
     public function accept(ASTVisitor $visitor, $data = [])
     {
-        $methodName = 'visit' . substr(get_class($this), 22);
+        $methodName = 'visit' . substr(static::class, 22);
         $callable = [$visitor, $methodName];
         assert(is_callable($callable));
 
-        return call_user_func($callable, $this, $data);
+        return $callable($this, $data);
     }
 }

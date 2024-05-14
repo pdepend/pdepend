@@ -57,14 +57,10 @@ use RuntimeException;
  */
 class FileCacheDriverTest extends AbstractDriverTestCase
 {
-    /**
-     * Temporary cache directory.
-     */
+    /** Temporary cache directory. */
     protected string $cacheDir;
 
-    /**
-     * Cache TTL
-     */
+    /** Cache TTL */
     protected int $cacheTtl = FileCacheDriver::DEFAULT_TTL;
 
     /**
@@ -98,10 +94,10 @@ class FileCacheDriverTest extends AbstractDriverTestCase
         $cache = new FileCacheDriver($this->cacheDir, $this->cacheTtl, 'foo');
         $cache->type('bar')->store('baz', __METHOD__);
 
-        $key = md5('baz' . 'foo');
+        $key = md5('bazfoo');
         $dir = substr($key, 0, 2);
 
-        $this->assertCount(1, glob("{$this->cacheDir}/{$dir}/{$key}*.bar"));
+        static::assertCount(1, glob("{$this->cacheDir}/{$dir}/{$key}*.bar"));
     }
 
     /**
@@ -114,7 +110,7 @@ class FileCacheDriverTest extends AbstractDriverTestCase
         $cache = new FileCacheDriver($this->cacheDir, $this->cacheTtl, 'foo');
         $cache->type('bar')->store('baz', __METHOD__);
 
-        $this->assertEquals(__METHOD__, $cache->type('bar')->restore('baz'));
+        static::assertEquals(__METHOD__, $cache->type('bar')->restore('baz'));
     }
 
     public function testFileDriverHandlingOfCorruptCache(): void
@@ -138,14 +134,15 @@ class FileCacheDriverTest extends AbstractDriverTestCase
 
         // Try to retrieve the cached value
         $cachedValue = $cache->type($cacheType)->restore($storedKey, $hash);
-        $this->assertNull($cachedValue);
+        static::assertNull($cachedValue);
     }
 
     private function getCacheFilePath($cacheKey, $cacheType, $storedKey)
     {
         $key = md5($storedKey . $cacheKey);
         $dir = substr($key, 0, 2);
-        $version = preg_replace('(^(\d+\.\d+).*)', '\\1', phpversion());
+        $version = preg_replace('(^(\d+\.\d+).*)', '\\1', PHP_VERSION);
+
         return $this->cacheDir . '/' . $dir . '/' . $key . '.' . $version . '.' . $cacheType;
     }
 }

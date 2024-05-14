@@ -140,6 +140,6 @@ class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestC
             ->current()
             ->getClasses();
 
-        $this->assertCount(1, $classes);
+        static::assertCount(1, $classes);
     }
 }

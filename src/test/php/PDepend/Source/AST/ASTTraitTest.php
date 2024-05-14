@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  * @since 1.0.0
+ * @since 1.0.0
  */
 
 namespace PDepend\Source\AST;
@@ -49,9 +49,9 @@ use PDepend\Source\Builder\BuilderContext;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTrait} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\AST\ASTTrait
  * @covers \PDepend\Source\AST\AbstractASTType
+ * @covers \PDepend\Source\AST\ASTTrait
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
@@ -66,7 +66,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetAllMethodsOnSimpleTraitReturnsExpectedResult(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals(
+        static::assertEquals(
             ['foo', 'bar', 'baz'],
             array_keys($trait->getAllMethods())
         );
@@ -78,7 +78,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetAllMethodsOnTraitUsingTraitReturnsExpectedResult(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals(
+        static::assertEquals(
             ['foo', 'bar', 'baz'],
             array_keys($trait->getAllMethods())
         );
@@ -92,7 +92,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
-        $this->assertSame($trait, $methods['foo']->getParent());
+        static::assertSame($trait, $methods['foo']->getParent());
     }
 
     /**
@@ -101,7 +101,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetAllMethodsWithAliasedMethodCollision(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals(
+        static::assertEquals(
             ['foo', 'bar'],
             array_keys($trait->getAllMethods())
         );
@@ -113,7 +113,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetAllMethodsWithAliasedMethodTwice(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals(
+        static::assertEquals(
             ['foo', 'bar'],
             array_keys($trait->getAllMethods())
         );
@@ -127,7 +127,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PUBLIC,
             $methods['foo']->getModifiers()
         );
@@ -141,7 +141,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PROTECTED,
             $methods['foo']->getModifiers()
         );
@@ -155,7 +155,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PRIVATE,
             $methods['foo']->getModifiers()
         );
@@ -169,7 +169,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PROTECTED | State::IS_ABSTRACT,
             $methods['foo']->getModifiers()
         );
@@ -183,7 +183,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             State::IS_PUBLIC | State::IS_STATIC,
             $methods['foo']->getModifiers()
         );
@@ -197,7 +197,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $trait = $this->getFirstTraitForTest();
         $methods = $trait->getAllMethods();
 
-        $this->assertEquals(
+        static::assertEquals(
             'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
             $methods['foo']->getParent()->getName()
         );
@@ -209,7 +209,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetAllMethodsExcludeTraitMethodWithPrecedence(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertCount(1, $trait->getAllMethods());
+        static::assertCount(1, $trait->getAllMethods());
     }
 
     /**
@@ -240,7 +240,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetAllMethodsWithAbstractMethods(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertCount(1, $trait->getAllMethods());
+        static::assertCount(1, $trait->getAllMethods());
     }
 
     /**
@@ -251,7 +251,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetAllChildrenReturnsAnEmptyArrayByDefault(): void
     {
         $trait = new ASTTrait(__CLASS__);
-        $this->assertSame([], $trait->getChildren());
+        static::assertSame([], $trait->getChildren());
     }
 
     /**
@@ -262,7 +262,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertCount(3, $trait->getChildren());
+        static::assertCount(3, $trait->getChildren());
     }
 
     /**
@@ -271,7 +271,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testTraitHasExpectedStartLine(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals(5, $trait->getStartLine());
+        static::assertEquals(5, $trait->getStartLine());
     }
 
     /**
@@ -280,7 +280,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testTraitHasExpectedEndLine(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals(11, $trait->getEndLine());
+        static::assertEquals(11, $trait->getEndLine());
     }
 
     /**
@@ -289,7 +289,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testTraitHasExpectedPackage(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals('org.pdepend', $trait->getNamespace()->getName());
+        static::assertEquals('org.pdepend', $trait->getNamespace()->getName());
     }
 
     /**
@@ -298,7 +298,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testTraitHasExpectedNamespace(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals('org\pdepend\code', $trait->getNamespace()->getName());
+        static::assertEquals('org\pdepend\code', $trait->getNamespace()->getName());
     }
 
     /**
@@ -307,7 +307,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetNamespaceNameReturnsExpectedName(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertEquals('org\pdepend\code', $trait->getNamespaceName());
+        static::assertEquals('org\pdepend\code', $trait->getNamespaceName());
     }
 
     /**
@@ -316,7 +316,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testGetMethodsReturnsExpectedNumberOfMethods(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertCount(3, $trait->getMethods());
+        static::assertCount(3, $trait->getMethods());
     }
 
     /**
@@ -325,7 +325,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testTraitCanUseParentKeywordInMethodBody(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertNotNull($trait);
+        static::assertNotNull($trait);
     }
 
     /**
@@ -334,13 +334,13 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
     public function testTraitCanUseParentKeywordAsMethodTypeHint(): void
     {
         $trait = $this->getFirstTraitForTest();
-        $this->assertNotNull($trait);
+        static::assertNotNull($trait);
     }
 
     public function testGetNamespacedName(): void
     {
         $trait = new ASTTrait('MyTrait');
-        $this->assertSame('MyTrait', $trait->getNamespacedName());
+        static::assertSame('MyTrait', $trait->getNamespacedName());
     }
 
     public function testGetNamespacedNameWithNamespaceDeclaration(): void
@@ -348,7 +348,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $trait = new ASTTrait('MyTrait');
         $trait->setNamespace(new ASTNamespace('My\\Namespace'));
 
-        $this->assertSame('My\\Namespace\\MyTrait', $trait->getNamespacedName());
+        static::assertSame('My\\Namespace\\MyTrait', $trait->getNamespacedName());
     }
 
     public function testGetNamespacedNameWithPackageAnnotation(): void
@@ -359,7 +359,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $Trait = new ASTTrait('MyTrait');
         $Trait->setNamespace($namespace);
 
-        $this->assertSame('MyTrait', $Trait->getNamespacedName());
+        static::assertSame('MyTrait', $Trait->getNamespacedName());
     }
 
     /**
@@ -370,9 +370,9 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->disableOriginalClone()
             ->getMock();
-        $visitor->expects($this->once())
+        $visitor->expects(static::once())
             ->method('visitTrait')
-            ->with($this->isInstanceOf(ASTTrait::class));
+            ->with(static::isInstanceOf(ASTTrait::class));
 
         $trait = new ASTTrait('MyTrait');
         $trait->accept($visitor);
@@ -386,9 +386,9 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $context = $this->getMockBuilder(BuilderContext::class)
             ->disableOriginalClone()
             ->getMock();
-        $context->expects($this->once())
+        $context->expects(static::once())
             ->method('registerTrait')
-            ->with($this->isInstanceOf(ASTTrait::class));
+            ->with(static::isInstanceOf(ASTTrait::class));
 
         $trait = new ASTTrait(__FUNCTION__);
         $trait->setContext($context);

@@ -63,9 +63,7 @@ use PDepend\Source\AST\ASTSwitchLabel;
  */
 class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
-    /**
-     * Metrics provided by the analyzer implementation.
-     */
+    /** Metrics provided by the analyzer implementation. */
     private const
         M_CYCLOMATIC_COMPLEXITY_1 = 'ccn',
         M_CYCLOMATIC_COMPLEXITY_2 = 'ccn2';
@@ -116,6 +114,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         if (isset($metrics[self::M_CYCLOMATIC_COMPLEXITY_1])) {
             return $metrics[self::M_CYCLOMATIC_COMPLEXITY_1];
         }
+
         return 0;
     }
 
@@ -131,6 +130,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         if (isset($metrics[self::M_CYCLOMATIC_COMPLEXITY_2])) {
             return $metrics[self::M_CYCLOMATIC_COMPLEXITY_2];
         }
+
         return 0;
     }
 
@@ -146,6 +146,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         if (isset($this->metrics[$artifact->getId()])) {
             return $this->metrics[$artifact->getId()];
         }
+
         return [];
     }
 
@@ -243,6 +244,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     public function visitBooleanAndExpression($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
+
         return $this->visit($node, $data);
     }
 
@@ -257,6 +259,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     public function visitBooleanOrExpression($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
+
         return $this->visit($node, $data);
     }
 
@@ -274,6 +277,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_1];
             ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
         }
+
         return $this->visit($node, $data);
     }
 
@@ -368,6 +372,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     public function visitLogicalAndExpression($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
+
         return $this->visit($node, $data);
     }
 
@@ -382,6 +387,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     public function visitLogicalOrExpression($node, $data)
     {
         ++$data[self::M_CYCLOMATIC_COMPLEXITY_2];
+
         return $this->visit($node, $data);
     }
 

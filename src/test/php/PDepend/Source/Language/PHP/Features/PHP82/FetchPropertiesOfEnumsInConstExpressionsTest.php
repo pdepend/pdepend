@@ -65,21 +65,21 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
             ->current()
             ->getEnums();
 
-        $this->assertSame(1, $enums->count());
+        static::assertSame(1, $enums->count());
 
         $enum = $enums->current();
         $constants = $enum->getConstants();
 
-        $this->assertCount(1, $constants);
-        $this->assertInstanceOf(ASTArray::class, $constants['C']);
+        static::assertCount(1, $constants);
+        static::assertInstanceOf(ASTArray::class, $constants['C']);
 
         $elements = $constants['C']->getChildren();
-        $this->assertCount(1, $elements);
+        static::assertCount(1, $elements);
         $children = $elements[0]->getChildren();
-        $this->assertCount(2, $children);
+        static::assertCount(2, $children);
 
-        $this->assertSame('self::B->value', $this->constructImage($children[0]));
-        $this->assertSame('self::B', $this->constructImage($children[1]));
+        static::assertSame('self::B->value', $this->constructImage($children[0]));
+        static::assertSame('self::B', $this->constructImage($children[1]));
     }
 
     public function testVariousUsages(): void
@@ -89,31 +89,31 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
             ->getClasses();
 
         $d = $classes[0];
-        $this->assertSame('D', $d->getName());
+        static::assertSame('D', $d->getName());
 
         $f = $classes[1];
-        $this->assertSame('F', $f->getName());
+        static::assertSame('F', $f->getName());
 
         $properties = $f->getProperties();
-        $this->assertSame(1, $properties->count());
+        static::assertSame(1, $properties->count());
 
         /** @var ASTProperty $property */
         $property = $properties->current();
-        $this->assertSame('E::Foo->name', $this->constructImage($property->getDefaultValue()));
+        static::assertSame('E::Foo->name', $this->constructImage($property->getDefaultValue()));
 
         $g = $classes[2];
-        $this->assertSame('G', $g->getName());
+        static::assertSame('G', $g->getName());
 
         /** @var ASTConstantDefinition[] $constants */
         $constants = $g->getChildren();
-        $this->assertCount(1, $constants);
+        static::assertCount(1, $constants);
 
         /** @var ASTConstantDeclarator[] $declarators */
         $declarators = $constants[0]->getChildren();
         $declaration = $declarators[0];
 
-        $this->assertSame('C', $declaration->getImage());
-        $this->assertSame('E::Foo->{VALUE}', $this->constructImage($declaration->getValue()->getValue()));
+        static::assertSame('C', $declaration->getImage());
+        static::assertSame('E::Foo->{VALUE}', $this->constructImage($declaration->getValue()->getValue()));
     }
 
     public function constructImage(ASTNode $node)

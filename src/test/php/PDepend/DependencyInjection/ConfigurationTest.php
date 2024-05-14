@@ -50,8 +50,8 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 /**
  * Test cases for the {@link \PDepend\Application} class.
  *
- * @covers \PDepend\DependencyInjection\TreeBuilderFactory
  * @covers \PDepend\DependencyInjection\TreeBuilder
+ * @covers \PDepend\DependencyInjection\TreeBuilderFactory
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -63,7 +63,7 @@ class ConfigurationTest extends AbstractTestCase
     {
         $config = new Configuration([new TestExtension()]);
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             TreeBuilder::class,
             $config->getConfigTreeBuilder()
         );
@@ -73,7 +73,7 @@ class ConfigurationTest extends AbstractTestCase
             'getConfigTreeBuilder'
         );
 
-        $this->assertSame(
+        static::assertSame(
             TreeBuilder::class,
             $method->getReturnType()->getName()
         );

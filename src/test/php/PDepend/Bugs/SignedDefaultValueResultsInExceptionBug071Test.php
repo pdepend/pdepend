@@ -62,7 +62,7 @@ class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionT
             ->getFunctions()
             ->current()
             ->getParameters();
-        $this->assertSame(-42, $parameters[0]->getDefaultValue());
+        static::assertSame(-42, $parameters[0]->getDefaultValue());
     }
 
     /**
@@ -75,7 +75,7 @@ class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionT
             ->getFunctions()
             ->current()
             ->getParameters();
-        $this->assertSame(42, $parameters[0]->getDefaultValue());
+        static::assertSame(42, $parameters[0]->getDefaultValue());
     }
 
     /**
@@ -88,6 +88,6 @@ class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionT
             ->getFunctions()
             ->current()
             ->getParameters();
-        $this->assertSame(-42, $parameters[0]->getDefaultValue());
+        static::assertSame(-42, $parameters[0]->getDefaultValue());
     }
 }

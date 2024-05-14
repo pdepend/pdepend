@@ -135,7 +135,7 @@ class SymbolTableTest extends AbstractTestCase
 
         $symbolTable->add($key, $value);
 
-        $this->assertSame($value, $symbolTable->lookup($lookupKey));
+        static::assertSame($value, $symbolTable->lookup($lookupKey));
     }
 
     /**
@@ -158,13 +158,13 @@ class SymbolTableTest extends AbstractTestCase
         $symbolTable->add($secondLevelKey, $secondLevelValue);
 
         // There must be boths keys in the current active scope.
-        $this->assertSame($firstLevelValue, $symbolTable->lookup($firstLevelKey));
-        $this->assertSame($secondLevelValue, $symbolTable->lookup($secondLevelKey));
+        static::assertSame($firstLevelValue, $symbolTable->lookup($firstLevelKey));
+        static::assertSame($secondLevelValue, $symbolTable->lookup($secondLevelKey));
 
         $symbolTable->destroyScope();
 
         // After destroying there must be no keys from previously active scope.
-        $this->assertNull($symbolTable->lookup($secondLevelKey));
+        static::assertNull($symbolTable->lookup($secondLevelKey));
     }
 
     /**
@@ -179,10 +179,10 @@ class SymbolTableTest extends AbstractTestCase
 
         $symbolTable->add($key, $value);
 
-        $this->assertSame($value, $symbolTable->lookup($key));
+        static::assertSame($value, $symbolTable->lookup($key));
 
         $symbolTable->resetScope();
 
-        $this->assertNull($symbolTable->lookup($key));
+        static::assertNull($symbolTable->lookup($key));
     }
 }

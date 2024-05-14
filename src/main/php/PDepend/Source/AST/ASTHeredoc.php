@@ -52,9 +52,7 @@ namespace PDepend\Source\AST;
  */
 class ASTHeredoc extends ASTExpression
 {
-    /**
-     * Delimiter used for this heredoc instance.
-     */
+    /** Delimiter used for this heredoc instance. */
     protected string $delimiter;
 
     /**

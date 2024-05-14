@@ -59,19 +59,13 @@ use PDepend\Util\Cache\Driver\FileCacheDriver;
  */
 class BuilderParserCacheTest extends AbstractTestCase
 {
-    /**
-     * The temporary cache directory.
-     */
+    /** The temporary cache directory. */
     protected string $cacheDir;
 
-    /**
-     * TTL for files in cache directory
-     */
+    /** TTL for files in cache directory */
     protected int $cacheTtl = FileCacheDriver::DEFAULT_TTL;
 
-    /**
-     * The temporary cache file.
-     */
+    /** The temporary cache file. */
     protected string $testFile;
 
     /**
@@ -94,7 +88,7 @@ class BuilderParserCacheTest extends AbstractTestCase
         $builder0 = $this->parseSourceAndReturnBuilder('fileA.php');
         $builder1 = $this->parseSourceAndReturnBuilder('fileA.php');
 
-        $this->assertEquals(
+        static::assertEquals(
             count($builder0->getNamespaces()),
             count($builder1->getNamespaces())
         );
@@ -108,7 +102,7 @@ class BuilderParserCacheTest extends AbstractTestCase
         $builder0 = $this->parseSourceAndReturnBuilder('fileA.php');
         $builder1 = $this->parseSourceAndReturnBuilder('fileB.php');
 
-        $this->assertEquals(
+        static::assertEquals(
             count($builder0->getNamespaces()) + 1,
             count($builder1->getNamespaces())
         );

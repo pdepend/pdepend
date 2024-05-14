@@ -48,7 +48,7 @@ use PDepend\Source\AST\ASTFunctionPostfix;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
-use PHPUnit_Framework_MockObject_MockObject;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Test case for bug #247.
@@ -75,7 +75,7 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
             $actual[] = $reference->getImage();
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 '\Bar\BAZ',
                 '\SOMETHING',
@@ -97,7 +97,7 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
             $actual[] = $reference->getImage();
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 '\Bar\baz',
                 '\something',

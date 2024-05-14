@@ -54,9 +54,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class AnalyzerFactory
 {
-    /**
-     * @var ContainerInterface
-     */
+    /** @var ContainerInterface */
     private $container;
 
     /**

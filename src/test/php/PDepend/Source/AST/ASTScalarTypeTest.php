@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTScalarType} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTScalarType
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTScalarTypeTest extends ASTNodeTestCase
     public function testIsArrayReturnsFalse(): void
     {
         $type = new ASTScalarType();
-        $this->assertFalse($type->isArray());
+        static::assertFalse($type->isArray());
     }
 
     /**
@@ -69,6 +69,6 @@ class ASTScalarTypeTest extends ASTNodeTestCase
     public function testIsPrimitiveReturnsTrue(): void
     {
         $type = new ASTScalarType();
-        $this->assertTrue($type->isScalar());
+        static::assertTrue($type->isScalar());
     }
 }

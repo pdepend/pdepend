@@ -68,7 +68,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTestC
         $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
-        $this->assertEquals(1, $project['calls']);
+        static::assertEquals(1, $project['calls']);
     }
 
     /**
@@ -82,7 +82,7 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTestC
         $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
-        $this->assertEquals(2, $project['calls']);
+        static::assertEquals(2, $project['calls']);
     }
 
     /**
@@ -96,6 +96,6 @@ class WrongCouplingAnalyzerForCommentsBug089Test extends AbstractRegressionTestC
         $analyzer->analyze($namespaces);
 
         $project = $analyzer->getProjectMetrics();
-        $this->assertEquals(0, $project['calls']);
+        static::assertEquals(0, $project['calls']);
     }
 }

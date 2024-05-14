@@ -53,14 +53,10 @@ namespace PDepend\Source\AST;
  */
 final class ASTParentReference extends ASTClassOrInterfaceReference
 {
-    /**
-     * The source image of this node.
-     */
+    /** The source image of this node. */
     public const IMAGE = 'parent';
 
-    /**
-     * The wrapped reference node.
-     */
+    /** The wrapped reference node. */
     protected ASTClassOrInterfaceReference $reference;
 
     /**

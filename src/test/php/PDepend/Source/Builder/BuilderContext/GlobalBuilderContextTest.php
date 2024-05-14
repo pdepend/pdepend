@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\Builder\BuilderContext;
 
@@ -70,9 +70,9 @@ class GlobalBuilderContextTest extends AbstractTestCase
     {
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
-        $builder->expects($this->once())
+        $builder->expects(static::once())
             ->method('restoreTrait')
-            ->with($this->isInstanceOf(ASTTrait::class));
+            ->with(static::isInstanceOf(ASTTrait::class));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerTrait(new ASTTrait(__CLASS__));
@@ -85,9 +85,9 @@ class GlobalBuilderContextTest extends AbstractTestCase
     {
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
-        $builder->expects($this->once())
+        $builder->expects(static::once())
             ->method('restoreClass')
-            ->with($this->isInstanceOf(ASTClass::class));
+            ->with(static::isInstanceOf(ASTClass::class));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerClass(new ASTClass(__CLASS__));
@@ -100,9 +100,9 @@ class GlobalBuilderContextTest extends AbstractTestCase
     {
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
-        $builder->expects($this->once())
+        $builder->expects(static::once())
             ->method('restoreInterface')
-            ->with($this->isInstanceOf(ASTInterface::class));
+            ->with(static::isInstanceOf(ASTInterface::class));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerInterface(new ASTInterface(__CLASS__));
@@ -115,9 +115,9 @@ class GlobalBuilderContextTest extends AbstractTestCase
     {
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
-        $builder->expects($this->once())
+        $builder->expects(static::once())
             ->method('restoreFunction')
-            ->with($this->isInstanceOf(ASTFunction::class));
+            ->with(static::isInstanceOf(ASTFunction::class));
 
         $context = new GlobalBuilderContext($builder);
         $context->registerFunction(new ASTFunction(__CLASS__));
@@ -132,9 +132,9 @@ class GlobalBuilderContextTest extends AbstractTestCase
     {
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
-        $builder->expects($this->once())
+        $builder->expects(static::once())
             ->method('getTrait')
-            ->with($this->equalTo(__CLASS__));
+            ->with(static::equalTo(__CLASS__));
 
         $context = new GlobalBuilderContext($builder);
         $context->getTrait(__CLASS__);
@@ -147,9 +147,9 @@ class GlobalBuilderContextTest extends AbstractTestCase
     {
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
-        $builder->expects($this->once())
+        $builder->expects(static::once())
             ->method('getClass')
-            ->with($this->equalTo(__CLASS__));
+            ->with(static::equalTo(__CLASS__));
 
         $context = new GlobalBuilderContext($builder);
         $context->getClass(__CLASS__);
@@ -162,9 +162,9 @@ class GlobalBuilderContextTest extends AbstractTestCase
     {
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
-        $builder->expects($this->once())
+        $builder->expects(static::once())
             ->method('getClassOrInterface')
-            ->with($this->equalTo(__CLASS__));
+            ->with(static::equalTo(__CLASS__));
 
         $context = new GlobalBuilderContext($builder);
         $context->getClassOrInterface(__CLASS__);

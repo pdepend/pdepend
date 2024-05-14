@@ -50,9 +50,7 @@ namespace PDepend\Source\AST;
  */
 class ASTEnumCase extends AbstractASTNode implements ASTArtifact
 {
-    /**
-     * The enum definition of this case.
-     */
+    /** The enum definition of this case. */
     protected ASTEnum $enum;
 
     /**

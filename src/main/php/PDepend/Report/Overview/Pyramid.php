@@ -66,34 +66,22 @@ use RuntimeException;
  */
 class Pyramid implements FileAwareGenerator
 {
-    /**
-     * The output file name.
-     */
+    /** The output file name. */
     private string $logFile;
 
-    /**
-     * The used coupling analyzer.
-     */
+    /** The used coupling analyzer. */
     private CouplingAnalyzer $coupling;
 
-    /**
-     * The used cyclomatic complexity analyzer.
-     */
+    /** The used cyclomatic complexity analyzer. */
     private CyclomaticComplexityAnalyzer $cyclomaticComplexity;
 
-    /**
-     * The used inheritance analyzer.
-     */
+    /** The used inheritance analyzer. */
     private InheritanceAnalyzer $inheritance;
 
-    /**
-     * The used node count analyzer.
-     */
+    /** The used node count analyzer. */
     private NodeCountAnalyzer $nodeCount;
 
-    /**
-     * The used node loc analyzer.
-     */
+    /** The used node loc analyzer. */
     private NodeLocAnalyzer $nodeLoc;
 
     /**
@@ -162,6 +150,7 @@ class Pyramid implements FileAwareGenerator
         } else {
             return false;
         }
+
         return true;
     }
 
@@ -240,16 +229,17 @@ class Pyramid implements FileAwareGenerator
         $threshold = $this->thresholds[$name];
         if ($value <= $threshold[0]) {
             return 'low';
-        } elseif ($value >= $threshold[2]) {
-            return 'high';
-        } else {
-            $low = $value - $threshold[0];
-            $avg = $threshold[1] - $value;
-
-            if ($low < $avg) {
-                return 'low';
-            }
         }
+        if ($value >= $threshold[2]) {
+            return 'high';
+        }
+        $low = $value - $threshold[0];
+        $avg = $threshold[1] - $value;
+
+        if ($low < $avg) {
+            return 'low';
+        }
+
         return 'average';
     }
 

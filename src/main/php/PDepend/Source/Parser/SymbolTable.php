@@ -70,7 +70,7 @@ class SymbolTable
     public function createScope(): void
     {
         // Add copy of last scope as new scope
-        array_push($this->scopeStack, $this->scope);
+        $this->scopeStack[] = $this->scope;
     }
 
     /**

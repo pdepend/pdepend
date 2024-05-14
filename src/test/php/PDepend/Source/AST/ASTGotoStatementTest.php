@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTGotoStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTGotoStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
     public function testGotoStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
-        $this->assertSame(8, $stmt->getStartLine());
+        static::assertSame(8, $stmt->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
     public function testGotoStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
-        $this->assertSame(9, $stmt->getStartColumn());
+        static::assertSame(9, $stmt->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
     public function testGotoStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
-        $this->assertSame(8, $stmt->getEndLine());
+        static::assertSame(8, $stmt->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
     public function testGotoStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
-        $this->assertSame(23, $stmt->getEndColumn());
+        static::assertSame(23, $stmt->getEndColumn());
     }
 
     /**

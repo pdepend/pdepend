@@ -84,14 +84,11 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * @var ASTCompilationUnit[]
      */
     protected $fileSet = [];
-    /**
-     * The log output file.
-     */
+
+    /** The log output file. */
     private string $logFile;
 
-    /**
-     * @var ClassDependencyAnalyzer|null
-     */
+    /** @var ClassDependencyAnalyzer|null */
     private $dependencyAnalyzer;
 
     /**
@@ -145,8 +142,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     {
         if ($analyzer instanceof ClassDependencyAnalyzer) {
             $this->dependencyAnalyzer = $analyzer;
+
             return true;
         }
+
         return false;
     }
 
@@ -167,7 +166,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $dependencies = $dom->createElement('dependencies');
         $dependencies->setAttribute('generated', date('Y-m-d\TH:i:s'));
         $dependencies->setAttribute('pdepend', '@package_version@');
-        array_push($this->xmlStack, $dependencies);
+        $this->xmlStack[] = $dependencies;
 
         foreach ($this->code as $node) {
             $node->accept($this);
@@ -222,7 +221,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $typeXml->setAttribute('name', Utf8Util::ensureEncoding($type->getName()));
         $xml->appendChild($typeXml);
 
-        array_push($this->xmlStack, $typeXml);
+        $this->xmlStack[] = $typeXml;
         $this->writeNodeDependencies($typeXml, $type);
         $this->writeFileReference($typeXml, $type->getCompilationUnit());
         array_pop($this->xmlStack);
@@ -262,7 +261,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $packageXml = $doc->createElement('package');
         $packageXml->setAttribute('name', Utf8Util::ensureEncoding($namespace->getName()));
 
-        array_push($this->xmlStack, $packageXml);
+        $this->xmlStack[] = $packageXml;
 
         foreach ($namespace->getTypes() as $type) {
             $type->accept($this);

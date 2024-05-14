@@ -55,10 +55,9 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @var TreeBuilderFactory
-     */
+    /** @var TreeBuilderFactory */
     protected $treeBuilderFactory;
+
     /**
      * @param array<Extension> $extensions
      */

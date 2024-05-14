@@ -60,47 +60,52 @@ class UnionTypesTest extends PHPParserVersion80TestCase
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTFormalParameter $parameter */
         $parameter = $method->getFirstChildOfType(
             ASTFormalParameter::class
         );
         $children = $parameter->getChildren();
 
-        $this->assertInstanceOf(ASTUnionType::class, $children[0]);
+        static::assertInstanceOf(ASTUnionType::class, $children[0]);
+
         /** @var ASTUnionType $unionType */
         $unionType = $children[0];
-        $this->assertSame('array|int|float|Bar\Biz|null', $unionType->getImage());
+        static::assertSame('array|int|float|Bar\Biz|null', $unionType->getImage());
 
-        $this->assertInstanceOf(ASTVariableDeclarator::class, $children[1]);
+        static::assertInstanceOf(ASTVariableDeclarator::class, $children[1]);
+
         /** @var ASTVariableDeclarator $variable */
         $variable = $children[1];
-        $this->assertSame('$number', $variable->getImage());
+        static::assertSame('$number', $variable->getImage());
     }
 
     public function testUnionTypesAsReturn(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTType $return */
         $return = $method->getFirstChildOfType(
             ASTType::class
         );
 
-        $this->assertInstanceOf(ASTUnionType::class, $return);
-        $this->assertSame('int|float|Bar\Biz|null', $return->getImage());
+        static::assertInstanceOf(ASTUnionType::class, $return);
+        static::assertSame('int|float|Bar\Biz|null', $return->getImage());
     }
 
     public function testUnionTypesAsReturnWithArray(): void
     {
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
+
         /** @var ASTType $return */
         $return = $method->getFirstChildOfType(
             ASTType::class
         );
 
-        $this->assertInstanceOf(ASTUnionType::class, $return);
-        $this->assertSame('array|iterable', $return->getImage());
+        static::assertInstanceOf(ASTUnionType::class, $return);
+        static::assertSame('array|iterable', $return->getImage());
     }
 
     public function testUnionTypesStandaloneNull(): void

@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\AST;
 
@@ -64,7 +64,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetDeclaringClass(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals(__FUNCTION__, $property->getDeclaringClass()->getName());
+        static::assertEquals(__FUNCTION__, $property->getDeclaringClass()->getName());
     }
 
     /**
@@ -73,7 +73,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassForPropertyWithNamespacedRootType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals('Foo', $property->getClass()->getName());
+        static::assertEquals('Foo', $property->getClass()->getName());
     }
 
     /**
@@ -82,7 +82,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassForPropertyWithNamespacedType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals('Baz', $property->getClass()->getName());
+        static::assertEquals('Baz', $property->getClass()->getName());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassForPropertyWithNamespacedArrayRootType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals('Foo', $property->getClass()->getName());
+        static::assertEquals('Foo', $property->getClass()->getName());
     }
 
     /**
@@ -100,7 +100,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassForPropertyWithNamespacedArrayType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals('Baz', $property->getClass()->getName());
+        static::assertEquals('Baz', $property->getClass()->getName());
     }
 
     /**
@@ -109,7 +109,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassReturnsNullForPropertyWithScalarType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertNull($property->getClass());
+        static::assertNull($property->getClass());
     }
 
     /**
@@ -118,7 +118,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassReturnsNullForPropertyWithoutTypeHint(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertNull($property->getClass());
+        static::assertNull($property->getClass());
     }
 
     /**
@@ -127,7 +127,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetClassReturnsNullForPropertyWithoutDocComment(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertNull($property->getClass());
+        static::assertNull($property->getClass());
     }
 
     /**
@@ -136,7 +136,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetCompilationUnitReturnsNullByDefault(): void
     {
         $property = $this->getMockWithoutConstructor(ASTProperty::class);
-        $this->assertNull($property->getCompilationUnit());
+        static::assertNull($property->getCompilationUnit());
     }
 
     /**
@@ -149,7 +149,7 @@ class ASTPropertyTest extends AbstractTestCase
         $property = $this->getMockWithoutConstructor(ASTProperty::class);
         $property->setCompilationUnit($compilationUnit);
 
-        $this->assertSame($compilationUnit, $property->getCompilationUnit());
+        static::assertSame($compilationUnit, $property->getCompilationUnit());
     }
 
     /**
@@ -158,7 +158,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetDocCommentReturnsNullByDefault(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertNull($property->getComment());
+        static::assertNull($property->getComment());
     }
 
     /**
@@ -167,7 +167,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetDocCommentReturnsExpectedPropertyComment(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals('/** Manuel */', $property->getComment());
+        static::assertEquals('/** Manuel */', $property->getComment());
     }
 
     /**
@@ -177,7 +177,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testPropertyIsDefaultValueAvailableReturnsFalseWhenNoValueExists(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertFalse($property->isDefaultValueAvailable());
+        static::assertFalse($property->isDefaultValueAvailable());
     }
 
     /**
@@ -187,7 +187,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testPropertyIsDefaultValueAvailableReturnsTrueWhenValueExists(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertTrue($property->isDefaultValueAvailable());
+        static::assertTrue($property->isDefaultValueAvailable());
     }
 
     /**
@@ -196,7 +196,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsDefaultValueAvailableReturnsExpectedTrueForNullValue(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertTrue($property->isDefaultValueAvailable());
+        static::assertTrue($property->isDefaultValueAvailable());
     }
 
     /**
@@ -205,7 +205,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetDefaultValueReturnsByDefaultExpectedNull(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertNull($property->getDefaultValue());
+        static::assertNull($property->getDefaultValue());
     }
 
     /**
@@ -214,7 +214,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetDefaultValueReturnsExpectedNullForNullDefaultValue(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertNull($property->getDefaultValue());
+        static::assertNull($property->getDefaultValue());
     }
 
     /**
@@ -223,7 +223,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testPropertyContainsExpectDefaultValueBooleanTrue(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertTrue($property->getDefaultValue());
+        static::assertTrue($property->getDefaultValue());
     }
 
     /**
@@ -232,7 +232,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testPropertyContainsExpectDefaultValueBooleanFalse(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertFalse($property->getDefaultValue());
+        static::assertFalse($property->getDefaultValue());
     }
 
     /**
@@ -241,7 +241,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testPropertyContainsExpectDefaultValueArray(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertIsArray($property->getDefaultValue());
+        static::assertIsArray($property->getDefaultValue());
     }
 
     /**
@@ -250,7 +250,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testPropertyContainsExpectedDefaultValueFloat(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEqualsWithDelta(3.14, $property->getDefaultValue(), 0.001);
+        static::assertEqualsWithDelta(3.14, $property->getDefaultValue(), 0.001);
     }
 
     /**
@@ -260,7 +260,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsArrayReturnsExpectedValueTrueForVarAnnotationWithArray(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertTrue($property->isArray());
+        static::assertTrue($property->isArray());
     }
 
     /**
@@ -270,7 +270,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsArrayReturnsExpectedValueFalseForVarAnnotationWithClassType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertFalse($property->isArray());
+        static::assertFalse($property->isArray());
     }
 
     /**
@@ -280,7 +280,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsArrayReturnsExpectedValueFalseForPropertyWithoutVarAnnotation(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertFalse($property->isArray());
+        static::assertFalse($property->isArray());
     }
 
     /**
@@ -290,7 +290,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsPrimitiveReturnsExpectedValueTrueForVarAnnotationWithIntegerTypeHint(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertTrue($property->isScalar());
+        static::assertTrue($property->isScalar());
     }
 
     /**
@@ -300,7 +300,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsPrimitiveReturnsExpectedValueFalseForVarAnnotationWithClassType(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertFalse($property->isScalar());
+        static::assertFalse($property->isScalar());
     }
 
     /**
@@ -311,7 +311,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testGetDefaultValueReturnsExpectedStringFromHeredoc(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals('Testing!', $property->getDefaultValue());
+        static::assertEquals('Testing!', $property->getDefaultValue());
     }
 
     /**
@@ -321,7 +321,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsPrimitiveReturnsExpectedValueFalseForPropertyWithoutVarAnnotation(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertFalse($property->isScalar());
+        static::assertFalse($property->isScalar());
     }
 
     /**
@@ -330,7 +330,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsPublicReturnsFalseByDefault(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertFalse($property->isPublic());
+        static::assertFalse($property->isPublic());
     }
 
     /**
@@ -339,7 +339,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsPublicReturnsTrueForPublicProperty(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertTrue($property->isPublic());
+        static::assertTrue($property->isPublic());
     }
 
     /**
@@ -348,7 +348,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsProtectedReturnsFalseByDefault(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertFalse($property->isProtected());
+        static::assertFalse($property->isProtected());
     }
 
     /**
@@ -357,7 +357,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsProtectedReturnsTrueForProtectedProperty(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertTrue($property->isProtected());
+        static::assertTrue($property->isProtected());
     }
 
     /**
@@ -366,7 +366,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsPrivateReturnsFalseByDefault(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertFalse($property->isPrivate());
+        static::assertFalse($property->isPrivate());
     }
 
     /**
@@ -375,7 +375,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsPrivateReturnsTrueForPrivateProperty(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertTrue($property->isPrivate());
+        static::assertTrue($property->isPrivate());
     }
 
     /**
@@ -384,7 +384,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsStaticReturnsFalseByDefault(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertFalse($property->isStatic());
+        static::assertFalse($property->isStatic());
     }
 
     /**
@@ -393,7 +393,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testIsStaticReturnsTrueForStaticProperty(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertTrue($property->isStatic());
+        static::assertTrue($property->isStatic());
     }
 
     /**
@@ -403,7 +403,7 @@ class ASTPropertyTest extends AbstractTestCase
     {
         $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->getMock();
-        $visitor->expects($this->once())
+        $visitor->expects(static::once())
             ->method('visitProperty');
 
         $property = $this->getMockBuilder(ASTProperty::class)
@@ -420,7 +420,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testPropertyHasExpectedStartLine(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals(4, $property->getStartLine());
+        static::assertEquals(4, $property->getStartLine());
     }
 
     /**
@@ -429,7 +429,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testPropertyHasExpectedStartColumn(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals(13, $property->getStartColumn());
+        static::assertEquals(13, $property->getStartColumn());
     }
 
     /**
@@ -438,7 +438,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testPropertyHasExpectedEndLine(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals(6, $property->getEndLine());
+        static::assertEquals(6, $property->getEndLine());
     }
 
     /**
@@ -447,7 +447,7 @@ class ASTPropertyTest extends AbstractTestCase
     public function testPropertyHasExpectedEndColumn(): void
     {
         $property = $this->getFirstPropertyInClass();
-        $this->assertEquals(13, $property->getEndColumn());
+        static::assertEquals(13, $property->getEndColumn());
     }
 
     /**

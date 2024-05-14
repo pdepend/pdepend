@@ -47,8 +47,8 @@ use PDepend\Source\Parser\UnexpectedTokenException;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTListExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTListExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -65,7 +65,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     public function testListExpression()
     {
         $expr = $this->getFirstListExpressionInFunction();
-        $this->assertInstanceOf(ASTListExpression::class, $expr);
+        static::assertInstanceOf(ASTListExpression::class, $expr);
 
         return $expr;
     }
@@ -79,7 +79,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      */
     public function testListExpressionHasExpectedStartLine($expr): void
     {
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      */
     public function testListExpressionHasExpectedStartColumn($expr): void
     {
-        $this->assertEquals(5, $expr->getStartColumn());
+        static::assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -103,7 +103,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      */
     public function testListExpressionHasExpectedEndLine($expr): void
     {
-        $this->assertEquals(4, $expr->getEndLine());
+        static::assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -115,7 +115,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      */
     public function testListExpressionHasExpectedEndColumn($expr): void
     {
-        $this->assertEquals(16, $expr->getEndColumn());
+        static::assertEquals(16, $expr->getEndColumn());
     }
 
     /**
@@ -127,7 +127,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     public function testListExpressionWithNestedList()
     {
         $expr = $this->getFirstListExpressionInFunction();
-        $this->assertInstanceOf(ASTListExpression::class, $expr);
+        static::assertInstanceOf(ASTListExpression::class, $expr);
 
         return $expr;
     }
@@ -142,7 +142,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      */
     public function testListExpressionWithNestedListHasExpectedStartLine($expr): void
     {
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -155,7 +155,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      */
     public function testListExpressionWithNestedListHasExpectedStartColumn($expr): void
     {
-        $this->assertEquals(5, $expr->getStartColumn());
+        static::assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -168,7 +168,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      */
     public function testListExpressionWithNestedListHasExpectedEndLine($expr): void
     {
-        $this->assertEquals(4, $expr->getEndLine());
+        static::assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -181,7 +181,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
      */
     public function testListExpressionWithNestedListHasExpectedEndColumn($expr): void
     {
-        $this->assertEquals(42, $expr->getEndColumn());
+        static::assertEquals(42, $expr->getEndColumn());
     }
 
     /**
@@ -191,7 +191,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
-        $this->assertCount(3, $vars);
+        static::assertCount(3, $vars);
     }
 
     /**
@@ -201,7 +201,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
-        $this->assertCount(1, $vars);
+        static::assertCount(1, $vars);
     }
 
     /**
@@ -211,7 +211,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
-        $this->assertCount(3, $vars);
+        static::assertCount(3, $vars);
     }
 
     /**
@@ -221,7 +221,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
-        $this->assertCount(3, $vars);
+        static::assertCount(3, $vars);
     }
 
     /**
@@ -231,7 +231,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     {
         $expr = $this->getFirstListExpressionInFunction();
         $vars = $expr->getChildren();
-        $this->assertCount(0, $vars);
+        static::assertCount(0, $vars);
     }
 
     /**
@@ -242,7 +242,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstListExpressionInFunction();
         $var = $expr->getChild(0);
 
-        $this->assertInstanceOf(ASTVariableVariable::class, $var);
+        static::assertInstanceOf(ASTVariableVariable::class, $var);
     }
 
     /**
@@ -255,7 +255,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
             ASTFormalParameters::class
         );
 
-        $this->assertInstanceOf(ASTFormalParameters::class, $parameters);
+        static::assertInstanceOf(ASTFormalParameters::class, $parameters);
     }
 
     /**
@@ -268,7 +268,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
             ASTFormalParameters::class
         );
 
-        $this->assertInstanceOf(ASTFormalParameters::class, $parameters);
+        static::assertInstanceOf(ASTFormalParameters::class, $parameters);
     }
 
     /**
@@ -296,8 +296,8 @@ class ASTListExpressionTest extends ASTNodeTestCase
             $this->getCallingTestMethod(),
             ASTArray::class
         );
-        $this->assertCount(1, $array->getChildren());
-        $this->assertSame('$b', $array->getChild(0)->getChild(0)->getImage());
+        static::assertCount(1, $array->getChildren());
+        static::assertSame('$b', $array->getChild(0)->getChild(0)->getImage());
     }
 
     /**
@@ -311,7 +311,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
             ASTScalarType::class
         );
 
-        $this->assertSame('void', $type->getImage());
+        static::assertSame('void', $type->getImage());
     }
 
     /**
@@ -322,7 +322,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstListExpressionInFunction();
         $var = $expr->getChild(0);
 
-        $this->assertInstanceOf(ASTCompoundVariable::class, $var);
+        static::assertInstanceOf(ASTCompoundVariable::class, $var);
     }
 
     /**
@@ -333,7 +333,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstListExpressionInFunction();
         $var = $expr->getChild(0);
 
-        $this->assertInstanceOf(ASTArrayIndexExpression::class, $var);
+        static::assertInstanceOf(ASTArrayIndexExpression::class, $var);
     }
 
     /**
@@ -344,7 +344,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstListExpressionInFunction();
         $var = $expr->getChild(0);
 
-        $this->assertInstanceOf(ASTMemberPrimaryPrefix::class, $var);
+        static::assertInstanceOf(ASTMemberPrimaryPrefix::class, $var);
     }
 
     /**
@@ -356,7 +356,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     public function testListExpressionWithKeys()
     {
         $expr = $this->getFirstListExpressionInFunction();
-        $this->assertInstanceOf(ASTListExpression::class, $expr);
+        static::assertInstanceOf(ASTListExpression::class, $expr);
 
         return $expr;
     }
@@ -370,7 +370,7 @@ class ASTListExpressionTest extends ASTNodeTestCase
     public function testListExpressionWithKeysAndNestedList()
     {
         $expr = $this->getFirstListExpressionInFunction();
-        $this->assertInstanceOf(ASTListExpression::class, $expr);
+        static::assertInstanceOf(ASTListExpression::class, $expr);
 
         return $expr;
     }

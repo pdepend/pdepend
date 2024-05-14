@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCloneExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTCloneExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
     public function testCloneExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
     public function testCloneExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
-        $this->assertEquals(12, $expr->getStartColumn());
+        static::assertEquals(12, $expr->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
     public function testCloneExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
-        $this->assertEquals(6, $expr->getEndLine());
+        static::assertEquals(6, $expr->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
     public function testCloneExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
-        $this->assertEquals(21, $expr->getEndColumn());
+        static::assertEquals(21, $expr->getEndColumn());
     }
 
     /**

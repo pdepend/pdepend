@@ -71,7 +71,7 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTestCase
             ->current()
             ->getConstants();
 
-        $this->assertArrayHasKey($constantName, $constants);
+        static::assertArrayHasKey($constantName, $constants);
     }
 
     /**

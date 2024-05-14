@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTHeredoc} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTHeredoc
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -61,7 +61,7 @@ class ASTHeredocTest extends ASTNodeTestCase
      */
     public function testHeredocAsArrayInitializeValue(): void
     {
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTLiteral::class,
             $this->getFirstHeredocInClass()->getChild(0)
         );
@@ -73,7 +73,7 @@ class ASTHeredocTest extends ASTNodeTestCase
     public function testHeredocHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstHeredocInFunction();
-        $this->assertEquals(4, $stmt->getStartLine());
+        static::assertEquals(4, $stmt->getStartLine());
     }
 
     /**
@@ -82,7 +82,7 @@ class ASTHeredocTest extends ASTNodeTestCase
     public function testHeredocHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstHeredocInFunction();
-        $this->assertEquals(10, $stmt->getStartColumn());
+        static::assertEquals(10, $stmt->getStartColumn());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTHeredocTest extends ASTNodeTestCase
     public function testHeredocHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstHeredocInFunction();
-        $this->assertEquals(8, $stmt->getEndLine());
+        static::assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -100,7 +100,7 @@ class ASTHeredocTest extends ASTNodeTestCase
     public function testHeredocHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstHeredocInFunction();
-        $this->assertEquals(3, $stmt->getEndColumn());
+        static::assertEquals(3, $stmt->getEndColumn());
     }
 
     /**

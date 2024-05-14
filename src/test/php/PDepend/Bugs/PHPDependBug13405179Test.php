@@ -80,7 +80,7 @@ class PHPDependBug13405179Test extends AbstractRegressionTestCase
         $engine->addReportGenerator($generator);
         $engine->analyze();
 
-        $this->assertFileExists($file);
+        static::assertFileExists($file);
     }
 
     /**

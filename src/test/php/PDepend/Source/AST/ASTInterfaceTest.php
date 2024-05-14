@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\AST;
 
@@ -70,23 +70,23 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->once())
+        $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->never())
+        $node2->expects(static::never())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $interface = $this->createItem();
         $interface->addChild($node1);
         $interface->addChild($node2);
 
         $child = $interface->getFirstChildOfType($node2::class);
-        $this->assertSame($node2, $child);
+        static::assertSame($node2, $child);
     }
 
     /**
@@ -97,29 +97,29 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->never())
+        $node1->expects(static::never())
             ->method('getFirstChildOfType');
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->once())
+        $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node3 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node3->expects($this->once())
+        $node3->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue($node1));
+            ->will(static::returnValue($node1));
 
         $interface = $this->createItem();
         $interface->addChild($node2);
         $interface->addChild($node3);
 
         $child = $interface->getFirstChildOfType($node1::class);
-        $this->assertSame($node1, $child);
+        static::assertSame($node1, $child);
     }
 
     /**
@@ -130,16 +130,16 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $node1 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node1->expects($this->once())
+        $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $node2 = $this->getMockBuilder(ASTNode::class)
             ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
-        $node2->expects($this->once())
+        $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will($this->returnValue(null));
+            ->will(static::returnValue(null));
 
         $interface = $this->createItem();
         $interface->addChild($node1);
@@ -148,7 +148,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $child = $interface->getFirstChildOfType(
             'Mock_' . __FUNCTION__ . '_' . md5(microtime())
         );
-        $this->assertNull($child);
+        static::assertNull($child);
     }
 
     /**
@@ -161,7 +161,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
         $interfaces = $namespace->getInterfaces();
 
-        $this->assertCount(0, $interfaces[0]->getInterfaces());
+        static::assertCount(0, $interfaces[0]->getInterfaces());
     }
 
     /**
@@ -175,7 +175,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface = $namespace->getInterfaces()
             ->current();
 
-        $this->assertSame(1, $interface->getInterfaces()->count());
+        static::assertSame(1, $interface->getInterfaces()->count());
     }
 
     /**
@@ -187,7 +187,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface = $namespaces[0]->getInterfaces()
             ->current();
 
-        $this->assertSame(4, $interface->getInterfaces()->count());
+        static::assertSame(4, $interface->getInterfaces()->count());
     }
 
     /**
@@ -199,7 +199,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface = $namespaces[0]->getInterfaces()
             ->current();
 
-        $this->assertSame(5, $interface->getInterfaces()->count());
+        static::assertSame(5, $interface->getInterfaces()->count());
     }
 
     /**
@@ -211,7 +211,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $namespaces = $this->parseCodeResourceForTest();
         $interfaces = $namespaces[0]->getInterfaces();
 
-        $this->assertFalse($interfaces[0]->isSubtypeOf($interfaces[1]));
+        static::assertFalse($interfaces[0]->isSubtypeOf($interfaces[1]));
     }
 
     /**
@@ -302,7 +302,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -316,7 +316,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
             ->getInterfaces()
             ->current();
 
-        $this->assertInstanceOf(
+        static::assertInstanceOf(
             ASTFormalParameter::class,
             $class->getFirstChildOfType(ASTFormalParameter::class)
         );
@@ -335,7 +335,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $parameters = $class->findChildrenOfType(
             ASTFormalParameter::class
         );
-        $this->assertCount(4, $parameters);
+        static::assertCount(4, $parameters);
     }
 
     /**
@@ -360,7 +360,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testInterfaceReturnsExpectedModifiers(): void
     {
         $interface = $this->createItem();
-        $this->assertSame(
+        static::assertSame(
             State::IS_IMPLICIT_ABSTRACT,
             $interface->getModifiers()
         );
@@ -374,7 +374,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame($copy, $copy->getMethods()->current()->getParent());
+        static::assertSame($copy, $copy->getMethods()->current()->getParent());
     }
 
     /**
@@ -385,7 +385,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $copy->getCompilationUnit(),
             $copy->getMethods()->current()->getCompilationUnit()
         );
@@ -399,7 +399,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getInterfaces()->current(),
             $copy->getInterfaces()->current()
         );
@@ -415,7 +415,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $method->getReturnClass(),
             $copy
         );
@@ -429,7 +429,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame(
+        static::assertSame(
             $orig->getNamespace(),
             $copy->getNamespace()
         );
@@ -443,7 +443,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertSame($copy, $orig->getNamespace()->getInterfaces()->current());
+        static::assertSame($copy, $orig->getNamespace()->getInterfaces()->current());
     }
 
     /**
@@ -454,7 +454,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        $this->assertEquals(1, $orig->getNamespace()->getInterfaces()->count());
+        static::assertEquals(1, $orig->getNamespace()->getInterfaces()->count());
     }
 
     /**
@@ -463,11 +463,11 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetTokensDelegatesCallToCacheRestore(): void
     {
         $cache = $this->createCacheFixture();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('type')
-            ->with($this->equalTo('tokens'))
-            ->will($this->returnValue($cache));
-        $cache->expects($this->once())
+            ->with(static::equalTo('tokens'))
+            ->will(static::returnValue($cache));
+        $cache->expects(static::once())
             ->method('restore');
 
         $interface = $this->createItem();
@@ -483,13 +483,13 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $tokens = [new Token(1, 'a', 23, 42, 13, 17)];
 
         $cache = $this->createCacheFixture();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('type')
-            ->with($this->equalTo('tokens'))
-            ->will($this->returnValue($cache));
-        $cache->expects($this->once())
+            ->with(static::equalTo('tokens'))
+            ->will(static::returnValue($cache));
+        $cache->expects(static::once())
             ->method('store')
-            ->with($this->isType('string'), $this->equalTo($tokens));
+            ->with(static::isType('string'), static::equalTo($tokens));
 
         $interface = $this->createItem();
         $interface->setCache($cache)
@@ -502,7 +502,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetStartLineReturnsZeroByDefault(): void
     {
         $interface = $this->createItem();
-        $this->assertSame(0, $interface->getStartLine());
+        static::assertSame(0, $interface->getStartLine());
     }
 
     /**
@@ -511,9 +511,9 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetStartLineReturnsStartLineOfFirstToken(): void
     {
         $cache = $this->createCacheFixture();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('type')
-            ->will($this->returnValue($cache));
+            ->will(static::returnValue($cache));
 
         $interface = $this->createItem();
         $interface->setCache($cache)
@@ -524,7 +524,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
                 ]
             );
 
-        $this->assertEquals(23, $interface->getStartLine());
+        static::assertEquals(23, $interface->getStartLine());
     }
 
     /**
@@ -533,7 +533,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetEndLineReturnsZeroByDefault(): void
     {
         $interface = $this->createItem();
-        $this->assertSame(0, $interface->getEndLine());
+        static::assertSame(0, $interface->getEndLine());
     }
 
     /**
@@ -542,7 +542,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetParentClassReferenceReturnsNullByDefault(): void
     {
         $class = $this->createItem();
-        $this->assertNull($class->getParentClassReference());
+        static::assertNull($class->getParentClassReference());
     }
 
     /**
@@ -551,7 +551,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetParentClassesReturnsEmptyArrayByDefault(): void
     {
         $interface = $this->createItem();
-        $this->assertSame([], $interface->getParentClasses());
+        static::assertSame([], $interface->getParentClasses());
     }
 
     /**
@@ -564,7 +564,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
             ->getInterfaces()
             ->current();
 
-        $this->assertSame([], $interface->getParentClasses());
+        static::assertSame([], $interface->getParentClasses());
     }
 
     /**
@@ -573,7 +573,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetInterfaceReferencesReturnsEmptyArrayByDefault(): void
     {
         $interface = $this->createItem();
-        $this->assertSame([], $interface->getInterfaceReferences());
+        static::assertSame([], $interface->getInterfaceReferences());
     }
 
     /**
@@ -582,7 +582,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetInterfaceReferencesReturnsExpectedNumberOfInterfaces(): void
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertCount(3, $interface->getInterfaceReferences());
+        static::assertCount(3, $interface->getInterfaceReferences());
     }
 
     /**
@@ -593,7 +593,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetAllChildrenReturnsAnEmptyArrayByDefault(): void
     {
         $interface = $this->createItem();
-        $this->assertSame([], $interface->getChildren());
+        static::assertSame([], $interface->getChildren());
     }
 
     /**
@@ -604,7 +604,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetAllChildrenReturnsArrayWithExpectedNumberOfNodes(): void
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertCount(3, $interface->getChildren());
+        static::assertCount(3, $interface->getChildren());
     }
 
     /**
@@ -615,7 +615,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetDependenciesReturnsEmptyResultByDefault(): void
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertCount(0, $interface->getDependencies());
+        static::assertCount(0, $interface->getDependencies());
     }
 
     /**
@@ -626,7 +626,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetDependenciesContainsExtendedInterface(): void
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertCount(1, $interface->getDependencies());
+        static::assertCount(1, $interface->getDependencies());
     }
 
     /**
@@ -637,7 +637,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetDependenciesContainsExtendedInterfaces(): void
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertCount(3, $interface->getDependencies());
+        static::assertCount(3, $interface->getDependencies());
     }
 
     /**
@@ -646,9 +646,9 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetEndLineReturnsEndLineOfLastToken(): void
     {
         $cache = $this->createCacheFixture();
-        $cache->expects($this->once())
+        $cache->expects(static::once())
             ->method('type')
-            ->will($this->returnValue($cache));
+            ->will(static::returnValue($cache));
 
         $interface = $this->createItem();
         $interface->setCache($cache)
@@ -659,7 +659,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
                 ]
             );
 
-        $this->assertEquals(32, $interface->getEndLine());
+        static::assertEquals(32, $interface->getEndLine());
     }
 
     /**
@@ -668,7 +668,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testIsAbstractReturnsAlwaysTrue(): void
     {
         $interface = $this->createItem();
-        $this->assertTrue($interface->isAbstract());
+        static::assertTrue($interface->isAbstract());
     }
 
     /**
@@ -677,7 +677,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testIsUserDefinedReturnsFalseByDefault(): void
     {
         $interface = $this->createItem();
-        $this->assertFalse($interface->isUserDefined());
+        static::assertFalse($interface->isUserDefined());
     }
 
     /**
@@ -688,7 +688,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface = $this->createItem();
         $interface->setUserDefined();
 
-        $this->assertTrue($interface->isUserDefined());
+        static::assertTrue($interface->isUserDefined());
     }
 
     /**
@@ -699,7 +699,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testGetConstantsReturnsExpectedInterfaceConstants(): void
     {
         $interface = $this->getFirstInterfaceForTestCase();
-        $this->assertEquals(['FOO' => 42, 'BAR' => 23], $interface->getConstants());
+        static::assertEquals(['FOO' => 42, 'BAR' => 23], $interface->getConstants());
     }
 
     /**
@@ -708,7 +708,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     public function testIsCachedReturnsFalseByDefault(): void
     {
         $interface = $this->createItem();
-        $this->assertFalse($interface->isCached());
+        static::assertFalse($interface->isCached());
     }
 
     /**
@@ -719,13 +719,13 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface = $this->createItem();
         serialize($interface);
 
-        $this->assertFalse($interface->isCached());
+        static::assertFalse($interface->isCached());
     }
 
     public function testGetNamespacedName(): void
     {
         $interface = new ASTInterface('MyInterface');
-        $this->assertSame('MyInterface', $interface->getNamespacedName());
+        static::assertSame('MyInterface', $interface->getNamespacedName());
     }
 
     public function testGetNamespacedNameWithNamespaceDeclaration(): void
@@ -733,7 +733,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface = new ASTInterface('MyInterface');
         $interface->setNamespace(new ASTNamespace('My\\Namespace'));
 
-        $this->assertSame('My\\Namespace\\MyInterface', $interface->getNamespacedName());
+        static::assertSame('My\\Namespace\\MyInterface', $interface->getNamespacedName());
     }
 
     public function testGetNamespacedNameWithPackageAnnotation(): void
@@ -744,7 +744,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface = new ASTInterface('MyInterface');
         $interface->setNamespace($namespace);
 
-        $this->assertSame('MyInterface', $interface->getNamespacedName());
+        static::assertSame('MyInterface', $interface->getNamespacedName());
     }
 
     /**
@@ -755,7 +755,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface = $this->createItem();
         $interface->setNamespace(new ASTNamespace(__FUNCTION__));
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'constants',
                 'interfaceReferences',
@@ -787,7 +787,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
         $interface->__wakeup();
 
-        $this->assertSame($interface->getCompilationUnit(), $method->getCompilationUnit());
+        static::assertSame($interface->getCompilationUnit(), $method->getCompilationUnit());
     }
 
     /**
@@ -799,9 +799,9 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
         $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
-        $context->expects($this->once())
+        $context->expects(static::once())
             ->method('registerInterface')
-            ->with($this->isInstanceOf(ASTInterface::class));
+            ->with(static::isInstanceOf(ASTInterface::class));
 
         $interface->setContext($context)->__wakeup();
     }
@@ -813,9 +813,9 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
     {
         $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->getMock();
-        $visitor->expects($this->once())
+        $visitor->expects(static::once())
             ->method('visitInterface')
-            ->with($this->isInstanceOf(ASTInterface::class));
+            ->with(static::isInstanceOf(ASTInterface::class));
 
         $interface = $this->createItem();
         $interface->accept($visitor);

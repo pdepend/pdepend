@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\AST;
 
@@ -61,7 +61,7 @@ class ASTArtifactTest extends AbstractTestCase
     public function testGetNameReturnsValueOfFirstConstructorArgument(): void
     {
         $item = $this->getItemMock();
-        $this->assertEquals(__CLASS__, $item->getName());
+        static::assertEquals(__CLASS__, $item->getName());
     }
 
     /**
@@ -74,7 +74,7 @@ class ASTArtifactTest extends AbstractTestCase
         $item = $this->getItemMock();
         $item->setName(__FUNCTION__);
 
-        $this->assertEquals(__FUNCTION__, $item->getName());
+        static::assertEquals(__FUNCTION__, $item->getName());
     }
 
     /**
@@ -83,7 +83,7 @@ class ASTArtifactTest extends AbstractTestCase
     public function testGetIdReturnsMd5HashByDefault(): void
     {
         $item = $this->getItemMock();
-        $this->assertMatchesRegularExpression('(^[a-f0-9]{32}$)', $item->getId());
+        static::assertMatchesRegularExpression('(^[a-f0-9]{32}$)', $item->getId());
     }
 
     /**
@@ -94,7 +94,7 @@ class ASTArtifactTest extends AbstractTestCase
         $item = $this->getItemMock();
         $item->setId(__METHOD__);
 
-        $this->assertEquals(__METHOD__, $item->getId());
+        static::assertEquals(__METHOD__, $item->getId());
     }
 
     /**
@@ -103,7 +103,7 @@ class ASTArtifactTest extends AbstractTestCase
     public function testGetSourceFileReturnsNullByDefault(): void
     {
         $item = $this->getItemMock();
-        $this->assertNull($item->getCompilationUnit());
+        static::assertNull($item->getCompilationUnit());
     }
 
     /**
@@ -116,7 +116,7 @@ class ASTArtifactTest extends AbstractTestCase
         $item = $this->getItemMock();
         $item->setCompilationUnit($file);
 
-        $this->assertSame($file, $item->getCompilationUnit());
+        static::assertSame($file, $item->getCompilationUnit());
     }
 
     /**
@@ -125,7 +125,7 @@ class ASTArtifactTest extends AbstractTestCase
     public function testGetDocCommentReturnsNullByDefault(): void
     {
         $item = $this->getItemMock();
-        $this->assertNull($item->getComment());
+        static::assertNull($item->getComment());
     }
 
     /**
@@ -136,7 +136,7 @@ class ASTArtifactTest extends AbstractTestCase
         $item = $this->getItemMock();
         $item->setComment('/** Manuel */');
 
-        $this->assertSame('/** Manuel */', $item->getComment());
+        static::assertSame('/** Manuel */', $item->getComment());
     }
 
     /**

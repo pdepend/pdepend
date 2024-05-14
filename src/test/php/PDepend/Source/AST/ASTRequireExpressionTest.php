@@ -46,8 +46,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTRequireExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTRequireExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.12
@@ -62,7 +62,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     public function testIsOnceReturnsFalseByDefault(): void
     {
         $expr = new ASTRequireExpression();
-        $this->assertFalse($expr->isOnce());
+        static::assertFalse($expr->isOnce());
     }
 
     /**
@@ -71,7 +71,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     public function testIsOnceReturnsTrueForRequireOnceExpression(): void
     {
         $expr = $this->getFirstRequireExpressionInFunction();
-        $this->assertTrue($expr->isOnce());
+        static::assertTrue($expr->isOnce());
     }
 
     /**
@@ -80,7 +80,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $expr = new ASTRequireExpression();
-        $this->assertEquals(
+        static::assertEquals(
             [
                 'once',
                 'comment',
@@ -100,7 +100,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     public function testRequireExpression()
     {
         $expr = $this->getFirstRequireExpressionInFunction();
-        $this->assertInstanceOf(ASTRequireExpression::class, $expr);
+        static::assertInstanceOf(ASTRequireExpression::class, $expr);
 
         return $expr;
     }
@@ -114,7 +114,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      */
     public function testRequireExpressionHasExpectedStartLine($expr): void
     {
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -126,7 +126,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      */
     public function testRequireExpressionHasExpectedStartColumn($expr): void
     {
-        $this->assertEquals(5, $expr->getStartColumn());
+        static::assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -138,7 +138,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      */
     public function testRequireExpressionHasExpectedEndLine($expr): void
     {
-        $this->assertEquals(4, $expr->getEndLine());
+        static::assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -150,7 +150,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      */
     public function testRequireExpressionHasExpectedEndColumn($expr): void
     {
-        $this->assertEquals(35, $expr->getEndColumn());
+        static::assertEquals(35, $expr->getEndColumn());
     }
 
     /**
@@ -162,7 +162,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     public function testRequireExpressionWithParenthesis()
     {
         $expr = $this->getFirstRequireExpressionInFunction();
-        $this->assertInstanceOf(ASTRequireExpression::class, $expr);
+        static::assertInstanceOf(ASTRequireExpression::class, $expr);
 
         return $expr;
     }
@@ -176,7 +176,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      */
     public function testRequireExpressionWithParenthesisHasExpectedStartLine($expr): void
     {
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -188,7 +188,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      */
     public function testRequireExpressionWithParenthesisHasExpectedStartColumn($expr): void
     {
-        $this->assertEquals(5, $expr->getStartColumn());
+        static::assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -200,7 +200,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      */
     public function testRequireExpressionWithParenthesisHasExpectedEndLine($expr): void
     {
-        $this->assertEquals(6, $expr->getEndLine());
+        static::assertEquals(6, $expr->getEndLine());
     }
 
     /**
@@ -212,7 +212,7 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
      */
     public function testRequireExpressionWithParenthesisHasExpectedEndColumn($expr): void
     {
-        $this->assertEquals(5, $expr->getEndColumn());
+        static::assertEquals(5, $expr->getEndColumn());
     }
 
     /**

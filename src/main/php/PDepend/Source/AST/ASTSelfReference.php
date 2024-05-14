@@ -55,9 +55,7 @@ use PDepend\Source\Builder\BuilderContext;
  */
 class ASTSelfReference extends ASTClassOrInterfaceReference
 {
-    /**
-     * The source image of this node.
-     */
+    /** The source image of this node. */
     public const IMAGE = 'self';
 
     /**
@@ -119,10 +117,11 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
      */
     public function getType()
     {
-        if ($this->typeInstance == null) {
+        if ($this->typeInstance === null) {
             $this->typeInstance = $this->context
                 ->getClassOrInterface($this->qualifiedName);
         }
+
         return $this->typeInstance;
     }
 }

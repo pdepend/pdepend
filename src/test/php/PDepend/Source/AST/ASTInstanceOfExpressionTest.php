@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTInstanceOfExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTInstanceOfExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -196,8 +196,8 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
         );
 
         $reference = $instanceOf->getChild(0);
-        $this->assertInstanceOf($type, $reference);
-        $this->assertEquals($image, $reference->getImage());
+        static::assertInstanceOf($type, $reference);
+        static::assertEquals($image, $reference->getImage());
     }
 
     /**

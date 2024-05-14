@@ -54,6 +54,6 @@ class ReadonlyClassTest extends PHPParserVersion82TestCase
     {
         $class = $this->getFirstClassForTestCase();
 
-        $this->assertTrue($class->isReadonly());
+        static::assertTrue($class->isReadonly());
     }
 }

@@ -80,6 +80,6 @@ class ClassLevelAnalyzerBug09936901Test extends AbstractRegressionTestCase
 
         $metrics = $analyzer->getNodeMetrics($class);
 
-        $this->assertEquals(2, $metrics['wmci']);
+        static::assertEquals(2, $metrics['wmci']);
     }
 }

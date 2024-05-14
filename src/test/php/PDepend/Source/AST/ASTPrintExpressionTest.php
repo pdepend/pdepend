@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTPrintExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTPrintExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
     public function testSimplePrintExpression()
     {
         $print = $this->getFirstPrintInFunction();
-        $this->assertInstanceOf(ASTPrintExpression::class, $print);
+        static::assertInstanceOf(ASTPrintExpression::class, $print);
 
         return $print;
     }
@@ -70,7 +70,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
      */
     public function testSimplePrintExpressionHasExpectedStartLine(ASTPrintExpression $expr): void
     {
-        $this->assertSame(4, $expr->getStartLine());
+        static::assertSame(4, $expr->getStartLine());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
      */
     public function testSimplePrintExpressionHasExpectedEndLine(ASTPrintExpression $expr): void
     {
-        $this->assertSame(4, $expr->getEndLine());
+        static::assertSame(4, $expr->getEndLine());
     }
 
     /**
@@ -86,7 +86,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
      */
     public function testSimplePrintExpressionHasExpectedStartColumn(ASTPrintExpression $expr): void
     {
-        $this->assertSame(5, $expr->getStartColumn());
+        static::assertSame(5, $expr->getStartColumn());
     }
 
     /**
@@ -94,7 +94,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
      */
     public function testSimplePrintExpressionHasExpectedEndColumn(ASTPrintExpression $expr): void
     {
-        $this->assertSame(9, $expr->getEndColumn());
+        static::assertSame(9, $expr->getEndColumn());
     }
 
     /**

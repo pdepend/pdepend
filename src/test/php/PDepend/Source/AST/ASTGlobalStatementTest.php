@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTGlobalStatement} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTGlobalStatement
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
     public function testGlobalStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
-        $this->assertSame(4, $stmt->getStartLine());
+        static::assertSame(4, $stmt->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
     public function testGlobalStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
-        $this->assertSame(5, $stmt->getStartColumn());
+        static::assertSame(5, $stmt->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
     public function testGlobalStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
-        $this->assertSame(6, $stmt->getEndLine());
+        static::assertSame(6, $stmt->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
     public function testGlobalStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
-        $this->assertSame(19, $stmt->getEndColumn());
+        static::assertSame(19, $stmt->getEndColumn());
     }
 
     /**

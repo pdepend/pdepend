@@ -89,7 +89,7 @@ class CommandTest extends AbstractTestCase
     public function testPrintVersion(): void
     {
         [, $actual] = $this->executeCommand(['--version']);
-        $this->assertEquals($this->versionOutput, $actual);
+        static::assertEquals($this->versionOutput, $actual);
     }
 
     /**
@@ -97,8 +97,8 @@ class CommandTest extends AbstractTestCase
      */
     public function testPrintVersionReturnsExitCodeSuccess(): void
     {
-        [$exitCode, ] = $this->executeCommand(['--version']);
-        $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
+        [$exitCode] = $this->executeCommand(['--version']);
+        static::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -107,7 +107,7 @@ class CommandTest extends AbstractTestCase
     public function testPrintUsage(): void
     {
         [, $actual] = $this->executeCommand(['--usage']);
-        $this->assertEquals($this->versionOutput . $this->usageOutput, $actual);
+        static::assertEquals($this->versionOutput . $this->usageOutput, $actual);
     }
 
     /**
@@ -115,8 +115,8 @@ class CommandTest extends AbstractTestCase
      */
     public function testPrintUsageReturnsExitCodeSuccess(): void
     {
-        [$exitCode, ] = $this->executeCommand(['--usage']);
-        $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
+        [$exitCode] = $this->executeCommand(['--usage']);
+        static::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -133,8 +133,8 @@ class CommandTest extends AbstractTestCase
      */
     public function testPrintHelpReturnsExitCodeSuccess(): void
     {
-        [$exitCode, ] = $this->executeCommand(['--help']);
-        $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
+        [$exitCode] = $this->executeCommand(['--help']);
+        static::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -142,8 +142,8 @@ class CommandTest extends AbstractTestCase
      */
     public function testCommandCliReturnsErrorExitCodeIfNoArgvArrayExists(): void
     {
-        [$exitCode, ] = $this->executeCommand();
-        $this->assertEquals(Command::CLI_ERROR, $exitCode);
+        [$exitCode] = $this->executeCommand();
+        static::assertEquals(Command::CLI_ERROR, $exitCode);
     }
 
     /**
@@ -170,8 +170,8 @@ class CommandTest extends AbstractTestCase
      */
     public function testCommandReturnsErrorExitCodeIfNoOptionsWereSpecified(): void
     {
-        [$exitCode, ] = $this->executeCommand([]);
-        $this->assertEquals(Command::CLI_ERROR, $exitCode);
+        [$exitCode] = $this->executeCommand([]);
+        static::assertEquals(Command::CLI_ERROR, $exitCode);
     }
 
     /**
@@ -193,10 +193,10 @@ class CommandTest extends AbstractTestCase
             $resource,
         ];
 
-        [$exitCode, ] = $this->executeCommand($argv);
+        [$exitCode] = $this->executeCommand($argv);
 
-        $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
-        $this->assertFileExists($logFile);
+        static::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
+        static::assertFileExists($logFile);
     }
 
     /**
@@ -216,8 +216,8 @@ class CommandTest extends AbstractTestCase
             $resource,
         ];
 
-        [$exitCode, ] = $this->executeCommand($argv);
-        $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
+        [$exitCode] = $this->executeCommand($argv);
+        static::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -225,8 +225,8 @@ class CommandTest extends AbstractTestCase
      */
     public function testCommandExitsWithCliErrorForUnknownOption(): void
     {
-        [$exitCode, ] = $this->executeCommand(['--unknown']);
-        $this->assertEquals(Command::CLI_ERROR, $exitCode);
+        [$exitCode] = $this->executeCommand(['--unknown']);
+        static::assertEquals(Command::CLI_ERROR, $exitCode);
     }
 
     /**
@@ -259,7 +259,7 @@ class CommandTest extends AbstractTestCase
             $this->createCodeResourceUriForTest()
         );
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -293,7 +293,7 @@ class CommandTest extends AbstractTestCase
             [],
             $this->createCodeResourceUriForTest()
         );
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -361,7 +361,7 @@ class CommandTest extends AbstractTestCase
     {
         // Get backup
         if (($backup = ini_set('html_errors', 'off')) === false) {
-            $this->markTestSkipped('Cannot alter ini setting "html_errors".');
+            static::markTestSkipped('Cannot alter ini setting "html_errors".');
         }
 
         $this->executeCommand(
@@ -373,7 +373,7 @@ class CommandTest extends AbstractTestCase
             ]
         );
 
-        $this->assertEquals('on', ini_get('html_errors'));
+        static::assertEquals('on', ini_get('html_errors'));
 
         ini_set('html_errors', $backup);
     }
@@ -385,7 +385,7 @@ class CommandTest extends AbstractTestCase
     {
         // Get backup
         if (($backup = ini_set('html_errors', 'on')) === false) {
-            $this->markTestSkipped('Cannot alter ini setting "html_errors".');
+            static::markTestSkipped('Cannot alter ini setting "html_errors".');
         }
 
         $this->executeCommand(
@@ -397,7 +397,7 @@ class CommandTest extends AbstractTestCase
             ]
         );
 
-        $this->assertEquals('off', ini_get('html_errors'));
+        static::assertEquals('off', ini_get('html_errors'));
 
         ini_set('html_errors', $backup);
     }
@@ -438,7 +438,7 @@ class CommandTest extends AbstractTestCase
         $this->executeCommand($argv);
 
         $config = ConfigurationInstance::get();
-        $this->assertEquals('memory', $config->cache->driver);
+        static::assertEquals('memory', $config->cache->driver);
     }
 
     /**
@@ -447,7 +447,7 @@ class CommandTest extends AbstractTestCase
     public function testTextUiCommandOutputContainsExpectedCoverageReportOption(): void
     {
         [, $actual] = $this->executeCommand([]);
-        $this->assertStringContainsString('--coverage-report=<file>', $actual);
+        static::assertStringContainsString('--coverage-report=<file>', $actual);
     }
 
     /**
@@ -463,9 +463,9 @@ class CommandTest extends AbstractTestCase
             __FILE__,
         ];
 
-        [$exitCode, ] = $this->executeCommand($argv);
+        [$exitCode] = $this->executeCommand($argv);
 
-        $this->assertEquals(Command::INPUT_ERROR, $exitCode);
+        static::assertEquals(Command::INPUT_ERROR, $exitCode);
     }
 
     /**
@@ -480,9 +480,9 @@ class CommandTest extends AbstractTestCase
             __FILE__,
         ];
 
-        [$exitCode, ] = $this->executeCommand($argv);
+        [$exitCode] = $this->executeCommand($argv);
 
-        $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
+        static::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
     }
 
     /**
@@ -496,8 +496,8 @@ class CommandTest extends AbstractTestCase
 
         [$exitCode, $actual] = $this->executeCommand($argv);
 
-        $this->assertSame(Command::CLI_ERROR, $exitCode);
-        $this->assertStringContainsString(
+        static::assertSame(Command::CLI_ERROR, $exitCode);
+        static::assertStringContainsString(
             sprintf('The configuration file "%s" doesn\'t exist.', $configFile),
             $actual
         );
@@ -515,8 +515,8 @@ class CommandTest extends AbstractTestCase
 
         [$exitCode, $actual] = $this->executeCommand($argv);
 
-        $this->assertEquals(Runner::SUCCESS_EXIT, $exitCode);
-        $this->assertEmpty('', $actual);
+        static::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
+        static::assertEmpty('', $actual);
     }
 
     public function testErrorDisplay(): void
@@ -526,15 +526,15 @@ class CommandTest extends AbstractTestCase
         $output = ob_get_contents();
         ob_end_clean();
 
-        $this->assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
-        $this->assertSame(42, $exitCode);
+        static::assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
+        static::assertSame(42, $exitCode);
     }
 
     public function testDebugErrorDisplay(): void
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
         $streamProperty = new ReflectionClass(Log::class);
-        $streamProperty->setStaticPropertyValue('stream', fopen($file, 'a+'));
+        $streamProperty->setStaticPropertyValue('stream', fopen($file, 'a+b'));
 
         Log::setSeverity(Log::DEBUG);
 
@@ -548,9 +548,9 @@ class CommandTest extends AbstractTestCase
         unlink($file);
         $streamProperty->setStaticPropertyValue('stream', STDERR);
 
-        $this->assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
-        $this->assertSame(42, $exitCode);
-        $this->assertMatchesRegularExpression('/^
+        static::assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
+        static::assertSame(42, $exitCode);
+        static::assertMatchesRegularExpression('/^
                 \nRuntimeException\(Bad\susage\)\n
                 ##\s.+[\/\\\\]MockCommand\.php\(20\)\n
                 #0 .+[\/\\\\]Command\.php\(\d+\):\sPDepend\MockCommand->printVersion\(\)\n
@@ -572,17 +572,17 @@ class CommandTest extends AbstractTestCase
     {
         $startsWith = $prologText . $this->versionOutput . $this->usageOutput;
         $startsWith = '/^' . preg_quote($startsWith) . '/';
-        $this->assertMatchesRegularExpression($startsWith, $actual);
+        static::assertMatchesRegularExpression($startsWith, $actual);
 
-        $this->assertMatchesRegularExpression('(  --configuration=<file>[ ]+Optional\s+PDepend\s+configuration\s+file\.)', $actual);
-        $this->assertMatchesRegularExpression('(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)', $actual);
-        $this->assertMatchesRegularExpression('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
-        $this->assertMatchesRegularExpression('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+namespaces\.)', $actual);
-        $this->assertMatchesRegularExpression('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
-        $this->assertMatchesRegularExpression('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
-        $this->assertMatchesRegularExpression('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);
-        $this->assertMatchesRegularExpression('(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)', $actual);
-        $this->assertMatchesRegularExpression('(  --quiet[ ]+Prints\s+errors\s+only\.)', $actual);
+        static::assertMatchesRegularExpression('(  --configuration=<file>[ ]+Optional\s+PDepend\s+configuration\s+file\.)', $actual);
+        static::assertMatchesRegularExpression('(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)', $actual);
+        static::assertMatchesRegularExpression('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
+        static::assertMatchesRegularExpression('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+namespaces\.)', $actual);
+        static::assertMatchesRegularExpression('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
+        static::assertMatchesRegularExpression('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
+        static::assertMatchesRegularExpression('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);
+        static::assertMatchesRegularExpression('(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)', $actual);
+        static::assertMatchesRegularExpression('(  --quiet[ ]+Prints\s+errors\s+only\.)', $actual);
     }
 
     /**

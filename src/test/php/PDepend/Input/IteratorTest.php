@@ -68,7 +68,7 @@ class IteratorTest extends AbstractTestCase
         $actual = $this->createFilteredFileList(['php4']);
         $expected = ['file4.php4'];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -79,7 +79,7 @@ class IteratorTest extends AbstractTestCase
         $actual = $this->createFilteredFileList(['inc', 'php']);
         $expected = ['file1.inc', 'file2.php'];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -103,7 +103,7 @@ class IteratorTest extends AbstractTestCase
 
         $expected = ['file.php', 'file_process.php'];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -113,9 +113,9 @@ class IteratorTest extends AbstractTestCase
     {
         $filter = $this->getMockBuilder(Filter::class)
             ->getMock();
-        $filter->expects($this->once())
+        $filter->expects(static::once())
             ->method('accept')
-            ->with($this->equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
+            ->with(static::equalTo(DIRECTORY_SEPARATOR . basename(__FILE__)));
 
         $iterator = new Iterator(
             new ArrayIterator([new SplFileInfo(__FILE__)]),
@@ -134,9 +134,9 @@ class IteratorTest extends AbstractTestCase
 
         $filter = $this->getMockBuilder(Filter::class)
             ->getMock();
-        $filter->expects($this->once())
+        $filter->expects(static::once())
             ->method('accept')
-            ->with($this->equalTo(__FILE__), $this->equalTo(__FILE__));
+            ->with(static::equalTo(__FILE__), static::equalTo(__FILE__));
 
         $iterator = new Iterator($files, $filter);
         $iterator->accept();
@@ -151,9 +151,9 @@ class IteratorTest extends AbstractTestCase
 
         $filter = $this->getMockBuilder(Filter::class)
             ->getMock();
-        $filter->expects($this->once())
+        $filter->expects(static::once())
             ->method('accept')
-            ->with($this->equalTo(__FILE__), $this->equalTo(__FILE__));
+            ->with(static::equalTo(__FILE__), static::equalTo(__FILE__));
 
         $iterator = new Iterator($files, $filter, 'c:\foo');
         $iterator->accept();

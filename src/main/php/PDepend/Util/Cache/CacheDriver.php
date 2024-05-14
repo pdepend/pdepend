@@ -52,9 +52,7 @@ namespace PDepend\Util\Cache;
  */
 interface CacheDriver
 {
-    /**
-     * The current cache version.
-     */
+    /** The current cache version. */
     public const VERSION = '@version:a31e9e344aac643e20751f6d915114eb:@';
 
     /**

@@ -79,7 +79,7 @@ class PyramidTest extends AbstractTestCase
             'pdepend.analyzer.node_loc',
         ];
 
-        $this->assertEquals($exptected, $actual);
+        static::assertEquals($exptected, $actual);
     }
 
     /**
@@ -107,7 +107,7 @@ class PyramidTest extends AbstractTestCase
     public function testPyramidDoesntAcceptInvalidAnalyzer(): void
     {
         $logger = new Pyramid();
-        $this->assertFalse($logger->log(new DummyAnalyzer()));
+        static::assertFalse($logger->log(new DummyAnalyzer()));
     }
 
     /**
@@ -234,7 +234,7 @@ class PyramidTest extends AbstractTestCase
         $log->log($this->createNodeLocAnalyzer());
         $log->close();
 
-        $this->assertFileExists($output);
+        static::assertFileExists($output);
 
         $expected = [
             'cyclo' => 5579,
@@ -260,8 +260,8 @@ class PyramidTest extends AbstractTestCase
         // TODO: Replace this loop assertion
         foreach ($expected as $name => $value) {
             $elem = $svg->getElementById("pdepend.{$name}");
-            $this->assertInstanceOf(DOMElement::class, $elem);
-            $this->assertEqualsWithDelta($value, $elem->nodeValue, 0.01);
+            static::assertInstanceOf(DOMElement::class, $elem);
+            static::assertEqualsWithDelta($value, $elem->nodeValue, 0.01);
         }
 
         unlink($output);
@@ -271,9 +271,9 @@ class PyramidTest extends AbstractTestCase
     {
         $mock = $this->getMockBuilder(CouplingAnalyzer::class)
             ->getMock();
-        $mock->expects($this->any())
+        $mock->expects(static::any())
             ->method('getProjectMetrics')
-            ->will($this->returnValue(
+            ->will(static::returnValue(
                 [
                     'fanout' => 8590,
                     'calls' => 15128,
@@ -287,9 +287,9 @@ class PyramidTest extends AbstractTestCase
     {
         $mock = $this->getMockBuilder(CyclomaticComplexityAnalyzer::class)
             ->getMock();
-        $mock->expects($this->any())
+        $mock->expects(static::any())
             ->method('getProjectMetrics')
-            ->will($this->returnValue(
+            ->will(static::returnValue(
                 [
                     'ccn2' => 5579,
                 ]
@@ -302,9 +302,9 @@ class PyramidTest extends AbstractTestCase
     {
         $mock = $this->getMockBuilder(InheritanceAnalyzer::class)
             ->getMock();
-        $mock->expects($this->any())
+        $mock->expects(static::any())
             ->method('getProjectMetrics')
-            ->will($this->returnValue(
+            ->will(static::returnValue(
                 [
                     'andc' => 0.31,
                     'ahh' => 0.12,
@@ -318,9 +318,9 @@ class PyramidTest extends AbstractTestCase
     {
         $mock = $this->getMockBuilder(NodeCountAnalyzer::class)
             ->getMock();
-        $mock->expects($this->any())
+        $mock->expects(static::any())
             ->method('getProjectMetrics')
-            ->will($this->returnValue(
+            ->will(static::returnValue(
                 [
                     'nop' => 19,
                     'noc' => 384,
@@ -336,9 +336,9 @@ class PyramidTest extends AbstractTestCase
     {
         $mock = $this->getMockBuilder(NodeLocAnalyzer::class)
             ->getMock();
-        $mock->expects($this->any())
+        $mock->expects(static::any())
             ->method('getProjectMetrics')
-            ->will($this->returnValue(
+            ->will(static::returnValue(
                 [
                     'eloc' => 35175,
                 ]

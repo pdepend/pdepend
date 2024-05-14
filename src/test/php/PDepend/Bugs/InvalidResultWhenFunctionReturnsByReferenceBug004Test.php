@@ -63,7 +63,7 @@ class InvalidResultWhenFunctionReturnsByReferenceBug004Test extends AbstractRegr
             ->getFunctions()
             ->current();
 
-        $this->assertEquals('barBug08', $function->getName());
+        static::assertEquals('barBug08', $function->getName());
     }
 
     /**
@@ -79,6 +79,6 @@ class InvalidResultWhenFunctionReturnsByReferenceBug004Test extends AbstractRegr
             ->getMethods()
             ->current();
 
-        $this->assertEquals('fooBug08', $method->getName());
+        static::assertEquals('fooBug08', $method->getName());
     }
 }

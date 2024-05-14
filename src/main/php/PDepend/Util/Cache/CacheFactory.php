@@ -59,11 +59,9 @@ use RuntimeException;
  */
 class CacheFactory
 {
-    private const DEFAULT_TTL = 2592000; //30 days
+    private const DEFAULT_TTL = 2592000; // 30 days
 
-    /**
-     * The system configuration.
-     */
+    /** The system configuration. */
     protected Configuration $configuration;
 
     /**
@@ -98,6 +96,7 @@ class CacheFactory
         if (false === isset($this->caches[$cacheKey])) {
             $this->caches[$cacheKey] = $this->createCache($cacheKey);
         }
+
         return $this->caches[$cacheKey];
     }
 
@@ -119,9 +118,11 @@ class CacheFactory
                     $this->configuration->cache->ttl,
                     $cacheKey,
                 );
+
             case 'memory':
                 return $this->createMemoryCache();
         }
+
         throw new InvalidArgumentException(
             "Unknown cache driver '{$this->configuration->cache->driver}' given.",
         );

@@ -126,7 +126,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -151,7 +151,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'lloc' => 4,
             'ncloc' => 16,
         ];
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -169,7 +169,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(18, $metrics['ncloc']);
+        static::assertEquals(18, $metrics['ncloc']);
     }
 
     /**
@@ -186,7 +186,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(10, $metrics['ncloc']);
+        static::assertEquals(10, $metrics['ncloc']);
     }
 
     /**
@@ -203,7 +203,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(0, $metrics['eloc']);
+        static::assertEquals(0, $metrics['eloc']);
     }
 
     /**
@@ -228,7 +228,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'lloc' => 4,
             'ncloc' => 11,
         ];
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -252,7 +252,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'lloc' => 1,
             'ncloc' => 15,
         ];
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -277,7 +277,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'lloc' => 4,
             'ncloc' => 11,
         ];
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -301,7 +301,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'lloc' => 0,
             'ncloc' => 10,
         ];
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -323,7 +323,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             'ncloc' => 117,
         ];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -342,7 +342,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($method);
-        $this->assertEquals(0, $metrics['eloc']);
+        static::assertEquals(0, $metrics['eloc']);
     }
 
     /**
@@ -361,7 +361,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($method);
-        $this->assertEquals(0, $metrics['eloc']);
+        static::assertEquals(0, $metrics['eloc']);
     }
 
     /**
@@ -378,7 +378,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(8, $metrics['ncloc']);
+        static::assertEquals(8, $metrics['ncloc']);
     }
 
     /**
@@ -395,7 +395,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(0, $metrics['eloc']);
+        static::assertEquals(0, $metrics['eloc']);
     }
 
     /**
@@ -407,7 +407,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($this->parseTestCaseSource(__METHOD__));
 
         $metrics = $analyzer->getProjectMetrics();
-        $this->assertEquals(1, $metrics['lloc']);
+        static::assertEquals(1, $metrics['lloc']);
     }
 
     /**
@@ -433,7 +433,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($file);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**
@@ -458,7 +458,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($class);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**
@@ -483,7 +483,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($interface);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**
@@ -510,7 +510,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($method);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**
@@ -535,7 +535,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($function);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**
@@ -557,7 +557,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getProjectMetrics();
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**
@@ -565,7 +565,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculatesExpectedLLocForReturnStatement(): void
     {
-        $this->assertEquals(1, $this->calculateFunctionMetric('lloc'));
+        static::assertEquals(1, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -573,7 +573,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculatesExpectedLLocForIfAndElseIfStatement(): void
     {
-        $this->assertEquals(5, $this->calculateFunctionMetric('lloc'));
+        static::assertEquals(5, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -581,7 +581,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculatesExpectedLLocForForStatement(): void
     {
-        $this->assertEquals(3, $this->calculateFunctionMetric('lloc'));
+        static::assertEquals(3, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -589,7 +589,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculatesExpectedLLocForSwitchStatement(): void
     {
-        $this->assertEquals(7, $this->calculateFunctionMetric('lloc'));
+        static::assertEquals(7, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -597,7 +597,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculatesExpectedLLocForTryCatchStatement(): void
     {
-        $this->assertEquals(8, $this->calculateFunctionMetric('lloc'));
+        static::assertEquals(8, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -605,7 +605,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculatesExpectedLLocForForeachStatement(): void
     {
-        $this->assertEquals(2, $this->calculateFunctionMetric('lloc'));
+        static::assertEquals(2, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -613,7 +613,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculatesExpectedLLocForWhileStatement(): void
     {
-        $this->assertEquals(2, $this->calculateFunctionMetric('lloc'));
+        static::assertEquals(2, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -621,7 +621,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testCalculatesExpectedLLocForDoWhileStatement(): void
     {
-        $this->assertEquals(3, $this->calculateFunctionMetric('lloc'));
+        static::assertEquals(3, $this->calculateFunctionMetric('lloc'));
     }
 
     /**
@@ -636,7 +636,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->visitCompilationUnit($compilationUnit);
 
         $metrics = $analyzer->getNodeMetrics($compilationUnit);
-        $this->assertEquals([], $metrics);
+        static::assertEquals([], $metrics);
     }
 
     /**
@@ -657,6 +657,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($function);
+
         return $metrics[$name];
     }
 

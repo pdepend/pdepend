@@ -38,7 +38,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 namespace PDepend\Source\ASTVisitor;
 
@@ -85,6 +85,7 @@ interface ASTVisitor
      * @since  0.9.12
      */
     public function __call($method, $args);
+
     /**
      * Adds a new listener to this node visitor.
      */

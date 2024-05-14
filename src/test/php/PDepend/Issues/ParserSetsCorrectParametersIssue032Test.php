@@ -61,7 +61,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
     public function testParserSetsExpectedNumberOfFunctionParameters(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertCount(3, $parameters);
+        static::assertCount(3, $parameters);
     }
 
     /**
@@ -73,7 +73,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = $parameter->getPosition();
         }
-        $this->assertEquals([0, 1, 2], $actual);
+        static::assertEquals([0, 1, 2], $actual);
     }
 
     /**
@@ -85,7 +85,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = $parameter->getName();
         }
-        $this->assertEquals(['$foo', '$bar', '$foobar'], $actual);
+        static::assertEquals(['$foo', '$bar', '$foobar'], $actual);
     }
 
     /**
@@ -97,7 +97,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = is_null($parameter->getClass());
         }
-        $this->assertEquals([true, false, true], $actual);
+        static::assertEquals([true, false, true], $actual);
     }
 
     /**
@@ -106,7 +106,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
     public function testParserSetsExpectedNumberOfMethodParameters(): void
     {
         $parameters = $this->getParametersOfFirstMethod();
-        $this->assertCount(3, $parameters);
+        static::assertCount(3, $parameters);
     }
 
     /**
@@ -118,7 +118,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstMethod() as $parameter) {
             $actual[] = $parameter->getPosition();
         }
-        $this->assertEquals([0, 1, 2], $actual);
+        static::assertEquals([0, 1, 2], $actual);
     }
 
     /**
@@ -130,7 +130,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstMethod() as $parameter) {
             $actual[] = $parameter->getName();
         }
-        $this->assertEquals(['$foo', '$bar', '$foobar'], $actual);
+        static::assertEquals(['$foo', '$bar', '$foobar'], $actual);
     }
 
     /**
@@ -142,7 +142,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstMethod() as $parameter) {
             $actual[] = is_null($parameter->getClass());
         }
-        $this->assertEquals([true, false, true], $actual);
+        static::assertEquals([true, false, true], $actual);
     }
 
     /**
@@ -153,6 +153,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
     private function getParametersOfFirstMethod()
     {
         $namespaces = $this->parseTestCase();
+
         return $namespaces->current()
             ->getClasses()
             ->current()

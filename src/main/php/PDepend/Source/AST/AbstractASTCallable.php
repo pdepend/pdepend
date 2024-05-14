@@ -94,9 +94,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      */
     protected $nodes = [];
 
-    /**
-     * @var ASTParameter[]
-     */
+    /** @var ASTParameter[] */
     private array $parameters;
 
     /**
@@ -146,6 +144,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     public function setCache(CacheDriver $cache)
     {
         $this->cache = $cache;
+
         return $this;
     }
 
@@ -153,8 +152,6 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Adds a parsed child node to this node.
      *
      * @param AbstractASTNode $node A parsed child node instance.
-     *
-     * @access private
      *
      * @since  0.9.6
      */
@@ -259,6 +256,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         if (($node = $this->getReturnType()) instanceof ASTClassOrInterfaceReference) {
             return $node->getType();
         }
+
         return null;
     }
 
@@ -277,6 +275,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         if (($node = $this->getReturnType()) instanceof ASTClassOrInterfaceReference) {
             return true;
         }
+
         return false;
     }
 
@@ -290,6 +289,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
                 return $node;
             }
         }
+
         return null;
     }
 
@@ -341,6 +341,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         if (!isset($this->parameters)) {
             $this->initParameters();
         }
+
         return $this->parameters ?? null;
     }
 
@@ -395,6 +396,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
                 $staticVariables[substr($image, 1)] = $value;
             }
         }
+
         return $staticVariables;
     }
 

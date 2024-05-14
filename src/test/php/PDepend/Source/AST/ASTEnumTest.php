@@ -51,8 +51,8 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTForInit} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTForInit
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -71,10 +71,10 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         /** @var ASTEnum $enum */
         $deserializedEnum = unserialize($serializedClass);
 
-        $this->assertInstanceOf(ASTEnum::class, $deserializedEnum);
-        $this->assertSame('test', $deserializedEnum->getName());
-        $this->assertInstanceOf(ASTScalarType::class, $deserializedEnum->getType());
-        $this->assertSame('string', $deserializedEnum->getType()->getImage());
+        static::assertInstanceOf(ASTEnum::class, $deserializedEnum);
+        static::assertSame('test', $deserializedEnum->getName());
+        static::assertInstanceOf(ASTScalarType::class, $deserializedEnum->getType());
+        static::assertSame('string', $deserializedEnum->getType()->getImage());
     }
 
     public function testVisit(): void
@@ -82,7 +82,7 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         $enum = $this->createItem();
         $strategy = new PropertyStrategy();
         $enum->accept($strategy);
-        $this->assertSame([], $strategy->getCollectedNodes());
+        static::assertSame([], $strategy->getCollectedNodes());
 
         $strategy = new MethodStrategy();
         $enum->accept($strategy);
@@ -99,7 +99,7 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
             $nodes[$class][] = $node['name'];
         }
 
-        $this->assertSame([
+        static::assertSame([
             ASTEnum::class => ['test'],
             ASTClass::class => ['test'],
             ASTNamespace::class => ['+global', '+global'],

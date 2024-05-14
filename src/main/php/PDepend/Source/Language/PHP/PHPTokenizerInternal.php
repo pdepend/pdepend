@@ -222,7 +222,7 @@ if (!defined('T_ENUM')) {
     define('T_ENUM', 42372);
 }
 
-// @codeCoverageIgnoreEnd
+/** @codeCoverageIgnoreEnd */
 
 /**
  * This tokenizer uses the internal {@link token_get_all()} function as token stream
@@ -233,10 +233,9 @@ if (!defined('T_ENUM')) {
  */
 class PHPTokenizerInternal implements FullTokenizer
 {
-    /**
-     * Internally used transition token.
-     */
+    /** Internally used transition token. */
     private const T_ELLIPSIS = 23006;
+
     /**
      * Mapping between php internal tokens and php depend tokens.
      *
@@ -440,9 +439,7 @@ class PHPTokenizerInternal implements FullTokenizer
         'readonly' => Tokens::T_READONLY,
     ];
 
-    /**
-     * @var array<int, array<int, string>>
-     */
+    /** @var array<int, array<int, string>> */
     protected static $substituteTokens = [
         T_DOLLAR_OPEN_CURLY_BRACES => ['$', '{'],
     ];
@@ -565,9 +562,7 @@ class PHPTokenizerInternal implements FullTokenizer
         ],
     ];
 
-    /**
-     * @var array<int, array<int, array<string, int|string>>>
-     */
+    /** @var array<int, array<int, array<string, int|string>>> */
     protected static $reductionMap = [
         Tokens::T_CONCAT => [
             Tokens::T_CONCAT => [
@@ -602,19 +597,13 @@ class PHPTokenizerInternal implements FullTokenizer
         ],
     ];
 
-    /**
-     * The source file instance.
-     */
+    /** The source file instance. */
     private ASTCompilationUnit $sourceFile;
 
-    /**
-     * Count of all tokens.
-     */
+    /** Count of all tokens. */
     private int $count = 0;
 
-    /**
-     * Internal stream pointer index.
-     */
+    /** Internal stream pointer index. */
     private int $index = 0;
 
     /**
@@ -762,7 +751,7 @@ class PHPTokenizerInternal implements FullTokenizer
             }
 
             $type = $this->tokens[$index]->type;
-        } while ($type == Tokens::T_COMMENT || $type == Tokens::T_DOC_COMMENT);
+        } while ($type === Tokens::T_COMMENT || $type === Tokens::T_DOC_COMMENT);
 
         return $type;
     }
@@ -780,6 +769,7 @@ class PHPTokenizerInternal implements FullTokenizer
         if ($this->index > 1 && $this->tokens) {
             return $this->tokens[$this->index - 2]->type;
         }
+
         return self::T_BOF;
     }
 

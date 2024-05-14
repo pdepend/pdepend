@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTComment} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTComment
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testSingleLineCommentHasExpectedStartLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(4, $comment->getStartLine());
+        static::assertEquals(4, $comment->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testSingleLineCommentHasExpectedStartColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(5, $comment->getStartColumn());
+        static::assertEquals(5, $comment->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testSingleLineCommentHasExpectedEndLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(4, $comment->getEndLine());
+        static::assertEquals(4, $comment->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testSingleLineCommentHasExpectedEndColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(48, $comment->getEndColumn());
+        static::assertEquals(48, $comment->getEndColumn());
     }
 
     /**
@@ -96,7 +96,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testMultiLineCommentHasExpectedStartLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(4, $comment->getStartLine());
+        static::assertEquals(4, $comment->getStartLine());
     }
 
     /**
@@ -105,7 +105,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testMultiLineCommentHasExpectedStartColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(5, $comment->getStartColumn());
+        static::assertEquals(5, $comment->getStartColumn());
     }
 
     /**
@@ -114,7 +114,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testMultiLineCommentHasExpectedEndLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(8, $comment->getEndLine());
+        static::assertEquals(8, $comment->getEndLine());
     }
 
     /**
@@ -123,7 +123,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testMultiLineCommentHasExpectedEndColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(7, $comment->getEndColumn());
+        static::assertEquals(7, $comment->getEndColumn());
     }
 
     /**
@@ -132,7 +132,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testDocCommentHasExpectedStartLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(4, $comment->getStartLine());
+        static::assertEquals(4, $comment->getStartLine());
     }
 
     /**
@@ -141,7 +141,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testDocCommentHasExpectedStartColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(5, $comment->getStartColumn());
+        static::assertEquals(5, $comment->getStartColumn());
     }
 
     /**
@@ -150,7 +150,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testDocCommentHasExpectedEndLine(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(8, $comment->getEndLine());
+        static::assertEquals(8, $comment->getEndLine());
     }
 
     /**
@@ -159,7 +159,7 @@ class ASTCommentTest extends ASTNodeTestCase
     public function testDocCommentHasExpectedEndColumn(): void
     {
         $comment = $this->getFirstCommentInClass(__METHOD__);
-        $this->assertEquals(7, $comment->getEndColumn());
+        static::assertEquals(7, $comment->getEndColumn());
     }
 
     /**

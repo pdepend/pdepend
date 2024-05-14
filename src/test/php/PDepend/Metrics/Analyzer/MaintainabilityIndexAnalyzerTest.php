@@ -83,7 +83,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
         $analyzer = $this->createAnalyzer();
         $astArtifact = $this->getMockBuilder(ASTArtifact::class)
             ->getMock();
-        $this->assertEquals([], $analyzer->getNodeMetrics($astArtifact));
+        static::assertEquals([], $analyzer->getNodeMetrics($astArtifact));
     }
 
     /**
@@ -110,7 +110,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -141,7 +141,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
         ksort($expected);
         ksort($actual);
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -164,7 +164,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($functions[0]);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**
@@ -188,7 +188,7 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
 
         $metrics1 = $analyzer->getNodeMetrics($methods[0]);
 
-        $this->assertEquals($metrics0, $metrics1);
+        static::assertEquals($metrics0, $metrics1);
     }
 
     /**

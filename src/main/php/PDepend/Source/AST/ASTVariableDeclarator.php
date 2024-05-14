@@ -54,9 +54,7 @@ namespace PDepend\Source\AST;
  */
 class ASTVariableDeclarator extends ASTExpression
 {
-    /**
-     * The initial declaration value for this node or <b>null</b>.
-     */
+    /** The initial declaration value for this node or <b>null</b>. */
     protected ?ASTValue $value = null;
 
     /**

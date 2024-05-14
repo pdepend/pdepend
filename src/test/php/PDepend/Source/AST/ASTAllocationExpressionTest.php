@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTAllocationExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTAllocationExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -62,7 +62,7 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
         $args = $expr->findChildrenOfType(ASTArguments::class);
 
-        $this->assertCount(0, $args);
+        static::assertCount(0, $args);
     }
 
     /**
@@ -73,7 +73,7 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
         $args = $expr->findChildrenOfType(ASTArguments::class);
 
-        $this->assertCount(1, $args);
+        static::assertCount(1, $args);
     }
 
     /**
@@ -85,7 +85,7 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
         $arg = $expr->getFirstChildOfType(ASTArguments::class);
 
-        $this->assertEquals($expr, $arg->getParent());
+        static::assertEquals($expr, $arg->getParent());
     }
 
     /**
@@ -94,7 +94,7 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
     public function testAllocationExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -103,7 +103,7 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
     public function testAllocationExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
-        $this->assertEquals(5, $expr->getStartColumn());
+        static::assertEquals(5, $expr->getStartColumn());
     }
 
     /**
@@ -112,7 +112,7 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
     public function testAllocationExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
-        $this->assertEquals(8, $expr->getEndLine());
+        static::assertEquals(8, $expr->getEndLine());
     }
 
     /**
@@ -121,7 +121,7 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
     public function testAllocationExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstAllocationExpressionInFunction(__METHOD__);
-        $this->assertEquals(13, $expr->getEndColumn());
+        static::assertEquals(13, $expr->getEndColumn());
     }
 
     /**

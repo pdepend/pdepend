@@ -72,6 +72,7 @@ class PHPParserGeneric extends PHPParserVersion83
             case Tokens::T_INTERFACE:
                 return true;
         }
+
         return false;
     }
 
@@ -104,6 +105,7 @@ class PHPParserGeneric extends PHPParserVersion83
             case Tokens::T_TRAIT_C:
                 return true;
         }
+
         return false;
     }
 

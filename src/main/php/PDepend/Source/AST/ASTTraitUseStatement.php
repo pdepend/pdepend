@@ -52,9 +52,7 @@ namespace PDepend\Source\AST;
  */
 class ASTTraitUseStatement extends ASTStatement
 {
-    /**
-     * @var ASTMethod[]|null
-     */
+    /** @var ASTMethod[]|null */
     private $allMethods;
 
     /**
@@ -165,6 +163,7 @@ class ASTTraitUseStatement extends ASTStatement
                 $newMethod->setModifiers($modifier);
 
                 $newNames[] = $newMethod;
+
                 continue;
             }
 
@@ -185,6 +184,7 @@ class ASTTraitUseStatement extends ASTStatement
         if (count($newNames) > 0) {
             return $newNames;
         }
+
         return [$method];
     }
 

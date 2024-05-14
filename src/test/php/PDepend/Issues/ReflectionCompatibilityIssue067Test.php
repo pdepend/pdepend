@@ -53,8 +53,8 @@ use PDepend\Source\Parser\TokenStreamEndException;
 /**
  * Test case for the Reflection API compatibility ticket #67.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTParameter
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -68,7 +68,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserSetsFunctionParameterByReference(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isPassedByReference());
+        static::assertTrue($parameters[0]->isPassedByReference());
     }
 
     /**
@@ -83,7 +83,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         foreach ($parameters as $parameter) {
             $actual[$parameter->getName()] = $parameter->isPassedByReference();
         }
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -94,7 +94,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $parameters = $this->getParametersOfFirstFunction();
         $parameter = $parameters[0];
 
-        $this->assertTrue($parameter->isPassedByReference());
+        static::assertTrue($parameter->isPassedByReference());
     }
 
     /**
@@ -107,7 +107,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[$parameter->getName()] = $parameter->isPassedByReference();
         }
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -117,7 +117,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserSetsParameterArrayFlag(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isArray());
+        static::assertTrue($parameters[0]->isArray());
     }
 
     /**
@@ -127,7 +127,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserDoesNotSetParameterArrayFlagForScalar(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertFalse($parameters[0]->isArray());
+        static::assertFalse($parameters[0]->isArray());
     }
 
     /**
@@ -137,7 +137,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserDoesNotSetParameterArrayFlagForType(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertFalse($parameters[0]->isArray());
+        static::assertFalse($parameters[0]->isArray());
     }
 
     /**
@@ -146,7 +146,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterWithoutDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertFalse($parameters[0]->isDefaultValueAvailable());
+        static::assertFalse($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -156,7 +156,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueNull(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertNull($parameters[0]->getDefaultValue());
+        static::assertNull($parameters[0]->getDefaultValue());
     }
 
     /**
@@ -165,7 +165,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsTrueForNullDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -175,7 +175,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueBooleanFalse(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertFalse($parameters[0]->getDefaultValue());
+        static::assertFalse($parameters[0]->getDefaultValue());
     }
 
     /**
@@ -184,7 +184,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsTrueForFalseDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -194,7 +194,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueBooleanTrue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->getDefaultValue());
+        static::assertTrue($parameters[0]->getDefaultValue());
     }
 
     /**
@@ -203,7 +203,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsTrueForTrueDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -213,7 +213,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueFloat(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertEqualsWithDelta(42.23, $parameters[0]->getDefaultValue(), 0.001);
+        static::assertEqualsWithDelta(42.23, $parameters[0]->getDefaultValue(), 0.001);
     }
 
     /**
@@ -222,7 +222,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsTrueForFloatDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -232,7 +232,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueInteger(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertSame(42, $parameters[0]->getDefaultValue());
+        static::assertSame(42, $parameters[0]->getDefaultValue());
     }
 
     /**
@@ -241,7 +241,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsTrueForIntegerDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -251,7 +251,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueString(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertSame('foo bar 42', $parameters[0]->getDefaultValue());
+        static::assertSame('foo bar 42', $parameters[0]->getDefaultValue());
     }
 
     /**
@@ -260,7 +260,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsTrueForStringDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -270,7 +270,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueArray(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertSame([], $parameters[0]->getDefaultValue());
+        static::assertSame([], $parameters[0]->getDefaultValue());
     }
 
     /**
@@ -279,7 +279,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsTrueForArrayDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -289,7 +289,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesDefaultParameterValueNestedArray(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertSame([], $parameters[0]->getDefaultValue());
+        static::assertSame([], $parameters[0]->getDefaultValue());
     }
 
     /**
@@ -298,7 +298,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsTrueForNestedArrayDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -308,7 +308,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueConstant(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertSame('E_MY_ERROR', $parameters[0]->getDefaultValue()->getImage());
+        static::assertSame('E_MY_ERROR', $parameters[0]->getDefaultValue()->getImage());
     }
 
     /**
@@ -317,7 +317,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsTrueForConstantDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -327,15 +327,16 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueClassConstant(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
-        $this->assertSame('\\PDepend\\Code', $parameters[0]->getDefaultValue()->getImage());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertSame('\\PDepend\\Code', $parameters[0]->getDefaultValue()->getImage());
+
         /** @var ASTNode $node */
         $node = $parameters[0]->getDefaultValue()->getChild(0);
         $image = implode(
             $node->getImage(),
             array_map(static fn(ASTNode $node) => $node->getImage(), $node->getChildren()),
         );
-        $this->assertSame('\\PDepend\\Code::CONSTANT', $image);
+        static::assertSame('\\PDepend\\Code::CONSTANT', $image);
     }
 
     /**
@@ -344,7 +345,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsTrueForClassConstantDefaultValue(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertTrue($parameters[0]->isDefaultValueAvailable());
+        static::assertTrue($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -354,7 +355,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterWithoutDefaultValueReturnsNull(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertNull($parameters[0]->getDefaultValue());
+        static::assertNull($parameters[0]->getDefaultValue());
     }
 
     /**
@@ -363,7 +364,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testIsDefaultValueAvailableReturnsFalseWhenNoDefaultValueExists(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        $this->assertFalse($parameters[0]->isDefaultValueAvailable());
+        static::assertFalse($parameters[0]->isDefaultValueAvailable());
     }
 
     /**
@@ -377,7 +378,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[] = $parameter->isOptional();
         }
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -391,7 +392,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[$parameter->getPosition()] = $parameter->isOptional();
         }
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -405,7 +406,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[$parameter->getPosition()] = $parameter->isOptional();
         }
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -419,7 +420,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         foreach ($this->getParametersOfFirstFunction() as $parameter) {
             $actual[$parameter->getPosition()] = $parameter->isOptional();
         }
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -428,7 +429,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserSetsUserDefinedFlagForClass(): void
     {
         $actual = $this->getFirstClass()->isUserDefined();
-        $this->assertTrue($actual);
+        static::assertTrue($actual);
     }
 
     /**
@@ -440,7 +441,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $class = $this->getFirstClass();
         $actual = $class->getParentClass()->isUserDefined();
 
-        $this->assertFalse($actual);
+        static::assertFalse($actual);
     }
 
     /**
@@ -448,7 +449,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
      */
     public function testParserSetsUserDefinedFlagForInterface(): void
     {
-        $this->assertTrue($this->getFirstInterface()->isUserDefined());
+        static::assertTrue($this->getFirstInterface()->isUserDefined());
     }
 
     /**
@@ -458,7 +459,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserNotSetsUserDefinedFlagForUnknownInterface(): void
     {
         $interface = $this->getFirstInterface()->getInterfaces()->current();
-        $this->assertFalse($interface->isUserDefined());
+        static::assertFalse($interface->isUserDefined());
     }
 
     /**
@@ -467,7 +468,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
      */
     public function testParserFlagsFunctionWithReturnsReference(): void
     {
-        $this->assertTrue($this->getFirstFunction()->returnsReference());
+        static::assertTrue($this->getFirstFunction()->returnsReference());
     }
 
     /**
@@ -476,7 +477,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
      */
     public function testParserDoesNotFlagFunctionWithReturnsReference(): void
     {
-        $this->assertFalse($this->getFirstFunction()->returnsReference());
+        static::assertFalse($this->getFirstFunction()->returnsReference());
     }
 
     /**
@@ -486,7 +487,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserFlagsClassMethodWithReturnsReferences(): void
     {
         $actual = $this->getFirstMethod()->returnsReference();
-        $this->assertTrue($actual);
+        static::assertTrue($actual);
     }
 
     /**
@@ -496,7 +497,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserDoesNotFlagClassMethodWithReturnsReferences(): void
     {
         $actual = $this->getFirstMethod()->returnsReference();
-        $this->assertFalse($actual);
+        static::assertFalse($actual);
     }
 
     /**
@@ -508,7 +509,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $actual = $this->getFirstFunction()->getStaticVariables();
         $expected = ['x' => null];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -520,7 +521,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $actual = $this->getFirstFunction()->getStaticVariables();
         $expected = ['x' => 42];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -532,7 +533,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $actual = $this->getFirstFunction()->getStaticVariables();
         $expected = ['x' => true, 'y' => null, 'z' => []];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -544,7 +545,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $actual = $this->getFirstFunction()->getStaticVariables();
         $expected = ['x' => false, 'y' => null, 'z' => 3.14];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -555,7 +556,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $actual = $this->getFirstMethod()->getStaticVariables();
         $expected = [];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -566,7 +567,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
         $actual = $this->getFirstMethod()->getStaticVariables();
         $expected = ['x' => true, 'y' => false];
 
-        $this->assertEquals($expected, $actual);
+        static::assertEquals($expected, $actual);
     }
 
     /**
@@ -603,6 +604,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     private function getFirstInterface()
     {
         $namespaces = $this->parseTestCase();
+
         return $namespaces->current()
             ->getInterfaces()
             ->current();
@@ -616,6 +618,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     private function getFirstClass()
     {
         $namespaces = $this->parseTestCase();
+
         return $namespaces->current()
             ->getClasses()
             ->current();
@@ -629,6 +632,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     private function getFirstMethod()
     {
         $namespaces = $this->parseTestCase();
+
         return $namespaces->current()
             ->getClasses()
             ->current()
@@ -644,6 +648,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     private function getFirstFunction()
     {
         $namespaces = $this->parseTestCase();
+
         return $namespaces->current()
             ->getFunctions()
             ->current();

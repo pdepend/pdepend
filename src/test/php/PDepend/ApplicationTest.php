@@ -65,21 +65,21 @@ class ApplicationTest extends AbstractTestCase
         $application = $this->createTestApplication();
         $runner = $application->getRunner();
 
-        $this->assertInstanceOf(Runner::class, $runner);
+        static::assertInstanceOf(Runner::class, $runner);
     }
 
     public function testAnalyzerFactory(): void
     {
         $application = $this->createTestApplication();
 
-        $this->assertInstanceOf(AnalyzerFactory::class, $application->getAnalyzerFactory());
+        static::assertInstanceOf(AnalyzerFactory::class, $application->getAnalyzerFactory());
     }
 
     public function testReportGeneratorFactory(): void
     {
         $application = $this->createTestApplication();
 
-        $this->assertInstanceOf(ReportGeneratorFactory::class, $application->getReportGeneratorFactory());
+        static::assertInstanceOf(ReportGeneratorFactory::class, $application->getReportGeneratorFactory());
     }
 
     public function testBinCanReadInput(): void
@@ -92,9 +92,9 @@ class ApplicationTest extends AbstractTestCase
         unlink('foo.xml');
         chdir($cwd);
 
-        $this->assertMatchesRegularExpression('/Parsing source files:\s*\.\s+1/', $output);
-        $this->assertMatchesRegularExpression('/<class\s.*name="FooBar"/', $xml);
-        $this->assertMatchesRegularExpression('/<file\s.*name="php:\/\/stdin"/', $xml);
+        static::assertMatchesRegularExpression('/Parsing source files:\s*\.\s+1/', $output);
+        static::assertMatchesRegularExpression('/<class\s.*name="FooBar"/', $xml);
+        static::assertMatchesRegularExpression('/<file\s.*name="php:\/\/stdin"/', $xml);
     }
 
     public function testSetConfigurationFileAndThrowInvalidArgumentException(): void
@@ -113,7 +113,7 @@ class ApplicationTest extends AbstractTestCase
         $application = $this->createTestApplication();
         $config = $application->getConfiguration();
 
-        $this->assertInstanceOf(Configuration::class, $config);
+        static::assertInstanceOf(Configuration::class, $config);
     }
 
     public function testGetEngine(): void
@@ -121,7 +121,7 @@ class ApplicationTest extends AbstractTestCase
         $application = $this->createTestApplication();
         $config = $application->getEngine();
 
-        $this->assertInstanceOf(Engine::class, $config);
+        static::assertInstanceOf(Engine::class, $config);
     }
 
     public function testGetAvailableLoggerOptions(): void
@@ -129,7 +129,7 @@ class ApplicationTest extends AbstractTestCase
         $application = $this->createTestApplication();
         $options = $application->getAvailableLoggerOptions();
 
-        $this->assertSame([
+        static::assertSame([
             'message' => 'Dummy logger for tests',
             'value' => 'file',
         ], $options['--dummy-logger']);
@@ -140,7 +140,7 @@ class ApplicationTest extends AbstractTestCase
         $application = $this->createTestApplication();
         $options = $application->getAvailableAnalyzerOptions();
 
-        $this->assertSame([
+        static::assertSame([
             'message' => "Clover style CodeCoverage report, as produced by PHPUnit's --coverage-clover option.",
             'value' => 'file',
         ], $options['--' . CrapIndexAnalyzer::REPORT_OPTION]);

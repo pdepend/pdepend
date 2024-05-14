@@ -66,7 +66,7 @@ class ShortArraySyntaxInitializerBug00000104Test extends AbstractRegressionTestC
      */
     public function testPropertyDefaultValue(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
     }
 
     /**
@@ -74,6 +74,6 @@ class ShortArraySyntaxInitializerBug00000104Test extends AbstractRegressionTestC
      */
     public function testParameterDefaultValue(): void
     {
-        $this->assertNotNull($this->parseCodeResourceForTest());
+        static::assertNotNull($this->parseCodeResourceForTest());
     }
 }

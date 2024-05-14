@@ -45,9 +45,9 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTPreIncrementExpression} class.
  *
+ * @covers \PDepend\Source\AST\ASTPreIncrementExpression
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\Language\PHP\PHPBuilder
- * @covers \PDepend\Source\AST\ASTPreIncrementExpression
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -149,7 +149,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
             ->current()
             ->findChildrenOfType(ASTPreIncrementExpression::class);
 
-        $this->assertCount(2, $exprs);
+        static::assertCount(2, $exprs);
     }
 
     /**
@@ -158,7 +158,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
     public function testPreIncrementExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -167,7 +167,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
     public function testPreIncrementExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(13, $expr->getStartColumn());
+        static::assertEquals(13, $expr->getStartColumn());
     }
 
     /**
@@ -176,7 +176,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
     public function testPreIncrementExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getEndLine());
+        static::assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -185,7 +185,7 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
     public function testPreIncrementExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstPreIncrementExpressionInFunction(__METHOD__);
-        $this->assertEquals(20, $expr->getEndColumn());
+        static::assertEquals(20, $expr->getEndColumn());
     }
 
     /**

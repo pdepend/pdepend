@@ -57,14 +57,10 @@ use SplFileInfo;
  */
 class FileCacheDirectory
 {
-    /**
-     * The current cache version/hash number.
-     */
+    /** The current cache version/hash number. */
     private const VERSION = CacheDriver::VERSION;
 
-    /**
-     * The cache root directory.
-     */
+    /** The cache root directory. */
     protected string $cacheDir;
 
     /**
@@ -108,6 +104,7 @@ class FileCacheDirectory
         if (false === file_exists($path)) {
             @mkdir($path, 0o775, true);
         }
+
         return $path;
     }
 
@@ -122,6 +119,7 @@ class FileCacheDirectory
         if (false === file_exists($cacheDir)) {
             @mkdir($cacheDir, 0o775, true);
         }
+
         return $cacheDir;
     }
 
@@ -146,6 +144,7 @@ class FileCacheDirectory
         if (file_exists($this->getVersionFile())) {
             return trim(file_get_contents($this->getVersionFile()) ?: '');
         }
+
         return null;
     }
 
@@ -215,7 +214,8 @@ class FileCacheDirectory
         $path = $file->getRealPath();
         if ($file->isDot()) {
             return;
-        } elseif ($file->isFile()) {
+        }
+        if ($file->isFile()) {
             @unlink($path);
         } else {
             $this->flushDirectory($path);

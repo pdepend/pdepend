@@ -67,6 +67,6 @@ class ParserBug001Test extends AbstractRegressionTestCase
             ->getMethods()
             ->current();
 
-        $this->assertEquals(1, $method->getDependencies()->count());
+        static::assertEquals(1, $method->getDependencies()->count());
     }
 }

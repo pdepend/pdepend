@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTConditionalExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTConditionalExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -60,7 +60,7 @@ class ASTConditionalExpressionTest extends ASTNodeTestCase
     public function testConditionalExpressionHasExpectedStartLine(): void
     {
         $expr = $this->getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -69,7 +69,7 @@ class ASTConditionalExpressionTest extends ASTNodeTestCase
     public function testConditionalExpressionHasExpectedStartColumn(): void
     {
         $expr = $this->getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertEquals(18, $expr->getStartColumn());
+        static::assertEquals(18, $expr->getStartColumn());
     }
 
     /**
@@ -78,7 +78,7 @@ class ASTConditionalExpressionTest extends ASTNodeTestCase
     public function testConditionalExpressionHasExpectedEndLine(): void
     {
         $expr = $this->getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertEquals(4, $expr->getEndLine());
+        static::assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -87,7 +87,7 @@ class ASTConditionalExpressionTest extends ASTNodeTestCase
     public function testConditionalExpressionHasExpectedEndColumn(): void
     {
         $expr = $this->getFirstConditionalExpressionInFunction(__METHOD__);
-        $this->assertEquals(26, $expr->getEndColumn());
+        static::assertEquals(26, $expr->getEndColumn());
     }
 
     /**

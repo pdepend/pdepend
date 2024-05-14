@@ -79,14 +79,10 @@ namespace PDepend\Source\AST;
  */
 class ASTConstantDeclarator extends AbstractASTNode
 {
-    /**
-     * The type of the constant if explicitly specified, <b>null</b> else.
-     */
+    /** The type of the constant if explicitly specified, <b>null</b> else. */
     protected ?ASTType $type = null;
 
-    /**
-     * The initial declaration value for this node or <b>null</b>.
-     */
+    /** The initial declaration value for this node or <b>null</b>. */
     protected ?ASTValue $value = null;
 
     /**

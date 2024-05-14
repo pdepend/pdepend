@@ -55,14 +55,10 @@ use PDepend\Source\AST\ASTArtifact;
  */
 final class CollectionArtifactFilter implements ArtifactFilter
 {
-    /**
-     * Singleton instance of this filter.
-     */
+    /** Singleton instance of this filter. */
     private static CollectionArtifactFilter $instance;
 
-    /**
-     * An optional configured filter instance.
-     */
+    /** An optional configured filter instance. */
     private ?ArtifactFilter $filter = null;
 
     /**
@@ -73,8 +69,9 @@ final class CollectionArtifactFilter implements ArtifactFilter
     public static function getInstance()
     {
         if (!isset(self::$instance)) {
-            self::$instance = new CollectionArtifactFilter();
+            self::$instance = new self();
         }
+
         return self::$instance;
     }
 
@@ -100,6 +97,7 @@ final class CollectionArtifactFilter implements ArtifactFilter
         if ($this->filter === null) {
             return true;
         }
+
         return $this->filter->accept($node);
     }
 }

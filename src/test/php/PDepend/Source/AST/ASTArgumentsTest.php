@@ -45,8 +45,8 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArguments} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTArguments
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
@@ -80,7 +80,7 @@ class ASTArgumentsTest extends ASTNodeTestCase
     public function testArgumentsHasExpectedStartLine(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
-        $this->assertEquals(5, $arguments->getStartLine());
+        static::assertEquals(5, $arguments->getStartLine());
     }
 
     /**
@@ -89,7 +89,7 @@ class ASTArgumentsTest extends ASTNodeTestCase
     public function testArgumentsHasExpectedStartColumn(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
-        $this->assertEquals(8, $arguments->getStartColumn());
+        static::assertEquals(8, $arguments->getStartColumn());
     }
 
     /**
@@ -98,7 +98,7 @@ class ASTArgumentsTest extends ASTNodeTestCase
     public function testArgumentsHasExpectedEndLine(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
-        $this->assertEquals(7, $arguments->getEndLine());
+        static::assertEquals(7, $arguments->getEndLine());
     }
 
     /**
@@ -107,7 +107,7 @@ class ASTArgumentsTest extends ASTNodeTestCase
     public function testArgumentsHasExpectedEndColumn(): void
     {
         $arguments = $this->getFirstArgumentsOfFunction();
-        $this->assertEquals(21, $arguments->getEndColumn());
+        static::assertEquals(21, $arguments->getEndColumn());
     }
 
     /**

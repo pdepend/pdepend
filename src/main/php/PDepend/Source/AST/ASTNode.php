@@ -153,7 +153,7 @@ interface ASTNode
     /**
      * Sets the parent node of this node.
      */
-    public function setParent(?ASTNode $node): void;
+    public function setParent(?self $node): void;
 
     /**
      * Traverses up the node tree and finds all parent nodes that are instances

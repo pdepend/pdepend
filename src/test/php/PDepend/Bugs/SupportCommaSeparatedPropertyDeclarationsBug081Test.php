@@ -66,7 +66,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
             ->current()
             ->getProperties();
 
-        $this->assertCount(2, $properties);
+        static::assertCount(2, $properties);
     }
 
     /**
@@ -88,7 +88,7 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
             ];
         }
 
-        $this->assertEquals(
+        static::assertEquals(
             [
                 ['private' => false, 'public' => true],
                 ['private' => false, 'public' => true],
@@ -115,6 +115,6 @@ class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegres
             $actual[] = $property->isStatic();
         }
 
-        $this->assertEquals([true, true], $actual);
+        static::assertEquals([true, true], $actual);
     }
 }

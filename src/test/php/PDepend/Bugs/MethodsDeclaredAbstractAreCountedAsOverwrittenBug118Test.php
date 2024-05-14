@@ -66,7 +66,7 @@ class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractR
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(1, $metrics['noom']);
+        static::assertEquals(1, $metrics['noom']);
     }
 
     /**
@@ -81,6 +81,6 @@ class MethodsDeclaredAbstractAreCountedAsOverwrittenBug118Test extends AbstractR
         $analyzer->analyze($namespaces);
 
         $metrics = $analyzer->getNodeMetrics($class);
-        $this->assertEquals(1, $metrics['noom']);
+        static::assertEquals(1, $metrics['noom']);
     }
 }

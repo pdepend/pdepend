@@ -62,6 +62,7 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
                 return $node;
             }
         }
+
         return null;
     }
 

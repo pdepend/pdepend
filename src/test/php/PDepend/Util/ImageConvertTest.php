@@ -65,7 +65,7 @@ class ImageConvertTest extends AbstractTestCase
         $output = $this->createRunResourceURI('pdepend.out') . '.svg';
 
         ImageConvert::convert($input, $output);
-        $this->assertFileEquals($input, $output);
+        static::assertFileEquals($input, $output);
     }
 
     /**
@@ -79,7 +79,7 @@ class ImageConvertTest extends AbstractTestCase
         $output = $this->createRunResourceURI('pdepend.out') . '.png';
 
         ImageConvert::convert($input, $output);
-        $this->assertFileExists($output);
+        static::assertFileExists($output);
     }
 
     /**
@@ -88,14 +88,14 @@ class ImageConvertTest extends AbstractTestCase
     public function testConvertAppendDefaultFileExtensionAsFallback(): void
     {
         if (extension_loaded('imagick') === false) {
-            $this->markTestSkipped('No pecl/imagick extension.');
+            static::markTestSkipped('No pecl/imagick extension.');
         }
 
         $input = $this->createInputSvg();
         $output = $this->createRunResourceURI('pdepend');
 
         ImageConvert::convert($input, $output);
-        $this->assertFileExists("{$output}.svg");
+        static::assertFileExists("{$output}.svg");
     }
 
     /**
@@ -104,7 +104,7 @@ class ImageConvertTest extends AbstractTestCase
     public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions(): void
     {
         $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg');
-        $this->assertEquals(25, substr_count($svg, 'font-family:Arial'));
+        static::assertEquals(25, substr_count($svg, 'font-family:Arial'));
     }
 
     /**
@@ -126,7 +126,7 @@ class ImageConvertTest extends AbstractTestCase
         ImageConvert::convert($input, $output);
 
         $svg = file_get_contents($output);
-        $this->assertEquals(25, substr_count($svg, 'font-family:Verdana'));
+        static::assertEquals(25, substr_count($svg, 'font-family:Verdana'));
     }
 
     /**
@@ -135,7 +135,7 @@ class ImageConvertTest extends AbstractTestCase
     public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions(): void
     {
         $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg');
-        $this->assertEquals(25, substr_count($svg, 'font-size:11px'));
+        static::assertEquals(25, substr_count($svg, 'font-size:11px'));
     }
 
     /**
@@ -157,7 +157,7 @@ class ImageConvertTest extends AbstractTestCase
         ImageConvert::convert($input, $output);
 
         $svg = file_get_contents($output);
-        $this->assertEquals(25, substr_count($svg, 'font-size:14px'));
+        static::assertEquals(25, substr_count($svg, 'font-size:14px'));
     }
 
     /**

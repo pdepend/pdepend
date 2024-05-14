@@ -46,9 +46,9 @@ namespace PDepend\Source\AST;
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStringIndexExpression} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @covers \PDepend\Source\AST\ASTIndexExpression
  * @covers \PDepend\Source\AST\ASTStringIndexExpression
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.12
@@ -66,7 +66,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     public function testStringIndexExpression()
     {
         $expr = $this->getFirstStringIndexExpressionInFunction();
-        $this->assertInstanceOf(ASTStringIndexExpression::class, $expr);
+        static::assertInstanceOf(ASTStringIndexExpression::class, $expr);
 
         return $expr;
     }
@@ -80,7 +80,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
      */
     public function testStringIndexExpressionHasExpectedStartLine($expr): void
     {
-        $this->assertEquals(4, $expr->getStartLine());
+        static::assertEquals(4, $expr->getStartLine());
     }
 
     /**
@@ -92,7 +92,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
      */
     public function testStringIndexExpressionHasExpectedStartColumn($expr): void
     {
-        $this->assertEquals(23, $expr->getStartColumn());
+        static::assertEquals(23, $expr->getStartColumn());
     }
 
     /**
@@ -104,7 +104,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
      */
     public function testStringIndexExpressionHasExpectedEndLine($expr): void
     {
-        $this->assertEquals(4, $expr->getEndLine());
+        static::assertEquals(4, $expr->getEndLine());
     }
 
     /**
@@ -116,7 +116,7 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
      */
     public function testStringIndexExpressionHasExpectedEndColumn($expr): void
     {
-        $this->assertEquals(28, $expr->getEndColumn());
+        static::assertEquals(28, $expr->getEndColumn());
     }
 
     /**

@@ -50,9 +50,7 @@ namespace PDepend\Util;
  */
 final class Log
 {
-    /**
-     * Log debug messages.
-     */
+    /** Log debug messages. */
     public const DEBUG = 1;
 
     /**

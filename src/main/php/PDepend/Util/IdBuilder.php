@@ -59,9 +59,7 @@ use PDepend\Source\AST\ASTMethod;
  */
 class IdBuilder
 {
-    /**
-     * @var array<string, array<string, int>>
-     */
+    /** @var array<string, array<string, int>> */
     private $offsetInFile = [];
 
     /**
@@ -156,6 +154,7 @@ class IdBuilder
         } else {
             $this->offsetInFile[$file][$string] = 0;
         }
+
         return sprintf(
             '%02s',
             base_convert((string) $this->offsetInFile[$file][$string], 10, 36),
