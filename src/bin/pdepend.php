@@ -51,17 +51,6 @@ if (str_starts_with('@php_bin@', '@php_bin')) {
 require_once __DIR__ . '/../../vendor/autoload.php';
 
 // Allow as much memory as possible by default
-if (extension_loaded('suhosin') && is_numeric(ini_get('suhosin.memory_limit'))) {
-    $limit = ini_get('memory_limit');
-    if (preg_match('(^(\d+)([BKMGT]))', $limit, $match)) {
-        $shift = ['B' => 0, 'K' => 10, 'M' => 20, 'G' => 30, 'T' => 40];
-        $limit = ($match[1] * (1 << $shift[$match[2]]));
-    }
-    if (ini_get('suhosin.memory_limit') > $limit && $limit > -1) {
-        ini_set('memory_limit', ini_get('suhosin.memory_limit'));
-    }
-} else {
-    ini_set('memory_limit', -1);
-}
+ini_set('memory_limit', -1);
 
 exit(Command::main());
