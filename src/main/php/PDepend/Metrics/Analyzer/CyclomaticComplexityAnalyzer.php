@@ -229,8 +229,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     private function updateProjectMetrics($nodeId): void
     {
-        $this->ccn += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_1];
-        $this->ccn2 += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_2];
+        $this->ccn += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_1] ?? 0;
+        $this->ccn2 += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_2] ?? 0;
     }
 
     /**
