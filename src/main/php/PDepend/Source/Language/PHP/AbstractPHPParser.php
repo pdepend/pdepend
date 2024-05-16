@@ -3750,7 +3750,7 @@ abstract class AbstractPHPParser
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @return ASTNode
+     * @return ?ASTNode
      * @throws UnexpectedTokenException
      * @since 2.2
      */
@@ -6787,9 +6787,8 @@ abstract class AbstractPHPParser
     {
         if ($this->isTypeHint($tokenType)) {
             $typeHint = $this->parseOptionalTypeHint();
-            if ($typeHint) {
-                return $this->parseFormalParameterAndTypeHint($typeHint);
-            }
+
+            return $this->parseFormalParameterAndTypeHint($typeHint);
         }
 
         switch ($tokenType) {
@@ -6856,7 +6855,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a type hint that is valid in the supported PHP version after the next token.
      *
-     * @return ASTType|null
+     * @return ASTType
      * @since 2.9.2
      */
     private function parseOptionalTypeHint()
@@ -7291,7 +7290,7 @@ abstract class AbstractPHPParser
     /**
      * Parses a type hint that is valid in the supported PHP version.
      *
-     * @return ASTType|null
+     * @return ASTType
      *
      * @since 1.0.0
      */
@@ -8082,7 +8081,7 @@ abstract class AbstractPHPParser
      * Parses the value of a php constant. By default this can be only static
      * values that were allowed in the oldest supported PHP version.
      *
-     * @return ASTValue
+     * @return ?ASTValue
      * @since 2.2.x
      */
     protected function parseConstantDeclaratorValue()
@@ -8272,7 +8271,7 @@ abstract class AbstractPHPParser
      * This method will parse a default value after a parameter/static variable/constant
      * declaration.
      *
-     * @return ASTValue
+     * @return ?ASTValue
      * @since 2.11.0
      */
     protected function parseVariableDefaultValue()
@@ -8291,7 +8290,7 @@ abstract class AbstractPHPParser
      * This method will parse a static value or a static array as it is
      * used as default value for a parameter or property declaration.
      *
-     * @return ASTValue
+     * @return ?ASTValue
      * @since 0.9.6
      */
     protected function parseStaticValueOrStaticArray()
@@ -8315,7 +8314,7 @@ abstract class AbstractPHPParser
      * This method will parse a static default value as it is used for a
      * parameter, property or constant declaration.
      *
-     * @return ASTValue
+     * @return ?ASTValue
      * @since 0.9.5
      */
     protected function parseStaticValue()
@@ -8759,7 +8758,7 @@ abstract class AbstractPHPParser
      * Returns the name of a declared names. When the parsed code is not namespaced
      * this method will return the name from the @package annotation.
      *
-     * @return string
+     * @return ?string
      * @since 0.9.8
      */
     private function getNamespaceOrPackageName()

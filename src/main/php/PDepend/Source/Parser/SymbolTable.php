@@ -61,9 +61,9 @@ class SymbolTable
     /**
      * The currently active scope.
      *
-     * @var array<string, string>|null
+     * @var array<string, string>
      */
-    private $scope = [];
+    private array $scope = [];
 
     /**
      * This method creates a new scope.
@@ -71,7 +71,9 @@ class SymbolTable
     public function createScope(): void
     {
         // Add copy of last scope as new scope
-        $this->scopeStack[] = $this->scope;
+        if (isset($this->scope) && $this->scope) {
+            $this->scopeStack[] = $this->scope;
+        }
     }
 
     /**
@@ -84,11 +86,14 @@ class SymbolTable
         $this->ensureActiveScopeExists();
 
         // Destroy current active scope
-        $this->scope = null;
+        unset($this->scope);
 
         // Try to restore previously active scope
         if (count($this->scopeStack) > 0) {
-            $this->scope = array_pop($this->scopeStack);
+            $scope = array_pop($this->scopeStack);
+            if ($scope) {
+                $this->scope = $scope;
+            }
         }
     }
 
@@ -141,7 +146,7 @@ class SymbolTable
      */
     private function ensureActiveScopeExists(): void
     {
-        if (null === $this->scope) {
+        if (!isset($this->scope)) {
             throw new NoActiveScopeException();
         }
     }

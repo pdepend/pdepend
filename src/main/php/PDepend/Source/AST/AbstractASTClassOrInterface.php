@@ -70,7 +70,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * An <b>array</b> with all constants defined in this class or interface.
      *
-     * @var array<string, mixed>
+     * @var ?array<string, mixed>
      */
     protected ?array $constants = null;
 
@@ -215,11 +215,13 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      */
     public function getConstants()
     {
-        if ($this->constants === null) {
-            $this->initConstants();
+        $constants = $this->constants;
+        if ($constants === null) {
+            $constants = $this->initConstants();
+            $this->constants = $constants;
         }
 
-        return $this->constants;
+        return $constants;
     }
 
     /**
@@ -240,6 +242,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * This method returns <b>true</b> when a constant for <b>$name</b> exists,
      * otherwise it returns <b>false</b>.
      *
+     * @phpstan-assert-if-true !null $this->constants
      * @param string $name Name of the searched constant.
      * @return bool
      * @since  0.9.6
@@ -247,7 +250,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     public function hasConstant($name)
     {
         if ($this->constants === null) {
-            $this->initConstants();
+            $this->constants = $this->initConstants();
         }
 
         return array_key_exists($name, $this->constants);
@@ -362,19 +365,22 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * This method initializes the constants defined in this class or interface.
      *
+     * @return array<string, mixed>
      * @since  0.9.6
      */
-    private function initConstants(): void
+    private function initConstants(): array
     {
-        $this->constants = [];
+        $constants = [];
         $declarators = $this->getConstantDeclarators();
 
         foreach ($declarators as $declarator) {
             $image = $declarator->getImage();
             $value = $declarator->getValue()?->getValue();
 
-            $this->constants[$image] = $value;
+            $constants[$image] = $value;
         }
+
+        return $constants;
     }
 
     /**

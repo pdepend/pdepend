@@ -155,7 +155,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Sets the source file for this item.
      */
-    public function setCompilationUnit(ASTCompilationUnit $compilationUnit): void
+    public function setCompilationUnit(?ASTCompilationUnit $compilationUnit): void
     {
         if ($this->compilationUnit?->getFileName() === null) {
             $this->compilationUnit = $compilationUnit;

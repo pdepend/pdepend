@@ -343,7 +343,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
             $this->initParameters();
         }
 
-        return $this->parameters ?? null;
+        return $this->parameters;
     }
 
     /**

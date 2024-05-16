@@ -2321,7 +2321,7 @@ class PHPBuilder implements Builder
      */
     public function restoreFunction(ASTFunction $function): void
     {
-        $this->buildNamespace($function->getNamespaceName())
+        $this->buildNamespace($function->getNamespaceName() ?? self::DEFAULT_NAMESPACE)
             ->addFunction($function);
     }
 
@@ -2424,7 +2424,7 @@ class PHPBuilder implements Builder
      * This method will persist a trait instance for later reuse.
      *
      * @param string $traitName
-     * @param string $namespaceName
+     * @param ?string $namespaceName
      * @since 1.0.0
      */
     protected function storeTrait($traitName, $namespaceName, ASTTrait $trait): void
@@ -2435,7 +2435,7 @@ class PHPBuilder implements Builder
         }
         $this->traits[$traitName][$namespaceName][$trait->getId()] = $trait;
 
-        $namespace = $this->buildNamespace($namespaceName);
+        $namespace = $this->buildNamespace($namespaceName ?? self::DEFAULT_NAMESPACE);
         $namespace->addType($trait);
     }
 
@@ -2443,7 +2443,7 @@ class PHPBuilder implements Builder
      * This method will persist a class instance for later reuse.
      *
      * @param string $className
-     * @param string $namespaceName
+     * @param ?string $namespaceName
      * @since 0.9.5
      */
     protected function storeClass($className, $namespaceName, ASTClass $class): void
@@ -2454,7 +2454,7 @@ class PHPBuilder implements Builder
         }
         $this->classes[$className][$namespaceName][$class->getId()] = $class;
 
-        $namespace = $this->buildNamespace($namespaceName);
+        $namespace = $this->buildNamespace($namespaceName ?? self::DEFAULT_NAMESPACE);
         $namespace->addType($class);
     }
 
@@ -2462,7 +2462,7 @@ class PHPBuilder implements Builder
      * This method will persist a class instance for later reuse.
      *
      * @param string $enumName
-     * @param string $namespaceName
+     * @param ?string $namespaceName
      * @since 2.11.0
      */
     protected function storeEnum($enumName, $namespaceName, ASTEnum $enum): void
@@ -2473,7 +2473,7 @@ class PHPBuilder implements Builder
         }
         $this->classes[$enumName][$namespaceName][$enum->getId()] = $enum;
 
-        $namespace = $this->buildNamespace($namespaceName);
+        $namespace = $this->buildNamespace($namespaceName ?? self::DEFAULT_NAMESPACE);
         $namespace->addType($enum);
     }
 
@@ -2481,7 +2481,7 @@ class PHPBuilder implements Builder
      * This method will persist an interface instance for later reuse.
      *
      * @param string $interfaceName
-     * @param string $namespaceName
+     * @param ?string $namespaceName
      * @since 0.9.5
      */
     protected function storeInterface($interfaceName, $namespaceName, ASTInterface $interface): void
@@ -2493,7 +2493,7 @@ class PHPBuilder implements Builder
         $this->interfaces[$interfaceName][$namespaceName][$interface->getId()]
             = $interface;
 
-        $namespace = $this->buildNamespace($namespaceName);
+        $namespace = $this->buildNamespace($namespaceName ?? self::DEFAULT_NAMESPACE);
         $namespace->addType($interface);
     }
 

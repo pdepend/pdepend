@@ -215,7 +215,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             $filesXml = $dom->createElement('files');
             foreach ($this->fileSet as $file) {
                 $fileXml = $dom->createElement('file');
-                $fileXml->setAttribute('name', Utf8Util::ensureEncoding($file->getFileName()));
+                $fileName = $file->getFileName();
+                if ($fileName) {
+                    $fileXml->setAttribute('name', Utf8Util::ensureEncoding($fileName));
+                }
 
                 $this->writeNodeMetrics($fileXml, $file);
 
@@ -442,7 +445,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     protected function writeFileReference(DOMElement $xml, ?ASTCompilationUnit $compilationUnit = null): void
     {
-        if (in_array($compilationUnit, $this->fileSet, true) === false) {
+        if ($compilationUnit && in_array($compilationUnit, $this->fileSet, true) === false) {
             $this->fileSet[] = $compilationUnit;
         }
 
@@ -451,7 +454,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $fileXml = $xml->ownerDocument->createElement('file');
-        $fileXml->setAttribute('name', Utf8Util::ensureEncoding($compilationUnit->getFileName()));
+        $fileName = $compilationUnit?->getFileName();
+        if ($fileName) {
+            $fileXml->setAttribute('name', Utf8Util::ensureEncoding($fileName));
+        }
 
         $xml->appendChild($fileXml);
     }

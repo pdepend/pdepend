@@ -53,8 +53,8 @@ namespace PDepend\Source\AST;
  */
 class ASTTraitUseStatement extends ASTStatement
 {
-    /** @var ASTMethod[]|null */
-    private $allMethods;
+    /** @var ASTMethod[] */
+    private array $allMethods;
 
     /**
      * Returns an array with all aliased or directly imported methods.
@@ -63,7 +63,7 @@ class ASTTraitUseStatement extends ASTStatement
      */
     public function getAllMethods()
     {
-        if ($this->allMethods === null) {
+        if (!isset($this->allMethods)) {
             $this->allMethods = [];
 
             foreach ($this->nodes as $node) {
@@ -153,9 +153,9 @@ class ASTTraitUseStatement extends ASTStatement
                 $modifier |= $alias->getNewModifier();
             }
 
-            $newName = $method->getImage();
-            if ($alias->getNewName()) {
-                $newName = $alias->getNewName();
+            $newName = $alias->getNewName();
+            if (!$newName) {
+                $newName = $method->getImage();
             }
 
             if (0 === count($alias->getChildren())) {
