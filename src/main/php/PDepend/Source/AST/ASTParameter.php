@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PDepend.
  *
@@ -297,7 +298,8 @@ class ASTParameter extends AbstractASTArtifact
             return true;
         }
 
-        if (!($node instanceof ASTTypeArray)
+        if (
+            !($node instanceof ASTTypeArray)
             && !($node instanceof ASTScalarType)
             && $this->getClass() === null
         ) {

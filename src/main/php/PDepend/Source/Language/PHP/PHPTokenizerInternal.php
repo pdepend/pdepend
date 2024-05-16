@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PDepend.
  *
@@ -1077,9 +1078,11 @@ class PHPTokenizerInternal implements FullTokenizer
         $token = (array) current($tokens);
 
         // Skipp all non open tags
-        while ($token[0] !== T_OPEN_TAG_WITH_ECHO &&
+        while (
+            $token[0] !== T_OPEN_TAG_WITH_ECHO &&
                $token[0] !== T_OPEN_TAG &&
-               $token[0] !== false) {
+               $token[0] !== false
+        ) {
             $content .= ($token[1] ?? $token[0]);
 
             $token = (array) next($tokens);

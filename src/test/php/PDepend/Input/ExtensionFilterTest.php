@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PDepend.
  *
@@ -105,7 +106,8 @@ class ExtensionFilterTest extends AbstractTestCase
 
         $actual = [];
         foreach ($files as $file) {
-            if ($filter->accept($file, $file)
+            if (
+                $filter->accept($file, $file)
                 && $file->isFile()
                 && false === stripos($file->getPathname(), '.svn')
             ) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PDepend.
  *
@@ -537,7 +538,8 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $sum = '0';
         if ($node instanceof ASTConditionalExpression) {
             $sum = MathUtil::add($sum, $node->accept($this, '1'));
-        } elseif ($node instanceof ASTBooleanAndExpression
+        } elseif (
+            $node instanceof ASTBooleanAndExpression
             || $node instanceof ASTBooleanOrExpression
             || $node instanceof ASTLogicalAndExpression
             || $node instanceof ASTLogicalOrExpression
