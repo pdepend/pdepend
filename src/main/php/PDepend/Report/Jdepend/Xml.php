@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PDepend.
  *
@@ -346,7 +347,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             $type->accept($this);
         }
 
-        if ($this->concreteClasses->firstChild === null
+        if (
+            $this->concreteClasses->firstChild === null
             && $this->abstractClasses->firstChild === null
         ) {
             return;

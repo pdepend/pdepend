@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PDepend.
  *
@@ -182,7 +183,8 @@ class Command
 
                     return self::INPUT_ERROR;
                 }
-                if ($analyzerOptions[$option]['value'] === 'file'
+                if (
+                    $analyzerOptions[$option]['value'] === 'file'
                     && file_exists($value) === false
                 ) {
                     echo 'Specified file ' . $option . '=' . $value
