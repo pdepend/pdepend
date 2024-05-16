@@ -109,13 +109,15 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
             $depPkg = $dependency->getNamespace();
 
             $this->initNode($dependency);
-            $this->initNode($depPkg);
+            if ($depPkg) {
+                $this->initNode($depPkg);
+            }
 
             $this->nodes[$type->getId()]['in'][] = $dependency->getId();
             $this->nodes[$dependency->getId()]['out'][] = $type->getId();
 
             // No self references
-            if ($namespace !== $depPkg) {
+            if ($namespace && $depPkg && $namespace !== $depPkg) {
                 $this->nodes[$namespace->getId()]['in'][] = $depPkg->getId();
                 $this->nodes[$depPkg->getId()]['out'][] = $namespace->getId();
             }

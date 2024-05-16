@@ -333,7 +333,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     protected function writeFileReference(DOMElement $xml, ?ASTCompilationUnit $compilationUnit = null): void
     {
-        if (in_array($compilationUnit, $this->fileSet, true) === false) {
+        if ($compilationUnit && in_array($compilationUnit, $this->fileSet, true) === false) {
             $this->fileSet[] = $compilationUnit;
         }
 
@@ -342,7 +342,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         $fileXml = $xml->ownerDocument->createElement('file');
-        $fileXml->setAttribute('name', Utf8Util::ensureEncoding($compilationUnit->getFileName()));
+        $fileName = $compilationUnit?->getFileName();
+        if ($fileName) {
+            $fileXml->setAttribute('name', Utf8Util::ensureEncoding($fileName));
+        }
 
         $xml->appendChild($fileXml);
     }

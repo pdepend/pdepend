@@ -60,7 +60,7 @@ class ASTEnum extends AbstractASTClassOrInterface
      *   - or:     ASTScalarType('int')
      * null if basic enumeration: https://www.php.net/manual/en/language.enumerations.basics.php
      *
-     * @var ASTScalarType
+     * @var ?ASTScalarType
      */
     private $type;
 
@@ -207,7 +207,10 @@ class ASTEnum extends AbstractASTClassOrInterface
                 $from->setModifiers(State::IS_STATIC | State::IS_PUBLIC);
                 $parameters = new ASTFormalParameters();
                 $valueParameter = new ASTFormalParameter();
-                $valueParameter->addChild(clone $this->getType());
+                $type = $this->getType();
+                if ($type) {
+                    $valueParameter->addChild(clone $type);
+                }
                 $valueParameter->addChild(new ASTVariableDeclarator('$value'));
                 $parameters->addChild($valueParameter);
                 $from->addChild($parameters);
