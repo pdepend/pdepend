@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PDepend.
  *
@@ -360,7 +361,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         if (null === $coupledType) {
             return;
         }
-        if ($coupledType->isSubtypeOf($declaringType)
+        if (
+            $coupledType->isSubtypeOf($declaringType)
             || $declaringType->isSubtypeOf($coupledType)
         ) {
             return;
@@ -368,17 +370,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
 
         $this->initDependencyMap($coupledType);
 
-        $this->dependencyMap[
-            $declaringType->getId()
-        ]['ce'][
-            $coupledType->getId()
-        ] = true;
+        $this->dependencyMap[$declaringType->getId()]['ce'][$coupledType->getId()] = true;
 
-        $this->dependencyMap[
-            $coupledType->getId()
-        ]['ca'][
-            $declaringType->getId()
-        ] = true;
+        $this->dependencyMap[$coupledType->getId()]['ca'][$declaringType->getId()] = true;
     }
 
     /**

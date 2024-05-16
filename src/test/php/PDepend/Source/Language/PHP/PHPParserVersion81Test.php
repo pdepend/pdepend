@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PDepend.
  *
@@ -1156,30 +1157,32 @@ class PHPParserVersion81Test extends AbstractTestCase
             ];
         }, $children);
 
-        foreach ([
-            ['int', '$id'],
-            ['float', '$money'],
-            ['bool', '$active'],
-            ['string', '$name'],
-            ['array', '$list', 'PDepend\\Source\\AST\\ASTTypeArray'],
-            ['self', '$parent', 'PDepend\\Source\\AST\\ASTSelfReference'],
-            ['callable', '$event', 'PDepend\\Source\\AST\\ASTTypeCallable'],
-            ['\Closure', '$fqn', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
-            ['iterable', '$actions', 'PDepend\\Source\\AST\\ASTTypeIterable'],
-            ['object', '$bag', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
-            ['Role', '$role', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
-            ['?int', '$idN'],
-            ['?float', '$moneyN'],
-            ['?bool', '$activeN'],
-            ['?string', '$nameN'],
-            ['?array', '$listN', 'PDepend\\Source\\AST\\ASTTypeArray'],
-            ['?self', '$parentN', 'PDepend\\Source\\AST\\ASTSelfReference'],
-            ['?callable', '$eventN', 'PDepend\\Source\\AST\\ASTTypeCallable'],
-            ['?\Closure', '$fqnN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
-            ['?iterable', '$actionsN', 'PDepend\\Source\\AST\\ASTTypeIterable'],
-            ['?object', '$bagN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
-            ['?Role', '$roleN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
-        ] as $index => $expected) {
+        foreach (
+            [
+                ['int', '$id'],
+                ['float', '$money'],
+                ['bool', '$active'],
+                ['string', '$name'],
+                ['array', '$list', 'PDepend\\Source\\AST\\ASTTypeArray'],
+                ['self', '$parent', 'PDepend\\Source\\AST\\ASTSelfReference'],
+                ['callable', '$event', 'PDepend\\Source\\AST\\ASTTypeCallable'],
+                ['\Closure', '$fqn', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+                ['iterable', '$actions', 'PDepend\\Source\\AST\\ASTTypeIterable'],
+                ['object', '$bag', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+                ['Role', '$role', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+                ['?int', '$idN'],
+                ['?float', '$moneyN'],
+                ['?bool', '$activeN'],
+                ['?string', '$nameN'],
+                ['?array', '$listN', 'PDepend\\Source\\AST\\ASTTypeArray'],
+                ['?self', '$parentN', 'PDepend\\Source\\AST\\ASTSelfReference'],
+                ['?callable', '$eventN', 'PDepend\\Source\\AST\\ASTTypeCallable'],
+                ['?\Closure', '$fqnN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+                ['?iterable', '$actionsN', 'PDepend\\Source\\AST\\ASTTypeIterable'],
+                ['?object', '$bagN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+                ['?Role', '$roleN', 'PDepend\\Source\\AST\\ASTClassOrInterfaceReference'],
+            ] as $index => $expected
+        ) {
             [$expectedType, $expectedVariable] = $expected;
             $expectedTypeClass = $expected[2] ?? 'PDepend\\Source\\AST\\ASTScalarType';
             [$type, $variable] = $declarations[$index];
@@ -1490,9 +1493,11 @@ class PHPParserVersion81Test extends AbstractTestCase
             ];
         }, $children);
 
-        foreach ([
-            ['null|int|float', '$number', 'PDepend\\Source\\AST\\ASTUnionType'],
-        ] as $index => $expected) {
+        foreach (
+            [
+                ['null|int|float', '$number', 'PDepend\\Source\\AST\\ASTUnionType'],
+            ] as $index => $expected
+        ) {
             [$expectedType, $expectedVariable, $expectedTypeClass] = $expected;
             [$type, $variable] = $declarations[$index];
 

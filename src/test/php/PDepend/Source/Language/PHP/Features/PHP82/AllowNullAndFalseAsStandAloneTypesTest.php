@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of PDepend.
  *
@@ -73,10 +74,12 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
             ];
         }, $children);
 
-        foreach ([
-            ['null', '$nullish'],
-            ['false', '$falsy'],
-        ] as $index => $expected) {
+        foreach (
+            [
+                ['null', '$nullish'],
+                ['false', '$falsy'],
+            ] as $index => $expected
+        ) {
             [$expectedType, $expectedVariable] = $expected;
             $expectedTypeClass = $expected[2] ?? ASTScalarType::class;
             [$type, $variable] = $declarations[$index];
