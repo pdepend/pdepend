@@ -82,9 +82,9 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     /**
      * Returns the project metrics.
      *
-     * @return array
+     * @return array<string, int>
      */
-    public function getProjectMetrics()
+    public function getProjectMetrics(): array
     {
         return $this->projectMetrics;
     }
@@ -92,15 +92,11 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     /**
      * Returns the node metrics.
      *
-     * @return array
+     * @return array<string, int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        if (isset($this->nodeMetrics[$artifact->getImage()])) {
-            return $this->nodeMetrics[$artifact->getImage()];
-        }
-
-        return [];
+        return $this->nodeMetrics[$artifact->getImage()] ?? [];
     }
 
     /**

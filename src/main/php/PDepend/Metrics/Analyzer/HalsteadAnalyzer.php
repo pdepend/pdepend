@@ -118,7 +118,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      *
      * @return array<string, float>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
         $basis = $this->getNodeBasisMetrics($artifact);
         if ($basis) {
@@ -370,7 +370,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * @see http://www.verifysoft.com/en_halstead_metrics.html
      * @see http://www.grammatech.com/codesonar/workflow-features/halstead
      */
-    public function calculateHalsteadMeasures(array $basis)
+    public function calculateHalsteadMeasures(array $basis): array
     {
         $measures = [];
         $measures[self::M_HALSTEAD_LENGTH] = $basis['N1'] + $basis['N2'];

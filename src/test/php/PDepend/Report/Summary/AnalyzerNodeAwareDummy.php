@@ -111,15 +111,11 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
     /**
      * Returns an array with metrics for the requested node.
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        if (isset($this->nodeMetrics[$artifact->getId()])) {
-            return $this->nodeMetrics[$artifact->getId()];
-        }
-
-        return [];
+        return $this->nodeMetrics[$artifact->getId()] ?? [];
     }
 
     /**

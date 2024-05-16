@@ -232,10 +232,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Returns an array with all collected project metrics.
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      * @since  0.9.10
      */
-    private function getProjectMetrics()
+    private function getProjectMetrics(): array
     {
         $projectMetrics = [];
         foreach ($this->projectAwareAnalyzers as $analyzer) {

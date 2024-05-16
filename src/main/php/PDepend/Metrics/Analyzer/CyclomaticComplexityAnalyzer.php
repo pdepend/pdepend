@@ -141,13 +141,9 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      *
      * @return array<string, int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        if (isset($this->metrics[$artifact->getId()])) {
-            return $this->metrics[$artifact->getId()];
-        }
-
-        return [];
+        return $this->metrics[$artifact->getId()] ?? [];
     }
 
     /**
@@ -155,7 +151,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      *
      * @return array<string, int>
      */
-    public function getProjectMetrics()
+    public function getProjectMetrics(): array
     {
         return [
             self::M_CYCLOMATIC_COMPLEXITY_1 => $this->ccn,

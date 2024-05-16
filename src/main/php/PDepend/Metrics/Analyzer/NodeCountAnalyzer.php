@@ -125,16 +125,11 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      * )
      * </code>
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        $metrics = [];
-        if (isset($this->nodeMetrics[$artifact->getId()])) {
-            $metrics = $this->nodeMetrics[$artifact->getId()];
-        }
-
-        return $metrics;
+        return $this->nodeMetrics[$artifact->getId()] ?? [];
     }
 
     /**
@@ -150,9 +145,9 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      * )
      * </code>
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getProjectMetrics()
+    public function getProjectMetrics(): array
     {
         return [
             self::M_NUMBER_OF_PACKAGES => $this->nop,

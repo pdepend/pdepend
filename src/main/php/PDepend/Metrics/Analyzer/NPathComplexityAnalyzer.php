@@ -110,14 +110,13 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      *
      * @return array<string, array<string, int>>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        $metric = [];
         if (isset($this->metrics[$artifact->getId()])) {
-            $metric = [self::M_NPATH_COMPLEXITY => $this->metrics[$artifact->getId()]];
+            return [self::M_NPATH_COMPLEXITY => $this->metrics[$artifact->getId()]];
         }
 
-        return $metric;
+        return [];
     }
 
     /**

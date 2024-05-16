@@ -64,7 +64,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     /**
      * Collected node metrics
      *
-     * @var array<string, mixed>
+     * @var array<string, array<string, int>>
      */
     protected array $metrics;
 
@@ -73,17 +73,15 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      *
      * @var array<string, array<string, int>>
      */
-    private $metricsCached = [];
+    private array $metricsCached = [];
 
     /**
      * Injected cache driver.
-     *
-     * @var CacheDriver
      */
-    private $cache;
+    private CacheDriver $cache;
 
     /**
-     * Setter method for the system wide used cache.
+     * Setter method for the system-wide used cache.
      */
     public function setCache(CacheDriver $cache): void
     {
@@ -91,11 +89,9 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     }
 
     /**
-     * Getter method for the system wide used cache.
-     *
-     * @return CacheDriver $cache
+     * Getter method for the system-wide used cache.
      */
-    public function getCache()
+    public function getCache(): CacheDriver
     {
         return $this->cache;
     }

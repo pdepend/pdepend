@@ -64,7 +64,7 @@ interface AnalyzerProjectAware extends Analyzer
      * )
      * </code>
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getProjectMetrics();
+    public function getProjectMetrics(): array;
 }

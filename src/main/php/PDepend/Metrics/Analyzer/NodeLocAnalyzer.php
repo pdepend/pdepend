@@ -145,14 +145,9 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      *
      * @return array<string, int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        $metrics = [];
-        if (isset($this->metrics[$artifact->getId()])) {
-            $metrics = $this->metrics[$artifact->getId()];
-        }
-
-        return $metrics;
+        return $this->metrics[$artifact->getId()] ?? [];
     }
 
     /**
@@ -168,7 +163,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      *
      * @return array<string, int>
      */
-    public function getProjectMetrics()
+    public function getProjectMetrics(): array
     {
         return $this->projectMetrics;
     }

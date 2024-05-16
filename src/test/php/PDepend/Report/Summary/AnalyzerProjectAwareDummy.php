@@ -110,9 +110,9 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
     /**
      * Returns the project metrics.
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getProjectMetrics()
+    public function getProjectMetrics(): array
     {
         return $this->projectMetrics;
     }
