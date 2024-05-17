@@ -231,6 +231,9 @@ class ASTParameterTest extends AbstractTestCase
 
         $formalParameter = $this->getMockBuilder(ASTFormalParameter::class)
             ->getMock();
+        $formalParameter->expects(static::any())
+            ->method('getFirstChildOfType')
+            ->will(static::returnValue(new ASTVariableDeclarator('test')));
         $parameter = new ASTParameter($formalParameter);
         $parameter->accept($visitor);
     }

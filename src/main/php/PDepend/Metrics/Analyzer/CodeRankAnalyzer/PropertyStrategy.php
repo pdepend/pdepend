@@ -98,7 +98,7 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
             $this->nodes[$depClass->getId()]['out'][] = $class->getId();
         }
 
-        if ($depNamespace !== $namespace) {
+        if ($depNamespace && $namespace && $depNamespace !== $namespace) {
             $this->initNode($namespace);
             $this->initNode($depNamespace);
 

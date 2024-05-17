@@ -6,7 +6,7 @@ parameters:
         - src/main/php/PDepend/DbusUI/ResultPrinter.php
     universalObjectCratesClasses:
         - PDepend\Util\Configuration
-    level: 7
+    level: 8
     exceptions:
         reportUncheckedExceptionDeadCatch: true
         implicitThrows: false

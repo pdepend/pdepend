@@ -458,8 +458,8 @@ abstract class AbstractPHPParser
      * Parses a scalar type hint or a callable type hint.
      *
      * @param string $image
-     *
-     * @return ASTType|false
+     * @return ASTType
+     * @throws ParserException
      */
     protected function parseScalarOrCallableTypeHint($image)
     {
@@ -479,7 +479,7 @@ abstract class AbstractPHPParser
                 return $this->builder->buildAstTypeIterable();
         }
 
-        return false;
+        throw new ParserException('Unsupported typehint');
     }
 
     private function consumeQuestionMark(): void
@@ -650,10 +650,10 @@ abstract class AbstractPHPParser
             assert($token instanceof Token);
             $this->tokenStack->add($token);
 
-            return $this->builder->buildAstNamedArgument(
-                $constant->getImage(),
-                $this->parseOptionalExpression()
-            );
+            $expression = $this->parseOptionalExpression();
+            if ($expression) {
+                return $this->builder->buildAstNamedArgument($constant->getImage(), $expression);
+            }
         }
 
         return $constant;
@@ -666,13 +666,15 @@ abstract class AbstractPHPParser
     {
         if ($this->tokenizer->peekNext() === Tokens::T_COLON) {
             $token = $this->tokenizer->currentToken();
-            $image = $token->image;
+            if ($token) {
+                $image = $token->image;
 
-            // Variable RegExp from https://www.php.net/manual/en/language.variables.basics.php
-            if (preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $image)) {
-                $this->consumeToken($token->type);
+                // Variable RegExp from https://www.php.net/manual/en/language.variables.basics.php
+                if (preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $image)) {
+                    $this->consumeToken($token->type);
 
-                return $this->builder->buildAstConstant($image);
+                    return $this->builder->buildAstConstant($image);
+                }
             }
         }
 
@@ -734,20 +736,29 @@ abstract class AbstractPHPParser
      */
     public function parse(): void
     {
-        $this->compilationUnit = $this->tokenizer->getSourceFile();
-        $this->compilationUnit
+        $compilationUnit = $this->tokenizer->getSourceFile();
+        if (!$compilationUnit) {
+            return;
+        }
+        $this->compilationUnit = $compilationUnit;
+
+        $compilationUnit
             ->setCache($this->cache)
-            ->setId($this->idBuilder->forFile($this->compilationUnit));
+            ->setId($this->idBuilder->forFile($compilationUnit));
 
-        $hash = $this->compilationUnit->getFileName() === 'php://stdin'
-            ? md5($this->compilationUnit->getSource())
-            : md5_file($this->compilationUnit->getFileName());
+        $filename = $compilationUnit->getFileName();
+        $hash = ($filename === 'php://stdin' || !$filename)
+            ? md5((string) $compilationUnit->getSource())
+            : md5_file($filename);
 
-        if ($hash && $this->cache->restore($this->compilationUnit->getId(), $hash)) {
+        $id = $compilationUnit->getId();
+        if ($hash && $id && $this->cache->restore($id, $hash)) {
             return;
         }
 
-        $this->cache->remove($this->compilationUnit->getId());
+        if ($id) {
+            $this->cache->remove($id);
+        }
 
         $this->setUpEnvironment();
 
@@ -811,11 +822,10 @@ abstract class AbstractPHPParser
         }
 
         $this->compilationUnit->setTokens($this->tokenStack->pop());
-        $this->cache->store(
-            $this->compilationUnit->getId(),
-            $this->compilationUnit,
-            $hash ?: null,
-        );
+        $id = $this->compilationUnit->getId();
+        if ($id) {
+            $this->cache->store($id, $this->compilationUnit, $hash ?: null);
+        }
 
         $this->tearDownEnvironment();
     }
@@ -1767,7 +1777,7 @@ abstract class AbstractPHPParser
             $namespaceName = $this->globalPackageName;
         }
 
-        $namespace = $this->builder->buildNamespace($namespaceName);
+        $namespace = $this->builder->buildNamespace((string) $namespaceName);
         $namespace->setPackageAnnotation(null === $this->namespaceName);
         $namespace->addFunction($function);
 
@@ -1799,7 +1809,7 @@ abstract class AbstractPHPParser
         $method->setComment($this->docComment);
         $method->setCompilationUnit($this->compilationUnit);
 
-        $this->classOrInterface->addMethod($method);
+        $this->classOrInterface?->addMethod($method);
 
         $this->parseCallableDeclaration($method);
         $this->prepareCallable($method);
@@ -2078,7 +2088,7 @@ abstract class AbstractPHPParser
         if (count($reference) < 2) {
             throw new InvalidStateException(
                 $this->requireNextToken()->startLine,
-                $this->compilationUnit->getFileName(),
+                $this->compilationUnit->getFileName() ?? 'unknown',
                 'Expecting full qualified trait method name.',
             );
         }
@@ -2412,10 +2422,13 @@ abstract class AbstractPHPParser
 
         if ($this->tokenizer->peek() === Tokens::T_PARENTHESIS_OPEN) {
             $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
-            $expr->addChild($this->parseOptionalExpression());
+            $child = $this->parseOptionalExpression();
+            if ($child) {
+                $expr->addChild($child);
+            }
             $this->consumeToken(Tokens::T_PARENTHESIS_CLOSE);
-        } else {
-            $expr->addChild($this->parseOptionalExpression());
+        } elseif ($child = $this->parseOptionalExpression()) {
+            $expr->addChild($child);
         }
 
         return $this->setNodePositionsAndReturn($expr);
@@ -2454,7 +2467,9 @@ abstract class AbstractPHPParser
     {
         $expression = end($expressions);
         if ($expression && $this->isReadWriteVariable($expression)) {
-            return $this->parsePostIncrementExpression(array_pop($expressions));
+            array_pop($expressions);
+
+            return $this->parsePostIncrementExpression($expression);
         }
 
         return $this->parsePreIncrementExpression();
@@ -2516,7 +2531,9 @@ abstract class AbstractPHPParser
     {
         $expression = end($expressions);
         if ($expression && $this->isReadWriteVariable($expression)) {
-            return $this->parsePostDecrementExpression(array_pop($expressions));
+            array_pop($expressions);
+
+            return $this->parsePostDecrementExpression($expression);
         }
 
         return $this->parsePreDecrementExpression();
@@ -3375,7 +3392,7 @@ abstract class AbstractPHPParser
 
             throw new InvalidStateException(
                 $token->startLine,
-                $this->compilationUnit->getFileName(),
+                $this->compilationUnit->getFileName() ?? 'unknown',
                 'Mandatory expression expected.',
             );
         }
@@ -3603,7 +3620,10 @@ abstract class AbstractPHPParser
                 case Tokens::T_FUNC_C:
                 case Tokens::T_CLASS_C:
                 case Tokens::T_METHOD_C:
-                    $expressions[] = $this->parseConstant();
+                    $expression = $this->parseConstant();
+                    if ($expression) {
+                        $expressions[] = $expression;
+                    }
 
                     break;
 
@@ -3631,9 +3651,10 @@ abstract class AbstractPHPParser
                 case Tokens::T_MINUS_EQUAL:
                 case Tokens::T_CONCAT_EQUAL:
                 case Tokens::T_COALESCE_EQUAL:
-                    $expressions[] = $this->parseAssignmentExpression(
-                        array_pop($expressions),
-                    );
+                    $expression = array_pop($expressions);
+                    if ($expression) {
+                        $expressions[] = $this->parseAssignmentExpression($expression);
+                    }
 
                     break;
 
@@ -3715,7 +3736,10 @@ abstract class AbstractPHPParser
                     break;
 
                 default:
-                    $expressions[] = $this->parseOptionalExpressionForVersion();
+                    $expression = $this->parseOptionalExpressionForVersion();
+                    if ($expression) {
+                        $expressions[] = $expression;
+                    }
 
                     break;
             }
@@ -4615,7 +4639,9 @@ abstract class AbstractPHPParser
             $this->consumeComments();
             $value = $this->parseStaticValue();
 
-            $stmt->addValue($name, $value);
+            if ($value) {
+                $stmt->addValue($name, $value);
+            }
 
             $this->consumeComments();
             if ($this->tokenizer->peek() === Tokens::T_COMMA) {
@@ -6150,7 +6176,7 @@ abstract class AbstractPHPParser
         if (!preg_match('(^b[01]+$)i', $token1->image)) {
             throw new UnexpectedTokenException(
                 $token1,
-                $this->tokenizer->getSourceFile()
+                $this->tokenizer->getSourceFile() ?? 'unknown'
             );
         }
 
@@ -7092,7 +7118,8 @@ abstract class AbstractPHPParser
     /**
      * Parses a type hint that is valid in the supported PHP version.
      *
-     * @return ?ASTType
+     * @return ASTType
+     * @throws ParserException
      * @since 1.0.0
      */
     protected function parseBasicTypeHint()
@@ -7117,7 +7144,7 @@ abstract class AbstractPHPParser
                 $name = $this->parseQualifiedName();
 
                 return $this->isScalarOrCallableTypeHint($name)
-                    ? ($this->parseScalarOrCallableTypeHint($name) ?: null)
+                    ? $this->parseScalarOrCallableTypeHint($name)
                     : $this->builder->buildAstClassOrInterfaceReference($name);
 
             case Tokens::T_CLASS:
@@ -7126,12 +7153,12 @@ abstract class AbstractPHPParser
                 );
 
             default:
-                return null;
+                throw new ParserException('Unsupported typehint');
         }
     }
 
     /**
-     * @return ?ASTType
+     * @return ASTType
      */
     protected function parseSingleTypeHint()
     {
@@ -7291,7 +7318,7 @@ abstract class AbstractPHPParser
      * Parses a type hint that is valid in the supported PHP version.
      *
      * @return ASTType
-     *
+     * @throws ParserException
      * @since 1.0.0
      */
     protected function parseTypeHint()
@@ -8248,6 +8275,7 @@ abstract class AbstractPHPParser
      * </code>
      *
      * @return ASTVariableDeclarator
+     * @throws MissingValueException
      * @since 0.9.6
      */
     protected function parseVariableDeclarator()
@@ -8261,7 +8289,11 @@ abstract class AbstractPHPParser
 
         if ($this->tokenizer->peek() === Tokens::T_EQUAL) {
             $this->consumeToken(Tokens::T_EQUAL);
-            $declarator->setValue($this->parseVariableDefaultValue());
+            $value = $this->parseVariableDefaultValue();
+            if (!$value) {
+                throw new MissingValueException($this->tokenizer);
+            }
+            $declarator->setValue($value);
         }
 
         return $this->setNodePositionsAndReturn($declarator);
@@ -8620,9 +8652,10 @@ abstract class AbstractPHPParser
                 case Tokens::T_MINUS_EQUAL:
                 case Tokens::T_CONCAT_EQUAL:
                 case Tokens::T_COALESCE_EQUAL:
-                    $expressions[] = $this->parseAssignmentExpression(
-                        array_pop($expressions)
-                    );
+                    $expression = array_pop($expressions);
+                    if ($expression) {
+                        $expressions[] = $this->parseAssignmentExpression($expression);
+                    }
 
                     break;
 
@@ -8633,7 +8666,10 @@ abstract class AbstractPHPParser
                 case Tokens::T_FUNC_C:
                 case Tokens::T_CLASS_C:
                 case Tokens::T_METHOD_C:
-                    $expressions[] = $this->parseConstant();
+                    $expression = $this->parseConstant();
+                    if ($expression) {
+                        $expressions[] = $expression;
+                    }
 
                     break;
 
@@ -8778,7 +8814,7 @@ abstract class AbstractPHPParser
      */
     private function getNamespaceOrPackage()
     {
-        $namespace = $this->builder->buildNamespace($this->getNamespaceOrPackageName());
+        $namespace = $this->builder->buildNamespace((string) $this->getNamespaceOrPackageName());
         $namespace->setPackageAnnotation(null === $this->namespaceName);
 
         return $namespace;
@@ -8928,6 +8964,10 @@ abstract class AbstractPHPParser
             return null;
         }
 
+        if (!$this->docComment) {
+            return null;
+        }
+
         $reference = $this->parseFieldDeclarationClassOrInterfaceReference();
 
         if ($reference !== null) {
@@ -8938,9 +8978,10 @@ abstract class AbstractPHPParser
 
         foreach ($annotations as $annotation) {
             if (Type::isPrimitiveType($annotation) === true) {
-                return $this->builder->buildAstScalarType(
-                    Type::getPrimitiveType($annotation),
-                );
+                $type = Type::getPrimitiveType($annotation);
+                if ($type) {
+                    return $this->builder->buildAstScalarType($type);
+                }
             }
 
             if (Type::isArrayType($annotation) === true) {
@@ -8960,6 +9001,10 @@ abstract class AbstractPHPParser
      */
     private function parseFieldDeclarationClassOrInterfaceReference()
     {
+        if (!$this->docComment) {
+            return null;
+        }
+
         $annotations = $this->parseVarAnnotation($this->docComment);
 
         foreach ($annotations as $annotation) {
@@ -8996,7 +9041,10 @@ abstract class AbstractPHPParser
             if ($this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
                 $this->consumeToken(Tokens::T_DOUBLE_ARROW);
 
-                $yield->addChild($this->parseOptionalExpression());
+                $child = $this->parseOptionalExpression();
+                if ($child) {
+                    $yield->addChild($child);
+                }
             }
         }
 

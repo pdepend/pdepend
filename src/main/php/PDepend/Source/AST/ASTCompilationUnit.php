@@ -211,7 +211,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     {
         return (array) $this->cache
             ->type('tokens')
-            ->restore($this->getId());
+            ->restore((string) $this->getId());
     }
 
     /**
@@ -223,7 +223,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
     {
         $this->cache
             ->type('tokens')
-            ->store($this->getId(), $tokens);
+            ->store((string) $this->getId(), $tokens);
     }
 
     /**
