@@ -251,7 +251,7 @@ class Runner
             $engine->setCodeFilter($filter);
         }
 
-        if ($this->withoutAnnotations === true) {
+        if ($this->withoutAnnotations) {
             $engine->setWithoutAnnotations();
         }
 

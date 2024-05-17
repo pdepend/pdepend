@@ -289,7 +289,7 @@ class Engine
      */
     public function addProcessListener(ProcessListener $listener): void
     {
-        if (in_array($listener, $this->listeners, true) === false) {
+        if (!in_array($listener, $this->listeners, true)) {
             $this->listeners[] = $listener;
         }
     }
@@ -543,7 +543,7 @@ class Engine
             $parser->setMaxNestingLevel($this->configuration->parser->nesting);
 
             // Disable annotation parsing?
-            if ($this->withoutAnnotations === true) {
+            if ($this->withoutAnnotations) {
                 $parser->setIgnoreAnnotations();
             }
 

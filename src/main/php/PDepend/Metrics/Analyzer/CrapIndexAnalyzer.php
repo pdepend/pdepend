@@ -164,7 +164,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     public function visitMethod(ASTMethod $method): void
     {
-        if ($method->isAbstract() === false) {
+        if (!$method->isAbstract()) {
             $this->visitCallable($method);
         }
     }

@@ -849,7 +849,7 @@ abstract class AbstractTestCase extends TestCase
             $tokenizer->setSourceFile($file);
 
             $parser = $this->createPHPParser($tokenizer, $builder, $cache);
-            if ($ignoreAnnotations === true) {
+            if ($ignoreAnnotations) {
                 $parser->setIgnoreAnnotations();
             }
 
@@ -882,7 +882,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function requireImagick(array $requiredFormats = ['PNG', 'SVG']): void
     {
-        if (extension_loaded('imagick') === false) {
+        if (!extension_loaded('imagick')) {
             static::markTestSkipped('No pecl/imagick extension.');
         }
 

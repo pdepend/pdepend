@@ -338,7 +338,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     protected function writeFileReference(DOMElement $xml, ?ASTCompilationUnit $compilationUnit = null): void
     {
-        if ($compilationUnit && in_array($compilationUnit, $this->fileSet, true) === false) {
+        if ($compilationUnit && !in_array($compilationUnit, $this->fileSet, true)) {
             $this->fileSet[] = $compilationUnit;
         }
 

@@ -1778,7 +1778,7 @@ abstract class AbstractPHPParser
         $this->parseCallableDeclaration($method);
         $this->prepareCallable($method);
 
-        if ($returnsReference === true) {
+        if ($returnsReference) {
             $method->setReturnsReference();
         }
 
@@ -4238,7 +4238,7 @@ abstract class AbstractPHPParser
                 $this->consumeToken(Tokens::T_BITWISE_OR);
                 $repeat = true;
             }
-        } while ($repeat === true);
+        } while ($repeat);
     }
 
     /**
@@ -5407,7 +5407,7 @@ abstract class AbstractPHPParser
         }
 
         // ellipsis and no further arguments => variadic placeholder foo(...)
-        if ($ellipsis === true && count($arguments->getChildren()) === 0) {
+        if ($ellipsis && count($arguments->getChildren()) === 0) {
             $arguments->setVariadicPlaceholder();
         }
 
@@ -7686,7 +7686,7 @@ abstract class AbstractPHPParser
             array_unshift($fragments, $mapsTo);
         } elseif (
             isset($this->namespaceName)
-            && $this->namespacePrefixReplaced === false
+            && !$this->namespacePrefixReplaced
         ) {
             // Prepend current namespace
             array_unshift($fragments, $this->namespaceName, '\\');
@@ -8339,7 +8339,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_COMMA:
                 case Tokens::T_SEMICOLON:
                 case Tokens::T_PARENTHESIS_CLOSE:
-                    if ($defaultValue->isValueAvailable() === true) {
+                    if ($defaultValue->isValueAvailable()) {
                         return $defaultValue;
                     }
 
@@ -8822,7 +8822,7 @@ abstract class AbstractPHPParser
         // Check for doc level comment
         if (
             $this->globalPackageName === Builder::DEFAULT_NAMESPACE
-            && $this->isFileComment() === true
+            && $this->isFileComment()
         ) {
             $this->globalPackageName = $package;
 
@@ -8936,7 +8936,7 @@ abstract class AbstractPHPParser
     private function parseFieldDeclarationType()
     {
         // Skip, if ignore annotations is set
-        if ($this->ignoreAnnotations === true) {
+        if ($this->ignoreAnnotations) {
             return null;
         }
 
@@ -8953,14 +8953,14 @@ abstract class AbstractPHPParser
         $annotations = $this->parseVarAnnotation($this->docComment);
 
         foreach ($annotations as $annotation) {
-            if (Type::isPrimitiveType($annotation) === true) {
+            if (Type::isPrimitiveType($annotation)) {
                 $type = Type::getPrimitiveType($annotation);
                 if ($type) {
                     return $this->builder->buildAstScalarType($type);
                 }
             }
 
-            if (Type::isArrayType($annotation) === true) {
+            if (Type::isArrayType($annotation)) {
                 return $this->builder->buildAstTypeArray();
             }
         }
@@ -8984,7 +8984,7 @@ abstract class AbstractPHPParser
         $annotations = $this->parseVarAnnotation($this->docComment);
 
         foreach ($annotations as $annotation) {
-            if (Type::isScalarType($annotation) === false) {
+            if (!Type::isScalarType($annotation)) {
                 return $this->builder->buildAstClassOrInterfaceReference(
                     $annotation,
                 );
@@ -9040,7 +9040,7 @@ abstract class AbstractPHPParser
     private function prepareCallable(AbstractASTCallable $callable): void
     {
         // Skip, if ignore annotations is set
-        if ($this->ignoreAnnotations === true) {
+        if ($this->ignoreAnnotations) {
             return;
         }
 

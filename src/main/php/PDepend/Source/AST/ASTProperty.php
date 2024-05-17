@@ -96,14 +96,14 @@ class ASTProperty extends AbstractASTArtifact
     {
         $static = '';
 
-        if ($this->isStatic() === true) {
+        if ($this->isStatic()) {
             $static = ' static';
         }
 
         $visibility = ' public';
-        if ($this->isProtected() === true) {
+        if ($this->isProtected()) {
             $visibility = ' protected';
-        } elseif ($this->isPrivate() === true) {
+        } elseif ($this->isPrivate()) {
             $visibility = ' private';
         }
 

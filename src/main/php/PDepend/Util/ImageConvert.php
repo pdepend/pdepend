@@ -83,14 +83,14 @@ class ImageConvert
 
         if ($inputType === $outputType) {
             file_put_contents($output, file_get_contents($input));
-        } elseif (extension_loaded('imagick') === true) {
+        } elseif (extension_loaded('imagick')) {
             $imagick = new Imagick($input);
             $imagick->setImageFormat($outputType);
             $imagick->writeImage($output);
 
             // The following code is not testable when imagick is installed
             // @codeCoverageIgnoreStart
-        } elseif (self::hasImagickConvert() === true) {
+        } elseif (self::hasImagickConvert()) {
             $input = escapeshellarg($input);
             $output = escapeshellarg($output);
 

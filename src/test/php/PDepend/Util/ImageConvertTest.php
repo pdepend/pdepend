@@ -88,7 +88,7 @@ class ImageConvertTest extends AbstractTestCase
      */
     public function testConvertAppendDefaultFileExtensionAsFallback(): void
     {
-        if (extension_loaded('imagick') === false) {
+        if (!extension_loaded('imagick')) {
             static::markTestSkipped('No pecl/imagick extension.');
         }
 

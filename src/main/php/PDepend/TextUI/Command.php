@@ -94,7 +94,7 @@ class Command
         $this->application = new Application();
 
         try {
-            if ($this->parseArguments() === false) {
+            if (!$this->parseArguments()) {
                 $this->printHelp();
 
                 return self::CLI_ERROR;
@@ -189,7 +189,7 @@ class Command
                 assert(is_string($value));
                 if (
                     $analyzerOptions[$option]['value'] === 'file'
-                    && file_exists($value) === false
+                    && !file_exists($value)
                 ) {
                     echo 'Specified file ' . $option . '=' . $value
                         . ' not exists.' . PHP_EOL;
@@ -234,7 +234,7 @@ class Command
 
         try {
             // Output current pdepend version and author
-            if ($runSilent === false) {
+            if (!$runSilent) {
                 $this->printVersion();
             }
 
@@ -242,7 +242,7 @@ class Command
 
             $result = $this->runner->run();
 
-            if ($this->runner->hasParseErrors() === true) {
+            if ($this->runner->hasParseErrors()) {
                 $errors = $this->runner->getParseErrors();
 
                 printf(
@@ -257,7 +257,7 @@ class Command
                 }
                 echo PHP_EOL;
             }
-            if ($runSilent === false) {
+            if (!$runSilent) {
                 $this->printStatistics($startTime);
             }
 
@@ -280,10 +280,8 @@ class Command
 
     /**
      * Parses the cli arguments.
-     *
-     * @return bool
      */
-    protected function parseArguments()
+    protected function parseArguments(): bool
     {
         if (!isset($_SERVER['argv'])) {
             if (false === (bool) ini_get('register_argc_argv')) {
@@ -589,7 +587,7 @@ class Command
      */
     private function printDbusOption($length): void
     {
-        if (extension_loaded('dbus') === false) {
+        if (!extension_loaded('dbus')) {
             return;
         }
 

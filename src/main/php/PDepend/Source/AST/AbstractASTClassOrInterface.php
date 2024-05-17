@@ -115,7 +115,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
 
         // Check parent against global filter
         $collection = CollectionArtifactFilter::getInstance();
-        if ($collection->accept($parentClass) === false) {
+        if (!$collection->accept($parentClass)) {
             return null;
         }
 
@@ -264,7 +264,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      */
     public function getConstant($name): mixed
     {
-        if ($this->hasConstant($name) === true) {
+        if ($this->hasConstant($name)) {
             return $this->constants[$name];
         }
 

@@ -310,11 +310,11 @@ final class Type
     public static function isScalarType($image)
     {
         $image = strtolower($image);
-        if (isset(self::$scalarTypes[$image]) === true) {
+        if (isset(self::$scalarTypes[$image])) {
             return true;
         }
         $image = metaphone($image);
-        if (isset(self::$scalarTypes[$image]) === true) {
+        if (isset(self::$scalarTypes[$image])) {
             return true;
         }
 
@@ -345,15 +345,15 @@ final class Type
     public static function getPrimitiveType($image)
     {
         $image = strtolower($image);
-        if (isset(self::$primitiveTypes[$image]) === true) {
+        if (isset(self::$primitiveTypes[$image])) {
             return self::$primitiveTypes[$image];
         }
         $image = metaphone($image);
-        if (isset(self::$primitiveTypes[$image]) === true) {
+        if (isset(self::$primitiveTypes[$image])) {
             return self::$primitiveTypes[$image];
         }
         $image = soundex($image);
-        if (isset(self::$primitiveTypes[$image]) === true) {
+        if (isset(self::$primitiveTypes[$image])) {
             return self::$primitiveTypes[$image];
         }
 
