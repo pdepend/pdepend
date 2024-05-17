@@ -69,10 +69,9 @@ class Application
     private string $configurationFile;
 
     /**
-     * @param string $configurationFile
      * @throws InvalidArgumentException
      */
-    public function setConfigurationFile($configurationFile): void
+    public function setConfigurationFile(string $configurationFile): void
     {
         if (!file_exists($configurationFile)) {
             throw new InvalidArgumentException(
@@ -84,10 +83,9 @@ class Application
     }
 
     /**
-     * @return Configuration
      * @throws Exception
      */
-    public function getConfiguration()
+    public function getConfiguration(): Configuration
     {
         $obj = $this->getContainer()->get('pdepend.configuration');
         assert($obj instanceof Configuration);
@@ -96,10 +94,9 @@ class Application
     }
 
     /**
-     * @return Engine
      * @throws Exception
      */
-    public function getEngine()
+    public function getEngine(): Engine
     {
         $obj = $this->getContainer()->get('pdepend.engine');
         assert($obj instanceof Engine);
@@ -108,10 +105,9 @@ class Application
     }
 
     /**
-     * @return Runner
      * @throws Exception
      */
-    public function getRunner()
+    public function getRunner(): Runner
     {
         $obj = $this->getContainer()->get('pdepend.textui.runner'); // TODO: Use standard name? textui is detail.
         assert($obj instanceof Runner);
@@ -120,10 +116,9 @@ class Application
     }
 
     /**
-     * @return ReportGeneratorFactory
      * @throws Exception
      */
-    public function getReportGeneratorFactory()
+    public function getReportGeneratorFactory(): ReportGeneratorFactory
     {
         $obj = $this->getContainer()->get('pdepend.report_generator_factory');
         assert($obj instanceof ReportGeneratorFactory);
@@ -132,10 +127,9 @@ class Application
     }
 
     /**
-     * @return AnalyzerFactory
      * @throws Exception
      */
-    public function getAnalyzerFactory()
+    public function getAnalyzerFactory(): AnalyzerFactory
     {
         $obj = $this->getContainer()->get('pdepend.analyzer_factory');
         assert($obj instanceof AnalyzerFactory);
@@ -144,10 +138,9 @@ class Application
     }
 
     /**
-     * @return TaggedContainerInterface
      * @throws Exception
      */
-    private function getContainer()
+    private function getContainer(): TaggedContainerInterface
     {
         if (!isset($this->container)) {
             $this->container = $this->createContainer();
@@ -157,10 +150,9 @@ class Application
     }
 
     /**
-     * @return TaggedContainerInterface
      * @throws Exception
      */
-    private function createContainer()
+    private function createContainer(): TaggedContainerInterface
     {
         $extensions = [new PdependExtension()];
 
@@ -189,7 +181,7 @@ class Application
      * @return array<string, array<string, string>>
      * @throws Exception
      */
-    public function getAvailableLoggerOptions()
+    public function getAvailableLoggerOptions(): array
     {
         return $this->getAvailableOptionsFor('pdepend.logger');
     }
@@ -200,17 +192,16 @@ class Application
      * @return array<string, array<string, string>>
      * @throws Exception
      */
-    public function getAvailableAnalyzerOptions()
+    public function getAvailableAnalyzerOptions(): array
     {
         return $this->getAvailableOptionsFor('pdepend.analyzer');
     }
 
     /**
-     * @param string $serviceTag
      * @return array<string, array<string, string>>
      * @throws Exception
      */
-    private function getAvailableOptionsFor($serviceTag)
+    private function getAvailableOptionsFor(string $serviceTag): array
     {
         $container = $this->getContainer();
 
