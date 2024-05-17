@@ -311,16 +311,18 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
 
         $declaringClass = $method->getParent();
 
-        $this->calculateCoupling(
-            $declaringClass,
-            $method->getReturnClass(),
-        );
+        if ($declaringClass) {
+            $this->calculateCoupling(
+                $declaringClass,
+                $method->getReturnClass(),
+            );
 
-        foreach ($method->getExceptionClasses() as $type) {
-            $this->calculateCoupling($declaringClass, $type);
-        }
-        foreach ($method->getDependencies() as $type) {
-            $this->calculateCoupling($declaringClass, $type);
+            foreach ($method->getExceptionClasses() as $type) {
+                $this->calculateCoupling($declaringClass, $type);
+            }
+            foreach ($method->getDependencies() as $type) {
+                $this->calculateCoupling($declaringClass, $type);
+            }
         }
 
         $this->countCalls($method);

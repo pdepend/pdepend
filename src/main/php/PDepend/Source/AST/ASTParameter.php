@@ -43,6 +43,8 @@
 
 namespace PDepend\Source\AST;
 
+use RuntimeException;
+
 /**
  * An instance of this class represents a function or method parameter within
  * the analyzed source code.
@@ -85,17 +87,23 @@ class ASTParameter extends AbstractASTArtifact
     private ASTFormalParameter $formalParameter;
 
     /** The wrapped variable declarator instance. */
-    private ?ASTVariableDeclarator $variableDeclarator;
+    private ASTVariableDeclarator $variableDeclarator;
 
     /**
      * Constructs a new parameter instance for the given AST node.
+     *
+     * @throws RuntimeException
      */
     public function __construct(ASTFormalParameter $formalParameter)
     {
         $this->formalParameter = $formalParameter;
-        $this->variableDeclarator = $formalParameter->getFirstChildOfType(
+        $variableDeclarator = $formalParameter->getFirstChildOfType(
             ASTVariableDeclarator::class,
         );
+        if (!$variableDeclarator) {
+            throw new RuntimeException('Missing variable decleration');
+        }
+        $this->variableDeclarator = $variableDeclarator;
 
         $this->id = spl_object_hash($this);
     }
@@ -113,8 +121,8 @@ class ASTParameter extends AbstractASTArtifact
         $typeHint = '';
         if ($this->isArray() === true) {
             $typeHint = ' array';
-        } elseif ($this->getClass() !== null) {
-            $typeHint = ' ' . $this->getClass()->getImage();
+        } elseif ($class = $this->getClass()) {
+            $typeHint = ' ' . $class->getImage();
         }
 
         $default = '';
@@ -348,7 +356,7 @@ class ASTParameter extends AbstractASTArtifact
      */
     public function isDefaultValueAvailable()
     {
-        $value = $this->variableDeclarator?->getValue();
+        $value = $this->variableDeclarator->getValue();
         if ($value === null) {
             return false;
         }
@@ -367,7 +375,7 @@ class ASTParameter extends AbstractASTArtifact
      */
     public function getDefaultValue(): mixed
     {
-        $value = $this->variableDeclarator?->getValue();
+        $value = $this->variableDeclarator->getValue();
 
         return $value === null ? null : $value->getValue();
     }

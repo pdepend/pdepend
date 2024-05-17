@@ -192,8 +192,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Update global class count
         ++$this->noc;
 
-        $id = $class->getNamespace()->getId();
-        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CLASSES];
+        $id = $class->getNamespace()?->getId();
+        ++$this->nodeMetrics[(string) $id][self::M_NUMBER_OF_CLASSES];
 
         $this->nodeMetrics[$class->getId()] = [
             self::M_NUMBER_OF_METHODS => 0,
@@ -216,8 +216,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Update global function count
         ++$this->nof;
 
-        $id = $function->getNamespace()->getId();
-        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_FUNCTIONS];
+        $id = $function->getNamespace()?->getId();
+        ++$this->nodeMetrics[(string) $id][self::M_NUMBER_OF_FUNCTIONS];
 
         $this->fireEndFunction($function);
     }
@@ -236,8 +236,8 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         // Update global class count
         ++$this->noi;
 
-        $id = $interface->getNamespace()->getId();
-        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_INTERFACES];
+        $id = $interface->getNamespace()?->getId();
+        ++$this->nodeMetrics[(string) $id][self::M_NUMBER_OF_INTERFACES];
 
         $this->nodeMetrics[$interface->getId()] = [
             self::M_NUMBER_OF_METHODS => 0,
@@ -263,11 +263,11 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         $parent = $method->getParent();
 
         // Update parent class or interface
-        $parentId = $parent->getId();
-        ++$this->nodeMetrics[$parentId][self::M_NUMBER_OF_METHODS];
+        $parentId = $parent?->getId();
+        ++$this->nodeMetrics[(string) $parentId][self::M_NUMBER_OF_METHODS];
 
-        $id = $parent->getNamespace()->getId();
-        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_METHODS];
+        $id = $parent?->getNamespace()?->getId();
+        ++$this->nodeMetrics[(string) $id][self::M_NUMBER_OF_METHODS];
 
         $this->fireEndMethod($method);
     }

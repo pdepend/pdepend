@@ -230,9 +230,14 @@ class DependencyAnalyzer extends AbstractAnalyzer
     {
         $this->fireStartMethod($method);
 
-        $namespace = $method->getParent()->getNamespace();
-        foreach ($method->getDependencies() as $dependency) {
-            $this->collectDependencies($namespace, $dependency->getNamespace());
+        $namespace = $method->getParent()?->getNamespace();
+        if ($namespace) {
+            foreach ($method->getDependencies() as $dependency) {
+                $dependencyNamespace = $dependency->getNamespace();
+                if ($dependencyNamespace) {
+                    $this->collectDependencies($namespace, $dependencyNamespace);
+                }
+            }
         }
 
         $this->fireEndMethod($method);
@@ -282,23 +287,26 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     protected function visitType(AbstractASTClassOrInterface $type): void
     {
-        $id = $type->getNamespace()->getId();
+        $namespace = $type->getNamespace();
+        $id = $namespace?->getId();
 
         // Increment total classes count
-        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CLASSES];
+        ++$this->nodeMetrics[(string) $id][self::M_NUMBER_OF_CLASSES];
 
         // Check for abstract or concrete class
         if ($type->isAbstract()) {
-            ++$this->nodeMetrics[$id][self::M_NUMBER_OF_ABSTRACT_CLASSES];
+            ++$this->nodeMetrics[(string) $id][self::M_NUMBER_OF_ABSTRACT_CLASSES];
         } else {
-            ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CONCRETE_CLASSES];
+            ++$this->nodeMetrics[(string) $id][self::M_NUMBER_OF_CONCRETE_CLASSES];
         }
 
-        foreach ($type->getDependencies() as $dependency) {
-            $this->collectDependencies(
-                $type->getNamespace(),
-                $dependency->getNamespace(),
-            );
+        if ($namespace) {
+            foreach ($type->getDependencies() as $dependency) {
+                $dependencyNamespace = $dependency->getNamespace();
+                if ($dependencyNamespace) {
+                    $this->collectDependencies($namespace, $dependencyNamespace);
+                }
+            }
         }
 
         foreach ($type->getMethods() as $method) {

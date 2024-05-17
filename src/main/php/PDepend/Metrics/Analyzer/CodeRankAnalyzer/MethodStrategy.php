@@ -83,14 +83,16 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
         // Get owner type
         $type = $method->getParent();
 
-        if (($depType = $method->getReturnClass()) !== null) {
-            $this->processType($type, $depType);
-        }
-        foreach ($method->getExceptionClasses() as $depType) {
-            $this->processType($type, $depType);
-        }
-        foreach ($method->getDependencies() as $depType) {
-            $this->processType($type, $depType);
+        if ($type) {
+            if (($depType = $method->getReturnClass()) !== null) {
+                $this->processType($type, $depType);
+            }
+            foreach ($method->getExceptionClasses() as $depType) {
+                $this->processType($type, $depType);
+            }
+            foreach ($method->getDependencies() as $depType) {
+                $this->processType($type, $depType);
+            }
         }
 
         $this->fireEndMethod($method);
@@ -113,7 +115,7 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
         $namespace = $type->getNamespace();
         $dependencyNamespace = $dependency->getNamespace();
 
-        if ($namespace !== $dependencyNamespace) {
+        if ($namespace && $dependencyNamespace && $namespace !== $dependencyNamespace) {
             $this->initNode($namespace);
             $this->initNode($dependencyNamespace);
 
