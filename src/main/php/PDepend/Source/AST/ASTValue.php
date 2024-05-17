@@ -78,7 +78,7 @@ class ASTValue
      */
     public function setValue($value): void
     {
-        if ($this->valueAvailable === false) {
+        if (!$this->valueAvailable) {
             $this->value = $value;
             $this->valueAvailable = true;
         }

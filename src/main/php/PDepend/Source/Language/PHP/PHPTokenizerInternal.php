@@ -961,7 +961,7 @@ class PHPTokenizerInternal implements FullTokenizer
                 $type = $tokenMap[$token[0]];
                 $image = $token[1];
                 $inTag = false;
-            } elseif ($inTag === false) {
+            } elseif (!$inTag) {
                 $type = Tokens::T_NO_PHP;
                 $image = $this->consumeNonePhpTokens($tokens);
             } elseif ($token[0] === T_WHITESPACE) {

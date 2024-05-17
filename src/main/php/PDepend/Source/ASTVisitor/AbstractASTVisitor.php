@@ -87,7 +87,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
      */
     public function addVisitListener(ASTVisitListener $listener): void
     {
-        if (in_array($listener, $this->listeners, true) === false) {
+        if (!in_array($listener, $this->listeners, true)) {
             $this->listeners[] = $listener;
         }
     }

@@ -96,7 +96,7 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      */
     public function addAnalyzeListener(AnalyzerListener $listener): void
     {
-        if (in_array($listener, $this->listeners, true) === false) {
+        if (!in_array($listener, $this->listeners, true)) {
             $this->listeners[] = $listener;
         }
     }

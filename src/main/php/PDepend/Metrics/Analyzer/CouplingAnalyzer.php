@@ -246,13 +246,13 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
             ++$this->fanout;
         }
         foreach ($function->getExceptionClasses() as $type) {
-            if (in_array($type, $fanouts, true) === false) {
+            if (!in_array($type, $fanouts, true)) {
                 $fanouts[] = $type;
                 ++$this->fanout;
             }
         }
         foreach ($function->getDependencies() as $type) {
-            if (in_array($type, $fanouts, true) === false) {
+            if (!in_array($type, $fanouts, true)) {
                 $fanouts[] = $type;
                 ++$this->fanout;
             }

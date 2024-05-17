@@ -440,7 +440,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
 
         $optional = true;
         foreach (array_reverse($parameters) as $parameter) {
-            if ($parameter->isDefaultValueAvailable() === false) {
+            if (!$parameter->isDefaultValueAvailable()) {
                 $optional = false;
             }
             $parameter->setOptional($optional);

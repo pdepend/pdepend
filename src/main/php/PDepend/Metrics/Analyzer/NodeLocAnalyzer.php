@@ -407,7 +407,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         $llines = 0;
 
         $count = count($tokens);
-        if ($search === true) {
+        if ($search) {
             for ($i = 0; $i < $count; ++$i) {
                 $token = $tokens[$i];
 

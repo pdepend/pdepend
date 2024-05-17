@@ -130,7 +130,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
      */
     public function endLogProcess(): void
     {
-        if (extension_loaded('dbus') === false) {
+        if (!extension_loaded('dbus')) {
             return;
         }
 

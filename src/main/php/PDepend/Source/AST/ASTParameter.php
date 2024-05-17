@@ -111,7 +111,7 @@ class ASTParameter extends AbstractASTArtifact
         $reference = $this->isPassedByReference() ? '&' : '';
 
         $typeHint = '';
-        if ($this->isArray() === true) {
+        if ($this->isArray()) {
             $typeHint = ' array';
         } elseif ($class = $this->getClass()) {
             $typeHint = ' ' . $class->getImage();
@@ -129,9 +129,9 @@ class ASTParameter extends AbstractASTArtifact
                 $default .= 'false';
             } elseif ($value === true) {
                 $default .= 'true';
-            } elseif (is_array($value) === true) {
+            } elseif (is_array($value)) {
                 $default .= 'Array';
-            } elseif (is_string($value) === true) {
+            } elseif (is_string($value)) {
                 $default .= "'" . $value . "'";
             } else {
                 $default .= $value;

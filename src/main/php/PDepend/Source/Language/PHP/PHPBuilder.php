@@ -319,7 +319,7 @@ class PHPBuilder implements Builder
      */
     public function buildAstNeededReference($qualifiedName, $classReference)
     {
-        if ($classReference === true) {
+        if ($classReference) {
             return $this->buildAstClassReference($qualifiedName);
         }
 
@@ -2267,7 +2267,7 @@ class PHPBuilder implements Builder
      */
     protected function freeze(): void
     {
-        if ($this->frozen === true) {
+        if ($this->frozen) {
             return;
         }
 
@@ -2498,7 +2498,7 @@ class PHPBuilder implements Builder
      */
     protected function checkBuilderState($internal = false): void
     {
-        if ($this->frozen === true && $this->internal === false) {
+        if ($this->frozen && !$this->internal) {
             throw new BadMethodCallException(
                 'Cannot create new nodes, when internal state is frozen.',
             );
