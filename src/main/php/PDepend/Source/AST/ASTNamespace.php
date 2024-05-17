@@ -211,8 +211,9 @@ class ASTNamespace extends AbstractASTArtifact
             return $type;
         }
 
-        if ($type->getNamespace() !== null) {
-            $type->getNamespace()->removeType($type);
+        $namespace = $type->getNamespace();
+        if ($namespace !== null) {
+            $namespace->removeType($type);
         }
 
         // Set this as class namespace
@@ -256,8 +257,9 @@ class ASTNamespace extends AbstractASTArtifact
      */
     public function addFunction(ASTFunction $function)
     {
-        if ($function->getNamespace() !== null) {
-            $function->getNamespace()->removeFunction($function);
+        $namespace = $function->getNamespace();
+        if ($namespace !== null) {
+            $namespace->removeFunction($function);
         }
 
         $function->setNamespace($this);

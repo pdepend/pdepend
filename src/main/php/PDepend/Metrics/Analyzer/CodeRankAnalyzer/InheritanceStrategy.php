@@ -102,7 +102,9 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     {
         $namespace = $type->getNamespace();
 
-        $this->initNode($namespace);
+        if ($namespace) {
+            $this->initNode($namespace);
+        }
         $this->initNode($type);
 
         foreach ($type->getDependencies() as $dependency) {

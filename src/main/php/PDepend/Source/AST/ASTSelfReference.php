@@ -45,6 +45,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
+use RuntimeException;
 
 /**
  * This is a special reference container that is used whenever the keyword
@@ -114,11 +115,15 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
      * Returns the class or interface instance that this node instance represents.
      *
      * @return AbstractASTClassOrInterface
+     * @throws RuntimeException
      * @since  0.10.0
      */
     public function getType()
     {
         if ($this->typeInstance === null) {
+            if (!$this->context) {
+                throw new RuntimeException('No context set');
+            }
             $this->typeInstance = $this->context
                 ->getClassOrInterface($this->qualifiedName);
         }

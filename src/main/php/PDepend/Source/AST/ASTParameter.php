@@ -348,7 +348,7 @@ class ASTParameter extends AbstractASTArtifact
      */
     public function isDefaultValueAvailable()
     {
-        $value = $this->variableDeclarator->getValue();
+        $value = $this->variableDeclarator?->getValue();
         if ($value === null) {
             return false;
         }

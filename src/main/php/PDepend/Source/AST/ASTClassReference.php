@@ -44,6 +44,8 @@
 
 namespace PDepend\Source\AST;
 
+use RuntimeException;
+
 /**
  * This is a classes only version of the class or interface reference .
  *
@@ -57,10 +59,14 @@ class ASTClassReference extends ASTClassOrInterfaceReference
      * Returns the concrete type instance associated with with this placeholder.
      *
      * @return ASTClass
+     * @throws RuntimeException
      */
     public function getType()
     {
         if (!$this->typeInstance instanceof ASTClass) {
+            if (!$this->context) {
+                throw new RuntimeException('No context set');
+            }
             $this->typeInstance = $this->context->getClass($this->getImage());
         }
 

@@ -44,6 +44,8 @@
 
 namespace PDepend\Source\AST;
 
+use RuntimeException;
+
 /**
  * This is a trait only version of the type reference .
  *
@@ -57,10 +59,14 @@ class ASTTraitReference extends ASTClassOrInterfaceReference
      * Returns the concrete type instance associated with with this placeholder.
      *
      * @return AbstractASTType
+     * @throws RuntimeException
      */
     public function getType()
     {
         if ($this->typeInstance === null) {
+            if (!$this->context) {
+                throw new RuntimeException('No context set');
+            }
             $this->typeInstance = $this->context->getTrait($this->getImage());
         }
 
