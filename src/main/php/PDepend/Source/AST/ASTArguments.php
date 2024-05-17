@@ -99,6 +99,8 @@ class ASTArguments extends AbstractASTNode
 
     /**
      * This method adds a new child node to this node instance.
+     *
+     * @throws InvalidArgumentException
      */
     public function addChild(ASTNode $node): void
     {

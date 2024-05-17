@@ -189,6 +189,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Sets the tokens found in the function body.
      *
      * @param Token[] $tokens The body tokens.
+     * @throws InvalidArgumentException
      */
     public function setTokens(array $tokens): void
     {
