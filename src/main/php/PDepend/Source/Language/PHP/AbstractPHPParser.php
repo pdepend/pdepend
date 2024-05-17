@@ -9184,7 +9184,10 @@ abstract class AbstractPHPParser
             throw $this->getUnexpectedNextTokenException();
         }
 
-        $name = $this->tokenizer->currentToken()->image;
+        $name = $this->tokenizer->currentToken()?->image;
+        if (!$name) {
+            throw new TokenException('Invalid Enum name');
+        }
         $this->consumeToken(Tokens::T_STRING);
         $this->consumeComments();
         $type = null;
@@ -9308,7 +9311,7 @@ abstract class AbstractPHPParser
         $this->tokenStack->add($this->requireNextToken());
         $this->tokenStack->push();
         $this->consumeComments();
-        $caseName = $this->tokenizer->currentToken()->image;
+        $caseName = $this->tokenizer->currentToken()?->image ?? '';
 
         if (!preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $caseName)) {
             throw $this->getUnexpectedNextTokenException();

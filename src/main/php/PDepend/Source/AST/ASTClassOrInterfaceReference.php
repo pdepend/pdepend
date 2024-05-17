@@ -45,6 +45,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
+use RuntimeException;
 
 /**
  * This class is used as a placeholder for unknown classes or interfaces. It
@@ -94,10 +95,14 @@ class ASTClassOrInterfaceReference extends ASTType
      * Returns the concrete type instance associated with with this placeholder.
      *
      * @return AbstractASTClassOrInterface
+     * @throws RuntimeException
      */
     public function getType()
     {
         if ($this->typeInstance === null) {
+            if (!$this->context) {
+                throw new RuntimeException('No context set');
+            }
             $this->typeInstance = $this->context->getClassOrInterface(
                 $this->getImage(),
             );
