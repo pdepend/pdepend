@@ -56,9 +56,9 @@ class ASTTraitAdaptationAlias extends ASTStatement
     /**
      * The new aliased method name.
      *
-     * @var string
+     * @var ?string
      */
-    protected $newName;
+    protected $newName = null;
 
     /**
      * The new method modifier for the imported method.

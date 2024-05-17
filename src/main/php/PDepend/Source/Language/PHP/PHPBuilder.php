@@ -2423,13 +2423,13 @@ class PHPBuilder implements Builder
     /**
      * This method will persist a trait instance for later reuse.
      *
-     * @param string $traitName
+     * @param ?string $traitName
      * @param ?string $namespaceName
      * @since 1.0.0
      */
     protected function storeTrait($traitName, $namespaceName, ASTTrait $trait): void
     {
-        $traitName = strtolower($traitName);
+        $traitName = strtolower($traitName ?? '');
         if (!isset($this->traits[$traitName][$namespaceName])) {
             $this->traits[$traitName][$namespaceName] = [];
         }
@@ -2442,13 +2442,13 @@ class PHPBuilder implements Builder
     /**
      * This method will persist a class instance for later reuse.
      *
-     * @param string $className
+     * @param ?string $className
      * @param ?string $namespaceName
      * @since 0.9.5
      */
     protected function storeClass($className, $namespaceName, ASTClass $class): void
     {
-        $className = strtolower($className);
+        $className = strtolower($className ?? '');
         if (!isset($this->classes[$className][$namespaceName])) {
             $this->classes[$className][$namespaceName] = [];
         }
@@ -2461,13 +2461,13 @@ class PHPBuilder implements Builder
     /**
      * This method will persist a class instance for later reuse.
      *
-     * @param string $enumName
+     * @param ?string $enumName
      * @param ?string $namespaceName
      * @since 2.11.0
      */
     protected function storeEnum($enumName, $namespaceName, ASTEnum $enum): void
     {
-        $enumName = strtolower($enumName);
+        $enumName = strtolower($enumName ?? '');
         if (!isset($this->classes[$enumName][$namespaceName])) {
             $this->classes[$enumName][$namespaceName] = [];
         }
@@ -2480,13 +2480,13 @@ class PHPBuilder implements Builder
     /**
      * This method will persist an interface instance for later reuse.
      *
-     * @param string $interfaceName
+     * @param ?string $interfaceName
      * @param ?string $namespaceName
      * @since 0.9.5
      */
     protected function storeInterface($interfaceName, $namespaceName, ASTInterface $interface): void
     {
-        $interfaceName = strtolower($interfaceName);
+        $interfaceName = strtolower($interfaceName ?? '');
         if (!isset($this->interfaces[$interfaceName][$namespaceName])) {
             $this->interfaces[$interfaceName][$namespaceName] = [];
         }
@@ -2586,7 +2586,7 @@ class PHPBuilder implements Builder
      * @template T of ASTNode
      *
      * @param class-string<T> $className
-     * @param string $image
+     * @param ?string $image
      * @return T
      * @since 0.9.12
      */

@@ -44,7 +44,6 @@
 namespace PDepend\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
-use Symfony\Component\Config\Definition\Builder\NodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder as BaseTreeBuilder;
 
 /**
@@ -52,7 +51,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder as BaseTreeBuilder;
  */
 class TreeBuilder
 {
-    /** @var ArrayNodeDefinition|NodeDefinition */
+    /** @var ArrayNodeDefinition */
     protected $rootNode;
 
     /** @var BaseTreeBuilder */
@@ -65,26 +64,16 @@ class TreeBuilder
      */
     public function __construct($name = 'pdepend')
     {
-        $this->treeBuilder = new BaseTreeBuilder($name);
-
-        if (method_exists($this->treeBuilder, 'getRootNode')) {
-            $this->rootNode = $this->treeBuilder->getRootNode();
-
-            return;
-        }
-
-        // @codeCoverageIgnoreStart
-        if (method_exists($this->treeBuilder, 'root')) {
-            // Symfony < 4.2
-            $this->rootNode = $this->treeBuilder->root($name);
-        }
-        // @codeCoverageIgnoreEnd
+        $this->treeBuilder = new BaseTreeBuilder($name, 'array');
+        $rootNode = $this->treeBuilder->getRootNode();
+        assert($rootNode instanceof ArrayNodeDefinition);
+        $this->rootNode = $rootNode;
     }
 
     /**
      * Get the root node of the built tree.
      *
-     * @return ArrayNodeDefinition|NodeDefinition
+     * @return ArrayNodeDefinition
      */
     public function getRootNode()
     {

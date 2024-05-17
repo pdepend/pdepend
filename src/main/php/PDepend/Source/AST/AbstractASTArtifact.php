@@ -89,11 +89,11 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Constructs a new item for the given <b>$name</b>.
      *
-     * @param string $name The item name.
+     * @param ?string $name The item name.
      */
-    public function __construct($name)
+    public function __construct(?string $name = null)
     {
-        $this->name = $name;
+        $this->name = $name ?? '';
     }
 
     /**

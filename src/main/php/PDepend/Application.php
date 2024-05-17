@@ -64,11 +64,9 @@ use Symfony\Component\DependencyInjection\TaggedContainerInterface;
  */
 class Application
 {
-    /** @var TaggedContainerInterface|null */
-    private $container;
+    private TaggedContainerInterface $container;
 
-    /** @var string */
-    private $configurationFile;
+    private string $configurationFile;
 
     /**
      * @param string $configurationFile
@@ -151,7 +149,7 @@ class Application
      */
     private function getContainer()
     {
-        if ($this->container === null) {
+        if (!isset($this->container)) {
             $this->container = $this->createContainer();
         }
 
@@ -176,7 +174,7 @@ class Application
             $container->registerExtension($extension);
         }
 
-        if ($this->configurationFile) {
+        if (isset($this->configurationFile)) {
             $loader->load($this->configurationFile);
         }
 

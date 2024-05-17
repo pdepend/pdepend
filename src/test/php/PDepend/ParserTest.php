@@ -1331,7 +1331,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserStopsProcessingWhenCacheContainsValidResult(): void
     {
-        $builder = $this->getMockBuilder(Builder::class)
+        $builder = $this->getMockBuilder(PHPBuilder::class)
             ->getMock();
 
         $tokenizer = new PHPTokenizerInternal();

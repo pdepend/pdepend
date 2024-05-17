@@ -89,8 +89,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /** The log output file. */
     private string $logFile;
 
-    /** @var ClassDependencyAnalyzer|null */
-    private $dependencyAnalyzer;
+    private ClassDependencyAnalyzer $dependencyAnalyzer;
 
     /**
      * The internal used xml stack.
@@ -288,7 +287,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      */
     protected function writeNodeDependencies(DOMElement $xml, AbstractASTArtifact $node): void
     {
-        if (!$this->dependencyAnalyzer) {
+        if (!isset($this->dependencyAnalyzer)) {
             return;
         }
 
