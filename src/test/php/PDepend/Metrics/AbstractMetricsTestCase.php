@@ -80,7 +80,7 @@ abstract class AbstractMetricsTestCase extends AbstractTestCase
                 ),
                 $ignoreAnnotations
             );
-        } catch (Exception $e) {
+        } catch (Exception) {
         }
 
         return parent::parseSource(

@@ -143,7 +143,7 @@ class RunnerTest extends AbstractTestCase
 
         try {
             $this->silentRun($runner);
-        } catch (Exception $exception) {
+        } catch (Exception) {
             // noop
         }
 
@@ -176,7 +176,7 @@ class RunnerTest extends AbstractTestCase
 
         try {
             $this->silentRun($runner);
-        } catch (Exception $exception) {
+        } catch (Exception) {
             // noop
         }
 

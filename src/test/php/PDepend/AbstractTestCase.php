@@ -710,7 +710,7 @@ abstract class AbstractTestCase extends TestCase
 
         try {
             return self::createCodeResourceURI($fileName);
-        } catch (ErrorException $e) {
+        } catch (ErrorException) {
             return self::createCodeResourceURI("{$fileName}.php");
         }
     }
@@ -799,7 +799,7 @@ abstract class AbstractTestCase extends TestCase
 
         try {
             $fileOrDirectory = self::createCodeResourceURI($fileName);
-        } catch (ErrorException $e) {
+        } catch (ErrorException) {
             $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
         }
 
