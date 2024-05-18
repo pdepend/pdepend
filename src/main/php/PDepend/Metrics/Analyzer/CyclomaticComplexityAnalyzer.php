@@ -59,6 +59,8 @@ use PDepend\Source\AST\ASTSwitchLabel;
  * This class calculates the Cyclomatic Complexity Number(CCN) for the project,
  * methods and functions.
  *
+ * @extends AbstractCachingAnalyzer<array<string, int>>
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */

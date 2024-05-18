@@ -202,7 +202,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $metrics->setAttribute('pdepend', '@package_version@');
 
         foreach ($this->getProjectMetrics() as $name => $value) {
-            $metrics->setAttribute($name, $value);
+            $metrics->setAttribute($name, (string) $value);
         }
 
         $this->xmlStack[] = $metrics;
@@ -423,7 +423,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         }
 
         foreach ($metrics as $name => $value) {
-            $xml->setAttribute($name, $value);
+            $xml->setAttribute($name, (string) $value);
         }
     }
 

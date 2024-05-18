@@ -71,6 +71,8 @@ use PDepend\Util\MathUtil;
  * NPath complexity metric measures the acyclic execution paths through a method
  * or function. See Nejmeh, Communications of the ACM Feb 1988 pp 188-200.
  *
+ * @extends AbstractCachingAnalyzer<numeric-string>
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */

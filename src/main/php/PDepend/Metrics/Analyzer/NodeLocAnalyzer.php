@@ -76,6 +76,8 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * The same rule applies to class methods. mapi, <b>PLEASE, FIX THIS ISSUE.</b>
  *
+ * @extends AbstractCachingAnalyzer<array<string, int>>
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
@@ -104,7 +106,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      *
      * @var array<string, int>
      */
-    private $projectMetrics = [
+    private array $projectMetrics = [
         self::M_LINES_OF_CODE => 0,
         self::M_COMMENT_LINES_OF_CODE => 0,
         self::M_EXECUTABLE_LINES_OF_CODE => 0,
