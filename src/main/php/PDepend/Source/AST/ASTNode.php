@@ -111,7 +111,7 @@ interface ASTNode
      *
      * @return ASTNode[]
      */
-    public function getChildren();
+    public function getChildren(): array;
 
     /**
      * This method will search recursive for the first child node that is an
@@ -142,10 +142,8 @@ interface ASTNode
     /**
      * Returns the parent node of this node or <b>null</b> when this node is
      * the root of a node tree.
-     *
-     * @return ?ASTNode
      */
-    public function getParent();
+    public function getParent(): ?self;
 
     /**
      * Sets the parent node of this node.

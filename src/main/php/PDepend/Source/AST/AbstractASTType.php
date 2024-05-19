@@ -192,7 +192,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return ASTNode[]
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->nodes;
     }

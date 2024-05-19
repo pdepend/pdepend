@@ -162,7 +162,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         }
     }
 
-    public function getChild($index)
+    public function getChild($index): ASTNode
     {
         $children = $this->getChildren();
         if (isset($children[$index])) {
@@ -178,12 +178,12 @@ abstract class AbstractASTArtifact implements ASTArtifact
         );
     }
 
-    public function getChildren()
+    public function getChildren(): array
     {
         return [];
     }
 
-    public function getFirstChildOfType($targetType)
+    public function getFirstChildOfType($targetType): ?ASTNode
     {
         $children = $this->getChildren();
         foreach ($children as $node) {
@@ -198,7 +198,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         return null;
     }
 
-    public function findChildrenOfType($targetType, array &$results = [])
+    public function findChildrenOfType($targetType, array &$results = []): array
     {
         $children = $this->getChildren();
         foreach ($children as $node) {
@@ -211,7 +211,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         return $results;
     }
 
-    public function getParent()
+    public function getParent(): ?ASTNode
     {
         return $this->parent;
     }
@@ -221,7 +221,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         $this->parent = $node;
     }
 
-    public function getParentsOfType($parentType)
+    public function getParentsOfType($parentType): array
     {
         $parents = [];
 

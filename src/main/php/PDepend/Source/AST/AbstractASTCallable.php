@@ -168,7 +168,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @return AbstractASTNode[]
      * @since  0.9.8
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->nodes;
     }

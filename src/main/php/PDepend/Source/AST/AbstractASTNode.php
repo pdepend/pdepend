@@ -348,7 +348,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @return ASTNode[]
      */
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->nodes;
     }
@@ -363,7 +363,7 @@ abstract class AbstractASTNode implements ASTNode
      * @param class-string<T> $targetType
      * @return T|null
      */
-    public function getFirstChildOfType($targetType)
+    public function getFirstChildOfType($targetType): ?ASTNode
     {
         foreach ($this->nodes as $node) {
             if ($node instanceof $targetType) {
@@ -423,10 +423,8 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the parent node of this node or <b>null</b> when this node is
      * the root of a node tree.
-     *
-     * @return ?ASTNode
      */
-    public function getParent()
+    public function getParent(): ?ASTNode
     {
         return $this->parent;
     }

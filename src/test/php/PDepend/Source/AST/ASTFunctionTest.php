@@ -156,7 +156,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     /**
      * testClassReferenceForJavaStyleArrayNotation
      *
-     * @return ASTClassOrInterfaceReference
+     * @return ASTClass
      */
     public function testClassReferenceForJavaStyleArrayNotation()
     {
