@@ -288,16 +288,16 @@ class DependencyAnalyzer extends AbstractAnalyzer
     protected function visitType(AbstractASTClassOrInterface $type): void
     {
         $namespace = $type->getNamespace();
-        $id = $namespace?->getId();
+        $id = (string) $namespace?->getId();
 
         // Increment total classes count
-        ++$this->nodeMetrics[(string) $id][self::M_NUMBER_OF_CLASSES];
+        ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CLASSES];
 
         // Check for abstract or concrete class
         if ($type->isAbstract()) {
-            ++$this->nodeMetrics[(string) $id][self::M_NUMBER_OF_ABSTRACT_CLASSES];
+            ++$this->nodeMetrics[$id][self::M_NUMBER_OF_ABSTRACT_CLASSES];
         } else {
-            ++$this->nodeMetrics[(string) $id][self::M_NUMBER_OF_CONCRETE_CLASSES];
+            ++$this->nodeMetrics[$id][self::M_NUMBER_OF_CONCRETE_CLASSES];
         }
 
         if ($namespace) {
