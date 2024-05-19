@@ -56,6 +56,8 @@ use PDepend\Source\AST\ASTNamespace;
  * This class calculates the Halstead Complexity Measures for the project,
  * methods and functions.
  *
+ * @extends AbstractCachingAnalyzer<array<string, float>>
+ *
  * @copyright 2015 Matthias Mullie. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
@@ -64,14 +66,11 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     /** Metrics provided by the analyzer implementation. */
     private const M_MAINTAINABILITY_INDEX = 'mi';
 
-    /** @var CyclomaticComplexityAnalyzer */
-    private $analyzersCCN;
+    private CyclomaticComplexityAnalyzer $analyzersCCN;
 
-    /** @var HalsteadAnalyzer */
-    private $analyzersHalstead;
+    private HalsteadAnalyzer $analyzersHalstead;
 
-    /** @var NodeLocAnalyzer */
-    private $analyzersLOC;
+    private NodeLocAnalyzer $analyzersLOC;
 
     /**
      * Maintainability index is a combination of cyclomatic complexity,
@@ -126,13 +125,9 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
      *
      * @return array<string, float>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        if (isset($this->metrics[$artifact->getId()])) {
-            return $this->metrics[$artifact->getId()];
-        }
-
-        return [];
+        return $this->metrics[$artifact->getId()] ?? [];
     }
 
     /**

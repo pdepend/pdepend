@@ -71,6 +71,8 @@ use PDepend\Util\MathUtil;
  * NPath complexity metric measures the acyclic execution paths through a method
  * or function. See Nejmeh, Communications of the ACM Feb 1988 pp 188-200.
  *
+ * @extends AbstractCachingAnalyzer<numeric-string>
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
@@ -109,16 +111,15 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * )
      * </code>
      *
-     * @return array<string, array<string, int>>
+     * @return array<string, numeric-string>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        $metric = [];
         if (isset($this->metrics[$artifact->getId()])) {
-            $metric = [self::M_NPATH_COMPLEXITY => $this->metrics[$artifact->getId()]];
+            return [self::M_NPATH_COMPLEXITY => $this->metrics[$artifact->getId()]];
         }
 
-        return $metric;
+        return [];
     }
 
     /**

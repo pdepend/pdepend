@@ -105,13 +105,9 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      *
      * @return array<string, float>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        if (isset($this->metrics[$artifact->getId()])) {
-            return $this->metrics[$artifact->getId()];
-        }
-
-        return [];
+        return $this->metrics[$artifact->getId()] ?? [];
     }
 
     /**

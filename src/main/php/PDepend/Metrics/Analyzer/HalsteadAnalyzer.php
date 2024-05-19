@@ -57,6 +57,8 @@ use PDepend\Source\Tokenizer\Tokens;
  * This class calculates the Halstead Complexity Measures for the project,
  * methods and functions.
  *
+ * @extends AbstractCachingAnalyzer<array<string, int>>
+ *
  * @copyright 2015 Matthias Mullie. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
@@ -102,13 +104,9 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      *
      * @return array<string, int>
      */
-    public function getNodeBasisMetrics(ASTArtifact $artifact)
+    public function getNodeBasisMetrics(ASTArtifact $artifact): array
     {
-        if (isset($this->metrics[$artifact->getId()])) {
-            return $this->metrics[$artifact->getId()];
-        }
-
-        return [];
+        return $this->metrics[$artifact->getId()] ?? [];
     }
 
     /**
@@ -116,9 +114,9 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @return array<string, float>
+     * @return array<string, float|int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
         $basis = $this->getNodeBasisMetrics($artifact);
         if ($basis) {
@@ -366,11 +364,11 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
      * Calculates Halstead measures from n1, n2, N1 & N2.
      *
      * @param array<string, int> $basis [n1, n2, N1, N2]
-     * @return array<string, float>
+     * @return array<string, float|int>
      * @see http://www.verifysoft.com/en_halstead_metrics.html
      * @see http://www.grammatech.com/codesonar/workflow-features/halstead
      */
-    public function calculateHalsteadMeasures(array $basis)
+    public function calculateHalsteadMeasures(array $basis): array
     {
         $measures = [];
         $measures[self::M_HALSTEAD_LENGTH] = $basis['N1'] + $basis['N2'];

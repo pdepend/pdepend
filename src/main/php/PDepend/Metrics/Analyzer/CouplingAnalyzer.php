@@ -128,10 +128,10 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * This array holds a mapping between node identifiers and an array with
      * the node's metrics.
      *
-     * @var array<string, array<string, mixed>>
+     * @var array<string, array<string, int>>
      * @since 0.10.2
      */
-    private $nodeMetrics = [];
+    private array $nodeMetrics = [];
 
     /**
      * Provides the project summary as an <b>array</b>.
@@ -143,9 +143,9 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * )
      * </code>
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getProjectMetrics()
+    public function getProjectMetrics(): array
     {
         return [
             self::M_CALLS => $this->calls,
@@ -166,15 +166,11 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * )
      * </code>
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        if (isset($this->nodeMetrics[$artifact->getId()])) {
-            return $this->nodeMetrics[$artifact->getId()];
-        }
-
-        return [];
+        return $this->nodeMetrics[$artifact->getId()] ?? [];
     }
 
     /**

@@ -66,7 +66,7 @@ interface AnalyzerNodeAware extends Analyzer
      * )
      * </code>
      *
-     * @return array<string, mixed>
+     * @return array<string, ?numeric>
      */
-    public function getNodeMetrics(ASTArtifact $artifact);
+    public function getNodeMetrics(ASTArtifact $artifact): array;
 }

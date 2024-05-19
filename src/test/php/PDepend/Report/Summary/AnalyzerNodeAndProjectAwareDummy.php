@@ -122,9 +122,9 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
     /**
      * Returns the project metrics.
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getProjectMetrics()
+    public function getProjectMetrics(): array
     {
         return $this->projectMetrics;
     }
@@ -132,9 +132,9 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
     /**
      * Returns an array with metrics for the requested node.
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
         return $this->nodeMetrics;
     }

@@ -173,9 +173,9 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     /**
      * Provides the project summary metrics as an <b>array</b>.
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getProjectMetrics()
+    public function getProjectMetrics(): array
     {
         // Count none leaf classes
         $noneLeafs = count($this->noneLeafs);
@@ -193,15 +193,11 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
      * for the given <b>$node</b> instance. If there are no metrics for the
      * requested node, this method will return an empty <b>array</b>.
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        if (isset($this->nodeMetrics[$artifact->getId()])) {
-            return $this->nodeMetrics[$artifact->getId()];
-        }
-
-        return [];
+        return $this->nodeMetrics[$artifact->getId()] ?? [];
     }
 
     /**

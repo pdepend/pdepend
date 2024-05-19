@@ -127,7 +127,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     /**
      * Metrics calculated for a single source node.
      *
-     * @var array<string, array<string, mixed>>
+     * @var array<string, array<string, int>>
      */
     private array $nodeMetrics;
 
@@ -136,15 +136,11 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        if (isset($this->nodeMetrics[$artifact->getId()])) {
-            return $this->nodeMetrics[$artifact->getId()];
-        }
-
-        return [];
+        return $this->nodeMetrics[$artifact->getId()] ?? [];
     }
 
     /**
@@ -157,9 +153,9 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      * )
      * </code>
      *
-     * @return array<string, mixed>
+     * @return array<string, float|int>
      */
-    public function getProjectMetrics()
+    public function getProjectMetrics(): array
     {
         return [
             self::M_AVERAGE_NUMBER_DERIVED_CLASSES => $this->andc,

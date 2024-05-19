@@ -56,6 +56,8 @@ use PDepend\Util\Cache\CacheDriver;
  * This abstract class provides an analyzer that provides the basic infrastructure
  * for caching.
  *
+ * @template T of numeric|array<string, numeric>
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
@@ -65,26 +67,22 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     /**
      * Collected node metrics
      *
-     * @var array<string, mixed>
+     * @var array<string, T>
      */
     protected array $metrics;
 
     /**
      * Metrics restored from the cache. This property is only used temporary.
      *
-     * @var array<string, array<string, int>>
+     * @var array<string, T>
      */
-    private $metricsCached = [];
+    private array $metricsCached = [];
+
+    /** Injected cache driver. */
+    private CacheDriver $cache;
 
     /**
-     * Injected cache driver.
-     *
-     * @var CacheDriver
-     */
-    private $cache;
-
-    /**
-     * Setter method for the system wide used cache.
+     * Setter method for the system-wide used cache.
      */
     public function setCache(CacheDriver $cache): void
     {
@@ -92,11 +90,9 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
     }
 
     /**
-     * Getter method for the system wide used cache.
-     *
-     * @return CacheDriver $cache
+     * Getter method for the system-wide used cache.
      */
-    public function getCache()
+    public function getCache(): CacheDriver
     {
         return $this->cache;
     }

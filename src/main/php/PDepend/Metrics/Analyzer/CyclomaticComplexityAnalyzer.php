@@ -59,6 +59,8 @@ use PDepend\Source\AST\ASTSwitchLabel;
  * This class calculates the Cyclomatic Complexity Number(CCN) for the project,
  * methods and functions.
  *
+ * @extends AbstractCachingAnalyzer<array<string, int>>
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
@@ -142,13 +144,9 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      *
      * @return array<string, int>
      */
-    public function getNodeMetrics(ASTArtifact $artifact)
+    public function getNodeMetrics(ASTArtifact $artifact): array
     {
-        if (isset($this->metrics[$artifact->getId()])) {
-            return $this->metrics[$artifact->getId()];
-        }
-
-        return [];
+        return $this->metrics[$artifact->getId()] ?? [];
     }
 
     /**
@@ -156,7 +154,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      *
      * @return array<string, int>
      */
-    public function getProjectMetrics()
+    public function getProjectMetrics(): array
     {
         return [
             self::M_CYCLOMATIC_COMPLEXITY_1 => $this->ccn,
