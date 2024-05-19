@@ -63,7 +63,7 @@ class ASTIntersectionType extends AbstractASTCombinationType
         return true;
     }
 
-    protected function getSymbol()
+    protected function getSymbol(): string
     {
         return '&';
     }

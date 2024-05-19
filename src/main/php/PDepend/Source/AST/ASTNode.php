@@ -82,10 +82,8 @@ interface ASTNode
 
     /**
      * Returns the start column for this ast node.
-     *
-     * @return int
      */
-    public function getStartColumn();
+    public function getStartColumn(): int;
 
     /**
      * Returns the end line for this ast node.
@@ -96,10 +94,8 @@ interface ASTNode
 
     /**
      * Returns the end column for this ast node.
-     *
-     * @return int
      */
-    public function getEndColumn();
+    public function getEndColumn(): int;
 
     /**
      * Returns the node instance for the given index or throws an exception.

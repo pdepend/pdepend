@@ -262,10 +262,9 @@ class ASTProperty extends AbstractASTArtifact
     /**
      * Returns the column number where the property declaration starts.
      *
-     * @return int
      * @since  0.9.8
      */
-    public function getStartColumn()
+    public function getStartColumn(): int
     {
         return $this->variableDeclarator->getStartColumn();
     }
@@ -284,10 +283,9 @@ class ASTProperty extends AbstractASTArtifact
     /**
      * Returns the column number where the property declaration ends.
      *
-     * @return int
      * @since  0.9.8
      */
-    public function getEndColumn()
+    public function getEndColumn(): int
     {
         return $this->variableDeclarator->getEndColumn();
     }

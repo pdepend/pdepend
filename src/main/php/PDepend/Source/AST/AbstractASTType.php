@@ -159,7 +159,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return $this
      */
-    public function setCache(CacheDriver $cache)
+    public function setCache(CacheDriver $cache): self
     {
         $this->cache = $cache;
 
@@ -171,7 +171,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return $this
      */
-    public function setContext(BuilderContext $context)
+    public function setContext(BuilderContext $context): self
     {
         $this->context = $context;
 

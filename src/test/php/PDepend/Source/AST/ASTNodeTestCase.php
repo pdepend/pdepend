@@ -728,7 +728,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      *
      * @param string $testCase
      * @param bool $ignoreAnnotations
-     * @return ASTNamespace[]
+     * @return ASTArtifactList<ASTNamespace>
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {

@@ -68,7 +68,7 @@ class ASTFormalParameter extends AbstractASTNode
      */
     protected $modifiers = 0;
 
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['modifiers', ...parent::__sleep()];
     }

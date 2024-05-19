@@ -51,6 +51,7 @@ use Imagick;
 use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\Iterator;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
+use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClosure;
@@ -62,6 +63,7 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Builder\BuilderContext;
@@ -448,7 +450,7 @@ abstract class AbstractTestCase extends TestCase
      * Creates a mocked class instance without calling the constructor.
      *
      * @param string $className Name of the class to mock.
-     * @return stdClass
+     * @return ASTProperty
      * @since 0.10.0
      */
     protected function getMockWithoutConstructor($className)
@@ -770,7 +772,7 @@ abstract class AbstractTestCase extends TestCase
      * Parses the test code associated with the calling test method.
      *
      * @param bool $ignoreAnnotations The parser should ignore annotations.
-     * @return ASTNamespace[]
+     * @return ASTArtifactList<ASTNamespace>
      */
     protected function parseCodeResourceForTest($ignoreAnnotations = false)
     {
@@ -786,7 +788,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @param string $testCase
      * @param bool $ignoreAnnotations
-     * @return ASTNamespace[]
+     * @return ASTArtifactList<ASTNamespace>
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {
@@ -810,7 +812,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @param string $fileOrDirectory
      * @param bool $ignoreAnnotations
-     * @return ASTNamespace[]
+     * @return ASTArtifactList<ASTNamespace>
      */
     public function parseSource($fileOrDirectory, $ignoreAnnotations = false)
     {

@@ -58,7 +58,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * testStaticVariableDeclaration
      *
-     * @return ASTStringIndexExpression
+     * @return ASTStaticVariableDeclaration
      * @since 1.0.2
      */
     public function testStaticVariableDeclaration()
@@ -120,7 +120,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @return ASTStringIndexExpression
+     * @return ASTStaticVariableDeclaration
      */
     private function getFirstStaticVariableDeclarationInFunction()
     {

@@ -113,10 +113,8 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
 
     /**
      * Returns the start column for this ast node.
-     *
-     * @return int
      */
-    public function getStartColumn()
+    public function getStartColumn(): int
     {
         return $this->getMetadataInteger(2);
     }
@@ -133,10 +131,8 @@ class ASTAnonymousClass extends ASTClass implements ASTNode
 
     /**
      * Returns the end column for this ast node.
-     *
-     * @return int
      */
-    public function getEndColumn()
+    public function getEndColumn(): int
     {
         return $this->getMetadataInteger(3);
     }

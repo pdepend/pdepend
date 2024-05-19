@@ -131,7 +131,7 @@ class MemoryCacheDriver implements CacheDriver
      * @param string $type The name or object type for the next storage method call.
      * @return $this
      */
-    public function type($type)
+    public function type($type): self
     {
         $this->type = $type;
 
