@@ -78,9 +78,7 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      */
     private array $metricsCached = [];
 
-    /**
-     * Injected cache driver.
-     */
+    /** Injected cache driver. */
     private CacheDriver $cache;
 
     /**
