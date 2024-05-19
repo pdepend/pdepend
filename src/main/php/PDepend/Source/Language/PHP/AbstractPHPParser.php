@@ -111,8 +111,6 @@ use PDepend\Source\AST\ASTLogicalXorExpression;
 use PDepend\Source\AST\ASTMatchEntry;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\ASTMethodPostfix;
-use PDepend\Source\AST\ASTNamedArgument;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParentReference;
@@ -531,7 +529,7 @@ abstract class AbstractPHPParser
      *
      * @return T|null
      */
-    private function parseAnonymousClassDeclaration(ASTAllocationExpression $allocation)
+    private function parseAnonymousClassDeclaration(ASTAllocationExpression $allocation): ?ASTAllocationExpression
     {
         $this->consumeComments();
 
@@ -576,6 +574,7 @@ abstract class AbstractPHPParser
             $this->parseInterfaceList($class);
         }
 
+        $tokens = [];
         $allocation->addChild(
             $this->setNodePositionsAndReturn(
                 $this->parseTypeBody($class),
@@ -641,7 +640,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @return ASTConstant|ASTNamedArgument
+     * @return AbstractASTNode
      */
     private function parseConstantArgument(ASTConstant $constant, ASTArguments $arguments)
     {
@@ -1182,10 +1181,12 @@ abstract class AbstractPHPParser
     /**
      * Parses an optional interface list of an interface declaration.
      *
-     * @return ASTInterface
+     * @template T of ASTInterface
+     * @param T $interface
+     * @return T
      * @since 0.10.2
      */
-    private function parseOptionalExtendsList(ASTInterface $interface)
+    private function parseOptionalExtendsList(ASTInterface $interface): ASTInterface
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
@@ -1317,7 +1318,7 @@ abstract class AbstractPHPParser
      * @return T
      * @since 1.0.0
      */
-    private function parseClassExtends(ASTClass $class)
+    private function parseClassExtends(ASTClass $class): ASTClass
     {
         $this->consumeToken(Tokens::T_EXTENDS);
         $this->tokenStack->push();
@@ -1371,7 +1372,7 @@ abstract class AbstractPHPParser
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
      */
-    private function parseTypeBody(AbstractASTClassOrInterface $classOrInterface)
+    private function parseTypeBody(AbstractASTClassOrInterface $classOrInterface): AbstractASTClassOrInterface
     {
         $this->classOrInterface = $classOrInterface;
 
@@ -1493,7 +1494,7 @@ abstract class AbstractPHPParser
      * method.
      *
      * @param int $modifiers
-     * @return ASTConstantDefinition|ASTFieldDeclaration|ASTMethod
+     * @return ASTNode
      * @since 0.9.6
      */
     private function parseMethodOrFieldDeclaration($modifiers = 0)
@@ -1574,7 +1575,7 @@ abstract class AbstractPHPParser
      *
      * @param int $tokenType
      * @param int $modifiers
-     * @return ASTConstantDefinition|ASTFieldDeclaration
+     * @return AbstractASTNode
      * @throws UnexpectedTokenException
      */
     private function parseUnknownDeclaration($tokenType, $modifiers)
@@ -1872,7 +1873,7 @@ abstract class AbstractPHPParser
      * @param T $callable
      * @return T
      */
-    private function parseCallableDeclarationAddition($callable)
+    private function parseCallableDeclarationAddition($callable): AbstractASTCallable|ASTClosure
     {
         $this->consumeComments();
         if (Tokens::T_COLON !== $this->tokenizer->peek()) {
@@ -1935,10 +1936,12 @@ abstract class AbstractPHPParser
      * Parses the adaptation list of the given use statement or simply reads
      * the terminating semicolon, when no adaptation list exists.
      *
-     * @return ASTTraitUseStatement
+     * @template T of ASTTraitUseStatement
+     * @param T $useStatement
+     * @return T
      * @since 1.0.0
      */
-    private function parseOptionalTraitAdaptation(ASTTraitUseStatement $useStatement)
+    private function parseOptionalTraitAdaptation(ASTTraitUseStatement $useStatement): ASTTraitUseStatement
     {
         $this->consumeComments();
 
@@ -2154,7 +2157,7 @@ abstract class AbstractPHPParser
      * @throws ParserException
      * @since 2.3
      */
-    private function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation)
+    private function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation): ASTAllocationExpression
     {
         return $this->parseAnonymousClassDeclaration($allocation)
             ?: $this->parseExpressionTypeReference($allocation, true);
@@ -2413,7 +2416,7 @@ abstract class AbstractPHPParser
      * @return T
      * @since 0.9.12
      */
-    private function parseRequireOrIncludeExpression(ASTExpression $expr, $type)
+    private function parseRequireOrIncludeExpression(ASTExpression $expr, $type): ASTExpression
     {
         $this->tokenStack->push();
 
@@ -2459,20 +2462,24 @@ abstract class AbstractPHPParser
      * This method will parse an increment-expression. Depending on the previous node
      * this can be a {@link ASTPostIncrementExpression} or {@link ASTPostfixExpression}.
      *
-     * @param array<ASTNode> $expressions List of previous parsed expression nodes.
-     * @return ASTExpression
+     * @param list<ASTNode> $expressions List of previous parsed expression nodes.
+     * @return list<ASTNode>
      * @since 0.10.0
      */
-    private function parseIncrementExpression(array &$expressions)
+    private function parseIncrementExpression(array $expressions)
     {
         $expression = end($expressions);
         if ($expression && $this->isReadWriteVariable($expression)) {
             array_pop($expressions);
 
-            return $this->parsePostIncrementExpression($expression);
+            $expressions[] = $this->parsePostIncrementExpression($expression);
+
+            return $expressions;
         }
 
-        return $this->parsePreIncrementExpression();
+        $expressions[] = $this->parsePreIncrementExpression();
+
+        return $expressions;
     }
 
     /**
@@ -2523,20 +2530,24 @@ abstract class AbstractPHPParser
      * This method will parse an decrement-expression. Depending on the previous node
      * this can be a {@link ASTPostDecrementExpression} or {@link ASTPostfixExpression}.
      *
-     * @param array<ASTNode> $expressions List of previous parsed expression nodes.
-     * @return ASTExpression
+     * @param list<ASTNode> $expressions List of previous parsed expression nodes.
+     * @return list<ASTNode>
      * @since 0.10.0
      */
-    private function parseDecrementExpression(array &$expressions)
+    private function parseDecrementExpression(array $expressions)
     {
         $expression = end($expressions);
         if ($expression && $this->isReadWriteVariable($expression)) {
             array_pop($expressions);
 
-            return $this->parsePostDecrementExpression($expression);
+            $expressions[] = $this->parsePostDecrementExpression($expression);
+
+            return $expressions;
         }
 
-        return $this->parsePreDecrementExpression();
+        $expressions[] = $this->parsePreDecrementExpression();
+
+        return $expressions;
     }
 
     /**
@@ -2600,13 +2611,10 @@ abstract class AbstractPHPParser
      * ----------------
      * </code>
      *
-     * @template T of ASTNode
-     *
-     * @param T $node The parent/context node instance.
-     * @return ASTIndexExpression|T
+     * @param AbstractASTNode $node The parent/context node instance.
      * @since 0.9.12
      */
-    private function parseOptionalIndexExpression(ASTNode $node)
+    private function parseOptionalIndexExpression(AbstractASTNode $node): AbstractASTNode
     {
         $this->consumeComments();
 
@@ -2625,13 +2633,10 @@ abstract class AbstractPHPParser
      * Parses an index expression as it is valid to access elements in a php
      * string or array.
      *
-     * @template T of ASTExpression
-     *
      * @param ASTNode $node The context source node.
-     * @param T $expr The concrete index expression.
+     * @param ASTExpression $expr The concrete index expression.
      * @param int $open The open token type.
      * @param int $close The close token type.
-     * @return ASTIndexExpression|T
      * @since 0.9.12
      */
     private function parseIndexExpression(
@@ -2639,7 +2644,7 @@ abstract class AbstractPHPParser
         ASTExpression $expr,
         $open,
         $close,
-    ) {
+    ): AbstractASTNode {
         $this->consumeToken($open);
 
         if (($child = $this->parseOptionalExpression()) !== null) {
@@ -2667,11 +2672,11 @@ abstract class AbstractPHPParser
      * //    ---
      * </code>
      *
-     * @param ASTNode $node The context source node.
-     * @return ASTIndexExpression
+     * @param AbstractASTNode $node The context source node.
+     * @return AbstractASTNode
      * @since 0.9.12
      */
-    private function parseArrayIndexExpression(ASTNode $node)
+    private function parseArrayIndexExpression(AbstractASTNode $node)
     {
         $expr = $this->builder->buildAstArrayIndexExpression();
         $expr->addChild($node);
@@ -2693,11 +2698,11 @@ abstract class AbstractPHPParser
      * //     ---
      * </code>
      *
-     * @param ASTNode $node The context source node.
-     * @return ASTIndexExpression
+     * @param AbstractASTNode $node The context source node.
+     * @return AbstractASTNode
      * @since 0.9.12
      */
-    private function parseStringIndexExpression(ASTNode $node)
+    private function parseStringIndexExpression(AbstractASTNode $node)
     {
         $expr = $this->builder->buildAstStringIndexExpression();
         $expr->addChild($node);
@@ -2729,11 +2734,11 @@ abstract class AbstractPHPParser
      * @template T of ASTNode
      *
      * @param T $node
-     * @param array<int, Token>|null $tokens
+     * @param array<int, Token> $tokens
      * @return T
      * @since 0.9.8
      */
-    protected function setNodePositionsAndReturn(ASTNode $node, ?array &$tokens = null)
+    protected function setNodePositionsAndReturn(ASTNode $node, array &$tokens = []): ASTNode
     {
         $tokens = $this->stripTrailingComments($this->tokenStack->pop());
 
@@ -2753,11 +2758,12 @@ abstract class AbstractPHPParser
     /**
      * Strips all trailing comments from the given token stream.
      *
-     * @param Token[] $tokens Original token stream.
-     * @return Token[]
+     * @template T of Token[]
+     * @param T $tokens Original token stream.
+     * @return T
      * @since 1.0.0
      */
-    private function stripTrailingComments(array $tokens)
+    private function stripTrailingComments(array $tokens): array
     {
         $comments = [Tokens::T_COMMENT, Tokens::T_DOC_COMMENT];
 
@@ -2876,7 +2882,7 @@ abstract class AbstractPHPParser
 
     /**
      * @param bool $classRef
-     * @return ASTNode
+     * @return AbstractASTNode
      * @throws ParserException
      */
     private function parseStandAloneExpressionType($classRef)
@@ -2913,7 +2919,7 @@ abstract class AbstractPHPParser
      * @return T
      * @throws ParserException
      */
-    private function parseExpressionTypeReference(ASTNode $expr, $classRef)
+    private function parseExpressionTypeReference(ASTNode $expr, $classRef): AbstractASTNode
     {
         $expr->addChild(
             $this->parseOptionalMemberPrimaryPrefix(
@@ -3158,7 +3164,7 @@ abstract class AbstractPHPParser
         Token $start,
         $closeToken,
         $separatorToken = null,
-    ) {
+    ): AbstractASTNode {
         if (is_object($expr = $this->parseOptionalExpression())) {
             $node->addChild($expr);
         }
@@ -3197,7 +3203,7 @@ abstract class AbstractPHPParser
      * @return T
      * @since 0.9.12
      */
-    private function parseStatementBody(ASTStatement $stmt)
+    private function parseStatementBody(ASTStatement $stmt): ASTStatement
     {
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
@@ -3340,7 +3346,7 @@ abstract class AbstractPHPParser
      * @return T
      * @since 1.0.0
      */
-    private function parseExpressionList(ASTNode $exprList)
+    private function parseExpressionList(ASTNode $exprList): AbstractASTNode
     {
         $this->consumeComments();
 
@@ -3594,12 +3600,12 @@ abstract class AbstractPHPParser
                     break;
 
                 case Tokens::T_DEC:
-                    $expressions[] = $this->parseDecrementExpression($expressions);
+                    $expressions = $this->parseDecrementExpression($expressions);
 
                     break;
 
                 case Tokens::T_INC:
-                    $expressions[] = $this->parseIncrementExpression($expressions);
+                    $expressions = $this->parseIncrementExpression($expressions);
 
                     break;
 
@@ -3811,11 +3817,12 @@ abstract class AbstractPHPParser
     /**
      * Applies all reduce rules against the given expression list.
      *
-     * @param ASTNode[] $expressions Unprepared input array with parsed expression nodes found in the source tree.
-     * @return ASTNode[]
+     * @template T of ASTNode[]
+     * @param T $expressions Unprepared input array with parsed expression nodes found in the source tree.
+     * @return T
      * @since 0.10.0
      */
-    private function reduce(array $expressions)
+    private function reduce(array $expressions): array
     {
         return $this->reduceUnaryExpression($expressions);
     }
@@ -3829,7 +3836,7 @@ abstract class AbstractPHPParser
      * @return T
      * @since 0.10.0
      */
-    private function reduceUnaryExpression(array $expressions)
+    private function reduceUnaryExpression(array $expressions): array
     {
         for ($i = count($expressions) - 2; $i >= 0; --$i) {
             $expr = $expressions[$i];
@@ -3874,12 +3881,13 @@ abstract class AbstractPHPParser
     /**
      * Parses the body of a switch statement.
      *
-     * @param ASTSwitchStatement $switch The parent switch stmt.
-     * @return ASTSwitchStatement
+     * @template T of ASTSwitchStatement
+     * @param T $switch The parent switch stmt.
+     * @return T
      * @throws ParserException
      * @since 0.9.8
      */
-    private function parseSwitchStatementBody(ASTSwitchStatement $switch)
+    private function parseSwitchStatementBody(ASTSwitchStatement $switch): ASTSwitchStatement
     {
         $this->consumeComments();
         if ($this->tokenizer->peek() === Tokens::T_CURLY_BRACE_OPEN) {
@@ -3984,11 +3992,12 @@ abstract class AbstractPHPParser
     /**
      * Parses the body of an switch label node.
      *
-     * @param ASTSwitchLabel $label The context switch label.
-     * @return ASTSwitchLabel
+     * @template T of ASTSwitchLabel
+     * @param T $label The context switch label.
+     * @return T
      * @throws ParserException
      */
-    private function parseSwitchLabelBody(ASTSwitchLabel $label)
+    private function parseSwitchLabelBody(ASTSwitchLabel $label): ASTSwitchLabel
     {
         $curlyBraceCount = 0;
 
@@ -4331,11 +4340,12 @@ abstract class AbstractPHPParser
     /**
      * This method parses an optional else-, else+if- or elseif-statement.
      *
-     * @param ASTStatement $stmt The owning if/elseif statement.
-     * @return ASTStatement
+     * @template T of ASTStatement
+     * @param T $stmt The owning if/elseif statement.
+     * @return T
      * @since 0.9.12
      */
-    private function parseOptionalElseOrElseIfStatement(ASTStatement $stmt)
+    private function parseOptionalElseOrElseIfStatement(ASTStatement $stmt): ASTStatement
     {
         $this->consumeComments();
 
@@ -4620,11 +4630,12 @@ abstract class AbstractPHPParser
      * This method parses a list of declare values. A declare list value always
      * consists of a string token and a static scalar.
      *
-     * @param ASTDeclareStatement $stmt The declare statement that is the owner of this list.
-     * @return ASTDeclareStatement
+     * @template T of ASTDeclareStatement
+     * @param T $stmt The declare statement that is the owner of this list.
+     * @return T
      * @since 0.10.0
      */
-    private function parseDeclareList(ASTDeclareStatement $stmt)
+    private function parseDeclareList(ASTDeclareStatement $stmt): ASTDeclareStatement
     {
         $this->consumeComments();
         $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
@@ -4772,13 +4783,7 @@ abstract class AbstractPHPParser
         );
     }
 
-    /**
-     * @template T of ASTExpression
-     *
-     * @param T $expr
-     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix|T
-     */
-    private function parseParenthesisExpressionOrPrimaryPrefixForVersion(ASTExpression $expr)
+    private function parseParenthesisExpressionOrPrimaryPrefixForVersion(ASTExpression $expr): AbstractASTNode
     {
         $this->consumeComments();
 
@@ -4933,13 +4938,11 @@ abstract class AbstractPHPParser
      * wrap the given <b>$node</b> with a {@link ASTFunctionPostfix}
      * node.
      *
-     * @template T of ASTNode
-     *
-     * @param T $node The previously parsed node.
-     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix|T The original input node or this node wrapped with a function postfix instance.
+     * @param AbstractASTNode $node The previously parsed node.
+     * @return AbstractASTNode The original input node or this node wrapped with a function postfix instance.
      * @since 1.0.0
      */
-    private function parseOptionalFunctionPostfix(ASTNode $node)
+    private function parseOptionalFunctionPostfix(ASTNode $node): AbstractASTNode
     {
         $this->consumeComments();
         if (Tokens::T_PARENTHESIS_OPEN === $this->tokenizer->peek()) {
@@ -4960,7 +4963,7 @@ abstract class AbstractPHPParser
      *
      * @param ASTNode $node This node represents the function identifier. An identifier can be a static string,
      *                      a variable, a compound variable or any other valid php function identifier.
-     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
+     * @return AbstractASTNode
      * @throws ParserException
      * @since 0.9.6
      */
@@ -5052,16 +5055,13 @@ abstract class AbstractPHPParser
      * token stream position. Otherwise this method simply returns the input
      * {@link ASTNode} instance.
      *
-     * @template T of ASTNode
-     *
-     * @param T $node This node represents primary prefix
-     *                left expression. It will be the first child of the parsed member
-     *                primary expression.
-     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix|T
+     * @param AbstractASTNode $node This node represents primary prefix
+     *                              left expression. It will be the first child of the parsed member
+     *                              primary expression.
      * @throws ParserException
      * @since 0.9.6
      */
-    private function parseOptionalMemberPrimaryPrefix(ASTNode $node)
+    private function parseOptionalMemberPrimaryPrefix(AbstractASTNode $node): AbstractASTNode
     {
         $this->consumeComments();
 
@@ -5091,7 +5091,7 @@ abstract class AbstractPHPParser
      * </code>
      *
      * @param ASTNode $node The left node in the parsed member primary expression.
-     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
+     * @return AbstractASTNode
      * @throws ParserException
      * @since 0.9.6
      */
@@ -5151,13 +5151,13 @@ abstract class AbstractPHPParser
      * actual token stream position. Otherwise this method simply returns the
      * input {@link ASTNode} instance.
      *
-     * @param ASTNode $node This node represents primary prefix left expression. It will
-     *                      be the first child of the parsed member primary expression.
-     * @return ASTNode
+     * @param AbstractASTNode $node This node represents primary prefix left expression. It will
+     *                              be the first child of the parsed member primary expression.
+     * @return AbstractASTNode
      * @throws ParserException
      * @since 1.0.1
      */
-    private function parseOptionalStaticMemberPrimaryPrefix(ASTNode $node)
+    private function parseOptionalStaticMemberPrimaryPrefix(AbstractASTNode $node)
     {
         $this->consumeComments();
 
@@ -5192,7 +5192,7 @@ abstract class AbstractPHPParser
      * </code>
      *
      * @param ASTNode $node The left node in the parsed member primary expression.
-     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix
+     * @return AbstractASTNode
      * @throws ParserException
      * @since 0.9.6
      */
@@ -5349,7 +5349,7 @@ abstract class AbstractPHPParser
      * Parses a method postfix node instance.
      *
      * @param ASTNode $node Node that represents the image of the method postfix node.
-     * @return ASTFunctionPostfix|ASTIndexExpression|ASTMemberPrimaryPrefix|ASTMethodPostfix
+     * @return AbstractASTNode
      * @since 1.0.0
      */
     private function parseMethodPostfix(ASTNode $node)
@@ -5392,11 +5392,13 @@ abstract class AbstractPHPParser
     /**
      * This method parses the tokens after arguments passed to a function- or method-call.
      *
-     * @return ASTArguments
+     * @template T of ASTArguments
+     * @param T $arguments
+     * @return T
      * @throws ParserException
      * @since 0.9.6
      */
-    private function parseArgumentsParenthesesContent(ASTArguments $arguments)
+    private function parseArgumentsParenthesesContent(ASTArguments $arguments): ASTArguments
     {
         $this->consumeToken(Tokens::T_PARENTHESIS_OPEN);
         $this->consumeComments();
@@ -5416,7 +5418,7 @@ abstract class AbstractPHPParser
      * @param T $arguments
      * @return T
      */
-    private function parseArgumentList(ASTArguments $arguments)
+    private function parseArgumentList(ASTArguments $arguments): ASTArguments
     {
         $this->consumeComments();
 
@@ -5498,7 +5500,7 @@ abstract class AbstractPHPParser
      * variable is followed by an object operator, double colon or opening
      * parenthesis.
      *
-     * @return ASTNode
+     * @return AbstractASTNode
      * @throws ParserException
      * @since 0.9.6
      */
@@ -5852,7 +5854,7 @@ abstract class AbstractPHPParser
      * @return T The prepared entire node.
      * @since 0.9.12
      */
-    private function parseVariableList(ASTNode $node, $inCall = false)
+    private function parseVariableList(ASTNode $node, $inCall = false): AbstractASTNode
     {
         $this->consumeComments();
         while ($this->tokenizer->peek() !== Tokenizer::T_EOF) {
@@ -5902,7 +5904,7 @@ abstract class AbstractPHPParser
      * ------
      * </code>
      *
-     * @return ASTCompoundVariable|ASTVariable|ASTVariableVariable
+     * @return AbstractASTNode
      * @throws ParserException
      * @throws UnexpectedTokenException
      * @since 0.9.6
@@ -5957,7 +5959,7 @@ abstract class AbstractPHPParser
      * this is compound variable, otherwise it can be a variable-variable or a
      * compound-variable.
      *
-     * @return ASTCompoundVariable|ASTVariableVariable
+     * @return AbstractASTNode
      * @throws ParserException
      * @throws UnexpectedTokenException
      * @since 0.9.6
@@ -6237,11 +6239,13 @@ abstract class AbstractPHPParser
     /**
      * Parses a php array declaration.
      *
+     * @template T of ASTArray
+     * @param T $array
      * @param bool $static
-     * @return ASTArray
+     * @return T
      * @since 1.0.0
      */
-    private function parseArray(ASTArray $array, $static = false)
+    private function parseArray(ASTArray $array, $static = false): ASTArray
     {
         switch ($this->tokenizer->peek()) {
             case Tokens::T_SQUARED_BRACKET_OPEN:
@@ -6270,12 +6274,14 @@ abstract class AbstractPHPParser
     /**
      * Parses all elements in an array.
      *
+     * @template T of ASTArray
+     * @param T $array
      * @param int $endDelimiter
      * @param bool $static
-     * @return ASTArray
+     * @return T
      * @since 1.0.0
      */
-    private function parseArrayElements(ASTArray $array, $endDelimiter, $static = false)
+    private function parseArrayElements(ASTArray $array, $endDelimiter, $static = false): ASTArray
     {
         $consecutiveComma = null;
         $openingToken = $this->tokenizer->prevToken();
@@ -6551,12 +6557,13 @@ abstract class AbstractPHPParser
      * to consume the stop token. The return value of this method is the prepared
      * input string node.
      *
-     * @param AbstractASTNode $node
+     * @template T of AbstractASTNode
+     * @param T $node
      * @param int $stopToken
-     * @return ASTNode
+     * @return T
      * @since 0.9.12
      */
-    private function parseStringExpressions(ASTNode $node, $stopToken)
+    private function parseStringExpressions(AbstractASTNode $node, $stopToken): AbstractASTNode
     {
         while (($tokenType = $this->tokenizer->peek()) !== Tokenizer::T_EOF) {
             switch ($tokenType) {
@@ -7627,7 +7634,7 @@ abstract class AbstractPHPParser
      */
     private function parseOptionalBoundVariables(
         ASTClosure $closure,
-    ) {
+    ): ASTClosure {
         $this->consumeComments();
 
         if (Tokens::T_USE === $this->tokenizer->peek()) {
@@ -7646,7 +7653,7 @@ abstract class AbstractPHPParser
      * @return T
      * @since 0.9.5
      */
-    private function parseBoundVariables(ASTClosure $closure)
+    private function parseBoundVariables(ASTClosure $closure): ASTClosure
     {
         $this->consumeToken(Tokens::T_USE);
 
@@ -8083,6 +8090,10 @@ abstract class AbstractPHPParser
 
         $nextToken = $this->tokenizer->peekNext();
 
+        if (!$nextToken) {
+            throw $this->getUnexpectedNextTokenException();
+        }
+
         if ($this->isConstantName($nextToken)) {
             return $this->parseTypedConstantDeclarator();
         }
@@ -8505,10 +8516,12 @@ abstract class AbstractPHPParser
     /**
      * Parses additional static values that are valid in the supported php version.
      *
-     * @return ASTValue|null
+     * @template T of ASTValue
+     * @param T $value
+     * @return T|null
      * @throws UnexpectedTokenException
      */
-    private function parseStaticValueVersionSpecific(ASTValue $value)
+    private function parseStaticValueVersionSpecific(ASTValue $value): ?ASTValue
     {
         $expressions = [];
 

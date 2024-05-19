@@ -2237,7 +2237,7 @@ class PHPBuilder implements Builder
      * @return T|null
      * @since  0.9.5
      */
-    protected function findType(array $instances, $qualifiedName)
+    protected function findType(array $instances, $qualifiedName): ?AbstractASTType
     {
         $classOrInterfaceName = $this->extractTypeName($qualifiedName);
         $caseInsensitiveName = strtolower($classOrInterfaceName);
@@ -2590,7 +2590,7 @@ class PHPBuilder implements Builder
      * @return T
      * @since 0.9.12
      */
-    private function buildAstNodeInstance($className, $image = null)
+    private function buildAstNodeInstance($className, $image = null): ASTNode
     {
         Log::debug("Creating: {$className}({$image})");
 

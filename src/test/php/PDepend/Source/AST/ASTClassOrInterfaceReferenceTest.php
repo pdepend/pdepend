@@ -83,11 +83,14 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeDelegatesToBuilderContextGetClassOrInterface(): void
     {
+        $class = $this->getMockBuilder(ASTClass::class)
+            ->setConstructorArgs([__CLASS__])
+            ->getMock();
         $context = $this->getBuilderContextMock();
         $context->expects(static::once())
             ->method('getClassOrInterface')
             ->with(static::equalTo(__CLASS__))
-            ->will(static::returnValue($this));
+            ->will(static::returnValue($class));
 
         $reference = new ASTClassOrInterfaceReference(
             $context,
@@ -102,11 +105,14 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeCachesReturnValueOfBuilderContextGetClassOrInterface(): void
     {
+        $class = $this->getMockBuilder(ASTClass::class)
+            ->setConstructorArgs([__CLASS__])
+            ->getMock();
         $context = $this->getBuilderContextMock();
         $context->expects(static::exactly(1))
             ->method('getClassOrInterface')
             ->with(static::equalTo(__CLASS__))
-            ->will(static::returnValue($this));
+            ->will(static::returnValue($class));
 
         $reference = new ASTClassOrInterfaceReference(
             $context,

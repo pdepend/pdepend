@@ -58,7 +58,7 @@ class ASTClassReference extends ASTClassOrInterfaceReference
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return ASTClass
+     * @return ASTClass|ASTEnum
      * @throws RuntimeException
      */
     public function getType()

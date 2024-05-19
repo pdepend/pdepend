@@ -58,12 +58,12 @@ class ASTTraitReference extends ASTClassOrInterfaceReference
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return AbstractASTType
+     * @return ASTTrait
      * @throws RuntimeException
      */
     public function getType()
     {
-        if ($this->typeInstance === null) {
+        if (!$this->typeInstance instanceof ASTTrait) {
             if (!$this->context) {
                 throw new RuntimeException('No context set');
             }

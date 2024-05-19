@@ -149,7 +149,7 @@ class GlobalBuilderContext implements BuilderContext
      * Returns the class instance for the given qualified name.
      *
      * @param string $qualifiedName
-     * @return ASTClass
+     * @return ASTClass|ASTEnum
      */
     public function getClass($qualifiedName)
     {
