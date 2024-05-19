@@ -121,12 +121,11 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testInlineScopeStatementHasExpectedEndColumn
      *
      * @param ASTScopeStatement $stmt
-     * @return ASTScopeStatement
      * @since 1.0.0
      *
      * @depends testInlineScopeStatementHasExpectedEndLine
      */
-    public function testInlineScopeStatementHasExpectedEndColumn($stmt)
+    public function testInlineScopeStatementHasExpectedEndColumn($stmt): void
     {
         static::assertEquals(20, $stmt->getEndColumn());
     }

@@ -8,15 +8,16 @@ use RuntimeException;
 
 class MockCommand extends Command
 {
-    public static function main()
+    public static function main(): int
     {
         $command = new self();
 
         return $command->run();
     }
 
-    protected function parseArguments(): void
+    protected function parseArguments(): bool
     {
+        return true;
     }
 
     protected function printVersion(): void

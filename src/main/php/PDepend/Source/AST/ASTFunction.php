@@ -106,7 +106,7 @@ class ASTFunction extends AbstractASTCallable
      * @return $this
      * @since  0.10.0
      */
-    public function setContext(BuilderContext $context)
+    public function setContext(BuilderContext $context): self
     {
         $this->context = $context;
 

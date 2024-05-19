@@ -275,7 +275,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         return $this->startLine;
     }
 
-    public function getStartColumn()
+    public function getStartColumn(): int
     {
         return $this->startColumn;
     }
@@ -290,7 +290,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         return $this->endLine;
     }
 
-    public function getEndColumn()
+    public function getEndColumn(): int
     {
         return $this->endColumn;
     }

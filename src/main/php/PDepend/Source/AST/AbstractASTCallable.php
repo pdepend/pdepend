@@ -142,7 +142,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @return $this
      * @since  0.10.0
      */
-    public function setCache(CacheDriver $cache)
+    public function setCache(CacheDriver $cache): self
     {
         $this->cache = $cache;
 

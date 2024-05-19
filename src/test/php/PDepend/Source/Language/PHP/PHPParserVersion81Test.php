@@ -989,10 +989,7 @@ class PHPParserVersion81Test extends AbstractTestCase
         static::assertNull($parameter->getClass());
     }
 
-    /**
-     * @return ASTNamespace
-     */
-    public function testGroupUseStatementTrailingComma()
+    public function testGroupUseStatementTrailingComma(): void
     {
         $namespaces = $this->parseCodeResourceForTest();
         static::assertGreaterThan(0, count($namespaces));

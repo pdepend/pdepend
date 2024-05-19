@@ -45,6 +45,7 @@ namespace PDepend\Issues;
 
 use ErrorException;
 use PDepend\AbstractTestCase;
+use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTParameter;
 
@@ -71,7 +72,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      * Parses the source for the calling test case.
      *
      * @param string $testCase
-     * @return ASTNamespace[]
+     * @return ASTArtifactList<ASTNamespace>
      */
     protected function parseTestCase($testCase = null)
     {
@@ -88,7 +89,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      *
      * @param string $testCase
      * @param bool $ignoreAnnotations
-     * @return ASTNamespace[]
+     * @return ASTArtifactList<ASTNamespace>
      */
     public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
     {

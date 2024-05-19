@@ -47,6 +47,7 @@ namespace PDepend\Bugs;
 use PDepend\Source\AST\ASTConstant;
 use PDepend\Source\AST\ASTFunctionPostfix;
 use PDepend\Source\Builder\Builder;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -110,12 +111,12 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
 
     /**
      * @param Builder<mixed> $builder
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * @return AbstractPHPParser&MockObject
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
     {
         return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\AbstractPHPParser',
+            AbstractPHPParser::class,
             [$tokenizer, $builder, $cache]
         );
     }

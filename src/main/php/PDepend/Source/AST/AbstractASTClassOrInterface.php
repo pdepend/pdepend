@@ -177,7 +177,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns a node iterator with all implemented interfaces.
      *
-     * @return AbstractASTClassOrInterface[]|ASTArtifactList<AbstractASTClassOrInterface>
+     * @return ASTArtifactList<AbstractASTClassOrInterface>
      * @since  0.9.5
      */
     public function getInterfaces()

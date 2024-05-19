@@ -116,7 +116,7 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         $enum->setTokens([]);
     }
 
-    protected function createItem()
+    protected function createItem(): AbstractASTArtifact
     {
         $builder = new PHPBuilder();
         $builder->setCache(new MemoryCacheDriver());

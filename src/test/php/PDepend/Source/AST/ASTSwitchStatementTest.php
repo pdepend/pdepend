@@ -253,7 +253,7 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementWithNestedNonePhpCode
      *
-     * @return ASTSwitch
+     * @return ASTSwitchStatement
      * @since 2.1.0
      */
     public function testSwitchStatementWithNestedNonePhpCode()

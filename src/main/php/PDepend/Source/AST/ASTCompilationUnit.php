@@ -183,7 +183,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * @return $this
      * @since  0.10.0
      */
-    public function setCache(CacheDriver $cache)
+    public function setCache(CacheDriver $cache): self
     {
         $this->cache = $cache;
 
@@ -236,7 +236,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
         $this->childNodes[$artifact->getId()] = $artifact;
     }
 
-    public function getChildren()
+    public function getChildren(): array
     {
         return $this->childNodes;
     }

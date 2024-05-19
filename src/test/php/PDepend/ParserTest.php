@@ -500,7 +500,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser sets the correct function return type.
      *
-     * @return ASTFunction[]
+     * @return ASTArtifactList<ASTFunction>
      */
     public function testParserSetsCorrectFunctionReturnType()
     {
@@ -922,7 +922,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Tests that the parser supports sub packages.
      *
-     * @return ASTNamespace[]
+     * @return ASTArtifactList<ASTNamespace>
      */
     public function testParserSetsFileLevelFunctionPackage()
     {
@@ -1449,7 +1449,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Returns the methods of an interface from the mixed code test file.
      *
-     * @return ASTMethod[]
+     * @return ASTArtifactList<ASTMethod>
      */
     protected function getInterfaceMethodsForTest()
     {
@@ -1476,7 +1476,7 @@ class ParserTest extends AbstractTestCase
     /**
      * Returns the methods of a class from the mixed code test file.
      *
-     * @return ASTMethod[]
+     * @return ASTArtifactList<ASTMethod>
      */
     protected function getClassMethodsForTest()
     {
