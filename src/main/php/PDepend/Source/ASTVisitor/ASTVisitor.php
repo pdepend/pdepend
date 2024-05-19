@@ -64,30 +64,6 @@ use PDepend\Source\AST\ASTTrait;
 interface ASTVisitor
 {
     /**
-     * Magic call method used to provide simplified visitor implementations.
-     * With this method we can call <b>visit${NodeClassName}</b> on each node.
-     *
-     * <code>
-     * $visitor->visitAllocationExpression($alloc);
-     *
-     * $visitor->visitStatement($stmt);
-     * </code>
-     *
-     * All visit methods takes two argument. The first argument is the current
-     * context ast node and the second argument is a data array or object that
-     * is used to collect data.
-     *
-     * The return value of this method is the second input argument, modified
-     * by the concrete visit method.
-     *
-     * @param string $method Name of the called method.
-     * @param array<int, mixed> $args Array with method argument.
-     * @return array<string, mixed>|numeric-string
-     * @since  0.9.12
-     */
-    public function __call($method, $args);
-
-    /**
      * Adds a new listener to this node visitor.
      */
     public function addVisitListener(ASTVisitListener $listener): void;
@@ -145,11 +121,7 @@ interface ASTVisitor
     public function visitProperty(ASTProperty $property): void;
 
     /**
-     * @template T of array<string, mixed>|numeric-string
-     *
      * @param ASTNode $node
-     * @param T $value
-     * @return T
      */
-    public function visit($node, $value);
+    public function visit($node): void;
 }

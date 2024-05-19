@@ -58,13 +58,8 @@ interface ASTNode
 {
     /**
      * ASTVisitor method for node tree traversal.
-     *
-     * @template T of array<string, mixed>|numeric-string
-     *
-     * @param T $data
-     * @return T
      */
-    public function accept(ASTVisitor $visitor, $data = []);
+    public function accept(ASTVisitor $visitor): void;
 
     /**
      * Returns the source image of this ast node.
