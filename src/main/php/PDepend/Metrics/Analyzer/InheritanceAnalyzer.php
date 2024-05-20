@@ -327,7 +327,9 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
         ];
 
         foreach ($class->getParentClasses() as $parent) {
-            $this->initNodeMetricsForClass($parent);
+            if ($parent instanceof ASTClass) {
+                $this->initNodeMetricsForClass($parent);
+            }
         }
     }
 }

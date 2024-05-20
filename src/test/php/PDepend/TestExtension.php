@@ -6,7 +6,7 @@ use PDepend\DependencyInjection\Extension;
 
 class TestExtension extends Extension
 {
-    public function getName()
+    public function getName(): string
     {
         return 'test';
     }

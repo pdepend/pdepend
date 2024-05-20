@@ -118,7 +118,7 @@ interface ASTNode
      * @param class-string<T> $targetType
      * @return T|null
      */
-    public function getFirstChildOfType($targetType);
+    public function getFirstChildOfType($targetType): ?self;
 
     /**
      * This method will search recursive for all child nodes that are an

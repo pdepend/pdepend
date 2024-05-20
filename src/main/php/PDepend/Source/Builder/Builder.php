@@ -255,7 +255,7 @@ interface Builder extends IteratorAggregate
      * instance when no matching type exists.
      *
      * @param string $qualifiedName
-     * @return ASTClass
+     * @return ASTClass|ASTEnum
      * @since  0.9.5
      */
     public function getClass($qualifiedName);

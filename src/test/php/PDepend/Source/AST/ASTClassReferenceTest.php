@@ -62,11 +62,14 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeDelegatesToBuilderContextGetClass(): void
     {
+        $class = $this->getMockBuilder(ASTClass::class)
+            ->setConstructorArgs([__CLASS__])
+            ->getMock();
         $context = $this->getBuilderContextMock();
         $context->expects(static::once())
             ->method('getClass')
             ->with(static::equalTo(__CLASS__))
-            ->will(static::returnValue($this));
+            ->will(static::returnValue($class));
 
         $reference = new ASTClassReference($context, __CLASS__);
         $reference->getType();
@@ -77,11 +80,14 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeCachesReturnValueOfBuilderContextGetClass(): void
     {
+        $class = $this->getMockBuilder(ASTClass::class)
+            ->setConstructorArgs([__CLASS__])
+            ->getMock();
         $context = $this->getBuilderContextMock();
         $context->expects(static::exactly(1))
             ->method('getClass')
             ->with(static::equalTo(__CLASS__))
-            ->will(static::returnValue($this));
+            ->will(static::returnValue($class));
 
         $reference = new ASTClassReference($context, __CLASS__);
         $reference->getType();

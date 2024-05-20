@@ -98,7 +98,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
-     * @return ASTClass|null
+     * @return ASTClass|ASTEnum|null
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function getParentClass()
@@ -131,7 +131,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * direct parent of this class is the first element in the returned array
      * and parent of this parent the second element and so on.
      *
-     * @return ASTClass[]
+     * @return array<int, ASTClass|ASTEnum>
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @since  1.0.0
      */
