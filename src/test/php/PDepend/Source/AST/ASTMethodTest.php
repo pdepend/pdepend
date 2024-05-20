@@ -330,7 +330,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     {
         $method = new ASTMethod('method', 0);
         $visitor = new StubASTVisitor();
-        $method->accept($visitor);
+        $visitor->dispatch($method);
 
         static::assertSame($method, $visitor->method);
     }

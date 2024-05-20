@@ -146,7 +146,7 @@ class MethodStrategyTest extends AbstractTestCase
 
         $strategy = new MethodStrategy();
         foreach ($namespaces as $namespace) {
-            $namespace->accept($strategy);
+            $strategy->dispatch($namespace);
         }
 
         $actual = $strategy->getCollectedNodes();

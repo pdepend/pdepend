@@ -44,7 +44,6 @@
 namespace PDepend\Source\AST;
 
 use BadMethodCallException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
@@ -805,21 +804,6 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
             ->with(static::isInstanceOf(ASTInterface::class));
 
         $interface->setContext($context)->__wakeup();
-    }
-
-    /**
-     * testAcceptInvokesVisitInterfaceOnGivenVisitor
-     */
-    public function testAcceptInvokesVisitInterfaceOnGivenVisitor(): void
-    {
-        $visitor = $this->getMockBuilder(ASTVisitor::class)
-            ->getMock();
-        $visitor->expects(static::once())
-            ->method('visitInterface')
-            ->with(static::isInstanceOf(ASTInterface::class));
-
-        $interface = $this->createItem();
-        $interface->accept($visitor);
     }
 
     /**

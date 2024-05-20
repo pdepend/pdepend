@@ -52,6 +52,7 @@ use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTTrait;
@@ -99,13 +100,16 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartClass($class);
 
-        $class->getCompilationUnit()?->accept($this);
+        $unit = $class->getCompilationUnit();
+        if ($unit) {
+            $this->dispatch($unit);
+        }
 
         foreach ($class->getProperties() as $property) {
-            $property->accept($this);
+            $this->dispatch($property);
         }
         foreach ($class->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
 
         $this->fireEndClass($class);
@@ -118,13 +122,16 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartEnum($enum);
 
-        $enum->getCompilationUnit()?->accept($this);
+        $unit = $enum->getCompilationUnit();
+        if ($unit) {
+            $this->dispatch($unit);
+        }
 
         foreach ($enum->getProperties() as $property) {
-            $property->accept($this);
+            $this->dispatch($property);
         }
         foreach ($enum->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
 
         $this->fireEndEnum($enum);
@@ -139,10 +146,13 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartTrait($trait);
 
-        $trait->getCompilationUnit()?->accept($this);
+        $unit = $trait->getCompilationUnit();
+        if ($unit) {
+            $this->dispatch($unit);
+        }
 
         foreach ($trait->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
 
         $this->fireEndTrait($trait);
@@ -164,10 +174,13 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartFunction($function);
 
-        $function->getCompilationUnit()?->accept($this);
+        $unit = $function->getCompilationUnit();
+        if ($unit) {
+            $this->dispatch($unit);
+        }
 
         foreach ($function->getParameters() as $parameter) {
-            $parameter->accept($this);
+            $this->dispatch($parameter);
         }
 
         $this->fireEndFunction($function);
@@ -180,10 +193,13 @@ abstract class AbstractASTVisitor implements ASTVisitor
     {
         $this->fireStartInterface($interface);
 
-        $interface->getCompilationUnit()?->accept($this);
+        $unit = $interface->getCompilationUnit();
+        if ($unit) {
+            $this->dispatch($unit);
+        }
 
         foreach ($interface->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
 
         $this->fireEndInterface($interface);
@@ -197,7 +213,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
         $this->fireStartMethod($method);
 
         foreach ($method->getParameters() as $parameter) {
-            $parameter->accept($this);
+            $this->dispatch($parameter);
         }
 
         $this->fireEndMethod($method);
@@ -211,19 +227,19 @@ abstract class AbstractASTVisitor implements ASTVisitor
         $this->fireStartNamespace($namespace);
 
         foreach ($namespace->getClasses() as $class) {
-            $class->accept($this);
+            $this->dispatch($class);
         }
         foreach ($namespace->getInterfaces() as $interface) {
-            $interface->accept($this);
+            $this->dispatch($interface);
         }
         foreach ($namespace->getTraits() as $trait) {
-            $trait->accept($this);
+            $this->dispatch($trait);
         }
         foreach ($namespace->getEnums() as $enum) {
-            $enum->accept($this);
+            $this->dispatch($enum);
         }
         foreach ($namespace->getFunctions() as $function) {
-            $function->accept($this);
+            $this->dispatch($function);
         }
 
         $this->fireEndNamespace($namespace);
@@ -247,10 +263,20 @@ abstract class AbstractASTVisitor implements ASTVisitor
         $this->fireEndProperty($property);
     }
 
-    public function visit($node): void
+    public function dispatch(ASTNode $node): void
+    {
+        $methodName = 'visit' . substr($node::class, 22);
+        if (method_exists($this, $methodName)) {
+            $this->{$methodName}($node);
+        } else {
+            $this->visit($node);
+        }
+    }
+
+    public function visit(ASTNode $node): void
     {
         foreach ($node->getChildren() as $child) {
-            $child->accept($this);
+            $this->dispatch($child);
         }
     }
 

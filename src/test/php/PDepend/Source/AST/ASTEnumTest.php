@@ -82,11 +82,11 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
     {
         $enum = $this->createItem();
         $strategy = new PropertyStrategy();
-        $enum->accept($strategy);
+        $strategy->dispatch($enum);
         static::assertSame([], $strategy->getCollectedNodes());
 
         $strategy = new MethodStrategy();
-        $enum->accept($strategy);
+        $strategy->dispatch($enum);
 
         $nodes = [];
 

@@ -44,7 +44,6 @@
 namespace PDepend\Source\AST;
 
 use PDepend\AbstractTestCase;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Test case for the code property class.
@@ -395,24 +394,6 @@ class ASTPropertyTest extends AbstractTestCase
     {
         $property = $this->getFirstPropertyInClass();
         static::assertTrue($property->isStatic());
-    }
-
-    /**
-     * testAcceptCallsVisitorMethodVisitProperty
-     */
-    public function testAcceptCallsVisitorMethodVisitProperty(): void
-    {
-        $visitor = $this->getMockBuilder(ASTVisitor::class)
-            ->getMock();
-        $visitor->expects(static::once())
-            ->method('visitProperty');
-
-        $property = $this->getMockBuilder(ASTProperty::class)
-            ->onlyMethods(['__construct'])
-            ->disableOriginalConstructor()
-            ->setMockClassName(substr('package_' . md5(microtime()), 0, 18) . '_ASTProperty')
-            ->getMock();
-        $property->accept($visitor);
     }
 
     /**

@@ -188,7 +188,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         $this->reset();
 
         foreach ($namespaces as $namespace) {
-            $namespace->accept($this);
+            $this->dispatch($namespace);
         }
 
         $this->postProcessTemporaryCouplingMap();

@@ -104,7 +104,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
             $this->metrics = [];
             foreach ($namespaces as $namespace) {
-                $namespace->accept($this);
+                $this->dispatch($namespace);
             }
 
             $this->fireEndAnalyzer();
@@ -233,7 +233,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     public function visitDoWhileStatement(ASTDoWhileStatement $node): void
     {
         $this->pushCollector();
-        $node->getChild(0)->accept($this);
+        $this->dispatch($node->getChild(0));
         $expr = $this->sumComplexity($node->getChild(1));
 
         $npath = MathUtil::add($expr, $this->collector);
@@ -273,7 +273,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
                 $this->pushCollector();
-                $child->accept($this);
+                $this->dispatch($child);
                 $npath = MathUtil::add($npath, $this->collector);
                 $this->popCollector();
             }
@@ -307,7 +307,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
                 $this->pushCollector();
-                $child->accept($this);
+                $this->dispatch($child);
                 $npath = MathUtil::add($npath, $this->collector);
                 $this->popCollector();
             } elseif ($child instanceof ASTExpression) {
@@ -342,7 +342,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
                 $this->pushCollector();
-                $child->accept($this);
+                $this->dispatch($child);
                 $npath = MathUtil::add($npath, $this->collector);
                 $this->popCollector();
             }
@@ -382,7 +382,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
                 $this->pushCollector();
-                $child->accept($this);
+                $this->dispatch($child);
                 $npath = MathUtil::add($npath, $this->collector);
                 $this->popCollector();
             }
@@ -439,7 +439,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTSwitchLabel) {
                 $this->pushCollector();
-                $child->accept($this);
+                $this->dispatch($child);
                 $npath = MathUtil::add($npath, $this->collector);
                 $this->popCollector();
             }
@@ -481,7 +481,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
                 $this->pushCollector();
-                $child->accept($this);
+                $this->dispatch($child);
                 $npath = MathUtil::add($npath, $this->collector);
                 $this->popCollector();
             }
@@ -509,7 +509,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     {
         $expr = $this->sumComplexity($node->getChild(0));
         $this->pushCollector();
-        $node->getChild(1)->accept($this);
+        $this->dispatch($node->getChild(1));
 
         $npath = MathUtil::add($expr, $this->collector);
         $npath = MathUtil::add($npath, '1');
@@ -533,7 +533,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $sum = '0';
         $this->pushCollector();
         if ($node instanceof ASTConditionalExpression) {
-            $node->accept($this);
+            $this->dispatch($node);
             $sum = MathUtil::add($sum, $this->collector);
         } elseif (
             $node instanceof ASTBooleanAndExpression

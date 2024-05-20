@@ -129,7 +129,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
 
             // Visit all nodes
             foreach ($namespaces as $namespace) {
-                $namespace->accept($this);
+                $this->dispatch($namespace);
             }
 
             $this->fireEndAnalyzer();
@@ -216,10 +216,10 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         ];
 
         foreach ($trait->getProperties() as $property) {
-            $property->accept($this);
+            $this->dispatch($property);
         }
         foreach ($trait->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
 
         $this->fireEndTrait($trait);
@@ -400,12 +400,12 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
 
         if ($class instanceof ASTClass) {
             foreach ($class->getProperties() as $property) {
-                $property->accept($this);
+                $this->dispatch($property);
             }
         }
 
         foreach ($class->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
     }
 }

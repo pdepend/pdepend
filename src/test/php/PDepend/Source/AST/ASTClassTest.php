@@ -1118,7 +1118,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $class = new ASTClass(__CLASS__);
         $visitor = new StubASTVisitor();
 
-        $class->accept($visitor);
+        $visitor->dispatch($class);
         static::assertSame($class, $visitor->class);
     }
 

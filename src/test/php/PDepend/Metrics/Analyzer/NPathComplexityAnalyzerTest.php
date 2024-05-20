@@ -512,7 +512,7 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     private function calculateNPathComplexity(AbstractASTCallable $callable)
     {
         $analyzer = $this->createAnalyzer();
-        $callable->accept($analyzer);
+        $analyzer->dispatch($callable);
 
         $metrics = $analyzer->getNodeMetrics($callable);
 

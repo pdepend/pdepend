@@ -104,7 +104,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
             $this->nodeMetrics = [];
 
             foreach ($namespaces as $namespace) {
-                $namespace->accept($this);
+                $this->dispatch($namespace);
             }
 
             $this->postProcess();
@@ -196,7 +196,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
         }
 
         foreach ($type->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
     }
 

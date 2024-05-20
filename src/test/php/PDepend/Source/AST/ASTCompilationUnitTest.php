@@ -44,7 +44,6 @@
 namespace PDepend\Source\AST;
 
 use PDepend\AbstractTestCase;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Test case for the code file class.
@@ -137,21 +136,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
         $compilationUnit->setId(__FUNCTION__);
 
         $compilationUnit->setTokens([1, 2, 3]);
-    }
-
-    /**
-     * testAcceptInvokesVisitFileOnGivenVisitor
-     */
-    public function testAcceptInvokesVisitFileOnGivenVisitor(): void
-    {
-        $visitor = $this->getMockBuilder(ASTVisitor::class)
-            ->getMock();
-        $visitor->expects(static::once())
-            ->method('visitCompilationUnit')
-            ->with(static::isInstanceOf(ASTCompilationUnit::class));
-
-        $file = new ASTCompilationUnit(null);
-        $file->accept($visitor);
     }
 
     /**

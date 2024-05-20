@@ -146,7 +146,7 @@ class PropertyStrategyTest extends AbstractTestCase
 
         $strategy = new PropertyStrategy();
         foreach ($namespaces as $namespace) {
-            $namespace->accept($strategy);
+            $strategy->dispatch($namespace);
         }
 
         $actual = $strategy->getCollectedNodes();

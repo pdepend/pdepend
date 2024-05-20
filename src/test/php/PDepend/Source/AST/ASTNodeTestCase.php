@@ -45,7 +45,6 @@ namespace PDepend\Source\AST;
 
 use OutOfBoundsException;
 use PDepend\AbstractTestCase;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 use ReflectionClass;
 
 /**
@@ -571,22 +570,6 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $parent->prependChild($child1);
 
         static::assertSame($child2, $parent->getChild(1));
-    }
-
-    /**
-     * testAcceptInvokesVisitOnGivenVisitor
-     */
-    public function testAcceptInvokesVisitOnGivenVisitor(): void
-    {
-        $node = $this->createNodeInstance();
-
-        $visitor = $this->getMockBuilder(ASTVisitor::class)
-            ->getMock();
-        $visitor->expects(static::once())
-            ->method('visit')
-            ->with(static::equalTo($node));
-
-        $node->accept($visitor);
     }
 
     /**
