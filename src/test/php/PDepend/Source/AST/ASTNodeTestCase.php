@@ -578,34 +578,15 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testAcceptInvokesVisitOnGivenVisitor(): void
     {
-        $methodName = 'visit' . substr(static::class, 22, -4);
+        $node = $this->createNodeInstance();
 
         $visitor = $this->getMockBuilder(ASTVisitor::class)
             ->getMock();
         $visitor->expects(static::once())
-            ->method('__call')
-            ->with(static::equalTo($methodName));
+            ->method('visit')
+            ->with(static::equalTo($node));
 
-        $node = $this->createNodeInstance();
         $node->accept($visitor);
-    }
-
-    /**
-     * testAcceptReturnsReturnValueOfVisitMethod
-     */
-    public function testAcceptReturnsReturnValueOfVisitMethod(): void
-    {
-        $methodName = 'visit' . substr(static::class, 22, -4);
-
-        $visitor = $this->getMockBuilder(ASTVisitor::class)
-            ->getMock();
-        $visitor->expects(static::once())
-            ->method('__call')
-            ->with(static::equalTo($methodName))
-            ->will(static::returnValue(42));
-
-        $node = $this->createNodeInstance();
-        static::assertEquals(42, $node->accept($visitor));
     }
 
     /**
