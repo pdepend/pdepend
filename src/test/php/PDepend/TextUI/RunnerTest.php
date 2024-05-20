@@ -52,7 +52,7 @@ use PDepend\Input\Filter;
 use PDepend\Report\ReportGeneratorFactory;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use RuntimeException;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Test case for the text ui runner.
@@ -136,7 +136,7 @@ class RunnerTest extends AbstractTestCase
             });
         $engine->expects(static::exactly(0))
             ->method('setCodeFilter');
-        $container = new Container();
+        $container = new ContainerBuilder();
 
         $runner = new Runner(new ReportGeneratorFactory($container), $engine);
         $runner->setExcludeDirectories([dirname(__DIR__)]);
@@ -169,7 +169,7 @@ class RunnerTest extends AbstractTestCase
             ->willReturnCallback(function (PackageArtifactFilter $excludePathFilter) use (&$record): void {
                 $record[] = $excludePathFilter;
             });
-        $container = new Container();
+        $container = new ContainerBuilder();
 
         $runner = new Runner(new ReportGeneratorFactory($container), $engine);
         $runner->setExcludeNamespaces(['PDepend']);

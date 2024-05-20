@@ -306,22 +306,14 @@ abstract class AbstractPHPParser
      */
     private $namespacePrefixReplaced = false;
 
-    /**
-     * The currently parsed file instance.
-     *
-     * @var ASTCompilationUnit
-     */
-    private $compilationUnit;
+    /** The currently parsed file instance. */
+    private ASTCompilationUnit $compilationUnit;
 
     /** The symbol table used to handle PHP use statements. */
     private SymbolTable $useSymbolTable;
 
-    /**
-     * The actually parsed class or interface instance.
-     *
-     * @var AbstractASTClassOrInterface|null
-     */
-    private $classOrInterface;
+    /** The actually parsed class or interface instance. */
+    private ?AbstractASTClassOrInterface $classOrInterface = null;
 
     /** @since 0.10.0 */
     private CacheDriver $cache;
@@ -331,7 +323,7 @@ abstract class AbstractPHPParser
      *
      * @var string|null
      */
-    private $namespaceName;
+    private $namespaceName = null;
 
     /**
      * Last parsed package tag.
@@ -1770,7 +1762,7 @@ abstract class AbstractPHPParser
         $this->parseCallableDeclaration($function);
 
         // First check for an existing namespace
-        if ($this->namespaceName !== null) {
+        if (isset($this->namespaceName)) {
             $namespaceName = $this->namespaceName;
         } elseif ($this->packageName !== Builder::DEFAULT_NAMESPACE) {
             $namespaceName = $this->packageName;
@@ -5584,7 +5576,7 @@ abstract class AbstractPHPParser
         // Strip optional comments
         $this->consumeComments();
 
-        if ($this->classOrInterface === null) {
+        if (!isset($this->classOrInterface)) {
             throw new InvalidStateException(
                 $token->startLine,
                 (string) $this->compilationUnit,
@@ -5614,7 +5606,7 @@ abstract class AbstractPHPParser
      */
     private function parseSelfReference(Token $token)
     {
-        if ($this->classOrInterface === null) {
+        if (!isset($this->classOrInterface)) {
             throw new InvalidStateException(
                 $token->startLine,
                 (string) $this->compilationUnit,
@@ -5701,7 +5693,7 @@ abstract class AbstractPHPParser
      */
     private function parseParentReference(Token $token)
     {
-        if ($this->classOrInterface === null) {
+        if (!isset($this->classOrInterface)) {
             throw new InvalidStateException(
                 $token->startLine,
                 (string) $this->compilationUnit,
@@ -7722,7 +7714,7 @@ abstract class AbstractPHPParser
             array_shift($fragments);
             array_unshift($fragments, $mapsTo);
         } elseif (
-            $this->namespaceName !== null
+            isset($this->namespaceName)
             && $this->namespacePrefixReplaced === false
         ) {
             // Prepend current namespace
@@ -7756,7 +7748,7 @@ abstract class AbstractPHPParser
             $this->consumeComments();
 
             // Add current namespace as first token
-            $qualifiedName = [(string) $this->namespaceName];
+            $qualifiedName = [$this->namespaceName ?? ''];
 
             // Set prefixed flag to true
             $this->namespacePrefixReplaced = true;
@@ -8812,7 +8804,7 @@ abstract class AbstractPHPParser
      */
     private function getNamespaceOrPackageName()
     {
-        if ($this->namespaceName === null) {
+        if (!isset($this->namespaceName)) {
             return $this->packageName;
         }
 

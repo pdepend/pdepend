@@ -84,7 +84,7 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Constructs a new ast node instance.
      *
-     * @param string $image The source image for this node.
+     * @param ?string $image The source image for this node.
      */
     public function __construct($image = null)
     {

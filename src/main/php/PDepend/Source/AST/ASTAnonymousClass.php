@@ -51,7 +51,7 @@ namespace PDepend\Source\AST;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 2.3
  */
-class ASTAnonymousClass extends ASTClass implements ASTNode
+class ASTAnonymousClass extends ASTClass
 {
     /**
      * Metadata for this node instance, serialized in a string. This string
