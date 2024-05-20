@@ -295,18 +295,16 @@ abstract class AbstractASTArtifact implements ASTArtifact
         return $this->endColumn;
     }
 
-    /**
-     * @template T of array<string, mixed>|numeric-string
-     *
-     * @param T $data
-     * @return T
-     */
-    public function accept(ASTVisitor $visitor, $data = [])
+    public function accept(ASTVisitor $visitor): void
     {
         $methodName = 'visit' . substr(static::class, 22);
         $callable = [$visitor, $methodName];
-        assert(is_callable($callable));
+        if (is_callable($callable)) {
+            $callable($this);
 
-        return $callable($this, $data);
+            return;
+        }
+
+        $visitor->visit($this);
     }
 }
