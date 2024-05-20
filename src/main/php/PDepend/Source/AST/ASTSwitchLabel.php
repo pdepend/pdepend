@@ -53,12 +53,8 @@ namespace PDepend\Source\AST;
  */
 class ASTSwitchLabel extends AbstractASTNode
 {
-    /**
-     * Is this switch label the default label?
-     *
-     * @var bool
-     */
-    protected $default = false;
+    /** Is this switch label the default label? */
+    protected bool $default = false;
 
     /**
      * The magic sleep method will be called by PHP's runtime environment right

@@ -62,19 +62,15 @@ class StrategyFactory
     /** The identifier for the method strategy. */
     private const STRATEGY_METHOD = 'method';
 
-    /**
-     * The default strategy.
-     *
-     * @var string
-     */
-    private $defaultStrategy = self::STRATEGY_INHERITANCE;
+    /** The default strategy. */
+    private string $defaultStrategy = self::STRATEGY_INHERITANCE;
 
     /**
      * List of all valid properties.
      *
      * @var array<string, class-string<CodeRankStrategyI>>
      */
-    private $validStrategies = [
+    private array $validStrategies = [
         self::STRATEGY_INHERITANCE => InheritanceStrategy::class,
         self::STRATEGY_METHOD => MethodStrategy::class,
         self::STRATEGY_PROPERTY => PropertyStrategy::class,

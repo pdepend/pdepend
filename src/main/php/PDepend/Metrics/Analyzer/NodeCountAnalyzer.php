@@ -71,40 +71,20 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         M_NUMBER_OF_METHODS = 'nom',
         M_NUMBER_OF_FUNCTIONS = 'nof';
 
-    /**
-     * Number Of Packages.
-     *
-     * @var int
-     */
-    private $nop = 0;
+    /** Number Of Packages. */
+    private int $nop = 0;
 
-    /**
-     * Number Of Classes.
-     *
-     * @var int
-     */
-    private $noc = 0;
+    /** Number Of Classes. */
+    private int $noc = 0;
 
-    /**
-     * Number Of Interfaces.
-     *
-     * @var int
-     */
-    private $noi = 0;
+    /** Number Of Interfaces. */
+    private int $noi = 0;
 
-    /**
-     * Number Of Methods.
-     *
-     * @var int
-     */
-    private $nom = 0;
+    /** Number Of Methods. */
+    private int $nom = 0;
 
-    /**
-     * Number Of Functions.
-     *
-     * @var int
-     */
-    private $nof = 0;
+    /** Number Of Functions. */
+    private int $nof = 0;
 
     /**
      * Collected node metrics

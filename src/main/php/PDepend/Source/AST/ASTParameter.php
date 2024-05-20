@@ -69,19 +69,11 @@ class ASTParameter extends AbstractASTArtifact
     /** The parent function or method instance. */
     private AbstractASTCallable $declaringFunction;
 
-    /**
-     * The parameter position.
-     *
-     * @var int
-     */
-    private $position = 0;
+    /** The parameter position. */
+    private int $position = 0;
 
-    /**
-     * Is this parameter optional or mandatory?
-     *
-     * @var bool
-     */
-    private $optional = false;
+    /** Is this parameter optional or mandatory? */
+    private bool $optional = false;
 
     /** The wrapped formal parameter instance. */
     private ASTFormalParameter $formalParameter;

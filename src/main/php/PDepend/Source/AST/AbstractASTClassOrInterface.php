@@ -65,7 +65,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @var ASTClassOrInterfaceReference[]
      */
-    protected $interfaceReferences = [];
+    protected array $interfaceReferences = [];
 
     /**
      * An <b>array</b> with all constants defined in this class or interface.

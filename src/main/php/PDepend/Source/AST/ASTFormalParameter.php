@@ -61,12 +61,8 @@ use OutOfBoundsException;
  */
 class ASTFormalParameter extends AbstractASTNode
 {
-    /**
-     * Defined modifiers for this property node.
-     *
-     * @var int
-     */
-    protected $modifiers = 0;
+    /** Defined modifiers for this property node. */
+    protected int $modifiers = 0;
 
     public function __sleep(): array
     {

@@ -58,14 +58,14 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      *
      * @var array<string, mixed>
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * List or registered listeners.
      *
      * @var AnalyzerListener[]
      */
-    private $listeners = [];
+    private array $listeners = [];
 
     /**
      * Constructs a new analyzer instance.

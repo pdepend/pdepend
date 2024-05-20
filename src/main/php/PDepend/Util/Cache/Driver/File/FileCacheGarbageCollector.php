@@ -59,11 +59,9 @@ class FileCacheGarbageCollector
 {
     public const DEFAULT_TTL = 2592000; // 30 days
 
-    /** @var string */
-    private $cacheDir;
+    private string $cacheDir;
 
-    /** @var int */
-    private $expirationTimestamp;
+    private int $expirationTimestamp;
 
     /**
      * @param string $cacheDir

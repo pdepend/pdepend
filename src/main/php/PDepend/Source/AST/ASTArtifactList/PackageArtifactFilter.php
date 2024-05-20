@@ -56,12 +56,8 @@ use PDepend\Source\AST\ASTNamespace;
  */
 class PackageArtifactFilter implements ArtifactFilter
 {
-    /**
-     * Regexp with ignorable namespace names and namespace name fragments.
-     *
-     * @var string
-     */
-    private $pattern = '';
+    /** Regexp with ignorable namespace names and namespace name fragments. */
+    private string $pattern = '';
 
     /**
      * Constructs a new namespace filter for the given list of namespace names.

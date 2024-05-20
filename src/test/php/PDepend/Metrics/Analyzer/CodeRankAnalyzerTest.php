@@ -62,7 +62,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
      *
      * @var array<string, array>
      */
-    private $input = [
+    private array $input = [
         'package1' => ['cr' => 0.2775, 'rcr' => 0.385875],
         'package2' => ['cr' => 0.15, 'rcr' => 0.47799375],
         'package3' => ['cr' => 0.385875, 'rcr' => 0.2775],

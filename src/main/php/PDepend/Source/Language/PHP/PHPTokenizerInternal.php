@@ -242,7 +242,7 @@ class PHPTokenizerInternal implements FullTokenizer
      *
      * @var array<int, int>
      */
-    protected static $tokenMap = [
+    protected static array $tokenMap = [
         T_AS => Tokens::T_AS,
         T_DO => Tokens::T_DO,
         T_IF => Tokens::T_IF,
@@ -389,7 +389,7 @@ class PHPTokenizerInternal implements FullTokenizer
      *
      * @var array<string, int>
      */
-    protected static $literalMap = [
+    protected static array $literalMap = [
         '@' => Tokens::T_AT,
         '/' => Tokens::T_DIV,
         '%' => Tokens::T_MOD,
@@ -441,7 +441,7 @@ class PHPTokenizerInternal implements FullTokenizer
     ];
 
     /** @var array<int, array<int, string>> */
-    protected static $substituteTokens = [
+    protected static array $substituteTokens = [
         T_DOLLAR_OPEN_CURLY_BRACES => ['$', '{'],
     ];
 
@@ -452,7 +452,7 @@ class PHPTokenizerInternal implements FullTokenizer
      *
      * @var array<int, array<int, int>>
      */
-    protected static $alternativeMap = [
+    protected static array $alternativeMap = [
         Tokens::T_USE => [
             Tokens::T_OBJECT_OPERATOR => Tokens::T_STRING,
             Tokens::T_DOUBLE_COLON => Tokens::T_STRING,
@@ -564,7 +564,7 @@ class PHPTokenizerInternal implements FullTokenizer
     ];
 
     /** @var array<int, array<int, array<string, int|string>>> */
-    protected static $reductionMap = [
+    protected static array $reductionMap = [
         Tokens::T_CONCAT => [
             Tokens::T_CONCAT => [
                 'type' => self::T_ELLIPSIS,
@@ -614,12 +614,8 @@ class PHPTokenizerInternal implements FullTokenizer
      */
     private array $tokens;
 
-    /**
-     * The next free identifier for unknown string tokens.
-     *
-     * @var int
-     */
-    private $unknownTokenID = 1000;
+    /** The next free identifier for unknown string tokens. */
+    private int $unknownTokenID = 1000;
 
     /**
      * Returns the name of the source file.

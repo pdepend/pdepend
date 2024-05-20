@@ -143,7 +143,7 @@ final class Type
      *
      * @var array<string, bool>
      */
-    private static $scalarTypes = [
+    private static array $scalarTypes = [
         self::IMAGE_ARRAY => true,
         self::IMAGE_BOOL => true,
         self::IMAGE_BOOLEAN => true,
@@ -199,7 +199,7 @@ final class Type
      *
      * @var array<string, string>
      */
-    private static $primitiveTypes = [
+    private static array $primitiveTypes = [
         self::IMAGE_BOOL => self::PHP_TYPE_BOOLEAN,
         self::IMAGE_BOOLEAN => self::PHP_TYPE_BOOLEAN,
         self::IMAGE_SOUNDEX_BOOL => self::PHP_TYPE_BOOLEAN,

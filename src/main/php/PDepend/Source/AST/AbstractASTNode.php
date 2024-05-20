@@ -61,7 +61,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @var ASTNode[]
      */
-    protected $nodes = [];
+    protected array $nodes = [];
 
     /**
      * The parent node of this node or <b>null</b> when this node is the root

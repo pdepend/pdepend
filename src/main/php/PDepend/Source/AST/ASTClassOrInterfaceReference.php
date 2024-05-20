@@ -60,12 +60,8 @@ class ASTClassOrInterfaceReference extends ASTType
     /** The global AST builder context. */
     protected ?BuilderContext $context = null;
 
-    /**
-     * An already loaded type instance.
-     *
-     * @var AbstractASTClassOrInterface|null
-     */
-    protected $typeInstance = null;
+    /** An already loaded type instance. */
+    protected ?AbstractASTClassOrInterface $typeInstance = null;
 
     /**
      * Constructs a new type holder instance.

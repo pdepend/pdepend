@@ -67,26 +67,14 @@ class FileCacheDriver implements CacheDriver
     /** Default cache entry type. */
     private const ENTRY_TYPE = 'cache';
 
-    /**
-     * The cache directory handler
-     *
-     * @var FileCacheDirectory
-     */
-    protected $directory;
+    /** The cache directory handler */
+    protected FileCacheDirectory $directory;
 
-    /**
-     * The current cache entry type.
-     *
-     * @var string
-     */
-    protected $type = self::ENTRY_TYPE;
+    /** The current cache entry type. */
+    protected string $type = self::ENTRY_TYPE;
 
-    /**
-     * Major and minor version of the currently used PHP.
-     *
-     * @var string
-     */
-    protected $version;
+    /** Major and minor version of the currently used PHP. */
+    protected string $version;
 
     /**
      * Unique key for this cache instance.
@@ -94,7 +82,7 @@ class FileCacheDriver implements CacheDriver
      * @var ?string
      * @since 1.0.0
      */
-    private $cacheKey;
+    private ?string $cacheKey;
 
     /**
      * This method constructs a new file cache instance for the given root

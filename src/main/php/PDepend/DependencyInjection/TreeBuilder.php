@@ -51,11 +51,9 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder as BaseTreeBuilder;
  */
 class TreeBuilder
 {
-    /** @var ArrayNodeDefinition */
-    protected $rootNode;
+    protected ArrayNodeDefinition $rootNode;
 
-    /** @var BaseTreeBuilder */
-    protected $treeBuilder;
+    protected BaseTreeBuilder $treeBuilder;
 
     /**
      * TreeBuilder constructor.

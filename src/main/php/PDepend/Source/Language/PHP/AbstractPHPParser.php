@@ -278,7 +278,7 @@ abstract class AbstractPHPParser
      *
      * @var PHPBuilder<mixed>
      */
-    protected $builder;
+    protected PHPBuilder $builder;
 
     /** Stack with all active token scopes. */
     protected TokenStack $tokenStack;
@@ -287,7 +287,7 @@ abstract class AbstractPHPParser
     protected Tokenizer $tokenizer;
 
     /** @var array<int, int> */
-    protected $possiblePropertyTypes = [
+    protected array $possiblePropertyTypes = [
         Tokens::T_STRING,
         Tokens::T_ARRAY,
         Tokens::T_QUESTION_MARK,
@@ -301,10 +301,8 @@ abstract class AbstractPHPParser
     /**
      * Internal state flag, that will be set to <b>true</b> when the parser has
      * prefixed a qualified name with the actual namespace.
-     *
-     * @var bool
      */
-    private $namespacePrefixReplaced = false;
+    private bool $namespacePrefixReplaced = false;
 
     /** The currently parsed file instance. */
     private ASTCompilationUnit $compilationUnit;
@@ -318,48 +316,26 @@ abstract class AbstractPHPParser
     /** @since 0.10.0 */
     private CacheDriver $cache;
 
-    /**
-     * The name of the last detected namespace.
-     *
-     * @var string|null
-     */
-    private $namespaceName = null;
+    /** The name of the last detected namespace. */
+    private ?string $namespaceName = null;
 
-    /**
-     * Last parsed package tag.
-     *
-     * @var string|null
-     */
-    private $packageName = Builder::DEFAULT_NAMESPACE;
+    /** Last parsed package tag. */
+    private ?string $packageName = Builder::DEFAULT_NAMESPACE;
 
-    /**
-     * The package defined in the file level comment.
-     *
-     * @var string|null
-     */
-    private $globalPackageName = Builder::DEFAULT_NAMESPACE;
+    /** The package defined in the file level comment. */
+    private ?string $globalPackageName = Builder::DEFAULT_NAMESPACE;
 
-    /**
-     * The last parsed doc comment or <b>null</b>.
-     *
-     * @var string|null
-     */
-    private $docComment;
+    /** The last parsed doc comment or <b>null</b>. */
+    private ?string $docComment;
 
-    /**
-     * Bitfield of last parsed modifiers.
-     *
-     * @var int
-     */
-    private $modifiers = 0;
+    /** Bitfield of last parsed modifiers. */
+    private int $modifiers = 0;
 
     /**
      * If this property is set to <b>true</b> the parser will ignore all doc
      * comment annotations.
-     *
-     * @var bool
      */
-    private $ignoreAnnotations = false;
+    private bool $ignoreAnnotations = false;
 
     /**
      * Used identifier builder instance.
@@ -371,17 +347,12 @@ abstract class AbstractPHPParser
     /**
      * The maximum valid nesting level allowed.
      *
-     * @var int
      * @since 0.9.12
      */
-    private $maxNestingLevel = 1024;
+    private int $maxNestingLevel = 1024;
 
-    /**
-     * True if current statement is echoing (such as after <?=)
-     *
-     * @var bool
-     */
-    private $echoing = false;
+    /** True if current statement is echoing (such as after <?=) */
+    private bool $echoing = false;
 
     /**
      * Constructs a new source parser.

@@ -96,24 +96,15 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
     /**
      * Has this analyzer already processed the source under test?
      *
-     * @var bool
      * @since 0.10.2
      */
-    private $uninitialized = true;
+    private bool $uninitialized = true;
 
-    /**
-     * The number of method or function calls.
-     *
-     * @var int
-     */
-    private $calls = 0;
+    /** The number of method or function calls. */
+    private int $calls = 0;
 
-    /**
-     * Number of fanouts.
-     *
-     * @var int
-     */
-    private $fanout = 0;
+    /** Number of fanouts. */
+    private int $fanout = 0;
 
     /**
      * Temporary map that is used to hold the id combinations of dependee and
@@ -122,7 +113,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * @var array<string, array<string, array<string, bool>>>
      * @since 0.10.2
      */
-    private $dependencyMap = [];
+    private array $dependencyMap = [];
 
     /**
      * This array holds a mapping between node identifiers and an array with

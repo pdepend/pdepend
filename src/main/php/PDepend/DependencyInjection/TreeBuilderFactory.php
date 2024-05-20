@@ -58,7 +58,7 @@ class TreeBuilderFactory
     public const DEFAULT_TTL = 2592000; // 30 days
 
     /** @var array<Extension> */
-    private $extensions = [];
+    private array $extensions = [];
 
     /**
      * @param array<Extension> $extensions

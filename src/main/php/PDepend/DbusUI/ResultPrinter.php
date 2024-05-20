@@ -63,19 +63,11 @@ use PDepend\Source\Tokenizer\Tokenizer;
  */
 class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
 {
-    /**
-     * Time when it the process has started.
-     *
-     * @var int
-     */
-    private $startTime = 0;
+    /** Time when it the process has started. */
+    private int $startTime = 0;
 
-    /**
-     * Number of parsed/analyzed files.
-     *
-     * @var int
-     */
-    private $parsedFiles = 0;
+    /** Number of parsed/analyzed files. */
+    private int $parsedFiles = 0;
 
     /**
      * Is called when PDepend starts the file parsing process.

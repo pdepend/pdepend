@@ -62,7 +62,7 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
      *
      * @var array<string, array{in: string[], out: string[], name: string, type: class-string}>
      */
-    private $nodes = [];
+    private array $nodes = [];
 
     /**
      * Returns the collected nodes.

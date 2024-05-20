@@ -61,12 +61,8 @@ final class Log
      */
     private static $stream = STDERR;
 
-    /**
-     * Are debugging messages activated?
-     *
-     * @var bool
-     */
-    private static $debug = false;
+    /** Are debugging messages activated? */
+    private static bool $debug = false;
 
     /**
      * Sets the log severity levels, this can be an OR combined list of valid

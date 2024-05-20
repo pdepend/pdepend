@@ -85,7 +85,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var ASTCompilationUnit[]
      */
-    protected $fileSet = [];
+    protected array $fileSet = [];
 
     /** The log output file. */
     private string $logFile;
@@ -96,7 +96,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var AnalyzerNodeAware[]
      */
-    private $nodeAwareAnalyzers = [];
+    private array $nodeAwareAnalyzers = [];
 
     /**
      * List of all analyzers that implement the node aware interface
@@ -104,14 +104,14 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var AnalyzerProjectAware[]
      */
-    private $projectAwareAnalyzers = [];
+    private array $projectAwareAnalyzers = [];
 
     /**
      * The internal used xml stack.
      *
      * @var DOMElement[]
      */
-    private $xmlStack = [];
+    private array $xmlStack = [];
 
     /**
      * Sets the output log file.

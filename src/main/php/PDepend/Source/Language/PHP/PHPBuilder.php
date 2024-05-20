@@ -212,21 +212,21 @@ class PHPBuilder implements Builder
      *
      * @var array<string, array<string, array<string, ASTTrait>>>
      */
-    private $traits = [];
+    private array $traits = [];
 
     /**
      * All generated {@link ASTClass} objects
      *
      * @var array<string, array<string, array<string, ASTClass|ASTEnum>>>
      */
-    private $classes = [];
+    private array $classes = [];
 
     /**
      * All generated {@link ASTInterface} instances.
      *
      * @var array<string, array<string, array<string, ASTInterface>>>
      */
-    private $interfaces = [];
+    private array $interfaces = [];
 
     /**
      * All generated {@link ASTNamespace} objects
@@ -235,40 +235,32 @@ class PHPBuilder implements Builder
      */
     private array $namespaces = [];
 
-    /**
-     * Internal status flag used to check that a build request is internal.
-     *
-     * @var bool
-     */
-    private $internal = false;
+    /** Internal status flag used to check that a build request is internal. */
+    private bool $internal = false;
 
-    /**
-     * Internal used flag that marks the parsing process as frozen.
-     *
-     * @var bool
-     */
-    private $frozen = false;
+    /** Internal used flag that marks the parsing process as frozen. */
+    private bool $frozen = false;
 
     /**
      * Cache of all traits created during the regular parsing process.
      *
      * @var array<string, array<string, array<string, ASTTrait>>>
      */
-    private $frozenTraits = [];
+    private array $frozenTraits = [];
 
     /**
      * Cache of all classes created during the regular parsing process.
      *
      * @var array<string, array<string, array<string, ASTClass|ASTEnum>>>
      */
-    private $frozenClasses = [];
+    private array $frozenClasses = [];
 
     /**
      * Cache of all interfaces created during the regular parsing process.
      *
      * @var array<string, array<string, array<string, ASTInterface>>>
      */
-    private $frozenInterfaces = [];
+    private array $frozenInterfaces = [];
 
     /**
      * Constructs a new builder instance.

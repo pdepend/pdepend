@@ -65,7 +65,7 @@ class ClassDependencyAnalyzerTest extends AbstractMetricsTestCase
      *
      * @var array<string, array>
      */
-    private $input = [
+    private array $input = [
         'AbstractBase' => [
             'efferent' => [],
             'afferent' => [

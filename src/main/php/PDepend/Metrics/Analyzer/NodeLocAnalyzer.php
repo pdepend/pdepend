@@ -111,19 +111,17 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * Executable lines of code in a class. The method calculation increases
      * this property with each method's ELOC value.
      *
-     * @var int
      * @since 0.9.12
      */
-    private $classExecutableLines = 0;
+    private int $classExecutableLines = 0;
 
     /**
      * Logical lines of code in a class. The method calculation increases this
      * property with each method's LLOC value.
      *
-     * @var int
      * @since 0.9.13
      */
-    private $classLogicalLines = 0;
+    private int $classLogicalLines = 0;
 
     /**
      * This method will return an <b>array</b> with all generated metric values

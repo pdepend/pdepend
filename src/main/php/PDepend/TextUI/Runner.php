@@ -72,7 +72,7 @@ class Runner
      *
      * @var array<string>
      */
-    private $extensions = ['php', 'php5'];
+    private array $extensions = ['php', 'php5'];
 
     /**
      * List of exclude directories. Default exclude dirs are <b>.svn</b> and
@@ -80,42 +80,38 @@ class Runner
      *
      * @var array<string>
      */
-    private $excludeDirectories = ['.git', '.svn', 'CVS'];
+    private array $excludeDirectories = ['.git', '.svn', 'CVS'];
 
     /**
      * List of exclude namespaces.
      *
      * @var array<string>
      */
-    private $excludeNamespaces = [];
+    private array $excludeNamespaces = [];
 
     /**
      * List of source code directories and files.
      *
      * @var array<string>
      */
-    private $sourceArguments = [];
+    private array $sourceArguments = [];
 
-    /**
-     * Should the parse ignore doc comment annotations?
-     *
-     * @var bool
-     */
-    private $withoutAnnotations = false;
+    /** Should the parse ignore doc comment annotations? */
+    private bool $withoutAnnotations = false;
 
     /**
      * List of log identifiers and log files.
      *
      * @var array<string, string>
      */
-    private $loggerMap = [];
+    private array $loggerMap = [];
 
     /**
      * List of cli options for loggers or analyzers.
      *
      * @var array<string, mixed>
      */
-    private $options = [];
+    private array $options = [];
 
     /**
      * This of process listeners that will be hooked into PDepend's analyzing
@@ -123,20 +119,18 @@ class Runner
      *
      * @var ProcessListener[]
      */
-    private $processListeners = [];
+    private array $processListeners = [];
 
     /**
      * List of error messages for all parsing errors.
      *
      * @var array<string>
      */
-    private $parseErrors = [];
+    private array $parseErrors = [];
 
-    /** @var ReportGeneratorFactory */
-    private $reportGeneratorFactory;
+    private ReportGeneratorFactory $reportGeneratorFactory;
 
-    /** @var Engine */
-    private $engine;
+    private Engine $engine;
 
     public function __construct(ReportGeneratorFactory $reportGeneratorFactory, Engine $engine)
     {

@@ -54,12 +54,8 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  */
 abstract class AbstractASTArtifact implements ASTArtifact
 {
-    /**
-     * The name for this item.
-     *
-     * @var string
-     */
-    protected $name = '';
+    /** The name for this item. */
+    protected string $name = '';
 
     /** The unique identifier for this function. */
     protected string $id;

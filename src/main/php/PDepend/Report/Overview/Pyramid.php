@@ -91,7 +91,7 @@ class Pyramid implements FileAwareGenerator
      *
      * @var array<string, array<int, float>>
      */
-    private $thresholds = [
+    private array $thresholds = [
         'cyclo-loc' => [0.16, 0.20, 0.24],
         'loc-nom' => [7, 10, 13],
         'nom-noc' => [4, 7, 10],

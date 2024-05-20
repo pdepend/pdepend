@@ -57,7 +57,7 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @var AbstractASTClassOrInterface[]
      */
-    protected $types = [];
+    protected array $types = [];
 
     /**
      * List of all standalone {@link ASTFunction} objects
@@ -65,10 +65,9 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @var ASTFunction[]
      */
-    protected $functions = [];
+    protected array $functions = [];
 
-    /** @var bool */
-    protected $packageAnnotation = false;
+    protected bool $packageAnnotation = false;
 
     /** Does this namespace contain user defined functions, classes or interfaces? */
     private bool $userDefined;

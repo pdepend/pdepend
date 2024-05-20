@@ -69,21 +69,13 @@ class ASTArtifactList implements ArrayAccess, Countable, Iterator
      *
      * @var T[]
      */
-    private $artifacts = [];
+    private array $artifacts = [];
 
-    /**
-     * Total number of available nodes.
-     *
-     * @var int
-     */
-    private $count = 0;
+    /** Total number of available nodes. */
+    private int $count = 0;
 
-    /**
-     * Current internal offset.
-     *
-     * @var int
-     */
-    private $offset = 0;
+    /** Current internal offset. */
+    private int $offset = 0;
 
     /**
      * Constructs a new node iterator from the given {@link ASTArtifact}

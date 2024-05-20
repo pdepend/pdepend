@@ -76,7 +76,7 @@ class ASTDeclareStatement extends ASTStatement
      *
      * @var ASTValue[]
      */
-    protected $values = [];
+    protected array $values = [];
 
     /**
      * The magic sleep method will be called by PHP's runtime environment right
