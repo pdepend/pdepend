@@ -104,7 +104,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
             $this->metrics = [];
 
             foreach ($namespaces as $namespace) {
-                $namespace->accept($this);
+                $this->dispatch($namespace);
             }
 
             $this->fireEndAnalyzer();

@@ -153,7 +153,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
         $this->fireStartAnalyzer();
 
         foreach ($namespaces as $namespace) {
-            $namespace->accept($this);
+            $this->dispatch($namespace);
         }
 
         $this->fireEndAnalyzer();

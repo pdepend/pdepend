@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\AST;
 
-use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Source\Builder\BuilderContext;
 
 /**
@@ -361,22 +360,6 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         $Trait->setNamespace($namespace);
 
         static::assertSame('MyTrait', $Trait->getNamespacedName());
-    }
-
-    /**
-     * testAcceptInvokesVisitTraitOnGivenVisitor
-     */
-    public function testAcceptInvokesVisitTraitOnGivenVisitor(): void
-    {
-        $visitor = $this->getMockBuilder(ASTVisitor::class)
-            ->disableOriginalClone()
-            ->getMock();
-        $visitor->expects(static::once())
-            ->method('visitTrait')
-            ->with(static::isInstanceOf(ASTTrait::class));
-
-        $trait = new ASTTrait('MyTrait');
-        $trait->accept($visitor);
     }
 
     /**

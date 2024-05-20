@@ -144,7 +144,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
             $this->nodeCollector = [];
 
             foreach ($namespaces as $namespace) {
-                $namespace->accept($this);
+                $this->dispatch($namespace);
             }
 
             $this->postProcess();
@@ -259,7 +259,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
         $this->nodeSet[$namespace->getId()] = $namespace;
 
         foreach ($namespace->getTypes() as $type) {
-            $type->accept($this);
+            $this->dispatch($type);
         }
 
         $this->fireEndNamespace($namespace);
@@ -314,7 +314,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
         }
 
         foreach ($type->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
     }
 

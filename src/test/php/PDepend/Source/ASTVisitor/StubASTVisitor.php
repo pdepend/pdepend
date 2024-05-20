@@ -50,6 +50,7 @@ use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTTrait;
@@ -183,7 +184,17 @@ class StubASTVisitor implements ASTVisitor
     {
     }
 
-    public function visit($node): void
+    public function visit(ASTNode $node): void
     {
+    }
+
+    public function dispatch(ASTNode $node): void
+    {
+        $methodName = 'visit' . substr($node::class, 22);
+        if (method_exists($this, $methodName)) {
+            $this->{$methodName}($node);
+        } else {
+            $this->visit($node);
+        }
     }
 }

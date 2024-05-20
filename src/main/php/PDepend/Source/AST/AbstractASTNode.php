@@ -45,7 +45,6 @@
 namespace PDepend\Source\AST;
 
 use OutOfBoundsException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This is an abstract base implementation of the ast node interface.
@@ -122,19 +121,6 @@ abstract class AbstractASTNode implements ASTNode
         foreach ($this->nodes as $node) {
             $node->setParent($this);
         }
-    }
-
-    public function accept(ASTVisitor $visitor): void
-    {
-        $methodName = 'visit' . substr(static::class, 22);
-        $callable = [$visitor, $methodName];
-        if (is_callable($callable)) {
-            $callable($this);
-
-            return;
-        }
-
-        $visitor->visit($this);
     }
 
     /**

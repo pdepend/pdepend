@@ -137,7 +137,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
             foreach ($namespaces as $namespace) {
                 // Traverse all strategies
                 foreach ($this->strategies as $strategy) {
-                    $namespace->accept($strategy);
+                    $strategy->dispatch($namespace);
                 }
             }
 

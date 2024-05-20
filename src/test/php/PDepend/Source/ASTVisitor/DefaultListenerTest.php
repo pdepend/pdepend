@@ -115,7 +115,7 @@ class DefaultListenerTest extends AbstractTestCase
         $visitor = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
-        $class->accept($visitor);
+        $visitor->dispatch($class);
 
         $actual = $listener->nodes;
         $expected = [
@@ -141,7 +141,7 @@ class DefaultListenerTest extends AbstractTestCase
         $visitor = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
-        $interface->accept($visitor);
+        $visitor->dispatch($interface);
 
         $actual = $listener->nodes;
         $expected = [
@@ -167,7 +167,7 @@ class DefaultListenerTest extends AbstractTestCase
         $visitor = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
-        $function->accept($visitor);
+        $visitor->dispatch($function);
 
         $actual = $listener->nodes;
         $expected = [
@@ -193,7 +193,7 @@ class DefaultListenerTest extends AbstractTestCase
         $visitor = new StubAbstractASTVisitor();
         $visitor->addVisitListener($listener);
 
-        $method->accept($visitor);
+        $visitor->dispatch($method);
 
         $actual = $listener->nodes;
         $expected = [

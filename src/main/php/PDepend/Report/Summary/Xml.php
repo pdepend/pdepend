@@ -208,7 +208,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $this->xmlStack[] = $metrics;
 
         foreach ($this->code as $node) {
-            $node->accept($this);
+            $this->dispatch($node);
         }
 
         if (count($this->fileSet) > 0) {
@@ -302,10 +302,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $this->xmlStack[] = $typeXml;
 
         foreach ($type->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
         foreach ($type->getProperties() as $property) {
-            $property->accept($this);
+            $this->dispatch($property);
         }
 
         array_pop($this->xmlStack);
@@ -399,10 +399,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $this->xmlStack[] = $packageXml;
 
         foreach ($namespace->getTypes() as $type) {
-            $type->accept($this);
+            $this->dispatch($type);
         }
         foreach ($namespace->getFunctions() as $function) {
-            $function->accept($this);
+            $this->dispatch($function);
         }
 
         array_pop($this->xmlStack);

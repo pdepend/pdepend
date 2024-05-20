@@ -169,7 +169,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $this->xmlStack[] = $dependencies;
 
         foreach ($this->code as $node) {
-            $node->accept($this);
+            $this->dispatch($node);
         }
 
         $dom->appendChild($dependencies);
@@ -264,10 +264,10 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
         $this->xmlStack[] = $packageXml;
 
         foreach ($namespace->getTypes() as $type) {
-            $type->accept($this);
+            $this->dispatch($type);
         }
         foreach ($namespace->getFunctions() as $function) {
-            $function->accept($this);
+            $this->dispatch($function);
         }
 
         array_pop($this->xmlStack);

@@ -89,7 +89,7 @@ class HalsteadAnalyzer extends AbstractCachingAnalyzer implements AnalyzerNodeAw
             $this->metrics = [];
 
             foreach ($namespaces as $namespace) {
-                $namespace->accept($this);
+                $this->dispatch($namespace);
             }
 
             $this->fireEndAnalyzer();

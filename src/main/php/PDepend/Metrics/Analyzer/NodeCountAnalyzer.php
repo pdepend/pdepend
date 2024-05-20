@@ -151,7 +151,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
             $this->nodeMetrics = [];
 
             foreach ($namespaces as $namespace) {
-                $namespace->accept($this);
+                $this->dispatch($namespace);
             }
 
             $this->fireEndAnalyzer();
@@ -180,7 +180,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ];
 
         foreach ($class->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
 
         $this->fireEndClass($class);
@@ -224,7 +224,7 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ];
 
         foreach ($interface->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
 
         $this->fireEndInterface($interface);
@@ -269,13 +269,13 @@ class NodeCountAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ];
 
         foreach ($namespace->getClasses() as $class) {
-            $class->accept($this);
+            $this->dispatch($class);
         }
         foreach ($namespace->getInterfaces() as $interface) {
-            $interface->accept($this);
+            $this->dispatch($interface);
         }
         foreach ($namespace->getFunctions() as $function) {
-            $function->accept($this);
+            $this->dispatch($function);
         }
 
         $this->fireEndNamespace($namespace);

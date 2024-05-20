@@ -168,7 +168,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
     private function doAnalyze($namespaces): void
     {
         foreach ($namespaces as $namespace) {
-            $namespace->accept($this);
+            $this->dispatch($namespace);
         }
 
         if ($this->numberOfClasses > 0) {

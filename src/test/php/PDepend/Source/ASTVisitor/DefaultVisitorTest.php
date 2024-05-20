@@ -69,7 +69,7 @@ class DefaultVisitorTest extends AbstractTestCase
 
         $visitor = new StubAbstractASTVisitor();
         foreach ($namespaces as $namespace) {
-            $namespace->accept($visitor);
+            $visitor->dispatch($namespace);
         }
 
         $expected = [
@@ -265,7 +265,7 @@ class DefaultVisitorTest extends AbstractTestCase
         $visitor->expects(static::exactly(2))
             ->method('visitTrait');
 
-        $namespace->accept($visitor);
+        $visitor->dispatch($namespace);
     }
 
     /**
@@ -284,7 +284,7 @@ class DefaultVisitorTest extends AbstractTestCase
         $visitor->method('visitMethod')
             ->willReturnOnConsecutiveCalls(static::equalTo($method0), static::equalTo($method1));
 
-        $trait->accept($visitor);
+        $visitor->dispatch($trait);
     }
 
     /**

@@ -173,7 +173,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
 
             $this->metrics = [];
             foreach ($namespaces as $namespace) {
-                $namespace->accept($this);
+                $this->dispatch($namespace);
             }
 
             $this->fireEndAnalyzer();
@@ -188,13 +188,16 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
     {
         $this->fireStartClass($class);
 
-        $class->getCompilationUnit()?->accept($this);
+        $unit = $class->getCompilationUnit();
+        if ($unit) {
+            $this->dispatch($unit);
+        }
 
         $this->classExecutableLines = 0;
         $this->classLogicalLines = 0;
 
         foreach ($class->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
 
         if ($this->restoreFromCache($class)) {
@@ -268,7 +271,10 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
     {
         $this->fireStartFunction($function);
 
-        $function->getCompilationUnit()?->accept($this);
+        $unit = $function->getCompilationUnit();
+        if ($unit) {
+            $this->dispatch($unit);
+        }
 
         if ($this->restoreFromCache($function)) {
             $this->fireEndFunction($function);
@@ -302,10 +308,13 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
     {
         $this->fireStartInterface($interface);
 
-        $interface->getCompilationUnit()?->accept($this);
+        $unit = $interface->getCompilationUnit();
+        if ($unit) {
+            $this->dispatch($unit);
+        }
 
         foreach ($interface->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
 
         if ($this->restoreFromCache($interface)) {

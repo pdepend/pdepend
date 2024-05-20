@@ -44,7 +44,6 @@
 namespace PDepend\Source\AST;
 
 use PDepend\AbstractTestCase;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Test case for the code parameter class.
@@ -216,25 +215,5 @@ class ASTParameterTest extends AbstractTestCase
             ->current()
             ->getMethods()
             ->current();
-    }
-
-    /**
-     * testAcceptInvokesVisitParameterOnSuppliedVisitor
-     */
-    public function testAcceptInvokesVisitParameterOnSuppliedVisitor(): void
-    {
-        $visitor = $this->getMockBuilder(ASTVisitor::class)
-            ->getMock();
-        $visitor->expects(static::once())
-            ->method('visitParameter')
-            ->with(static::isInstanceOf(ASTParameter::class));
-
-        $formalParameter = $this->getMockBuilder(ASTFormalParameter::class)
-            ->getMock();
-        $formalParameter->expects(static::any())
-            ->method('getFirstChildOfType')
-            ->will(static::returnValue(new ASTVariableDeclarator('test')));
-        $parameter = new ASTParameter($formalParameter);
-        $parameter->accept($visitor);
     }
 }

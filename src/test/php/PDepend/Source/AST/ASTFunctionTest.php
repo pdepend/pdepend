@@ -566,7 +566,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function = $this->createItem();
         $visitor = new StubASTVisitor();
 
-        $function->accept($visitor);
+        $visitor->dispatch($function);
         static::assertSame($function, $visitor->function);
     }
 

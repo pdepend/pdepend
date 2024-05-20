@@ -143,7 +143,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
 
             // Visit all nodes
             foreach ($namespaces as $namespace) {
-                $namespace->accept($this);
+                $this->dispatch($namespace);
             }
 
             $this->fireEndAnalyzer();
@@ -209,10 +209,10 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         $this->nodeMetrics[$class->getId()] = [];
 
         foreach ($class->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
         foreach ($class->getProperties() as $property) {
-            $property->accept($this);
+            $this->dispatch($property);
         }
 
         $this->fireEndClass($class);
@@ -238,7 +238,7 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         ++$this->interfs;
 
         foreach ($interface->getMethods() as $method) {
-            $method->accept($this);
+            $this->dispatch($method);
         }
 
         $this->fireEndInterface($interface);
@@ -262,11 +262,11 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         $this->fireStartNamespace($namespace);
 
         foreach ($namespace->getTypes() as $type) {
-            $type->accept($this);
+            $this->dispatch($type);
         }
 
         foreach ($namespace->getFunctions() as $function) {
-            $function->accept($this);
+            $this->dispatch($function);
         }
 
         $this->fireEndNamespace($namespace);

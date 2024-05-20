@@ -364,7 +364,7 @@ class ASTNamespaceTest extends AbstractTestCase
         $namespace = new ASTNamespace('package1');
         $visitor = new StubASTVisitor();
 
-        $namespace->accept($visitor);
+        $visitor->dispatch($namespace);
         static::assertSame($namespace, $visitor->namespace);
     }
 

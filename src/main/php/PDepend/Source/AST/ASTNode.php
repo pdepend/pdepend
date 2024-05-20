@@ -45,7 +45,6 @@
 namespace PDepend\Source\AST;
 
 use OutOfBoundsException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * This is an abstract base implementation of the ast node interface.
@@ -56,11 +55,6 @@ use PDepend\Source\ASTVisitor\ASTVisitor;
  */
 interface ASTNode
 {
-    /**
-     * ASTVisitor method for node tree traversal.
-     */
-    public function accept(ASTVisitor $visitor): void;
-
     /**
      * Returns the source image of this ast node.
      *

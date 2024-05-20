@@ -44,7 +44,6 @@
 namespace PDepend\Source\AST;
 
 use OutOfBoundsException;
-use PDepend\Source\ASTVisitor\ASTVisitor;
 
 /**
  * Abstract base class for code item.
@@ -289,18 +288,5 @@ abstract class AbstractASTArtifact implements ASTArtifact
     public function getEndColumn(): int
     {
         return $this->endColumn;
-    }
-
-    public function accept(ASTVisitor $visitor): void
-    {
-        $methodName = 'visit' . substr(static::class, 22);
-        $callable = [$visitor, $methodName];
-        if (is_callable($callable)) {
-            $callable($this);
-
-            return;
-        }
-
-        $visitor->visit($this);
     }
 }
