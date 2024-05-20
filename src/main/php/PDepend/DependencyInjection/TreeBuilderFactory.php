@@ -84,8 +84,12 @@ class TreeBuilderFactory
 
         $cacheNode = $nodes->arrayNode('cache')->addDefaultsIfNotSet()->children();
         $cacheNode->enumNode('driver')->defaultValue('file')->values(['file', 'memory']);
-        $cacheNode->scalarNode('location')->info('This value is only used for the file cache.')->defaultValue($home . '/.pdepend');
-        $cacheNode->integerNode('ttl')->info('This value is only used for the file cache. Value in seconds.')->defaultValue(self::DEFAULT_TTL);
+        $cacheNode->scalarNode('location')
+            ->info('This value is only used for the file cache.')
+            ->defaultValue($home . '/.pdepend');
+        $cacheNode->integerNode('ttl')
+            ->info('This value is only used for the file cache. Value in seconds.')
+            ->defaultValue(self::DEFAULT_TTL);
 
         $imageConvertNode = $nodes->arrayNode('image_convert')->addDefaultsIfNotSet()->children();
         $imageConvertNode->scalarNode('font_size')->defaultValue('11');

@@ -72,7 +72,8 @@ class ASTProperty extends AbstractASTArtifact
      * Constructs a new item for the given field declaration and variable
      * declarator.
      *
-     * @param ASTFieldDeclaration $fieldDeclaration The context field declaration where this property was declared in the source.
+     * @param ASTFieldDeclaration $fieldDeclaration The context field declaration where this property was declared in
+     *                                              the source.
      * @param ASTVariableDeclarator $variableDeclarator The context variable declarator for this property instance.
      */
     public function __construct(

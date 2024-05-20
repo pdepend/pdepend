@@ -87,6 +87,7 @@ class ASTFormalParameter extends AbstractASTNode
      * Returns the type of this parameter.
      *
      * @return ASTType
+     * @throws OutOfBoundsException
      */
     public function getType()
     {

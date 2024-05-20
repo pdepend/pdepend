@@ -222,10 +222,14 @@ class Application
 
         foreach ($loggerServices as $loggerServiceTags) {
             foreach ($loggerServiceTags as $loggerServiceTag) {
-                if (isset($loggerServiceTag['option'], $loggerServiceTag['message']) && is_string($loggerServiceTag['option']) && is_string($loggerServiceTag['message'])) {
+                if (isset($loggerServiceTag['option'], $loggerServiceTag['message'])
+                    && is_string($loggerServiceTag['option'])
+                    && is_string($loggerServiceTag['message'])
+                ) {
+                    $hasValue = isset($loggerServiceTag['value']) && is_string($loggerServiceTag['value']);
                     $options[$loggerServiceTag['option']] = [
                         'message' => $loggerServiceTag['message'],
-                        'value' => isset($loggerServiceTag['value']) && is_string($loggerServiceTag['value']) ? $loggerServiceTag['value'] : 'file',
+                        'value' => $hasValue ? $loggerServiceTag['value'] : 'file',
                     ];
                 }
             }

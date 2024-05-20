@@ -275,6 +275,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Sets the tokens for this type.
      *
      * @param Token[] $tokens
+     * @throws InvalidArgumentException
      */
     public function setTokens(array $tokens, ?Token $startToken = null): void
     {
@@ -379,6 +380,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * that are imported through traits.
      *
      * @return ASTMethod[]
+     * @throws ASTTraitMethodCollisionException
      * @since  1.0.0
      */
     protected function getTraitMethods()
