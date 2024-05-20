@@ -62,69 +62,36 @@ use PDepend\Source\AST\ASTTrait;
  */
 class StubASTVisitor implements ASTVisitor
 {
-    /**
-     * The last visited class instance.
-     *
-     * @var ASTClass
-     */
-    public $class;
+    /** The last visited class instance. */
+    public ASTClass $class;
 
-    /**
-     * The last visited class instance.
-     *
-     * @var ASTEnum
-     */
-    public $enum;
+    /** The last visited class instance. */
+    public ASTEnum $enum;
 
     /**
      * The last visited trait instance.
      *
-     * @var ASTTrait
      * @since 1.0.0
      */
-    public $trait;
+    public ASTTrait $trait;
 
-    /**
-     * The last visited interface instance.
-     *
-     * @var ASTInterface
-     */
-    public $interface;
+    /** The last visited interface instance. */
+    public ASTInterface $interface;
 
-    /**
-     * The last visited method instance.
-     *
-     * @var ASTMethod
-     */
-    public $method;
+    /** The last visited method instance. */
+    public ASTMethod $method;
 
-    /**
-     * The last visited package instance.
-     *
-     * @var ASTNamespace
-     */
-    public $namespace;
+    /** The last visited package instance. */
+    public ASTNamespace $namespace;
 
-    /**
-     * The last visited parameter instance.
-     *
-     * @var ASTParameter
-     */
-    public $parameter;
+    /** The last visited parameter instance. */
+    public ASTParameter $parameter;
 
-    /**
-     * The last visited property instance.
-     *
-     * @var ASTProperty
-     */
-    public $property;
+    /** The last visited property instance. */
+    public ASTProperty $property;
 
-    /**
-     * The last visited function instance.
-     *
-     * @var ASTFunction
-     */
-    public $function;
+    /** The last visited function instance. */
+    public ASTFunction $function;
 
     /**
      * Adds a new listener to this node visitor.

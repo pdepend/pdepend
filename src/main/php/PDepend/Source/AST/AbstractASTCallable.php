@@ -78,14 +78,10 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @var ASTClassOrInterfaceReference[]
      * @since 0.9.5
      */
-    protected $exceptionClassReferences = [];
+    protected array $exceptionClassReferences = [];
 
-    /**
-     * Does this callable return a value by reference?
-     *
-     * @var bool
-     */
-    protected $returnsReference = false;
+    /** Does this callable return a value by reference? */
+    protected bool $returnsReference = false;
 
     /**
      * List of all parsed child nodes.
@@ -93,7 +89,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @var AbstractASTNode[]
      * @since 0.9.6
      */
-    protected $nodes = [];
+    protected array $nodes = [];
 
     /** @var ASTParameter[] */
     private array $parameters;

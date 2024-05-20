@@ -60,19 +60,11 @@ use ReflectionClass;
  */
 class CommandTest extends AbstractTestCase
 {
-    /**
-     * Expected output of the --version option.
-     *
-     * @var string
-     */
-    private $versionOutput;
+    /** Expected output of the --version option. */
+    private string $versionOutput;
 
-    /**
-     * Expected output of the --usage option.
-     *
-     * @var string
-     */
-    private $usageOutput;
+    /** Expected output of the --usage option. */
+    private string $usageOutput;
 
     protected function setUp(): void
     {

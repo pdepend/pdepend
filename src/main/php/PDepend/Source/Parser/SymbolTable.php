@@ -56,7 +56,7 @@ class SymbolTable
      *
      * @var array<array<string, string>>
      */
-    private $scopeStack = [];
+    private array $scopeStack = [];
 
     /**
      * The currently active scope.

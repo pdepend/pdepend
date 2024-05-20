@@ -65,7 +65,7 @@ abstract class PHPParserVersion82 extends AbstractPHPParser
     protected const READONLY_CLASS_ALLOWED = true;
 
     /** @var array<int, int> */
-    protected $possiblePropertyTypes = [
+    protected array $possiblePropertyTypes = [
         Tokens::T_STRING,
         Tokens::T_ARRAY,
         Tokens::T_QUESTION_MARK,

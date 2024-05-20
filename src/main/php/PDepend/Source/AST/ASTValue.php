@@ -55,12 +55,8 @@ namespace PDepend\Source\AST;
  */
 class ASTValue
 {
-    /**
-     * Boolean flag that is <b>true</b> when a PHP-value was set.
-     *
-     * @var bool
-     */
-    private $valueAvailable = false;
+    /** Boolean flag that is <b>true</b> when a PHP-value was set. */
+    private bool $valueAvailable = false;
 
     /** The parsed PHP-value, */
     private mixed $value = null;

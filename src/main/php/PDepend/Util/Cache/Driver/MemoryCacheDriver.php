@@ -68,14 +68,10 @@ class MemoryCacheDriver implements CacheDriver
      *
      * @var array<string, array<int, mixed>>
      */
-    protected $cache = [];
+    protected array $cache = [];
 
-    /**
-     * Current cache entry type.
-     *
-     * @var string
-     */
-    protected $type = self::ENTRY_TYPE;
+    /** Current cache entry type. */
+    protected string $type = self::ENTRY_TYPE;
 
     /** Unique identifier within the same cache instance. */
     protected string $staticId;

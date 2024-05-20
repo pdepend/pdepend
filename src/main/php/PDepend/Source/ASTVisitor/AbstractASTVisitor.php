@@ -70,7 +70,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
      *
      * @var ASTVisitListener[]
      */
-    private $listeners = [];
+    private array $listeners = [];
 
     /**
      * Returns an iterator with all registered visit listeners.

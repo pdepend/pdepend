@@ -77,14 +77,14 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      *
      * @var array<string, array<string, array<int, string>>>
      */
-    private $nodes = [];
+    private array $nodes = [];
 
     /**
      * List of node collect strategies.
      *
      * @var CodeRankStrategyI[]
      */
-    private $strategies = [];
+    private array $strategies = [];
 
     /**
      * Hash with all calculated node metrics.

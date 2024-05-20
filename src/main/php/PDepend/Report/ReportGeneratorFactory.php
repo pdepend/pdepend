@@ -67,10 +67,9 @@ class ReportGeneratorFactory
      *
      * @var array<string, ReportGenerator>
      */
-    protected $instances = [];
+    protected array $instances = [];
 
-    /** @var TaggedContainerInterface */
-    private $container;
+    private TaggedContainerInterface $container;
 
     public function __construct(TaggedContainerInterface $container)
     {

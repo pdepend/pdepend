@@ -54,10 +54,9 @@ class ExcludePathFilter implements Filter
     /**
      * Regular expression that should not match against the absolute file paths or a chunk of a relative path.
      *
-     * @var string
      * @since 0.10.0
      */
-    protected $pattern = '';
+    protected string $pattern = '';
 
     /**
      * Constructs a new exclude path filter instance and accepts an array of

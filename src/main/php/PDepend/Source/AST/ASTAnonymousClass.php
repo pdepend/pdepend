@@ -58,10 +58,9 @@ class ASTAnonymousClass extends ASTClass
      * contains the start, end line, and the start, end column and the node
      * image in a colon separated string.
      *
-     * @var string
      * @since 0.10.4
      */
-    protected $metadata = ':::';
+    protected string $metadata = ':::';
 
     /**
      * The magic sleep method will be called by PHP's runtime environment right

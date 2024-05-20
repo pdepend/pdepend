@@ -68,17 +68,15 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * This property will indicate that the class or interface is user defined.
      * The parser marks all classes and interfaces as user defined that have a
      * source file and were part of parsing process.
-     *
-     * @var bool
      */
-    protected $userDefined = false;
+    protected bool $userDefined = false;
 
     /**
      * List of all parsed child nodes.
      *
      * @var ASTNode[]
      */
-    protected $nodes = [];
+    protected array $nodes = [];
 
     /**
      * Name of the parent namespace for this class or interface instance. Or
@@ -86,12 +84,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     protected ?string $namespaceName = null;
 
-    /**
-     * The modifiers for this class instance.
-     *
-     * @var int
-     */
-    protected $modifiers = 0;
+    /** The modifiers for this class instance. */
+    protected int $modifiers = 0;
 
     /**
      * Temporary property that only holds methods during the parsing process.
@@ -99,7 +93,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @var ASTMethod[]|null
      * @since 1.0.2
      */
-    protected $methods = [];
+    protected ?array $methods = [];
 
     /** The parent namespace for this class. */
     private ?ASTNamespace $namespace = null;

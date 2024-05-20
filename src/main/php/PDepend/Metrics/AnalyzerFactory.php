@@ -55,8 +55,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class AnalyzerFactory
 {
-    /** @var ContainerInterface */
-    private $container;
+    private ContainerInterface $container;
 
     /**
      * Create a new Analyzer Factory

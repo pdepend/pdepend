@@ -56,10 +56,8 @@ class ASTInterface extends AbstractASTClassOrInterface
     /**
      * The modifiers for this interface instance, by default an interface is
      * always abstract.
-     *
-     * @var int
      */
-    protected $modifiers = State::IS_IMPLICIT_ABSTRACT;
+    protected int $modifiers = State::IS_IMPLICIT_ABSTRACT;
 
     /**
      * The magic wakeup method will be called by PHP's runtime environment when

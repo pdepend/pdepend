@@ -71,15 +71,14 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * @var AbstractASTArtifact[]
      * @since 0.10.0
      */
-    protected $childNodes = [];
+    protected array $childNodes = [];
 
     /**
      * Was this file instance restored from the cache?
      *
-     * @var bool
      * @since 0.10.0
      */
-    protected $cached = false;
+    protected bool $cached = false;
 
     /** Normalized code in this file. */
     private ?string $source = null;

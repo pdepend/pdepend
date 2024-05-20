@@ -59,7 +59,7 @@ class CloverReport implements Report
      *
      * @var array<string, array<int, bool>>
      */
-    private $fileLineCoverage = [];
+    private array $fileLineCoverage = [];
 
     /**
      * Constructs a new clover report instance.

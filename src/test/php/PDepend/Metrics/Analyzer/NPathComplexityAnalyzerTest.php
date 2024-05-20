@@ -62,11 +62,8 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  */
 class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 {
-    /**
-     * @var CacheDriver
-     * @since 1.0.0
-     */
-    private $cache;
+    /** @since 1.0.0 */
+    private CacheDriver $cache;
 
     /**
      * Initializes a in memory cache.

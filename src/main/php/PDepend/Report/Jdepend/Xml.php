@@ -81,21 +81,21 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @var ASTCompilationUnit[]
      */
-    protected $fileSet = [];
+    protected array $fileSet = [];
 
     /**
      * List of all generated project metrics.
      *
      * @var array<string, mixed>
      */
-    protected $projectMetrics = [];
+    protected array $projectMetrics = [];
 
     /**
      * List of all collected node metrics.
      *
      * @var array<string, array<string, array<int, string>>>
      */
-    protected $nodeMetrics = [];
+    protected array $nodeMetrics = [];
 
     /** The dependency result set. */
     protected DependencyAnalyzer $analyzer;

@@ -87,42 +87,22 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      *
      * @var array<int>
      */
-    private $rootClasses = [];
+    private array $rootClasses = [];
 
-    /**
-     * The maximum depth of inheritance tree value within the analyzed source code.
-     *
-     * @var int
-     */
-    private $maxDIT = 0;
+    /** The maximum depth of inheritance tree value within the analyzed source code. */
+    private int $maxDIT = 0;
 
-    /**
-     * The average number of derived classes.
-     *
-     * @var float
-     */
-    private $andc = 0;
+    /** The average number of derived classes. */
+    private float $andc = 0;
 
-    /**
-     * The average hierarchy height.
-     *
-     * @var float
-     */
-    private $ahh = 0;
+    /** The average hierarchy height. */
+    private float $ahh = 0;
 
-    /**
-     * Total number of classes.
-     *
-     * @var int
-     */
-    private $numberOfClasses = 0;
+    /** Total number of classes. */
+    private int $numberOfClasses = 0;
 
-    /**
-     * Total number of derived classes.
-     *
-     * @var int
-     */
-    private $numberOfDerivedClasses = 0;
+    /** Total number of derived classes. */
+    private int $numberOfDerivedClasses = 0;
 
     /**
      * Metrics calculated for a single source node.

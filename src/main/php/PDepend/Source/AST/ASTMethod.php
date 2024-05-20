@@ -55,12 +55,8 @@ class ASTMethod extends AbstractASTCallable
 {
     protected ?AbstractASTClassOrInterface $parentClass = null;
 
-    /**
-     * Defined modifiers for this property node.
-     *
-     * @var int
-     */
-    protected $modifiers = 0;
+    /** Defined modifiers for this property node. */
+    protected int $modifiers = 0;
 
     /**
      * The magic sleep method will be called by the PHP engine when this class

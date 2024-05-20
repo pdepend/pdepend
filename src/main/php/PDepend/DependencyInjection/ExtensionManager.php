@@ -54,7 +54,7 @@ use RuntimeException;
 class ExtensionManager
 {
     /** @var array<Extension> */
-    private $extensions = [];
+    private array $extensions = [];
 
     /**
      * Activate an extension based on a class name.

@@ -61,21 +61,17 @@ class TokenStack
      *
      * @var Token[]
      */
-    private $tokens = [];
+    private array $tokens = [];
 
     /**
      * Stack with token scopes.
      *
      * @var Token[][]
      */
-    private $stack = [];
+    private array $stack = [];
 
-    /**
-     * The current stack offset.
-     *
-     * @var int
-     */
-    private $offset = 0;
+    /** The current stack offset. */
+    private int $offset = 0;
 
     /**
      * This method will push a new token scope onto the stack,

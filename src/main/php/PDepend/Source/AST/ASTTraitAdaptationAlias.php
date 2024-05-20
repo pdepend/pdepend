@@ -58,14 +58,10 @@ class ASTTraitAdaptationAlias extends ASTStatement
      *
      * @var ?string
      */
-    protected $newName = null;
+    protected ?string $newName = null;
 
-    /**
-     * The new method modifier for the imported method.
-     *
-     * @var int
-     */
-    protected $newModifier = -1;
+    /** The new method modifier for the imported method. */
+    protected int $newModifier = -1;
 
     /**
      * The magic sleep method will be called by PHP's runtime environment right

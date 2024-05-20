@@ -61,12 +61,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /** The step size. */
     private const STEP_SIZE = 20;
 
-    /**
-     * Number of processed items.
-     *
-     * @var int
-     */
-    private $count = 0;
+    /** Number of processed items. */
+    private int $count = 0;
 
     /**
      * Is called when PDepend starts the file parsing process.

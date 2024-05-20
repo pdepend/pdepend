@@ -71,7 +71,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
         M_DISTANCE = 'd';
 
     /** @var array<string, ASTNamespace> */
-    private $nodeSet = [];
+    private array $nodeSet = [];
 
     /**
      * Hash with all calculated node metrics.
@@ -100,14 +100,14 @@ class DependencyAnalyzer extends AbstractAnalyzer
      *
      * @var array<string, array<int, ASTNamespace>>
      */
-    private $efferentNodes = [];
+    private array $efferentNodes = [];
 
     /**
      * Nodes that is used by the current analyzed node.
      *
      * @var array<string, array<int, ASTNamespace>>
      */
-    private $afferentNodes = [];
+    private array $afferentNodes = [];
 
     /**
      * All collected cycles for the input code.
@@ -127,7 +127,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      *
      * @var array<string, array<int, AbstractASTArtifact>|null>
      */
-    private $collectedCycles = [];
+    private array $collectedCycles = [];
 
     /**
      * Processes all {@link ASTNamespace} code nodes.

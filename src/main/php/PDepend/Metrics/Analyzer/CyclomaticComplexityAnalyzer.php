@@ -85,19 +85,11 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /** @var array<string, int> */
     private array $collector;
 
-    /**
-     * The project Cyclomatic Complexity Number.
-     *
-     * @var int
-     */
-    private $ccn = 0;
+    /** The project Cyclomatic Complexity Number. */
+    private int $ccn = 0;
 
-    /**
-     * Extended Cyclomatic Complexity Number(CCN2) for the project.
-     *
-     * @var int
-     */
-    private $ccn2 = 0;
+    /** Extended Cyclomatic Complexity Number(CCN2) for the project. */
+    private int $ccn2 = 0;
 
     /**
      * Processes all {@link ASTNamespace} code nodes.

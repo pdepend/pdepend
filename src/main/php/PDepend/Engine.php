@@ -130,7 +130,7 @@ class Engine
      *
      * @var ReportGenerator[]
      */
-    private $generators = [];
+    private array $generators = [];
 
     /** A composite filter for input files. */
     private CompositeFilter $fileFilter;
@@ -138,26 +138,22 @@ class Engine
     /** A filter for namespace. */
     private ArtifactFilter $codeFilter;
 
-    /**
-     * Should the parse ignore doc comment annotations?
-     *
-     * @var bool
-     */
-    private $withoutAnnotations = false;
+    /** Should the parse ignore doc comment annotations? */
+    private bool $withoutAnnotations = false;
 
     /**
      * List or registered listeners.
      *
      * @var ProcessListener[]
      */
-    private $listeners = [];
+    private array $listeners = [];
 
     /**
      * List of analyzer options.
      *
      * @var array<string, mixed>
      */
-    private $options = [];
+    private array $options = [];
 
     /**
      * List of all {@link ParserException} that were caught during
@@ -165,18 +161,16 @@ class Engine
      *
      * @var ParserException[]
      */
-    private $parseExceptions = [];
+    private array $parseExceptions = [];
 
     /**
      * The configured cache factory.
      *
-     * @var CacheFactory
      * @since 1.0.0
      */
-    private $cacheFactory;
+    private CacheFactory $cacheFactory;
 
-    /** @var AnalyzerFactory */
-    private $analyzerFactory;
+    private AnalyzerFactory $analyzerFactory;
 
     /**
      * Constructs a new php depend facade.

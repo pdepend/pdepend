@@ -56,19 +56,11 @@ use PDepend\Source\AST\ASTArtifact;
  */
 class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
-    /**
-     * Test project metrics
-     *
-     * @var array
-     */
-    public $projectMetrics = [];
+    /** Test project metrics */
+    public array $projectMetrics = [];
 
-    /**
-     * Test node metrics.
-     *
-     * @var array
-     */
-    public $nodeMetrics = [];
+    /** Test node metrics. */
+    public array $nodeMetrics = [];
 
     /**
      * Constructs a new analyzer instance.

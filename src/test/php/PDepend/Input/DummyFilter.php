@@ -51,19 +51,11 @@ namespace PDepend\Input;
  */
 class DummyFilter implements Filter
 {
-    /**
-     * The return value for this filter.
-     *
-     * @var bool
-     */
-    public $returnValue = false;
+    /** The return value for this filter. */
+    public bool $returnValue = false;
 
-    /**
-     * Was this filter invoked?
-     *
-     * @var bool
-     */
-    public $invoked = false;
+    /** Was this filter invoked? */
+    public bool $invoked = false;
 
     /**
      * Constructs a new dummy filter

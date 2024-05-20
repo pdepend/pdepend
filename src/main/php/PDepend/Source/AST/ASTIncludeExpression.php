@@ -53,12 +53,8 @@ namespace PDepend\Source\AST;
  */
 class ASTIncludeExpression extends ASTExpression
 {
-    /**
-     * Does this node represent a <b>include_once</b>-expression?
-     *
-     * @var bool
-     */
-    protected $once = false;
+    /** Does this node represent a <b>include_once</b>-expression? */
+    protected bool $once = false;
 
     /**
      * The magic sleep method will be called by PHP's runtime environment right

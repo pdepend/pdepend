@@ -79,54 +79,34 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         M_NUMBER_OF_ROOT_CLASSES = 'roots',
         M_NUMBER_OF_LEAF_CLASSES = 'leafs';
 
-    /**
-     * Number of all analyzed functions.
-     *
-     * @var int
-     */
-    private $fcs = 0;
+    /** Number of all analyzed functions. */
+    private int $fcs = 0;
 
-    /**
-     * Number of all analyzer methods.
-     *
-     * @var int
-     */
-    private $mts = 0;
+    /** Number of all analyzer methods. */
+    private int $mts = 0;
 
-    /**
-     * Number of all analyzed classes.
-     *
-     * @var int
-     */
-    private $cls = 0;
+    /** Number of all analyzed classes. */
+    private int $cls = 0;
 
-    /**
-     * Number of all analyzed abstract classes.
-     *
-     * @var int
-     */
-    private $clsa = 0;
+    /** Number of all analyzed abstract classes. */
+    private int $clsa = 0;
 
-    /**
-     * Number of all analyzed interfaces.
-     *
-     * @var int
-     */
-    private $interfs = 0;
+    /** Number of all analyzed interfaces. */
+    private int $interfs = 0;
 
     /**
      * Number of all root classes within the analyzed source code.
      *
      * @var array<string, bool>
      */
-    private $roots = [];
+    private array $roots = [];
 
     /**
      * Number of all none leaf classes within the analyzed source code
      *
      * @var array<string, bool>
      */
-    private $noneLeafs = [];
+    private array $noneLeafs = [];
 
     /**
      * Hash with all calculated node metrics.
