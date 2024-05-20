@@ -67,10 +67,9 @@ class ASTAnonymousClass extends ASTClass
      * before an instance of this class gets serialized. It should return an
      * array with those property names that should be serialized for this class.
      *
-     * @return array
      * @since 0.10.0
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['metadata', ...parent::__sleep()];
     }

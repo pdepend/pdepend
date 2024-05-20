@@ -184,7 +184,7 @@ class Pyramid implements FileAwareGenerator
             if (!$node) {
                 throw new RuntimeException("Document is missing the pdepend.{$name} elsement");
             }
-            $node->nodeValue = $value;
+            $node->nodeValue = (string) $value;
 
             if (($threshold = $this->computeThreshold($name, $value)) === null) {
                 continue;
@@ -278,7 +278,7 @@ class Pyramid implements FileAwareGenerator
     /**
      * Aggregates the required metrics from the registered analyzers.
      *
-     * @return array<string, mixed>
+     * @return array<string, float|int>
      * @throws RuntimeException If one of the required analyzers isn't set.
      */
     private function collectMetrics()

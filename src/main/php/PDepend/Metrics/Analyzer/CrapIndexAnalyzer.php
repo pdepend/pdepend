@@ -240,6 +240,9 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     {
         $factory = new Factory();
 
-        return $factory->create($this->options['coverage-report']);
+        /** @var string */
+        $coverageReport = $this->options[self::REPORT_OPTION];
+
+        return $factory->create($coverageReport);
     }
 }

@@ -104,9 +104,9 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * names of all those properties that should be cached for this class or
      * interface instance.
      *
-     * @return array
+     * @return list<string>
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         if (is_array($this->methods)) {
             $this->cache
@@ -260,6 +260,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function getTokens()
     {
+        /** @var Token[] */
         return (array) $this->cache
             ->type('tokens')
             ->restore($this->getId());

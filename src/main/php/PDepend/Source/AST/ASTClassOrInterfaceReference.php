@@ -79,10 +79,9 @@ class ASTClassOrInterfaceReference extends ASTType
      * Magic method which returns the names of all those properties that should
      * be cached for this node instance.
      *
-     * @return array
      * @since  0.10.0
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['context', ...parent::__sleep()];
     }

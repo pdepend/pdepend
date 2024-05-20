@@ -117,8 +117,10 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
             $this->fireStartAnalyzer();
 
             $factory = new StrategyFactory();
-            if (isset($this->options[self::STRATEGY_OPTION])) {
-                foreach ($this->options[self::STRATEGY_OPTION] as $identifier) {
+            $strategyIdentifiers = $this->options[self::STRATEGY_OPTION] ?? null;
+
+            if (is_array($strategyIdentifiers)) {
+                foreach ($strategyIdentifiers as $identifier) {
                     $this->strategies[] = $factory->createStrategy($identifier);
                 }
             } else {

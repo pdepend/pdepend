@@ -66,7 +66,7 @@ class ASTVariableDeclarator extends ASTExpression
      * @return array<string>
      * @since  0.10.0
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['value', ...parent::__sleep()];
     }

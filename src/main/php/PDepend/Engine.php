@@ -75,6 +75,7 @@ use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
 use SplFileObject;
+use stdClass;
 
 /**
  * PDepend analyzes php class files and generates metrics.
@@ -151,7 +152,7 @@ class Engine
     /**
      * List of analyzer options.
      *
-     * @var array<string, mixed>
+     * @var array<string, array<int, string>|string>
      */
     private array $options = [];
 
@@ -266,7 +267,7 @@ class Engine
     /**
      * Sets analyzer options.
      *
-     * @param array<string, mixed> $options The analyzer options.
+     * @param array<string, array<int, string>|string> $options The analyzer options.
      */
     public function setOptions(array $options = []): void
     {
@@ -538,6 +539,7 @@ class Engine
                 $this->builder,
                 $this->cacheFactory->create(),
             );
+            assert($this->configuration->parser instanceof stdClass);
             $parser->setMaxNestingLevel($this->configuration->parser->nesting);
 
             // Disable annotation parsing?
@@ -574,6 +576,7 @@ class Engine
 
         $this->fireStartAnalyzeProcess();
 
+        assert($this->configuration->parser instanceof stdClass);
         ini_set('xdebug.max_nesting_level', $this->configuration->parser->nesting);
 
         foreach ($analyzerLoader as $analyzer) {
@@ -661,7 +664,7 @@ class Engine
     }
 
     /**
-     * @param array<string, mixed> $options
+     * @param array<string, array<int, string>|string> $options
      * @return Analyzer[]
      * @throws InvalidArgumentException
      */

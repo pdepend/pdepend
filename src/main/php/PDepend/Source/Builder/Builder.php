@@ -163,7 +163,7 @@ use PDepend\Util\Cache\CacheDriver;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *
- * @template T of mixed
+ * @template T
  *
  * @extends \IteratorAggregate<T>
  */
@@ -175,7 +175,7 @@ interface Builder extends IteratorAggregate
     /**
      * Setter method for the currently used token cache.
      *
-     * @return Builder<mixed>
+     * @return $this
      * @since  0.10.0
      */
     public function setCache(CacheDriver $cache);

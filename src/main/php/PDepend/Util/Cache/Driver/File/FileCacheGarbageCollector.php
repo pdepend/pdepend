@@ -92,6 +92,7 @@ class FileCacheGarbageCollector
                 new RecursiveDirectoryIterator($this->cacheDir),
             );
             foreach ($files as $file) {
+                assert($file instanceof SplFileInfo);
                 if ($this->isCollectibleFile($file)) {
                     $this->garbageCollectFile($file);
                     ++$count;

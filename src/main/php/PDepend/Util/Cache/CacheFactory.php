@@ -50,6 +50,7 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PDepend\Util\Configuration;
 use Random\RandomException;
 use RuntimeException;
+use stdClass;
 
 /**
  * Factory that encapsulates the creation of a concrete cache instance.
@@ -68,7 +69,7 @@ class CacheFactory
     /**
      * Singleton property that holds existing cache instances.
      *
-     * @var CacheDriver[]
+     * @var array<string, CacheDriver>
      */
     protected array $caches = [];
 
@@ -112,6 +113,8 @@ class CacheFactory
      */
     protected function createCache($cacheKey = null)
     {
+        assert($this->configuration->cache instanceof stdClass);
+
         switch ($this->configuration->cache->driver) {
             case 'file':
                 return $this->createFileCache(

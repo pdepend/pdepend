@@ -109,7 +109,7 @@ class Runner
     /**
      * List of cli options for loggers or analyzers.
      *
-     * @var array<string, mixed>
+     * @var array<string, array<int, string>|string>
      */
     private array $options = [];
 
@@ -205,7 +205,7 @@ class Runner
      * Adds a logger or analyzer option.
      *
      * @param string $identifier
-     * @param array<string>|string $value
+     * @param array<int, string>|string $value
      */
     public function addOption($identifier, $value): void
     {

@@ -105,7 +105,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      * @return array<string>
      * @since  0.10.0
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return [
             'cache',
@@ -208,6 +208,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     public function getTokens()
     {
+        /** @var Token[] */
         return (array) $this->cache
             ->type('tokens')
             ->restore((string) $this->getId());

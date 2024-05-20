@@ -123,16 +123,18 @@ class Command
             return Runner::SUCCESS_EXIT;
         }
 
-        $configurationFile = false;
+        $configurationFile = null;
 
         if (isset($this->options['--configuration'])) {
             $configurationFile = $this->options['--configuration'];
 
-            if (false === file_exists($configurationFile)) {
-                $configurationFile = getcwd() . '/' . $configurationFile;
-            }
-            if (false === file_exists($configurationFile)) {
-                $configurationFile = $this->options['--configuration'];
+            if (is_string($configurationFile)) {
+                if (false === file_exists($configurationFile)) {
+                    $configurationFile = getcwd() . '/' . $configurationFile;
+                }
+                if (false === file_exists($configurationFile)) {
+                    $configurationFile = $this->options['--configuration'];
+                }
             }
 
             unset($this->options['--configuration']);
@@ -142,7 +144,7 @@ class Command
             $configurationFile = getcwd() . '/pdepend.xml.dist';
         }
 
-        if ($configurationFile) {
+        if (is_string($configurationFile)) {
             try {
                 $this->application->setConfigurationFile($configurationFile);
             } catch (Exception $e) {
@@ -172,6 +174,7 @@ class Command
             if (isset($logOptions[$option])) {
                 // Reduce received option list
                 unset($options[$option]);
+                assert(is_string($value));
                 // Register logger
                 $this->runner->addReportGenerator(substr($option, 2), $value);
             } elseif (isset($analyzerOptions[$option])) {
@@ -183,6 +186,7 @@ class Command
 
                     return self::INPUT_ERROR;
                 }
+                assert(is_string($value));
                 if (
                     $analyzerOptions[$option]['value'] === 'file'
                     && file_exists($value) === false
@@ -344,9 +348,11 @@ class Command
         }
 
         // Check for suffix option
-        if (isset($this->options['--suffix'])) {
+        $suffix = $this->options['--suffix'] ?? null;
+
+        if (is_string($suffix)) {
             // Get file extensions
-            $extensions = explode(',', $this->options['--suffix']);
+            $extensions = explode(',', $suffix);
             // Set allowed file extensions
             $this->runner->setFileExtensions($extensions);
 
@@ -354,7 +360,7 @@ class Command
         }
 
         // Check for ignore option
-        if (isset($this->options['--ignore'])) {
+        if (isset($this->options['--ignore']) && is_string($this->options['--ignore'])) {
             // Get exclude directories
             $directories = explode(',', $this->options['--ignore']);
             // Set exclude directories
@@ -364,7 +370,7 @@ class Command
         }
 
         // Check for exclude namespace option
-        if (isset($this->options['--exclude'])) {
+        if (isset($this->options['--exclude']) && is_string($this->options['--exclude'])) {
             // Get exclude directories
             $namespaces = explode(',', $this->options['--exclude']);
             // Set exclude namespace

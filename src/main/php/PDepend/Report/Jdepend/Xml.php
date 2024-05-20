@@ -281,21 +281,21 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
         $statsXml = $doc->createElement('Stats');
         $statsXml->appendChild($doc->createElement('TotalClasses'))
-            ->appendChild($doc->createTextNode($stats['tc']));
+            ->appendChild($doc->createTextNode((string) $stats['tc']));
         $statsXml->appendChild($doc->createElement('ConcreteClasses'))
-            ->appendChild($doc->createTextNode($stats['cc']));
+            ->appendChild($doc->createTextNode((string) $stats['cc']));
         $statsXml->appendChild($doc->createElement('AbstractClasses'))
-            ->appendChild($doc->createTextNode($stats['ac']));
+            ->appendChild($doc->createTextNode((string) $stats['ac']));
         $statsXml->appendChild($doc->createElement('Ca'))
-            ->appendChild($doc->createTextNode($stats['ca']));
+            ->appendChild($doc->createTextNode((string) $stats['ca']));
         $statsXml->appendChild($doc->createElement('Ce'))
-            ->appendChild($doc->createTextNode($stats['ce']));
+            ->appendChild($doc->createTextNode((string) $stats['ce']));
         $statsXml->appendChild($doc->createElement('A'))
-            ->appendChild($doc->createTextNode($stats['a']));
+            ->appendChild($doc->createTextNode((string) $stats['a']));
         $statsXml->appendChild($doc->createElement('I'))
-            ->appendChild($doc->createTextNode($stats['i']));
+            ->appendChild($doc->createTextNode((string) $stats['i']));
         $statsXml->appendChild($doc->createElement('D'))
-            ->appendChild($doc->createTextNode($stats['d']));
+            ->appendChild($doc->createTextNode((string) $stats['d']));
 
         $dependsUpon = $doc->createElement('DependsUpon');
         foreach ($this->analyzer->getEfferents($namespace) as $efferent) {

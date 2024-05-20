@@ -221,7 +221,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     }
 
     /**
-     * @return array<int, array<string, mixed>>
+     * @return array<int, array{size: int, abstraction: int, instability: int, distance: int, name: string, ratio: int}>
      */
     private function getItems()
     {
@@ -242,6 +242,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
                 'abstraction' => $metrics['a'],
                 'instability' => $metrics['i'],
                 'distance' => $metrics['d'],
+                'ratio' => 15,
                 'name' => Utf8Util::ensureEncoding($namespace->getImage()),
             ];
         }
@@ -259,7 +260,6 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
             $diff = (($max - $min) / 10);
 
             foreach ($items as &$item) {
-                $item['ratio'] = 15;
                 if ($diff !== 0) {
                     $item['ratio'] = 5 + (($item['size'] - $min) / $diff);
                 }

@@ -66,7 +66,7 @@ class ASTMethod extends AbstractASTCallable
      * @return array<string>
      * @since  0.10.0
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['modifiers', ...parent::__sleep()];
     }

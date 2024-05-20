@@ -86,7 +86,7 @@ class ASTDeclareStatement extends ASTStatement
      * @return array<string>
      * @since  0.10.0
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['values', ...parent::__sleep()];
     }

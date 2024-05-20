@@ -89,10 +89,9 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
      * before an instance of this class gets serialized. It should return an
      * array with those property names that should be serialized for this class.
      *
-     * @return array
      * @since  0.10.0
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         $this->qualifiedName = $this->getType()->getNamespaceName() . '\\' .
                                $this->getType()->getImage();

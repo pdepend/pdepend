@@ -990,14 +990,14 @@ class PHPTokenizerInternal implements FullTokenizer
 
                     if (isset(self::$reductionMap[$type][$previousType])) {
                         $image = self::$reductionMap[$type][$previousType]['image'];
-                        $type = self::$reductionMap[$type][$previousType]['type'];
+                        $type = (int) self::$reductionMap[$type][$previousType]['type'];
 
                         $startColumn = $previousStartColumn;
 
                         array_pop($this->tokens);
                     }
                 } elseif (isset($tokenMap[$token[0]])) {
-                    $type = $tokenMap[$token[0]];
+                    $type = (int) $tokenMap[$token[0]];
                     // Check for a context sensitive alternative
                     if (isset(self::$alternativeMap[$type][$previousType])) {
                         $type = self::$alternativeMap[$type][$previousType];
@@ -1096,7 +1096,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * Generates a dummy/temp token for unknown string literals.
      *
      * @param string $token The unknown string token.
-     * @return array<int, mixed>
+     * @return array{int, string}
      */
     private function generateUnknownToken($token)
     {

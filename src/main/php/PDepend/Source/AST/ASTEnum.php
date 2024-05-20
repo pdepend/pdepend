@@ -91,10 +91,8 @@ class ASTEnum extends AbstractASTClassOrInterface
      * instance of this class gets serialized. It returns an array with the
      * names of all those properties that should be cached for this class or
      * interface instance.
-     *
-     * @return array
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['type', ...parent::__sleep()];
     }

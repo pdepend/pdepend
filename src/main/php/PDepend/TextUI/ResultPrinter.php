@@ -46,6 +46,7 @@ namespace PDepend\TextUI;
 use PDepend\Metrics\Analyzer;
 use PDepend\ProcessListener;
 use PDepend\Source\AST\AbstractASTArtifact;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
@@ -67,7 +68,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param Builder<mixed> $builder
+     * @param Builder<ASTNamespace> $builder
      */
     public function startParseProcess(Builder $builder): void
     {
@@ -79,7 +80,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param Builder<mixed> $builder
+     * @param Builder<ASTNamespace> $builder
      */
     public function endParseProcess(Builder $builder): void
     {
