@@ -92,7 +92,7 @@ abstract class PHPParserVersion82 extends AbstractPHPParser
         return parent::isScalarOrCallableTypeHint($image);
     }
 
-    protected function isTypeHint($tokenType): bool
+    protected function isTypeHint(int $tokenType): bool
     {
         if (in_array($tokenType, [Tokens::T_TRUE, Tokens::T_PARENTHESIS_OPEN], true)) {
             return true;

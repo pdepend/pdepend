@@ -195,17 +195,13 @@ abstract class AbstractASTNode implements ASTNode
      * For better performance we have moved the single setter methods for the
      * node columns and lines into this configure method.
      *
-     * @param int $startLine
-     * @param int $endLine
-     * @param int $startColumn
-     * @param int $endColumn
      * @since 0.9.10
      */
     public function configureLinesAndColumns(
-        $startLine,
-        $endLine,
-        $startColumn,
-        $endColumn,
+        int $startLine,
+        int $endLine,
+        int $startColumn,
+        int $endColumn,
     ): void {
         $this->setMetadataInteger(0, $startLine);
         $this->setMetadataInteger(1, $endLine);
@@ -307,11 +303,10 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the node instance for the given index or throws an exception.
      *
-     * @param int $index
      * @return ASTNode
      * @throws OutOfBoundsException When no node exists at the given index.
      */
-    public function getChild($index)
+    public function getChild(int $index)
     {
         if (isset($this->nodes[$index])) {
             return $this->nodes[$index];
@@ -416,10 +411,9 @@ abstract class AbstractASTNode implements ASTNode
      * Traverses up the node tree and finds all parent nodes that are instances
      * of <b>$parentType</b>.
      *
-     * @param string $parentType
      * @return ASTNode[]
      */
-    public function getParentsOfType($parentType)
+    public function getParentsOfType(string $parentType)
     {
         $parents = [];
 

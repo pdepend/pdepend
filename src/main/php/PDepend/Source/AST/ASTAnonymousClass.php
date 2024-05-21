@@ -139,13 +139,9 @@ class ASTAnonymousClass extends ASTClass
      * For better performance we have moved the single setter methods for the
      * node columns and lines into this configure method.
      *
-     * @param int $startLine
-     * @param int $endLine
-     * @param int $startColumn
-     * @param int $endColumn
      * @since 0.9.10
      */
-    public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn): void
+    public function configureLinesAndColumns(int $startLine, int $endLine, int $startColumn, int $endColumn): void
     {
         $this->setMetadataInteger(0, $startLine);
         $this->setMetadataInteger(1, $endLine);

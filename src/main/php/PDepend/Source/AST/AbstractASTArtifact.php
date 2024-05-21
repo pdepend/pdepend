@@ -157,7 +157,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         }
     }
 
-    public function getChild($index): ASTNode
+    public function getChild(int $index): ASTNode
     {
         $children = $this->getChildren();
         if (isset($children[$index])) {
@@ -216,7 +216,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         $this->parent = $node;
     }
 
-    public function getParentsOfType($parentType): array
+    public function getParentsOfType(string $parentType): array
     {
         $parents = [];
 
@@ -252,7 +252,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
         $this->comment = $comment;
     }
 
-    public function configureLinesAndColumns($startLine, $endLine, $startColumn, $endColumn): void
+    public function configureLinesAndColumns(int $startLine, int $endLine, int $startColumn, int $endColumn): void
     {
         $this->startLine = $startLine;
         $this->endLine = $endLine;

@@ -183,7 +183,7 @@ class ASTArtifactList implements ArrayAccess, Countable, Iterator
      * @link   http://php.net/manual/en/arrayaccess.offsetget.php
      * @since  1.0.0
      */
-    public function offsetGet($offset): ASTArtifact
+    public function offsetGet(mixed $offset): ASTArtifact
     {
         if (isset($this->artifacts[$offset])) {
             return $this->artifacts[$offset];
@@ -201,7 +201,7 @@ class ASTArtifactList implements ArrayAccess, Countable, Iterator
      * @link   http://php.net/manual/en/arrayaccess.offsetset.php
      * @since  1.0.0
      */
-    public function offsetSet($offset, $value): void
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         throw new BadMethodCallException('Not supported operation.');
     }
@@ -214,7 +214,7 @@ class ASTArtifactList implements ArrayAccess, Countable, Iterator
      * @link   http://php.net/manual/en/arrayaccess.offsetunset.php
      * @since  1.0.0
      */
-    public function offsetUnset($offset): void
+    public function offsetUnset(mixed $offset): void
     {
         throw new BadMethodCallException('Not supported operation.');
     }

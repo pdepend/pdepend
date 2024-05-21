@@ -513,7 +513,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param ASTFunction[] $functions
+     * @param ASTArtifactList<ASTFunction> $functions
      *
      * @depends testParserSetsCorrectFunctionReturnType
      */
@@ -532,7 +532,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param ASTFunction[] $functions
+     * @param ASTArtifactList<ASTFunction> $functions
      *
      * @depends testParserSetsCorrectFunctionReturnType
      */
@@ -551,7 +551,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param ASTFunction[] $functions
+     * @param ASTArtifactList<ASTFunction> $functions
      *
      * @depends testParserSetsCorrectFunctionReturnType
      */
@@ -934,7 +934,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param ASTNamespace[] $namespaces
+     * @param ASTArtifactList<ASTNamespace> $namespaces
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
@@ -945,7 +945,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param ASTNamespace[] $namespaces
+     * @param ASTArtifactList<ASTNamespace> $namespaces
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
@@ -956,7 +956,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param ASTNamespace[] $namespaces
+     * @param ASTArtifactList<ASTNamespace> $namespaces
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
@@ -968,7 +968,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param ASTNamespace[] $namespaces
+     * @param ASTArtifactList<ASTNamespace> $namespaces
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
@@ -980,7 +980,7 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
-     * @param ASTNamespace[] $namespaces
+     * @param ASTArtifactList<ASTNamespace> $namespaces
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
