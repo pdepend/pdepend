@@ -1820,7 +1820,7 @@ abstract class AbstractPHPParser
      * @param T $callable
      * @return T
      */
-    private function parseCallableDeclarationAddition($callable): AbstractASTCallable|ASTClosure
+    private function parseCallableDeclarationAddition(AbstractASTCallable|ASTClosure $callable): AbstractASTCallable|ASTClosure
     {
         $this->consumeComments();
         if (Tokens::T_COLON !== $this->tokenizer->peek()) {
@@ -6962,11 +6962,10 @@ abstract class AbstractPHPParser
      * Tests if the given token type is a valid formal parameter in the supported
      * PHP version.
      *
-     * @param int $tokenType
      * @return bool
      * @since 1.0.0
      */
-    protected function isTypeHint($tokenType)
+    protected function isTypeHint(int $tokenType)
     {
         return match ($tokenType) {
             Tokens::T_SELF,
@@ -9147,7 +9146,7 @@ abstract class AbstractPHPParser
     /**
      * Peek the next token if it's of the given type, add it to current tokenStack, and return it if so.
      *
-     * @param string $type
+     * @param int $type
      *
      * @psalm-param Tokens::T_* $type
      *
@@ -9268,7 +9267,7 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param string $type
+     * @param int $type
      *
      * @psalm-param Tokens::T_* $type
      *

@@ -72,7 +72,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected start line value.
      *
-     * @param ASTStringIndexExpression $declaration
+     * @param ASTStaticVariableDeclaration $declaration
      *
      * @depends testStaticVariableDeclaration
      */
@@ -84,7 +84,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected start column value.
      *
-     * @param ASTStringIndexExpression $declaration
+     * @param ASTStaticVariableDeclaration $declaration
      *
      * @depends testStaticVariableDeclaration
      */
@@ -96,7 +96,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected end line value.
      *
-     * @param ASTStringIndexExpression $declaration
+     * @param ASTStaticVariableDeclaration $declaration
      *
      * @depends testStaticVariableDeclaration
      */
@@ -108,7 +108,7 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected end column value.
      *
-     * @param ASTStringIndexExpression $declaration
+     * @param ASTStaticVariableDeclaration $declaration
      *
      * @depends testStaticVariableDeclaration
      */
