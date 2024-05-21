@@ -67,15 +67,6 @@ class ASTCompilationUnitTest extends AbstractTestCase
     }
 
     /**
-     * testGetIdReturnsNullByDefault
-     */
-    public function testGetIdReturnsNullByDefault(): void
-    {
-        $file = new ASTCompilationUnit(__FILE__);
-        static::assertNull($file->getId());
-    }
-
-    /**
      * testGetIdReturnsInjectedIdValue
      */
     public function testGetIdReturnsInjectedIdValue(): void

@@ -169,11 +169,11 @@ class ASTCompilationUnit extends AbstractASTArtifact
     /**
      * Returns a id for this code node.
      *
-     * @return string|null
+     * @return string
      */
     public function getId()
     {
-        return $this->id ?? null;
+        return $this->id ?? '';
     }
 
     /**
