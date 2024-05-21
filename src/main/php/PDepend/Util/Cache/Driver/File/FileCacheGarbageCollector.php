@@ -101,7 +101,7 @@ class FileCacheGarbageCollector
             }
 
             return $count;
-        } catch (UnexpectedValueException $e) {
+        } catch (UnexpectedValueException) {
             // This may happen if PHPMD and PDepend run in parallel
             return $count;
         }

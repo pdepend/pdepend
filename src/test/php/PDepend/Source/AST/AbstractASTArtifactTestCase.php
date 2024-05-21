@@ -86,7 +86,7 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
 
         try {
             $fileOrDirectory = self::createCodeResourceURI($fileName);
-        } catch (ErrorException $e) {
+        } catch (ErrorException) {
             $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
         }
 
