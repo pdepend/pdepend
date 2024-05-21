@@ -146,11 +146,15 @@ class GlobalBuilderContextTest extends AbstractTestCase
      */
     public function testGetClassDelegatesCallToWrappedBuilder(): void
     {
+        $class = $this->getMockBuilder(ASTClass::class)
+            ->setConstructorArgs([__CLASS__])
+            ->getMock();
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
         $builder->expects(static::once())
             ->method('getClass')
-            ->with(static::equalTo(__CLASS__));
+            ->with(static::equalTo(__CLASS__))
+            ->will(static::returnValue($class));
 
         $context = new GlobalBuilderContext($builder);
         $context->getClass(__CLASS__);
