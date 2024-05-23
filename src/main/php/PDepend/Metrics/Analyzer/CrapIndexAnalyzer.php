@@ -91,10 +91,8 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
 
     /**
      * Returns <b>true</b> when this analyzer is enabled.
-     *
-     * @return bool
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return isset($this->options[self::REPORT_OPTION]);
     }
@@ -230,11 +228,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      */
     private function createOrReturnCoverageReport()
     {
-        if (!isset($this->report)) {
-            $this->report = $this->createCoverageReport();
-        }
-
-        return $this->report;
+        return $this->report ??= $this->createCoverageReport();
     }
 
     /**
