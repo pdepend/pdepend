@@ -39,30 +39,57 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\Language\PHP\Features\PHP80;
+namespace PDepend\Source\Language\PHP\Features\PHP81;
 
-use PDepend\AbstractTestCase;
-use PDepend\Source\Builder\Builder;
-use PDepend\Source\Language\PHP\AbstractPHPParser;
-use PDepend\Source\Tokenizer\Tokenizer;
-use PDepend\Util\Cache\CacheDriver;
+use PDepend\Source\AST\ASTEchoStatement;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTPropertyPostfix;
+use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\AST\ASTVariableDeclarator;
 
 /**
  * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @group unittest
+ * @group php8
  */
-abstract class PHPParserVersion81TestCase extends AbstractTestCase
+class NullsafeOperatorTest extends PHPParserVersion81TestCase
 {
-    /**
-     * @return AbstractPHPParser
-     */
-    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    public function testNullsafeOperator(): void
     {
-        return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\AbstractPHPParser',
-            [$tokenizer, $builder, $cache]
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+
+        /** @var ASTVariableDeclarator $variable */
+        $variable = $method->getFirstChildOfType(
+            ASTVariableDeclarator::class
         );
+
+        static::assertSame('$obj', $variable->getImage());
+    }
+
+    public function testNullsafeOperatorChain(): void
+    {
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+
+        /** @var ASTEchoStatement $variable */
+        $echo = $method->getFirstChildOfType(ASTEchoStatement::class);
+        $chain = [];
+        $node = $echo;
+
+        while ($node = $node->getFirstChildOfType(ASTMemberPrimaryPrefix::class)) {
+            if ($variable = $node->getFirstChildOfType(ASTVariable::class)) {
+                $chain[] = $variable->getImage();
+            } elseif ($property = $node->getFirstChildOfType(ASTPropertyPostfix::class)) {
+                $chain[] = $property->getImage();
+            }
+
+            $chain[] = $node->getImage();
+        }
+
+        static::assertSame(['$this', '->', 'a', '?->', 'b', '->'], $chain);
     }
 }

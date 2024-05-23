@@ -48,8 +48,10 @@ use PDepend\AbstractTestCase;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
+use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTMethodPostfix;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTSelfReference;
 use PDepend\Source\AST\ASTType;
@@ -734,5 +736,590 @@ class PHPParserGenericTest extends AbstractTestCase
         return $this->getFirstTypeForTestCase()
             ->getProperties()
             ->current();
+    }
+
+    /**
+     * testShiftLeftInConstantInitializer
+     */
+    public function testShiftLeftInConstantInitializer(): void
+    {
+        $class = $this->getFirstClassForTestCase();
+        $const = $class->getChild(0);
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testShiftRightInConstantInitializer
+     */
+    public function testShiftRightInConstantInitializer(): void
+    {
+        $class = $this->getFirstClassForTestCase();
+        $const = $class->getChild(0);
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testShiftLeftInConstantInitializer
+     */
+    public function testMultipleShiftLeftInConstantInitializer(): void
+    {
+        $class = $this->getFirstClassForTestCase();
+        $const = $class->getChild(0);
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testShiftRightInConstantInitializer
+     */
+    public function testMultipleShiftRightInConstantInitializer(): void
+    {
+        $class = $this->getFirstClassForTestCase();
+        $const = $class->getChild(0);
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testConstantSupportForScalarArrayValues
+     *
+     * @link https://github.com/pdepend/pdepend/issues/209
+     */
+    public function testConstantSupportForArrayWithValues(): void
+    {
+        $class = $this->getFirstClassForTestCase();
+        $const = $class->getChild(0);
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testConstantSupportForArrayWithKeyValuePairs
+     *
+     * @link https://github.com/pdepend/pdepend/issues/209
+     */
+    public function testConstantSupportForArrayWithKeyValuePairs(): void
+    {
+        $class = $this->getFirstClassForTestCase();
+        $const = $class->getChild(0);
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testConstantSupportForArrayWithSelfReferenceInClass
+     *
+     * @link https://github.com/pdepend/pdepend/issues/192
+     */
+    public function testConstantSupportForArrayWithSelfReferenceInClass(): void
+    {
+        $class = $this->getFirstClassForTestCase();
+        $const = $class->getChild(0);
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testConstantSupportForArrayWithSelfReferenceInInterface
+     *
+     * @link https://github.com/pdepend/pdepend/issues/192
+     */
+    public function testConstantSupportForArrayWithSelfReferenceInInterface(): void
+    {
+        $class = $this->getFirstInterfaceForTestCase();
+        $const = $class->getChild(0);
+
+        static::assertInstanceOf('PDepend\\Source\\AST\\ASTConstantDefinition', $const);
+    }
+
+    /**
+     * testComplexExpressionInParameterInitializer
+     */
+    public function testComplexExpressionInParameterInitializer(): void
+    {
+        $node = $this->getFirstFunctionForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFormalParameter');
+
+        static::assertNotNull($node);
+    }
+
+    /**
+     * testComplexExpressionInConstantDeclarator
+     */
+    public function testComplexExpressionInConstantDeclarator(): void
+    {
+        $node = $this->getFirstClassForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTConstantDeclarator');
+
+        static::assertNotNull($node);
+    }
+
+    /**
+     * testComplexExpressionInFieldDeclaration
+     */
+    public function testComplexExpressionInFieldDeclaration(): void
+    {
+        $node = $this->getFirstClassForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
+
+        static::assertNotNull($node);
+    }
+
+    /**
+     * testPowExpressionInMethodBody
+     */
+    public function testPowExpressionInMethodBody(): void
+    {
+        $node = $this->getFirstClassForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTReturnStatement');
+
+        static::assertSame('**', $node->getChild(0)->getChild(1)->getImage());
+    }
+
+    /**
+     * testPowExpressionInFieldDeclaration
+     */
+    public function testPowExpressionInFieldDeclaration(): void
+    {
+        $node = $this->getFirstClassForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTFieldDeclaration');
+
+        static::assertNotNull($node);
+    }
+
+    public function testEllipsisOperatorInFunctionCall(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    /**
+     * testFormalParameterScalarTypeHintInt
+     */
+    public function testFormalParameterScalarTypeHintInt(): void
+    {
+        $type = $this->getFirstFormalParameterForTestCase()->getType();
+
+        static::assertTrue($type->isScalar());
+        static::assertEquals('int', $type->getImage());
+    }
+
+    /**
+     * testFormalParameterScalarTypeHintString
+     */
+    public function testFormalParameterScalarTypeHintString(): void
+    {
+        $type = $this->getFirstFormalParameterForTestCase()->getType();
+
+        static::assertTrue($type->isScalar());
+        static::assertEquals('string', $type->getImage());
+    }
+
+    /**
+     * testFormalParameterScalarTypeHintFloat
+     */
+    public function testFormalParameterScalarTypeHintFloat(): void
+    {
+        $type = $this->getFirstFormalParameterForTestCase()->getType();
+
+        static::assertTrue($type->isScalar());
+        static::assertEquals('float', $type->getImage());
+    }
+
+    /**
+     * testFormalParameterScalarTypeHintBool
+     */
+    public function testFormalParameterScalarTypeHintBool(): void
+    {
+        $type = $this->getFirstFormalParameterForTestCase()->getType();
+
+        static::assertTrue($type->isScalar());
+        static::assertEquals('bool', $type->getImage());
+    }
+
+    /**
+     * testFormalParameterStillWorksWithTypeHintArray
+     */
+    public function testFormalParameterStillWorksWithTypeHintArray(): void
+    {
+        $type = $this->getFirstFormalParameterForTestCase()->getChild(0);
+
+        static::assertFalse($type->isScalar());
+    }
+
+    /**
+     * testFunctionReturnTypeHintInt
+     */
+    public function testFunctionReturnTypeHintInt(): void
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        static::assertTrue($type->isScalar());
+        static::assertSame('int', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintSelf
+     */
+    public function testFunctionReturnTypeHintSelf(): void
+    {
+        $type = $this->getFirstMethodForTestCase()->getReturnType();
+
+        static::assertFalse($type->isScalar());
+        static::assertSame('self', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintParent
+     */
+    public function testFunctionReturnTypeHintParent(): void
+    {
+        $type = $this->getFirstMethodForTestCase()->getReturnType();
+
+        static::assertFalse($type->isScalar());
+        static::assertSame('parent', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintFloat
+     */
+    public function testFunctionReturnTypeHintFloat(): void
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        static::assertTrue($type->isScalar());
+        static::assertSame('float', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintString
+     */
+    public function testFunctionReturnTypeHintString(): void
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        static::assertTrue($type->isScalar());
+        static::assertSame('string', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintBool
+     */
+    public function testFunctionReturnTypeHintBool(): void
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        static::assertTrue($type->isScalar());
+        static::assertSame('bool', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintArray
+     */
+    public function testFunctionReturnTypeHintArray(): void
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        static::assertTrue($type->isArray());
+        static::assertSame('array', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintCallable
+     */
+    public function testFunctionReturnTypeHintCallable(): void
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        static::assertFalse($type->isScalar());
+        static::assertFalse($type->isArray());
+
+        static::assertSame('callable', $type->getImage());
+    }
+
+    /**
+     * testFunctionReturnTypeHintClass
+     */
+    public function testFunctionReturnTypeHintClass(): void
+    {
+        $type = $this->getFirstFunctionForTestCase()->getReturnType();
+
+        static::assertFalse($type->isScalar());
+        static::assertFalse($type->isArray());
+
+        static::assertSame('\\Iterator', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintInt
+     */
+    public function testClosureReturnTypeHintInt(): void
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        static::assertTrue($type->isScalar());
+        static::assertSame('int', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintFloat
+     */
+    public function testClosureReturnTypeHintFloat(): void
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        static::assertTrue($type->isScalar());
+        static::assertSame('float', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintString
+     */
+    public function testClosureReturnTypeHintString(): void
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        static::assertTrue($type->isScalar());
+        static::assertSame('string', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintBool
+     */
+    public function testClosureReturnTypeHintBool(): void
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        static::assertTrue($type->isScalar());
+        static::assertSame('bool', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintArray
+     */
+    public function testClosureReturnTypeHintArray(): void
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        static::assertTrue($type->isArray());
+        static::assertSame('array', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintCallable
+     */
+    public function testClosureReturnTypeHintCallable(): void
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        static::assertFalse($type->isScalar());
+        static::assertFalse($type->isArray());
+
+        static::assertSame('callable', $type->getImage());
+    }
+
+    /**
+     * testClosureReturnTypeHintClass
+     */
+    public function testClosureReturnTypeHintClass(): void
+    {
+        $type = $this->getFirstClosureForTestCase()->getReturnType();
+
+        static::assertFalse($type->isScalar());
+        static::assertFalse($type->isArray());
+
+        static::assertSame('\\Iterator', $type->getImage());
+    }
+
+    /**
+     * testSpaceshipOperatorWithStrings
+     */
+    public function testSpaceshipOperatorWithStrings(): void
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+
+        static::assertSame('<=>', $expr->getImage());
+    }
+
+    /**
+     * testSpaceshipOperatorWithNumbers
+     */
+    public function testSpaceshipOperatorWithNumbers(): void
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+
+        static::assertSame('<=>', $expr->getImage());
+    }
+
+    /**
+     * testSpaceshipOperatorWithArrays
+     *
+     * @return \PDepend\Source\AST\ASTNode
+     */
+    public function testSpaceshipOperatorWithArrays()
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getChild(1);
+
+        static::assertSame('<=>', $expr->getImage());
+
+        return $expr;
+    }
+
+    /**
+     * @depends testSpaceshipOperatorWithArrays
+     */
+    public function testSpaceshipOperatorHasExpectedStartLine(ASTExpression $expr): void
+    {
+        static::assertSame(6, $expr->getStartLine());
+    }
+
+    /**
+     * @depends testSpaceshipOperatorWithArrays
+     */
+    public function testSpaceshipOperatorHasExpectedEndLine(ASTExpression $expr): void
+    {
+        static::assertSame(6, $expr->getEndLine());
+    }
+
+    /**
+     * @depends testSpaceshipOperatorWithArrays
+     */
+    public function testSpaceshipOperatorHasExpectedStartColumn(ASTExpression $expr): void
+    {
+        static::assertSame(27, $expr->getStartColumn());
+    }
+
+    /**
+     * @depends testSpaceshipOperatorWithArrays
+     */
+    public function testSpaceshipOperatorHasExpectedEndColumn(ASTExpression $expr): void
+    {
+        static::assertSame(29, $expr->getEndColumn());
+    }
+
+    /**
+     * testNullCoalesceOperator
+     */
+    public function testNullCoalesceOperator(): void
+    {
+        $expr = $this->getFirstClassMethodForTestCase()
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
+            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+
+        static::assertSame('??', $expr->getImage());
+    }
+
+    public function testListKeywordAsMethodName(): void
+    {
+        $method = $this->getFirstMethodForTestCase();
+        static::assertNotNull($method);
+    }
+
+    public function testListKeywordAsFunctionNameThrowsException(): void
+    {
+        $this->expectException(UnexpectedTokenException::class);
+
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
+     * @return ASTNamespace
+     */
+    public function testGroupUseStatement()
+    {
+        $namespaces = $this->parseCodeResourceForTest();
+        static::assertNotNull($namespaces);
+
+        return $namespaces[0];
+    }
+
+    /**
+     * @depends testGroupUseStatement
+     */
+    public function testGroupUseStatementClassNameResolution(ASTNamespace $namespace): void
+    {
+        $classes = $namespace->getClasses();
+        $class = $classes[0];
+
+        static::assertEquals(
+            'FooLibrary\Bar\Baz\ClassB',
+            $class->getParentClass()->getNamespacedName()
+        );
+    }
+
+    /**
+     * @depends testGroupUseStatement
+     */
+    public function testGroupUseStatementAliasResolution(ASTNamespace $namespace): void
+    {
+        $classes = $namespace->getClasses();
+        $class = $classes[1];
+
+        static::assertEquals(
+            'FooLibrary\Bar\Baz\ClassD',
+            $class->getParentClass()->getNamespacedName()
+        );
+    }
+
+    public function testUniformVariableSyntax(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testConstantNameArray(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testClassConstantNames(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testClassConstantNamesAccessed(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testClassMethodNames(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testClassMethodNamesInvoked(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testMethodsCanBeCallOnInstancesReturnedByInvokableObject(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testMultipleArgumentsInInvocation(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testConstVisibility(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testNullableTypeHintParameter(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
+    }
+
+    public function testNullableTypeHintReturn(): void
+    {
+        static::assertNotNull($this->parseCodeResourceForTest());
     }
 }
