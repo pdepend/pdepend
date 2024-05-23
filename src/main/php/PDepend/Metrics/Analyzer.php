@@ -81,10 +81,9 @@ interface Analyzer
      * pdepend framework, while an analyzer that does not perform any action
      * for any reason should return <b>false</b>.
      *
-     * @return bool
      * @since  0.9.10
      */
-    public function isEnabled();
+    public function isEnabled(): bool;
 
     /**
      * Set global options

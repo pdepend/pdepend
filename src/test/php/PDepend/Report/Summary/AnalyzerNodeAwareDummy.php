@@ -101,10 +101,9 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
      * By default all analyzers are enabled. Overwrite this method to provide
      * state based disabling/enabling.
      *
-     * @return bool
      * @since 0.9.10
      */
-    public function isEnabled()
+    public function isEnabled(): bool
     {
         return true;
     }
