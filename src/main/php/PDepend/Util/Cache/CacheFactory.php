@@ -115,21 +115,17 @@ class CacheFactory
     {
         assert($this->configuration->cache instanceof stdClass);
 
-        switch ($this->configuration->cache->driver) {
-            case 'file':
-                return $this->createFileCache(
-                    $this->configuration->cache->location,
-                    $this->configuration->cache->ttl,
-                    $cacheKey,
-                );
-
-            case 'memory':
-                return $this->createMemoryCache();
-        }
-
-        throw new InvalidArgumentException(
-            "Unknown cache driver '{$this->configuration->cache->driver}' given.",
-        );
+        return match ($this->configuration->cache->driver) {
+            'file' => $this->createFileCache(
+                $this->configuration->cache->location,
+                $this->configuration->cache->ttl,
+                $cacheKey,
+            ),
+            'memory' => $this->createMemoryCache(),
+            default => throw new InvalidArgumentException(
+                "Unknown cache driver '{$this->configuration->cache->driver}' given.",
+            ),
+        };
     }
 
     /**
