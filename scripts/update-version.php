@@ -150,7 +150,7 @@ class CacheVersionUpdater
      */
     protected function accept($path)
     {
-        return (is_file($path) && '.php' === substr($path, -4, 4));
+        return (is_file($path) && str_ends_with($path, '.php'));
     }
 
     /**

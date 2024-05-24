@@ -699,6 +699,6 @@ class Engine
      */
     private function isPhpStream($path)
     {
-        return substr($path, 0, strlen($this->phpStreamPrefix)) === $this->phpStreamPrefix;
+        return str_starts_with($path, $this->phpStreamPrefix);
     }
 }
