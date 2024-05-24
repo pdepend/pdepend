@@ -68,13 +68,11 @@ class PHPParserGeneric extends PHPParserVersion83
      */
     protected function isKeyword($tokenType)
     {
-        switch ($tokenType) {
-            case Tokens::T_CLASS:
-            case Tokens::T_INTERFACE:
-                return true;
-        }
-
-        return false;
+        return match ($tokenType) {
+            Tokens::T_CLASS,
+            Tokens::T_INTERFACE => true,
+            default => false,
+        };
     }
 
     /**
@@ -87,27 +85,25 @@ class PHPParserGeneric extends PHPParserVersion83
      */
     protected function isFunctionName($tokenType)
     {
-        switch ($tokenType) {
-            case Tokens::T_CLONE:
-            case Tokens::T_STRING:
-            case Tokens::T_USE:
-            case Tokens::T_GOTO:
-            case Tokens::T_NULL:
-            case Tokens::T_SELF:
-            case Tokens::T_TRUE:
-            case Tokens::T_FALSE:
-            case Tokens::T_TRAIT:
-            case Tokens::T_INSTEADOF:
-            case Tokens::T_NAMESPACE:
-            case Tokens::T_DIR:
-            case Tokens::T_NS_C:
-            case Tokens::T_YIELD:
-            case Tokens::T_PARENT:
-            case Tokens::T_TRAIT_C:
-                return true;
-        }
-
-        return false;
+        return match ($tokenType) {
+            Tokens::T_CLONE,
+            Tokens::T_STRING,
+            Tokens::T_USE,
+            Tokens::T_GOTO,
+            Tokens::T_NULL,
+            Tokens::T_SELF,
+            Tokens::T_TRUE,
+            Tokens::T_FALSE,
+            Tokens::T_TRAIT,
+            Tokens::T_INSTEADOF,
+            Tokens::T_NAMESPACE,
+            Tokens::T_DIR,
+            Tokens::T_NS_C,
+            Tokens::T_YIELD,
+            Tokens::T_PARENT,
+            Tokens::T_TRAIT_C => true,
+            default => false,
+        };
     }
 
     /**

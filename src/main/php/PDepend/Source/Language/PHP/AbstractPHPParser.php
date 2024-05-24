@@ -424,23 +424,17 @@ abstract class AbstractPHPParser
      */
     private function parseScalarOrCallableTypeHint($image)
     {
-        switch (strtolower($image)) {
-            case 'int':
-            case 'bool':
-            case 'float':
-            case 'string':
-            case 'void':
-            case 'never':
-                return $this->builder->buildAstScalarType($image);
-
-            case 'callable':
-                return $this->builder->buildAstTypeCallable();
-
-            case 'iterable':
-                return $this->builder->buildAstTypeIterable();
-        }
-
-        throw new ParserException('Unsupported typehint');
+        return match (strtolower($image)) {
+            'int',
+            'bool',
+            'float',
+            'string',
+            'void',
+            'never' => $this->builder->buildAstScalarType($image),
+            'callable' => $this->builder->buildAstTypeCallable(),
+            'iterable' => $this->builder->buildAstTypeIterable(),
+            default => throw new ParserException('Unsupported typehint'),
+        };
     }
 
     private function consumeQuestionMark(): void
@@ -843,16 +837,14 @@ abstract class AbstractPHPParser
      */
     protected function isKeyword($tokenType)
     {
-        switch ($tokenType) {
-            case Tokens::T_CLASS:
-            case Tokens::T_TRAIT:
-            case Tokens::T_CALLABLE:
-            case Tokens::T_INSTEADOF:
-            case Tokens::T_INTERFACE:
-                return true;
-        }
-
-        return false;
+        return match ($tokenType) {
+            Tokens::T_CLASS,
+            Tokens::T_TRAIT,
+            Tokens::T_CALLABLE,
+            Tokens::T_INSTEADOF,
+            Tokens::T_INTERFACE => true,
+            default => false,
+        };
     }
 
     /**
@@ -884,26 +876,24 @@ abstract class AbstractPHPParser
      */
     private function isClassName($tokenType)
     {
-        switch ($tokenType) {
-            case Tokens::T_DIR:
-            case Tokens::T_USE:
-            case Tokens::T_GOTO:
-            case Tokens::T_NULL:
-            case Tokens::T_NS_C:
-            case Tokens::T_TRUE:
-            case Tokens::T_CLONE:
-            case Tokens::T_FALSE:
-            case Tokens::T_TRAIT:
-            case Tokens::T_STRING:
-            case Tokens::T_TRAIT_C:
-            case Tokens::T_CALLABLE:
-            case Tokens::T_INSTEADOF:
-            case Tokens::T_NAMESPACE:
-            case Tokens::T_READONLY:
-                return true;
-        }
-
-        return false;
+        return match ($tokenType) {
+            Tokens::T_DIR,
+            Tokens::T_USE,
+            Tokens::T_GOTO,
+            Tokens::T_NULL,
+            Tokens::T_NS_C,
+            Tokens::T_TRUE,
+            Tokens::T_CLONE,
+            Tokens::T_FALSE,
+            Tokens::T_TRAIT,
+            Tokens::T_STRING,
+            Tokens::T_TRAIT_C,
+            Tokens::T_CALLABLE,
+            Tokens::T_INSTEADOF,
+            Tokens::T_NAMESPACE,
+            Tokens::T_READONLY => true,
+            default => false,
+        };
     }
 
     /**
@@ -933,78 +923,76 @@ abstract class AbstractPHPParser
      */
     protected function isConstantName($tokenType)
     {
-        switch ($tokenType) {
-            case Tokens::T_CALLABLE:
-            case Tokens::T_TRAIT:
-            case Tokens::T_EXTENDS:
-            case Tokens::T_IMPLEMENTS:
-            case Tokens::T_STATIC:
-            case Tokens::T_ABSTRACT:
-            case Tokens::T_FINAL:
-            case Tokens::T_PUBLIC:
-            case Tokens::T_PROTECTED:
-            case Tokens::T_PRIVATE:
-            case Tokens::T_CONST:
-            case Tokens::T_ENDDECLARE:
-            case Tokens::T_ENDFOR:
-            case Tokens::T_ENDFOREACH:
-            case Tokens::T_ENDIF:
-            case Tokens::T_ENDWHILE:
-            case Tokens::T_EMPTY:
-            case Tokens::T_EVAL:
-            case Tokens::T_LOGICAL_AND:
-            case Tokens::T_GLOBAL:
-            case Tokens::T_GOTO:
-            case Tokens::T_INSTANCEOF:
-            case Tokens::T_INSTEADOF:
-            case Tokens::T_INTERFACE:
-            case Tokens::T_ISSET:
-            case Tokens::T_NAMESPACE:
-            case Tokens::T_NEW:
-            case Tokens::T_LOGICAL_OR:
-            case Tokens::T_LOGICAL_XOR:
-            case Tokens::T_TRY:
-            case Tokens::T_USE:
-            case Tokens::T_VAR:
-            case Tokens::T_EXIT:
-            case Tokens::T_LIST:
-            case Tokens::T_CLONE:
-            case Tokens::T_INCLUDE:
-            case Tokens::T_INCLUDE_ONCE:
-            case Tokens::T_THROW:
-            case Tokens::T_ARRAY:
-            case Tokens::T_PRINT:
-            case Tokens::T_ECHO:
-            case Tokens::T_REQUIRE:
-            case Tokens::T_REQUIRE_ONCE:
-            case Tokens::T_RETURN:
-            case Tokens::T_ELSE:
-            case Tokens::T_ELSEIF:
-            case Tokens::T_DEFAULT:
-            case Tokens::T_BREAK:
-            case Tokens::T_CONTINUE:
-            case Tokens::T_SWITCH:
-            case Tokens::T_YIELD:
-            case Tokens::T_FUNCTION:
-            case Tokens::T_IF:
-            case Tokens::T_ENDSWITCH:
-            case Tokens::T_FINALLY:
-            case Tokens::T_FOR:
-            case Tokens::T_FOREACH:
-            case Tokens::T_DECLARE:
-            case Tokens::T_CASE:
-            case Tokens::T_DO:
-            case Tokens::T_WHILE:
-            case Tokens::T_AS:
-            case Tokens::T_CATCH:
-                // case Tokens::T_DIE:
-            case Tokens::T_SELF:
-            case Tokens::T_PARENT:
-            case Tokens::T_UNSET:
-                return true;
-        }
-
-        return $this->isFunctionName($tokenType);
+        return match ($tokenType) {
+            Tokens::T_CALLABLE,
+            Tokens::T_TRAIT,
+            Tokens::T_EXTENDS,
+            Tokens::T_IMPLEMENTS,
+            Tokens::T_STATIC,
+            Tokens::T_ABSTRACT,
+            Tokens::T_FINAL,
+            Tokens::T_PUBLIC,
+            Tokens::T_PROTECTED,
+            Tokens::T_PRIVATE,
+            Tokens::T_CONST,
+            Tokens::T_ENDDECLARE,
+            Tokens::T_ENDFOR,
+            Tokens::T_ENDFOREACH,
+            Tokens::T_ENDIF,
+            Tokens::T_ENDWHILE,
+            Tokens::T_EMPTY,
+            Tokens::T_EVAL,
+            Tokens::T_LOGICAL_AND,
+            Tokens::T_GLOBAL,
+            Tokens::T_GOTO,
+            Tokens::T_INSTANCEOF,
+            Tokens::T_INSTEADOF,
+            Tokens::T_INTERFACE,
+            Tokens::T_ISSET,
+            Tokens::T_NAMESPACE,
+            Tokens::T_NEW,
+            Tokens::T_LOGICAL_OR,
+            Tokens::T_LOGICAL_XOR,
+            Tokens::T_TRY,
+            Tokens::T_USE,
+            Tokens::T_VAR,
+            Tokens::T_EXIT,
+            Tokens::T_LIST,
+            Tokens::T_CLONE,
+            Tokens::T_INCLUDE,
+            Tokens::T_INCLUDE_ONCE,
+            Tokens::T_THROW,
+            Tokens::T_ARRAY,
+            Tokens::T_PRINT,
+            Tokens::T_ECHO,
+            Tokens::T_REQUIRE,
+            Tokens::T_REQUIRE_ONCE,
+            Tokens::T_RETURN,
+            Tokens::T_ELSE,
+            Tokens::T_ELSEIF,
+            Tokens::T_DEFAULT,
+            Tokens::T_BREAK,
+            Tokens::T_CONTINUE,
+            Tokens::T_SWITCH,
+            Tokens::T_YIELD,
+            Tokens::T_FUNCTION,
+            Tokens::T_IF,
+            Tokens::T_ENDSWITCH,
+            Tokens::T_FINALLY,
+            Tokens::T_FOR,
+            Tokens::T_FOREACH,
+            Tokens::T_DECLARE,
+            Tokens::T_CASE,
+            Tokens::T_DO,
+            Tokens::T_WHILE,
+            Tokens::T_AS,
+            Tokens::T_CATCH,
+            // Tokens::T_DIE,
+            Tokens::T_SELF,
+            Tokens::T_PARENT,
+            Tokens::T_UNSET => true,
+            default => $this->isFunctionName($tokenType),
+        };
     }
 
     /**
@@ -1017,17 +1005,15 @@ abstract class AbstractPHPParser
      */
     protected function isFunctionName($tokenType)
     {
-        switch ($tokenType) {
-            case Tokens::T_STRING:
-            case Tokens::T_NULL:
-            case Tokens::T_SELF:
-            case Tokens::T_TRUE:
-            case Tokens::T_FALSE:
-            case Tokens::T_PARENT:
-                return true;
-        }
-
-        return false;
+        return match ($tokenType) {
+            Tokens::T_STRING,
+            Tokens::T_NULL,
+            Tokens::T_SELF,
+            Tokens::T_TRUE,
+            Tokens::T_FALSE,
+            Tokens::T_PARENT => true,
+            default => false,
+        };
     }
 
     /**
@@ -1052,12 +1038,10 @@ abstract class AbstractPHPParser
      */
     private function isMethodName($tokenType)
     {
-        switch ($tokenType) {
-            case Tokens::T_CLASS:
-                return true;
-        }
-
-        return $this->isConstantName($tokenType);
+        return match ($tokenType) {
+            Tokens::T_CLASS => true,
+            default => $this->isConstantName($tokenType),
+        };
     }
 
     /**
@@ -2581,15 +2565,11 @@ abstract class AbstractPHPParser
     {
         $this->consumeComments();
 
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_CURLY_BRACE_OPEN:
-                return $this->parseStringIndexExpression($node);
-
-            case Tokens::T_SQUARED_BRACKET_OPEN:
-                return $this->parseArrayIndexExpression($node);
-        }
-
-        return $node;
+        return match ($this->tokenizer->peek()) {
+            Tokens::T_CURLY_BRACE_OPEN => $this->parseStringIndexExpression($node),
+            Tokens::T_SQUARED_BRACKET_OPEN => $this->parseArrayIndexExpression($node),
+            default => $node,
+        };
     }
 
     /**
@@ -2829,18 +2809,12 @@ abstract class AbstractPHPParser
      */
     private function parseStandAloneExpressionTypeReference($tokenType)
     {
-        switch ($tokenType) {
-            case Tokens::T_SELF:
-                return $this->parseSelfReference($this->consumeToken(Tokens::T_SELF));
-
-            case Tokens::T_PARENT:
-                return $this->parseParentReference($this->consumeToken(Tokens::T_PARENT));
-
-            case Tokens::T_STATIC:
-                return $this->parseStaticReference($this->consumeToken(Tokens::T_STATIC));
-        }
-
-        throw $this->getUnexpectedNextTokenException();
+        return match ($tokenType) {
+            Tokens::T_SELF => $this->parseSelfReference($this->consumeToken(Tokens::T_SELF)),
+            Tokens::T_PARENT => $this->parseParentReference($this->consumeToken(Tokens::T_PARENT)),
+            Tokens::T_STATIC => $this->parseStaticReference($this->consumeToken(Tokens::T_STATIC)),
+            default => throw $this->getUnexpectedNextTokenException(),
+        };
     }
 
     /**
@@ -2854,20 +2828,15 @@ abstract class AbstractPHPParser
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
 
-        switch ($tokenType) {
-            case Tokens::T_DOLLAR:
-            case Tokens::T_VARIABLE:
-                // TODO: Parse variable or Member Primary Prefix + Property Postfix
-                return $this->parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
-
-            case Tokens::T_SELF:
-            case Tokens::T_PARENT:
-            case Tokens::T_STATIC:
-                return $this->parseStandAloneExpressionTypeReference($tokenType);
-
-            default:
-                return $this->parseClassOrInterfaceReference($classRef);
-        }
+        return match ($tokenType) {
+            // TODO: Parse variable or Member Primary Prefix + Property Postfix
+            Tokens::T_DOLLAR,
+            Tokens::T_VARIABLE => $this->parseVariableOrFunctionPostfixOrMemberPrimaryPrefix(),
+            Tokens::T_SELF,
+            Tokens::T_PARENT,
+            Tokens::T_STATIC => $this->parseStandAloneExpressionTypeReference($tokenType),
+            default => $this->parseClassOrInterfaceReference($classRef),
+        };
     }
 
     /**
@@ -4992,22 +4961,11 @@ abstract class AbstractPHPParser
             return $this->parseOptionalIndexExpression($this->parseLiteral());
         }
 
-        switch ($tokenType) {
-            case Tokens::T_CURLY_BRACE_OPEN:
-                $node = $this->parseCompoundExpression();
-
-                break;
-
-            case Tokens::T_STRING:
-                $node = $this->parseLiteral();
-
-                break;
-
-            default:
-                $node = $this->parseCompoundVariableOrVariableVariableOrVariable();
-
-                break;
-        }
+        $node = match ($tokenType) {
+            Tokens::T_CURLY_BRACE_OPEN => $this->parseCompoundExpression(),
+            Tokens::T_STRING => $this->parseLiteral(),
+            default => $this->parseCompoundVariableOrVariableVariableOrVariable(),
+        };
 
         return $this->parseOptionalIndexExpression($node);
     }
@@ -5168,24 +5126,13 @@ abstract class AbstractPHPParser
 
         $this->consumeComments();
 
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_STRING:
-                $postfix = $this->parseMethodOrConstantPostfix();
-
-                break;
-
-            case Tokens::T_CLASS_FQN:
-                $postfix = $this->parseFullQualifiedClassNamePostfix();
-
-                break;
-
-            default:
-                $postfix = $this->parseMethodOrPropertyPostfix(
-                    $this->parsePostfixIdentifier(),
-                );
-
-                break;
-        }
+        $postfix = match ($this->tokenizer->peek()) {
+            Tokens::T_STRING => $this->parseMethodOrConstantPostfix(),
+            Tokens::T_CLASS_FQN => $this->parseFullQualifiedClassNamePostfix(),
+            default => $this->parseMethodOrPropertyPostfix(
+                $this->parsePostfixIdentifier(),
+            ),
+        };
 
         $prefix->addChild($postfix);
 
@@ -5233,17 +5180,10 @@ abstract class AbstractPHPParser
         // Strip optional comments
         $this->consumeComments();
 
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_PARENTHESIS_OPEN:
-                $postfix = $this->parseMethodPostfix($node);
-
-                break;
-
-            default:
-                $postfix = $this->parsePropertyPostfix($node);
-
-                break;
-        }
+        $postfix = match ($this->tokenizer->peek()) {
+            Tokens::T_PARENTHESIS_OPEN => $this->parseMethodPostfix($node),
+            default => $this->parsePropertyPostfix($node),
+        };
 
         return $this->parseOptionalMemberPrimaryPrefix($postfix);
     }
@@ -5426,30 +5366,18 @@ abstract class AbstractPHPParser
     {
         $this->consumeComments();
 
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_DOLLAR:
-            case Tokens::T_VARIABLE:
-                return $this->parseVariableOrFunctionPostfixOrMemberPrimaryPrefix();
-
-            case Tokens::T_SELF:
-                return $this->parseConstantOrSelfMemberPrimaryPrefix();
-
-            case Tokens::T_PARENT:
-                return $this->parseConstantOrParentMemberPrimaryPrefix();
-
-            case Tokens::T_STATIC:
-                return $this->parseStaticVariableDeclarationOrMemberPrimaryPrefix();
-
-            case Tokens::T_STRING:
-            case Tokens::T_BACKSLASH:
-            case Tokens::T_NAMESPACE:
-                return $this->parseMemberPrefixOrFunctionPostfix();
-
-            case Tokens::T_PARENTHESIS_OPEN:
-                return $this->parseParenthesisExpression();
-        }
-
-        throw $this->getUnexpectedNextTokenException();
+        return match ($this->tokenizer->peek()) {
+            Tokens::T_DOLLAR,
+            Tokens::T_VARIABLE => $this->parseVariableOrFunctionPostfixOrMemberPrimaryPrefix(),
+            Tokens::T_SELF => $this->parseConstantOrSelfMemberPrimaryPrefix(),
+            Tokens::T_PARENT => $this->parseConstantOrParentMemberPrimaryPrefix(),
+            Tokens::T_STATIC => $this->parseStaticVariableDeclarationOrMemberPrimaryPrefix(),
+            Tokens::T_STRING,
+            Tokens::T_BACKSLASH,
+            Tokens::T_NAMESPACE => $this->parseMemberPrefixOrFunctionPostfix(),
+            Tokens::T_PARENTHESIS_OPEN => $this->parseParenthesisExpression(),
+            default => throw $this->getUnexpectedNextTokenException(),
+        };
     }
 
     /**
@@ -5476,28 +5404,13 @@ abstract class AbstractPHPParser
 
         $this->consumeComments();
 
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_DOUBLE_COLON:
-                $result = $this->parseStaticMemberPrimaryPrefix($variable);
-
-                break;
-
-            case Tokens::T_NULLSAFE_OBJECT_OPERATOR:
-            case Tokens::T_OBJECT_OPERATOR:
-                $result = $this->parseMemberPrimaryPrefix($variable);
-
-                break;
-
-            case Tokens::T_PARENTHESIS_OPEN:
-                $result = $this->parseFunctionPostfix($variable);
-
-                break;
-
-            default:
-                $result = $variable;
-
-                break;
-        }
+        $result = match ($this->tokenizer->peek()) {
+            Tokens::T_DOUBLE_COLON => $this->parseStaticMemberPrimaryPrefix($variable),
+            Tokens::T_NULLSAFE_OBJECT_OPERATOR,
+            Tokens::T_OBJECT_OPERATOR => $this->parseMemberPrimaryPrefix($variable),
+            Tokens::T_PARENTHESIS_OPEN => $this->parseFunctionPostfix($variable),
+            default => $variable,
+        };
 
         return $this->setNodePositionsAndReturn($result);
     }
@@ -6190,13 +6103,11 @@ abstract class AbstractPHPParser
      */
     private function isArrayStartDelimiter()
     {
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_ARRAY:
-            case Tokens::T_SQUARED_BRACKET_OPEN:
-                return true;
-        }
-
-        return false;
+        return match ($this->tokenizer->peek()) {
+            Tokens::T_ARRAY,
+            Tokens::T_SQUARED_BRACKET_OPEN => true,
+            default => false,
+        };
     }
 
     /**
@@ -6787,25 +6698,14 @@ abstract class AbstractPHPParser
             return $this->parseFormalParameterAndTypeHint($typeHint);
         }
 
-        switch ($tokenType) {
-            case Tokens::T_ARRAY:
-                return $this->parseFormalParameterAndArrayTypeHint();
-
-            case Tokens::T_SELF:
-                return $this->parseFormalParameterAndSelfTypeHint();
-
-            case Tokens::T_PARENT:
-                return $this->parseFormalParameterAndParentTypeHint();
-
-            case Tokens::T_STATIC:
-                return $this->parseFormalParameterAndStaticTypeHint();
-
-            case Tokens::T_BITWISE_AND:
-                return $this->parseFormalParameterAndByReference();
-
-            default:
-                return $this->parseFormalParameter();
-        }
+        return match ($tokenType) {
+            Tokens::T_ARRAY => $this->parseFormalParameterAndArrayTypeHint(),
+            Tokens::T_SELF => $this->parseFormalParameterAndSelfTypeHint(),
+            Tokens::T_PARENT => $this->parseFormalParameterAndParentTypeHint(),
+            Tokens::T_STATIC => $this->parseFormalParameterAndStaticTypeHint(),
+            Tokens::T_BITWISE_AND => $this->parseFormalParameterAndByReference(),
+            default => $this->parseFormalParameter(),
+        };
     }
 
     /**
@@ -7068,21 +6968,19 @@ abstract class AbstractPHPParser
      */
     protected function isTypeHint($tokenType)
     {
-        switch ($tokenType) {
-            case Tokens::T_SELF:
-            case Tokens::T_PARENT:
-            case Tokens::T_CALLABLE:
-            case Tokens::T_STRING:
-            case Tokens::T_BACKSLASH:
-            case Tokens::T_NAMESPACE:
-            case Tokens::T_ARRAY:
-            case Tokens::T_NULL:
-            case Tokens::T_FALSE:
-            case Tokens::T_STATIC:
-                return true;
-        }
-
-        return false;
+        return match ($tokenType) {
+            Tokens::T_SELF,
+            Tokens::T_PARENT,
+            Tokens::T_CALLABLE,
+            Tokens::T_STRING,
+            Tokens::T_BACKSLASH,
+            Tokens::T_NAMESPACE,
+            Tokens::T_ARRAY,
+            Tokens::T_NULL,
+            Tokens::T_FALSE,
+            Tokens::T_STATIC => true,
+            default => false,
+        };
     }
 
     /**
@@ -7764,19 +7662,17 @@ abstract class AbstractPHPParser
      */
     protected function isScalarOrCallableTypeHint($image)
     {
-        switch (strtolower($image)) {
-            case 'int':
-            case 'bool':
-            case 'float':
-            case 'string':
-            case 'callable':
-            case 'iterable':
-            case 'void':
-            case 'never':
-                return true;
-        }
-
-        return false;
+        return match (strtolower($image)) {
+            'int',
+            'bool',
+            'float',
+            'string',
+            'callable',
+            'iterable',
+            'void',
+            'never' => true,
+            default => false,
+        };
     }
 
     /**
