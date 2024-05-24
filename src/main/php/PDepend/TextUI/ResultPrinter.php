@@ -191,7 +191,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
         if ($diff === 0) {
             printf(".% 6s\n\n", $this->count);
         } elseif ($size === 1) {
-            $indent = 66 - ceil($diff / $size);
+            $indent = 66 - ceil($diff);
             printf(".% {$indent}s\n\n", $this->count);
         } else {
             $indent = 66 - ceil($diff / $size) + 1;

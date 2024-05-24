@@ -88,8 +88,6 @@ class CacheVersionUpdater
      * Processes all source files and generates a combined version for all files.
      * The it replaces the old version key within the project source with the
      * newly calculated value.
-     *
-     * @return void
      */
     public function run(): void
     {
@@ -170,7 +168,6 @@ class CacheVersionUpdater
      * The main method starts the cache version updater.
      *
      * @param array $args Cli arguments.
-     * @return void
      */
     public static function main(array $args): void
     {
