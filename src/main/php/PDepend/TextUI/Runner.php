@@ -265,7 +265,7 @@ class Runner
                 }
             }
         } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
+            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT, $e);
         }
 
         if (count($this->loggerMap) === 0) {
@@ -281,7 +281,7 @@ class Runner
                 $engine->addReportGenerator($generator);
             }
         } catch (Exception $e) {
-            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT);
+            throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT, $e);
         }
 
         foreach ($this->processListeners as $processListener) {
