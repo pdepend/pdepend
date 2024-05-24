@@ -188,16 +188,16 @@ class PHPBuilder implements Builder
      *
      * @since 0.10.0
      */
-    private BuilderContext $context;
+    private readonly BuilderContext $context;
 
     /**
      * Default package which contains all functions and classes with an unknown
      * scope.
      */
-    private ASTNamespace $defaultPackage;
+    private readonly ASTNamespace $defaultPackage;
 
     /** Default source file that acts as a dummy. */
-    private ASTCompilationUnit $defaultCompilationUnit;
+    private readonly ASTCompilationUnit $defaultCompilationUnit;
 
     /**
      * This property holds all packages found during the parsing phase.

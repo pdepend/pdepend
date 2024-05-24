@@ -342,7 +342,7 @@ abstract class AbstractPHPParser
      *
      * @since 0.9.12
      */
-    private IdBuilder $idBuilder;
+    private readonly IdBuilder $idBuilder;
 
     /**
      * The maximum valid nesting level allowed.
