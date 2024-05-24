@@ -6129,7 +6129,7 @@ abstract class AbstractPHPParser
             $number .= $next->image;
         }
 
-        if ('0' !== substr($number, 0, 1)) {
+        if (!str_starts_with($number, '0')) {
             goto BUILD_LITERAL;
         }
 
