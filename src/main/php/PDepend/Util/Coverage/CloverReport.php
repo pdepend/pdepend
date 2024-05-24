@@ -143,10 +143,6 @@ class CloverReport implements Report
      */
     private function getLines($fileName)
     {
-        if (isset($this->fileLineCoverage[$fileName])) {
-            return $this->fileLineCoverage[$fileName];
-        }
-
-        return [];
+        return $this->fileLineCoverage[$fileName] ?? [];
     }
 }

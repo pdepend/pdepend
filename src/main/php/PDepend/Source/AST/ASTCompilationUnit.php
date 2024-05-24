@@ -143,7 +143,7 @@ class ASTCompilationUnit extends AbstractASTArtifact
      */
     public function __toString()
     {
-        return ($this->fileName === null ? '' : $this->fileName);
+        return $this->fileName ?? '';
     }
 
     /**

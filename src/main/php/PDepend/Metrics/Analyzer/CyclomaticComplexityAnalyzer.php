@@ -121,11 +121,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     public function getCcn(ASTArtifact $node)
     {
         $metrics = $this->getNodeMetrics($node);
-        if (isset($metrics[self::M_CYCLOMATIC_COMPLEXITY_1])) {
-            return $metrics[self::M_CYCLOMATIC_COMPLEXITY_1];
-        }
 
-        return 0;
+        return $metrics[self::M_CYCLOMATIC_COMPLEXITY_1] ?? 0;
     }
 
     /**
@@ -137,11 +134,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     public function getCcn2(ASTArtifact $node)
     {
         $metrics = $this->getNodeMetrics($node);
-        if (isset($metrics[self::M_CYCLOMATIC_COMPLEXITY_2])) {
-            return $metrics[self::M_CYCLOMATIC_COMPLEXITY_2];
-        }
 
-        return 0;
+        return $metrics[self::M_CYCLOMATIC_COMPLEXITY_2] ?? 0;
     }
 
     /**
