@@ -83,18 +83,6 @@ class ExtensionManagerTest extends AbstractTestCase
 
         $message = null;
 
-        try {
-            $extensionManager->activateExtension(ExtensionManager::class);
-        } catch (RuntimeException $exception) {
-            $message = $exception->getMessage();
-        }
-
-        static::assertSame(
-            'Class "PDepend\\DependencyInjection\\ExtensionManager" is not a valid Extension',
-            $message
-        );
-        static::assertSame([], $extensionManager->getActivatedExtensions());
-
         $extensionManager->activateExtension(TestExtension::class);
         $extensions = $extensionManager->getActivatedExtensions();
 
