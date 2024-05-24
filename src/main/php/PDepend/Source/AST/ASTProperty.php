@@ -43,13 +43,15 @@
 
 namespace PDepend\Source\AST;
 
+use Stringable;
+
 /**
  * This code class represents a class property.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ASTProperty extends AbstractASTArtifact
+class ASTProperty extends AbstractASTArtifact implements Stringable
 {
     /** The parent type object. */
     private ASTClass $declaringClass;

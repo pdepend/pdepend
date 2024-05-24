@@ -44,6 +44,7 @@
 namespace PDepend\Source\AST;
 
 use RuntimeException;
+use Stringable;
 
 /**
  * An instance of this class represents a function or method parameter within
@@ -64,7 +65,7 @@ use RuntimeException;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ASTParameter extends AbstractASTArtifact
+class ASTParameter extends AbstractASTArtifact implements Stringable
 {
     /** The parent function or method instance. */
     private AbstractASTCallable $declaringFunction;

@@ -46,6 +46,7 @@ namespace PDepend\Source\AST;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\CacheDriver;
 use RuntimeException;
+use Stringable;
 
 /**
  * This class provides an interface to a single source file.
@@ -53,7 +54,7 @@ use RuntimeException;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
-class ASTCompilationUnit extends AbstractASTArtifact
+class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
 {
     /**
      * The internal used cache instance.
