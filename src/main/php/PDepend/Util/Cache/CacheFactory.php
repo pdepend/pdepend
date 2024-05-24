@@ -63,9 +63,6 @@ class CacheFactory
 {
     private const DEFAULT_TTL = 2592000; // 30 days
 
-    /** The system configuration. */
-    protected Configuration $configuration;
-
     /**
      * Singleton property that holds existing cache instances.
      *
@@ -78,9 +75,9 @@ class CacheFactory
      *
      * @param Configuration $configuration The system configuration.
      */
-    public function __construct(Configuration $configuration)
-    {
-        $this->configuration = $configuration;
+    public function __construct(
+        protected Configuration $configuration,
+    ) {
     }
 
     /**

@@ -59,17 +59,12 @@ class FileCacheGarbageCollector
 {
     public const DEFAULT_TTL = 2592000; // 30 days
 
-    private string $cacheDir;
+    private readonly int $expirationTimestamp;
 
-    private int $expirationTimestamp;
-
-    /**
-     * @param string $cacheDir
-     * @param int $ttl
-     */
-    public function __construct($cacheDir, $ttl = self::DEFAULT_TTL)
-    {
-        $this->cacheDir = $cacheDir;
+    public function __construct(
+        private readonly string $cacheDir,
+        int $ttl = self::DEFAULT_TTL
+    ) {
         $this->expirationTimestamp = time() - $ttl;
     }
 

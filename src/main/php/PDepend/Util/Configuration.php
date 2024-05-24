@@ -56,21 +56,14 @@ use stdClass;
 class Configuration
 {
     /**
-     * Simple object tree holding the concrete configuration values.
-     *
-     * @since 0.10.0
-     */
-    protected stdClass $settings;
-
-    /**
      * Constructs a new configuration instance with the given settings tree.
      *
      * @param stdClass $settings The concrete configuration values.
      * @since 0.10.0
      */
-    public function __construct(stdClass $settings)
-    {
-        $this->settings = $settings;
+    public function __construct(
+        protected stdClass $settings,
+    ) {
     }
 
     /**

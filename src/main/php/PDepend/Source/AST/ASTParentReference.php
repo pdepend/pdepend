@@ -57,18 +57,15 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
     /** The source image of this node. */
     public const IMAGE = 'parent';
 
-    /** The wrapped reference node. */
-    protected ASTClassOrInterfaceReference $reference;
-
     /**
      * Constructs a new type holder instance.
      *
      * @param ASTClassOrInterfaceReference $reference The type instance that reference the concrete target of self.
      * @todo Call parent constructor, otherwise this could cause bad side effects.
      */
-    public function __construct(ASTClassOrInterfaceReference $reference)
-    {
-        $this->reference = $reference;
+    public function __construct(
+        protected ASTClassOrInterfaceReference $reference,
+    ) {
     }
 
     /**

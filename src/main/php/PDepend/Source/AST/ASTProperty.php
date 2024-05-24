@@ -57,20 +57,6 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
     private ASTClass $declaringClass;
 
     /**
-     * The wrapped field declaration instance.
-     *
-     * @since 0.9.6
-     */
-    private ASTFieldDeclaration $fieldDeclaration;
-
-    /**
-     * The wrapped variable declarator instance.
-     *
-     * @since 0.9.6
-     */
-    private ASTVariableDeclarator $variableDeclarator;
-
-    /**
      * Constructs a new item for the given field declaration and variable
      * declarator.
      *
@@ -79,12 +65,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
      * @param ASTVariableDeclarator $variableDeclarator The context variable declarator for this property instance.
      */
     public function __construct(
-        ASTFieldDeclaration $fieldDeclaration,
-        ASTVariableDeclarator $variableDeclarator,
+        private readonly ASTFieldDeclaration $fieldDeclaration,
+        private readonly ASTVariableDeclarator $variableDeclarator,
     ) {
-        $this->fieldDeclaration = $fieldDeclaration;
-        $this->variableDeclarator = $variableDeclarator;
-
         $this->id = spl_object_hash($this);
     }
 

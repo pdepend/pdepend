@@ -52,21 +52,14 @@ namespace PDepend\Input;
 class ExtensionFilter implements Filter
 {
     /**
-     * Whitelist of accepted file extensions.
-     *
-     * @var array<string>
-     */
-    protected array $extensions = [];
-
-    /**
      * Constructs a new file extension filter instance with the given list of
      *  allowed file <b>$extensions</b>.
      *
      * @param array<string> $extensions List of allowed extension.
      */
-    public function __construct(array $extensions)
-    {
-        $this->extensions = $extensions;
+    public function __construct(
+        protected array $extensions,
+    ) {
     }
 
     /**

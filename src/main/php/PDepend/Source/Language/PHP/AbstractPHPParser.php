@@ -273,18 +273,8 @@ abstract class AbstractPHPParser
                        0[bB][01]+(?:_[01]+)*
                      )x';
 
-    /**
-     * The used data structure builder.
-     *
-     * @var PHPBuilder<mixed>
-     */
-    protected PHPBuilder $builder;
-
     /** Stack with all active token scopes. */
     protected TokenStack $tokenStack;
-
-    /** The used code tokenizer. */
-    protected Tokenizer $tokenizer;
 
     /** @var array<int, int> */
     protected array $possiblePropertyTypes = [
@@ -312,9 +302,6 @@ abstract class AbstractPHPParser
 
     /** The actually parsed class or interface instance. */
     private ?AbstractASTClassOrInterface $classOrInterface = null;
-
-    /** @since 0.10.0 */
-    private CacheDriver $cache;
 
     /** The name of the last detected namespace. */
     private ?string $namespaceName = null;
@@ -357,14 +344,14 @@ abstract class AbstractPHPParser
     /**
      * Constructs a new source parser.
      *
-     * @param PHPBuilder<mixed> $builder
+     * @param Tokenizer $tokenizer The used code tokenizer.
+     * @param PHPBuilder<mixed> $builder The used data structure builder.
      */
-    public function __construct(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
-    {
-        $this->tokenizer = $tokenizer;
-        $this->builder = $builder;
-        $this->cache = $cache;
-
+    public function __construct(
+        protected Tokenizer $tokenizer,
+        protected PHPBuilder $builder,
+        private readonly CacheDriver $cache
+    ) {
         $this->idBuilder = new IdBuilder();
         $this->tokenStack = new TokenStack();
         $this->useSymbolTable = new SymbolTable();

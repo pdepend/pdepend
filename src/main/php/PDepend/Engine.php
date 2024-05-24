@@ -88,13 +88,6 @@ use stdClass;
  */
 class Engine
 {
-    /**
-     * The system configuration.
-     *
-     * @since 0.10.0
-     */
-    protected Configuration $configuration;
-
     /** Prefix for PHP streams. */
     protected string $phpStreamPrefix = 'php://';
 
@@ -165,31 +158,18 @@ class Engine
     private array $parseExceptions = [];
 
     /**
-     * The configured cache factory.
-     *
-     * @since 1.0.0
-     */
-    private CacheFactory $cacheFactory;
-
-    private AnalyzerFactory $analyzerFactory;
-
-    /**
      * Constructs a new php depend facade.
      *
      * @param Configuration $configuration The system configuration.
+     * @param CacheFactory $cacheFactory The configured cache factory.
      */
     public function __construct(
-        Configuration $configuration,
-        CacheFactory $cacheFactory,
-        AnalyzerFactory $analyzerFactory,
+        protected Configuration $configuration,
+        private readonly CacheFactory $cacheFactory,
+        private readonly AnalyzerFactory $analyzerFactory,
     ) {
-        $this->configuration = $configuration;
-
         $this->codeFilter = new NullArtifactFilter();
         $this->fileFilter = new CompositeFilter();
-
-        $this->cacheFactory = $cacheFactory;
-        $this->analyzerFactory = $analyzerFactory;
     }
 
     /**

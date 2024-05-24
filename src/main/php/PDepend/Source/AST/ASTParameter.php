@@ -76,21 +76,19 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
     /** Is this parameter optional or mandatory? */
     private bool $optional = false;
 
-    /** The wrapped formal parameter instance. */
-    private ASTFormalParameter $formalParameter;
-
     /** The wrapped variable declarator instance. */
     private readonly ASTVariableDeclarator $variableDeclarator;
 
     /**
      * Constructs a new parameter instance for the given AST node.
      *
+     * @param ASTFormalParameter $formalParameter The wrapped formal parameter instance.
      * @throws RuntimeException
      */
-    public function __construct(ASTFormalParameter $formalParameter)
-    {
-        $this->formalParameter = $formalParameter;
-        $variableDeclarator = $formalParameter->getFirstChildOfType(
+    public function __construct(
+        private readonly ASTFormalParameter $formalParameter,
+    ) {
+        $variableDeclarator = $this->formalParameter->getFirstChildOfType(
             ASTVariableDeclarator::class,
         );
         if (!$variableDeclarator) {
