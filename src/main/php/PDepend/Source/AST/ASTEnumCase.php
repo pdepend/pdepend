@@ -85,10 +85,6 @@ class ASTEnumCase extends AbstractASTNode implements ASTArtifact
      */
     public function getValue()
     {
-        if (isset($this->nodes[0])) {
-            return $this->nodes[0];
-        }
-
-        return null;
+        return $this->nodes[0] ?? null;
     }
 }

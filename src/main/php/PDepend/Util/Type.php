@@ -260,11 +260,8 @@ final class Type
 
         $normalizedName = ltrim($typeName, '\\');
         $normalizedName = strtolower($normalizedName);
-        if (isset(self::$typeNameToExtension[$normalizedName])) {
-            return self::$typeNameToExtension[$normalizedName];
-        }
 
-        return null;
+        return self::$typeNameToExtension[$normalizedName] ?? null;
     }
 
     /**
@@ -353,11 +350,8 @@ final class Type
             return self::$primitiveTypes[$image];
         }
         $image = soundex($image);
-        if (isset(self::$primitiveTypes[$image])) {
-            return self::$primitiveTypes[$image];
-        }
 
-        return null;
+        return self::$primitiveTypes[$image] ?? null;
     }
 
     /**
