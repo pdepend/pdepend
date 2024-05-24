@@ -55,14 +55,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class AnalyzerFactory
 {
-    private ContainerInterface $container;
-
     /**
      * Create a new Analyzer Factory
      */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
+    public function __construct(
+        private readonly ContainerInterface $container,
+    ) {
     }
 
     /**

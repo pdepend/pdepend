@@ -53,16 +53,11 @@ namespace PDepend\Source\AST;
  */
 class ASTNamedArgument extends AbstractASTNode
 {
-    protected string $name;
-
-    /**
-     * @param string $name
-     */
-    public function __construct($name, ASTNode $value)
-    {
+    public function __construct(
+        protected string $name,
+        ASTNode $value
+    ) {
         parent::__construct();
-
-        $this->name = $name;
         $this->addChild($value);
     }
 

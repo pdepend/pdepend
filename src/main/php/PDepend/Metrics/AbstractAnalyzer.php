@@ -54,13 +54,6 @@ use PDepend\Source\ASTVisitor\AbstractASTVisitor;
 abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
 {
     /**
-     * Global options array.
-     *
-     * @var array<string, array<int, string>|string>
-     */
-    protected array $options = [];
-
-    /**
      * List or registered listeners.
      *
      * @var AnalyzerListener[]
@@ -73,9 +66,9 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      * @param array<string, array<int, string>|string> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
-    public function __construct(array $options = [])
-    {
-        $this->options = $options;
+    public function __construct(
+        protected array $options = [],
+    ) {
     }
 
     /**

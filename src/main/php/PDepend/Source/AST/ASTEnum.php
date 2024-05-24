@@ -55,20 +55,16 @@ use InvalidArgumentException;
 class ASTEnum extends AbstractASTClassOrInterface
 {
     /**
-     * ASTScalarType if backed enumeration: https://www.php.net/manual/en/language.enumerations.backed.php
+     * @param ?ASTScalarType $type ASTScalarType if backed enumeration: https://www.php.net/manual/en/language.enumerations.backed.php
      *   - either: ASTScalarType('string')
      *   - or:     ASTScalarType('int')
      * null if basic enumeration: https://www.php.net/manual/en/language.enumerations.basics.php
-     *
-     * @var ?ASTScalarType
      */
-    private ?ASTScalarType $type;
-
-    public function __construct($name, ?ASTScalarType $type = null)
-    {
+    public function __construct(
+        $name,
+        private readonly ?ASTScalarType $type = null,
+    ) {
         parent::__construct($name);
-
-        $this->type = $type;
     }
 
     /**

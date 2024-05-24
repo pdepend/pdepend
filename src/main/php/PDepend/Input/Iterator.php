@@ -55,29 +55,19 @@ use SplFileInfo;
  */
 class Iterator extends FilterIterator
 {
-    /** The associated filter object. */
-    protected Filter $filter;
-
-    /**
-     * Optional root path for the files.
-     *
-     * @since 0.10.0
-     */
-    protected ?string $rootPath;
-
     /**
      * Constructs a new file filter iterator.
      *
      * @param \Iterator<int, SplFileInfo> $iterator The inner iterator.
      * @param Filter $filter The filter object.
-     * @param string $rootPath Optional root path for the files.
+     * @param ?string $rootPath Optional root path for the files.
      */
-    public function __construct(\Iterator $iterator, Filter $filter, $rootPath = null)
-    {
+    public function __construct(
+        \Iterator $iterator,
+        protected Filter $filter,
+        protected ?string $rootPath = null,
+    ) {
         parent::__construct($iterator);
-
-        $this->filter = $filter;
-        $this->rootPath = $rootPath;
     }
 
     /**

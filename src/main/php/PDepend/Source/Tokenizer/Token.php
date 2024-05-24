@@ -51,24 +51,6 @@ namespace PDepend\Source\Tokenizer;
  */
 class Token
 {
-    /** The token type identifier. */
-    public int $type;
-
-    /** The token image/textual representation. */
-    public string $image;
-
-    /** The start line number for this token. */
-    public int $startLine;
-
-    /** The end line number for this token. */
-    public int $endLine;
-
-    /** The start column number for this token. */
-    public int $startColumn;
-
-    /** The end column number for this token. */
-    public int $endColumn;
-
     /**
      * Constructs a new source token.
      *
@@ -79,13 +61,13 @@ class Token
      * @param int $startColumn The start column number for this token.
      * @param int $endColumn The end column number for this token.
      */
-    public function __construct($type, $image, $startLine, $endLine, $startColumn, $endColumn)
-    {
-        $this->type = $type;
-        $this->image = $image;
-        $this->startLine = $startLine;
-        $this->endLine = $endLine;
-        $this->startColumn = $startColumn;
-        $this->endColumn = $endColumn;
+    public function __construct(
+        public int $type,
+        public string $image,
+        public int $startLine,
+        public int $endLine,
+        public int $startColumn,
+        public int $endColumn
+    ) {
     }
 }

@@ -77,14 +77,6 @@ class FileCacheDriver implements CacheDriver
     protected string $version;
 
     /**
-     * Unique key for this cache instance.
-     *
-     * @var ?string
-     * @since 1.0.0
-     */
-    private ?string $cacheKey;
-
-    /**
      * This method constructs a new file cache instance for the given root
      * directory.
      *
@@ -93,12 +85,13 @@ class FileCacheDriver implements CacheDriver
      * @param string|null $cacheKey Unique key for this cache instance.
      * @throws RuntimeException
      */
-    public function __construct($root, $ttl = self::DEFAULT_TTL, $cacheKey = null)
-    {
+    public function __construct(
+        $root,
+        $ttl = self::DEFAULT_TTL,
+        private readonly ?string $cacheKey = null
+    ) {
         $this->directory = new FileCacheDirectory($root);
         $this->version = preg_replace('(^(\d+\.\d+).*)', '\\1', PHP_VERSION) ?? PHP_VERSION;
-
-        $this->cacheKey = $cacheKey;
 
         $this->garbageCollect($root, $ttl);
     }

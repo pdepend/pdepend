@@ -128,14 +128,10 @@ class Runner
      */
     private array $parseErrors = [];
 
-    private ReportGeneratorFactory $reportGeneratorFactory;
-
-    private Engine $engine;
-
-    public function __construct(ReportGeneratorFactory $reportGeneratorFactory, Engine $engine)
-    {
-        $this->reportGeneratorFactory = $reportGeneratorFactory;
-        $this->engine = $engine;
+    public function __construct(
+        private readonly ReportGeneratorFactory $reportGeneratorFactory,
+        private Engine $engine,
+    ) {
     }
 
     /**
