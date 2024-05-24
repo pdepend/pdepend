@@ -326,7 +326,7 @@ abstract class AbstractPHPParser
     private ?string $globalPackageName = Builder::DEFAULT_NAMESPACE;
 
     /** The last parsed doc comment or <b>null</b>. */
-    private ?string $docComment;
+    private ?string $docComment = null;
 
     /** Bitfield of last parsed modifiers. */
     private int $modifiers = 0;

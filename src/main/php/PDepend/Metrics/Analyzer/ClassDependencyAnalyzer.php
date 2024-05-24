@@ -189,8 +189,6 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      */
     protected function visitType(AbstractASTClassOrInterface $type): void
     {
-        $id = $type->getId();
-
         foreach ($type->getDependencies() as $dependency) {
             $this->collectDependencies($type, $dependency);
         }
