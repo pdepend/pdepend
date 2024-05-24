@@ -92,7 +92,7 @@ class ASTConstantDeclarator extends AbstractASTNode
      *
      * @return array<string>
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['value', ...parent::__sleep()];
     }

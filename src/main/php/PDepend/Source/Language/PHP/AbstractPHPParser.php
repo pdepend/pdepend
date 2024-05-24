@@ -1966,7 +1966,7 @@ abstract class AbstractPHPParser
      * {@link ASTTraitReference} class that represents the
      * declaring trait.
      *
-     * @return array<int, mixed>
+     * @return array{string, ?ASTNode}
      * @since 1.0.0
      */
     private function parseTraitMethodReference()
@@ -1990,13 +1990,13 @@ abstract class AbstractPHPParser
 
         $this->tokenStack->pop();
 
-        return [$qualifiedName];
+        return [$qualifiedName, null];
     }
 
     /**
      * Parses a trait adaptation alias statement.
      *
-     * @param array<int, mixed> $reference Parsed method reference array.
+     * @param array{string, ?ASTNode} $reference Parsed method reference array.
      * @return ASTTraitAdaptationAlias
      * @since 1.0.0
      */
@@ -2004,7 +2004,7 @@ abstract class AbstractPHPParser
     {
         $stmt = $this->builder->buildAstTraitAdaptationAlias($reference[0]);
 
-        if (2 === count($reference)) {
+        if (isset($reference[1])) {
             $stmt->addChild($reference[1]);
         }
 
@@ -2044,14 +2044,14 @@ abstract class AbstractPHPParser
     /**
      * Parses a trait adaptation precedence statement.
      *
-     * @param array<int, mixed> $reference Parsed method reference array.
+     * @param array{string, ?ASTNode} $reference Parsed method reference array.
      * @return ASTTraitAdaptationPrecedence
      * @throws InvalidStateException
      * @since 1.0.0
      */
     private function parseTraitAdaptationPrecedenceStatement(array $reference)
     {
-        if (count($reference) < 2) {
+        if (!isset($reference[1])) {
             throw new InvalidStateException(
                 $this->requireNextToken()->startLine,
                 $this->compilationUnit->getFileName() ?? 'unknown',

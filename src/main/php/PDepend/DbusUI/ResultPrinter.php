@@ -51,6 +51,7 @@ use DBusDict;
 use DBusUInt32;
 use PDepend\Metrics\Analyzer;
 use PDepend\ProcessListener;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Tokenizer\Tokenizer;
@@ -72,7 +73,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts the file parsing process.
      *
-     * @param Builder<mixed> $builder The used node builder instance.
+     * @param Builder<ASTNamespace> $builder The used node builder instance.
      */
     public function startParseProcess(Builder $builder): void
     {
@@ -82,7 +83,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished the file parsing process.
      *
-     * @param Builder<mixed> $builder The used node builder instance.
+     * @param Builder<ASTNamespace> $builder The used node builder instance.
      */
     public function endParseProcess(Builder $builder): void
     {

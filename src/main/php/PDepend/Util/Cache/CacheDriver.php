@@ -65,7 +65,7 @@ interface CacheDriver
      * <em>store()</em>.
      *
      * @param string $type
-     * @return CacheDriver
+     * @return $this
      */
     public function type($type);
 

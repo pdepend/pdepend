@@ -91,9 +91,12 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * )
      * </code>
      *
-     * @var array<string, array<string, mixed>>
+     * @var array<string, array<string, int>>
      */
     private array $nodeMetrics;
+
+    /** @var array<string, array<string, list<string>>> */
+    private array $nodeCollector;
 
     /**
      * Nodes in which the current analyzed dependency is used.
@@ -138,6 +141,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
             $this->fireStartAnalyzer();
 
             $this->nodeMetrics = [];
+            $this->nodeCollector = [];
 
             foreach ($namespaces as $namespace) {
                 $namespace->accept($this);
@@ -156,7 +160,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
     /**
      * Returns the statistics for the requested node.
      *
-     * @return array<string, mixed>
+     * @return array<string, int>
      */
     public function getStats(AbstractASTArtifact $node)
     {
@@ -329,9 +333,9 @@ class DependencyAnalyzer extends AbstractAnalyzer
         // Create a container for this dependency
         $this->initNamespaceMetric($namespaceB);
 
-        if (!in_array($idB, $this->nodeMetrics[$idA][self::M_EFFERENT_COUPLING], true)) {
-            $this->nodeMetrics[$idA][self::M_EFFERENT_COUPLING][] = $idB;
-            $this->nodeMetrics[$idB][self::M_AFFERENT_COUPLING][] = $idA;
+        if (!in_array($idB, $this->nodeCollector[$idA][self::M_EFFERENT_COUPLING], true)) {
+            $this->nodeCollector[$idA][self::M_EFFERENT_COUPLING][] = $idB;
+            $this->nodeCollector[$idB][self::M_AFFERENT_COUPLING][] = $idA;
         }
     }
 
@@ -349,11 +353,16 @@ class DependencyAnalyzer extends AbstractAnalyzer
                 self::M_NUMBER_OF_CLASSES => 0,
                 self::M_NUMBER_OF_CONCRETE_CLASSES => 0,
                 self::M_NUMBER_OF_ABSTRACT_CLASSES => 0,
-                self::M_AFFERENT_COUPLING => [],
-                self::M_EFFERENT_COUPLING => [],
+                self::M_AFFERENT_COUPLING => 0,
+                self::M_EFFERENT_COUPLING => 0,
                 self::M_ABSTRACTION => 0,
                 self::M_INSTABILITY => 0,
                 self::M_DISTANCE => 0,
+            ];
+
+            $this->nodeCollector[$id] = [
+                self::M_AFFERENT_COUPLING => [],
+                self::M_EFFERENT_COUPLING => [],
             ];
         }
     }
@@ -363,7 +372,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      */
     protected function postProcess(): void
     {
-        foreach ($this->nodeMetrics as $id => $metrics) {
+        foreach ($this->nodeCollector as $id => $metrics) {
             $this->afferentNodes[$id] = [];
             foreach ($metrics[self::M_AFFERENT_COUPLING] as $caId) {
                 $this->afferentNodes[$id][] = $this->nodeSet[$caId];

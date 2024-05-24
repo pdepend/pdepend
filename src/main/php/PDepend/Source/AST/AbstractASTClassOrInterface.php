@@ -87,10 +87,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * names of all those properties that should be cached for this class or
      * interface instance.
      *
-     * @return array
      * @since  0.10.0
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['constants', 'interfaceReferences', 'parentClassReference', ...parent::__sleep()];
     }

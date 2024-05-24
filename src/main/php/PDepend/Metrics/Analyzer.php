@@ -88,7 +88,7 @@ interface Analyzer
     /**
      * Set global options
      *
-     * @param array<string, mixed> $options
+     * @param array<string, array<int, string>|string> $options
      * @since 2.0.1
      */
     public function setOptions(array $options = []): void;

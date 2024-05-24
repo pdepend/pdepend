@@ -67,10 +67,8 @@ class ASTTraitAdaptationAlias extends ASTStatement
      * The magic sleep method will be called by PHP's runtime environment right
      * before an instance of this class gets serialized. It should return an
      * array with those property names that should be serialized for this class.
-     *
-     * @return array
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['newName', 'newModifier', ...parent::__sleep()];
     }

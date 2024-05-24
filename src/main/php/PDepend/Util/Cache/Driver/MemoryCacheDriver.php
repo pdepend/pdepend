@@ -66,7 +66,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * The in memory cache.
      *
-     * @var array<string, array<int, mixed>>
+     * @var array<string, array{?string, mixed}>
      */
     protected array $cache = [];
 
@@ -79,7 +79,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * Global stack, mainly used during testing.
      *
-     * @var array<string, array<string, array<int, mixed>>>
+     * @var array<string, array<string, array{?string, mixed}>>
      */
     protected static array $staticCache = [];
 
@@ -96,10 +96,9 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * PHP's magic serialize sleep method.
      *
-     * @return array
      * @since  1.0.2
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         self::$staticCache[$this->staticId] = $this->cache;
 

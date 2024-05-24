@@ -46,6 +46,7 @@ namespace PDepend\Util;
 use Imagick;
 use ImagickException;
 use InvalidArgumentException;
+use stdClass;
 
 /**
  * Simple utility class that is used to create different image formats. This
@@ -155,34 +156,36 @@ class ImageConvert
             throw new InvalidArgumentException(sprintf('The given file "%s" does not exist.', $input));
         }
 
-        // Check for font family
-        if (isset($config->imageConvert->fontFamily)) {
-            // Get font family
-            $fontFamily = (string) $config->imageConvert->fontFamily;
-            // Replace CSS separators
-            $fontReplace = 'font-family:' . strtr($fontFamily, ';:', '  ');
-            $fontPattern = '/font-family:\s*Arial/';
-
-            $svg = preg_replace($fontPattern, $fontReplace, $svg) ?? $svg;
-        }
-
-        // Check for font size
-        if (isset($config->imageConvert->fontSize)) {
-            // Get font size
-            $fontSize = abs((float) $config->imageConvert->fontSize);
-
-            // Fetch all font-size expressions
-            preg_match_all('/font-size:\s*(\d+)/', $svg, $fontSizes);
-            $fontSizes = array_unique($fontSizes[1]);
-            $fontSizes = array_map(intval(...), $fontSizes);
-
-            $resize = ($fontSize - max($fontSizes));
-            foreach ($fontSizes as $fontSize) {
-                // Calculate resize value
-                $fontReplace = 'font-size:' . ($fontSize + $resize);
-                $fontPattern = "/font-size:\s*{$fontSize}/";
+        if ($config->imageConvert instanceof stdClass) {
+            // Check for font family
+            if (isset($config->imageConvert->fontFamily)) {
+                // Get font family
+                $fontFamily = (string) $config->imageConvert->fontFamily;
+                // Replace CSS separators
+                $fontReplace = 'font-family:' . strtr($fontFamily, ';:', '  ');
+                $fontPattern = '/font-family:\s*Arial/';
 
                 $svg = preg_replace($fontPattern, $fontReplace, $svg) ?? $svg;
+            }
+
+            // Check for font size
+            if (isset($config->imageConvert->fontSize)) {
+                // Get font size
+                $fontSize = abs((float) $config->imageConvert->fontSize);
+
+                // Fetch all font-size expressions
+                preg_match_all('/font-size:\s*(\d+)/', $svg, $fontSizes);
+                $fontSizes = array_unique($fontSizes[1]);
+                $fontSizes = array_map(intval(...), $fontSizes);
+
+                $resize = ($fontSize - max($fontSizes));
+                foreach ($fontSizes as $fontSize) {
+                    // Calculate resize value
+                    $fontReplace = 'font-size:' . ($fontSize + $resize);
+                    $fontPattern = "/font-size:\s*{$fontSize}/";
+
+                    $svg = preg_replace($fontPattern, $fontReplace, $svg) ?? $svg;
+                }
             }
         }
 

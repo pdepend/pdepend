@@ -77,7 +77,7 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
      * halstead volume & lines of code, all of which we already have analyzers
      * for.
      *
-     * @param array<string, mixed> $options
+     * @param array<string, string> $options
      */
     public function __construct(array $options = [])
     {

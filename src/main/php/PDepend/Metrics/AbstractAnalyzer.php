@@ -56,7 +56,7 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
     /**
      * Global options array.
      *
-     * @var array<string, mixed>
+     * @var array<string, array<int, string>|string>
      */
     protected array $options = [];
 
@@ -70,7 +70,7 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
     /**
      * Constructs a new analyzer instance.
      *
-     * @param array<string, mixed> $options Global option array, every analyzer
+     * @param array<string, array<int, string>|string> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
     public function __construct(array $options = [])
@@ -81,7 +81,7 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
     /**
      * Set global options
      *
-     * @param array<string, mixed> $options Global option array, every analyzer
+     * @param array<string, array<int, string>|string> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
     public function setOptions(array $options = []): void

@@ -49,6 +49,7 @@ use SplFileInfo;
 /**
  * Simple utility filter iterator for php source files.
  *
+ * @extends FilterIterator<int, SplFileInfo, \Iterator<int, SplFileInfo>>
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
@@ -67,7 +68,7 @@ class Iterator extends FilterIterator
     /**
      * Constructs a new file filter iterator.
      *
-     * @param \Iterator<SplFileInfo> $iterator The inner iterator.
+     * @param \Iterator<int, SplFileInfo> $iterator The inner iterator.
      * @param Filter $filter The filter object.
      * @param string $rootPath Optional root path for the files.
      */

@@ -64,7 +64,7 @@ class ASTSwitchLabel extends AbstractASTNode
      * @return array<string>
      * @since  0.10.0
      */
-    public function __sleep()
+    public function __sleep(): array
     {
         return ['default', ...parent::__sleep()];
     }

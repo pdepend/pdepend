@@ -101,7 +101,7 @@ class SymbolTable
      * Adds a new value to the top most scope.
      *
      * @param string $key The key of this scope value.
-     * @param mixed $value A new scope value.
+     * @param string $value A new scope value.
      * @throws NoActiveScopeException
      */
     public function add($key, $value): void
