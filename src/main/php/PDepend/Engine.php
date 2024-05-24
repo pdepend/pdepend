@@ -133,7 +133,7 @@ class Engine
     private array $generators = [];
 
     /** A composite filter for input files. */
-    private CompositeFilter $fileFilter;
+    private readonly CompositeFilter $fileFilter;
 
     /** A filter for namespace. */
     private ArtifactFilter $codeFilter;

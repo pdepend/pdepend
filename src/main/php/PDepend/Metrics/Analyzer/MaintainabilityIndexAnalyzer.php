@@ -66,11 +66,11 @@ class MaintainabilityIndexAnalyzer extends AbstractCachingAnalyzer implements An
     /** Metrics provided by the analyzer implementation. */
     private const M_MAINTAINABILITY_INDEX = 'mi';
 
-    private CyclomaticComplexityAnalyzer $analyzersCCN;
+    private readonly CyclomaticComplexityAnalyzer $analyzersCCN;
 
-    private HalsteadAnalyzer $analyzersHalstead;
+    private readonly HalsteadAnalyzer $analyzersHalstead;
 
-    private NodeLocAnalyzer $analyzersLOC;
+    private readonly NodeLocAnalyzer $analyzersLOC;
 
     /**
      * Maintainability index is a combination of cyclomatic complexity,

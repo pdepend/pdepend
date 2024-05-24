@@ -54,7 +54,7 @@ class CacheVersionUpdater
     /**
      * The source directory.
      */
-    private string $rootDirectory;
+    private readonly string $rootDirectory;
 
     /**
      * The source sub directories that we will process.
