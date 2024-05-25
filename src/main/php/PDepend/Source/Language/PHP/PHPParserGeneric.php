@@ -44,7 +44,6 @@
 
 namespace PDepend\Source\Language\PHP;
 
-use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -58,23 +57,6 @@ use PDepend\Source\Tokenizer\Tokens;
  */
 class PHPParserGeneric extends PHPParserVersion83
 {
-    /**
-     * Tests if the given token type is a reserved keyword in the supported PHP
-     * version.
-     *
-     * @param int $tokenType
-     * @return bool
-     * @since  1.1.1
-     */
-    protected function isKeyword($tokenType)
-    {
-        return match ($tokenType) {
-            Tokens::T_CLASS,
-            Tokens::T_INTERFACE => true,
-            default => false,
-        };
-    }
-
     /**
      * Tests if the give token is a valid function name in the supported PHP
      * version.
@@ -105,34 +87,4 @@ class PHPParserGeneric extends PHPParserVersion83
             default => false,
         };
     }
-
-    /**
-     * Parses additional static values that are valid in the supported php version.
-     *
-     * @param ASTValue $value
-     * @return ASTValue
-     * @throws UnexpectedTokenException
-     * @todo Handle shift left/right expressions in ASTValue
-     */
-    /*
-    protected function parseStaticValueVersionSpecific(ASTValue $value)
-    {
-        switch ($this->tokenizer->peek()) {
-            case Tokens::T_SL:
-                $shift = $this->parseShiftLeftExpression();
-                $this->parseStaticValue();
-                break;
-            case Tokens::T_SR:
-                $shift = $this->parseShiftRightExpression();
-                $this->parseStaticValue();
-                break;
-            default:
-                throw new UnexpectedTokenException(
-                    $this->tokenizer->next(),
-                    $this->tokenizer->getSourceFile() ?? 'unknown'
-                );
-        }
-
-        return $value;
-    }*/
 }
