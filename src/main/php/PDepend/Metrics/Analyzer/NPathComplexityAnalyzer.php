@@ -88,10 +88,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     private const M_NPATH_COMPLEXITY = 'npath';
 
     /** @var numeric-string */
-    private string $collector;
+    private string $complexityCollector;
 
     /** @var list<numeric-string> */
-    private array $collectorStack = [];
+    private array $complexityCollectorStack = [];
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
@@ -170,9 +170,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     protected function calculateComplexity(AbstractASTCallable $callable): void
     {
-        $this->collector = '1';
+        $this->complexityCollector = '1';
         $this->visit($callable);
-        $this->metrics[$callable->getId()] = $this->collector;
+        $this->metrics[$callable->getId()] = $this->complexityCollector;
     }
 
     /**
@@ -211,7 +211,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         // Add 2 for the branching per the NPath spec
         $npath = MathUtil::add($npath, '2');
 
-        $this->collector = MathUtil::mul($npath, $this->collector);
+        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
     }
 
     /**
@@ -232,15 +232,15 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function visitDoWhileStatement(ASTDoWhileStatement $node): void
     {
-        $this->pushCollector();
+        $this->pushComplexityCollector();
         $this->dispatch($node->getChild(0));
         $expr = $this->sumComplexity($node->getChild(1));
 
-        $npath = MathUtil::add($expr, $this->collector);
+        $npath = MathUtil::add($expr, $this->complexityCollector);
         $npath = MathUtil::add($npath, '1');
 
-        $this->popCollector();
-        $this->collector = MathUtil::mul($npath, $this->collector);
+        $this->popComplexityCollector();
+        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
     }
 
     /**
@@ -272,10 +272,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $npath = $this->sumComplexity($node->getChild(0));
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
-                $this->pushCollector();
+                $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->collector);
-                $this->popCollector();
+                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $this->popComplexityCollector();
             }
         }
 
@@ -283,7 +283,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
             $npath = MathUtil::add($npath, '1');
         }
 
-        $this->collector = MathUtil::mul($npath, $this->collector);
+        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
     }
 
     /**
@@ -306,17 +306,17 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $npath = '1';
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
-                $this->pushCollector();
+                $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->collector);
-                $this->popCollector();
+                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $this->popComplexityCollector();
             } elseif ($child instanceof ASTExpression) {
                 $expr = $this->sumComplexity($child);
                 $npath = MathUtil::add($npath, $expr);
             }
         }
 
-        $this->collector = MathUtil::mul($npath, $this->collector);
+        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
     }
 
     /**
@@ -341,14 +341,14 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
-                $this->pushCollector();
+                $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->collector);
-                $this->popCollector();
+                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $this->popComplexityCollector();
             }
         }
 
-        $this->collector = MathUtil::mul($npath, $this->collector);
+        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
     }
 
     /**
@@ -381,10 +381,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
-                $this->pushCollector();
+                $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->collector);
-                $this->popCollector();
+                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $this->popComplexityCollector();
             }
         }
 
@@ -392,7 +392,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
             $npath = MathUtil::add($npath, '1');
         }
 
-        $this->collector = MathUtil::mul($npath, $this->collector);
+        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
     }
 
     /**
@@ -412,7 +412,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     {
         $npath = $this->sumComplexity($node);
         if ($npath !== '0') {
-            $this->collector = MathUtil::mul($npath, $this->collector);
+            $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
         }
     }
 
@@ -438,14 +438,14 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $npath = $this->sumComplexity($node->getChild(0));
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTSwitchLabel) {
-                $this->pushCollector();
+                $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->collector);
-                $this->popCollector();
+                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $this->popComplexityCollector();
             }
         }
 
-        $this->collector = MathUtil::mul($npath, $this->collector);
+        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
     }
 
     /**
@@ -480,14 +480,14 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $npath = '0';
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
-                $this->pushCollector();
+                $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->collector);
-                $this->popCollector();
+                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $this->popComplexityCollector();
             }
         }
 
-        $this->collector = MathUtil::mul($npath, $this->collector);
+        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
     }
 
     /**
@@ -508,14 +508,14 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     public function visitWhileStatement(ASTWhileStatement $node): void
     {
         $expr = $this->sumComplexity($node->getChild(0));
-        $this->pushCollector();
+        $this->pushComplexityCollector();
         $this->dispatch($node->getChild(1));
 
-        $npath = MathUtil::add($expr, $this->collector);
+        $npath = MathUtil::add($expr, $this->complexityCollector);
         $npath = MathUtil::add($npath, '1');
 
-        $this->popCollector();
-        $this->collector = MathUtil::mul($npath, $this->collector);
+        $this->popComplexityCollector();
+        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
     }
 
     public function dispatch(ASTNode $node): void
@@ -548,10 +548,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     public function sumComplexity(ASTNode $node): string
     {
         $sum = '0';
-        $this->pushCollector();
+        $this->pushComplexityCollector();
         if ($node instanceof ASTConditionalExpression) {
             $this->dispatch($node);
-            $sum = MathUtil::add($sum, $this->collector);
+            $sum = MathUtil::add($sum, $this->complexityCollector);
         } elseif (
             $node instanceof ASTBooleanAndExpression
             || $node instanceof ASTBooleanOrExpression
@@ -567,7 +567,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
             }
         }
 
-        $this->popCollector();
+        $this->popComplexityCollector();
 
         return $sum;
     }
@@ -575,17 +575,17 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /**
      * Push the current collector value onto the stack
      */
-    private function pushCollector(): void
+    private function pushComplexityCollector(): void
     {
-        $this->collectorStack[] = $this->collector;
-        $this->collector = '1';
+        $this->complexityCollectorStack[] = $this->complexityCollector;
+        $this->complexityCollector = '1';
     }
 
     /**
      * Pop the last collector value off the stack and return it
      */
-    private function popCollector(): void
+    private function popComplexityCollector(): void
     {
-        $this->collector = array_pop($this->collectorStack) ?: '1';
+        $this->complexityCollector = array_pop($this->complexityCollectorStack) ?: '1';
     }
 }

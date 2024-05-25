@@ -84,7 +84,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
         M_CYCLOMATIC_COMPLEXITY_2 = 'ccn2';
 
     /** @var array<string, int> */
-    private array $collector;
+    private array $complexityCollector;
 
     /** The project Cyclomatic Complexity Number. */
     private int $ccn = 0;
@@ -208,14 +208,14 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function calculateComplexity(AbstractASTCallable $callable): void
     {
-        $this->collector = [
+        $this->complexityCollector = [
             self::M_CYCLOMATIC_COMPLEXITY_1 => 1,
             self::M_CYCLOMATIC_COMPLEXITY_2 => 1,
         ];
 
         $this->visit($callable);
 
-        $this->metrics[$callable->getId()] = $this->collector;
+        $this->metrics[$callable->getId()] = $this->complexityCollector;
     }
 
     /**
@@ -239,7 +239,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitBooleanAndExpression(ASTBooleanAndExpression $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -252,7 +252,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitBooleanOrExpression(ASTBooleanOrExpression $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -266,8 +266,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     public function visitSwitchLabel(ASTSwitchLabel $node): void
     {
         if (!$node->isDefault()) {
-            ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_1];
-            ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+            ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_1];
+            ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
         }
 
         $this->visit($node);
@@ -281,8 +281,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitCatchStatement(ASTCatchStatement $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_1];
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -295,8 +295,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitElseIfStatement(ASTElseIfStatement $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_1];
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -309,8 +309,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitForStatement(ASTForStatement $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_1];
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -323,8 +323,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitForeachStatement(ASTForeachStatement $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_1];
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -337,8 +337,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitIfStatement(ASTIfStatement $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_1];
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -351,7 +351,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitLogicalAndExpression(ASTLogicalAndExpression $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -364,7 +364,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitLogicalOrExpression(ASTLogicalOrExpression $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -377,8 +377,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitConditionalExpression(ASTConditionalExpression $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_1];
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -391,8 +391,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitWhileStatement(ASTWhileStatement $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_1];
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
@@ -405,8 +405,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      */
     public function visitDoWhileStatement(ASTDoWhileStatement $node): void
     {
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_1];
-        ++$this->collector[self::M_CYCLOMATIC_COMPLEXITY_2];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_1];
+        ++$this->complexityCollector[self::M_CYCLOMATIC_COMPLEXITY_2];
 
         $this->visit($node);
     }
