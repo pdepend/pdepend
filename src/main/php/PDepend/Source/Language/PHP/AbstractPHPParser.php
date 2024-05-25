@@ -1338,9 +1338,7 @@ abstract class AbstractPHPParser
                         $defaultModifier,
                     );
 
-                    if ($methodOrProperty instanceof ASTNode) {
-                        $classOrInterface->addChild($methodOrProperty);
-                    }
+                    $classOrInterface->addChild($methodOrProperty);
 
                     $this->reset();
 
@@ -3190,9 +3188,7 @@ abstract class AbstractPHPParser
     {
         $scope = $this->builder->buildAstScopeStatement();
         while (($child = $this->parseOptionalStatement()) !== null) {
-            if ($child instanceof ASTNode) {
-                $scope->addChild($child);
-            }
+            $scope->addChild($child);
         }
 
         return $scope;
@@ -3670,7 +3666,7 @@ abstract class AbstractPHPParser
             }
         }
 
-        $expressions = $this->reduce($expressions);
+        $expressions = $this->reduceUnaryExpression($expressions);
 
         $count = count($expressions);
         if ($count === 0) {
@@ -3734,23 +3730,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * Applies all reduce rules against the given expression list.
-     *
-     * @template T of ASTNode[]
-     * @param T $expressions Unprepared input array with parsed expression nodes found in the source tree.
-     * @return T
-     * @since 0.10.0
-     */
-    private function reduce(array $expressions): array
-    {
-        return $this->reduceUnaryExpression($expressions);
-    }
-
-    /**
      * Reduces all unary-expressions in the given expression list.
      *
-     * @template T of ASTNode[]
-     *
+     * @template T of list<ASTNode>
      * @param T $expressions Unprepared input array with parsed expression nodes found in the source tree.
      * @return T
      * @since 0.10.0
@@ -6575,7 +6557,7 @@ abstract class AbstractPHPParser
 
         $parameter = $this->parseFormalParameterOrTypeHintOrByReference();
 
-        if ($modifier && $parameter instanceof ASTFormalParameter) {
+        if ($modifier) {
             $parameter->setModifiers($modifier);
         }
 
@@ -7210,11 +7192,7 @@ abstract class AbstractPHPParser
         $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN);
 
         while (($stmt = $this->parseOptionalStatement()) !== null) {
-            // TODO: Remove if-statement once, we have translated functions and
-            //       closures into ast-nodes
-            if ($stmt instanceof ASTNode) {
-                $scope->addChild($stmt);
-            }
+            $scope->addChild($stmt);
         }
 
         $this->consumeComments();
@@ -8559,7 +8537,7 @@ abstract class AbstractPHPParser
             }
         }
 
-        $expressions = $this->reduce($expressions);
+        $expressions = $this->reduceUnaryExpression($expressions);
 
         $count = count($expressions);
         if ($count === 0) {
@@ -9217,7 +9195,7 @@ abstract class AbstractPHPParser
         $this->tokenStack->add($this->requireNextToken());
         $this->tokenStack->push();
         $this->consumeComments();
-        $caseName = $this->tokenizer->currentToken()?->image ?? '';
+        $caseName = $this->tokenizer->currentToken()->image ?? '';
 
         if (!preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $caseName)) {
             throw $this->getUnexpectedNextTokenException();

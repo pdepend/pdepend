@@ -178,13 +178,15 @@ class ImageConvert
                 $fontSizes = array_unique($fontSizes[1]);
                 $fontSizes = array_map(intval(...), $fontSizes);
 
-                $resize = ($fontSize - max($fontSizes));
-                foreach ($fontSizes as $fontSize) {
-                    // Calculate resize value
-                    $fontReplace = 'font-size:' . ($fontSize + $resize);
-                    $fontPattern = "/font-size:\s*{$fontSize}/";
+                if ($fontSizes) {
+                    $resize = ($fontSize - max($fontSizes));
+                    foreach ($fontSizes as $fontSize) {
+                        // Calculate resize value
+                        $fontReplace = 'font-size:' . ($fontSize + $resize);
+                        $fontPattern = "/font-size:\s*{$fontSize}/";
 
-                    $svg = preg_replace($fontPattern, $fontReplace, $svg) ?? $svg;
+                        $svg = preg_replace($fontPattern, $fontReplace, $svg) ?? $svg;
+                    }
                 }
             }
         }

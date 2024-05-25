@@ -75,12 +75,6 @@ class ExtensionManager
 
         $extension = new $className();
 
-        if (!($extension instanceof Extension)) {
-            throw new RuntimeException(
-                sprintf('Class "%s" is not a valid Extension', $className),
-            );
-        }
-
         $this->extensions[$extension->getName()] = $extension;
     }
 

@@ -843,7 +843,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * parser implementation.
      *
      * @param array<array{int, string, int}|string> $tokens Unprepared array of php tokens.
-     * @return array<array<int, int|string|null>|string>
+     * @return array<array<int, int|string>|string>
      */
     private function substituteTokens(array $tokens)
     {
@@ -866,7 +866,7 @@ class PHPTokenizerInternal implements FullTokenizer
                 }
 
                 if ($brackets <= 0) {
-                    $result[] = [T_COMMENT, "$attributeComment */", $attributeCommentLine];
+                    $result[] = [T_COMMENT, "$attributeComment */", (string) $attributeCommentLine];
                     $attributeComment = null;
 
                     continue;
@@ -966,18 +966,18 @@ class PHPTokenizerInternal implements FullTokenizer
                 $image = $this->consumeNonePhpTokens($tokens);
             } elseif ($token[0] === T_WHITESPACE) {
                 // Count newlines in token
-                $lines = substr_count($token[1], "\n");
+                $lines = substr_count((string) $token[1], "\n");
                 if ($lines === 0) {
-                    $startColumn += strlen($token[1]);
+                    $startColumn += strlen((string) $token[1]);
                 } else {
                     $startColumn = strlen(
-                        substr($token[1], strrpos($token[1], "\n") + 1),
+                        substr((string) $token[1], strrpos((string) $token[1], "\n") + 1),
                     ) + 1;
                 }
 
                 $startLine += $lines;
             } else {
-                $value = strtolower($token[1]);
+                $value = strtolower((string) $token[1]);
                 if (isset($literalMap[$value])) {
                     // Fetch literal type
                     $type = $literalMap[$value];
@@ -1007,7 +1007,7 @@ class PHPTokenizerInternal implements FullTokenizer
                 } else {
                     // This should never happen
                     // @codeCoverageIgnoreStart
-                    [$type, $image] = $this->generateUnknownToken($token[1]);
+                    [$type, $image] = $this->generateUnknownToken((string) $token[1]);
                     // @codeCoverageIgnoreEnd
                 }
             }
