@@ -822,7 +822,7 @@ abstract class AbstractPHPParser
      * @return bool
      * @since 1.1.1
      */
-    protected function isKeyword($tokenType)
+    private function isKeyword($tokenType)
     {
         return match ($tokenType) {
             Tokens::T_CLASS,
