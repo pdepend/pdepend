@@ -114,7 +114,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      */
     public function testClassReferenceHasExpectedStartLine(): void
     {
-        $reference = $this->getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction();
         static::assertEquals(4, $reference->getStartLine());
     }
 
@@ -123,7 +123,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      */
     public function testClassReferenceHasExpectedStartColumn(): void
     {
-        $reference = $this->getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction();
         static::assertEquals(16, $reference->getStartColumn());
     }
 
@@ -132,7 +132,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      */
     public function testClassReferenceHasExpectedEndLine(): void
     {
-        $reference = $this->getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction();
         static::assertEquals(4, $reference->getEndLine());
     }
 
@@ -141,7 +141,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      */
     public function testClassReferenceHasExpectedEndColumn(): void
     {
-        $reference = $this->getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction();
         static::assertEquals(18, $reference->getEndColumn());
     }
 
@@ -192,13 +192,11 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTClassReference
      */
-    private function getFirstReferenceInFunction($testCase)
+    private function getFirstReferenceInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTClassReference::class
         );
     }
@@ -212,7 +210,6 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     private function getFirstReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTClassReference::class
         );
     }

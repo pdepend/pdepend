@@ -301,7 +301,6 @@ class ASTArrayElementTest extends ASTNodeTestCase
     private function getFirstArrayElementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTArrayElement::class
         );
     }

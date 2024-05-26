@@ -60,7 +60,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
      */
     public function testBreakStatementHasExpectedStartLine(): void
     {
-        $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstBreakStatementInFunction();
         static::assertEquals(5, $stmt->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
      */
     public function testBreakStatementHasExpectedStartColumn(): void
     {
-        $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstBreakStatementInFunction();
         static::assertEquals(9, $stmt->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
      */
     public function testBreakStatementHasExpectedEndLine(): void
     {
-        $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstBreakStatementInFunction();
         static::assertEquals(7, $stmt->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTBreakStatementTest extends ASTNodeTestCase
      */
     public function testBreakStatementHasExpectedEndColumn(): void
     {
-        $stmt = $this->getFirstBreakStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstBreakStatementInFunction();
         static::assertEquals(17, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTBreakStatement
      */
-    private function getFirstBreakStatementInFunction($testCase)
+    private function getFirstBreakStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTBreakStatement::class
         );
     }

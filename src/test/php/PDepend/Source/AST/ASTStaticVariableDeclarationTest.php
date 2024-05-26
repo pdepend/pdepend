@@ -125,7 +125,6 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     private function getFirstStaticVariableDeclarationInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTStaticVariableDeclaration::class
         );
     }

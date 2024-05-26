@@ -510,7 +510,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     private function getFirstTraitUseStatementInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTTraitUseStatement::class
         );
     }

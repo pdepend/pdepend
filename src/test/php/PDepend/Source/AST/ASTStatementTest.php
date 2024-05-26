@@ -63,7 +63,7 @@ class ASTStatementTest extends ASTNodeTestCase
      */
     public function testStatement()
     {
-        $stmt = $this->getFirstStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstStatementInFunction();
         static::assertInstanceOf(ASTStatement::class, $stmt);
 
         return $stmt;
@@ -120,13 +120,11 @@ class ASTStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTStatement
      */
-    private function getFirstStatementInFunction($testCase)
+    private function getFirstStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTStatement::class
         );
     }

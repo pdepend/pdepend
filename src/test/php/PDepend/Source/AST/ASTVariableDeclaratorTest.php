@@ -154,7 +154,6 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
     private function getFirstVariableDeclaratorInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTVariableDeclarator::class
         );
     }

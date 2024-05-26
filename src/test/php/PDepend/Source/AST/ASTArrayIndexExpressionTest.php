@@ -366,7 +366,6 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
     private function getFirstArrayIndexExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTArrayIndexExpression::class
         );
     }

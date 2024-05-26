@@ -233,7 +233,6 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
     private function getFirstSelfReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTSelfReference::class
         );
     }

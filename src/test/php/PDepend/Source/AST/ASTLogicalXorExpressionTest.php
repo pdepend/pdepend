@@ -60,7 +60,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
      */
     public function testLogicalXorExpressionHasExpectedStartLine(): void
     {
-        $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalXorExpressionInFunction();
         static::assertEquals(4, $expr->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
      */
     public function testLogicalXorExpressionHasExpectedStartColumn(): void
     {
-        $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalXorExpressionInFunction();
         static::assertEquals(18, $expr->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
      */
     public function testLogicalXorExpressionHasExpectedEndLine(): void
     {
-        $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalXorExpressionInFunction();
         static::assertEquals(4, $expr->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
      */
     public function testLogicalXorExpressionHasExpectedEndColumn(): void
     {
-        $expr = $this->getFirstLogicalXorExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalXorExpressionInFunction();
         static::assertEquals(20, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTLogicalXorExpression
      */
-    private function getFirstLogicalXorExpressionInFunction($testCase)
+    private function getFirstLogicalXorExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTLogicalXorExpression::class
         );
     }

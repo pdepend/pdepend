@@ -149,7 +149,7 @@ class ASTTryStatementTest extends ASTNodeTestCase
     public function testTryStatementContainsMultipleChildInstancesOfCatchStatement(): void
     {
         $actual = [];
-        foreach ($this->getFirstTryStatementInFunction(__METHOD__)->getChildren() as $child) {
+        foreach ($this->getFirstTryStatementInFunction()->getChildren() as $child) {
             $actual[] = $child::class;
         }
 
@@ -182,7 +182,6 @@ class ASTTryStatementTest extends ASTNodeTestCase
     private function getFirstTryStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTTryStatement::class
         );
     }

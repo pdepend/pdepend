@@ -68,7 +68,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * @param array<string, mixed> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
-    public function __construct(array $options = [])
+    public function __construct(private array $options = [])
     {
     }
 

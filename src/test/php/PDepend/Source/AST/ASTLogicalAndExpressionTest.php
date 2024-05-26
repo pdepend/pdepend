@@ -62,7 +62,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
      */
     public function testLogicalAndExpressionHasExpectedStartLine(): void
     {
-        $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalAndExpressionInFunction();
         static::assertEquals(4, $expr->getStartLine());
     }
 
@@ -71,7 +71,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
      */
     public function testLogicalAndExpressionHasExpectedStartColumn(): void
     {
-        $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalAndExpressionInFunction();
         static::assertEquals(18, $expr->getStartColumn());
     }
 
@@ -80,7 +80,7 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
      */
     public function testLogicalAndExpressionHasExpectedEndLine(): void
     {
-        $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalAndExpressionInFunction();
         static::assertEquals(4, $expr->getEndLine());
     }
 
@@ -89,20 +89,18 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
      */
     public function testLogicalAndExpressionHasExpectedEndColumn(): void
     {
-        $expr = $this->getFirstLogicalAndExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstLogicalAndExpressionInFunction();
         static::assertEquals(20, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTLogicalAndExpression
      */
-    private function getFirstLogicalAndExpressionInFunction($testCase)
+    private function getFirstLogicalAndExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTLogicalAndExpression::class
         );
     }

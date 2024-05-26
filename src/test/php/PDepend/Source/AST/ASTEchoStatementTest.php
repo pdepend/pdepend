@@ -60,7 +60,7 @@ class ASTEchoStatementTest extends ASTNodeTestCase
      */
     public function testEchoStatementHasExpectedStartLine(): void
     {
-        $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstEchoStatementInFunction();
         static::assertEquals(4, $stmt->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTEchoStatementTest extends ASTNodeTestCase
      */
     public function testEchoStatementHasExpectedStartColumn(): void
     {
-        $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstEchoStatementInFunction();
         static::assertEquals(5, $stmt->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTEchoStatementTest extends ASTNodeTestCase
      */
     public function testEchoStatementHasExpectedEndLine(): void
     {
-        $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstEchoStatementInFunction();
         static::assertEquals(6, $stmt->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTEchoStatementTest extends ASTNodeTestCase
      */
     public function testEchoStatementHasExpectedEndColumn(): void
     {
-        $stmt = $this->getFirstEchoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstEchoStatementInFunction();
         static::assertEquals(26, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTEchoStatement
      */
-    private function getFirstEchoStatementInFunction($testCase)
+    private function getFirstEchoStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTEchoStatement::class
         );
     }

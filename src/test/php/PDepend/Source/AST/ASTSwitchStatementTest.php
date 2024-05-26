@@ -320,7 +320,6 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     private function getFirstSwitchStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTSwitchStatement::class
         );
     }

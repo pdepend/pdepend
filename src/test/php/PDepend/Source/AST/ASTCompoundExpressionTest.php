@@ -60,7 +60,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
      */
     public function testExpressionHasExpectedStartLine(): void
     {
-        $expr = $this->getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction();
         static::assertSame(4, $expr->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
      */
     public function testExpressionHasExpectedStartColumn(): void
     {
-        $expr = $this->getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction();
         static::assertSame(19, $expr->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
      */
     public function testExpressionHasExpectedEndLine(): void
     {
-        $expr = $this->getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction();
         static::assertSame(5, $expr->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
      */
     public function testExpressionHasExpectedEndColumn(): void
     {
-        $expr = $this->getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction();
         static::assertSame(13, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTCompoundExpression
      */
-    private function getFirstExpressionInFunction($testCase)
+    private function getFirstExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTCompoundExpression::class
         );
     }

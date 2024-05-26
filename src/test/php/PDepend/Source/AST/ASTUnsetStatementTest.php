@@ -63,7 +63,7 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
      */
     public function testUnsetStatement()
     {
-        $stmt = $this->getFirstUnsetStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstUnsetStatementInFunction();
         static::assertInstanceOf(ASTUnsetStatement::class, $stmt);
 
         return $stmt;
@@ -120,13 +120,11 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTUnsetStatement
      */
-    private function getFirstUnsetStatementInFunction($testCase)
+    private function getFirstUnsetStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTUnsetStatement::class
         );
     }

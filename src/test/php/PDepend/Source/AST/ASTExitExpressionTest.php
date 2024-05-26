@@ -257,7 +257,6 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     private function getFirstExitExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTExitExpression::class
         );
     }

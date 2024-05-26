@@ -65,10 +65,10 @@ class ASTArtifactListTest extends AbstractTestCase
     public function testCreateIteratorWidthValidInput(): void
     {
         $nodes = [
-            new ASTClass('clazz', 0, 'clazz.php'),
+            new ASTClass('clazz'),
             new ASTNamespace('pkg'),
-            new ASTMethod('method', 0),
-            new ASTFunction('func', 0),
+            new ASTMethod('method'),
+            new ASTFunction('func'),
         ];
 
         $it = new ASTArtifactList($nodes);
@@ -82,9 +82,9 @@ class ASTArtifactListTest extends AbstractTestCase
     public function testNodeIteratorReturnsObjectsInUnmodifiedOrder(): void
     {
         $expected = [
-            new ASTClass('clazz', 0, 'clazz.php'),
-            new ASTFunction('func', 0),
-            new ASTMethod('method', 0),
+            new ASTClass('clazz'),
+            new ASTFunction('func'),
+            new ASTMethod('method'),
             new ASTNamespace('pkg'),
         ];
 
@@ -105,9 +105,9 @@ class ASTArtifactListTest extends AbstractTestCase
     {
         $iterator = new ASTArtifactList(
             [
-                $object2 = new ASTClass('o2', 0, 'o2.php'),
-                $object1 = new ASTClass('o1', 0, 'o1.php'),
-                $object3 = new ASTClass('o3', 0, 'o3.php'),
+                $object2 = new ASTClass('o2'),
+                $object1 = new ASTClass('o1'),
+                $object3 = new ASTClass('o3'),
                 $object1,
                 $object2,
                 $object3,
@@ -129,9 +129,9 @@ class ASTArtifactListTest extends AbstractTestCase
     public function testIteratorUsesNodeNameAsItsIterationKey(): void
     {
         $nodes = [
-            new ASTClass('clazz', 0, 'clazz.php'),
-            new ASTFunction('func', 0),
-            new ASTMethod('method', 0),
+            new ASTClass('clazz'),
+            new ASTFunction('func'),
+            new ASTMethod('method'),
             new ASTNamespace('pkg'),
         ];
 

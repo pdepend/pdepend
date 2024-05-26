@@ -135,7 +135,6 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     private function getFirstCallableTypeInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTTypeCallable::class
         );
     }

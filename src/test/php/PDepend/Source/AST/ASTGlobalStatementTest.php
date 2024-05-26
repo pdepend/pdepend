@@ -60,7 +60,7 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
      */
     public function testGlobalStatementHasExpectedStartLine(): void
     {
-        $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGlobalStatementInFunction();
         static::assertSame(4, $stmt->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
      */
     public function testGlobalStatementHasExpectedStartColumn(): void
     {
-        $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGlobalStatementInFunction();
         static::assertSame(5, $stmt->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
      */
     public function testGlobalStatementHasExpectedEndLine(): void
     {
-        $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGlobalStatementInFunction();
         static::assertSame(6, $stmt->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
      */
     public function testGlobalStatementHasExpectedEndColumn(): void
     {
-        $stmt = $this->getFirstGlobalStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGlobalStatementInFunction();
         static::assertSame(19, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTGlobalStatement
      */
-    private function getFirstGlobalStatementInFunction($testCase)
+    private function getFirstGlobalStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTGlobalStatement::class
         );
     }

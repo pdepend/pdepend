@@ -252,7 +252,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
     public function testListExpressionWithSquaredBrackets(): void
     {
         $parameters = $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTFormalParameters::class
         );
 
@@ -265,7 +264,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
     public function testListExpressionWithSquaredBracketsAndEmptySlot(): void
     {
         $parameters = $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTFormalParameters::class
         );
 
@@ -294,7 +292,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
     {
         /** @var ASTArray $expr */
         $array = $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTArray::class
         );
         static::assertCount(1, $array->getChildren());
@@ -308,7 +305,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
     {
         /** @var ASTScalarType $type */
         $type = $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTScalarType::class
         );
 
@@ -384,7 +380,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
     private function getFirstListExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTListExpression::class
         );
     }

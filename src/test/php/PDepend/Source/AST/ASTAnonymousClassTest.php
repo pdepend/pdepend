@@ -59,25 +59,25 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
 {
     public function testAnonymousClassHasExpectedStartLine(): void
     {
-        $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
+        $expr = $this->getFirstAnonymousClassInFunction();
         static::assertEquals(4, $expr->getStartLine());
     }
 
     public function testAnonymousClassHasExpectedStartColumn(): void
     {
-        $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
+        $expr = $this->getFirstAnonymousClassInFunction();
         static::assertEquals(16, $expr->getStartColumn());
     }
 
     public function testAnonymousClassHasExpectedEndLine(): void
     {
-        $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
+        $expr = $this->getFirstAnonymousClassInFunction();
         static::assertEquals(9, $expr->getEndLine());
     }
 
     public function testAnonymousClassHasExpectedEndColumn(): void
     {
-        $expr = $this->getFirstAnonymousClassInFunction(__METHOD__);
+        $expr = $this->getFirstAnonymousClassInFunction();
         static::assertEquals(5, $expr->getEndColumn());
     }
 

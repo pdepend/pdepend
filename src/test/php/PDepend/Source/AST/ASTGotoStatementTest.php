@@ -60,7 +60,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
      */
     public function testGotoStatementHasExpectedStartLine(): void
     {
-        $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGotoStatementInFunction();
         static::assertSame(8, $stmt->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
      */
     public function testGotoStatementHasExpectedStartColumn(): void
     {
-        $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGotoStatementInFunction();
         static::assertSame(9, $stmt->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTGotoStatementTest extends ASTNodeTestCase
      */
     public function testGotoStatementHasExpectedEndLine(): void
     {
-        $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGotoStatementInFunction();
         static::assertSame(8, $stmt->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTGotoStatementTest extends ASTNodeTestCase
      */
     public function testGotoStatementHasExpectedEndColumn(): void
     {
-        $stmt = $this->getFirstGotoStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstGotoStatementInFunction();
         static::assertSame(23, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTGotoStatement
      */
-    private function getFirstGotoStatementInFunction($testCase)
+    private function getFirstGotoStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTGotoStatement::class
         );
     }

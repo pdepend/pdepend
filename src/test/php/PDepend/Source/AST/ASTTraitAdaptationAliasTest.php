@@ -205,7 +205,6 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     private function getFirstTraitAdaptationAliasInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTTraitAdaptationAlias::class
         );
     }

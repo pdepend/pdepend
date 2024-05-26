@@ -131,7 +131,6 @@ class ASTArgumentsTest extends ASTNodeTestCase
     private function getFirstArgumentsOfFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTArguments::class
         );
     }

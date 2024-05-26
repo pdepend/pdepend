@@ -60,7 +60,7 @@ class ASTBooleanOrExpressionTest extends ASTNodeTestCase
      */
     public function testBooleanOrExpressionHasExpectedStartLine(): void
     {
-        $expr = $this->getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstBooleanOrExpressionInFunction();
         static::assertEquals(4, $expr->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTBooleanOrExpressionTest extends ASTNodeTestCase
      */
     public function testBooleanOrExpressionHasExpectedStartColumn(): void
     {
-        $expr = $this->getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstBooleanOrExpressionInFunction();
         static::assertEquals(18, $expr->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTBooleanOrExpressionTest extends ASTNodeTestCase
      */
     public function testBooleanOrExpressionHasExpectedEndLine(): void
     {
-        $expr = $this->getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstBooleanOrExpressionInFunction();
         static::assertEquals(4, $expr->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTBooleanOrExpressionTest extends ASTNodeTestCase
      */
     public function testBooleanOrExpressionHasExpectedEndColumn(): void
     {
-        $expr = $this->getFirstBooleanOrExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstBooleanOrExpressionInFunction();
         static::assertEquals(19, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTBooleanOrExpression
      */
-    private function getFirstBooleanOrExpressionInFunction($testCase)
+    private function getFirstBooleanOrExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTBooleanOrExpression::class
         );
     }

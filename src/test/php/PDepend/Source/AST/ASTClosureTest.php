@@ -263,7 +263,6 @@ class ASTClosureTest extends ASTNodeTestCase
     private function getFirstClosureInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTClosure::class
         );
     }

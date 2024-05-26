@@ -211,7 +211,6 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     private function getFirstUnaryExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTUnaryExpression::class
         );
     }

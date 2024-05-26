@@ -223,7 +223,6 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     private function getFirstWhileStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTWhileStatement::class
         );
     }

@@ -934,7 +934,6 @@ class PHPParserVersion81Test extends AbstractTestCase
     {
         /** @var ASTArray $expr */
         $array = $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTArray::class
         );
         static::assertCount(1, $array->getChildren());
@@ -999,7 +998,7 @@ class PHPParserVersion81Test extends AbstractTestCase
     public function testHereDocAndNowDoc(): void
     {
         /** @var ASTHeredoc $heredoc */
-        $heredoc = $this->getFirstNodeOfTypeInFunction('', 'PDepend\\Source\\AST\\ASTArray');
+        $heredoc = $this->getFirstNodeOfTypeInFunction(ASTArray::class);
         $arrayElements = $heredoc->getChildren();
         $children = $arrayElements[0]->getChildren();
         $children = $children[0]->getChildren();
@@ -1229,7 +1228,6 @@ class PHPParserVersion81Test extends AbstractTestCase
     {
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTFunctionPostfix'
         )->getChild(1)->getChild(0);
 
@@ -1274,7 +1272,6 @@ class PHPParserVersion81Test extends AbstractTestCase
     {
         /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTFunctionPostfix'
         )->getChild(1)->getChild(0);
 
@@ -1329,7 +1326,6 @@ class PHPParserVersion81Test extends AbstractTestCase
     {
         /** @var ASTAssignmentExpression $assignment */
         $assignment = $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTAssignmentExpression'
         );
 
@@ -1339,8 +1335,7 @@ class PHPParserVersion81Test extends AbstractTestCase
     public function testUnpackingInsideArrays(): void
     {
         $expression = $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
-            'PDepend\\Source\\AST\\ASTArray'
+            ASTArray::class
         );
         static::assertSame([
             'PDepend\\Source\\AST\\ASTArrayElement',
@@ -1371,7 +1366,6 @@ class PHPParserVersion81Test extends AbstractTestCase
     public function testNumericLiteralSeparator(): void
     {
         $expression = $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             'PDepend\\Source\\AST\\ASTExpression'
         );
         static::assertSame([
