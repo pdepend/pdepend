@@ -225,7 +225,7 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
      * @param string $nodeId Identifier of the analyzed item.
      * @since  1.0.0
      */
-    private function updateProjectMetrics($nodeId): void
+    private function updateProjectMetrics(string $nodeId): void
     {
         $this->ccn += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_1] ?? 0;
         $this->ccn2 += $this->metrics[$nodeId][self::M_CYCLOMATIC_COMPLEXITY_2] ?? 0;

@@ -88,7 +88,7 @@ class ASTCastExpression extends ASTUnaryExpression
      *
      * @param string $image The original cast image.
      */
-    public function __construct($image)
+    public function __construct(string $image)
     {
         parent::__construct(preg_replace('(\s+)', '', strtolower($image)));
     }

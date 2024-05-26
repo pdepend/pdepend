@@ -74,11 +74,9 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * Tests that the try-statement has the expected start line value.
      *
-     * @param ASTTryStatement $stmt
-     *
      * @depends testTryStatement
      */
-    public function testTryStatementHasExpectedStartLine($stmt): void
+    public function testTryStatementHasExpectedStartLine(ASTTryStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
     }
@@ -86,11 +84,9 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * Tests that the try-statement has the expected start column value.
      *
-     * @param ASTTryStatement $stmt
-     *
      * @depends testTryStatement
      */
-    public function testTryStatementHasExpectedStartColumn($stmt): void
+    public function testTryStatementHasExpectedStartColumn(ASTTryStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
     }
@@ -98,11 +94,9 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * Tests that the try-statement has the expected end line value.
      *
-     * @param ASTTryStatement $stmt
-     *
      * @depends testTryStatement
      */
-    public function testTryStatementHasExpectedEndLine($stmt): void
+    public function testTryStatementHasExpectedEndLine(ASTTryStatement $stmt): void
     {
         static::assertEquals(8, $stmt->getEndLine());
     }
@@ -110,11 +104,9 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * Tests that the try-statement has the expected end column value.
      *
-     * @param ASTTryStatement $stmt
-     *
      * @depends testTryStatement
      */
-    public function testTryStatementHasExpectedEndColumn($stmt): void
+    public function testTryStatementHasExpectedEndColumn(ASTTryStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getEndColumn());
     }
@@ -122,11 +114,9 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * testFirstChildOfTryStatementIsInstanceOfScopeStatement
      *
-     * @param ASTTryStatement $stmt
-     *
      * @depends testTryStatement
      */
-    public function testFirstChildOfTryStatementIsInstanceOfScopeStatement($stmt): void
+    public function testFirstChildOfTryStatementIsInstanceOfScopeStatement(ASTTryStatement $stmt): void
     {
         static::assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(0));
     }
@@ -134,11 +124,9 @@ class ASTTryStatementTest extends ASTNodeTestCase
     /**
      * testSecondChildOfTryStatementIsInstanceOfCatchStatement
      *
-     * @param ASTTryStatement $stmt
-     *
      * @depends testTryStatement
      */
-    public function testSecondChildOfTryStatementIsInstanceOfCatchStatement($stmt): void
+    public function testSecondChildOfTryStatementIsInstanceOfCatchStatement(ASTTryStatement $stmt): void
     {
         static::assertInstanceOf(ASTCatchStatement::class, $stmt->getChild(1));
     }

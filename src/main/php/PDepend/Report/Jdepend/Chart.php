@@ -83,7 +83,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      *
      * @param string $logFile The output log file.
      */
-    public function setLogFile($logFile): void
+    public function setLogFile(string $logFile): void
     {
         $this->logFile = $logFile;
     }

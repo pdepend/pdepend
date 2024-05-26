@@ -102,7 +102,7 @@ class IdBuilder
      * @param string $prefix The item type identifier.
      * @return string
      */
-    protected function forOffsetItem(AbstractASTArtifact $artifact, $prefix)
+    protected function forOffsetItem(AbstractASTArtifact $artifact, string $prefix)
     {
         $fileHash = $artifact->getCompilationUnit()?->getId() ?? 'default';
         $itemHash = $this->hash($prefix . ':' . strtolower($artifact->getImage()));
@@ -135,7 +135,7 @@ class IdBuilder
      * @param string $string The raw input identifier/string.
      * @return string
      */
-    protected function hash($string)
+    protected function hash(string $string)
     {
         return substr(base_convert(md5($string), 16, 36), 0, 11);
     }
@@ -148,7 +148,7 @@ class IdBuilder
      * @param string $string The node identifier.
      * @return string
      */
-    protected function getOffsetInFile($file, $string)
+    protected function getOffsetInFile(string $file, string $string)
     {
         if (isset($this->offsetInFile[$file][$string])) {
             $this->offsetInFile[$file][$string]++;

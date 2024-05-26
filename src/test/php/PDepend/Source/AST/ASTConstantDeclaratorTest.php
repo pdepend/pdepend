@@ -118,11 +118,9 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testConstantDeclaratorHasExpectedStartLine
      *
-     * @param ASTConstantDeclarator $declarator
-     *
      * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedStartLine($declarator): void
+    public function testConstantDeclaratorHasExpectedStartLine(ASTConstantDeclarator $declarator): void
     {
         static::assertEquals(5, $declarator->getStartLine());
     }
@@ -130,11 +128,9 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testConstantDeclaratorHasExpectedStartColumn
      *
-     * @param ASTConstantDeclarator $declarator
-     *
      * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedStartColumn($declarator): void
+    public function testConstantDeclaratorHasExpectedStartColumn(ASTConstantDeclarator $declarator): void
     {
         static::assertEquals(7, $declarator->getStartColumn());
     }
@@ -142,11 +138,9 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testConstantDeclaratorHasExpectedEndLine
      *
-     * @param ASTConstantDeclarator $declarator
-     *
      * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedEndLine($declarator): void
+    public function testConstantDeclaratorHasExpectedEndLine(ASTConstantDeclarator $declarator): void
     {
         static::assertEquals(7, $declarator->getEndLine());
     }
@@ -154,11 +148,9 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testConstantDeclaratorHasExpectedEndColumn
      *
-     * @param ASTConstantDeclarator $declarator
-     *
      * @depends testConstantDeclarator
      */
-    public function testConstantDeclaratorHasExpectedEndColumn($declarator): void
+    public function testConstantDeclaratorHasExpectedEndColumn(ASTConstantDeclarator $declarator): void
     {
         static::assertEquals(14, $declarator->getEndColumn());
     }

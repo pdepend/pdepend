@@ -107,11 +107,9 @@ class ASTVariableTest extends ASTNodeTestCase
     /**
      * testVariableHasExpectedStartLine
      *
-     * @param ASTVariable $variable
-     *
      * @depends testVariable
      */
-    public function testVariableHasExpectedStartLine($variable): void
+    public function testVariableHasExpectedStartLine(ASTVariable $variable): void
     {
         static::assertEquals(6, $variable->getStartLine());
     }
@@ -119,11 +117,9 @@ class ASTVariableTest extends ASTNodeTestCase
     /**
      * testVariableHasExpectedStartColumn
      *
-     * @param ASTVariable $variable
-     *
      * @depends testVariable
      */
-    public function testVariableHasExpectedStartColumn($variable): void
+    public function testVariableHasExpectedStartColumn(ASTVariable $variable): void
     {
         static::assertEquals(9, $variable->getStartColumn());
     }
@@ -131,11 +127,9 @@ class ASTVariableTest extends ASTNodeTestCase
     /**
      * testVariableHasExpectedEndLine
      *
-     * @param ASTVariable $variable
-     *
      * @depends testVariable
      */
-    public function testVariableHasExpectedEndLine($variable): void
+    public function testVariableHasExpectedEndLine(ASTVariable $variable): void
     {
         static::assertEquals(6, $variable->getEndLine());
     }
@@ -143,11 +137,9 @@ class ASTVariableTest extends ASTNodeTestCase
     /**
      * testVariableHasExpectedEndColumn
      *
-     * @param ASTVariable $variable
-     *
      * @depends testVariable
      */
-    public function testVariableHasExpectedEndColumn($variable): void
+    public function testVariableHasExpectedEndColumn(ASTVariable $variable): void
     {
         static::assertEquals(10, $variable->getEndColumn());
     }

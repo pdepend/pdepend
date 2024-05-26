@@ -320,11 +320,9 @@ class ChartTest extends AbstractTestCase
     }
 
     /**
-     * @param bool $userDefined
-     * @param string $packageName
      * @return ASTNamespace
      */
-    private function createPackage($userDefined, $packageName)
+    private function createPackage(bool $userDefined, string $packageName)
     {
         $packageA = new ASTNamespace($packageName);
         $type = $this->getMockBuilder(ASTClass::class)

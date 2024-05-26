@@ -517,7 +517,7 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsCorrectFunctionReturnType
      */
-    public function testParserSetsFunctionReturnTypeToNull($functions): void
+    public function testParserSetsFunctionReturnTypeToNull(ASTArtifactList $functions): void
     {
         static::assertSame(
             [
@@ -536,7 +536,7 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsCorrectFunctionReturnType
      */
-    public function testParserSetsExpectedFunctionReturnTypeOfFunctionTwo($functions): void
+    public function testParserSetsExpectedFunctionReturnTypeOfFunctionTwo(ASTArtifactList $functions): void
     {
         static::assertSame(
             [
@@ -555,7 +555,7 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsCorrectFunctionReturnType
      */
-    public function testParserSetsExpectedFunctionReturnTypeOfFunctionThree($functions): void
+    public function testParserSetsExpectedFunctionReturnTypeOfFunctionThree(ASTArtifactList $functions): void
     {
         static::assertSame(
             [
@@ -938,7 +938,7 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace($namespaces): void
+    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace(ASTArtifactList $namespaces): void
     {
         $functions = $namespaces[0]->getFunctions();
         static::assertCount(2, $functions);
@@ -949,7 +949,7 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace($namespaces): void
+    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace(ASTArtifactList $namespaces): void
     {
         $functions = $namespaces[1]->getFunctions();
         static::assertCount(1, $functions);
@@ -960,7 +960,7 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileExpectedPackageForFirstFunctionInFirstNamespace($namespaces): void
+    public function testParserSetsFileExpectedPackageForFirstFunctionInFirstNamespace(ASTArtifactList $namespaces): void
     {
         $functions = $namespaces[0]->getFunctions();
 
@@ -972,7 +972,7 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileExpectedPackageForSecondFunctionInFirstNamespace($namespaces): void
+    public function testParserSetsFileExpectedPackageForSecondFunctionInFirstNamespace(ASTArtifactList $namespaces): void
     {
         $functions = $namespaces[0]->getFunctions();
 
@@ -984,7 +984,7 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileExpectedPackageForFirstFunctionInSecondNamespace($namespaces): void
+    public function testParserSetsFileExpectedPackageForFirstFunctionInSecondNamespace(ASTArtifactList $namespaces): void
     {
         $functions = $namespaces[1]->getFunctions();
 
@@ -1487,10 +1487,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Generic comment test method.
-     *
-     * @param int $indent
      */
-    protected function doTestParserSetsCorrectDocComment(ASTArtifactList $nodes, $indent = 1): void
+    protected function doTestParserSetsCorrectDocComment(ASTArtifactList $nodes, int $indent = 1): void
     {
         $ws = str_repeat(' ', 4 * $indent);
 

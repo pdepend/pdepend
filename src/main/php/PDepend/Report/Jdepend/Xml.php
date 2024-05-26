@@ -120,7 +120,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @param string $logFile The output log file.
      */
-    public function setLogFile($logFile): void
+    public function setLogFile(string $logFile): void
     {
         $this->logFile = $logFile;
     }

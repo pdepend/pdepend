@@ -59,7 +59,7 @@ class InvalidStateException extends ParserException
      * @param string $fileName The source file where this exception occurred.
      * @param string $reason Short description what has happened.
      */
-    public function __construct($lineNumber, $fileName, $reason)
+    public function __construct(int $lineNumber, string $fileName, string $reason)
     {
         parent::__construct(
             sprintf(

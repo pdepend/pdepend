@@ -72,12 +72,11 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithExitCodeHasExpectedStartLine
      *
-     * @param ASTExitExpression $expr
      * @since 1.0.1
      *
      * @depends testExitExpressionWithExitCode
      */
-    public function testExitExpressionWithExitCodeHasExpectedStartLine($expr): void
+    public function testExitExpressionWithExitCodeHasExpectedStartLine(ASTExitExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -85,12 +84,11 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithExitCodeHasExpectedEndLine
      *
-     * @param ASTExitExpression $expr
      * @since 1.0.1
      *
      * @depends testExitExpressionWithExitCode
      */
-    public function testExitExpressionWithExitCodeHasExpectedEndLine($expr): void
+    public function testExitExpressionWithExitCodeHasExpectedEndLine(ASTExitExpression $expr): void
     {
         static::assertEquals(6, $expr->getEndLine());
     }
@@ -98,12 +96,11 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithExitCodeHasExpectedStartColumn
      *
-     * @param ASTExitExpression $expr
      * @since 1.0.1
      *
      * @depends testExitExpressionWithExitCode
      */
-    public function testExitExpressionWithExitCodeHasExpectedStartColumn($expr): void
+    public function testExitExpressionWithExitCodeHasExpectedStartColumn(ASTExitExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -111,12 +108,11 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithExitCodeHasExpectedEndColumn
      *
-     * @param ASTExitExpression $expr
      * @since 1.0.1
      *
      * @depends testExitExpressionWithExitCode
      */
-    public function testExitExpressionWithExitCodeHasExpectedEndColumn($expr): void
+    public function testExitExpressionWithExitCodeHasExpectedEndColumn(ASTExitExpression $expr): void
     {
         static::assertEquals(5, $expr->getEndColumn());
     }
@@ -138,12 +134,11 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithEmptyArgsHasExpectedStartLine
      *
-     * @param ASTExitExpression $expr
      * @since 1.0.1
      *
      * @depends testExitExpressionWithEmptyArgs
      */
-    public function testExitExpressionWithEmptyArgsHasExpectedStartLine($expr): void
+    public function testExitExpressionWithEmptyArgsHasExpectedStartLine(ASTExitExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -151,12 +146,11 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithEmptyArgsHasExpectedEndLine
      *
-     * @param ASTExitExpression $expr
      * @since 1.0.1
      *
      * @depends testExitExpressionWithEmptyArgs
      */
-    public function testExitExpressionWithEmptyArgsHasExpectedEndLine($expr): void
+    public function testExitExpressionWithEmptyArgsHasExpectedEndLine(ASTExitExpression $expr): void
     {
         static::assertEquals(4, $expr->getEndLine());
     }
@@ -164,12 +158,11 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithEmptyArgsHasExpectedStartColumn
      *
-     * @param ASTExitExpression $expr
      * @since 1.0.1
      *
      * @depends testExitExpressionWithEmptyArgs
      */
-    public function testExitExpressionWithEmptyArgsHasExpectedStartColumn($expr): void
+    public function testExitExpressionWithEmptyArgsHasExpectedStartColumn(ASTExitExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -177,12 +170,11 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithEmptyArgsHasExpectedEndColumn
      *
-     * @param ASTExitExpression $expr
      * @since 1.0.1
      *
      * @depends testExitExpressionWithEmptyArgs
      */
-    public function testExitExpressionWithEmptyArgsHasExpectedEndColumn($expr): void
+    public function testExitExpressionWithEmptyArgsHasExpectedEndColumn(ASTExitExpression $expr): void
     {
         static::assertEquals(10, $expr->getEndColumn());
     }
@@ -204,11 +196,9 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithoutArgsHasExpectedStartLine
      *
-     * @param ASTExitExpression $expr
-     *
      * @depends testExitExpressionWithoutArgs
      */
-    public function testExitExpressionWithoutArgsHasExpectedStartLine($expr): void
+    public function testExitExpressionWithoutArgsHasExpectedStartLine(ASTExitExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -216,11 +206,9 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithoutArgsHasExpectedStartColumn
      *
-     * @param ASTExitExpression $expr
-     *
      * @depends testExitExpressionWithoutArgs
      */
-    public function testExitExpressionWithoutArgsHasExpectedStartColumn($expr): void
+    public function testExitExpressionWithoutArgsHasExpectedStartColumn(ASTExitExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -228,11 +216,9 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionHasExpectedEndLineWithoutArgs
      *
-     * @param ASTExitExpression $expr
-     *
      * @depends testExitExpressionWithoutArgs
      */
-    public function testExitExpressionWithoutArgsHasExpectedEndLine($expr): void
+    public function testExitExpressionWithoutArgsHasExpectedEndLine(ASTExitExpression $expr): void
     {
         static::assertEquals(4, $expr->getEndLine());
     }
@@ -240,11 +226,9 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionHasExpectedEndColumnWithoutArgs
      *
-     * @param ASTExitExpression $expr
-     *
      * @depends testExitExpressionWithoutArgs
      */
-    public function testExitExpressionWithoutArgsHasExpectedEndColumn($expr): void
+    public function testExitExpressionWithoutArgsHasExpectedEndColumn(ASTExitExpression $expr): void
     {
         static::assertEquals(8, $expr->getEndColumn());
     }

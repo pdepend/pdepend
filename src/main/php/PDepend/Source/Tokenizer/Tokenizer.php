@@ -71,7 +71,7 @@ interface Tokenizer
      *
      * @param string $sourceFile A php source file.
      */
-    public function setSourceFile($sourceFile): void;
+    public function setSourceFile(string $sourceFile): void;
 
     /**
      * Returns the next token or {@link Tokenizer::T_EOF} if

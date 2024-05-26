@@ -62,7 +62,7 @@ class DummyFilter implements Filter
      *
      * @param bool $returnValue The pre defined return value for this filter.
      */
-    public function __construct($returnValue)
+    public function __construct(bool $returnValue)
     {
         $this->returnValue = $returnValue;
     }
@@ -73,7 +73,7 @@ class DummyFilter implements Filter
      * @param string $relative The relative path to the specified root.
      * @param string $absolute The absolute path to a source file.
      */
-    public function accept($relative, $absolute): bool
+    public function accept(string $relative, string $absolute): bool
     {
         $this->invoked = true;
 

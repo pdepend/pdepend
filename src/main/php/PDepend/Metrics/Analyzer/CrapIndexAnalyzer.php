@@ -144,7 +144,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      *
      * @param ASTArtifactList<ASTNamespace> $namespaces
      */
-    private function doAnalyze($namespaces): void
+    private function doAnalyze(ASTArtifactList $namespaces): void
     {
         $this->metrics = [];
 

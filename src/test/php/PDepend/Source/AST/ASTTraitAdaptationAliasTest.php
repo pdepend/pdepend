@@ -152,11 +152,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationAliasHasExpectedStartLine
      *
-     * @param ASTTraitAdaptationAlias $alias
-     *
      * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedStartLine($alias): void
+    public function testTraitAdaptationAliasHasExpectedStartLine(ASTTraitAdaptationAlias $alias): void
     {
         static::assertEquals(6, $alias->getStartLine());
     }
@@ -164,11 +162,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationAliasHasExpectedStartColumn
      *
-     * @param ASTTraitAdaptationAlias $alias
-     *
      * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedStartColumn($alias): void
+    public function testTraitAdaptationAliasHasExpectedStartColumn(ASTTraitAdaptationAlias $alias): void
     {
         static::assertEquals(9, $alias->getStartColumn());
     }
@@ -176,11 +172,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationAliasHasExpectedEndLine
      *
-     * @param ASTTraitAdaptationAlias $alias
-     *
      * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedEndLine($alias): void
+    public function testTraitAdaptationAliasHasExpectedEndLine(ASTTraitAdaptationAlias $alias): void
     {
         static::assertEquals(6, $alias->getEndLine());
     }
@@ -188,11 +182,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationAliasHasExpectedEndColumn
      *
-     * @param ASTTraitAdaptationAlias $alias
-     *
      * @depends testTraitAdaptationAlias
      */
-    public function testTraitAdaptationAliasHasExpectedEndColumn($alias): void
+    public function testTraitAdaptationAliasHasExpectedEndColumn(ASTTraitAdaptationAlias $alias): void
     {
         static::assertEquals(46, $alias->getEndColumn());
     }
@@ -226,11 +218,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedStartLine
      *
-     * @param ASTTraitReference $reference
-     *
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartLine($reference): void
+    public function testTraitReferenceHasExpectedStartLine(ASTTraitReference $reference): void
     {
         static::assertEquals(7, $reference->getStartLine());
     }
@@ -238,11 +228,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedStartColumn
      *
-     * @param ASTTraitReference $reference
-     *
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartColumn($reference): void
+    public function testTraitReferenceHasExpectedStartColumn(ASTTraitReference $reference): void
     {
         static::assertEquals(9, $reference->getStartColumn());
     }
@@ -250,11 +238,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedEndLine
      *
-     * @param ASTTraitReference $reference
-     *
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndLine($reference): void
+    public function testTraitReferenceHasExpectedEndLine(ASTTraitReference $reference): void
     {
         static::assertEquals(7, $reference->getEndLine());
     }
@@ -262,11 +248,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedEndColumn
      *
-     * @param ASTTraitReference $reference
-     *
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndColumn($reference): void
+    public function testTraitReferenceHasExpectedEndColumn(ASTTraitReference $reference): void
     {
         static::assertEquals(36, $reference->getEndColumn());
     }

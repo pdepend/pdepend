@@ -72,11 +72,9 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     /**
      * testIterableTypeHasExpectedStartLine
      *
-     * @param ASTTypeIterable $type
-     *
      * @depends testIterableType
      */
-    public function testIterableTypeHasExpectedStartLine($type): void
+    public function testIterableTypeHasExpectedStartLine(ASTTypeIterable $type): void
     {
         static::assertEquals(2, $type->getStartLine());
     }
@@ -84,11 +82,9 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     /**
      * testIterableTypeHasExpectedStartColumn
      *
-     * @param ASTTypeIterable $type
-     *
      * @depends testIterableType
      */
-    public function testIterableTypeHasExpectedStartColumn($type): void
+    public function testIterableTypeHasExpectedStartColumn(ASTTypeIterable $type): void
     {
         static::assertEquals(24, $type->getStartColumn());
     }
@@ -96,11 +92,9 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     /**
      * testIterableTypeHasExpectedEndLine
      *
-     * @param ASTTypeIterable $type
-     *
      * @depends testIterableType
      */
-    public function testIterableTypeHasExpectedEndLine($type): void
+    public function testIterableTypeHasExpectedEndLine(ASTTypeIterable $type): void
     {
         static::assertEquals(2, $type->getEndLine());
     }
@@ -108,11 +102,9 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     /**
      * testIterableTypeHasExpectedEndColumn
      *
-     * @param ASTTypeIterable $type
-     *
      * @depends testIterableType
      */
-    public function testIterableTypeHasExpectedEndColumn($type): void
+    public function testIterableTypeHasExpectedEndColumn(ASTTypeIterable $type): void
     {
         static::assertEquals(31, $type->getEndColumn());
     }

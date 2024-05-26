@@ -195,7 +195,7 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
      * @param string $id2 Identifier for the outgoing edges.
      * @return array<string, float>
      */
-    protected function computeCodeRank($id1, $id2)
+    protected function computeCodeRank(string $id1, string $id2)
     {
         $dampingFactory = self::DAMPING_FACTOR;
 

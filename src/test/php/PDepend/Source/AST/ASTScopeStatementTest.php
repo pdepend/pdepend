@@ -72,13 +72,12 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedStartLine
      *
-     * @param ASTScopeStatement $stmt
      * @return ASTScopeStatement
      * @since 1.0.0
      *
      * @depends testParserHandlesInlineScopeStatement
      */
-    public function testInlineScopeStatementHasExpectedStartLine($stmt)
+    public function testInlineScopeStatementHasExpectedStartLine(ASTScopeStatement $stmt)
     {
         static::assertEquals(4, $stmt->getStartLine());
 
@@ -88,13 +87,12 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedStartColumn
      *
-     * @param ASTScopeStatement $stmt
      * @return ASTScopeStatement
      * @since 1.0.0
      *
      * @depends testInlineScopeStatementHasExpectedStartLine
      */
-    public function testInlineScopeStatementHasExpectedStartColumn($stmt)
+    public function testInlineScopeStatementHasExpectedStartColumn(ASTScopeStatement $stmt)
     {
         static::assertEquals(5, $stmt->getStartColumn());
 
@@ -104,13 +102,12 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedEndLine
      *
-     * @param ASTScopeStatement $stmt
      * @return ASTScopeStatement
      * @since 1.0.0
      *
      * @depends testInlineScopeStatementHasExpectedStartColumn
      */
-    public function testInlineScopeStatementHasExpectedEndLine($stmt)
+    public function testInlineScopeStatementHasExpectedEndLine(ASTScopeStatement $stmt)
     {
         static::assertEquals(5, $stmt->getEndLine());
 
@@ -120,12 +117,11 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedEndColumn
      *
-     * @param ASTScopeStatement $stmt
      * @since 1.0.0
      *
      * @depends testInlineScopeStatementHasExpectedEndLine
      */
-    public function testInlineScopeStatementHasExpectedEndColumn($stmt): void
+    public function testInlineScopeStatementHasExpectedEndColumn(ASTScopeStatement $stmt): void
     {
         static::assertEquals(20, $stmt->getEndColumn());
     }
@@ -147,11 +143,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected start line value.
      *
-     * @param ASTScopeStatement $stmt
-     *
      * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedStartLine($stmt): void
+    public function testScopeStatementHasExpectedStartLine(ASTScopeStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
     }
@@ -159,11 +153,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected start column value.
      *
-     * @param ASTScopeStatement $stmt
-     *
      * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedStartColumn($stmt): void
+    public function testScopeStatementHasExpectedStartColumn(ASTScopeStatement $stmt): void
     {
         static::assertEquals(34, $stmt->getStartColumn());
     }
@@ -171,11 +163,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected end line value.
      *
-     * @param ASTScopeStatement $stmt
-     *
      * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedEndLine($stmt): void
+    public function testScopeStatementHasExpectedEndLine(ASTScopeStatement $stmt): void
     {
         static::assertEquals(6, $stmt->getEndLine());
     }
@@ -183,11 +173,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected end column value.
      *
-     * @param ASTScopeStatement $stmt
-     *
      * @depends testScopeStatement
      */
-    public function testScopeStatementHasExpectedEndColumn($stmt): void
+    public function testScopeStatementHasExpectedEndColumn(ASTScopeStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getEndColumn());
     }
@@ -209,11 +197,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatementWithAlternativeHasExpectedStartLine
      *
-     * @param ASTScopeStatement $stmt
-     *
      * @depends testScopeStatementWithAlternative
      */
-    public function testScopeStatementWithAlternativeHasExpectedStartLine($stmt): void
+    public function testScopeStatementWithAlternativeHasExpectedStartLine(ASTScopeStatement $stmt): void
     {
         static::assertEquals(6, $stmt->getStartLine());
     }
@@ -221,11 +207,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatementWithAlternativeHasExpectedStartColumn
      *
-     * @param ASTScopeStatement $stmt
-     *
      * @depends testScopeStatementWithAlternative
      */
-    public function testScopeStatementWithAlternativeHasExpectedStartColumn($stmt): void
+    public function testScopeStatementWithAlternativeHasExpectedStartColumn(ASTScopeStatement $stmt): void
     {
         static::assertEquals(13, $stmt->getStartColumn());
     }
@@ -233,11 +217,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatementWithAlternativeHasExpectedEndLine
      *
-     * @param ASTScopeStatement $stmt
-     *
      * @depends testScopeStatementWithAlternative
      */
-    public function testScopeStatementWithAlternativeHasExpectedEndLine($stmt): void
+    public function testScopeStatementWithAlternativeHasExpectedEndLine(ASTScopeStatement $stmt): void
     {
         static::assertEquals(17, $stmt->getEndLine());
     }
@@ -245,11 +227,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatementWithAlternativeHasExpectedEndColumn
      *
-     * @param ASTScopeStatement $stmt
-     *
      * @depends testScopeStatementWithAlternative
      */
-    public function testScopeStatementWithAlternativeHasExpectedEndColumn($stmt): void
+    public function testScopeStatementWithAlternativeHasExpectedEndColumn(ASTScopeStatement $stmt): void
     {
         static::assertEquals(15, $stmt->getEndColumn());
     }

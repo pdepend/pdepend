@@ -86,8 +86,8 @@ class FileCacheDriver implements CacheDriver
      * @throws RuntimeException
      */
     public function __construct(
-        $root,
-        $ttl = self::DEFAULT_TTL,
+        string $root,
+        int $ttl = self::DEFAULT_TTL,
         private readonly ?string $cacheKey = null
     ) {
         $this->directory = new FileCacheDirectory($root);
@@ -107,7 +107,7 @@ class FileCacheDriver implements CacheDriver
      * @param string $type The name or object type for the next storage method call.
      * @return $this
      */
-    public function type($type): self
+    public function type(string $type): self
     {
         $this->type = $type;
 
@@ -125,7 +125,7 @@ class FileCacheDriver implements CacheDriver
      * @param mixed $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
      */
-    public function store($key, $data, $hash = null): void
+    public function store(string $key, mixed $data, ?string $hash = null): void
     {
         $file = $this->getCacheFile($key);
         $this->write($file, serialize(['hash' => $hash, 'data' => $data]));
@@ -137,7 +137,7 @@ class FileCacheDriver implements CacheDriver
      * @param string $file The cache file name.
      * @param string $data Serialized cache data.
      */
-    protected function write($file, $data): void
+    protected function write(string $file, string $data): void
     {
         $handle = fopen($file, 'wb');
         if (!$handle) {
@@ -159,7 +159,7 @@ class FileCacheDriver implements CacheDriver
      * @param string $key The cache key for the given data.
      * @param ?string $hash Optional hash that will be used for verification.
      */
-    public function restore($key, $hash = null): mixed
+    public function restore(string $key, ?string $hash = null): mixed
     {
         $file = $this->getCacheFile($key);
         if (file_exists($file)) {
@@ -177,7 +177,7 @@ class FileCacheDriver implements CacheDriver
      * @param string  $file The cache file name.
      * @param ?string $hash The verification hash.
      */
-    protected function restoreFile($file, $hash): mixed
+    protected function restoreFile(string $file, ?string $hash): mixed
     {
         // unserialize() throws E_NOTICE when data is corrupt
         /** @var array{hash: ?string, data: mixed} */
@@ -195,7 +195,7 @@ class FileCacheDriver implements CacheDriver
      * @param string $file The cache file name.
      * @return string
      */
-    protected function read($file)
+    protected function read(string $file)
     {
         $handle = fopen($file, 'rb');
         if (!$handle) {
@@ -223,7 +223,7 @@ class FileCacheDriver implements CacheDriver
      *
      * @param string $pattern The cache key pattern.
      */
-    public function remove($pattern): void
+    public function remove(string $pattern): void
     {
         $file = $this->getCacheFileWithoutExtension($pattern);
         $glob = glob("{$file}*.*") ?: [];
@@ -241,7 +241,7 @@ class FileCacheDriver implements CacheDriver
      * @param string $key The cache key for the given data.
      * @return string
      */
-    protected function getCacheFile($key)
+    protected function getCacheFile(string $key)
     {
         $cacheFile = $this->getCacheFileWithoutExtension($key) .
                      '.' . $this->version .
@@ -261,7 +261,7 @@ class FileCacheDriver implements CacheDriver
      * @param string $key The cache key for the given data.
      * @return string
      */
-    protected function getCacheFileWithoutExtension($key)
+    protected function getCacheFileWithoutExtension(string $key)
     {
         if (is_string($this->cacheKey)) {
             $key = md5($key . $this->cacheKey);
@@ -274,11 +274,8 @@ class FileCacheDriver implements CacheDriver
 
     /**
      * Cleans old cache files.
-     *
-     * @param string $root
-     * @param int $ttl
      */
-    protected function garbageCollect($root, $ttl): void
+    protected function garbageCollect(string $root, int $ttl): void
     {
         $garbageCollector = new FileCacheGarbageCollector($root, $ttl);
         $garbageCollector->garbageCollect();

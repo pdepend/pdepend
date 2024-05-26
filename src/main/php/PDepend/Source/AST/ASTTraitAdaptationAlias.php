@@ -78,7 +78,7 @@ class ASTTraitAdaptationAlias extends ASTStatement
      *
      * @param int $newModifier The new method modifier.
      */
-    public function setNewModifier($newModifier): void
+    public function setNewModifier(int $newModifier): void
     {
         $this->newModifier = $newModifier;
     }
@@ -99,7 +99,7 @@ class ASTTraitAdaptationAlias extends ASTStatement
      *
      * @param string $newName The new aliased method name.
      */
-    public function setNewName($newName): void
+    public function setNewName(string $newName): void
     {
         $this->newName = $newName;
     }

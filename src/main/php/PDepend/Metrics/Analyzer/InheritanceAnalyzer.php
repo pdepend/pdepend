@@ -165,7 +165,7 @@ class InheritanceAnalyzer extends AbstractAnalyzer implements
      * @param ASTArtifactList<ASTNamespace> $namespaces
      * @since  0.9.10
      */
-    private function doAnalyze($namespaces): void
+    private function doAnalyze(ASTArtifactList $namespaces): void
     {
         foreach ($namespaces as $namespace) {
             $this->dispatch($namespace);

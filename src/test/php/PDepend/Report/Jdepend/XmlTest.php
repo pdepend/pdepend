@@ -135,7 +135,7 @@ class XmlTest extends AbstractTestCase
      * @param string $fileName File name of the expected result document.
      * @return string The prepared xml document
      */
-    protected function getNormalizedPathXml($fileName)
+    protected function getNormalizedPathXml(string $fileName)
     {
         $path = $this->createCodeResourceUriForTest();
 

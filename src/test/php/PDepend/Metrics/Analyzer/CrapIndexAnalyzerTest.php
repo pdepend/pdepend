@@ -154,7 +154,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      * @param int $ccn The entire cyclomatic complexity number.
      * @param int $crapIndex The expected crap index.
      */
-    private function doTestCrapIndexCalculation($testCase, $ccn, $crapIndex): void
+    private function doTestCrapIndexCalculation(string $testCase, int $ccn, int $crapIndex): void
     {
         $metrics = $this->calculateCrapIndex($testCase, $ccn);
         static::assertEqualsWithDelta($crapIndex, $metrics['crap'], 0.005);
@@ -167,7 +167,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      * @param int $ccn The entire cyclomatic complexity number.
      * @return array
      */
-    private function calculateCrapIndex($testCase, $ccn)
+    private function calculateCrapIndex(string $testCase, int $ccn)
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -215,10 +215,9 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Creates a mocked instance of the cyclomatic complexity analyzer.
      *
-     * @param int $ccn
      * @return CyclomaticComplexityAnalyzer
      */
-    private function createCyclomaticComplexityAnalyzerMock($ccn = 42)
+    private function createCyclomaticComplexityAnalyzerMock(int $ccn = 42)
     {
         $mock = $this->getMockBuilder(CyclomaticComplexityAnalyzer::class)
             ->getMock();

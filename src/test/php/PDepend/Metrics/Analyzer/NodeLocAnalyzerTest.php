@@ -644,7 +644,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
      * @param string $name The name of the requested metric.
      * @since 0.10.2
      */
-    private function calculateFunctionMetric($name): mixed
+    private function calculateFunctionMetric(string $name): mixed
     {
         $namespaces = $this->parseTestCaseSource($this->getCallingTestMethod());
         $function = $namespaces->current()

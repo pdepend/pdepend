@@ -94,7 +94,7 @@ class StrategyFactory
      * @throws InvalidArgumentException If the given <b>$id</b> is not valid or
      *                                  no matching class declaration exists.
      */
-    public function createStrategy($strategyName)
+    public function createStrategy(string $strategyName)
     {
         if (!isset($this->validStrategies[$strategyName])) {
             throw new InvalidArgumentException(

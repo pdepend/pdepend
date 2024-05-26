@@ -165,10 +165,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
 
     /**
      * Prints a single dot for the current step.
-     *
-     * @param int $size
      */
-    protected function step($size = 1): void
+    protected function step(int $size = 1): void
     {
         if ($this->count > 0 && $this->count % $size === 0) {
             echo '.';
@@ -181,10 +179,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
 
     /**
      * Closes the current dot line.
-     *
-     * @param int $size
      */
-    protected function finish($size = 1): void
+    protected function finish(int $size = 1): void
     {
         $diff = ($this->count % ($size * 60));
 

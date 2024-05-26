@@ -81,7 +81,7 @@ class ExcludePathFilter implements Filter
      * @param string $relative The relative path to the specified root.
      * @param string $absolute The absolute path to a source file.
      */
-    public function accept($relative, $absolute): bool
+    public function accept(string $relative, string $absolute): bool
     {
         return $this->notRelative($relative) && $this->notAbsolute($absolute);
     }
@@ -94,7 +94,7 @@ class ExcludePathFilter implements Filter
      * @return bool
      * @since  0.10.0
      */
-    protected function notAbsolute($path)
+    protected function notAbsolute(string $path)
     {
         return !preg_match($this->pattern, str_replace('\\', '/', $path));
     }
@@ -107,7 +107,7 @@ class ExcludePathFilter implements Filter
      * @return bool
      * @since  0.10.0
      */
-    protected function notRelative($path)
+    protected function notRelative(string $path)
     {
         $subPath = str_replace('\\', '/', $path);
 

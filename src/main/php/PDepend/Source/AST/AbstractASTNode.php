@@ -85,7 +85,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @param ?string $image The source image for this node.
      */
-    public function __construct($image = null)
+    public function __construct(?string $image = null)
     {
         $this->metadata = str_repeat(':', $this->getMetadataSize() - 1);
 
@@ -128,7 +128,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @param ?string $image
      */
-    public function setImage($image): void
+    public function setImage(?string $image): void
     {
         $this->setMetadata(4, $image ?? '');
     }
@@ -212,11 +212,10 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns an integer value that was stored under the given index.
      *
-     * @param int $index
      * @return int
      * @since 0.10.4
      */
-    protected function getMetadataInteger($index)
+    protected function getMetadataInteger(int $index)
     {
         return (int) $this->getMetadata($index);
     }
@@ -225,11 +224,9 @@ abstract class AbstractASTNode implements ASTNode
      * Stores an integer value under the given index in the internally used data
      * string.
      *
-     * @param int $index
-     * @param int $value
      * @since 0.10.4
      */
-    protected function setMetadataInteger($index, $value): void
+    protected function setMetadataInteger(int $index, int $value): void
     {
         $this->setMetadata($index, (string) $value);
     }
@@ -237,11 +234,10 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns a boolean value that was stored under the given index.
      *
-     * @param int $index
      * @return bool
      * @since 0.10.4
      */
-    protected function getMetadataBoolean($index)
+    protected function getMetadataBoolean(int $index)
     {
         return (bool) $this->getMetadata($index);
     }
@@ -250,11 +246,9 @@ abstract class AbstractASTNode implements ASTNode
      * Stores a boolean value under the given index in the internally used data
      * string.
      *
-     * @param int $index
-     * @param bool $value
      * @since 0.10.4
      */
-    protected function setMetadataBoolean($index, $value): void
+    protected function setMetadataBoolean(int $index, bool $value): void
     {
         $this->setMetadata($index, $value ? '1' : '0');
     }
@@ -262,11 +256,10 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the value that was stored under the given index.
      *
-     * @param int $index
      * @return string
      * @since 0.10.4
      */
-    protected function getMetadata($index)
+    protected function getMetadata(int $index)
     {
         $metadata = explode(':', $this->metadata, $this->getMetadataSize());
 
@@ -277,11 +270,9 @@ abstract class AbstractASTNode implements ASTNode
      * Stores the given value under the given index in an internal storage
      * container.
      *
-     * @param int $index
-     * @param string $value
      * @since 0.10.4
      */
-    protected function setMetadata($index, $value): void
+    protected function setMetadata(int $index, string $value): void
     {
         $metadata = explode(':', $this->metadata, $this->getMetadataSize());
         $metadata[$index] = $value;
@@ -451,7 +442,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @param ?string $comment The doc comment block for this node.
      */
-    public function setComment($comment): void
+    public function setComment(?string $comment): void
     {
         $this->comment = $comment;
     }

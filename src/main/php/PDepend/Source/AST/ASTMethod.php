@@ -90,11 +90,10 @@ class ASTMethod extends AbstractASTCallable
      * This method will throw an exception when the value of given <b>$modifiers</b>
      * contains an invalid/unexpected modifier
      *
-     * @param int $modifiers
      * @throws InvalidArgumentException If the given modifier contains unexpected values.
      * @since  0.9.4
      */
-    public function setModifiers($modifiers): void
+    public function setModifiers(int $modifiers): void
     {
         $expected = ~State::IS_PUBLIC
                   & ~State::IS_PROTECTED

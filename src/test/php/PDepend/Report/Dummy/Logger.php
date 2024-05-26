@@ -74,7 +74,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      *
      * @param string $logFile The output log file.
      */
-    public function setLogFile($logFile): void
+    public function setLogFile(string $logFile): void
     {
         $this->logFile = $logFile;
     }

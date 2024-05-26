@@ -299,7 +299,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserResolvesQualifiedTypeNameInTypeSignature
      */
-    public function testParserResolvesQualifiedTypeNameInTypeSignature($fileName, $namespaceName): void
+    public function testParserResolvesQualifiedTypeNameInTypeSignature(string $fileName, string $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -319,7 +319,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserResolvesQualifiedTypeNameInFunction
      */
-    public function testParserResolvesQualifiedTypeNameInFunction($fileName, $namespaceName): void
+    public function testParserResolvesQualifiedTypeNameInFunction(string $fileName, string $namespaceName): void
     {
         $namespaces = $this->parseSource($fileName);
         $function = $namespaces->current()
@@ -344,7 +344,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserKeepsQualifiedTypeNameInTypeSignature
      */
-    public function testParserKeepsQualifiedTypeNameInTypeSignature($fileName, $namespaceName): void
+    public function testParserKeepsQualifiedTypeNameInTypeSignature(string $fileName, string $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -364,7 +364,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserKeepsQualifiedTypeNameInFunction
      */
-    public function testParserKeepsQualifiedTypeNameInFunction($fileName, $namespaceName): void
+    public function testParserKeepsQualifiedTypeNameInFunction(string $fileName, string $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -384,7 +384,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax
      */
-    public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax($fileName, $namespaceName): void
+    public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax(string $fileName, string $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -404,7 +404,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax
      */
-    public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax($fileName, $namespaceName): void
+    public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax(string $fileName, string $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -424,7 +424,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax
      */
-    public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax($fileName, $namespaceName): void
+    public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax(string $fileName, string $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()
@@ -444,7 +444,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax
      */
-    public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax($fileName, $namespaceName): void
+    public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax(string $fileName, string $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
             ->current()

@@ -66,7 +66,7 @@ class ImageConvert
      * @throws ImagickException
      * @throws InvalidArgumentException
      */
-    public static function convert($input, $output): void
+    public static function convert(string $input, string $output): void
     {
         $inputType = strtolower(pathinfo($input, PATHINFO_EXTENSION));
         $outputType = strtolower(pathinfo($output, PATHINFO_EXTENSION));
@@ -144,7 +144,7 @@ class ImageConvert
      * @param string $input The input svg file.
      * @throws InvalidArgumentException
      */
-    protected static function prepareSvg($input): void
+    protected static function prepareSvg(string $input): void
     {
         // Check for a configuration instance
         if (($config = ConfigurationInstance::get()) === null) {

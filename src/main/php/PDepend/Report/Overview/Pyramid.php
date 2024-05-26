@@ -107,7 +107,7 @@ class Pyramid implements FileAwareGenerator
      *
      * @param string $logFile The output log file.
      */
-    public function setLogFile($logFile): void
+    public function setLogFile(string $logFile): void
     {
         $this->logFile = $logFile;
     }
@@ -221,7 +221,7 @@ class Pyramid implements FileAwareGenerator
      * @param mixed $value The metric/field value.
      * @return string|null
      */
-    private function computeThreshold($name, $value)
+    private function computeThreshold(string $name, mixed $value)
     {
         if (!isset($this->thresholds[$name])) {
             return null;

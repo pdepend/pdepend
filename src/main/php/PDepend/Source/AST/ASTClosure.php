@@ -83,7 +83,7 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      *
      * @param bool $returnsReference Does this closure return by reference?
      */
-    public function setReturnsByReference($returnsReference): void
+    public function setReturnsByReference(bool $returnsReference): void
     {
         $this->setMetadataBoolean(5, (bool) $returnsReference);
     }
@@ -122,7 +122,7 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      * @param bool $static Whether this closure is static or not.
      * @since  1.0.0
      */
-    public function setStatic($static): void
+    public function setStatic(bool $static): void
     {
         $this->setMetadataBoolean(6, (bool) $static);
     }

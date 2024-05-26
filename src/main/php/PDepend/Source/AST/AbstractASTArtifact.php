@@ -107,7 +107,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * @param string $name The item name.
      * @since  1.0.0
      */
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -132,7 +132,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      * @param string $id Identifier for this node.
      * @since  0.9.12
      */
-    public function setId($id): void
+    public function setId(string $id): void
     {
         $this->id = $id;
     }
@@ -247,7 +247,7 @@ abstract class AbstractASTArtifact implements ASTArtifact
      *
      * @param ?string $comment
      */
-    public function setComment($comment): void
+    public function setComment(?string $comment): void
     {
         $this->comment = $comment;
     }

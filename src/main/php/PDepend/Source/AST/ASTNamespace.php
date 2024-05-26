@@ -74,10 +74,8 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Constructs a new namespace for the given <b>$name</b>
-     *
-     * @param string $name
      */
-    public function __construct($name)
+    public function __construct(string $name)
     {
         parent::__construct($name);
         $this->id = spl_object_hash($this);
@@ -289,10 +287,7 @@ class ASTNamespace extends AbstractASTArtifact
         return $this->packageAnnotation;
     }
 
-    /**
-     * @param bool $packageAnnotation
-     */
-    public function setPackageAnnotation($packageAnnotation): void
+    public function setPackageAnnotation(bool $packageAnnotation): void
     {
         $this->packageAnnotation = $packageAnnotation;
     }

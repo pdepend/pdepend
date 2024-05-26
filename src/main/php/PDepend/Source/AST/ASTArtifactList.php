@@ -169,7 +169,7 @@ class ASTArtifactList implements ArrayAccess, Countable, Iterator
      * @link   http://php.net/manual/en/arrayaccess.offsetexists.php
      * @since  1.0.0
      */
-    public function offsetExists($offset): bool
+    public function offsetExists(mixed $offset): bool
     {
         return isset($this->artifacts[$offset]);
     }

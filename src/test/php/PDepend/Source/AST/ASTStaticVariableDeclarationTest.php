@@ -72,11 +72,9 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected start line value.
      *
-     * @param ASTStaticVariableDeclaration $declaration
-     *
      * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedStartLine($declaration): void
+    public function testStaticVariableDeclarationHasExpectedStartLine(ASTStaticVariableDeclaration $declaration): void
     {
         static::assertSame(4, $declaration->getStartLine());
     }
@@ -84,11 +82,9 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected start column value.
      *
-     * @param ASTStaticVariableDeclaration $declaration
-     *
      * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedStartColumn($declaration): void
+    public function testStaticVariableDeclarationHasExpectedStartColumn(ASTStaticVariableDeclaration $declaration): void
     {
         static::assertSame(5, $declaration->getStartColumn());
     }
@@ -96,11 +92,9 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected end line value.
      *
-     * @param ASTStaticVariableDeclaration $declaration
-     *
      * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedEndLine($declaration): void
+    public function testStaticVariableDeclarationHasExpectedEndLine(ASTStaticVariableDeclaration $declaration): void
     {
         static::assertSame(5, $declaration->getEndLine());
     }
@@ -108,11 +102,9 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * Tests that the declaration has the expected end column value.
      *
-     * @param ASTStaticVariableDeclaration $declaration
-     *
      * @depends testStaticVariableDeclaration
      */
-    public function testStaticVariableDeclarationHasExpectedEndColumn($declaration): void
+    public function testStaticVariableDeclarationHasExpectedEndColumn(ASTStaticVariableDeclaration $declaration): void
     {
         static::assertSame(23, $declaration->getEndColumn());
     }

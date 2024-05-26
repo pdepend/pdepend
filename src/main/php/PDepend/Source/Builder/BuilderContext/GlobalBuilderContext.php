@@ -136,11 +136,10 @@ class GlobalBuilderContext implements BuilderContext
     /**
      * Returns the trait instance for the given qualified name.
      *
-     * @param string $qualifiedName
      * @return ASTTrait
      * @since  1.0.0
      */
-    public function getTrait($qualifiedName)
+    public function getTrait(string $qualifiedName)
     {
         return $this->getBuilder()->getTrait($qualifiedName);
     }
@@ -148,10 +147,9 @@ class GlobalBuilderContext implements BuilderContext
     /**
      * Returns the class instance for the given qualified name.
      *
-     * @param string $qualifiedName
      * @return ASTClass|ASTEnum
      */
-    public function getClass($qualifiedName)
+    public function getClass(string $qualifiedName)
     {
         return $this->getBuilder()->getClass($qualifiedName);
     }
@@ -159,10 +157,9 @@ class GlobalBuilderContext implements BuilderContext
     /**
      * Returns a class or an interface instance for the given qualified name.
      *
-     * @param string $qualifiedName
      * @return AbstractASTClassOrInterface
      */
-    public function getClassOrInterface($qualifiedName)
+    public function getClassOrInterface(string $qualifiedName)
     {
         return $this->getBuilder()->getClassOrInterface($qualifiedName);
     }

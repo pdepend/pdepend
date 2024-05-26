@@ -154,7 +154,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
      *
      * @param array<string> $argv The temporary command line argument vector
      */
-    protected function prepareArgv($argv): void
+    protected function prepareArgv(array $argv): void
     {
         array_unshift($argv, __FILE__);
 

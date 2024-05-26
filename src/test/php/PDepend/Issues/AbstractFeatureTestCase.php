@@ -71,10 +71,9 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
     /**
      * Parses the source for the calling test case.
      *
-     * @param string $testCase
      * @return ASTArtifactList<ASTNamespace>
      */
-    protected function parseTestCase($testCase = null)
+    protected function parseTestCase(?string $testCase = null)
     {
         if ($testCase === null) {
             $testCase = $this->getTestCaseMethod();
@@ -87,11 +86,9 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string $testCase
-     * @param bool $ignoreAnnotations
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false)
     {
         [$class, $method] = explode('::', $testCase);
         if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {

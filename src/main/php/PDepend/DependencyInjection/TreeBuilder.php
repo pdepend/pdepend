@@ -57,10 +57,8 @@ class TreeBuilder
 
     /**
      * TreeBuilder constructor.
-     *
-     * @param string $name
      */
-    public function __construct($name = 'pdepend')
+    public function __construct(string $name = 'pdepend')
     {
         $this->treeBuilder = new BaseTreeBuilder($name, 'array');
         $rootNode = $this->treeBuilder->getRootNode();

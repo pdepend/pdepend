@@ -109,11 +109,9 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionHasExpectedStartLine
      *
-     * @param ASTRequireExpression $expr
-     *
      * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedStartLine($expr): void
+    public function testRequireExpressionHasExpectedStartLine(ASTRequireExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -121,11 +119,9 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionHasExpectedStartColumn
      *
-     * @param ASTRequireExpression $expr
-     *
      * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedStartColumn($expr): void
+    public function testRequireExpressionHasExpectedStartColumn(ASTRequireExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -133,11 +129,9 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionHasExpectedEndLine
      *
-     * @param ASTRequireExpression $expr
-     *
      * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedEndLine($expr): void
+    public function testRequireExpressionHasExpectedEndLine(ASTRequireExpression $expr): void
     {
         static::assertEquals(4, $expr->getEndLine());
     }
@@ -145,11 +139,9 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionHasExpectedEndColumn
      *
-     * @param ASTRequireExpression $expr
-     *
      * @depends testRequireExpression
      */
-    public function testRequireExpressionHasExpectedEndColumn($expr): void
+    public function testRequireExpressionHasExpectedEndColumn(ASTRequireExpression $expr): void
     {
         static::assertEquals(35, $expr->getEndColumn());
     }
@@ -171,11 +163,9 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionWithParenthesisHasExpectedStartLine
      *
-     * @param ASTRequireExpression $expr
-     *
      * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedStartLine($expr): void
+    public function testRequireExpressionWithParenthesisHasExpectedStartLine(ASTRequireExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -183,11 +173,9 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionWithParenthesisHasExpectedStartColumn
      *
-     * @param ASTRequireExpression $expr
-     *
      * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedStartColumn($expr): void
+    public function testRequireExpressionWithParenthesisHasExpectedStartColumn(ASTRequireExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -195,11 +183,9 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionWithParenthesisHasExpectedEndLine
      *
-     * @param ASTRequireExpression $expr
-     *
      * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedEndLine($expr): void
+    public function testRequireExpressionWithParenthesisHasExpectedEndLine(ASTRequireExpression $expr): void
     {
         static::assertEquals(6, $expr->getEndLine());
     }
@@ -207,11 +193,9 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionWithParenthesisHasExpectedEndColumn
      *
-     * @param ASTRequireExpression $expr
-     *
      * @depends testRequireExpressionWithParenthesis
      */
-    public function testRequireExpressionWithParenthesisHasExpectedEndColumn($expr): void
+    public function testRequireExpressionWithParenthesisHasExpectedEndColumn(ASTRequireExpression $expr): void
     {
         static::assertEquals(5, $expr->getEndColumn());
     }

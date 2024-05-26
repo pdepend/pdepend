@@ -104,7 +104,7 @@ class SymbolTable
      * @param string $value A new scope value.
      * @throws NoActiveScopeException
      */
-    public function add($key, $value): void
+    public function add(string $key, string $value): void
     {
         $this->ensureActiveScopeExists();
         $this->scope[$this->normalizeKey($key)] = $value;
@@ -130,7 +130,7 @@ class SymbolTable
      * @return string|null
      * @throws NoActiveScopeException
      */
-    public function lookup($key)
+    public function lookup(string $key)
     {
         $this->ensureActiveScopeExists();
 
@@ -155,10 +155,9 @@ class SymbolTable
      * Normalizes the <code>$key</code>, so it's the same for
      * <code>add()</code> and <code>lookup()</code> operations.
      *
-     * @param string $key
      * @return string normalized key
      */
-    private function normalizeKey($key)
+    private function normalizeKey(string $key)
     {
         return strtolower($key);
     }

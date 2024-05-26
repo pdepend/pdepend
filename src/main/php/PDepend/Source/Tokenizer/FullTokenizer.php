@@ -58,5 +58,5 @@ interface FullTokenizer extends Tokenizer
      * @param int $shift positive or negative to apply to the current index.
      * @return int
      */
-    public function peekAt($shift);
+    public function peekAt(int $shift);
 }

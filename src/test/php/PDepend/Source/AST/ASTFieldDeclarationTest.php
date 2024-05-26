@@ -120,7 +120,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * @param int $modifiers Combinations of valid modifiers.
      * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
-    public function testSetModifiersAcceptsExpectedModifierCombinations($modifiers): void
+    public function testSetModifiersAcceptsExpectedModifierCombinations(int $modifiers): void
     {
         $declaration = new ASTFieldDeclaration();
         $declaration->setModifiers($modifiers);
@@ -134,7 +134,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * @param int $modifiers Combinations of invalid modifiers.
      * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
-    public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers($modifiers): void
+    public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers(int $modifiers): void
     {
         $declaration = new ASTFieldDeclaration();
 

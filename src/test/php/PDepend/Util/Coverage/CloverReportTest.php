@@ -185,11 +185,9 @@ class CloverReportTest extends AbstractTestCase
      * Creates a mocked method instance.
      *
      * @param string $name Name of the mock method.
-     * @param int $startLine
-     * @param int $endLine
      * @return ASTMethod
      */
-    private function createMethodMock($name, $startLine = 1, $endLine = 4)
+    private function createMethodMock(string $name, int $startLine = 1, int $endLine = 4)
     {
         $file = $this->getMockBuilder(ASTCompilationUnit::class)
             ->setConstructorArgs([null])

@@ -286,11 +286,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start line of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testVariableAssignmentExpression
      */
-    public function testVariableAssignmentExpressionHasExpectedStartLine($expr): void
+    public function testVariableAssignmentExpressionHasExpectedStartLine(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -298,11 +296,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start column of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testVariableAssignmentExpression
      */
-    public function testVariableAssignmentExpressionHasExpectedStartColumn($expr): void
+    public function testVariableAssignmentExpressionHasExpectedStartColumn(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -310,11 +306,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end line of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testVariableAssignmentExpression
      */
-    public function testVariableAssignmentExpressionHasExpectedEndLine($expr): void
+    public function testVariableAssignmentExpressionHasExpectedEndLine(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(6, $expr->getEndLine());
     }
@@ -322,11 +316,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end column of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testVariableAssignmentExpression
      */
-    public function testVariableAssignmentExpressionHasExpectedEndColumn($expr): void
+    public function testVariableAssignmentExpressionHasExpectedEndColumn(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(5, $expr->getEndColumn());
     }
@@ -348,11 +340,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start line of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testStaticPropertyAssignmentExpression
      */
-    public function testStaticPropertyAssignmentExpressionHasExpectedStartLine($expr): void
+    public function testStaticPropertyAssignmentExpressionHasExpectedStartLine(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -360,11 +350,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start column of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testStaticPropertyAssignmentExpression
      */
-    public function testStaticPropertyAssignmentExpressionHasExpectedStartColumn($expr): void
+    public function testStaticPropertyAssignmentExpressionHasExpectedStartColumn(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -372,11 +360,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end line of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testStaticPropertyAssignmentExpression
      */
-    public function testStaticPropertyAssignmentExpressionHasExpectedEndLine($expr): void
+    public function testStaticPropertyAssignmentExpressionHasExpectedEndLine(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(4, $expr->getEndLine());
     }
@@ -384,11 +370,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end column of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testStaticPropertyAssignmentExpression
      */
-    public function testStaticPropertyAssignmentExpressionHasExpectedEndColumn($expr): void
+    public function testStaticPropertyAssignmentExpressionHasExpectedEndColumn(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(60, $expr->getEndColumn());
     }
@@ -410,11 +394,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start line of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testObjectPropertyAssignmentExpression
      */
-    public function testObjectPropertyAssignmentExpressionHasExpectedStartLine($expr): void
+    public function testObjectPropertyAssignmentExpressionHasExpectedStartLine(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -422,11 +404,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start column of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testObjectPropertyAssignmentExpression
      */
-    public function testObjectPropertyAssignmentExpressionHasExpectedStartColumn($expr): void
+    public function testObjectPropertyAssignmentExpressionHasExpectedStartColumn(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -434,11 +414,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end line of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testObjectPropertyAssignmentExpression
      */
-    public function testObjectPropertyAssignmentExpressionHasExpectedEndLine($expr): void
+    public function testObjectPropertyAssignmentExpressionHasExpectedEndLine(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(5, $expr->getEndLine());
     }
@@ -446,11 +424,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end column of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testObjectPropertyAssignmentExpression
      */
-    public function testObjectPropertyAssignmentExpressionHasExpectedEndColumn($expr): void
+    public function testObjectPropertyAssignmentExpressionHasExpectedEndColumn(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(15, $expr->getEndColumn());
     }
@@ -472,11 +448,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start line of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testChainedPropertyAssignmentExpression
      */
-    public function testChainedPropertyAssignmentExpressionHasExpectedStartLine($expr): void
+    public function testChainedPropertyAssignmentExpressionHasExpectedStartLine(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -484,11 +458,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start column of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testChainedPropertyAssignmentExpression
      */
-    public function testChainedPropertyAssignmentExpressionHasExpectedStartColumn($expr): void
+    public function testChainedPropertyAssignmentExpressionHasExpectedStartColumn(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -496,11 +468,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end column of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testChainedPropertyAssignmentExpression
      */
-    public function testChainedPropertyAssignmentExpressionHasExpectedEndColumn($expr): void
+    public function testChainedPropertyAssignmentExpressionHasExpectedEndColumn(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(23, $expr->getEndColumn());
     }
@@ -508,11 +478,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end line of an assignment-expression.
      *
-     * @param ASTAssignmentExpression $expr
-     *
      * @depends testChainedPropertyAssignmentExpression
      */
-    public function testChainedPropertyAssignmentExpressionHasExpectedEndLine($expr): void
+    public function testChainedPropertyAssignmentExpressionHasExpectedEndLine(ASTAssignmentExpression $expr): void
     {
         static::assertEquals(8, $expr->getEndLine());
     }

@@ -91,10 +91,7 @@ class ASTAnonymousClass extends ASTClass
         parent::__wakeup();
     }
 
-    /**
-     * @param string $image
-     */
-    public function setImage($image): void
+    public function setImage(string $image): void
     {
         $this->setName($image);
     }
@@ -172,11 +169,10 @@ class ASTAnonymousClass extends ASTClass
     /**
      * Returns an integer value that was stored under the given index.
      *
-     * @param int $index
      * @return int
      * @since 0.10.4
      */
-    protected function getMetadataInteger($index)
+    protected function getMetadataInteger(int $index)
     {
         return (int) $this->getMetadata($index);
     }
@@ -185,11 +181,9 @@ class ASTAnonymousClass extends ASTClass
      * Stores an integer value under the given index in the internally used data
      * string.
      *
-     * @param int $index
-     * @param int $value
      * @since 0.10.4
      */
-    protected function setMetadataInteger($index, $value): void
+    protected function setMetadataInteger(int $index, int $value): void
     {
         $this->setMetadata($index, (string) $value);
     }
@@ -197,11 +191,10 @@ class ASTAnonymousClass extends ASTClass
     /**
      * Returns the value that was stored under the given index.
      *
-     * @param int $index
      * @return string
      * @since 0.10.4
      */
-    protected function getMetadata($index)
+    protected function getMetadata(int $index)
     {
         $metadata = explode(':', $this->metadata, $this->getMetadataSize());
 
@@ -212,11 +205,9 @@ class ASTAnonymousClass extends ASTClass
      * Stores the given value under the given index in an internal storage
      * container.
      *
-     * @param int $index
-     * @param string $value
      * @since 0.10.4
      */
-    protected function setMetadata($index, $value): void
+    protected function setMetadata(int $index, string $value): void
     {
         $metadata = explode(':', $this->metadata, $this->getMetadataSize());
         $metadata[$index] = $value;

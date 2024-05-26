@@ -72,11 +72,9 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * testUnaryExpressionHasExpectedStartLine
      *
-     * @param ASTUnaryExpression $expr
-     *
      * @depends testUnaryExpression
      */
-    public function testUnaryExpressionHasExpectedStartLine($expr): void
+    public function testUnaryExpressionHasExpectedStartLine(ASTUnaryExpression $expr): void
     {
         static::assertSame(4, $expr->getStartLine());
     }
@@ -84,11 +82,9 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * testUnaryExpressionHasExpectedEndLine
      *
-     * @param ASTUnaryExpression $expr
-     *
      * @depends testUnaryExpression
      */
-    public function testUnaryExpressionHasExpectedEndLine($expr): void
+    public function testUnaryExpressionHasExpectedEndLine(ASTUnaryExpression $expr): void
     {
         static::assertSame(5, $expr->getEndLine());
     }
@@ -96,11 +92,9 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * testUnaryExpressionHasExpectedStartColumn
      *
-     * @param ASTUnaryExpression $expr
-     *
      * @depends testUnaryExpression
      */
-    public function testUnaryExpressionHasExpectedStartColumn($expr): void
+    public function testUnaryExpressionHasExpectedStartColumn(ASTUnaryExpression $expr): void
     {
         static::assertSame(22, $expr->getStartColumn());
     }
@@ -108,11 +102,9 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * testUnaryExpressionHasExpectedEndColumn
      *
-     * @param ASTUnaryExpression $expr
-     *
      * @depends testUnaryExpression
      */
-    public function testUnaryExpressionHasExpectedEndColumn($expr): void
+    public function testUnaryExpressionHasExpectedEndColumn(ASTUnaryExpression $expr): void
     {
         static::assertSame(14, $expr->getEndColumn());
     }

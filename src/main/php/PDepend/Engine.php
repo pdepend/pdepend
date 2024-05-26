@@ -178,7 +178,7 @@ class Engine
      * @param string $directory The php source directory.
      * @throws InvalidArgumentException
      */
-    public function addDirectory($directory): void
+    public function addDirectory(string $directory): void
     {
         $dir = realpath($directory);
 
@@ -195,7 +195,7 @@ class Engine
      * @param string $file The source file name.
      * @throws InvalidArgumentException
      */
-    public function addFile($file): void
+    public function addFile(string $file): void
     {
         if ($file === '-') {
             $file = $this->phpStreamPrefix . 'stdin';
@@ -375,12 +375,11 @@ class Engine
     /**
      * Returns the analyzed namespace for the given name.
      *
-     * @param string $name
      * @return ASTNamespace
      * @throws OutOfBoundsException
      * @throws RuntimeException
      */
-    public function getNamespace($name)
+    public function getNamespace(string $name)
     {
         if (!isset($this->namespaces)) {
             $msg = 'getNamespace() doesn\'t work before the source was analyzed.';
@@ -648,7 +647,7 @@ class Engine
      * @return Analyzer[]
      * @throws InvalidArgumentException
      */
-    private function createAnalyzers($options)
+    private function createAnalyzers(array $options)
     {
         $analyzers = $this->analyzerFactory->createRequiredForGenerators($this->generators);
 
@@ -674,10 +673,9 @@ class Engine
     }
 
     /**
-     * @param string $path
      * @return bool
      */
-    private function isPhpStream($path)
+    private function isPhpStream(string $path)
     {
         return str_starts_with($path, $this->phpStreamPrefix);
     }

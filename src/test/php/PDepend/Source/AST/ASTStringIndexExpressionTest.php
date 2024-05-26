@@ -75,11 +75,9 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     /**
      * testStringIndexExpressionHasExpectedStartLine
      *
-     * @param ASTStringIndexExpression $expr
-     *
      * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedStartLine($expr): void
+    public function testStringIndexExpressionHasExpectedStartLine(ASTStringIndexExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -87,11 +85,9 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     /**
      * testStringIndexExpressionHasExpectedStartColumn
      *
-     * @param ASTStringIndexExpression $expr
-     *
      * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedStartColumn($expr): void
+    public function testStringIndexExpressionHasExpectedStartColumn(ASTStringIndexExpression $expr): void
     {
         static::assertEquals(23, $expr->getStartColumn());
     }
@@ -99,11 +95,9 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     /**
      * testStringIndexExpressionHasExpectedEndLine
      *
-     * @param ASTStringIndexExpression $expr
-     *
      * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedEndLine($expr): void
+    public function testStringIndexExpressionHasExpectedEndLine(ASTStringIndexExpression $expr): void
     {
         static::assertEquals(4, $expr->getEndLine());
     }
@@ -111,11 +105,9 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     /**
      * testStringIndexExpressionHasExpectedEndColumn
      *
-     * @param ASTStringIndexExpression $expr
-     *
      * @depends testStringIndexExpression
      */
-    public function testStringIndexExpressionHasExpectedEndColumn($expr): void
+    public function testStringIndexExpressionHasExpectedEndColumn(ASTStringIndexExpression $expr): void
     {
         static::assertEquals(28, $expr->getEndColumn());
     }

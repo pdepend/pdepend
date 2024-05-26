@@ -90,7 +90,7 @@ class CacheFactory
      * @throws RandomException
      * @throws RuntimeException
      */
-    public function create($cacheKey = null)
+    public function create(?string $cacheKey = null)
     {
         if (false === isset($this->caches[$cacheKey])) {
             $this->caches[$cacheKey] = $this->createCache($cacheKey);
@@ -108,7 +108,7 @@ class CacheFactory
      * @throws RandomException
      * @throws RuntimeException
      */
-    protected function createCache($cacheKey = null)
+    protected function createCache(?string $cacheKey = null)
     {
         assert($this->configuration->cache instanceof stdClass);
 
@@ -134,7 +134,7 @@ class CacheFactory
      * @return FileCacheDriver
      * @throws RuntimeException
      */
-    protected function createFileCache($location, $ttl = self::DEFAULT_TTL, $cacheKey = null)
+    protected function createFileCache(string $location, int $ttl = self::DEFAULT_TTL, ?string $cacheKey = null)
     {
         return new FileCacheDriver($location, $ttl, $cacheKey);
     }

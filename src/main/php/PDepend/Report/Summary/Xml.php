@@ -118,7 +118,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @param string $logFile The output log file.
      */
-    public function setLogFile($logFile): void
+    public function setLogFile(string $logFile): void
     {
         $this->logFile = $logFile;
     }
@@ -269,10 +269,9 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
     /**
      * Generates the XML for a class or trait node.
      *
-     * @param string $typeIdentifier
      * @throws RuntimeException
      */
-    private function generateTypeXml(ASTClass $type, $typeIdentifier): void
+    private function generateTypeXml(ASTClass $type, string $typeIdentifier): void
     {
         if (!$type->isUserDefined()) {
             return;

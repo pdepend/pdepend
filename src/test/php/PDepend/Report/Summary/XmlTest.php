@@ -237,11 +237,9 @@ class XmlTest extends AbstractTestCase
     }
 
     /**
-     * @param string $fixture
-     * @param string $expectation
      * @dataProvider dataProviderNodeAware
      */
-    public function testNodeAwareAnalyzer($fixture, $expectation): void
+    public function testNodeAwareAnalyzer(string $fixture, string $expectation): void
     {
         $this->namespaces = $this->parseSource($fixture);
 

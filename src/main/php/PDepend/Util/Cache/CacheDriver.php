@@ -64,10 +64,9 @@ interface CacheDriver
      * you must invoke right before every call to <em>restore()</em> or
      * <em>store()</em>.
      *
-     * @param string $type
      * @return $this
      */
-    public function type($type);
+    public function type(string $type);
 
     /**
      * This method will store the given <em>$data</em> under <em>$key</em>. This
@@ -80,7 +79,7 @@ interface CacheDriver
      * @param mixed $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
      */
-    public function store($key, $data, $hash = null): void;
+    public function store(string $key, mixed $data, ?string $hash = null): void;
 
     /**
      * This method tries to restore an existing cache entry for the given
@@ -92,7 +91,7 @@ interface CacheDriver
      * @param string $key The cache key for the given data.
      * @param string $hash Optional hash that will be used for verification.
      */
-    public function restore($key, $hash = null): mixed;
+    public function restore(string $key, ?string $hash = null): mixed;
 
     /**
      * This method will remove an existing cache entry for the given identifier.
@@ -102,5 +101,5 @@ interface CacheDriver
      *
      * @param string $pattern The cache key pattern.
      */
-    public function remove($pattern): void;
+    public function remove(string $pattern): void;
 }

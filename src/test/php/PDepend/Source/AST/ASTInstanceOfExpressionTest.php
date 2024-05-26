@@ -159,7 +159,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      * @param object $parent The parent ast node.
      * @param string $image The expected type image.
      */
-    protected function assertInstanceOfGraphStatic($parent, $image): void
+    protected function assertInstanceOfGraphStatic(object $parent, string $image): void
     {
         $this->assertInstanceOfGraph(
             $parent,
@@ -174,7 +174,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      * @param object $parent The parent ast node.
      * @param string $image The expected type image.
      */
-    protected function assertInstanceOfGraphProperty($parent, $image): void
+    protected function assertInstanceOfGraphProperty(object $parent, string $image): void
     {
         $this->assertInstanceOfGraph(
             $parent,
@@ -190,7 +190,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
      * @param string $image The expected type image.
      * @param string $type The expected class or interface type.
      */
-    protected function assertInstanceOfGraph($parent, $image, $type): void
+    protected function assertInstanceOfGraph(object $parent, string $image, string $type): void
     {
         $instanceOf = $parent->getFirstChildOfType(
             ASTInstanceOfExpression::class

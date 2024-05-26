@@ -72,11 +72,9 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     /**
      * testUnsetStatementHasExpectedStartLine
      *
-     * @param ASTUnsetStatement $stmt
-     *
      * @depends testUnsetStatement
      */
-    public function testUnsetStatementHasExpectedStartLine($stmt): void
+    public function testUnsetStatementHasExpectedStartLine(ASTUnsetStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
     }
@@ -84,11 +82,9 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     /**
      * testUnsetStatementHasExpectedStartColumn
      *
-     * @param ASTUnsetStatement $stmt
-     *
      * @depends testUnsetStatement
      */
-    public function testUnsetStatementHasExpectedStartColumn($stmt): void
+    public function testUnsetStatementHasExpectedStartColumn(ASTUnsetStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
     }
@@ -96,11 +92,9 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     /**
      * testUnsetStatementHasExpectedEndLine
      *
-     * @param ASTUnsetStatement $stmt
-     *
      * @depends testUnsetStatement
      */
-    public function testUnsetStatementHasExpectedEndLine($stmt): void
+    public function testUnsetStatementHasExpectedEndLine(ASTUnsetStatement $stmt): void
     {
         static::assertEquals(6, $stmt->getEndLine());
     }
@@ -108,11 +102,9 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
     /**
      * testUnsetStatementHasExpectedEndColumn
      *
-     * @param ASTUnsetStatement $stmt
-     *
      * @depends testUnsetStatement
      */
-    public function testUnsetStatementHasExpectedEndColumn($stmt): void
+    public function testUnsetStatementHasExpectedEndColumn(ASTUnsetStatement $stmt): void
     {
         static::assertEquals(22, $stmt->getEndColumn());
     }

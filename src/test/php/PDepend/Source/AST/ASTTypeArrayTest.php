@@ -72,11 +72,9 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     /**
      * testArrayTypeHasExpectedStartLine
      *
-     * @param ASTTypeArray $type
-     *
      * @depends testArrayType
      */
-    public function testArrayTypeHasExpectedStartLine($type): void
+    public function testArrayTypeHasExpectedStartLine(ASTTypeArray $type): void
     {
         static::assertEquals(2, $type->getStartLine());
     }
@@ -84,11 +82,9 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     /**
      * testArrayTypeHasExpectedStartColumn
      *
-     * @param ASTTypeArray $type
-     *
      * @depends testArrayType
      */
-    public function testArrayTypeHasExpectedStartColumn($type): void
+    public function testArrayTypeHasExpectedStartColumn(ASTTypeArray $type): void
     {
         static::assertEquals(14, $type->getStartColumn());
     }
@@ -96,11 +92,9 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     /**
      * testArrayTypeHasExpectedEndLine
      *
-     * @param ASTTypeArray $type
-     *
      * @depends testArrayType
      */
-    public function testArrayTypeHasExpectedEndLine($type): void
+    public function testArrayTypeHasExpectedEndLine(ASTTypeArray $type): void
     {
         static::assertEquals(2, $type->getEndLine());
     }
@@ -108,11 +102,9 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     /**
      * testArrayTypeHasExpectedEndColumn
      *
-     * @param ASTTypeArray $type
-     *
      * @depends testArrayType
      */
-    public function testArrayTypeHasExpectedEndColumn($type): void
+    public function testArrayTypeHasExpectedEndColumn(ASTTypeArray $type): void
     {
         static::assertEquals(18, $type->getEndColumn());
     }

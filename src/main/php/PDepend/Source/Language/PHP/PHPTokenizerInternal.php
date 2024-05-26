@@ -632,7 +632,7 @@ class PHPTokenizerInternal implements FullTokenizer
      *
      * @param string $sourceFile A php source file.
      */
-    public function setSourceFile($sourceFile): void
+    public function setSourceFile(string $sourceFile): void
     {
         unset($this->tokens);
         $this->sourceFile = new ASTCompilationUnit($sourceFile);
@@ -710,7 +710,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * @param int $shift positive or negative to apply to the current index.
      * @return int
      */
-    public function peekAt($shift)
+    public function peekAt(int $shift)
     {
         $this->tokenize();
 
@@ -776,7 +776,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * @param array{int, string, int} $token
      * @return array<int, array<int, int|string>>
      */
-    private function splitQualifiedNameToken($token)
+    private function splitQualifiedNameToken(array $token)
     {
         $result = [];
 
@@ -805,10 +805,9 @@ class PHPTokenizerInternal implements FullTokenizer
      * Split PHP 8 T_NAME_RELATIVE token into PHP 7 compatible tokens.
      *
      * @param array<int|string> $token
-     * @param string $namespace
      * @return array<int, array<int, int|string>>
      */
-    private function splitRelativeNameToken($token, $namespace)
+    private function splitRelativeNameToken(array $token, string $namespace)
     {
         $result = [
             [
@@ -1098,7 +1097,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * @param string $token The unknown string token.
      * @return array{int, string}
      */
-    private function generateUnknownToken($token)
+    private function generateUnknownToken(string $token)
     {
         return [$this->unknownTokenID++, $token];
     }
