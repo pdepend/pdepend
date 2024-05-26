@@ -135,7 +135,6 @@ class ASTShiftRightExpressionTest extends ASTNodeTestCase
     private function getFirstShiftRightExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTShiftRightExpression::class
         );
     }

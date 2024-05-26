@@ -143,7 +143,6 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     private function getFirstReturnStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTReturnStatement::class
         );
     }

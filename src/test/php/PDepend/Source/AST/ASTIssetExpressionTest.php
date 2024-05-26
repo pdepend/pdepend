@@ -62,7 +62,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
      */
     public function testIssetExpressionGraphWithMultipleVariables(): void
     {
-        $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstIssetExpressionInFunction();
         $vars = $expr->findChildrenOfType(ASTVariable::class);
         static::assertCount(3, $vars);
     }
@@ -72,7 +72,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
      */
     public function testIssetExpressionGraphWithStaticProperty(): void
     {
-        $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstIssetExpressionInFunction();
         $vars = $expr->findChildrenOfType(ASTMemberPrimaryPrefix::class);
         static::assertCount(1, $vars);
     }
@@ -82,7 +82,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
      */
     public function testIssetExpressionGraphWithArrayProperty(): void
     {
-        $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstIssetExpressionInFunction();
         $vars = $expr->findChildrenOfType(ASTMemberPrimaryPrefix::class);
         static::assertCount(1, $vars);
     }
@@ -92,7 +92,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
      */
     public function testIssetExpressionHasExpectedStartLine(): void
     {
-        $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstIssetExpressionInFunction();
         static::assertEquals(4, $expr->getStartLine());
     }
 
@@ -101,7 +101,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
      */
     public function testIssetExpressionHasExpectedStartColumn(): void
     {
-        $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstIssetExpressionInFunction();
         static::assertEquals(9, $expr->getStartColumn());
     }
 
@@ -110,7 +110,7 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
      */
     public function testIssetExpressionHasExpectedEndLine(): void
     {
-        $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstIssetExpressionInFunction();
         static::assertEquals(4, $expr->getEndLine());
     }
 
@@ -119,20 +119,18 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
      */
     public function testIssetExpressionHasExpectedEndColumn(): void
     {
-        $expr = $this->getFirstIssetExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstIssetExpressionInFunction();
         static::assertEquals(30, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTIssetExpression
      */
-    private function getFirstIssetExpressionInFunction($testCase)
+    private function getFirstIssetExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTIssetExpression::class
         );
     }

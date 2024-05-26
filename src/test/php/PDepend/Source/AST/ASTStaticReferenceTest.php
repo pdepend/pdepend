@@ -246,7 +246,6 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     private function getFirstStaticReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTStaticReference::class
         );
     }

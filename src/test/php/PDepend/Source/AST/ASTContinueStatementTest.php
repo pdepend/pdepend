@@ -60,7 +60,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
      */
     public function testContinueStatementHasExpectedStartLine(): void
     {
-        $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstContinueStatementInFunction();
         static::assertEquals(5, $stmt->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
      */
     public function testContinueStatementHasExpectedStartColumn(): void
     {
-        $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstContinueStatementInFunction();
         static::assertEquals(9, $stmt->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
      */
     public function testContinueStatementHasExpectedEndLine(): void
     {
-        $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstContinueStatementInFunction();
         static::assertEquals(7, $stmt->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTContinueStatementTest extends ASTNodeTestCase
      */
     public function testContinueStatementHasExpectedEndColumn(): void
     {
-        $stmt = $this->getFirstContinueStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstContinueStatementInFunction();
         static::assertEquals(17, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTContinueStatement
      */
-    private function getFirstContinueStatementInFunction($testCase)
+    private function getFirstContinueStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTContinueStatement::class
         );
     }

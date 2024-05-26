@@ -425,7 +425,6 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     private function getFirstSwitchLabelInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTSwitchLabel::class
         );
     }

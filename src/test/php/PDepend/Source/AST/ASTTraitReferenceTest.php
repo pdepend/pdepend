@@ -144,7 +144,6 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     private function getFirstTraitReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTTraitReference::class
         );
     }

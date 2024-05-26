@@ -60,7 +60,7 @@ class ASTForInitTest extends ASTNodeTestCase
      */
     public function testForInitHasExpectedStartLine(): void
     {
-        $init = $this->getFirstForInitInFunction(__METHOD__);
+        $init = $this->getFirstForInitInFunction();
         static::assertEquals(4, $init->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTForInitTest extends ASTNodeTestCase
      */
     public function testForInitHasExpectedStartColumn(): void
     {
-        $init = $this->getFirstForInitInFunction(__METHOD__);
+        $init = $this->getFirstForInitInFunction();
         static::assertEquals(10, $init->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTForInitTest extends ASTNodeTestCase
      */
     public function testForInitHasExpectedEndLine(): void
     {
-        $init = $this->getFirstForInitInFunction(__METHOD__);
+        $init = $this->getFirstForInitInFunction();
         static::assertEquals(4, $init->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTForInitTest extends ASTNodeTestCase
      */
     public function testForInitHasExpectedEndColumn(): void
     {
-        $init = $this->getFirstForInitInFunction(__METHOD__);
+        $init = $this->getFirstForInitInFunction();
         static::assertEquals(24, $init->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTForInit
      */
-    private function getFirstForInitInFunction($testCase)
+    private function getFirstForInitInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTForInit::class
         );
     }

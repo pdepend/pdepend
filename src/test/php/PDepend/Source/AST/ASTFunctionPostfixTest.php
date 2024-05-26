@@ -252,7 +252,6 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
     private function getFirstFunctionPostfixInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTFunctionPostfix::class
         );
     }

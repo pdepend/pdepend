@@ -84,11 +84,7 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
         $fileName = substr($class, strrpos($class, '\\') + 1, -4);
         $fileName = 'code/' . $fileName . '/' . $method;
 
-        try {
-            $fileOrDirectory = self::createCodeResourceURI($fileName);
-        } catch (ErrorException) {
-            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
-        }
+        $fileOrDirectory = self::createCodeResourceURI($fileName);
 
         return $this->parseSource($fileOrDirectory, $ignoreAnnotations);
     }

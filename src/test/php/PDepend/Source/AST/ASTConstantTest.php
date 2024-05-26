@@ -60,7 +60,7 @@ class ASTConstantTest extends ASTNodeTestCase
      */
     public function testConstantGraphSimple(): void
     {
-        $constant = $this->getFirstConstantInFunction(__METHOD__);
+        $constant = $this->getFirstConstantInFunction();
         static::assertEquals('FOO', $constant->getImage());
     }
 
@@ -69,7 +69,7 @@ class ASTConstantTest extends ASTNodeTestCase
      */
     public function testConstantGraphKeywordSelf(): void
     {
-        $constant = $this->getFirstConstantInFunction(__METHOD__);
+        $constant = $this->getFirstConstantInFunction();
         static::assertEquals('self', $constant->getImage());
     }
 
@@ -78,7 +78,7 @@ class ASTConstantTest extends ASTNodeTestCase
      */
     public function testConstantGraphKeywordParent(): void
     {
-        $constant = $this->getFirstConstantInFunction(__METHOD__);
+        $constant = $this->getFirstConstantInFunction();
         static::assertEquals('parent', $constant->getImage());
     }
 
@@ -87,7 +87,7 @@ class ASTConstantTest extends ASTNodeTestCase
      */
     public function testConstantHasExpectedStartLine(): void
     {
-        $constant = $this->getFirstConstantInFunction(__METHOD__);
+        $constant = $this->getFirstConstantInFunction();
         static::assertEquals(4, $constant->getStartLine());
     }
 
@@ -96,7 +96,7 @@ class ASTConstantTest extends ASTNodeTestCase
      */
     public function testConstantHasExpectedStartColumn(): void
     {
-        $constant = $this->getFirstConstantInFunction(__METHOD__);
+        $constant = $this->getFirstConstantInFunction();
         static::assertEquals(12, $constant->getStartColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTConstantTest extends ASTNodeTestCase
      */
     public function testConstantHasExpectedEndLine(): void
     {
-        $constant = $this->getFirstConstantInFunction(__METHOD__);
+        $constant = $this->getFirstConstantInFunction();
         static::assertEquals(4, $constant->getEndLine());
     }
 
@@ -114,20 +114,18 @@ class ASTConstantTest extends ASTNodeTestCase
      */
     public function testConstantHasExpectedEndColumn(): void
     {
-        $constant = $this->getFirstConstantInFunction(__METHOD__);
+        $constant = $this->getFirstConstantInFunction();
         static::assertEquals(14, $constant->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTConstant
      */
-    private function getFirstConstantInFunction($testCase)
+    private function getFirstConstantInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTConstant::class
         );
     }

@@ -60,7 +60,7 @@ class ASTLabelStatementTest extends ASTNodeTestCase
      */
     public function testLabelStatementHasExpectedStartLine(): void
     {
-        $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstLabelStatementInFunction();
         static::assertSame(4, $stmt->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTLabelStatementTest extends ASTNodeTestCase
      */
     public function testLabelStatementHasExpectedStartColumn(): void
     {
-        $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstLabelStatementInFunction();
         static::assertSame(5, $stmt->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTLabelStatementTest extends ASTNodeTestCase
      */
     public function testLabelStatementHasExpectedEndLine(): void
     {
-        $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstLabelStatementInFunction();
         static::assertSame(4, $stmt->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTLabelStatementTest extends ASTNodeTestCase
      */
     public function testLabelStatementHasExpectedEndColumn(): void
     {
-        $stmt = $this->getFirstLabelStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstLabelStatementInFunction();
         static::assertSame(14, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTLabelStatement
      */
-    private function getFirstLabelStatementInFunction($testCase)
+    private function getFirstLabelStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTLabelStatement::class
         );
     }

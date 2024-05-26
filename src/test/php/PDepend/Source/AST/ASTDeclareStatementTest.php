@@ -62,7 +62,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithSingleParameter(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertCount(1, $stmt->getValues());
     }
 
@@ -71,7 +71,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithMultipleParameter(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertCount(2, $stmt->getValues());
     }
 
@@ -97,7 +97,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementHasExpectedStartLine(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(4, $stmt->getStartLine());
     }
 
@@ -106,7 +106,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementHasExpectedStartColumn(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(5, $stmt->getStartColumn());
     }
 
@@ -115,7 +115,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementHasExpectedEndLine(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(4, $stmt->getEndLine());
     }
 
@@ -124,7 +124,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementHasExpectedEndColumn(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(22, $stmt->getEndColumn());
     }
 
@@ -133,7 +133,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithScopeHasExpectedStartLine(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(4, $stmt->getStartLine());
     }
 
@@ -142,7 +142,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithScopeHasExpectedStartColumn(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(5, $stmt->getStartColumn());
     }
 
@@ -151,7 +151,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithScopeHasExpectedEndLine(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(10, $stmt->getEndLine());
     }
 
@@ -160,7 +160,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithScopeHasExpectedEndColumn(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(5, $stmt->getEndColumn());
     }
 
@@ -169,7 +169,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedStartLine(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(4, $stmt->getStartLine());
     }
 
@@ -178,7 +178,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedStartColumn(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(5, $stmt->getStartColumn());
     }
 
@@ -187,7 +187,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedEndLine(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(9, $stmt->getEndLine());
     }
 
@@ -196,20 +196,18 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithAlternativeScopeHasExpectedEndColumn(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstDeclareStatementInFunction();
         static::assertEquals(15, $stmt->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTDeclareStatement
      */
-    private function getFirstDeclareStatementInFunction($testCase)
+    private function getFirstDeclareStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTDeclareStatement::class
         );
     }

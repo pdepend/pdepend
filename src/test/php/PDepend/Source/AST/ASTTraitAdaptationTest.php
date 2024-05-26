@@ -127,7 +127,6 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
     private function getFirstTraitAdaptationInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTTraitAdaptation::class
         );
     }

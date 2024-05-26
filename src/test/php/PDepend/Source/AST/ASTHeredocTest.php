@@ -112,7 +112,6 @@ class ASTHeredocTest extends ASTNodeTestCase
     private function getFirstHeredocInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTHeredoc::class
         );
     }
@@ -125,7 +124,6 @@ class ASTHeredocTest extends ASTNodeTestCase
     private function getFirstHeredocInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTHeredoc::class
         );
     }

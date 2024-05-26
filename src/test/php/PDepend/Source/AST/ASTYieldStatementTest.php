@@ -60,7 +60,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYield(): void
     {
-        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction();
         static::assertInstanceOf(ASTYieldStatement::class, $stmt);
     }
 
@@ -69,7 +69,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldAssignment(): void
     {
-        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction();
 
         static::assertInstanceOf(ASTYieldStatement::class, $stmt);
         $assignment = $stmt->getParent();
@@ -87,7 +87,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldWithLiteral(): void
     {
-        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction();
         static::assertInstanceOf(ASTLiteral::class, $stmt->getChild(0));
     }
 
@@ -96,7 +96,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldWithVariable(): void
     {
-        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction();
         static::assertInstanceOf(ASTVariable::class, $stmt->getChild(0));
     }
 
@@ -105,7 +105,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldWithKeyValue(): void
     {
-        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction();
         static::assertInstanceOf(ASTVariable::class, $stmt->getChild(0));
         static::assertInstanceOf(ASTVariable::class, $stmt->getChild(1));
     }
@@ -115,7 +115,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldWithFunctionCalls(): void
     {
-        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction();
         static::assertInstanceOf(ASTFunctionPostfix::class, $stmt->getChild(0));
         static::assertInstanceOf(ASTFunctionPostfix::class, $stmt->getChild(1));
     }
@@ -125,7 +125,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldInsideForeach(): void
     {
-        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction();
         static::assertInstanceOf(ASTForeachStatement::class, $stmt->getParent()->getParent());
     }
 
@@ -136,7 +136,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldKeyValue()
     {
-        $stmt = $this->getFirstYieldStatementInFunction(__METHOD__);
+        $stmt = $this->getFirstYieldStatementInFunction();
         $nodes = $stmt->getChildren();
 
         static::assertCount(2, $nodes);
@@ -164,7 +164,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldValueAssignmentSimple()
     {
-        $yield = $this->getFirstYieldStatementInFunction(__METHOD__);
+        $yield = $this->getFirstYieldStatementInFunction();
         $nodes = $yield->getChildren();
 
         static::assertCount(1, $nodes);
@@ -192,7 +192,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      */
     public function testYieldValueAssignmentKeyValue()
     {
-        $yield = $this->getFirstYieldStatementInFunction(__METHOD__);
+        $yield = $this->getFirstYieldStatementInFunction();
         $nodes = $yield->getChildren();
 
         static::assertCount(2, $nodes);
@@ -229,13 +229,11 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTYieldStatement
      */
-    private function getFirstYieldStatementInFunction($testCase)
+    private function getFirstYieldStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTYieldStatement::class
         );
     }

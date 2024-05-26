@@ -224,7 +224,6 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     private function getFirstRequireExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTRequireExpression::class
         );
     }

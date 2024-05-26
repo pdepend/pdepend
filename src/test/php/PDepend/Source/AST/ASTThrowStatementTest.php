@@ -125,7 +125,6 @@ class ASTThrowStatementTest extends ASTNodeTestCase
     private function getFirstThrowStatementInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTThrowStatement::class
         );
     }

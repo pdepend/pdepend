@@ -43,8 +43,6 @@
 
 namespace PDepend\Source\AST;
 
-use Java\Style;
-
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFieldDeclaration} class.
  *
@@ -112,7 +110,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      */
     public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type): void
     {
-        static::assertEquals(Style::class, $type->getNamespaceName());
+        static::assertEquals('Java\\Style', $type->getNamespaceName());
     }
 
     /**
@@ -291,7 +289,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     private function getFirstFieldDeclarationInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTFieldDeclaration::class
         );
     }

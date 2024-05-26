@@ -328,7 +328,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
      */
     public function testVisitorAccept(): void
     {
-        $method = new ASTMethod('method', 0);
+        $method = new ASTMethod('method');
         $visitor = new StubASTVisitor();
         $visitor->dispatch($method);
 

@@ -525,7 +525,6 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     private function getFirstAssignmentExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTAssignmentExpression::class
         );
     }

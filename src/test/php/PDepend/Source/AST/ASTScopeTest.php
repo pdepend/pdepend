@@ -125,7 +125,6 @@ class ASTScopeTest extends ASTNodeTestCase
     private function getFirstScopeInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTScope::class
         );
     }

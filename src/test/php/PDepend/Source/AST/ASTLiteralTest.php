@@ -255,7 +255,6 @@ class ASTLiteralTest extends ASTNodeTestCase
     private function getFirstLiteralInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTLiteral::class
         );
     }

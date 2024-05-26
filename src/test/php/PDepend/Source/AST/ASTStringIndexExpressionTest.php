@@ -128,7 +128,6 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
     private function getFirstStringIndexExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTStringIndexExpression::class
         );
     }

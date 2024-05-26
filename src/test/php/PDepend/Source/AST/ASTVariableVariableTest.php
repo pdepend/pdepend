@@ -125,7 +125,6 @@ class ASTVariableVariableTest extends ASTNodeTestCase
     private function getFirstVariableVariableInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTVariableVariable::class
         );
     }

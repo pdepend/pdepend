@@ -178,13 +178,12 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @param string $nodeType The searched node class.
      * @return ASTNode
      */
-    protected function getFirstNodeOfTypeInFunction($testCase, $nodeType)
+    protected function getFirstNodeOfTypeInFunction($nodeType)
     {
-        return $this->getFirstFunctionForTestCase($testCase)
+        return $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType($nodeType);
     }
 
@@ -250,26 +249,24 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @param string $nodeType The searched node class.
      * @return ASTNode
      */
-    protected function getFirstNodeOfTypeInClass($testCase, $nodeType)
+    protected function getFirstNodeOfTypeInClass($nodeType)
     {
-        return $this->getFirstClassForTestCase($testCase)
+        return $this->getFirstClassForTestCase()
             ->getFirstChildOfType($nodeType);
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @param string $nodeType The searched node class.
      * @return ASTNode
      */
-    protected function getFirstNodeOfTypeInInterface($testCase, $nodeType)
+    protected function getFirstNodeOfTypeInInterface($nodeType)
     {
-        return $this->getFirstInterfaceForTestCase($testCase)
+        return $this->getFirstInterfaceForTestCase()
             ->getFirstChildOfType($nodeType);
     }
 
@@ -657,7 +654,6 @@ abstract class AbstractTestCase extends TestCase
      *
      * @param string $fileName
      * @return string
-     * @throws ErrorException
      */
     protected function createRunResourceURI($fileName = null)
     {

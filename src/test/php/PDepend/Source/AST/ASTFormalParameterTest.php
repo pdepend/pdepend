@@ -273,7 +273,6 @@ class ASTFormalParameterTest extends ASTNodeTestCase
     private function getFirstFormalParameterInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTFormalParameter::class
         );
     }

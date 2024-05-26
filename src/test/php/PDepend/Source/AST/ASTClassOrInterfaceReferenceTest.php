@@ -127,7 +127,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
      */
     public function testReferenceHasExpectedStartLine(): void
     {
-        $reference = $this->getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction();
         static::assertEquals(2, $reference->getStartLine());
     }
 
@@ -136,7 +136,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
      */
     public function testReferenceHasExpectedStartColumn(): void
     {
-        $reference = $this->getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction();
         static::assertEquals(14, $reference->getStartColumn());
     }
 
@@ -145,7 +145,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
      */
     public function testReferenceHasExpectedEndLine(): void
     {
-        $reference = $this->getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction();
         static::assertEquals(2, $reference->getEndLine());
     }
 
@@ -154,7 +154,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
      */
     public function testReferenceHasExpectedEndColumn(): void
     {
-        $reference = $this->getFirstReferenceInFunction(__METHOD__);
+        $reference = $this->getFirstReferenceInFunction();
         static::assertEquals(29, $reference->getEndColumn());
     }
 
@@ -249,13 +249,11 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTClassOrInterfaceReference
      */
-    private function getFirstReferenceInFunction($testCase)
+    private function getFirstReferenceInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTClassOrInterfaceReference::class
         );
     }
@@ -269,7 +267,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     private function getFirstReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTClassOrInterfaceReference::class
         );
     }
@@ -283,7 +280,6 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     private function getFirstReferenceInInterface()
     {
         return $this->getFirstNodeOfTypeInInterface(
-            $this->getCallingTestMethod(),
             ASTClassOrInterfaceReference::class
         );
     }

@@ -136,7 +136,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      */
     public function testParentReferenceHasExpectedStartLine(): void
     {
-        $reference = $this->getFirstParentReferenceInClass(__METHOD__);
+        $reference = $this->getFirstParentReferenceInClass();
         static::assertEquals(5, $reference->getStartLine());
     }
 
@@ -145,7 +145,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      */
     public function testParentReferenceHasExpectedStartColumn(): void
     {
-        $reference = $this->getFirstParentReferenceInClass(__METHOD__);
+        $reference = $this->getFirstParentReferenceInClass();
         static::assertEquals(20, $reference->getStartColumn());
     }
 
@@ -154,7 +154,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      */
     public function testParentReferenceHasExpectedEndLine(): void
     {
-        $reference = $this->getFirstParentReferenceInClass(__METHOD__);
+        $reference = $this->getFirstParentReferenceInClass();
         static::assertEquals(5, $reference->getEndLine());
     }
 
@@ -163,7 +163,7 @@ class ASTParentReferenceTest extends ASTNodeTestCase
      */
     public function testParentReferenceHasExpectedEndColumn(): void
     {
-        $reference = $this->getFirstParentReferenceInClass(__METHOD__);
+        $reference = $this->getFirstParentReferenceInClass();
         static::assertEquals(25, $reference->getEndColumn());
     }
 
@@ -184,13 +184,11 @@ class ASTParentReferenceTest extends ASTNodeTestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTParentReference
      */
-    private function getFirstParentReferenceInClass($testCase)
+    private function getFirstParentReferenceInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $testCase,
             ASTParentReference::class
         );
     }

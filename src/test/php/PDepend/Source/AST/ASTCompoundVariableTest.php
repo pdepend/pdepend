@@ -62,7 +62,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      */
     public function testCompoundVariableGraphWithInlineLiteral(): void
     {
-        $variable = $this->getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction();
 
         $string = $variable->getChild(0);
         static::assertInstanceOf(ASTString::class, $string);
@@ -73,7 +73,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      */
     public function testCompoundVariableGraphWithInlineConstantEscapedLiteral(): void
     {
-        $variable = $this->getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction();
 
         $literal = $variable->getChild(0);
         static::assertEquals("'FOO{\$bar}'", $literal->getImage());
@@ -84,7 +84,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      */
     public function testCompoundVariableGraphWithInlineBacktickLiteral(): void
     {
-        $variable = $this->getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction();
 
         $string = $variable->getChild(0);
         static::assertInstanceOf(ASTString::class, $string);
@@ -95,7 +95,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      */
     public function testCompoundVariableGraphWithMemberPrimaryPrefix(): void
     {
-        $variable = $this->getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction();
         $expected = [
             ASTMemberPrimaryPrefix::class,
             ASTVariable::class,
@@ -122,7 +122,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      */
     public function testCompoundVariableHasExpectedStartLine(): void
     {
-        $variable = $this->getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction();
         static::assertSame(4, $variable->getStartLine());
     }
 
@@ -131,7 +131,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      */
     public function testCompoundVariableHasExpectedStartColumn(): void
     {
-        $variable = $this->getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction();
         static::assertSame(5, $variable->getStartColumn());
     }
 
@@ -140,7 +140,7 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      */
     public function testCompoundVariableHasExpectedEndLine(): void
     {
-        $variable = $this->getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction();
         static::assertSame(7, $variable->getEndLine());
     }
 
@@ -149,20 +149,18 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
      */
     public function testCompoundVariableHasExpectedEndColumn(): void
     {
-        $variable = $this->getFirstVariableInFunction(__METHOD__);
+        $variable = $this->getFirstVariableInFunction();
         static::assertSame(11, $variable->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTCompoundVariable
      */
-    private function getFirstVariableInFunction($testCase)
+    private function getFirstVariableInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTCompoundVariable::class
         );
     }

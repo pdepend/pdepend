@@ -143,7 +143,6 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     private function getFirstArrayTypeInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTTypeIterable::class
         );
     }

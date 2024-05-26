@@ -235,7 +235,6 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
     private function getFirstArgumentsOfFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $this->getCallingTestMethod(),
             ASTArguments::class
         );
     }
@@ -248,7 +247,6 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
     private function getFirstArgumentsOfMethod()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTArguments::class
         );
     }

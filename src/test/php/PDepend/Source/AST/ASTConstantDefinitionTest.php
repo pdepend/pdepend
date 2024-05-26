@@ -336,7 +336,6 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     private function getFirstConstantDefinitionInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTConstantDefinition::class
         );
     }

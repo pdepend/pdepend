@@ -60,7 +60,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      */
     public function testExpressionHasExpectedNumberOfChildNodes(): void
     {
-        $expr = $this->getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction();
         static::assertCount(5, $expr->getChild(0)->getChildren());
     }
 
@@ -69,7 +69,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      */
     public function testExpressionGraphWithBooleanExpressions(): void
     {
-        $expr = $this->getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction();
         $expected = [
             ASTExpression::class,
             ASTVariable::class,
@@ -87,7 +87,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      */
     public function testExpressionHasExpectedStartLine(): void
     {
-        $expr = $this->getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction();
         static::assertEquals(4, $expr->getStartLine());
     }
 
@@ -96,7 +96,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      */
     public function testExpressionHasExpectedStartColumn(): void
     {
-        $expr = $this->getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction();
         static::assertEquals(8, $expr->getStartColumn());
     }
 
@@ -105,7 +105,7 @@ class ASTExpressionTest extends ASTNodeTestCase
      */
     public function testExpressionHasExpectedEndLine(): void
     {
-        $expr = $this->getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction();
         static::assertEquals(6, $expr->getEndLine());
     }
 
@@ -114,20 +114,18 @@ class ASTExpressionTest extends ASTNodeTestCase
      */
     public function testExpressionHasExpectedEndColumn(): void
     {
-        $expr = $this->getFirstExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstExpressionInFunction();
         static::assertEquals(14, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTExpression
      */
-    private function getFirstExpressionInFunction($testCase)
+    private function getFirstExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTExpression::class
         );
     }

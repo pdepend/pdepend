@@ -171,7 +171,6 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     private function getFirstConstantDeclaratorInClass()
     {
         return $this->getFirstNodeOfTypeInClass(
-            $this->getCallingTestMethod(),
             ASTConstantDeclarator::class
         );
     }

@@ -60,7 +60,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
      */
     public function testCloneExpressionHasExpectedStartLine(): void
     {
-        $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstCloneExpressionInFunction();
         static::assertEquals(4, $expr->getStartLine());
     }
 
@@ -69,7 +69,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
      */
     public function testCloneExpressionHasExpectedStartColumn(): void
     {
-        $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstCloneExpressionInFunction();
         static::assertEquals(12, $expr->getStartColumn());
     }
 
@@ -78,7 +78,7 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
      */
     public function testCloneExpressionHasExpectedEndLine(): void
     {
-        $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstCloneExpressionInFunction();
         static::assertEquals(6, $expr->getEndLine());
     }
 
@@ -87,20 +87,18 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
      */
     public function testCloneExpressionHasExpectedEndColumn(): void
     {
-        $expr = $this->getFirstCloneExpressionInFunction(__METHOD__);
+        $expr = $this->getFirstCloneExpressionInFunction();
         static::assertEquals(21, $expr->getEndColumn());
     }
 
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $testCase Name of the calling test case.
      * @return ASTCloneExpression
      */
-    private function getFirstCloneExpressionInFunction($testCase)
+    private function getFirstCloneExpressionInFunction()
     {
         return $this->getFirstNodeOfTypeInFunction(
-            $testCase,
             ASTCloneExpression::class
         );
     }
