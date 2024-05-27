@@ -166,7 +166,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * for the given <b>$node</b>. If there are no metrics for the requested
      * node, this method will return an empty <b>array</b>.
      *
-     * @return array<string, float|int|null>
+     * @return array<string, float|int>
      */
     public function getNodeMetrics(ASTArtifact $artifact): array
     {
