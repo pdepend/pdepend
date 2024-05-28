@@ -2736,7 +2736,7 @@ abstract class AbstractPHPParser
      * @return T
      * @throws ParserException
      */
-    private function parseExpressionTypeReference(ASTNode $expr, bool $classRef): AbstractASTNode
+    private function parseExpressionTypeReference(AbstractASTNode $expr, bool $classRef): AbstractASTNode
     {
         $expr->addChild(
             $this->parseOptionalMemberPrimaryPrefix(
@@ -3146,7 +3146,7 @@ abstract class AbstractPHPParser
      * @return T
      * @since 1.0.0
      */
-    private function parseExpressionList(ASTNode $exprList): AbstractASTNode
+    private function parseExpressionList(AbstractASTNode $exprList): AbstractASTNode
     {
         $this->consumeComments();
 
@@ -3160,9 +3160,10 @@ abstract class AbstractPHPParser
     /**
      * Return true if children remain to be added, false else.
      *
-     * @param AbstractASTNode $exprList
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      */
-    private function addChildToList(ASTNode $exprList, ASTNode $expr): bool
+    private function addChildToList(AbstractASTNode $exprList, ASTNode $expr): bool
     {
         $exprList->addChild($expr);
 
@@ -4690,7 +4691,7 @@ abstract class AbstractPHPParser
      * @return AbstractASTNode The original input node or this node wrapped with a function postfix instance.
      * @since 1.0.0
      */
-    private function parseOptionalFunctionPostfix(ASTNode $node): AbstractASTNode
+    private function parseOptionalFunctionPostfix(AbstractASTNode $node): AbstractASTNode
     {
         $this->consumeComments();
         if (Tokens::T_PARENTHESIS_OPEN === $this->tokenizer->peek()) {

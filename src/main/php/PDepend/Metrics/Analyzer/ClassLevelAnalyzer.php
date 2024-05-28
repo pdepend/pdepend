@@ -302,7 +302,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      *
      * @param ASTClass|ASTEnum|ASTTrait $class The context class instance.
      */
-    private function calculateVarsi(AbstractASTClassOrInterface $class): int
+    private function calculateVarsi(ASTClass|ASTEnum|ASTTrait $class): int
     {
         // List of properties, this method only counts not overwritten properties
         $properties = [];
@@ -372,10 +372,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         return $ccn;
     }
 
-    /**
-     * @param ASTClass|ASTEnum $class
-     */
-    private function calculateAbstractASTClassOrInterfaceMetrics(AbstractASTClassOrInterface $class): void
+    private function calculateAbstractASTClassOrInterfaceMetrics(ASTClass|ASTEnum|ASTTrait $class): void
     {
         $impl = count($class->getInterfaces());
         $varsi = $this->calculateVarsi($class);

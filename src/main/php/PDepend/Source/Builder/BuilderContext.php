@@ -102,10 +102,8 @@ interface BuilderContext
 
     /**
      * Returns the class instance for the given qualified name.
-     *
-     * @return ASTClass|ASTEnum;
      */
-    public function getClass(string $qualifiedName);
+    public function getClass(string $qualifiedName): ASTClass|ASTEnum;
 
     /**
      * Returns a class or an interface instance for the given qualified name.

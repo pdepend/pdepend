@@ -119,7 +119,7 @@ class ASTArtifactList implements ArrayAccess, Countable, Iterator
      * @return T
      * @throws OutOfBoundsException
      */
-    public function current(): ASTArtifact|false
+    public function current(): ASTArtifact
     {
         if ($this->offset >= $this->count) {
             throw new OutOfBoundsException('The offset does not exist.');

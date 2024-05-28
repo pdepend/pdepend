@@ -218,10 +218,8 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Removes the given type instance from this namespace.
-     *
-     * @param AbstractASTClassOrInterface $type
      */
-    public function removeType(AbstractASTType $type): void
+    public function removeType(AbstractASTClassOrInterface $type): void
     {
         if (($index = array_search($type, $this->types, true)) !== false) {
             // Remove class from internal list

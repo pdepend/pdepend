@@ -178,7 +178,7 @@ interface Builder extends IteratorAggregate
      * @return $this
      * @since  0.10.0
      */
-    public function setCache(CacheDriver $cache);
+    public function setCache(CacheDriver $cache): self;
 
     /**
      * Restores a function within the internal type scope.

@@ -44,7 +44,6 @@
 
 namespace PDepend\Metrics;
 
-use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
@@ -101,10 +100,8 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      * Tries to restore the metrics for a cached node. If this method has
      * restored the metrics it will return <b>TRUE</b>, otherwise the return
      * value will be <b>FALSE</b>.
-     *
-     * @param ASTClass|ASTCompilationUnit|ASTFunction|ASTInterface|ASTMethod $node
      */
-    protected function restoreFromCache(AbstractASTArtifact $node): bool
+    protected function restoreFromCache(ASTClass|ASTCompilationUnit|ASTFunction|ASTInterface|ASTMethod $node): bool
     {
         $id = $node->getId();
         if ($node->isCached() && isset($this->metricsCached[$id])) {

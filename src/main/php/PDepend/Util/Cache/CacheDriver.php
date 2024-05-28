@@ -66,7 +66,7 @@ interface CacheDriver
      *
      * @return $this
      */
-    public function type(string $type);
+    public function type(string $type): self;
 
     /**
      * This method will store the given <em>$data</em> under <em>$key</em>. This
