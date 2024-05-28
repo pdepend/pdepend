@@ -44,6 +44,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Parser\InvalidStateException;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTParentReference} class.
@@ -58,7 +59,7 @@ use PDepend\Source\Parser\InvalidStateException;
 class ASTParentReferenceTest extends ASTNodeTestCase
 {
     /** The mocked reference instance. */
-    protected ASTClassOrInterfaceReference $referenceMock;
+    protected ASTClassOrInterfaceReference&MockObject $referenceMock;
 
     /**
      * testGetTypeDelegatesCallToInjectedReferenceObject
@@ -169,10 +170,8 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 
     /**
      * Creates a concrete node implementation.
-     *
-     * @return ASTParentReference
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTParentReference
     {
         $this->referenceMock = $this->getMockBuilder(ASTClassOrInterfaceReference::class)
             ->disableOriginalConstructor()

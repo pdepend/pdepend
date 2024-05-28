@@ -65,6 +65,8 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testIsCachedReturnsFalseByDefault(): void
     {
         $method = $this->createItem();
+        static::assertInstanceOf(ASTMethod::class, $method);
+
         static::assertFalse($method->isCached());
     }
 
@@ -75,6 +77,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     {
         $method = $this->createItem();
         serialize($method);
+        static::assertInstanceOf(ASTMethod::class, $method);
 
         static::assertFalse($method->isCached());
     }

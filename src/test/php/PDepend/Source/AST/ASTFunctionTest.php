@@ -586,10 +586,8 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * Creates an abstract item instance.
-     *
-     * @return AbstractASTArtifact
      */
-    protected function createItem()
+    protected function createItem(): ASTFunction
     {
         $function = new ASTFunction(__FUNCTION__);
         $function->setCompilationUnit(new ASTCompilationUnit(__FILE__));

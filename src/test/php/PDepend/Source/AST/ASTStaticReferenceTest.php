@@ -213,10 +213,8 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
 
     /**
      * Creates a concrete node implementation.
-     *
-     * @return ASTStaticReference
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTStaticReference
     {
         $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();

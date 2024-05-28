@@ -98,6 +98,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     public function testIsPublicReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTConstantDefinition::class, $declaration);
         static::assertFalse($declaration->isPublic());
     }
 
@@ -107,6 +108,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTConstantDefinition::class, $declaration);
         $declaration->setModifiers(State::IS_PUBLIC);
 
         static::assertTrue($declaration->isPublic());
@@ -118,6 +120,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     public function testIsProtectedReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTConstantDefinition::class, $declaration);
         static::assertFalse($declaration->isProtected());
     }
 
@@ -127,6 +130,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTConstantDefinition::class, $declaration);
         $declaration->setModifiers(State::IS_PROTECTED);
 
         static::assertTrue($declaration->isProtected());
@@ -138,6 +142,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     public function testIsPrivateReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTConstantDefinition::class, $declaration);
         static::assertFalse($declaration->isPrivate());
     }
 
@@ -147,6 +152,7 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTConstantDefinition::class, $declaration);
         $declaration->setModifiers(State::IS_PRIVATE);
 
         static::assertTrue($declaration->isPrivate());

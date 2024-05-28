@@ -116,7 +116,6 @@ class InInitializersTest extends PHPParserVersion81TestCase
         static::assertTrue($classRef->isPromoted());
         static::assertTrue($classRef->isPublic());
 
-        /** @var ASTClassOrInterfaceReference $variable */
         $type = $classRef->getChild(0);
         static::assertInstanceOf(ASTClassOrInterfaceReference::class, $type);
         static::assertSame('Bar', $type->getImage());

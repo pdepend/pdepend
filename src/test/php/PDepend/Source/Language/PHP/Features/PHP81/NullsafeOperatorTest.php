@@ -75,8 +75,8 @@ class NullsafeOperatorTest extends PHPParserVersion81TestCase
         /** @var ASTMethod $method */
         $method = $this->getFirstMethodForTestCase();
 
-        /** @var ASTEchoStatement $variable */
         $echo = $method->getFirstChildOfType(ASTEchoStatement::class);
+        static::assertInstanceOf(ASTEchoStatement::class, $echo);
         $chain = [];
         $node = $echo;
 

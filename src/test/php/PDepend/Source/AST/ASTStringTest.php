@@ -234,10 +234,8 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * Creates a string node.
-     *
-     * @return ASTString
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTString
     {
         return new ASTString();
     }

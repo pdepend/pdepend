@@ -69,9 +69,7 @@ class DynamicClassConstantFetchTest extends PHPParserVersion83TestCase
 
         static::assertInstanceOf(ASTScope::class, $scope);
 
-        /** @var ASTMemberPrimaryPrefix $return */
         $member = $scope->getChild(0)->getChild(0);
-
         static::assertInstanceOf(ASTMemberPrimaryPrefix::class, $member);
         $children = $member->getChildren();
 

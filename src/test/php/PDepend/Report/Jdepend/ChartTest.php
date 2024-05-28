@@ -44,6 +44,7 @@
 namespace PDepend\Report\Jdepend;
 
 use DOMDocument;
+use DOMElement;
 use DOMXPath;
 use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
@@ -257,12 +258,14 @@ class ChartTest extends AbstractTestCase
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
 
         $ellipseA = $xpath->query("//s:ellipse[@title='package0']")->item(0);
+        static::assertInstanceOf(DOMElement::class, $ellipseA);
         $matrixA = $ellipseA->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixA, $matches);
         static::assertEquals(1, $matches[1]);
         static::assertEquals(1, $matches[4]);
 
         $ellipseB = $xpath->query("//s:ellipse[@title='package1']")->item(0);
+        static::assertInstanceOf(DOMElement::class, $ellipseB);
         $matrixB = $ellipseB->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixB, $matches);
         static::assertEqualsWithDelta(0.3333333, $matches[1], 0.000001);

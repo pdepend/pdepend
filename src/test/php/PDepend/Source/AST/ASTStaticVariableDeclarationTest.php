@@ -123,10 +123,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
 
     /**
      * Creates a static variable declaration node.
-     *
-     * @return ASTStaticVariableDeclaration
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTStaticVariableDeclaration
     {
         return new ASTStaticVariableDeclaration(__FUNCTION__);
     }

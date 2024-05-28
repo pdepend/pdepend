@@ -63,6 +63,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
         $declaration = $this->getFirstFieldDeclarationInClass();
 
         $reference = $declaration->getChild(0);
+        static::assertInstanceof(ASTClassOrInterfaceReference::class, $reference);
         static::assertEquals(__FUNCTION__, $reference->getType()->getImage());
     }
 
@@ -155,6 +156,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testIsPublicReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         static::assertFalse($declaration->isPublic());
     }
 
@@ -164,6 +166,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testIsPublicReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         $declaration->setModifiers(State::IS_PUBLIC);
 
         static::assertTrue($declaration->isPublic());
@@ -175,6 +178,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testIsProtectedReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         static::assertFalse($declaration->isProtected());
     }
 
@@ -184,6 +188,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testIsProtectedReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         $declaration->setModifiers(State::IS_PROTECTED);
 
         static::assertTrue($declaration->isProtected());
@@ -195,6 +200,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testIsPrivateReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         static::assertFalse($declaration->isPrivate());
     }
 
@@ -204,6 +210,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testIsPrivateReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         $declaration->setModifiers(State::IS_PRIVATE);
 
         static::assertTrue($declaration->isPrivate());
@@ -215,6 +222,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testIsStaticReturnsFalseByDefault(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         static::assertFalse($declaration->isStatic());
     }
 
@@ -224,6 +232,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testIsStaticReturnsTrueWhenCorrespondingModifierWasSet(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         $declaration->setModifiers(State::IS_STATIC);
 
         static::assertTrue($declaration->isStatic());
@@ -235,6 +244,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $declaration = $this->createNodeInstance();
+        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         static::assertEquals(
             [
                 'comment',

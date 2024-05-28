@@ -1360,6 +1360,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testIsUserDefinedReturnsTrueAfterSetUserDefinedCall(): void
     {
         $class = $this->createItem();
+        static::assertInstanceof(ASTClass::class, $class);
         $class->setUserDefined();
 
         static::assertTrue($class->isUserDefined());
@@ -1371,6 +1372,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     public function testIsCachedReturnsFalseByDefault(): void
     {
         $class = $this->createItem();
+        static::assertInstanceof(ASTClass::class, $class);
         static::assertFalse($class->isCached());
     }
 
@@ -1381,6 +1383,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $class = $this->createItem();
         serialize($class);
+        static::assertInstanceof(ASTClass::class, $class);
 
         static::assertFalse($class->isCached());
     }

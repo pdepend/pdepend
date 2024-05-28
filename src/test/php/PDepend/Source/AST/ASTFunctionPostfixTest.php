@@ -236,10 +236,8 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
 
     /**
      * Creates a field declaration node.
-     *
-     * @return ASTFunctionPostfix
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTFunctionPostfix
     {
         return new ASTFunctionPostfix(__FUNCTION__);
     }

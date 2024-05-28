@@ -697,10 +697,8 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
 
     /**
      * Creates a method postfix node.
-     *
-     * @return ASTMethodPostfix
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTMethodPostfix
     {
         return new ASTMethodPostfix(__FUNCTION__);
     }
