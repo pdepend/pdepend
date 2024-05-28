@@ -46,6 +46,7 @@ namespace PDepend\DependencyInjection;
 use PDepend\AbstractTestCase;
 use PDepend\TestExtension;
 use ReflectionMethod;
+use ReflectionNamedType;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
@@ -74,9 +75,9 @@ class ConfigurationTest extends AbstractTestCase
             'getConfigTreeBuilder'
         );
 
-        static::assertSame(
-            TreeBuilder::class,
-            $method->getReturnType()->getName()
-        );
+        $type = $method->getReturnType();
+        static::assertInstanceOf(ReflectionNamedType::class, $type);
+
+        static::assertSame(TreeBuilder::class, $type->getName());
     }
 }

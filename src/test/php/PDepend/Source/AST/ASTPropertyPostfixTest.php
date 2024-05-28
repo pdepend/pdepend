@@ -388,10 +388,8 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
 
     /**
      * Creates a field declaration node.
-     *
-     * @return ASTPropertyPostfix
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTPropertyPostfix
     {
         return new ASTPropertyPostfix(__CLASS__);
     }

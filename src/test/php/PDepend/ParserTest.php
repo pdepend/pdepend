@@ -707,11 +707,12 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectPropertyDocComment(): void
     {
-        $nodes = $this->parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
-            ->current()
-            ->getProperties();
+            ->current();
+        static::assertInstanceOf(ASTClass::class, $class);
+        $nodes = $class->getProperties();
 
         $this->doTestParserSetsCorrectDocComment($nodes);
     }
@@ -721,11 +722,12 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectPropertyVisibility(): void
     {
-        $nodes = $this->parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
-            ->current()
-            ->getProperties();
+            ->current();
+        static::assertInstanceOf(ASTClass::class, $class);
+        $nodes = $class->getProperties();
 
         $actual = [];
         foreach ($nodes as $node) {
@@ -752,11 +754,12 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsCorrectPropertyTypes(): void
     {
-        $nodes = $this->parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
-            ->current()
-            ->getProperties();
+            ->current();
+        static::assertInstanceOf(ASTClass::class, $class);
+        $nodes = $class->getProperties();
 
         $actual = [];
         foreach ($nodes as $node) {
@@ -792,8 +795,9 @@ class ParserTest extends AbstractTestCase
         $class = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
-            ->current()
-            ->getProperties()
+            ->current();
+        static::assertInstanceOf(ASTClass::class, $class);
+        $class = $class->getProperties()
             ->current()
             ->getClass();
 
@@ -812,11 +816,12 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserSetsExpectedPropertyTypeForChainedCommentInArray(): void
     {
-        $type = $this->parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
-            ->current()
-            ->getProperties()
+            ->current();
+        static::assertInstanceOf(ASTClass::class, $class);
+        $type = $class->getProperties()
             ->current()
             ->getClass();
 
@@ -874,11 +879,12 @@ class ParserTest extends AbstractTestCase
      */
     public function testHandlesIgnoreAnnotationsCorrectForProperties(): void
     {
-        $nodes = $this->parseCodeResourceForTest(true)
+        $class = $this->parseCodeResourceForTest(true)
             ->current()
             ->getTypes()
-            ->current()
-            ->getProperties();
+            ->current();
+        static::assertInstanceOf(ASTClass::class, $class);
+        $nodes = $class->getProperties();
 
         $actual = [];
         foreach ($nodes as $property) {

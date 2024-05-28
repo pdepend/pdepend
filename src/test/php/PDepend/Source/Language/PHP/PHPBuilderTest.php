@@ -1235,7 +1235,7 @@ class PHPBuilderTest extends AbstractTestCase
     {
         static::assertInstanceOf(
             ASTLogicalAndExpression::class,
-            $this->createBuilder()->buildAstLogicalAndExpression('AND')
+            $this->createBuilder()->buildAstLogicalAndExpression()
         );
     }
 
@@ -1246,7 +1246,7 @@ class PHPBuilderTest extends AbstractTestCase
     {
         static::assertInstanceOf(
             ASTLogicalOrExpression::class,
-            $this->createBuilder()->buildAstLogicalOrExpression('OR')
+            $this->createBuilder()->buildAstLogicalOrExpression()
         );
     }
 
@@ -1257,7 +1257,7 @@ class PHPBuilderTest extends AbstractTestCase
     {
         static::assertInstanceOf(
             ASTLogicalXorExpression::class,
-            $this->createBuilder()->buildAstLogicalXorExpression('XOR')
+            $this->createBuilder()->buildAstLogicalXorExpression()
         );
     }
 

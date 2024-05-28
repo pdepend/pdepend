@@ -119,7 +119,7 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
     {
         $method = $this->getFirstMethodForTestCase();
 
-        /** @var ASTParameter[] $methods */
+        /** @var ASTParameter[] */
         $parameters = $method->getParameters();
         $nullish = $parameters[0];
         $falsy = $parameters[1];

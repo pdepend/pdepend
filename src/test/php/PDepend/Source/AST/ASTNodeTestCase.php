@@ -547,10 +547,8 @@ abstract class ASTNodeTestCase extends AbstractTestCase
 
     /**
      * Returns a mocked ast node instance.
-     *
-     * @return ASTNode
      */
-    private function getNodeMock()
+    private function getNodeMock(): AbstractASTNode
     {
         return $this->getAbstractClassMock(AbstractASTNode::class);
     }
@@ -671,10 +669,8 @@ abstract class ASTNodeTestCase extends AbstractTestCase
 
     /**
      * Creates a concrete node implementation.
-     *
-     * @return ASTNode
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): AbstractASTArtifact|AbstractASTNode
     {
         $class = substr(static::class, 0, -4);
 

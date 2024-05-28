@@ -198,15 +198,13 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     public function testSelfReferenceHasExpectedEndColumn(ASTSelfReference $reference): void
     {
-        static::assertEquals(16, $reference->getEndColumn($reference));
+        static::assertEquals(16, $reference->getEndColumn());
     }
 
     /**
      * Creates a concrete node implementation.
-     *
-     * @return ASTSelfReference
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTSelfReference
     {
         $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();

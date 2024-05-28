@@ -239,10 +239,8 @@ class ASTLiteralTest extends ASTNodeTestCase
 
     /**
      * Creates a literal node.
-     *
-     * @return ASTLiteral
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTLiteral
     {
         return new ASTLiteral("'" . __METHOD__ . "'");
     }

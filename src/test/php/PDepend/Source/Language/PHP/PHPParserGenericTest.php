@@ -47,6 +47,7 @@ namespace PDepend\Source\Language\PHP;
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTArray;
+use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTMethod;
@@ -733,9 +734,10 @@ class PHPParserGenericTest extends AbstractTestCase
      */
     protected function getFirstPropertyForTestCase()
     {
-        return $this->getFirstTypeForTestCase()
-            ->getProperties()
-            ->current();
+        $class = $this->getFirstTypeForTestCase();
+        static::assertInstanceOf(ASTClass::class, $class);
+
+        return $class->getProperties()->current();
     }
 
     /**
@@ -945,6 +947,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstFormalParameterForTestCase()->getChild(0);
 
+        static::assertInstanceOf(ASTTypeArray::class, $type);
         static::assertFalse($type->isScalar());
     }
 

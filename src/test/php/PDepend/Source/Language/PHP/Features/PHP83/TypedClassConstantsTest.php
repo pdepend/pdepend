@@ -70,8 +70,8 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
         /** @var ASTInterface $interface */
         $interface = $this->getFirstInterfaceForTestCase();
 
-        /** @var ASTConstantDeclarator $constant */
         $constantDeclarator = $interface->getChild(0)->getChild(0);
+        static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
 
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();
@@ -103,8 +103,8 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
             ->getEnums()
             ->current();
 
-        /** @var ASTConstantDeclarator $constant */
         $constantDeclarator = $enum->getChild(0)->getChild(0);
+        static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
 
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();
@@ -130,8 +130,8 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
             ->getTraits()
             ->current();
 
-        /** @var ASTConstantDeclarator $constant */
         $constantDeclarator = $trait->getChild(0)->getChild(0);
+        static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
 
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();
@@ -163,8 +163,8 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
         /** @var ASTClass $class */
         $class = $classes[0];
 
-        /** @var ASTConstantDeclarator $constant */
         $constantDeclarator = $class->getChild(2)->getChild(0);
+        static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
 
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();
@@ -189,8 +189,8 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
         /** @var ASTClass $class */
         $class = $classes[1];
 
-        /** @var ASTConstantDeclarator $constant */
         $constantDeclarator = $class->getChild(1)->getChild(0);
+        static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
 
         /** @var ASTScalarType $type */
         $type = $constantDeclarator->getType();

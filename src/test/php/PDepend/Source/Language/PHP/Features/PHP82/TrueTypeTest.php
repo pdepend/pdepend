@@ -116,8 +116,8 @@ class TrueTypeTest extends PHPParserVersion82TestCase
     {
         $method = $this->getFirstMethodForTestCase();
 
-        /** @var ASTParameter[] $methods */
         $parameters = $method->getParameters();
+        static::assertInstanceOf(ASTParameter::class, $parameters[0]);
         $truthy = $parameters[0];
 
         static::assertFalse($truthy->allowsNull());

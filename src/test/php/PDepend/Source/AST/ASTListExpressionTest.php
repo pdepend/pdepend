@@ -278,7 +278,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
      */
     public function testSymmetricArrayDestructuringEmptySlot(): void
     {
-        /** @var ASTArray $expr */
         $array = $this->getFirstNodeOfTypeInFunction(
             ASTArray::class
         );

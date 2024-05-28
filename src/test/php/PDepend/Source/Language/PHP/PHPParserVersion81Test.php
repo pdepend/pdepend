@@ -72,6 +72,7 @@ use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTReturnStatement;
 use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTSelfReference;
+use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
@@ -135,7 +136,6 @@ class PHPParserVersion81Test extends AbstractTestCase
         $cache = new MemoryCacheDriver();
         $builder = new PHPBuilder();
 
-        /** @var Tokenizer $tokenizer */
         $tokenizer = $this->getMockBuilder(Tokenizer::class)
             ->getMock();
         $tokenizer
@@ -345,7 +345,7 @@ class PHPParserVersion81Test extends AbstractTestCase
         /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
 
-        /** @var ASTConstantDefinition[] $sontants */
+        /** @var ASTConstantDefinition[] */
         $constants = $class->getChildren();
 
         static::assertCount(2, $constants);
@@ -391,7 +391,6 @@ class PHPParserVersion81Test extends AbstractTestCase
         $cache = new MemoryCacheDriver();
         $builder = new PHPBuilder();
 
-        /** @var Tokenizer $tokenizer */
         $tokenizer = $this->getMockBuilder(Tokenizer::class)
             ->getMock();
         $tokenizer
@@ -457,6 +456,7 @@ class PHPParserVersion81Test extends AbstractTestCase
     {
         $type = $this->getFirstFormalParameterForTestCase()->getChild(0);
 
+        static::assertInstanceOf(ASTType::class, $type);
         static::assertFalse($type->isScalar());
     }
 
@@ -932,7 +932,7 @@ class PHPParserVersion81Test extends AbstractTestCase
      */
     public function testSymmetricArrayDestructuringEmptySlot(): void
     {
-        /** @var ASTArray $expr */
+        /** @var ASTArray */
         $array = $this->getFirstNodeOfTypeInFunction(
             ASTArray::class
         );
@@ -1069,7 +1069,7 @@ class PHPParserVersion81Test extends AbstractTestCase
         $expressions = $statements[0]->getChildren();
         $expression = $expressions[0]->getChildren();
 
-        /** @var ASTLiteral $instanceOf */
+        /** @var ASTLiteral */
         $literal = $expression[0];
 
         /** @var ASTInstanceOfExpression $instanceOf */
@@ -1468,13 +1468,12 @@ class PHPParserVersion81Test extends AbstractTestCase
 
     public function testNullableTypedProperties(): void
     {
-        /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
         $children = $class->getChildren();
 
+        static::assertInstanceOf(ASTFieldDeclaration::class, $children[0]);
         static::assertTrue($children[0]->hasType());
 
-        /** @var array[] $declarations */
         $declarations = array_map(function (ASTFieldDeclaration $child) {
             $childChildren = $child->getChildren();
 

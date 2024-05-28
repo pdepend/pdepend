@@ -295,10 +295,8 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * Creates a field declaration node.
-     *
-     * @return ASTClassFqnPostfix
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTClassFqnPostfix
     {
         return new ASTClassFqnPostfix(__CLASS__);
     }

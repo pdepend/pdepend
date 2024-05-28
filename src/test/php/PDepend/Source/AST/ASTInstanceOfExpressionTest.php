@@ -203,10 +203,8 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
 
     /**
      * Creates a arguments node.
-     *
-     * @return ASTInstanceOfExpression
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): ASTInstanceOfExpression
     {
         return new ASTInstanceOfExpression();
     }

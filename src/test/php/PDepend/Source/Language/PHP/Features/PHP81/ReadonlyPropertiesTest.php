@@ -41,6 +41,8 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
+use PDepend\Source\AST\ASTFieldDeclaration;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\State;
@@ -58,6 +60,7 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
     {
         $class = $this->getFirstClassForTestCase();
         $property = $class->getChild(0);
+        static::assertInstanceOf(ASTFieldDeclaration::class, $property);
 
         static::assertSame('string', $property->getChild(0)->getImage());
         static::assertSame('$bar', $property->getChild(1)->getImage());
@@ -98,13 +101,14 @@ class ReadonlyPropertiesTest extends PHPParserVersion81TestCase
         static::assertSame('readonly', $constant->getChild(0)->getImage());
 
         $propertyPostfix = $class->getChild(1);
+        static::assertInstanceOf(ASTFieldDeclaration::class, $propertyPostfix);
         static::assertSame('$readonly', $propertyPostfix->getChild(1)->getImage());
 
         $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_READONLY;
         static::assertSame(0, $expectedModifiers & $propertyPostfix->getModifiers());
 
-        /** @var ASTMethod $constructor */
         $constructor = $class->getMethods()->offsetGet(0);
+        static::assertInstanceOf(ASTMethod::class, $constructor);
         static::assertSame('__construct', $constructor->getImage());
         $constructorNodes = $constructor->getChildren();
         $assignment = $constructorNodes[1]->getChild(0)->getChild(0);

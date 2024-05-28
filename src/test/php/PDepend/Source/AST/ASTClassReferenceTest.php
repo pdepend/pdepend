@@ -44,6 +44,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
+use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTClassReference} class.
@@ -216,10 +217,8 @@ class ASTClassReferenceTest extends ASTNodeTestCase
 
     /**
      * Creates a concrete node implementation.
-     *
-     * @return ASTNode
      */
-    protected function createNodeInstance()
+    protected function createNodeInstance(): AbstractASTArtifact|AbstractASTNode
     {
         return new ASTClassReference(
             $this->getBuilderContextMock(),
@@ -229,10 +228,8 @@ class ASTClassReferenceTest extends ASTNodeTestCase
 
     /**
      * Returns a mocked builder context instance.
-     *
-     * @return BuilderContext
      */
-    protected function getBuilderContextMock()
+    protected function getBuilderContextMock(): BuilderContext&MockObject
     {
         $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();

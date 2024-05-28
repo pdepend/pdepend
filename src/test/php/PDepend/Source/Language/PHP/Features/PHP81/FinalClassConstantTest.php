@@ -41,6 +41,7 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
+use PDepend\Source\AST\ASTConstantDefinition;
 use PDepend\Source\AST\State;
 
 /**
@@ -61,6 +62,7 @@ class FinalClassConstantTest extends PHPParserVersion81TestCase
         static::assertSame('BAR', $constantDeclarator->getImage());
 
         $constantDefinition = $constantDeclarator->getParent();
+        static::assertInstanceOf(ASTConstantDefinition::class, $constantDefinition);
         $expectedModifiers = ~State::IS_PRIVATE & ~State::IS_FINAL;
         static::assertSame(0, $expectedModifiers & $constantDefinition->getModifiers());
     }

@@ -74,6 +74,7 @@ use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -496,10 +497,7 @@ abstract class AbstractTestCase extends TestCase
         return $application->getConfiguration();
     }
 
-    /**
-     * @return CacheDriver
-     */
-    protected function createCacheFixture()
+    protected function createCacheFixture(): CacheDriver&MockObject
     {
         $cache = $this->getMockBuilder(CacheDriver::class)
             ->getMock();
