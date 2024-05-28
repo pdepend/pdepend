@@ -70,14 +70,13 @@ use PDepend\Source\AST\ASTSwitchLabel;
 use PDepend\Source\AST\ASTSwitchStatement;
 use PDepend\Source\AST\ASTTryStatement;
 use PDepend\Source\AST\ASTWhileStatement;
-use PDepend\Util\MathUtil;
 
 /**
  * This analyzer calculates the NPath complexity of functions and methods. The
  * NPath complexity metric measures the acyclic execution paths through a method
  * or function. See Nejmeh, Communications of the ACM Feb 1988 pp 188-200.
  *
- * @extends AbstractCachingAnalyzer<numeric-string>
+ * @extends AbstractCachingAnalyzer<int>
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
@@ -87,10 +86,9 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     /** Metrics provided by the analyzer implementation. */
     private const M_NPATH_COMPLEXITY = 'npath';
 
-    /** @var numeric-string */
-    private string $complexityCollector;
+    private int $complexityCollector;
 
-    /** @var list<numeric-string> */
+    /** @var list<int> */
     private array $complexityCollectorStack = [];
 
     /**
@@ -119,11 +117,11 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      *
      * <code>
      * array(
-     *     'npath'  =>  '17'
+     *     'npath'  =>  17
      * )
      * </code>
      *
-     * @return array<string, numeric-string>
+     * @return array<string, int>
      */
     public function getNodeMetrics(ASTArtifact $artifact): array
     {
@@ -170,7 +168,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     protected function calculateComplexity(AbstractASTCallable $callable): void
     {
-        $this->complexityCollector = '1';
+        $this->complexityCollector = 1;
         $this->visit($callable);
         $this->metrics[$callable->getId()] = $this->complexityCollector;
     }
@@ -189,7 +187,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function visitConditionalExpression(ASTConditionalExpression $node): void
     {
-        $npath = '0';
+        $npath = 0;
 
         // Calculate the complexity of the condition
         $parent = $node->getParent();
@@ -199,19 +197,18 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
 
         // New PHP 5.3 ifsetor-operator $x ?: $y
         if (count($node->getChildren()) === 1) {
-            $npath = MathUtil::mul($npath, '2');
+            $npath *= 2;
         }
 
         // The complexity of each child has no minimum
         foreach ($node->getChildren() as $child) {
-            $cn = $this->sumComplexity($child);
-            $npath = MathUtil::add($npath, $cn);
+            $npath += $this->sumComplexity($child);
         }
 
         // Add 2 for the branching per the NPath spec
-        $npath = MathUtil::add($npath, '2');
+        $npath += 2;
 
-        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
+        $this->complexityCollector *= $npath;
     }
 
     /**
@@ -236,11 +233,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $this->dispatch($node->getChild(0));
         $expr = $this->sumComplexity($node->getChild(1));
 
-        $npath = MathUtil::add($expr, $this->complexityCollector);
-        $npath = MathUtil::add($npath, '1');
+        $npath = $this->complexityCollector + $expr + 1;
 
         $this->popComplexityCollector();
-        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
+        $this->complexityCollector *= $npath;
     }
 
     /**
@@ -274,16 +270,16 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
             if ($child instanceof ASTStatement) {
                 $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $npath += $this->complexityCollector;
                 $this->popComplexityCollector();
             }
         }
 
         if (!$node->hasElse()) {
-            $npath = MathUtil::add($npath, '1');
+            ++$npath;
         }
 
-        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
+        $this->complexityCollector *= $npath;
     }
 
     /**
@@ -303,20 +299,19 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function visitForStatement(ASTForStatement $node): void
     {
-        $npath = '1';
+        $npath = 1;
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
                 $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $npath += $this->complexityCollector;
                 $this->popComplexityCollector();
             } elseif ($child instanceof ASTExpression) {
-                $expr = $this->sumComplexity($child);
-                $npath = MathUtil::add($npath, $expr);
+                $npath += $this->sumComplexity($child);
             }
         }
 
-        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
+        $this->complexityCollector *= $npath;
     }
 
     /**
@@ -336,19 +331,18 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function visitForeachStatement(ASTForeachStatement $node): void
     {
-        $npath = $this->sumComplexity($node->getChild(0));
-        $npath = MathUtil::add($npath, '1');
+        $npath = $this->sumComplexity($node->getChild(0)) + 1;
 
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
                 $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $npath += $this->complexityCollector;
                 $this->popComplexityCollector();
             }
         }
 
-        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
+        $this->complexityCollector *= $npath;
     }
 
     /**
@@ -383,16 +377,16 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
             if ($child instanceof ASTStatement) {
                 $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $npath += $this->complexityCollector;
                 $this->popComplexityCollector();
             }
         }
 
         if (!$node->hasElse()) {
-            $npath = MathUtil::add($npath, '1');
+            ++$npath;
         }
 
-        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
+        $this->complexityCollector *= $npath;
     }
 
     /**
@@ -410,10 +404,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function visitReturnStatement(ASTReturnStatement $node): void
     {
-        $npath = $this->sumComplexity($node);
-        if ($npath !== '0') {
-            $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
-        }
+        $this->complexityCollector *= $this->sumComplexity($node) ?: 1;
     }
 
     /**
@@ -440,12 +431,12 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
             if ($child instanceof ASTSwitchLabel) {
                 $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $npath += $this->complexityCollector;
                 $this->popComplexityCollector();
             }
         }
 
-        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
+        $this->complexityCollector *= $npath;
     }
 
     /**
@@ -477,17 +468,17 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     public function visitTryStatement(ASTTryStatement $node): void
     {
-        $npath = '0';
+        $npath = 0;
         foreach ($node->getChildren() as $child) {
             if ($child instanceof ASTStatement) {
                 $this->pushComplexityCollector();
                 $this->dispatch($child);
-                $npath = MathUtil::add($npath, $this->complexityCollector);
+                $npath += $this->complexityCollector;
                 $this->popComplexityCollector();
             }
         }
 
-        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
+        $this->complexityCollector *= $npath;
     }
 
     /**
@@ -511,11 +502,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         $this->pushComplexityCollector();
         $this->dispatch($node->getChild(1));
 
-        $npath = MathUtil::add($expr, $this->complexityCollector);
-        $npath = MathUtil::add($npath, '1');
+        $npath = $this->complexityCollector + $expr + 1;
 
         $this->popComplexityCollector();
-        $this->complexityCollector = MathUtil::mul($npath, $this->complexityCollector);
+        $this->complexityCollector *= $npath;
     }
 
     public function dispatch(ASTNode $node): void
@@ -539,19 +529,18 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      * Calculates the expression sum of the given node.
      *
      * @param ASTNode $node The currently visited node.
-     * @return numeric-string
      * @since  0.9.12
      * @todo   I don't like this method implementation, it should be possible to
      *       implement this method with more visitor behavior for the boolean
      *       and logical expressions.
      */
-    public function sumComplexity(ASTNode $node): string
+    public function sumComplexity(ASTNode $node): int
     {
-        $sum = '0';
+        $sum = 0;
         $this->pushComplexityCollector();
         if ($node instanceof ASTConditionalExpression) {
             $this->dispatch($node);
-            $sum = MathUtil::add($sum, $this->complexityCollector);
+            $sum += $this->complexityCollector;
         } elseif (
             $node instanceof ASTBooleanAndExpression
             || $node instanceof ASTBooleanOrExpression
@@ -559,11 +548,10 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
             || $node instanceof ASTLogicalOrExpression
             || $node instanceof ASTLogicalXorExpression
         ) {
-            $sum = MathUtil::add($sum, '1');
+            ++$sum;
         } else {
             foreach ($node->getChildren() as $child) {
-                $expr = $this->sumComplexity($child);
-                $sum = MathUtil::add($sum, $expr);
+                $sum += $this->sumComplexity($child);
             }
         }
 
@@ -578,7 +566,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
     private function pushComplexityCollector(): void
     {
         $this->complexityCollectorStack[] = $this->complexityCollector;
-        $this->complexityCollector = '1';
+        $this->complexityCollector = 1;
     }
 
     /**
@@ -586,6 +574,6 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
      */
     private function popComplexityCollector(): void
     {
-        $this->complexityCollector = array_pop($this->complexityCollectorStack) ?: '1';
+        $this->complexityCollector = array_pop($this->complexityCollectorStack) ?: 1;
     }
 }
