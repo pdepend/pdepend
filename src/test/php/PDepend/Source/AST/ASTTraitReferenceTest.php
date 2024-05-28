@@ -91,11 +91,9 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedStartLine
      *
-     * @param ASTTraitReference $reference
-     *
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartLine($reference): void
+    public function testTraitReferenceHasExpectedStartLine(ASTTraitReference $reference): void
     {
         static::assertEquals(5, $reference->getStartLine());
     }
@@ -103,11 +101,9 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedStartColumn
      *
-     * @param ASTTraitReference $reference
-     *
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedStartColumn($reference): void
+    public function testTraitReferenceHasExpectedStartColumn(ASTTraitReference $reference): void
     {
         static::assertEquals(9, $reference->getStartColumn());
     }
@@ -115,11 +111,9 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedEndLine
      *
-     * @param ASTTraitReference $reference
-     *
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndLine($reference): void
+    public function testTraitReferenceHasExpectedEndLine(ASTTraitReference $reference): void
     {
         static::assertEquals(5, $reference->getEndLine());
     }
@@ -127,11 +121,9 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * testTraitReferenceHasExpectedEndColumn
      *
-     * @param ASTTraitReference $reference
-     *
      * @depends testTraitReference
      */
-    public function testTraitReferenceHasExpectedEndColumn($reference): void
+    public function testTraitReferenceHasExpectedEndColumn(ASTTraitReference $reference): void
     {
         static::assertEquals(27, $reference->getEndColumn());
     }

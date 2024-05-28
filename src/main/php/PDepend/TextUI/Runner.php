@@ -188,11 +188,8 @@ class Runner
 
     /**
      * Adds a logger to this runner.
-     *
-     * @param string $generatorId
-     * @param string $reportFile
      */
-    public function addReportGenerator($generatorId, $reportFile): void
+    public function addReportGenerator(string $generatorId, string $reportFile): void
     {
         $this->loggerMap[$generatorId] = $reportFile;
     }
@@ -200,10 +197,9 @@ class Runner
     /**
      * Adds a logger or analyzer option.
      *
-     * @param string $identifier
      * @param array<int, string>|string $value
      */
-    public function addOption($identifier, $value): void
+    public function addOption(string $identifier, array|string $value): void
     {
         $this->options[$identifier] = $value;
     }

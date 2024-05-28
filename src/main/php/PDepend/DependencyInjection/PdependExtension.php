@@ -117,7 +117,7 @@ class PdependExtension extends SymfonyExtension
      * @param array<string, array<string, string>> $config
      * @return stdClass
      */
-    private function createSettings($config)
+    private function createSettings(array $config)
     {
         $settings = new stdClass();
 

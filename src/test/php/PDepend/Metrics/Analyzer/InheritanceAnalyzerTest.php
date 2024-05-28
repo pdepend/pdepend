@@ -285,7 +285,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
      * @param string $testCase Name of the calling test case.
      * @param string $metric Name of the searched metric.
      */
-    private function getCalculatedMetric($testCase, $metric): mixed
+    private function getCalculatedMetric(string $testCase, string $metric): mixed
     {
         $namespaces = $this->parseTestCaseSource($testCase);
         $namespace = $namespaces->current();

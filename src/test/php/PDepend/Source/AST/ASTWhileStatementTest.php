@@ -99,11 +99,9 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementHasExpectedStartLine
      *
-     * @param ASTWhileStatement $stmt
-     *
      * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedStartLine($stmt): void
+    public function testWhileStatementHasExpectedStartLine(ASTWhileStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
     }
@@ -111,11 +109,9 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementHasExpectedStartColumn
      *
-     * @param ASTWhileStatement $stmt
-     *
      * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedStartColumn($stmt): void
+    public function testWhileStatementHasExpectedStartColumn(ASTWhileStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
     }
@@ -123,11 +119,9 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementHasExpectedEndLine
      *
-     * @param ASTWhileStatement $stmt
-     *
      * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedEndLine($stmt): void
+    public function testWhileStatementHasExpectedEndLine(ASTWhileStatement $stmt): void
     {
         static::assertEquals(6, $stmt->getEndLine());
     }
@@ -135,11 +129,9 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementHasExpectedEndColumn
      *
-     * @param ASTWhileStatement $stmt
-     *
      * @depends testWhileStatement
      */
-    public function testWhileStatementHasExpectedEndColumn($stmt): void
+    public function testWhileStatementHasExpectedEndColumn(ASTWhileStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getEndColumn());
     }
@@ -161,11 +153,9 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementAlternativeScopeHasExpectedStartLine
      *
-     * @param ASTWhileStatement $stmt
-     *
      * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedStartLine($stmt): void
+    public function testWhileStatementAlternativeScopeHasExpectedStartLine(ASTWhileStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
     }
@@ -173,11 +163,9 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementAlternativeScopeHasExpectedStartColumn
      *
-     * @param ASTWhileStatement $stmt
-     *
      * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedStartColumn($stmt): void
+    public function testWhileStatementAlternativeScopeHasExpectedStartColumn(ASTWhileStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
     }
@@ -185,11 +173,9 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementAlternativeScopeHasExpectedEndLine
      *
-     * @param ASTWhileStatement $stmt
-     *
      * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedEndLine($stmt): void
+    public function testWhileStatementAlternativeScopeHasExpectedEndLine(ASTWhileStatement $stmt): void
     {
         static::assertEquals(8, $stmt->getEndLine());
     }
@@ -197,11 +183,9 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementAlternativeScopeHasExpectedEndColumn
      *
-     * @param ASTWhileStatement $stmt
-     *
      * @depends testWhileStatementWithAlternativeScope
      */
-    public function testWhileStatementAlternativeScopeHasExpectedEndColumn($stmt): void
+    public function testWhileStatementAlternativeScopeHasExpectedEndColumn(ASTWhileStatement $stmt): void
     {
         static::assertEquals(13, $stmt->getEndColumn());
     }

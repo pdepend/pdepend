@@ -84,11 +84,10 @@ abstract class PHPParserVersion83 extends PHPParserVersion82
     }
 
     /**
-     * @param int $tokenType
      * @return bool
      * @since  2.16.3
      */
-    protected function isConstantName($tokenType)
+    protected function isConstantName(int $tokenType)
     {
         return parent::isConstantName($tokenType) || $tokenType === Tokens::T_BITWISE_OR;
     }

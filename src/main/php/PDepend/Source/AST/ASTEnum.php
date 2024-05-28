@@ -263,12 +263,11 @@ class ASTEnum extends AbstractASTClassOrInterface
      * This method will throw an exception when the value of given <b>$modifiers</b>
      * contains an invalid/unexpected modifier
      *
-     * @param int $modifiers
      * @throws BadMethodCallException
      * @throws InvalidArgumentException
      * @since  0.9.4
      */
-    public function setModifiers($modifiers): void
+    public function setModifiers(int $modifiers): void
     {
         if ($this->modifiers !== 0) {
             throw new BadMethodCallException(

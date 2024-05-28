@@ -115,7 +115,7 @@ class BuilderParserCacheTest extends AbstractTestCase
      * @param string $file Relative path to a test file for the calling test.
      * @return Builder
      */
-    protected function parseSourceAndReturnBuilder($file)
+    protected function parseSourceAndReturnBuilder(string $file)
     {
         copy($this->createCodeResourceUriForTest() . '/' . $file, $this->testFile);
 

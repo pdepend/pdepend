@@ -174,11 +174,9 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     /**
      * testStaticReferenceHasExpectedStartLine
      *
-     * @param ASTStaticReference $reference
-     *
      * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedStartLine($reference): void
+    public function testStaticReferenceHasExpectedStartLine(ASTStaticReference $reference): void
     {
         static::assertEquals(5, $reference->getStartLine());
     }
@@ -186,11 +184,9 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     /**
      * testStaticReferenceHasExpectedStartColumn
      *
-     * @param ASTStaticReference $reference
-     *
      * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedStartColumn($reference): void
+    public function testStaticReferenceHasExpectedStartColumn(ASTStaticReference $reference): void
     {
         static::assertEquals(13, $reference->getStartColumn());
     }
@@ -198,11 +194,9 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     /**
      * testStaticReferenceHasExpectedEndLine
      *
-     * @param ASTStaticReference $reference
-     *
      * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedEndLine($reference): void
+    public function testStaticReferenceHasExpectedEndLine(ASTStaticReference $reference): void
     {
         static::assertEquals(5, $reference->getEndLine());
     }
@@ -210,11 +204,9 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     /**
      * testStaticReferenceHasExpectedEndColumn
      *
-     * @param ASTStaticReference $reference
-     *
      * @depends testStaticReference
      */
-    public function testStaticReferenceHasExpectedEndColumn($reference): void
+    public function testStaticReferenceHasExpectedEndColumn(ASTStaticReference $reference): void
     {
         static::assertEquals(18, $reference->getEndColumn());
     }

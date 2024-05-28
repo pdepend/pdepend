@@ -236,7 +236,7 @@ final class Type
      * @return bool
      * @throws ReflectionException
      */
-    public static function isInternalType($typeName)
+    public static function isInternalType(string $typeName)
     {
         self::initTypeToExtension();
 
@@ -254,7 +254,7 @@ final class Type
      * @return string|null
      * @throws ReflectionException
      */
-    public static function getTypePackage($typeName)
+    public static function getTypePackage(string $typeName)
     {
         self::initTypeToExtension();
 
@@ -290,7 +290,7 @@ final class Type
      * @return bool
      * @throws ReflectionException
      */
-    public static function isInternalPackage($packageName)
+    public static function isInternalPackage(string $packageName)
     {
         $packageNames = self::getInternalNamespaces();
 
@@ -304,7 +304,7 @@ final class Type
      * @param string $image The type identifier.
      * @return bool
      */
-    public static function isScalarType($image)
+    public static function isScalarType(string $image)
     {
         $image = strtolower($image);
         if (isset(self::$scalarTypes[$image])) {
@@ -326,7 +326,7 @@ final class Type
      * @return bool
      * @since  0.9.6
      */
-    public static function isPrimitiveType($image)
+    public static function isPrimitiveType(string $image)
     {
         return (self::getPrimitiveType($image) !== null);
     }
@@ -339,7 +339,7 @@ final class Type
      * @return string|null
      * @since  0.9.6
      */
-    public static function getPrimitiveType($image)
+    public static function getPrimitiveType(string $image)
     {
         $image = strtolower($image);
         if (isset(self::$primitiveTypes[$image])) {
@@ -362,7 +362,7 @@ final class Type
      * @return bool
      * @since  0.9.6
      */
-    public static function isArrayType($image)
+    public static function isArrayType(string $image)
     {
         return (strtolower($image) === 'array');
     }

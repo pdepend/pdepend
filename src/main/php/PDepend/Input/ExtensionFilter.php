@@ -68,7 +68,7 @@ class ExtensionFilter implements Filter
      * @param string $relative The relative path to the specified root.
      * @param string $absolute The absolute path to a source file.
      */
-    public function accept($relative, $absolute): bool
+    public function accept(string $relative, string $absolute): bool
     {
         if (str_starts_with($absolute, 'php://')) {
             return true;

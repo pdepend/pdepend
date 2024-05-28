@@ -70,7 +70,7 @@ class FileCacheDirectory
      * @param string $cacheDir The cache root directory.
      * @throws RuntimeException
      */
-    public function __construct($cacheDir)
+    public function __construct(string $cacheDir)
     {
         $this->cacheDir = $this->ensureExists($cacheDir);
 
@@ -86,7 +86,7 @@ class FileCacheDirectory
      * @param string $key The cache for an entry.
      * @return string
      */
-    public function createCacheDirectory($key)
+    public function createCacheDirectory(string $key)
     {
         return $this->createOrReturnCacheDirectory($key);
     }
@@ -99,7 +99,7 @@ class FileCacheDirectory
      * @param string $key The cache for an entry.
      * @return string
      */
-    protected function createOrReturnCacheDirectory($key)
+    protected function createOrReturnCacheDirectory(string $key)
     {
         $path = $this->getCacheDir() . '/' . substr($key, 0, 2);
         if (false === file_exists($path)) {
@@ -115,7 +115,7 @@ class FileCacheDirectory
      * @param string $cacheDir The cache root directory.
      * @return string
      */
-    protected function ensureExists($cacheDir)
+    protected function ensureExists(string $cacheDir)
     {
         if (false === file_exists($cacheDir)) {
             @mkdir($cacheDir, 0o775, true);
@@ -196,7 +196,7 @@ class FileCacheDirectory
      * @param string $cacheDir A cache directory.
      * @throws RuntimeException
      */
-    protected function flushDirectory($cacheDir): void
+    protected function flushDirectory(string $cacheDir): void
     {
         foreach (new DirectoryIterator($cacheDir) as $child) {
             $this->flushEntry($child);

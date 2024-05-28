@@ -72,11 +72,9 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * testReturnStatementHasExpectedStartLine
      *
-     * @param ASTReturnStatement $stmt
-     *
      * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedStartLine($stmt): void
+    public function testReturnStatementHasExpectedStartLine(ASTReturnStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
     }
@@ -84,11 +82,9 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * testReturnStatementHasExpectedStartColumn
      *
-     * @param ASTReturnStatement $stmt
-     *
      * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedStartColumn($stmt): void
+    public function testReturnStatementHasExpectedStartColumn(ASTReturnStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
     }
@@ -96,11 +92,9 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * testReturnStatementHasExpectedEndLine
      *
-     * @param ASTReturnStatement $stmt
-     *
      * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedEndLine($stmt): void
+    public function testReturnStatementHasExpectedEndLine(ASTReturnStatement $stmt): void
     {
         static::assertEquals(7, $stmt->getEndLine());
     }
@@ -108,11 +102,9 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * testReturnStatementHasExpectedEndColumn
      *
-     * @param ASTReturnStatement $stmt
-     *
      * @depends testReturnStatement
      */
-    public function testReturnStatementHasExpectedEndColumn($stmt): void
+    public function testReturnStatementHasExpectedEndColumn(ASTReturnStatement $stmt): void
     {
         static::assertEquals(6, $stmt->getEndColumn());
     }

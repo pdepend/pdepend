@@ -246,7 +246,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * @return bool
      * @since  0.9.6
      */
-    public function hasConstant($name)
+    public function hasConstant(string $name)
     {
         if ($this->constants === null) {
             $this->constants = $this->initConstants();
@@ -262,7 +262,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * @param string $name Name of the searched constant.
      * @since  0.9.6
      */
-    public function getConstant($name): mixed
+    public function getConstant(string $name): mixed
     {
         if ($this->hasConstant($name)) {
             return $this->constants[$name];

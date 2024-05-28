@@ -89,7 +89,7 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
      *
      * @param string|null $fileName The source file name/path.
      */
-    public function __construct($fileName)
+    public function __construct(?string $fileName)
     {
         if ($fileName && str_starts_with($fileName, 'php://')) {
             $this->fileName = $fileName;

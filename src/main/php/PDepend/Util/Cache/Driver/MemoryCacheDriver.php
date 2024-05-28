@@ -126,7 +126,7 @@ class MemoryCacheDriver implements CacheDriver
      * @param string $type The name or object type for the next storage method call.
      * @return $this
      */
-    public function type($type): self
+    public function type(string $type): self
     {
         $this->type = $type;
 
@@ -144,7 +144,7 @@ class MemoryCacheDriver implements CacheDriver
      * @param mixed $data Any data that should be cached.
      * @param string $hash Optional hash that will be used for verification.
      */
-    public function store($key, $data, $hash = null): void
+    public function store(string $key, mixed $data, ?string $hash = null): void
     {
         $this->cache[$this->getCacheKey($key)] = [$hash, $data];
     }
@@ -159,7 +159,7 @@ class MemoryCacheDriver implements CacheDriver
      * @param string $key The cache key for the given data.
      * @param string $hash Optional hash that will be used for verification.
      */
-    public function restore($key, $hash = null): mixed
+    public function restore(string $key, ?string $hash = null): mixed
     {
         $cacheKey = $this->getCacheKey($key);
         if (isset($this->cache[$cacheKey]) && $this->cache[$cacheKey][0] === $hash) {
@@ -177,7 +177,7 @@ class MemoryCacheDriver implements CacheDriver
      *
      * @param string $pattern The cache key pattern.
      */
-    public function remove($pattern): void
+    public function remove(string $pattern): void
     {
         foreach (array_keys($this->cache) as $key) {
             if (str_starts_with($key, $pattern)) {
@@ -194,7 +194,7 @@ class MemoryCacheDriver implements CacheDriver
      * @param string $key The concrete object key.
      * @return string
      */
-    protected function getCacheKey($key)
+    protected function getCacheKey(string $key)
     {
         $type = $this->type;
         $this->type = self::ENTRY_TYPE;

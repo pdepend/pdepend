@@ -65,10 +65,8 @@ class ASTClassOrInterfaceReference extends ASTType
 
     /**
      * Constructs a new type holder instance.
-     *
-     * @param string $qualifiedName
      */
-    public function __construct(BuilderContext $context, $qualifiedName)
+    public function __construct(BuilderContext $context, string $qualifiedName)
     {
         parent::__construct($qualifiedName);
 

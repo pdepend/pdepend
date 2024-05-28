@@ -416,7 +416,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param string $name Name of the requested software metric.
      */
-    private function calculateTypeMetric($name): mixed
+    private function calculateTypeMetric(string $name): mixed
     {
         $namespaces = $this->parseCodeResourceForTest();
         $types = $namespaces[0]->getTypes();
@@ -648,9 +648,9 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * @dataProvider dataProviderAnalyzerCalculatesExpectedCallCount
      */
     public function testAnalyzerCalculatesExpectedCallCount(
-        $testCase,
-        $calls,
-        $fanout
+        string $testCase,
+        int $calls,
+        int $fanout
     ): void {
         $expected = ['calls' => $calls, 'fanout' => $fanout];
         $actual = $this->calculateProjectMetrics($testCase);
@@ -666,7 +666,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * @return array<string, mixed>
      * @since 0.10.2
      */
-    private function calculateProjectMetrics($testCase = null)
+    private function calculateProjectMetrics(?string $testCase = null)
     {
         $testCase = ($testCase ?: $this->getCallingTestMethod());
 

@@ -74,7 +74,7 @@ interface Analyzer
      *
      * @param ASTArtifactList<ASTNamespace> $namespaces
      */
-    public function analyze($namespaces): void;
+    public function analyze(ASTArtifactList $namespaces): void;
 
     /**
      * An analyzer that is active must return <b>true</b> to recognized by

@@ -159,7 +159,7 @@ interface ASTNode
      *
      * @param ?string $comment The doc comment block for this node.
      */
-    public function setComment($comment): void;
+    public function setComment(?string $comment): void;
 
     /**
      * For better performance we have moved the single setter methods for the

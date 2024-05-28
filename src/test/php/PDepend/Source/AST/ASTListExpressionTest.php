@@ -74,11 +74,9 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start line value.
      *
-     * @param ASTListExpression $expr
-     *
      * @depends testListExpression
      */
-    public function testListExpressionHasExpectedStartLine($expr): void
+    public function testListExpressionHasExpectedStartLine(ASTListExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -86,11 +84,9 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * Tests the start column value.
      *
-     * @param ASTListExpression $expr
-     *
      * @depends testListExpression
      */
-    public function testListExpressionHasExpectedStartColumn($expr): void
+    public function testListExpressionHasExpectedStartColumn(ASTListExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -98,11 +94,9 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end line value.
      *
-     * @param ASTListExpression $expr
-     *
      * @depends testListExpression
      */
-    public function testListExpressionHasExpectedEndLine($expr): void
+    public function testListExpressionHasExpectedEndLine(ASTListExpression $expr): void
     {
         static::assertEquals(4, $expr->getEndLine());
     }
@@ -110,11 +104,9 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * Tests the end column value.
      *
-     * @param ASTListExpression $expr
-     *
      * @depends testListExpression
      */
-    public function testListExpressionHasExpectedEndColumn($expr): void
+    public function testListExpressionHasExpectedEndColumn(ASTListExpression $expr): void
     {
         static::assertEquals(16, $expr->getEndColumn());
     }
@@ -136,12 +128,11 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithNestedListHasExpectedStartLine
      *
-     * @param ASTListExpression $expr
      * @since 1.0.2
      *
      * @depends testListExpressionWithNestedList
      */
-    public function testListExpressionWithNestedListHasExpectedStartLine($expr): void
+    public function testListExpressionWithNestedListHasExpectedStartLine(ASTListExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
     }
@@ -149,12 +140,11 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithNestedListHasExpectedStartColumn
      *
-     * @param ASTListExpression $expr
      * @since 1.0.2
      *
      * @depends testListExpressionWithNestedList
      */
-    public function testListExpressionWithNestedListHasExpectedStartColumn($expr): void
+    public function testListExpressionWithNestedListHasExpectedStartColumn(ASTListExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
     }
@@ -162,12 +152,11 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithNestedListHasExpectedEndLine
      *
-     * @param ASTListExpression $expr
      * @since 1.0.2
      *
      * @depends testListExpressionWithNestedList
      */
-    public function testListExpressionWithNestedListHasExpectedEndLine($expr): void
+    public function testListExpressionWithNestedListHasExpectedEndLine(ASTListExpression $expr): void
     {
         static::assertEquals(4, $expr->getEndLine());
     }
@@ -175,12 +164,11 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithNestedListHasExpectedEndColumn
      *
-     * @param ASTListExpression $expr
      * @since 1.0.2
      *
      * @depends testListExpressionWithNestedList
      */
-    public function testListExpressionWithNestedListHasExpectedEndColumn($expr): void
+    public function testListExpressionWithNestedListHasExpectedEndColumn(ASTListExpression $expr): void
     {
         static::assertEquals(42, $expr->getEndColumn());
     }

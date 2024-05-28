@@ -85,11 +85,9 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
     /**
      * Parses the source of a test case file.
      *
-     * @param string $testCase
-     * @param bool $ignoreAnnotations
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false)
     {
         return $this->parseSource(
             $this->getSourceFileForTestCase($testCase),
@@ -103,7 +101,7 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      * @param string $testCase The qualified test case name.
      * @return string
      */
-    protected function getSourceFileForTestCase($testCase)
+    protected function getSourceFileForTestCase(string $testCase)
     {
         [$class, $method] = explode('::', $testCase);
 

@@ -80,10 +80,9 @@ abstract class PHPParserVersion82 extends AbstractPHPParser
     /**
      * Tests if the given image is a PHP 8.2 type hint.
      *
-     * @param string $image
      * @return bool
      */
-    protected function isScalarOrCallableTypeHint($image)
+    protected function isScalarOrCallableTypeHint(string $image)
     {
         if (strtolower($image) === 'true') {
             return true;
@@ -136,10 +135,9 @@ abstract class PHPParserVersion82 extends AbstractPHPParser
     }
 
     /**
-     * @param ASTNode $type
      * @return bool
      */
-    protected function canNotBeStandAloneType($type)
+    protected function canNotBeStandAloneType(ASTNode $type)
     {
         return false;
     }

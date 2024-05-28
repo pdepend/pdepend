@@ -231,7 +231,7 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      *
      * @param int $position The parameter position.
      */
-    public function setPosition($position): void
+    public function setPosition(int $position): void
     {
         $this->position = $position;
     }
@@ -333,7 +333,7 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      *                       optional or not.
      * @since  0.9.5
      */
-    public function setOptional($optional): void
+    public function setOptional(bool $optional): void
     {
         $this->optional = (bool) $optional;
     }
@@ -382,10 +382,9 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
     }
 
     /**
-     * @param ASTNode $node
      * @return bool
      */
-    private function isTypeAllowingNull($node)
+    private function isTypeAllowingNull(ASTNode $node)
     {
         if ($node instanceof ASTUnionType) {
             foreach ($node->getChildren() as $child) {

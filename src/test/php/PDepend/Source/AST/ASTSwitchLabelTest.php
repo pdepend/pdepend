@@ -111,11 +111,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the start line value.
      *
-     * @param ASTSwitchLabel $label
-     *
      * @depends testSwitchLabel
      */
-    public function testSwitchLabelHasExpectedStartLine($label): void
+    public function testSwitchLabelHasExpectedStartLine(ASTSwitchLabel $label): void
     {
         static::assertEquals(6, $label->getStartLine());
     }
@@ -123,11 +121,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the start column value.
      *
-     * @param ASTSwitchLabel $label
-     *
      * @depends testSwitchLabel
      */
-    public function testSwitchLabelHasExpectedStartColumn($label): void
+    public function testSwitchLabelHasExpectedStartColumn(ASTSwitchLabel $label): void
     {
         static::assertEquals(9, $label->getStartColumn());
     }
@@ -135,11 +131,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the end line value.
      *
-     * @param ASTSwitchLabel $label
-     *
      * @depends testSwitchLabel
      */
-    public function testSwitchLabelHasExpectedEndLine($label): void
+    public function testSwitchLabelHasExpectedEndLine(ASTSwitchLabel $label): void
     {
         static::assertEquals(7, $label->getEndLine());
     }
@@ -147,11 +141,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the end column value.
      *
-     * @param ASTSwitchLabel $label
-     *
      * @depends testSwitchLabel
      */
-    public function testSwitchLabelHasExpectedEndColumn($label): void
+    public function testSwitchLabelHasExpectedEndColumn(ASTSwitchLabel $label): void
     {
         static::assertEquals(18, $label->getEndColumn());
     }
@@ -264,11 +256,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the start line value.
      *
-     * @param ASTSwitchLabel $label
-     *
      * @depends testSwitchLabelDefault
      */
-    public function testSwitchLabelDefaultHasExpectedStartLine($label): void
+    public function testSwitchLabelDefaultHasExpectedStartLine(ASTSwitchLabel $label): void
     {
         static::assertEquals(6, $label->getStartLine());
     }
@@ -276,11 +266,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the start column value.
      *
-     * @param ASTSwitchLabel $label
-     *
      * @depends testSwitchLabelDefault
      */
-    public function testSwitchLabelDefaultHasExpectedStartColumn($label): void
+    public function testSwitchLabelDefaultHasExpectedStartColumn(ASTSwitchLabel $label): void
     {
         static::assertEquals(9, $label->getStartColumn());
     }
@@ -288,11 +276,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the end line value.
      *
-     * @param ASTSwitchLabel $label
-     *
      * @depends testSwitchLabelDefault
      */
-    public function testSwitchLabelDefaultHasExpectedEndLine($label): void
+    public function testSwitchLabelDefaultHasExpectedEndLine(ASTSwitchLabel $label): void
     {
         static::assertEquals(7, $label->getEndLine());
     }
@@ -300,11 +286,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * Tests the end column value.
      *
-     * @param ASTSwitchLabel $label
-     *
      * @depends testSwitchLabelDefault
      */
-    public function testSwitchLabelDefaultHasExpectedEndColumn($label): void
+    public function testSwitchLabelDefaultHasExpectedEndColumn(ASTSwitchLabel $label): void
     {
         static::assertEquals(18, $label->getEndColumn());
     }

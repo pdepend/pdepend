@@ -72,11 +72,9 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected start line value.
      *
-     * @param ASTScope $scope
-     *
      * @depends testScope
      */
-    public function testScopeHasExpectedStartLine($scope): void
+    public function testScopeHasExpectedStartLine(ASTScope $scope): void
     {
         static::assertEquals(3, $scope->getStartLine());
     }
@@ -84,11 +82,9 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected start column value.
      *
-     * @param ASTScope $scope
-     *
      * @depends testScope
      */
-    public function testScopeHasExpectedStartColumn($scope): void
+    public function testScopeHasExpectedStartColumn(ASTScope $scope): void
     {
         static::assertEquals(1, $scope->getStartColumn());
     }
@@ -96,11 +92,9 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected end line value.
      *
-     * @param ASTScope $scope
-     *
      * @depends testScope
      */
-    public function testScopeHasExpectedEndLine($scope): void
+    public function testScopeHasExpectedEndLine(ASTScope $scope): void
     {
         static::assertEquals(8, $scope->getEndLine());
     }
@@ -108,11 +102,9 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * Tests that the scope-statement has the expected end column value.
      *
-     * @param ASTScope $scope
-     *
      * @depends testScope
      */
-    public function testScopeHasExpectedEndColumn($scope): void
+    public function testScopeHasExpectedEndColumn(ASTScope $scope): void
     {
         static::assertEquals(1, $scope->getEndColumn());
     }

@@ -64,7 +64,7 @@ class Factory
      * @throws RuntimeException When the given path name does not point to a
      *                          valid coverage file or onto an unsupported coverage format.
      */
-    public function create($pathName)
+    public function create(string $pathName)
     {
         $sxml = $this->loadXml($pathName);
         if (isset($sxml->project)) {
@@ -83,7 +83,7 @@ class Factory
      * @throws RuntimeException When the given path name does not point to a
      *                          valid xml file.
      */
-    private function loadXml($pathName)
+    private function loadXml(string $pathName)
     {
         $mode = libxml_use_internal_errors(true);
         $sxml = simplexml_load_file($pathName);

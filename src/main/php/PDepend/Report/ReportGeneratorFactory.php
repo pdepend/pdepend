@@ -83,7 +83,7 @@ class ReportGeneratorFactory
      * @return ReportGenerator
      * @throws RuntimeException
      */
-    public function createGenerator($identifier, $fileName)
+    public function createGenerator(string $identifier, string $fileName)
     {
         if (!isset($this->instances[$identifier])) {
             $loggerServices = $this->container->findTaggedServiceIds('pdepend.logger');

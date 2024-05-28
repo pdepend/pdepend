@@ -77,7 +77,7 @@ class Configuration
      * @throws OutOfRangeException If no matching configuration value exists.
      * @since  0.10.0
      */
-    public function __get($name): mixed
+    public function __get(string $name): mixed
     {
         if (isset($this->settings->{$name})) {
             return $this->settings->{$name};
@@ -99,7 +99,7 @@ class Configuration
      * @throws OutOfRangeException Whenever this method is called.
      * @since  0.10.0
      */
-    public function __set($name, $value): void
+    public function __set(string $name, mixed $value): void
     {
         throw new OutOfRangeException(
             sprintf("A configuration option '%s' not exists.", $name),
@@ -116,7 +116,7 @@ class Configuration
      * @return bool
      * @since  0.10.0
      */
-    public function __isset($name)
+    public function __isset(string $name)
     {
         return isset($this->settings->{$name});
     }

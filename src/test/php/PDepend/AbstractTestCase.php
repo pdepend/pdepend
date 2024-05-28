@@ -136,7 +136,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $directory Optional working directory.
      * @since 0.10.0
      */
-    protected function changeWorkingDirectory($directory = null): void
+    protected function changeWorkingDirectory(?string $directory = null): void
     {
         if (null === $directory) {
             $directory = $this->getTestWorkingDirectory();
@@ -181,7 +181,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $nodeType The searched node class.
      * @return ASTNode
      */
-    protected function getFirstNodeOfTypeInFunction($nodeType)
+    protected function getFirstNodeOfTypeInFunction(string $nodeType)
     {
         return $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType($nodeType);
@@ -240,7 +240,7 @@ abstract class AbstractTestCase extends TestCase
      * @return ASTNode
      * @since 1.0.0
      */
-    protected function getFirstNodeOfTypeInTrait($nodeType)
+    protected function getFirstNodeOfTypeInTrait(string $nodeType)
     {
         return $this->getFirstTraitForTestCase()
             ->getFirstChildOfType($nodeType);
@@ -252,7 +252,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $nodeType The searched node class.
      * @return ASTNode
      */
-    protected function getFirstNodeOfTypeInClass($nodeType)
+    protected function getFirstNodeOfTypeInClass(string $nodeType)
     {
         return $this->getFirstClassForTestCase()
             ->getFirstChildOfType($nodeType);
@@ -264,7 +264,7 @@ abstract class AbstractTestCase extends TestCase
      * @param string $nodeType The searched node class.
      * @return ASTNode
      */
-    protected function getFirstNodeOfTypeInInterface($nodeType)
+    protected function getFirstNodeOfTypeInInterface(string $nodeType)
     {
         return $this->getFirstInterfaceForTestCase()
             ->getFirstChildOfType($nodeType);
@@ -437,7 +437,7 @@ abstract class AbstractTestCase extends TestCase
      * @param ASTNode $node The root node.
      * @param array $graph Expected class structure.
      */
-    protected static function assertGraph(ASTNode $node, $graph): void
+    protected static function assertGraph(ASTNode $node, array $graph): void
     {
         $actual = self::collectGraph($node);
         static::assertEquals($graph, $actual);
@@ -450,7 +450,7 @@ abstract class AbstractTestCase extends TestCase
      * @return ASTProperty
      * @since 0.10.0
      */
-    protected function getMockWithoutConstructor($className)
+    protected function getMockWithoutConstructor(string $className)
     {
         $mock = $this->getMockBuilder($className)
             ->onlyMethods(['__construct'])
@@ -462,10 +462,8 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * Clears all temporary resources.
-     *
-     * @param string $dir
      */
-    private function clearRunResources($dir = null): void
+    private function clearRunResources(?string $dir = null): void
     {
         if ($dir === null) {
             $dir = __DIR__ . '/_run';
@@ -532,10 +530,9 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @param TextUI\Runner $runner
      * @return int
      */
-    protected function silentRun($runner)
+    protected function silentRun(TextUI\Runner $runner)
     {
         $error = null;
 
@@ -563,7 +560,7 @@ abstract class AbstractTestCase extends TestCase
      * @return ASTClass
      * @since 1.0.2
      */
-    protected function createClassFixture($name = null)
+    protected function createClassFixture(?string $name = null)
     {
         $name = $name ?: static::class;
 
@@ -584,7 +581,7 @@ abstract class AbstractTestCase extends TestCase
      * @return ASTInterface
      * @since 1.0.2
      */
-    protected function createInterfaceFixture($name = null)
+    protected function createInterfaceFixture(?string $name = null)
     {
         $name = $name ?: static::class;
 
@@ -602,7 +599,7 @@ abstract class AbstractTestCase extends TestCase
      * @return ASTTrait
      * @since 1.0.2
      */
-    protected function createTraitFixture($name = null)
+    protected function createTraitFixture(?string $name = null)
     {
         $name = $name ?: static::class;
 
@@ -619,7 +616,7 @@ abstract class AbstractTestCase extends TestCase
      * @return ASTFunction
      * @since 1.0.2
      */
-    protected function createFunctionFixture($name = null)
+    protected function createFunctionFixture(?string $name = null)
     {
         $name = $name ?: static::class;
 
@@ -638,7 +635,7 @@ abstract class AbstractTestCase extends TestCase
      * @return ASTMethod
      * @since 1.0.2
      */
-    protected function createMethodFixture($name = null)
+    protected function createMethodFixture(?string $name = null)
     {
         $name = $name ?: static::class;
 
@@ -652,10 +649,9 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Creates a temporary resource for the given file name.
      *
-     * @param string $fileName
      * @return string
      */
-    protected function createRunResourceURI($fileName = null)
+    protected function createRunResourceURI(?string $fileName = null)
     {
         return tempnam(sys_get_temp_dir(), $fileName ?: uniqid());
     }
@@ -667,7 +663,7 @@ abstract class AbstractTestCase extends TestCase
      * @return string
      * @throws ErrorException
      */
-    protected static function createCodeResourceURI($fileName)
+    protected static function createCodeResourceURI(string $fileName)
     {
         $uri = realpath(__DIR__ . '/../../resources/files') . DIRECTORY_SEPARATOR . $fileName;
 
@@ -753,7 +749,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @param string $className Name of the missing class.
      */
-    public static function autoload($className): void
+    public static function autoload(string $className): void
     {
         $file = strtr($className, '\\', DIRECTORY_SEPARATOR) . '.php';
         if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
@@ -770,7 +766,7 @@ abstract class AbstractTestCase extends TestCase
      * @param bool $ignoreAnnotations The parser should ignore annotations.
      * @return ASTArtifactList<ASTNamespace>
      */
-    protected function parseCodeResourceForTest($ignoreAnnotations = false)
+    protected function parseCodeResourceForTest(bool $ignoreAnnotations = false)
     {
         return $this->parseSource(
             $this->createCodeResourceUriForTest(),
@@ -782,11 +778,9 @@ abstract class AbstractTestCase extends TestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string $testCase
-     * @param bool $ignoreAnnotations
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false)
     {
         [$class, $method] = explode('::', $testCase);
 
@@ -806,11 +800,9 @@ abstract class AbstractTestCase extends TestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string $fileOrDirectory
-     * @param bool $ignoreAnnotations
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseSource($fileOrDirectory, $ignoreAnnotations = false)
+    public function parseSource(string $fileOrDirectory, bool $ignoreAnnotations = false)
     {
         if (file_exists($fileOrDirectory) === false) {
             $fileOrDirectory = self::createCodeResourceURI($fileOrDirectory);

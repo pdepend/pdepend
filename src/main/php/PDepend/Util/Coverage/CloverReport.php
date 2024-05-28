@@ -141,7 +141,7 @@ class CloverReport implements Report
      * @param string $fileName The source file name.
      * @return array<bool>
      */
-    private function getLines($fileName)
+    private function getLines(string $fileName)
     {
         return $this->fileLineCoverage[$fileName] ?? [];
     }

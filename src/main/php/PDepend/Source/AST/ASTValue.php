@@ -76,7 +76,7 @@ class ASTValue
      *
      * @param mixed $value The parsed PHP-value.
      */
-    public function setValue($value): void
+    public function setValue(mixed $value): void
     {
         if (!$this->valueAvailable) {
             $this->value = $value;

@@ -690,11 +690,9 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      * Parses the given source file or directory with the default tokenizer
      * and node builder implementations.
      *
-     * @param string $testCase
-     * @param bool $ignoreAnnotations
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseTestCaseSource($testCase, $ignoreAnnotations = false)
+    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false)
     {
         [$class, $method] = explode('::', $testCase);
 

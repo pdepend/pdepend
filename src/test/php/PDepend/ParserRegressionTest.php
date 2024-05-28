@@ -62,7 +62,7 @@ class ParserRegressionTest extends AbstractTestCase
      * @param string $pathName Name of the file to parse.
      * @dataProvider dataProviderSourceFiles
      */
-    public function testParserHandlesSourceFileWithoutException($pathName): void
+    public function testParserHandlesSourceFileWithoutException(string $pathName): void
     {
         $this->parseSource($pathName);
     }

@@ -70,7 +70,7 @@ final class Log
      *
      * @param int $severity The log severity levels.
      */
-    public static function setSeverity($severity): void
+    public static function setSeverity(int $severity): void
     {
         self::$debug = ((self::DEBUG & $severity) === $severity);
     }
@@ -80,7 +80,7 @@ final class Log
      *
      * @param string $message The debug log message.
      */
-    public static function debug($message): void
+    public static function debug(string $message): void
     {
         if (self::$debug) {
             self::log($message);
@@ -92,7 +92,7 @@ final class Log
      *
      * @param string $message The log message.
      */
-    public static function log($message): void
+    public static function log(string $message): void
     {
         fwrite(self::$stream, PHP_EOL . $message);
     }

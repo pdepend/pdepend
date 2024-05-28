@@ -82,11 +82,9 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
     /**
      * testShiftLeftExpressionHasExpectedStartLine
      *
-     * @param ASTShiftLeftExpression $expr
-     *
      * @depends testShiftLeftExpression
      */
-    public function testShiftLeftExpressionHasExpectedStartLine($expr): void
+    public function testShiftLeftExpressionHasExpectedStartLine(ASTShiftLeftExpression $expr): void
     {
         static::assertEquals(6, $expr->getStartLine());
     }
@@ -94,11 +92,9 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
     /**
      * testShiftLeftExpressionHasExpectedStartColumn
      *
-     * @param ASTShiftLeftExpression $expr
-     *
      * @depends testShiftLeftExpression
      */
-    public function testShiftLeftExpressionHasExpectedStartColumn($expr): void
+    public function testShiftLeftExpressionHasExpectedStartColumn(ASTShiftLeftExpression $expr): void
     {
         static::assertEquals(13, $expr->getStartColumn());
     }
@@ -106,11 +102,9 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
     /**
      * testShiftLeftExpressionHasExpectedEndLine
      *
-     * @param ASTShiftLeftExpression $expr
-     *
      * @depends testShiftLeftExpression
      */
-    public function testShiftLeftExpressionHasExpectedEndLine($expr): void
+    public function testShiftLeftExpressionHasExpectedEndLine(ASTShiftLeftExpression $expr): void
     {
         static::assertEquals(6, $expr->getEndLine());
     }
@@ -118,11 +112,9 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
     /**
      * testShiftLeftExpressionHasExpectedEndColumn
      *
-     * @param ASTShiftLeftExpression $expr
-     *
      * @depends testShiftLeftExpression
      */
-    public function testShiftLeftExpressionHasExpectedEndColumn($expr): void
+    public function testShiftLeftExpressionHasExpectedEndColumn(ASTShiftLeftExpression $expr): void
     {
         static::assertEquals(14, $expr->getEndColumn());
     }

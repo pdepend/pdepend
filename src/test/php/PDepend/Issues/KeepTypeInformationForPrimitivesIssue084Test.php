@@ -65,7 +65,7 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
      * @param string $expected The expected primitive type image.
      * @dataProvider dataProviderParserSetsExpectedPrimitivePropertyType
      */
-    public function testParserSetsExpectedPrimitivePropertyType($actual, $expected): void
+    public function testParserSetsExpectedPrimitivePropertyType(string $actual, string $expected): void
     {
         $type = $this->parseTestCase(__METHOD__ . '_' . $actual)
             ->current()

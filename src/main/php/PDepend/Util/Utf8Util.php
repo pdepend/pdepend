@@ -55,10 +55,9 @@ namespace PDepend\Util;
 final class Utf8Util
 {
     /**
-     * @param string $raw
      * @return string
      */
-    public static function ensureEncoding($raw)
+    public static function ensureEncoding(string $raw)
     {
         if (mb_check_encoding($raw, 'UTF-8')) {
             return $raw;

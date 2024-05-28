@@ -82,11 +82,9 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     /**
      * testCallableTypeHasExpectedStartLine
      *
-     * @param ASTTypeCallable $type
-     *
      * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedStartLine($type): void
+    public function testCallableTypeHasExpectedStartLine(ASTTypeCallable $type): void
     {
         static::assertEquals(2, $type->getStartLine());
     }
@@ -94,11 +92,9 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     /**
      * testCallableTypeHasExpectedEndLine
      *
-     * @param ASTTypeCallable $type
-     *
      * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedEndLine($type): void
+    public function testCallableTypeHasExpectedEndLine(ASTTypeCallable $type): void
     {
         static::assertEquals(2, $type->getEndLine());
     }
@@ -106,11 +102,9 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     /**
      * testCallableTypeHasExpectedStartColumn
      *
-     * @param ASTTypeCallable $type
-     *
      * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedStartColumn($type): void
+    public function testCallableTypeHasExpectedStartColumn(ASTTypeCallable $type): void
     {
         static::assertEquals(27, $type->getStartColumn());
     }
@@ -118,11 +112,9 @@ class ASTTypeCallableTest extends ASTNodeTestCase
     /**
      * testCallableTypeHasExpectedEndColumn
      *
-     * @param ASTTypeCallable $type
-     *
      * @depends testCallableType
      */
-    public function testCallableTypeHasExpectedEndColumn($type): void
+    public function testCallableTypeHasExpectedEndColumn(ASTTypeCallable $type): void
     {
         static::assertEquals(34, $type->getEndColumn());
     }

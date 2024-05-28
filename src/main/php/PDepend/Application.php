@@ -69,10 +69,9 @@ class Application
     private string $configurationFile;
 
     /**
-     * @param string $configurationFile
      * @throws InvalidArgumentException
      */
-    public function setConfigurationFile($configurationFile): void
+    public function setConfigurationFile(string $configurationFile): void
     {
         if (!file_exists($configurationFile)) {
             throw new InvalidArgumentException(
@@ -206,11 +205,10 @@ class Application
     }
 
     /**
-     * @param string $serviceTag
      * @return array<string, array<string, string>>
      * @throws Exception
      */
-    private function getAvailableOptionsFor($serviceTag)
+    private function getAvailableOptionsFor(string $serviceTag)
     {
         $container = $this->getContainer();
 

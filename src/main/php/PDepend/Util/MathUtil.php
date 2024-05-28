@@ -77,7 +77,7 @@ final class MathUtil
      * @param string $right The right arithmetic operand.
      * @return numeric-string
      */
-    public static function add($left, $right)
+    public static function add(string $left, string $right)
     {
         if (function_exists('bcadd')) {
             return bcadd($left, $right);

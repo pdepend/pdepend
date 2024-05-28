@@ -99,21 +99,19 @@ interface BuilderContext
      * @return ASTTrait
      * @since  1.0.0
      */
-    public function getTrait($qualifiedName);
+    public function getTrait(string $qualifiedName);
 
     /**
      * Returns the class instance for the given qualified name.
      *
-     * @param string $qualifiedName
      * @return ASTClass|ASTEnum;
      */
-    public function getClass($qualifiedName);
+    public function getClass(string $qualifiedName);
 
     /**
      * Returns a class or an interface instance for the given qualified name.
      *
-     * @param string $qualifiedName
      * @return AbstractASTClassOrInterface
      */
-    public function getClassOrInterface($qualifiedName);
+    public function getClassOrInterface(string $qualifiedName);
 }

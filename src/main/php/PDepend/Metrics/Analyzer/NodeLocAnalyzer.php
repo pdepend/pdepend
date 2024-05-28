@@ -385,7 +385,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      *
      * @param string $id The unique identifier of a node.
      */
-    private function updateProjectMetrics($id): void
+    private function updateProjectMetrics(string $id): void
     {
         foreach ($this->metrics[$id] as $metric => $value) {
             $this->projectMetrics[$metric] += $value;
@@ -409,7 +409,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * @param bool $search Optional boolean flag, search start.
      * @return array<int, int>
      */
-    private function linesOfCode(array $tokens, $search = false)
+    private function linesOfCode(array $tokens, bool $search = false)
     {
         $clines = [];
         $elines = [];

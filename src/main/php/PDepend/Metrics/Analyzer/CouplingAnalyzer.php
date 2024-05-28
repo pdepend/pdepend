@@ -182,7 +182,7 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
      * @param ASTArtifactList<ASTNamespace> $namespaces
      * @since  0.10.2
      */
-    private function doAnalyze($namespaces): void
+    private function doAnalyze(ASTArtifactList $namespaces): void
     {
         $this->fireStartAnalyzer();
         $this->reset();

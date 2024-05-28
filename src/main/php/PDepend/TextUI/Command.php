@@ -526,7 +526,7 @@ class Command
      * @return int
      * @throws Exception
      */
-    protected function printAnalyzerOptions($length)
+    protected function printAnalyzerOptions(int $length)
     {
         $options = $this->application->getAvailableAnalyzerOptions();
 
@@ -557,7 +557,7 @@ class Command
      * @param string $message The option help message.
      * @param int $length The length of the longest option.
      */
-    private function printOption($option, $message, $length): void
+    private function printOption(string $option, string $message, int $length): void
     {
         // Ignore the phpunit xml option
         if (str_starts_with($option, '--phpunit-xml=')) {
@@ -585,7 +585,7 @@ class Command
      *
      * @param int $length Padding length for the option.
      */
-    private function printDbusOption($length): void
+    private function printDbusOption(int $length): void
     {
         if (!extension_loaded('dbus')) {
             return;
@@ -609,10 +609,7 @@ class Command
         return $command->run();
     }
 
-    /**
-     * @param int $startTime
-     */
-    private function printStatistics($startTime): void
+    private function printStatistics(int $startTime): void
     {
         $duration = time() - $startTime;
         $hours = (int) ($duration / 3600);
@@ -627,10 +624,9 @@ class Command
     }
 
     /**
-     * @param Exception|Throwable $exception
      * @return string
      */
-    private function getErrorTrace($exception)
+    private function getErrorTrace(Exception|Throwable $exception)
     {
         return $exception::class . '(' . $exception->getMessage() . ')' . PHP_EOL .
             '## ' . $exception->getFile() . '(' . $exception->getLine() . ')' . PHP_EOL .

@@ -397,7 +397,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param string $name Name of the searched metric.
      */
-    private function calculateClassMetric($name): mixed
+    private function calculateClassMetric(string $name): mixed
     {
         $metrics = $this->calculateClassMetrics();
 

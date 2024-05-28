@@ -292,10 +292,9 @@ class CommandTest extends AbstractTestCase
     /**
      * Executes the command class and returns an array with namespace statistics.
      *
-     * @param string $pathName
      * @return array
      */
-    private function runCommandAndReturnStatistics(array $argv, $pathName)
+    private function runCommandAndReturnStatistics(array $argv, string $pathName)
     {
         $logFile = $this->createRunResourceURI();
 
@@ -561,7 +560,7 @@ class CommandTest extends AbstractTestCase
      * @param string $actual The cli output.
      * @param string $prologText Optional prolog text.
      */
-    protected function assertHelpOutput($actual, $prologText = ''): void
+    protected function assertHelpOutput(string $actual, string $prologText = ''): void
     {
         $startsWith = $prologText . $this->versionOutput . $this->usageOutput;
         $startsWith = '/^' . preg_quote($startsWith) . '/';

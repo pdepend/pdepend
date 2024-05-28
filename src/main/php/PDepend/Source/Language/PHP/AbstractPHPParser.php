@@ -374,7 +374,7 @@ abstract class AbstractPHPParser
      * @param int $maxNestingLevel The maximum allowed nesting level.
      * @since 0.9.12
      */
-    public function setMaxNestingLevel($maxNestingLevel): void
+    public function setMaxNestingLevel(int $maxNestingLevel): void
     {
         $this->maxNestingLevel = $maxNestingLevel;
     }
@@ -405,11 +405,10 @@ abstract class AbstractPHPParser
     /**
      * Parses a scalar type hint or a callable type hint.
      *
-     * @param string $image
      * @return ASTType
      * @throws ParserException
      */
-    private function parseScalarOrCallableTypeHint($image)
+    private function parseScalarOrCallableTypeHint(string $image)
     {
         return match (strtolower($image)) {
             'int',
@@ -432,12 +431,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param int $tokenType
-     * @param int $modifiers
-     *
      * @return int
      */
-    private function getModifiersForConstantDefinition($tokenType, $modifiers)
+    private function getModifiersForConstantDefinition(int $tokenType, int $modifiers)
     {
         $allowed = State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE;
         $modifiers &= $allowed;
@@ -806,7 +802,7 @@ abstract class AbstractPHPParser
      * @param int $modifiers Optional default modifiers.
      * @param bool $echoing True if current statement is echoing (such as after <?=).
      */
-    private function reset($modifiers = 0, $echoing = false): void
+    private function reset(int $modifiers = 0, bool $echoing = false): void
     {
         $this->packageName = Builder::DEFAULT_NAMESPACE;
         $this->docComment = null;
@@ -818,11 +814,10 @@ abstract class AbstractPHPParser
      * Tests if the given token type is a reserved keyword in the supported PHP
      * version.
      *
-     * @param int $tokenType
      * @return bool
      * @since 1.1.1
      */
-    private function isKeyword($tokenType)
+    private function isKeyword(int $tokenType)
     {
         return match ($tokenType) {
             Tokens::T_CLASS,
@@ -861,7 +856,7 @@ abstract class AbstractPHPParser
      * @return bool
      * @since 0.10.6
      */
-    private function isClassName($tokenType)
+    private function isClassName(int $tokenType)
     {
         return match ($tokenType) {
             Tokens::T_DIR,
@@ -905,10 +900,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param int $tokenType
      * @return bool
      */
-    protected function isConstantName($tokenType)
+    protected function isConstantName(int $tokenType)
     {
         return match ($tokenType) {
             Tokens::T_CALLABLE,
@@ -986,11 +980,10 @@ abstract class AbstractPHPParser
      * Tests if the give token is a valid function name in the supported PHP
      * version.
      *
-     * @param int $tokenType
      * @return bool
      * @since 2.3
      */
-    protected function isFunctionName($tokenType)
+    protected function isFunctionName(int $tokenType)
     {
         return match ($tokenType) {
             Tokens::T_STRING,
@@ -1020,10 +1013,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param int $tokenType
      * @return bool
      */
-    private function isMethodName($tokenType)
+    private function isMethodName(int $tokenType)
     {
         return match ($tokenType) {
             Tokens::T_CLASS => true,
@@ -1425,11 +1417,10 @@ abstract class AbstractPHPParser
      * This method will parse a list of modifiers and a following property or
      * method.
      *
-     * @param int $modifiers
      * @return ASTNode
      * @since 0.9.6
      */
-    private function parseMethodOrFieldDeclaration($modifiers = 0)
+    private function parseMethodOrFieldDeclaration(int $modifiers = 0)
     {
         $this->tokenStack->push();
         $tokenType = $this->tokenizer->peek();
@@ -1505,12 +1496,10 @@ abstract class AbstractPHPParser
     /**
      * Override this in later PHPParserVersions as necessary
      *
-     * @param int $tokenType
-     * @param int $modifiers
      * @return AbstractASTNode
      * @throws UnexpectedTokenException
      */
-    private function parseUnknownDeclaration($tokenType, $modifiers)
+    private function parseUnknownDeclaration(int $tokenType, int $modifiers)
     {
         /**
          * Typed properties
@@ -2186,11 +2175,8 @@ abstract class AbstractPHPParser
 
     /**
      * Throws an exception if the given token is not a valid list unpacking opening token for current PHP level.
-     *
-     * @param int $tokenType
-     * @param Token $unexpectedToken
      */
-    private function ensureTokenIsListUnpackingOpening($tokenType, $unexpectedToken = null): void
+    private function ensureTokenIsListUnpackingOpening(int $tokenType, ?Token $unexpectedToken = null): void
     {
         if (!$this->isListUnpacking($tokenType)) {
             throw $this->getUnexpectedTokenException($unexpectedToken ?: $this->tokenizer->prevToken());
@@ -2344,11 +2330,10 @@ abstract class AbstractPHPParser
      * @template T of ASTExpression
      *
      * @param T $expr
-     * @param int $type
      * @return T
      * @since 0.9.12
      */
-    private function parseRequireOrIncludeExpression(ASTExpression $expr, $type): ASTExpression
+    private function parseRequireOrIncludeExpression(ASTExpression $expr, int $type): ASTExpression
     {
         $this->tokenStack->push();
 
@@ -2570,8 +2555,8 @@ abstract class AbstractPHPParser
     private function parseIndexExpression(
         ASTNode $node,
         ASTExpression $expr,
-        $open,
-        $close,
+        int $open,
+        int $close,
     ): AbstractASTNode {
         $this->consumeToken($open);
 
@@ -2789,10 +2774,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param int $tokenType
      * @return ASTClassOrInterfaceReference
      */
-    private function parseStandAloneExpressionTypeReference($tokenType)
+    private function parseStandAloneExpressionTypeReference(int $tokenType)
     {
         return match ($tokenType) {
             Tokens::T_SELF => $this->parseSelfReference($this->consumeToken(Tokens::T_SELF)),
@@ -2803,11 +2787,10 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param bool $classRef
      * @return AbstractASTNode
      * @throws ParserException
      */
-    private function parseStandAloneExpressionType($classRef)
+    private function parseStandAloneExpressionType(bool $classRef)
     {
         // Peek next token and look for a static type identifier
         $this->consumeComments();
@@ -2832,11 +2815,10 @@ abstract class AbstractPHPParser
      * @template T of AbstractASTNode
      *
      * @param T $expr
-     * @param bool $classRef
      * @return T
      * @throws ParserException
      */
-    private function parseExpressionTypeReference(ASTNode $expr, $classRef): AbstractASTNode
+    private function parseExpressionTypeReference(ASTNode $expr, bool $classRef): AbstractASTNode
     {
         $expr->addChild(
             $this->parseOptionalMemberPrimaryPrefix(
@@ -3032,7 +3014,7 @@ abstract class AbstractPHPParser
      * @return ASTClassOrInterfaceReference
      * @since 0.9.8
      */
-    private function parseClassOrInterfaceReference($classReference)
+    private function parseClassOrInterfaceReference(bool $classReference)
     {
         $this->tokenStack->push();
 
@@ -3070,8 +3052,6 @@ abstract class AbstractPHPParser
      * @template T of AbstractASTNode
      *
      * @param T $node
-     * @param int $closeToken
-     * @param int|null $separatorToken
      * @return T
      * @throws TokenStreamEndException
      * @since 0.9.6
@@ -3079,8 +3059,8 @@ abstract class AbstractPHPParser
     private function parseBraceExpression(
         ASTNode $node,
         Token $start,
-        $closeToken,
-        $separatorToken = null,
+        int $closeToken,
+        ?int $separatorToken = null,
     ): AbstractASTNode {
         if (is_object($expr = $this->parseOptionalExpression())) {
             $node->addChild($expr);
@@ -3217,7 +3197,7 @@ abstract class AbstractPHPParser
      * @return bool
      * @since 0.10.0
      */
-    private function isAlternativeScopeTermination($tokenType)
+    private function isAlternativeScopeTermination(int $tokenType)
     {
         return in_array(
             $tokenType,
@@ -3239,7 +3219,7 @@ abstract class AbstractPHPParser
      * @param int $tokenType The token type identifier.
      * @since 0.10.0
      */
-    private function parseAlternativeScopeTermination($tokenType): void
+    private function parseAlternativeScopeTermination(int $tokenType): void
     {
         $this->consumeToken($tokenType);
         $this->consumeComments();
@@ -4376,11 +4356,10 @@ abstract class AbstractPHPParser
     /**
      * This methods return true if the token matches a list opening in the current PHP version level.
      *
-     * @param int $tokenType
      * @return bool
      * @since 2.6.0
      */
-    private function isListUnpacking($tokenType = null)
+    private function isListUnpacking(?int $tokenType = null)
     {
         return in_array($tokenType ?: $this->tokenizer->peek(), [Tokens::T_LIST, Tokens::T_SQUARED_BRACKET_OPEN], true);
     }
@@ -5695,11 +5674,10 @@ abstract class AbstractPHPParser
      * @template T of AbstractASTNode
      *
      * @param T $node The context parent node.
-     * @param bool $inCall
      * @return T The prepared entire node.
      * @since 0.9.12
      */
-    private function parseVariableList(ASTNode $node, $inCall = false): AbstractASTNode
+    private function parseVariableList(ASTNode $node, bool $inCall = false): AbstractASTNode
     {
         $this->consumeComments();
         while ($this->tokenizer->peek() !== Tokenizer::T_EOF) {
@@ -5938,11 +5916,10 @@ abstract class AbstractPHPParser
      * Parses a static identifier expression, as it is used for method and
      * function names.
      *
-     * @param int $tokenType
      * @return ASTIdentifier
      * @since 0.9.12
      */
-    private function parseIdentifier($tokenType = Tokens::T_STRING)
+    private function parseIdentifier(int $tokenType = Tokens::T_STRING)
     {
         $token = $this->consumeToken($tokenType);
 
@@ -6047,11 +6024,10 @@ abstract class AbstractPHPParser
     /**
      * Parses an array structure.
      *
-     * @param bool $static
      * @return ASTArray
      * @since 1.0.0
      */
-    private function doParseArray($static = false)
+    private function doParseArray(bool $static = false)
     {
         $this->tokenStack->push();
 
@@ -6084,11 +6060,10 @@ abstract class AbstractPHPParser
      *
      * @template T of ASTArray
      * @param T $array
-     * @param bool $static
      * @return T
      * @since 1.0.0
      */
-    private function parseArray(ASTArray $array, $static = false): ASTArray
+    private function parseArray(ASTArray $array, bool $static = false): ASTArray
     {
         switch ($this->tokenizer->peek()) {
             case Tokens::T_SQUARED_BRACKET_OPEN:
@@ -6119,12 +6094,10 @@ abstract class AbstractPHPParser
      *
      * @template T of ASTArray
      * @param T $array
-     * @param int $endDelimiter
-     * @param bool $static
      * @return T
      * @since 1.0.0
      */
-    private function parseArrayElements(ASTArray $array, $endDelimiter, $static = false): ASTArray
+    private function parseArrayElements(ASTArray $array, int $endDelimiter, bool $static = false): ASTArray
     {
         $consecutiveComma = null;
         $openingToken = $this->tokenizer->prevToken();
@@ -6166,12 +6139,9 @@ abstract class AbstractPHPParser
      * Check if the given array/list is a value and so does not have consecutive commas in it,
      * or if it's a destructuring list and so check the syntax is valid in the current PHP level.
      *
-     * @param bool $useSquaredBrackets
-     * @param Token|null $openingToken
-     * @param Token|null $consecutiveComma
      * @throws UnexpectedTokenException
      */
-    private function ensureArrayIsValid($useSquaredBrackets, $openingToken, $consecutiveComma): void
+    private function ensureArrayIsValid(bool $useSquaredBrackets, ?Token $openingToken, ?Token $consecutiveComma): void
     {
         // If this array is followed by =, it's in fact a destructuring list
         if ($this->tokenizer->peekNext() === Tokens::T_EQUAL) {
@@ -6268,11 +6238,10 @@ abstract class AbstractPHPParser
      * An array element can have a simple value, a key/value pair, a value by
      * reference or a key/value pair with a referenced value.
      *
-     * @param bool $static
      * @return ASTArrayElement
      * @since 1.0.0
      */
-    private function parseArrayElement($static = false)
+    private function parseArrayElement(bool $static = false)
     {
         $this->consumeComments();
 
@@ -6337,7 +6306,7 @@ abstract class AbstractPHPParser
      * @return string
      * @since 0.9.10
      */
-    private function parseStringSequence($tokenType)
+    private function parseStringSequence(int $tokenType)
     {
         $type = $tokenType;
         $string = '';
@@ -6370,7 +6339,7 @@ abstract class AbstractPHPParser
      * @throws UnexpectedTokenException
      * @since 0.9.10
      */
-    private function parseString($delimiterType)
+    private function parseString(int $delimiterType)
     {
         $token = $this->consumeToken($delimiterType);
 
@@ -6402,11 +6371,10 @@ abstract class AbstractPHPParser
      *
      * @template T of AbstractASTNode
      * @param T $node
-     * @param int $stopToken
      * @return T
      * @since 0.9.12
      */
-    private function parseStringExpressions(AbstractASTNode $node, $stopToken): AbstractASTNode
+    private function parseStringExpressions(AbstractASTNode $node, int $stopToken): AbstractASTNode
     {
         while (($tokenType = $this->tokenizer->peek()) !== Tokenizer::T_EOF) {
             switch ($tokenType) {
@@ -6656,10 +6624,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param int $tokenType
      * @return ASTFormalParameter
      */
-    private function parseFormalParameterFromType($tokenType)
+    private function parseFormalParameterFromType(int $tokenType)
     {
         if ($this->isTypeHint($tokenType)) {
             $typeHint = $this->parseOptionalTypeHint();
@@ -7064,11 +7031,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param ASTType $firstType
-     *
      * @return ASTUnionType
      */
-    private function parseUnionTypeHint($firstType)
+    private function parseUnionTypeHint(ASTType $firstType)
     {
         $types = [$firstType];
 
@@ -7088,11 +7053,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param ASTType $firstType
-     *
      * @return ASTIntersectionType
      */
-    private function parseIntersectionTypeHint($firstType)
+    private function parseIntersectionTypeHint(ASTType $firstType)
     {
         $token = $this->tokenizer->currentToken();
         $types = [$firstType];
@@ -7119,11 +7082,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param ASTType $type
-     *
      * @return ASTType
      */
-    private function parseTypeHintCombination($type)
+    private function parseTypeHintCombination(ASTType $type)
     {
         $peek = $this->tokenizer->peek();
 
@@ -7141,11 +7102,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param ASTNode $type
-     *
      * @return bool
      */
-    protected function canNotBeStandAloneType($type)
+    protected function canNotBeStandAloneType(ASTNode $type)
     {
         return $type instanceof ASTScalarType && ($type->isFalse() || $type->isNull());
     }
@@ -7621,10 +7580,9 @@ abstract class AbstractPHPParser
     /**
      * Determines if the given image is a PHP 7 type hint.
      *
-     * @param string $image
      * @return bool
      */
-    protected function isScalarOrCallableTypeHint($image)
+    protected function isScalarOrCallableTypeHint(string $image)
     {
         return match (strtolower($image)) {
             'int',
@@ -8603,7 +8561,7 @@ abstract class AbstractPHPParser
      * @return bool
      * @since 0.10.0
      */
-    private function isReadWriteVariable($expr)
+    private function isReadWriteVariable(ASTNode $expr)
     {
         return $expr instanceof ASTVariable
             || $expr instanceof ASTFunctionPostfix
@@ -8621,7 +8579,7 @@ abstract class AbstractPHPParser
      * @param string $localName The local class or interface name.
      * @return string
      */
-    private function createQualifiedTypeName($localName)
+    private function createQualifiedTypeName(string $localName)
     {
         return ltrim($this->getNamespaceOrPackageName() . '\\' . $localName, '\\');
     }
@@ -8659,10 +8617,9 @@ abstract class AbstractPHPParser
     /**
      * Extracts the @package information from the given comment.
      *
-     * @param string $comment
      * @return string|null
      */
-    private function parsePackageAnnotation($comment)
+    private function parsePackageAnnotation(string $comment)
     {
         if (getenv('DISMISS_PACKAGES')) {
             $this->packageName = null;
@@ -8725,7 +8682,7 @@ abstract class AbstractPHPParser
      * @param string $comment The context doc comment block.
      * @return array<int, string>
      */
-    private function parseThrowsAnnotations($comment)
+    private function parseThrowsAnnotations(string $comment)
     {
         $throws = [];
 
@@ -8745,7 +8702,7 @@ abstract class AbstractPHPParser
      * @param string $comment A doc comment text.
      * @return string|null
      */
-    private function parseReturnAnnotation($comment)
+    private function parseReturnAnnotation(string $comment)
     {
         if (!preg_match(self::REGEXP_RETURN_TYPE, $comment, $match)) {
             return null;
@@ -8771,7 +8728,7 @@ abstract class AbstractPHPParser
      * @param string $comment A doc comment text.
      * @return array<string>
      */
-    private function parseVarAnnotation($comment)
+    private function parseVarAnnotation(string $comment)
     {
         if (preg_match(self::REGEXP_VAR_TYPE, (string) $comment, $match) > 0) {
             $useSymbolTable = $this->useSymbolTable;
@@ -8861,7 +8818,7 @@ abstract class AbstractPHPParser
      *                         an expression (false).
      * @return ASTYieldStatement
      */
-    private function parseYield($standalone)
+    private function parseYield(bool $standalone)
     {
         $this->tokenStack->push();
 
@@ -8939,7 +8896,7 @@ abstract class AbstractPHPParser
      * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
      */
-    protected function consumeToken($tokenType)
+    protected function consumeToken(int $tokenType)
     {
         assert($tokenType > 0);
 
@@ -9111,13 +9068,11 @@ abstract class AbstractPHPParser
     /**
      * Peek the next token if it's of the given type, add it to current tokenStack, and return it if so.
      *
-     * @param int $type
-     *
      * @psalm-param Tokens::T_* $type
      *
      * @return Token|null
      */
-    private function addTokenToStackIfType($type)
+    private function addTokenToStackIfType(int $type)
     {
         if ($this->tokenizer->peek() === $type) {
             $next = $this->tokenizer->next();
@@ -9150,7 +9105,7 @@ abstract class AbstractPHPParser
      * @param string $numberRepresentation integer number as it appears in the code, `0xfe4`, `1_000_000`
      * @return int
      */
-    private function parseIntegerNumberImage($numberRepresentation)
+    private function parseIntegerNumberImage(string $numberRepresentation)
     {
         $numberRepresentation = trim($numberRepresentation);
 
@@ -9162,10 +9117,9 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param string $numberRepresentation
      * @return float|int|string
      */
-    private function getNumberFromImage($numberRepresentation)
+    private function getNumberFromImage(string $numberRepresentation)
     {
         $numberRepresentation = str_replace('_', '', $numberRepresentation);
 
@@ -9232,13 +9186,11 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @param int $type
-     *
      * @psalm-param Tokens::T_* $type
      *
      * @return string
      */
-    private function parseNumber($type)
+    private function parseNumber(int $type)
     {
         $token = $this->consumeToken($type);
         $number = (string) $token->image;

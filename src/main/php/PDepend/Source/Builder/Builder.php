@@ -192,11 +192,10 @@ interface Builder extends IteratorAggregate
      * qualified name. It will create a new {@link ASTClass}
      * instance when no matching type exists.
      *
-     * @param string $qualifiedName
      * @return AbstractASTClassOrInterface
      * @since  0.9.5
      */
-    public function getClassOrInterface($qualifiedName);
+    public function getClassOrInterface(string $qualifiedName);
 
     /**
      * Builds a new code type reference instance.
@@ -205,16 +204,15 @@ interface Builder extends IteratorAggregate
      * @return ASTClassOrInterfaceReference
      * @since  0.9.5
      */
-    public function buildAstClassOrInterfaceReference($qualifiedName);
+    public function buildAstClassOrInterfaceReference(string $qualifiedName);
 
     /**
      * Builds a new php trait instance.
      *
-     * @param string $qualifiedName
      * @return ASTTrait
      * @since  1.0.0
      */
-    public function buildTrait($qualifiedName);
+    public function buildTrait(string $qualifiedName);
 
     /**
      * Restores an existing trait instance within the context of this builder.
@@ -228,19 +226,17 @@ interface Builder extends IteratorAggregate
      * qualified name. It will create a new {@link ASTTrait}
      * instance when no matching type exists.
      *
-     * @param string $qualifiedName
      * @return ASTTrait
      * @since  1.0.0
      */
-    public function getTrait($qualifiedName);
+    public function getTrait(string $qualifiedName);
 
     /**
      * Builds a new code class instance.
      *
-     * @param string $qualifiedName
      * @return ASTClass
      */
-    public function buildClass($qualifiedName);
+    public function buildClass(string $qualifiedName);
 
     /**
      * Builds an anonymous class instance.
@@ -254,11 +250,10 @@ interface Builder extends IteratorAggregate
      * qualified name. It will create a new {@link ASTClass}
      * instance when no matching type exists.
      *
-     * @param string $qualifiedName
      * @return ASTClass|ASTEnum
      * @since  0.9.5
      */
-    public function getClass($qualifiedName);
+    public function getClass(string $qualifiedName);
 
     /**
      * Restores an existing class instance within the context of this builder.
@@ -281,15 +276,14 @@ interface Builder extends IteratorAggregate
      * @return ASTClassReference
      * @since  0.9.5
      */
-    public function buildAstClassReference($qualifiedName);
+    public function buildAstClassReference(string $qualifiedName);
 
     /**
      * Builds a new new interface instance.
      *
-     * @param string $qualifiedName
      * @return ASTInterface
      */
-    public function buildInterface($qualifiedName);
+    public function buildInterface(string $qualifiedName);
 
     /**
      * Restores an existing interface instance within the context of this builder.
@@ -307,31 +301,28 @@ interface Builder extends IteratorAggregate
      * @return ASTInterface
      * @since  0.9.5
      */
-    public function getInterface($qualifiedName);
+    public function getInterface(string $qualifiedName);
 
     /**
      * Builds a new namespace instance.
      *
-     * @param string $name
      * @return ASTNamespace
      */
-    public function buildNamespace($name);
+    public function buildNamespace(string $name);
 
     /**
      * Builds a new method instance.
      *
-     * @param string $name
      * @return ASTMethod
      */
-    public function buildMethod($name);
+    public function buildMethod(string $name);
 
     /**
      * Builds a new function instance.
      *
-     * @param string $name
      * @return ASTFunction
      */
-    public function buildFunction($name);
+    public function buildFunction(string $name);
 
     /**
      * Builds a new self reference instance.
@@ -373,7 +364,7 @@ interface Builder extends IteratorAggregate
      * @return ASTVariableDeclarator
      * @since  0.9.6
      */
-    public function buildAstVariableDeclarator($image);
+    public function buildAstVariableDeclarator(string $image);
 
     /**
      * Builds a new constant node.
@@ -382,7 +373,7 @@ interface Builder extends IteratorAggregate
      * @return ASTConstant
      * @since  0.9.6
      */
-    public function buildAstConstant($image);
+    public function buildAstConstant(string $image);
 
     /**
      * Builds a new variable node.
@@ -391,7 +382,7 @@ interface Builder extends IteratorAggregate
      * @return ASTVariable
      * @since  0.9.6
      */
-    public function buildAstVariable($image);
+    public function buildAstVariable(string $image);
 
     /**
      * Builds a new variable variable node.
@@ -400,7 +391,7 @@ interface Builder extends IteratorAggregate
      * @return ASTVariableVariable
      * @since  0.9.6
      */
-    public function buildAstVariableVariable($image);
+    public function buildAstVariableVariable(string $image);
 
     /**
      * Builds a new compound variable node.
@@ -409,7 +400,7 @@ interface Builder extends IteratorAggregate
      * @return ASTCompoundVariable
      * @since  0.9.6
      */
-    public function buildAstCompoundVariable($image);
+    public function buildAstCompoundVariable(string $image);
 
     /**
      * Builds a new compound expression node.
@@ -426,7 +417,7 @@ interface Builder extends IteratorAggregate
      * @return ASTStaticVariableDeclaration
      * @since  0.9.6
      */
-    public function buildAstStaticVariableDeclaration($image);
+    public function buildAstStaticVariableDeclaration(string $image);
 
     /**
      * Builds a new closure node.
@@ -455,11 +446,10 @@ interface Builder extends IteratorAggregate
     /**
      * Builds a new expression node.
      *
-     * @param string $image
      * @return ASTExpression
      * @since 0.9.8
      */
-    public function buildAstExpression($image = null);
+    public function buildAstExpression(?string $image = null);
 
     /**
      * Builds a new assignment expression node.
@@ -468,7 +458,7 @@ interface Builder extends IteratorAggregate
      * @return ASTAssignmentExpression
      * @since  0.9.8
      */
-    public function buildAstAssignmentExpression($image);
+    public function buildAstAssignmentExpression(string $image);
 
     /**
      * Builds a new allocation expression node.
@@ -477,7 +467,7 @@ interface Builder extends IteratorAggregate
      * @return ASTAllocationExpression
      * @since  0.9.6
      */
-    public function buildAstAllocationExpression($image);
+    public function buildAstAllocationExpression(string $image);
 
     /**
      * Builds a new eval-expression node.
@@ -486,7 +476,7 @@ interface Builder extends IteratorAggregate
      * @return ASTEvalExpression
      * @since  0.9.12
      */
-    public function buildAstEvalExpression($image);
+    public function buildAstEvalExpression(string $image);
 
     /**
      * Builds a new exit-expression instance.
@@ -495,7 +485,7 @@ interface Builder extends IteratorAggregate
      * @return ASTExitExpression
      * @since  0.9.12
      */
-    public function buildAstExitExpression($image);
+    public function buildAstExitExpression(string $image);
 
     /**
      * Builds a new clone-expression node.
@@ -504,7 +494,7 @@ interface Builder extends IteratorAggregate
      * @return ASTCloneExpression
      * @since  0.9.12
      */
-    public function buildAstCloneExpression($image);
+    public function buildAstCloneExpression(string $image);
 
     /**
      * Builds a new list-expression node.
@@ -513,7 +503,7 @@ interface Builder extends IteratorAggregate
      * @return ASTListExpression
      * @since  0.9.12
      */
-    public function buildAstListExpression($image);
+    public function buildAstListExpression(string $image);
 
     /**
      * Builds a new include- or include_once-expression.
@@ -560,7 +550,7 @@ interface Builder extends IteratorAggregate
      * @return ASTInstanceOfExpression
      * @since  0.9.6
      */
-    public function buildAstInstanceOfExpression($image);
+    public function buildAstInstanceOfExpression(string $image);
 
     /**
      * Builds a new isset-expression node.
@@ -689,7 +679,7 @@ interface Builder extends IteratorAggregate
      * @return ASTTraitAdaptationAlias
      * @since  1.0.0
      */
-    public function buildAstTraitAdaptationAlias($image);
+    public function buildAstTraitAdaptationAlias(string $image);
 
     /**
      * Builds a new trait adaptation precedence statement.
@@ -698,7 +688,7 @@ interface Builder extends IteratorAggregate
      * @return ASTTraitAdaptationPrecedence
      * @since  1.0.0
      */
-    public function buildAstTraitAdaptationPrecedence($image);
+    public function buildAstTraitAdaptationPrecedence(string $image);
 
     /**
      * Builds a new trait reference node.
@@ -707,7 +697,7 @@ interface Builder extends IteratorAggregate
      * @return ASTTraitReference
      * @since  1.0.0
      */
-    public function buildAstTraitReference($qualifiedName);
+    public function buildAstTraitReference(string $qualifiedName);
 
     /**
      * Builds a new switch-statement-node.
@@ -724,7 +714,7 @@ interface Builder extends IteratorAggregate
      * @return ASTSwitchLabel
      * @since  0.9.8
      */
-    public function buildAstSwitchLabel($image);
+    public function buildAstSwitchLabel(string $image);
 
     /**
      * Builds a new catch-statement node.
@@ -733,7 +723,7 @@ interface Builder extends IteratorAggregate
      * @return ASTCatchStatement
      * @since  0.9.8
      */
-    public function buildAstCatchStatement($image);
+    public function buildAstCatchStatement(string $image);
 
     /**
      * Builds a new finally-statement node.
@@ -750,7 +740,7 @@ interface Builder extends IteratorAggregate
      * @return ASTIfStatement
      * @since  0.9.8
      */
-    public function buildAstIfStatement($image);
+    public function buildAstIfStatement(string $image);
 
     /**
      * Builds a new elseif-statement node.
@@ -759,7 +749,7 @@ interface Builder extends IteratorAggregate
      * @return ASTElseIfStatement
      * @since  0.9.8
      */
-    public function buildAstElseIfStatement($image);
+    public function buildAstElseIfStatement(string $image);
 
     /**
      * Builds a new for-statement node.
@@ -768,7 +758,7 @@ interface Builder extends IteratorAggregate
      * @return ASTForStatement
      * @since  0.9.8
      */
-    public function buildAstForStatement($image);
+    public function buildAstForStatement(string $image);
 
     /**
      * Builds a new for-init node.
@@ -805,7 +795,7 @@ interface Builder extends IteratorAggregate
      * @return ASTForeachStatement
      * @since  0.9.8
      */
-    public function buildAstForeachStatement($image);
+    public function buildAstForeachStatement(string $image);
 
     /**
      * Builds a new while-statement node.
@@ -814,7 +804,7 @@ interface Builder extends IteratorAggregate
      * @return ASTWhileStatement
      * @since  0.9.8
      */
-    public function buildAstWhileStatement($image);
+    public function buildAstWhileStatement(string $image);
 
     /**
      * Builds a new do/while-statement node.
@@ -823,7 +813,7 @@ interface Builder extends IteratorAggregate
      * @return ASTDoWhileStatement
      * @since  0.9.12
      */
-    public function buildAstDoWhileStatement($image);
+    public function buildAstDoWhileStatement(string $image);
 
     /**
      * Builds a new declare-statement node.
@@ -876,7 +866,7 @@ interface Builder extends IteratorAggregate
      * @return ASTMemberPrimaryPrefix
      * @since  0.9.6
      */
-    public function buildAstMemberPrimaryPrefix($image);
+    public function buildAstMemberPrimaryPrefix(string $image);
 
     /**
      * Builds a new identifier node.
@@ -885,7 +875,7 @@ interface Builder extends IteratorAggregate
      * @return ASTIdentifier
      * @since  0.9.6
      */
-    public function buildAstIdentifier($image);
+    public function buildAstIdentifier(string $image);
 
     /**
      * Builds a new function postfix expression.
@@ -904,7 +894,7 @@ interface Builder extends IteratorAggregate
      * @return ASTFunctionPostfix
      * @since  0.9.6
      */
-    public function buildAstFunctionPostfix($image);
+    public function buildAstFunctionPostfix(string $image);
 
     /**
      * Builds a new method postfix expression.
@@ -923,7 +913,7 @@ interface Builder extends IteratorAggregate
      * @return ASTMethodPostfix
      * @since  0.9.6
      */
-    public function buildAstMethodPostfix($image);
+    public function buildAstMethodPostfix(string $image);
 
     /**
      * Builds a new constant postfix expression.
@@ -938,7 +928,7 @@ interface Builder extends IteratorAggregate
      * @return ASTConstantPostfix
      * @since  0.9.6
      */
-    public function buildAstConstantPostfix($image);
+    public function buildAstConstantPostfix(string $image);
 
     /**
      * Builds a new property postfix expression.
@@ -957,7 +947,7 @@ interface Builder extends IteratorAggregate
      * @return ASTPropertyPostfix
      * @since  0.9.6
      */
-    public function buildAstPropertyPostfix($image);
+    public function buildAstPropertyPostfix(string $image);
 
     /**
      * Builds a new full qualified class name postfix expression.
@@ -1040,11 +1030,10 @@ interface Builder extends IteratorAggregate
      * number_format(5623, thousands_separator: ' ')
      * </code>
      *
-     * @param string $name
      * @return ASTNamedArgument
      * @since  2.9.0
      */
-    public function buildAstNamedArgument($name, ASTNode $value);
+    public function buildAstNamedArgument(string $name, ASTNode $value);
 
     /**
      * Builds a new array type node.
@@ -1073,11 +1062,10 @@ interface Builder extends IteratorAggregate
     /**
      * Builds a new primitive type node.
      *
-     * @param string $image
      * @return ASTScalarType
      * @since  0.9.6
      */
-    public function buildAstScalarType($image);
+    public function buildAstScalarType(string $image);
 
     /**
      * Builds a new node for the union type.
@@ -1101,7 +1089,7 @@ interface Builder extends IteratorAggregate
      * @return ASTLiteral
      * @since  0.9.6
      */
-    public function buildAstLiteral($image);
+    public function buildAstLiteral(string $image);
 
     /**
      * Builds a new php string node.
@@ -1163,7 +1151,7 @@ interface Builder extends IteratorAggregate
      * @return ASTConstantDefinition
      * @since  0.9.6
      */
-    public function buildAstConstantDefinition($image);
+    public function buildAstConstantDefinition(string $image);
 
     /**
      * Builds a new constant declarator node.
@@ -1200,7 +1188,7 @@ interface Builder extends IteratorAggregate
      * @return ASTConstantDeclarator
      * @since  0.9.6
      */
-    public function buildAstConstantDeclarator($image);
+    public function buildAstConstantDeclarator(string $image);
 
     /**
      * Builds a new comment node instance.
@@ -1209,7 +1197,7 @@ interface Builder extends IteratorAggregate
      * @return ASTComment
      * @since  0.9.8
      */
-    public function buildAstComment($cdata);
+    public function buildAstComment(string $cdata);
 
     /**
      * Builds a new unary expression node instance.
@@ -1218,7 +1206,7 @@ interface Builder extends IteratorAggregate
      * @return ASTUnaryExpression
      * @since  0.9.11
      */
-    public function buildAstUnaryExpression($image);
+    public function buildAstUnaryExpression(string $image);
 
     /**
      * Builds a new cast-expression node instance.
@@ -1227,7 +1215,7 @@ interface Builder extends IteratorAggregate
      * @return ASTCastExpression
      * @since  0.10.0
      */
-    public function buildAstCastExpression($image);
+    public function buildAstCastExpression(string $image);
 
     /**
      * Builds a new postfix-expression node instance.
@@ -1236,7 +1224,7 @@ interface Builder extends IteratorAggregate
      * @return ASTPostfixExpression
      * @since  0.10.0
      */
-    public function buildAstPostfixExpression($image);
+    public function buildAstPostfixExpression(string $image);
 
     /**
      * Builds a new pre-increment-expression node instance.
@@ -1277,7 +1265,7 @@ interface Builder extends IteratorAggregate
      * @return ASTReturnStatement
      * @since  0.9.12
      */
-    public function buildAstReturnStatement($image);
+    public function buildAstReturnStatement(string $image);
 
     /**
      * Builds a new break-statement node instance.
@@ -1286,7 +1274,7 @@ interface Builder extends IteratorAggregate
      * @return ASTBreakStatement
      * @since  0.9.12
      */
-    public function buildAstBreakStatement($image);
+    public function buildAstBreakStatement(string $image);
 
     /**
      * Builds a new continue-statement node instance.
@@ -1295,7 +1283,7 @@ interface Builder extends IteratorAggregate
      * @return ASTContinueStatement
      * @since  0.9.12
      */
-    public function buildAstContinueStatement($image);
+    public function buildAstContinueStatement(string $image);
 
     /**
      * Builds a new scope-statement instance.
@@ -1312,7 +1300,7 @@ interface Builder extends IteratorAggregate
      * @return ASTTryStatement
      * @since  0.9.12
      */
-    public function buildAstTryStatement($image);
+    public function buildAstTryStatement(string $image);
 
     /**
      * Builds a new throw-statement instance.
@@ -1321,7 +1309,7 @@ interface Builder extends IteratorAggregate
      * @return ASTThrowStatement
      * @since  0.9.12
      */
-    public function buildAstThrowStatement($image);
+    public function buildAstThrowStatement(string $image);
 
     /**
      * Builds a new goto-statement instance.
@@ -1330,7 +1318,7 @@ interface Builder extends IteratorAggregate
      * @return ASTGotoStatement
      * @since  0.9.12
      */
-    public function buildAstGotoStatement($image);
+    public function buildAstGotoStatement(string $image);
 
     /**
      * Builds a new label-statement instance.
@@ -1339,7 +1327,7 @@ interface Builder extends IteratorAggregate
      * @return ASTLabelStatement
      * @since  0.9.12
      */
-    public function buildAstLabelStatement($image);
+    public function buildAstLabelStatement(string $image);
 
     /**
      * Builds a new global-statement instance.
@@ -1364,7 +1352,7 @@ interface Builder extends IteratorAggregate
      * @return ASTEchoStatement
      * @since  0.9.12
      */
-    public function buildAstEchoStatement($image);
+    public function buildAstEchoStatement(string $image);
 
     /**
      * Builds a new yield-statement instance.
@@ -1373,5 +1361,5 @@ interface Builder extends IteratorAggregate
      * @return ASTYieldStatement
      * @since  $version$
      */
-    public function buildAstYieldStatement($image);
+    public function buildAstYieldStatement(string $image);
 }
