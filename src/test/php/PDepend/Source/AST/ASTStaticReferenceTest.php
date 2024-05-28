@@ -160,10 +160,9 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     /**
      * testStaticReference
      *
-     * @return ASTStaticReference
      * @since 1.0.2
      */
-    public function testStaticReference()
+    public function testStaticReference(): ASTStaticReference
     {
         $reference = $this->getFirstStaticReferenceInClass();
         static::assertInstanceOf(ASTStaticReference::class, $reference);
@@ -230,10 +229,8 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTStaticReference
      */
-    private function getFirstStaticReferenceInClass()
+    private function getFirstStaticReferenceInClass(): ASTStaticReference
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTStaticReference::class

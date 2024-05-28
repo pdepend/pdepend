@@ -192,10 +192,8 @@ class ASTClassReferenceTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTClassReference
      */
-    private function getFirstReferenceInFunction()
+    private function getFirstReferenceInFunction(): ASTClassReference
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTClassReference::class
@@ -205,10 +203,9 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     /**
      * Returns the first reference node for the currently executed test case.
      *
-     * @return ASTClassReference
      * @since 0.10.5
      */
-    private function getFirstReferenceInClass()
+    private function getFirstReferenceInClass(): ASTClassReference
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTClassReference::class

@@ -60,11 +60,10 @@ class Factory
      * path name.
      *
      * @param string $pathName Qualified path name of a coverage report file.
-     * @return CloverReport
      * @throws RuntimeException When the given path name does not point to a
      *                          valid coverage file or onto an unsupported coverage format.
      */
-    public function create(string $pathName)
+    public function create(string $pathName): CloverReport
     {
         $sxml = $this->loadXml($pathName);
         if (isset($sxml->project)) {
@@ -79,11 +78,10 @@ class Factory
      * the given path name.
      *
      * @param string $pathName Qualified path name of a coverage report file.
-     * @return SimpleXMLElement
      * @throws RuntimeException When the given path name does not point to a
      *                          valid xml file.
      */
-    private function loadXml(string $pathName)
+    private function loadXml(string $pathName): SimpleXMLElement
     {
         $mode = libxml_use_internal_errors(true);
         $sxml = simplexml_load_file($pathName);

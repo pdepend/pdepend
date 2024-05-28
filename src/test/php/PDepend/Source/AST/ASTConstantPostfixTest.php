@@ -111,10 +111,8 @@ class ASTConstantPostfixTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTConstantPostfix
      */
-    private function getFirstConstantPostfixInFunction()
+    private function getFirstConstantPostfixInFunction(): ASTConstantPostfix
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTConstantPostfix::class

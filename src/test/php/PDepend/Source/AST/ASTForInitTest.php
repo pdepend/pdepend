@@ -93,10 +93,8 @@ class ASTForInitTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTForInit
      */
-    private function getFirstForInitInFunction()
+    private function getFirstForInitInFunction(): ASTForInit
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTForInit::class

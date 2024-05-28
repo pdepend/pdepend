@@ -808,10 +808,8 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
     /**
      * Creates an abstract item instance.
-     *
-     * @return ASTInterface
      */
-    protected function createItem()
+    protected function createItem(): ASTInterface
     {
         $interface = new ASTInterface(__CLASS__);
         $interface->setCompilationUnit(new ASTCompilationUnit(__FILE__));

@@ -58,10 +58,9 @@ class ASTScopeTest extends ASTNodeTestCase
     /**
      * testScope
      *
-     * @return ASTScope
      * @since 1.0.2
      */
-    public function testScope()
+    public function testScope(): ASTScope
     {
         $scope = $this->getFirstScopeInFunction();
         static::assertInstanceOf(ASTScope::class, $scope);
@@ -111,10 +110,8 @@ class ASTScopeTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTScope
      */
-    private function getFirstScopeInFunction()
+    private function getFirstScopeInFunction(): ASTScope
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTScope::class

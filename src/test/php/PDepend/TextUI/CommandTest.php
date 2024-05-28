@@ -291,10 +291,8 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Executes the command class and returns an array with namespace statistics.
-     *
-     * @return array
      */
-    private function runCommandAndReturnStatistics(array $argv, string $pathName)
+    private function runCommandAndReturnStatistics(array $argv, string $pathName): array
     {
         $logFile = $this->createRunResourceURI();
 
@@ -584,7 +582,7 @@ class CommandTest extends AbstractTestCase
      * @param ?array $argv The cli parameters.
      * @return array<mixed>
      */
-    private function executeCommand(?array $argv = null)
+    private function executeCommand(?array $argv = null): array
     {
         $this->prepareArgv($argv);
 

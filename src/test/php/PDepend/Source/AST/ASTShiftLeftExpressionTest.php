@@ -68,10 +68,8 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
 
     /**
      * testShiftLeftExpression
-     *
-     * @return ASTShiftLeftExpression
      */
-    public function testShiftLeftExpression()
+    public function testShiftLeftExpression(): ASTShiftLeftExpression
     {
         $expr = $this->getFirstShiftLeftExpressionInFunction();
         static::assertInstanceOf(ASTShiftLeftExpression::class, $expr);
@@ -121,10 +119,8 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTShiftLeftExpression
      */
-    private function getFirstShiftLeftExpressionInFunction()
+    private function getFirstShiftLeftExpressionInFunction(): ASTShiftLeftExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTShiftLeftExpression::class

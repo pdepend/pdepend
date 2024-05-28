@@ -194,7 +194,7 @@ class ExcludePathFilterTest extends AbstractTestCase
      * @param array<string> $excludes The filtered patterns
      * @return array<string>
      */
-    protected function createFilteredFileList(array $excludes)
+    protected function createFilteredFileList(array $excludes): array
     {
         $filter = new ExcludePathFilter($excludes);
 

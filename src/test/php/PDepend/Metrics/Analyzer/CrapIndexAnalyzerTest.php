@@ -165,9 +165,8 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param string $testCase Name of the calling test case.
      * @param int $ccn The entire cyclomatic complexity number.
-     * @return array
      */
-    private function calculateCrapIndex(string $testCase, int $ccn)
+    private function calculateCrapIndex(string $testCase, int $ccn): array
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -197,10 +196,8 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Creates a temporary clover report file that can be used for a single test.
-     *
-     * @return string
      */
-    private function createCloverReportFile()
+    private function createCloverReportFile(): string
     {
         $pathName = $this->createRunResourceURI('clover.xml');
 
@@ -214,10 +211,8 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * Creates a mocked instance of the cyclomatic complexity analyzer.
-     *
-     * @return CyclomaticComplexityAnalyzer
      */
-    private function createCyclomaticComplexityAnalyzerMock(int $ccn = 42)
+    private function createCyclomaticComplexityAnalyzerMock(int $ccn = 42): CyclomaticComplexityAnalyzer
     {
         $mock = $this->getMockBuilder(CyclomaticComplexityAnalyzer::class)
             ->getMock();

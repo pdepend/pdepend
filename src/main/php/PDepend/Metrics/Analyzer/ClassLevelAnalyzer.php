@@ -142,7 +142,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      *
      * @return array<string>
      */
-    public function getRequiredAnalyzers()
+    public function getRequiredAnalyzers(): array
     {
         return [CyclomaticComplexityAnalyzer::class];
     }
@@ -301,9 +301,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * counts protected and public properties of parent classes.
      *
      * @param ASTClass|ASTEnum|ASTTrait $class The context class instance.
-     * @return int
      */
-    private function calculateVarsi(AbstractASTClassOrInterface $class)
+    private function calculateVarsi(AbstractASTClassOrInterface $class): int
     {
         // List of properties, this method only counts not overwritten properties
         $properties = [];
@@ -326,10 +325,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Calculates the Weight Method Per Class metric, this method only counts
      * protected and public methods of parent classes.
-     *
-     * @return int
      */
-    private function calculateWmciForClass(AbstractASTClassOrInterface $class)
+    private function calculateWmciForClass(AbstractASTClassOrInterface $class): int
     {
         $ccn = $this->calculateWmci($class);
 
@@ -351,10 +348,9 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     /**
      * Calculates the Weight Method Per Class metric for a trait.
      *
-     * @return int
      * @since  1.0.6
      */
-    private function calculateWmciForTrait(ASTTrait $trait)
+    private function calculateWmciForTrait(ASTTrait $trait): int
     {
         return array_sum($this->calculateWmci($trait));
     }
@@ -365,7 +361,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * @return int[]
      * @since  1.0.6
      */
-    private function calculateWmci(AbstractASTType $type)
+    private function calculateWmci(AbstractASTType $type): array
     {
         $ccn = [];
 

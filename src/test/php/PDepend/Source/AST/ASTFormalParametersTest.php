@@ -95,10 +95,8 @@ class ASTFormalParametersTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTFormalParameters
      */
-    private function getFirstFormalParametersInFunction()
+    private function getFirstFormalParametersInFunction(): ASTFormalParameters
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTFormalParameters::class

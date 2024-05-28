@@ -58,10 +58,9 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
     /**
      * testUnaryExpression
      *
-     * @return ASTUnaryExpression
      * @since 1.0.2
      */
-    public function testUnaryExpression()
+    public function testUnaryExpression(): ASTUnaryExpression
     {
         $expr = $this->getFirstUnaryExpressionInFunction();
         static::assertInstanceOf(ASTUnaryExpression::class, $expr);
@@ -109,10 +108,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
         static::assertSame(14, $expr->getEndColumn());
     }
 
-    /**
-     * @return ASTUnaryExpression
-     */
-    public function testUnaryExpressionNot()
+    public function testUnaryExpressionNot(): ASTUnaryExpression
     {
         $expr = $this->getFirstUnaryExpressionInFunction();
         static::assertInstanceOf(ASTUnaryExpression::class, $expr);
@@ -152,10 +148,7 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
         static::assertSame(5, $expr->getEndColumn());
     }
 
-    /**
-     * @return ASTUnaryExpression
-     */
-    public function testUnaryExpressionSuppressWarning()
+    public function testUnaryExpressionSuppressWarning(): ASTUnaryExpression
     {
         $expr = $this->getFirstUnaryExpressionInFunction();
         static::assertInstanceOf(ASTUnaryExpression::class, $expr);
@@ -197,10 +190,8 @@ class ASTUnaryExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTUnaryExpression
      */
-    private function getFirstUnaryExpressionInFunction()
+    private function getFirstUnaryExpressionInFunction(): ASTUnaryExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTUnaryExpression::class

@@ -164,10 +164,8 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     /**
      * Executes PDepend's text ui command and returns the exit code and shell
      * output.
-     *
-     * @return array
      */
-    protected function runTextUICommand()
+    protected function runTextUICommand(): array
     {
         $command = new Command();
 

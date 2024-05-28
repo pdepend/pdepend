@@ -114,7 +114,7 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
      *
      * @return array<string>
      */
-    public function getRequiredAnalyzers()
+    public function getRequiredAnalyzers(): array
     {
         return [CyclomaticComplexityAnalyzer::class];
     }
@@ -190,10 +190,8 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
 
     /**
      * Calculates the crap index for the given callable.
-     *
-     * @return float
      */
-    private function calculateCrapIndex(AbstractASTCallable $callable)
+    private function calculateCrapIndex(AbstractASTCallable $callable): float
     {
         $report = $this->createOrReturnCoverageReport();
 
@@ -212,10 +210,8 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
 
     /**
      * Calculates the code coverage for the given callable object.
-     *
-     * @return float
      */
-    private function calculateCoverage(AbstractASTCallable $callable)
+    private function calculateCoverage(AbstractASTCallable $callable): float
     {
         return $this->createOrReturnCoverageReport()->getCoverage($callable);
     }
@@ -223,20 +219,16 @@ class CrapIndexAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, A
     /**
      * Returns a previously created report instance or creates a new report
      * instance.
-     *
-     * @return Report
      */
-    private function createOrReturnCoverageReport()
+    private function createOrReturnCoverageReport(): Report
     {
         return $this->report ??= $this->createCoverageReport();
     }
 
     /**
      * Creates a new coverage report instance.
-     *
-     * @return Report
      */
-    private function createCoverageReport()
+    private function createCoverageReport(): Report
     {
         $factory = new Factory();
 

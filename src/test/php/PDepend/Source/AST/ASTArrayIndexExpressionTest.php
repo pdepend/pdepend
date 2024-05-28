@@ -360,10 +360,8 @@ class ASTArrayIndexExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTArrayIndexExpression
      */
-    private function getFirstArrayIndexExpressionInFunction()
+    private function getFirstArrayIndexExpressionInFunction(): ASTArrayIndexExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTArrayIndexExpression::class

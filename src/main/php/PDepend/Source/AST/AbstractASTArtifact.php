@@ -93,10 +93,8 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * Returns the source image of this ast node.
-     *
-     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->name;
     }
@@ -114,10 +112,8 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * Returns a id for this code node.
-     *
-     * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         if (!isset($this->id)) {
             $this->id = md5(uniqid('', true));
@@ -139,10 +135,8 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * Returns the source file for this item.
-     *
-     * @return ASTCompilationUnit|null
      */
-    public function getCompilationUnit()
+    public function getCompilationUnit(): ?ASTCompilationUnit
     {
         return $this->compilationUnit;
     }
@@ -234,10 +228,8 @@ abstract class AbstractASTArtifact implements ASTArtifact
     /**
      * Returns a doc comment for this node or <b>null</b> when no comment was
      * found.
-     *
-     * @return string|null
      */
-    public function getComment()
+    public function getComment(): ?string
     {
         return $this->comment;
     }
@@ -262,10 +254,8 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * Returns the line number where the class or interface declaration starts.
-     *
-     * @return int
      */
-    public function getStartLine()
+    public function getStartLine(): int
     {
         return $this->startLine;
     }
@@ -277,10 +267,8 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * Returns the line number where the class or interface declaration ends.
-     *
-     * @return int
      */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         return $this->endLine;
     }

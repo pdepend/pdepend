@@ -59,10 +59,8 @@ class MemoryCacheDriverTest extends AbstractDriverTestCase
 {
     /**
      * Creates a test fixture.
-     *
-     * @return CacheDriver
      */
-    protected function createDriver()
+    protected function createDriver(): CacheDriver
     {
         return new MemoryCacheDriver();
     }

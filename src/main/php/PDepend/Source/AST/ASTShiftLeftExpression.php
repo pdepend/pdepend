@@ -58,10 +58,8 @@ class ASTShiftLeftExpression extends ASTExpression
 
     /**
      * Returns the source image of this ast node.
-     *
-     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return self::IMAGE;
     }

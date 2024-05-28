@@ -103,10 +103,8 @@ class CloverReport implements Report
 
     /**
      * Returns the percentage code coverage for the given item instance.
-     *
-     * @return float
      */
-    public function getCoverage(AbstractASTArtifact $artifact)
+    public function getCoverage(AbstractASTArtifact $artifact): float
     {
         $lines = $this->getLines($artifact->getCompilationUnit()?->getFileName() ?? 'default');
 
@@ -141,7 +139,7 @@ class CloverReport implements Report
      * @param string $fileName The source file name.
      * @return array<bool>
      */
-    private function getLines(string $fileName)
+    private function getLines(string $fileName): array
     {
         return $this->fileLineCoverage[$fileName] ?? [];
     }

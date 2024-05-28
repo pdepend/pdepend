@@ -58,10 +58,9 @@ class ASTTypeIterableTest extends ASTNodeTestCase
     /**
      * testIterableType
      *
-     * @return ASTTypeIterable
      * @since 2.5.1
      */
-    public function testIterableType()
+    public function testIterableType(): ASTTypeIterable
     {
         $type = $this->getFirstArrayTypeInFunction();
         static::assertInstanceOf(ASTTypeIterable::class, $type);
@@ -129,10 +128,8 @@ class ASTTypeIterableTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTTypeIterable
      */
-    private function getFirstArrayTypeInFunction()
+    private function getFirstArrayTypeInFunction(): ASTTypeIterable
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTTypeIterable::class

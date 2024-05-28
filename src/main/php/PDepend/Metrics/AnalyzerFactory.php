@@ -70,7 +70,7 @@ class AnalyzerFactory
      * @return Analyzer[]
      * @throws InvalidArgumentException
      */
-    public function createRequiredForGenerators(array $generators)
+    public function createRequiredForGenerators(array $generators): array
     {
         $analyzers = [];
 

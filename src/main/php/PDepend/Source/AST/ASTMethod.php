@@ -75,10 +75,9 @@ class ASTMethod extends AbstractASTCallable
      * This method returns a OR combined integer of the declared modifiers for
      * this method.
      *
-     * @return int
      * @since  1.0.0
      */
-    public function getModifiers()
+    public function getModifiers(): int
     {
         return $this->modifiers;
     }
@@ -111,10 +110,8 @@ class ASTMethod extends AbstractASTCallable
 
     /**
      * Returns <b>true</b> if this is an abstract method.
-     *
-     * @return bool
      */
-    public function isAbstract()
+    public function isAbstract(): bool
     {
         return (($this->modifiers & State::IS_ABSTRACT) === State::IS_ABSTRACT);
     }
@@ -122,10 +119,8 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns <b>true</b> if this node is marked as public, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isPublic()
+    public function isPublic(): bool
     {
         return (($this->modifiers & State::IS_PUBLIC) === State::IS_PUBLIC);
     }
@@ -133,10 +128,8 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns <b>true</b> if this node is marked as protected, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isProtected()
+    public function isProtected(): bool
     {
         return (($this->modifiers & State::IS_PROTECTED) === State::IS_PROTECTED);
     }
@@ -144,10 +137,8 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns <b>true</b> if this node is marked as private, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isPrivate()
+    public function isPrivate(): bool
     {
         return (($this->modifiers & State::IS_PRIVATE) === State::IS_PRIVATE);
     }
@@ -155,10 +146,8 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns <b>true</b> when this node is declared as static, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isStatic()
+    public function isStatic(): bool
     {
         return (($this->modifiers & State::IS_STATIC) === State::IS_STATIC);
     }
@@ -166,10 +155,8 @@ class ASTMethod extends AbstractASTCallable
     /**
      * Returns <b>true</b> when this node is declared as final, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isFinal()
+    public function isFinal(): bool
     {
         return (($this->modifiers & State::IS_FINAL) === State::IS_FINAL);
     }
@@ -199,7 +186,7 @@ class ASTMethod extends AbstractASTCallable
      * @throws ASTCompilationUnitNotFoundException When no parent was set.
      * @since  0.10.0
      */
-    public function getCompilationUnit()
+    public function getCompilationUnit(): ?ASTCompilationUnit
     {
         if ($this->parentClass === null) {
             throw new ASTCompilationUnitNotFoundException($this);

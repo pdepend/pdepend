@@ -192,8 +192,6 @@ abstract class AbstractDriverTestCase extends AbstractTestCase
 
     /**
      * Creates a test fixture.
-     *
-     * @return CacheDriver
      */
-    abstract protected function createDriver();
+    abstract protected function createDriver(): CacheDriver;
 }

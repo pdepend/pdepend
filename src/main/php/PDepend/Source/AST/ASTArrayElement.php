@@ -66,10 +66,8 @@ class ASTArrayElement extends ASTExpression
     /**
      * This method will return <b>true</b> when the element value is passed by
      * reference.
-     *
-     * @return bool
      */
-    public function isByReference()
+    public function isByReference(): bool
     {
         return $this->getMetadataBoolean(5);
     }
@@ -85,11 +83,10 @@ class ASTArrayElement extends ASTExpression
     /**
      * Returns the total number of the used property bag.
      *
-     * @return int
      * @see    ASTNode#getMetadataSize()
      * @since  0.10.4
      */
-    protected function getMetadataSize()
+    protected function getMetadataSize(): int
     {
         return 6;
     }

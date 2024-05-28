@@ -93,10 +93,8 @@ class ASTBreakStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTBreakStatement
      */
-    private function getFirstBreakStatementInFunction()
+    private function getFirstBreakStatementInFunction(): ASTBreakStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTBreakStatement::class

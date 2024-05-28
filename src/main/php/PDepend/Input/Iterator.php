@@ -85,10 +85,9 @@ class Iterator extends FilterIterator
     /**
      * Returns the full qualified realpath for the currently active file.
      *
-     * @return string
      * @since  0.10.0
      */
-    protected function getFullPath()
+    protected function getFullPath(): string
     {
         return $this->getInnerIterator()->current()->getRealpath();
     }
@@ -97,10 +96,9 @@ class Iterator extends FilterIterator
      * Returns the local path of the current file, if the root path property was
      * set. If not, this method returns the absolute file path.
      *
-     * @return string
      * @since  0.10.0
      */
-    protected function getLocalPath()
+    protected function getLocalPath(): string
     {
         if ($this->rootPath && str_starts_with($this->getFullPath(), $this->rootPath)) {
             return substr($this->getFullPath(), strlen($this->rootPath));

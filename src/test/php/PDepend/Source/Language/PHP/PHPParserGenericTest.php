@@ -702,10 +702,8 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
-     *
-     * @return AbstractASTClassOrInterface
      */
-    protected function getFirstTypeForTestCase()
+    protected function getFirstTypeForTestCase(): AbstractASTClassOrInterface
     {
         return $this->parseCodeResourceForTest()
             ->current()
@@ -716,10 +714,8 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * Returns the first method that could be found in the code under test for
      * the calling test case.
-     *
-     * @return ASTMethod
      */
-    protected function getFirstMethodForTestCase()
+    protected function getFirstMethodForTestCase(): ASTMethod
     {
         return $this->getFirstTypeForTestCase()
             ->getMethods()
@@ -729,10 +725,8 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * Returns the first property that could be found in the code under test for
      * the calling test case.
-     *
-     * @return ASTProperty
      */
-    protected function getFirstPropertyForTestCase()
+    protected function getFirstPropertyForTestCase(): ASTProperty
     {
         $class = $this->getFirstTypeForTestCase();
         static::assertInstanceOf(ASTClass::class, $class);
@@ -1161,10 +1155,8 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testSpaceshipOperatorWithArrays
-     *
-     * @return \PDepend\Source\AST\ASTNode
      */
-    public function testSpaceshipOperatorWithArrays()
+    public function testSpaceshipOperatorWithArrays(): \PDepend\Source\AST\ASTNode
     {
         $expr = $this->getFirstClassMethodForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
@@ -1232,10 +1224,7 @@ class PHPParserGenericTest extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    /**
-     * @return ASTNamespace
-     */
-    public function testGroupUseStatement()
+    public function testGroupUseStatement(): ASTNamespace
     {
         $namespaces = $this->parseCodeResourceForTest();
         static::assertNotNull($namespaces);

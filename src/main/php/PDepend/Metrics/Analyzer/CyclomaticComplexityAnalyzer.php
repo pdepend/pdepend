@@ -115,10 +115,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
 
     /**
      * Returns the cyclomatic complexity for the given <b>$node</b> instance.
-     *
-     * @return int
      */
-    public function getCcn(ASTArtifact $node)
+    public function getCcn(ASTArtifact $node): int
     {
         $metrics = $this->getNodeMetrics($node);
 
@@ -128,10 +126,8 @@ class CyclomaticComplexityAnalyzer extends AbstractCachingAnalyzer implements An
     /**
      * Returns the extended cyclomatic complexity for the given <b>$node</b>
      * instance.
-     *
-     * @return int
      */
-    public function getCcn2(ASTArtifact $node)
+    public function getCcn2(ASTArtifact $node): int
     {
         $metrics = $this->getNodeMetrics($node);
 

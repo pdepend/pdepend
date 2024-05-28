@@ -61,12 +61,11 @@ abstract class PHPParserVersion83 extends PHPParserVersion82
     /**
      * Parse a typed constant (PHP >= 8.3).
      *
-     * @return ASTConstantDeclarator
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
      * @since  1.16.0
      */
-    protected function parseTypedConstantDeclarator()
+    protected function parseTypedConstantDeclarator(): ASTConstantDeclarator
     {
         $constantType = $this->parseTypeHint();
         $tokenType = $this->tokenizer->peek();
@@ -84,10 +83,9 @@ abstract class PHPParserVersion83 extends PHPParserVersion82
     }
 
     /**
-     * @return bool
      * @since  2.16.3
      */
-    protected function isConstantName(int $tokenType)
+    protected function isConstantName(int $tokenType): bool
     {
         return parent::isConstantName($tokenType) || $tokenType === Tokens::T_BITWISE_OR;
     }

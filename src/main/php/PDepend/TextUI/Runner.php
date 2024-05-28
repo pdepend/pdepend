@@ -217,11 +217,10 @@ class Runner
      * Starts the main PDepend process and returns <b>true</b> after a successful
      * execution.
      *
-     * @return int
      * @throws RuntimeException An exception with a readable error message and
      *                          an exit code.
      */
-    public function run()
+    public function run(): int
     {
         $engine = $this->engine;
         $engine->setOptions($this->options);
@@ -296,10 +295,8 @@ class Runner
     /**
      * This method will return <b>true</b> when there were errors during the
      * parse process.
-     *
-     * @return bool
      */
-    public function hasParseErrors()
+    public function hasParseErrors(): bool
     {
         return (count($this->parseErrors) > 0);
     }
@@ -310,7 +307,7 @@ class Runner
      *
      * @return array<string>
      */
-    public function getParseErrors()
+    public function getParseErrors(): array
     {
         return $this->parseErrors;
     }

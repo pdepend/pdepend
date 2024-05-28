@@ -125,10 +125,8 @@ class ASTArgumentsTest extends ASTNodeTestCase
 
     /**
      * Returns an arguments instance for the currently executed test case.
-     *
-     * @return ASTArguments
      */
-    private function getFirstArgumentsOfFunction()
+    private function getFirstArgumentsOfFunction(): ASTArguments
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTArguments::class

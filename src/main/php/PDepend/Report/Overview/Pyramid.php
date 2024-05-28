@@ -118,7 +118,7 @@ class Pyramid implements FileAwareGenerator
      *
      * @return array<string>
      */
-    public function getAcceptedAnalyzers()
+    public function getAcceptedAnalyzers(): array
     {
         return [
             'pdepend.analyzer.coupling',
@@ -134,9 +134,8 @@ class Pyramid implements FileAwareGenerator
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param Analyzer $analyzer The analyzer to log.
-     * @return bool
      */
-    public function log(Analyzer $analyzer)
+    public function log(Analyzer $analyzer): bool
     {
         if ($analyzer instanceof CyclomaticComplexityAnalyzer) {
             $this->cyclomaticComplexity = $analyzer;
@@ -219,9 +218,8 @@ class Pyramid implements FileAwareGenerator
      *
      * @param string $name The metric/field identfier.
      * @param mixed $value The metric/field value.
-     * @return string|null
      */
-    private function computeThreshold(string $name, mixed $value)
+    private function computeThreshold(string $name, mixed $value): ?string
     {
         if (!isset($this->thresholds[$name])) {
             return null;
@@ -250,7 +248,7 @@ class Pyramid implements FileAwareGenerator
      * @param array<string, float> $metrics The aggregated project metrics.
      * @return array<string, float>
      */
-    private function computeProportions(array $metrics)
+    private function computeProportions(array $metrics): array
     {
         $orders = [
             ['cyclo', 'loc', 'nom', 'noc', 'nop'],
@@ -281,7 +279,7 @@ class Pyramid implements FileAwareGenerator
      * @return array<string, float|int>
      * @throws RuntimeException If one of the required analyzers isn't set.
      */
-    private function collectMetrics()
+    private function collectMetrics(): array
     {
         if (!isset($this->coupling)) {
             throw new RuntimeException('Missing Coupling analyzer.');

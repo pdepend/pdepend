@@ -381,20 +381,16 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
 
     /**
      * Returns the first trait found the code under test.
-     *
-     * @return ASTTrait
      */
-    protected function getFirstTraitForTest()
+    protected function getFirstTraitForTest(): ASTTrait
     {
         return parent::getFirstTraitForTestCase();
     }
 
     /**
      * Creates an item instance.
-     *
-     * @return AbstractASTArtifact
      */
-    protected function createItem()
+    protected function createItem(): AbstractASTArtifact
     {
         return new ASTTrait(__CLASS__);
     }

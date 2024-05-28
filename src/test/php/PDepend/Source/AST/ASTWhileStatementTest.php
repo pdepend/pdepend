@@ -85,10 +85,9 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatement
      *
-     * @return ASTWhileStatement
      * @since 1.0.2
      */
-    public function testWhileStatement()
+    public function testWhileStatement(): ASTWhileStatement
     {
         $stmt = $this->getFirstWhileStatementInFunction();
         static::assertInstanceOf(ASTWhileStatement::class, $stmt);
@@ -139,10 +138,9 @@ class ASTWhileStatementTest extends ASTNodeTestCase
     /**
      * testWhileStatementWithAlternativeScope
      *
-     * @return ASTWhileStatement
      * @since 1.0.2
      */
-    public function testWhileStatementWithAlternativeScope()
+    public function testWhileStatementWithAlternativeScope(): ASTWhileStatement
     {
         $stmt = $this->getFirstWhileStatementInFunction();
         static::assertInstanceOf(ASTWhileStatement::class, $stmt);
@@ -201,10 +199,8 @@ class ASTWhileStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTWhileStatement
      */
-    private function getFirstWhileStatementInFunction()
+    private function getFirstWhileStatementInFunction(): ASTWhileStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTWhileStatement::class

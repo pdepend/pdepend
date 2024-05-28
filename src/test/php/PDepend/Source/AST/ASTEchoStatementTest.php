@@ -93,10 +93,8 @@ class ASTEchoStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTEchoStatement
      */
-    private function getFirstEchoStatementInFunction()
+    private function getFirstEchoStatementInFunction(): ASTEchoStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTEchoStatement::class

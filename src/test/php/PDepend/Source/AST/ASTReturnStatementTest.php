@@ -58,10 +58,9 @@ class ASTReturnStatementTest extends ASTNodeTestCase
     /**
      * testReturnStatement
      *
-     * @return ASTReturnStatement
      * @since 1.0.2
      */
-    public function testReturnStatement()
+    public function testReturnStatement(): ASTReturnStatement
     {
         $stmt = $this->getFirstReturnStatementInFunction();
         static::assertInstanceOf(ASTReturnStatement::class, $stmt);
@@ -129,10 +128,8 @@ class ASTReturnStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTReturnStatement
      */
-    private function getFirstReturnStatementInFunction()
+    private function getFirstReturnStatementInFunction(): ASTReturnStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTReturnStatement::class

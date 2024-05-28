@@ -255,20 +255,17 @@ class ASTCallableTest extends AbstractTestCase
      * Returns the first callable found in the test file for the calling test
      * method.
      *
-     * @return AbstractASTCallable
      * @since 0.10.0
      */
-    protected function getFirstCallableForTest()
+    protected function getFirstCallableForTest(): AbstractASTCallable
     {
         return $this->getFirstFunctionForTestCase();
     }
 
     /**
      * Returns a mocked instance of the callable class.
-     *
-     * @return AbstractASTCallable
      */
-    protected function getCallableMock()
+    protected function getCallableMock(): AbstractASTCallable
     {
         return $this->getAbstractClassMock(
             AbstractASTCallable::class,

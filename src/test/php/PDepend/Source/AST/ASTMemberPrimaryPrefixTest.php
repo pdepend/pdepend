@@ -741,10 +741,8 @@ class ASTMemberPrimaryPrefixTest extends ASTNodeTestCase
 
     /**
      * Returns a test member primary prefix.
-     *
-     * @return ASTMemberPrimaryPrefix
      */
-    private function getFirstMemberPrimaryPrefixInFunction()
+    private function getFirstMemberPrimaryPrefixInFunction(): ASTMemberPrimaryPrefix
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTMemberPrimaryPrefix::class

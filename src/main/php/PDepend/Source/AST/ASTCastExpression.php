@@ -95,50 +95,40 @@ class ASTCastExpression extends ASTUnaryExpression
 
     /**
      * Returns <b>true</b> when this node represents an array cast-expression.
-     *
-     * @return bool
      */
-    public function isArray()
+    public function isArray(): bool
     {
         return ($this->getImage() === '(array)');
     }
 
     /**
      * Returns <b>true</b> when this node represents an object cast-expression.
-     *
-     * @return bool
      */
-    public function isObject()
+    public function isObject(): bool
     {
         return ($this->getImage() === '(object)');
     }
 
     /**
      * Returns <b>true</b> when this node represents a boolean cast-expression.
-     *
-     * @return bool
      */
-    public function isBoolean()
+    public function isBoolean(): bool
     {
         return ($this->getImage() === '(bool)' || $this->getImage() === '(boolean)');
     }
 
     /**
      * Returns <b>true</b> when this node represents an integer cast-expression.
-     *
-     * @return bool
      */
-    public function isInteger()
+    public function isInteger(): bool
     {
         return ($this->getImage() === '(int)' || $this->getImage() === '(integer)');
     }
 
     /**
      * Returns <b>true</b> when this node represents a float cast-expression.
-     *
-     * @return bool
      */
-    public function isFloat()
+    public function isFloat(): bool
     {
         return ($this->getImage() === '(real)'
             || $this->getImage() === '(float)'
@@ -148,20 +138,16 @@ class ASTCastExpression extends ASTUnaryExpression
 
     /**
      * Returns <b>true</b> when this node represents a string cast-expression.
-     *
-     * @return bool
      */
-    public function isString()
+    public function isString(): bool
     {
         return (strcmp('(string)', $this->getImage()) === 0);
     }
 
     /**
      * Returns <b>true</b> when this node represents an unset cast-expression.
-     *
-     * @return bool
      */
-    public function isUnset()
+    public function isUnset(): bool
     {
         return ($this->getImage() === '(unset)');
     }

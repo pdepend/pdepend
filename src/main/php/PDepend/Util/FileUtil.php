@@ -55,10 +55,9 @@ final class FileUtil
      * Returns the home directory of the current user if it exists. Otherwise
      * this method will return the system temp directory.
      *
-     * @return string
      * @since  0.10.0
      */
-    public static function getUserHomeDirOrSysTempDir()
+    public static function getUserHomeDirOrSysTempDir(): string
     {
         $home = self::getUserHomeDir();
 
@@ -71,10 +70,8 @@ final class FileUtil
 
     /**
      * Returns the system temp directory.
-     *
-     * @return string
      */
-    public static function getSysTempDir()
+    public static function getSysTempDir(): string
     {
         return sys_get_temp_dir();
     }
@@ -82,10 +79,9 @@ final class FileUtil
     /**
      * Returns the home directory of the current user.
      *
-     * @return string
      * @since  0.10.0
      */
-    public static function getUserHomeDir()
+    public static function getUserHomeDir(): string
     {
         $userHomeDir = getenv('HOME');
 

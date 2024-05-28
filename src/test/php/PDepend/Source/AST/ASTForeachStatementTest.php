@@ -293,10 +293,8 @@ class ASTForeachStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTForeachStatement
      */
-    private function getFirstForeachStatementInFunction()
+    private function getFirstForeachStatementInFunction(): ASTForeachStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTForeachStatement::class

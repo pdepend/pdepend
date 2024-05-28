@@ -249,10 +249,8 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTClassOrInterfaceReference
      */
-    private function getFirstReferenceInFunction()
+    private function getFirstReferenceInFunction(): ASTClassOrInterfaceReference
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTClassOrInterfaceReference::class
@@ -262,10 +260,9 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * Returns the first reference node for the currently executed test case.
      *
-     * @return ASTClassOrInterfaceReference
      * @since 0.10.5
      */
-    private function getFirstReferenceInClass()
+    private function getFirstReferenceInClass(): ASTClassOrInterfaceReference
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTClassOrInterfaceReference::class
@@ -275,10 +272,9 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
     /**
      * Returns the first reference node for the currently executed test case.
      *
-     * @return ASTClassOrInterfaceReference
      * @since 0.10.5
      */
-    private function getFirstReferenceInInterface()
+    private function getFirstReferenceInInterface(): ASTClassOrInterfaceReference
     {
         return $this->getFirstNodeOfTypeInInterface(
             ASTClassOrInterfaceReference::class

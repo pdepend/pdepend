@@ -312,10 +312,8 @@ class ASTIfStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTIfStatement
      */
-    private function getFirstIfStatementInFunction()
+    private function getFirstIfStatementInFunction(): ASTIfStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTIfStatement::class

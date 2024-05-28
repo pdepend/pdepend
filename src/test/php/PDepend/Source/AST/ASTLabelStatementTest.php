@@ -93,10 +93,8 @@ class ASTLabelStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTLabelStatement
      */
-    private function getFirstLabelStatementInFunction()
+    private function getFirstLabelStatementInFunction(): ASTLabelStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTLabelStatement::class

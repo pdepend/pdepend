@@ -73,7 +73,7 @@ class ASTClassOrInterfaceReferenceIterator extends ASTArtifactList
      * @param ASTClassOrInterfaceReference[] $references
      * @return AbstractASTClassOrInterface[]
      */
-    protected function createClassesAndInterfaces(array $references)
+    protected function createClassesAndInterfaces(array $references): array
     {
         $classesAndInterfaces = [];
 

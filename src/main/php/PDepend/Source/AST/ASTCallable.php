@@ -54,5 +54,5 @@ interface ASTCallable extends ASTNode
     /**
      * @return ?ASTType
      */
-    public function getReturnType();
+    public function getReturnType(): ?ASTType;
 }

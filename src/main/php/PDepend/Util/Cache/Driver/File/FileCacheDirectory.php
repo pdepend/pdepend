@@ -84,9 +84,8 @@ class FileCacheDirectory
      * full qualified path for that cache directory.
      *
      * @param string $key The cache for an entry.
-     * @return string
      */
-    public function createCacheDirectory(string $key)
+    public function createCacheDirectory(string $key): string
     {
         return $this->createOrReturnCacheDirectory($key);
     }
@@ -97,9 +96,8 @@ class FileCacheDirectory
      * the full qualified path for that cache directory.
      *
      * @param string $key The cache for an entry.
-     * @return string
      */
-    protected function createOrReturnCacheDirectory(string $key)
+    protected function createOrReturnCacheDirectory(string $key): string
     {
         $path = $this->getCacheDir() . '/' . substr($key, 0, 2);
         if (false === file_exists($path)) {
@@ -113,9 +111,8 @@ class FileCacheDirectory
      * Ensures that the given <b>$cacheDir</b> really exists.
      *
      * @param string $cacheDir The cache root directory.
-     * @return string
      */
-    protected function ensureExists(string $cacheDir)
+    protected function ensureExists(string $cacheDir): string
     {
         if (false === file_exists($cacheDir)) {
             @mkdir($cacheDir, 0o775, true);
@@ -127,20 +124,16 @@ class FileCacheDirectory
     /**
      * Tests if the current software cache version is similar to the stored
      * file system cache version.
-     *
-     * @return bool
      */
-    protected function isValidVersion()
+    protected function isValidVersion(): bool
     {
         return (self::VERSION === $this->readVersion());
     }
 
     /**
      * Reads the stored cache version number from the cache root directory.
-     *
-     * @return string|null
      */
-    protected function readVersion()
+    protected function readVersion(): ?string
     {
         if (file_exists($this->getVersionFile())) {
             return trim(file_get_contents($this->getVersionFile()) ?: '');
@@ -160,20 +153,16 @@ class FileCacheDirectory
 
     /**
      * Returns the file name for the used version file.
-     *
-     * @return string
      */
-    protected function getVersionFile()
+    protected function getVersionFile(): string
     {
         return $this->getCacheDir() . '/_version';
     }
 
     /**
      * Returns the cache root directory.
-     *
-     * @return string
      */
-    protected function getCacheDir()
+    protected function getCacheDir(): string
     {
         return $this->cacheDir;
     }

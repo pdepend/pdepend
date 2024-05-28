@@ -93,10 +93,8 @@ class ASTConditionalExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTConditionalExpression
      */
-    private function getFirstConditionalExpressionInFunction()
+    private function getFirstConditionalExpressionInFunction(): ASTConditionalExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTConditionalExpression::class

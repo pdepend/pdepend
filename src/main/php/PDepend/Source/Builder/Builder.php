@@ -192,27 +192,24 @@ interface Builder extends IteratorAggregate
      * qualified name. It will create a new {@link ASTClass}
      * instance when no matching type exists.
      *
-     * @return AbstractASTClassOrInterface
      * @since  0.9.5
      */
-    public function getClassOrInterface(string $qualifiedName);
+    public function getClassOrInterface(string $qualifiedName): AbstractASTClassOrInterface;
 
     /**
      * Builds a new code type reference instance.
      *
      * @param string $qualifiedName The qualified name of the referenced type.
-     * @return ASTClassOrInterfaceReference
      * @since  0.9.5
      */
-    public function buildAstClassOrInterfaceReference(string $qualifiedName);
+    public function buildAstClassOrInterfaceReference(string $qualifiedName): ASTClassOrInterfaceReference;
 
     /**
      * Builds a new php trait instance.
      *
-     * @return ASTTrait
      * @since  1.0.0
      */
-    public function buildTrait(string $qualifiedName);
+    public function buildTrait(string $qualifiedName): ASTTrait;
 
     /**
      * Restores an existing trait instance within the context of this builder.
@@ -226,34 +223,28 @@ interface Builder extends IteratorAggregate
      * qualified name. It will create a new {@link ASTTrait}
      * instance when no matching type exists.
      *
-     * @return ASTTrait
      * @since  1.0.0
      */
-    public function getTrait(string $qualifiedName);
+    public function getTrait(string $qualifiedName): ASTTrait;
 
     /**
      * Builds a new code class instance.
-     *
-     * @return ASTClass
      */
-    public function buildClass(string $qualifiedName);
+    public function buildClass(string $qualifiedName): ASTClass;
 
     /**
      * Builds an anonymous class instance.
-     *
-     * @return ASTAnonymousClass
      */
-    public function buildAnonymousClass();
+    public function buildAnonymousClass(): ASTAnonymousClass;
 
     /**
      * This method will try to find an already existing instance for the given
      * qualified name. It will create a new {@link ASTClass}
      * instance when no matching type exists.
      *
-     * @return ASTClass|ASTEnum
      * @since  0.9.5
      */
-    public function getClass(string $qualifiedName);
+    public function getClass(string $qualifiedName): ASTClass|ASTEnum;
 
     /**
      * Restores an existing class instance within the context of this builder.
@@ -273,17 +264,14 @@ interface Builder extends IteratorAggregate
      * Builds a new code type reference instance.
      *
      * @param string $qualifiedName The qualified name of the referenced type.
-     * @return ASTClassReference
      * @since  0.9.5
      */
-    public function buildAstClassReference(string $qualifiedName);
+    public function buildAstClassReference(string $qualifiedName): ASTClassReference;
 
     /**
      * Builds a new new interface instance.
-     *
-     * @return ASTInterface
      */
-    public function buildInterface(string $qualifiedName);
+    public function buildInterface(string $qualifiedName): ASTInterface;
 
     /**
      * Restores an existing interface instance within the context of this builder.
@@ -298,236 +286,205 @@ interface Builder extends IteratorAggregate
      * instance when no matching type exists.
      *
      * @param string $qualifiedName The full qualified type identifier.
-     * @return ASTInterface
      * @since  0.9.5
      */
-    public function getInterface(string $qualifiedName);
+    public function getInterface(string $qualifiedName): ASTInterface;
 
     /**
      * Builds a new namespace instance.
-     *
-     * @return ASTNamespace
      */
-    public function buildNamespace(string $name);
+    public function buildNamespace(string $name): ASTNamespace;
 
     /**
      * Builds a new method instance.
-     *
-     * @return ASTMethod
      */
-    public function buildMethod(string $name);
+    public function buildMethod(string $name): ASTMethod;
 
     /**
      * Builds a new function instance.
-     *
-     * @return ASTFunction
      */
-    public function buildFunction(string $name);
+    public function buildFunction(string $name): ASTFunction;
 
     /**
      * Builds a new self reference instance.
      *
-     * @return ASTSelfReference
      * @since  0.9.6
      */
-    public function buildAstSelfReference(AbstractASTClassOrInterface $type);
+    public function buildAstSelfReference(AbstractASTClassOrInterface $type): ASTSelfReference;
 
     /**
      * Builds a new parent reference instance.
      *
      * @param ASTClassOrInterfaceReference $reference The type instance that reference the concrete target of parent.
-     * @return ASTParentReference
      * @since  0.9.6
      */
-    public function buildAstParentReference(ASTClassOrInterfaceReference $reference);
+    public function buildAstParentReference(ASTClassOrInterfaceReference $reference): ASTParentReference;
 
     /**
      * Builds a new static reference instance.
      *
-     * @return ASTStaticReference
      * @since  0.9.6
      */
-    public function buildAstStaticReference(AbstractASTClassOrInterface $owner);
+    public function buildAstStaticReference(AbstractASTClassOrInterface $owner): ASTStaticReference;
 
     /**
      * Builds a new field declaration node.
      *
-     * @return ASTFieldDeclaration
      * @since  0.9.6
      */
-    public function buildAstFieldDeclaration();
+    public function buildAstFieldDeclaration(): ASTFieldDeclaration;
 
     /**
      * Builds a new variable declarator node.
      *
      * @param string $image The source image for the variable declarator.
-     * @return ASTVariableDeclarator
      * @since  0.9.6
      */
-    public function buildAstVariableDeclarator(string $image);
+    public function buildAstVariableDeclarator(string $image): ASTVariableDeclarator;
 
     /**
      * Builds a new constant node.
      *
      * @param string $image The source image for the constant.
-     * @return ASTConstant
      * @since  0.9.6
      */
-    public function buildAstConstant(string $image);
+    public function buildAstConstant(string $image): ASTConstant;
 
     /**
      * Builds a new variable node.
      *
      * @param string $image The source image for the variable.
-     * @return ASTVariable
      * @since  0.9.6
      */
-    public function buildAstVariable(string $image);
+    public function buildAstVariable(string $image): ASTVariable;
 
     /**
      * Builds a new variable variable node.
      *
      * @param string $image The source image for the variable variable.
-     * @return ASTVariableVariable
      * @since  0.9.6
      */
-    public function buildAstVariableVariable(string $image);
+    public function buildAstVariableVariable(string $image): ASTVariableVariable;
 
     /**
      * Builds a new compound variable node.
      *
      * @param string $image The source image for the compound variable.
-     * @return ASTCompoundVariable
      * @since  0.9.6
      */
-    public function buildAstCompoundVariable(string $image);
+    public function buildAstCompoundVariable(string $image): ASTCompoundVariable;
 
     /**
      * Builds a new compound expression node.
      *
-     * @return ASTCompoundExpression
      * @since  0.9.6
      */
-    public function buildAstCompoundExpression();
+    public function buildAstCompoundExpression(): ASTCompoundExpression;
 
     /**
      * Builds a new static variable declaration node.
      *
      * @param string $image The source image for the static declaration.
-     * @return ASTStaticVariableDeclaration
      * @since  0.9.6
      */
-    public function buildAstStaticVariableDeclaration(string $image);
+    public function buildAstStaticVariableDeclaration(string $image): ASTStaticVariableDeclaration;
 
     /**
      * Builds a new closure node.
      *
-     * @return ASTClosure
      * @since  0.9.12
      */
-    public function buildAstClosure();
+    public function buildAstClosure(): ASTClosure;
 
     /**
      * Builds a new formal parameters node.
      *
-     * @return ASTFormalParameters
      * @since  0.9.6
      */
-    public function buildAstFormalParameters();
+    public function buildAstFormalParameters(): ASTFormalParameters;
 
     /**
      * Builds a new formal parameter node.
      *
-     * @return ASTFormalParameter
      * @since  0.9.6
      */
-    public function buildAstFormalParameter();
+    public function buildAstFormalParameter(): ASTFormalParameter;
 
     /**
      * Builds a new expression node.
      *
-     * @return ASTExpression
      * @since 0.9.8
      */
-    public function buildAstExpression(?string $image = null);
+    public function buildAstExpression(?string $image = null): ASTExpression;
 
     /**
      * Builds a new assignment expression node.
      *
      * @param string $image The assignment operator.
-     * @return ASTAssignmentExpression
      * @since  0.9.8
      */
-    public function buildAstAssignmentExpression(string $image);
+    public function buildAstAssignmentExpression(string $image): ASTAssignmentExpression;
 
     /**
      * Builds a new allocation expression node.
      *
      * @param string $image The source image of this expression.
-     * @return ASTAllocationExpression
      * @since  0.9.6
      */
-    public function buildAstAllocationExpression(string $image);
+    public function buildAstAllocationExpression(string $image): ASTAllocationExpression;
 
     /**
      * Builds a new eval-expression node.
      *
      * @param string $image The source image of this expression.
-     * @return ASTEvalExpression
      * @since  0.9.12
      */
-    public function buildAstEvalExpression(string $image);
+    public function buildAstEvalExpression(string $image): ASTEvalExpression;
 
     /**
      * Builds a new exit-expression instance.
      *
      * @param string $image The source code image for this node.
-     * @return ASTExitExpression
      * @since  0.9.12
      */
-    public function buildAstExitExpression(string $image);
+    public function buildAstExitExpression(string $image): ASTExitExpression;
 
     /**
      * Builds a new clone-expression node.
      *
      * @param string $image The source image of this expression.
-     * @return ASTCloneExpression
      * @since  0.9.12
      */
-    public function buildAstCloneExpression(string $image);
+    public function buildAstCloneExpression(string $image): ASTCloneExpression;
 
     /**
      * Builds a new list-expression node.
      *
      * @param string $image The source image of this expression.
-     * @return ASTListExpression
      * @since  0.9.12
      */
-    public function buildAstListExpression(string $image);
+    public function buildAstListExpression(string $image): ASTListExpression;
 
     /**
      * Builds a new include- or include_once-expression.
      *
-     * @return ASTIncludeExpression
      * @since  0.9.12
      */
-    public function buildAstIncludeExpression();
+    public function buildAstIncludeExpression(): ASTIncludeExpression;
 
     /**
      * Builds a new require- or require_once-expression.
      *
-     * @return ASTRequireExpression
      * @since  0.9.12
      */
-    public function buildAstRequireExpression();
+    public function buildAstRequireExpression(): ASTRequireExpression;
 
     /**
      * Builds a new array-expression node.
      *
-     * @return ASTArrayIndexExpression
      * @since  0.9.12
      */
-    public function buildAstArrayIndexExpression();
+    public function buildAstArrayIndexExpression(): ASTArrayIndexExpression;
 
     /**
      * Builds a new string-expression node.
@@ -538,19 +495,17 @@ interface Builder extends IteratorAggregate
      * //     --------
      * </code>
      *
-     * @return ASTStringIndexExpression
      * @since  0.9.12
      */
-    public function buildAstStringIndexExpression();
+    public function buildAstStringIndexExpression(): ASTStringIndexExpression;
 
     /**
      * Builds a new instanceof-expression node.
      *
      * @param string $image The source image of this expression.
-     * @return ASTInstanceOfExpression
      * @since  0.9.6
      */
-    public function buildAstInstanceOfExpression(string $image);
+    public function buildAstInstanceOfExpression(string $image): ASTInstanceOfExpression;
 
     /**
      * Builds a new isset-expression node.
@@ -567,10 +522,9 @@ interface Builder extends IteratorAggregate
      * }
      * </code>
      *
-     * @return ASTIssetExpression
      * @since  0.9.12
      */
-    public function buildAstIssetExpression();
+    public function buildAstIssetExpression(): ASTIssetExpression;
 
     /**
      * Builds a new boolean conditional-expression.
@@ -581,10 +535,9 @@ interface Builder extends IteratorAggregate
      *         --------------
      * </code>
      *
-     * @return ASTConditionalExpression
      * @since  0.9.8
      */
-    public function buildAstConditionalExpression();
+    public function buildAstConditionalExpression(): ASTConditionalExpression;
 
     /**
      * Builds a new print-expression.
@@ -595,170 +548,150 @@ interface Builder extends IteratorAggregate
      * -------------
      * </code>
      *
-     * @return ASTPrintExpression
      * @since 2.3
      */
-    public function buildAstPrintExpression();
+    public function buildAstPrintExpression(): ASTPrintExpression;
 
     /**
      * Build a new shift left expression.
      *
-     * @return ASTShiftLeftExpression
      * @since  1.0.1
      */
-    public function buildAstShiftLeftExpression();
+    public function buildAstShiftLeftExpression(): ASTShiftLeftExpression;
 
     /**
      * Build a new shift right expression.
      *
-     * @return ASTShiftRightExpression
      * @since  1.0.1
      */
-    public function buildAstShiftRightExpression();
+    public function buildAstShiftRightExpression(): ASTShiftRightExpression;
 
     /**
      * Builds a new boolean and-expression.
      *
-     * @return ASTBooleanAndExpression
      * @since  0.9.8
      */
-    public function buildAstBooleanAndExpression();
+    public function buildAstBooleanAndExpression(): ASTBooleanAndExpression;
 
     /**
      * Builds a new boolean or-expression.
      *
-     * @return ASTBooleanOrExpression
      * @since  0.9.8
      */
-    public function buildAstBooleanOrExpression();
+    public function buildAstBooleanOrExpression(): ASTBooleanOrExpression;
 
     /**
      * Builds a new logical <b>and</b>-expression.
      *
-     * @return ASTLogicalAndExpression
      * @since  0.9.8
      */
-    public function buildAstLogicalAndExpression();
+    public function buildAstLogicalAndExpression(): ASTLogicalAndExpression;
 
     /**
      * Builds a new logical <b>or</b>-expression.
      *
-     * @return ASTLogicalOrExpression
      * @since  0.9.8
      */
-    public function buildAstLogicalOrExpression();
+    public function buildAstLogicalOrExpression(): ASTLogicalOrExpression;
 
     /**
      * Builds a new logical <b>xor</b>-expression.
      *
-     * @return ASTLogicalXorExpression
      * @since  0.9.8
      */
-    public function buildAstLogicalXorExpression();
+    public function buildAstLogicalXorExpression(): ASTLogicalXorExpression;
 
     /**
      * Builds a new trait use-statement node.
      *
-     * @return ASTTraitUseStatement
      * @since  1.0.0
      */
-    public function buildAstTraitUseStatement();
+    public function buildAstTraitUseStatement(): ASTTraitUseStatement;
 
     /**
      * Builds a new trait adaptation scope.
      *
-     * @return ASTTraitAdaptation
      * @since  1.0.0
      */
-    public function buildAstTraitAdaptation();
+    public function buildAstTraitAdaptation(): ASTTraitAdaptation;
 
     /**
      * Builds a new trait adaptation alias statement.
      *
      * @param string $image The trait method name.
-     * @return ASTTraitAdaptationAlias
      * @since  1.0.0
      */
-    public function buildAstTraitAdaptationAlias(string $image);
+    public function buildAstTraitAdaptationAlias(string $image): ASTTraitAdaptationAlias;
 
     /**
      * Builds a new trait adaptation precedence statement.
      *
      * @param string $image The trait method name.
-     * @return ASTTraitAdaptationPrecedence
      * @since  1.0.0
      */
-    public function buildAstTraitAdaptationPrecedence(string $image);
+    public function buildAstTraitAdaptationPrecedence(string $image): ASTTraitAdaptationPrecedence;
 
     /**
      * Builds a new trait reference node.
      *
      * @param string $qualifiedName The full qualified trait name.
-     * @return ASTTraitReference
      * @since  1.0.0
      */
-    public function buildAstTraitReference(string $qualifiedName);
+    public function buildAstTraitReference(string $qualifiedName): ASTTraitReference;
 
     /**
      * Builds a new switch-statement-node.
      *
-     * @return ASTSwitchStatement
      * @since  0.9.8
      */
-    public function buildAstSwitchStatement();
+    public function buildAstSwitchStatement(): ASTSwitchStatement;
 
     /**
      * Builds a new switch-label node.
      *
      * @param string $image The source image of this label.
-     * @return ASTSwitchLabel
      * @since  0.9.8
      */
-    public function buildAstSwitchLabel(string $image);
+    public function buildAstSwitchLabel(string $image): ASTSwitchLabel;
 
     /**
      * Builds a new catch-statement node.
      *
      * @param string $image The source image of this statement.
-     * @return ASTCatchStatement
      * @since  0.9.8
      */
-    public function buildAstCatchStatement(string $image);
+    public function buildAstCatchStatement(string $image): ASTCatchStatement;
 
     /**
      * Builds a new finally-statement node.
      *
-     * @return ASTFinallyStatement
      * @since  2.0.0
      */
-    public function buildAstFinallyStatement();
+    public function buildAstFinallyStatement(): ASTFinallyStatement;
 
     /**
      * Builds a new if statement node.
      *
      * @param string $image The source image of this statement.
-     * @return ASTIfStatement
      * @since  0.9.8
      */
-    public function buildAstIfStatement(string $image);
+    public function buildAstIfStatement(string $image): ASTIfStatement;
 
     /**
      * Builds a new elseif-statement node.
      *
      * @param string $image The source image of this statement.
-     * @return ASTElseIfStatement
      * @since  0.9.8
      */
-    public function buildAstElseIfStatement(string $image);
+    public function buildAstElseIfStatement(string $image): ASTElseIfStatement;
 
     /**
      * Builds a new for-statement node.
      *
      * @param string $image The source image of this statement.
-     * @return ASTForStatement
      * @since  0.9.8
      */
-    public function buildAstForStatement(string $image);
+    public function buildAstForStatement(string $image): ASTForStatement;
 
     /**
      * Builds a new for-init node.
@@ -769,10 +702,9 @@ interface Builder extends IteratorAggregate
      *      ------------------------
      * </code>
      *
-     * @return ASTForInit
      * @since  0.9.8
      */
-    public function buildAstForInit();
+    public function buildAstForInit(): ASTForInit;
 
     /**
      * Builds a new for-update node.
@@ -783,37 +715,33 @@ interface Builder extends IteratorAggregate
      *                                        -------------------------------
      * </code>
      *
-     * @return ASTForUpdate
      * @since  0.9.12
      */
-    public function buildAstForUpdate();
+    public function buildAstForUpdate(): ASTForUpdate;
 
     /**
      * Builds a new foreach-statement node.
      *
      * @param string $image The source image of this statement.
-     * @return ASTForeachStatement
      * @since  0.9.8
      */
-    public function buildAstForeachStatement(string $image);
+    public function buildAstForeachStatement(string $image): ASTForeachStatement;
 
     /**
      * Builds a new while-statement node.
      *
      * @param string $image The source image of this statement.
-     * @return ASTWhileStatement
      * @since  0.9.8
      */
-    public function buildAstWhileStatement(string $image);
+    public function buildAstWhileStatement(string $image): ASTWhileStatement;
 
     /**
      * Builds a new do/while-statement node.
      *
      * @param string $image The source image of this statement.
-     * @return ASTDoWhileStatement
      * @since  0.9.12
      */
-    public function buildAstDoWhileStatement(string $image);
+    public function buildAstDoWhileStatement(string $image): ASTDoWhileStatement;
 
     /**
      * Builds a new declare-statement node.
@@ -836,10 +764,9 @@ interface Builder extends IteratorAggregate
      * -----------
      * </code>
      *
-     * @return ASTDeclareStatement
      * @since  0.10.0
      */
-    public function buildAstDeclareStatement();
+    public function buildAstDeclareStatement(): ASTDeclareStatement;
 
     /**
      * Builds a new member primary expression node.
@@ -863,19 +790,17 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The source image of this expression.
-     * @return ASTMemberPrimaryPrefix
      * @since  0.9.6
      */
-    public function buildAstMemberPrimaryPrefix(string $image);
+    public function buildAstMemberPrimaryPrefix(string $image): ASTMemberPrimaryPrefix;
 
     /**
      * Builds a new identifier node.
      *
      * @param string $image The image of this identifier.
-     * @return ASTIdentifier
      * @since  0.9.6
      */
-    public function buildAstIdentifier(string $image);
+    public function buildAstIdentifier(string $image): ASTIdentifier;
 
     /**
      * Builds a new function postfix expression.
@@ -891,10 +816,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The image of this node.
-     * @return ASTFunctionPostfix
      * @since  0.9.6
      */
-    public function buildAstFunctionPostfix(string $image);
+    public function buildAstFunctionPostfix(string $image): ASTFunctionPostfix;
 
     /**
      * Builds a new method postfix expression.
@@ -910,10 +834,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The image of this node.
-     * @return ASTMethodPostfix
      * @since  0.9.6
      */
-    public function buildAstMethodPostfix(string $image);
+    public function buildAstMethodPostfix(string $image): ASTMethodPostfix;
 
     /**
      * Builds a new constant postfix expression.
@@ -925,10 +848,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The image of this node.
-     * @return ASTConstantPostfix
      * @since  0.9.6
      */
-    public function buildAstConstantPostfix(string $image);
+    public function buildAstConstantPostfix(string $image): ASTConstantPostfix;
 
     /**
      * Builds a new property postfix expression.
@@ -944,10 +866,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The image of this node.
-     * @return ASTPropertyPostfix
      * @since  0.9.6
      */
-    public function buildAstPropertyPostfix(string $image);
+    public function buildAstPropertyPostfix(string $image): ASTPropertyPostfix;
 
     /**
      * Builds a new full qualified class name postfix expression.
@@ -962,10 +883,9 @@ interface Builder extends IteratorAggregate
      * //       -----
      * </code>
      *
-     * @return ASTClassFqnPostfix
      * @since  2.0.0
      */
-    public function buildAstClassFqnPostfix();
+    public function buildAstClassFqnPostfix(): ASTClassFqnPostfix;
 
     /**
      * Builds a new arguments list.
@@ -980,10 +900,9 @@ interface Builder extends IteratorAggregate
      * //       ------------
      * </code>
      *
-     * @return ASTArguments
      * @since  0.9.6
      */
-    public function buildAstArguments();
+    public function buildAstArguments(): ASTArguments;
 
     /**
      * Builds a new argument match expression single-item slot.
@@ -992,10 +911,9 @@ interface Builder extends IteratorAggregate
      * match($x)
      * </code>
      *
-     * @return ASTMatchArgument
      * @since  0.9.6
      */
-    public function buildAstMatchArgument();
+    public function buildAstMatchArgument(): ASTMatchArgument;
 
     /**
      * Builds a new argument match expression single-item slot.
@@ -1006,10 +924,9 @@ interface Builder extends IteratorAggregate
      * }
      * </code>
      *
-     * @return ASTMatchBlock
      * @since  2.9.0
      */
-    public function buildAstMatchBlock();
+    public function buildAstMatchBlock(): ASTMatchBlock;
 
     /**
      * Builds a new argument match expression single-item slot.
@@ -1018,10 +935,9 @@ interface Builder extends IteratorAggregate
      * "foo" => "bar",
      * </code>
      *
-     * @return ASTMatchEntry
      * @since  2.9.0
      */
-    public function buildAstMatchEntry();
+    public function buildAstMatchEntry(): ASTMatchEntry;
 
     /**
      * Builds a new named argument node.
@@ -1030,66 +946,57 @@ interface Builder extends IteratorAggregate
      * number_format(5623, thousands_separator: ' ')
      * </code>
      *
-     * @return ASTNamedArgument
      * @since  2.9.0
      */
-    public function buildAstNamedArgument(string $name, ASTNode $value);
+    public function buildAstNamedArgument(string $name, ASTNode $value): ASTNamedArgument;
 
     /**
      * Builds a new array type node.
      *
-     * @return ASTTypeArray
      * @since  0.9.6
      */
-    public function buildAstTypeArray();
+    public function buildAstTypeArray(): ASTTypeArray;
 
     /**
      * Builds a new node for the callable type.
      *
-     * @return ASTTypeCallable
      * @since  1.0.0
      */
-    public function buildAstTypeCallable();
+    public function buildAstTypeCallable(): ASTTypeCallable;
 
     /**
      * Builds a new node for the iterable type.
      *
-     * @return ASTTypeIterable
      * @since  2.5.1
      */
-    public function buildAstTypeIterable();
+    public function buildAstTypeIterable(): ASTTypeIterable;
 
     /**
      * Builds a new primitive type node.
      *
-     * @return ASTScalarType
      * @since  0.9.6
      */
-    public function buildAstScalarType(string $image);
+    public function buildAstScalarType(string $image): ASTScalarType;
 
     /**
      * Builds a new node for the union type.
      *
-     * @return ASTUnionType
      * @since  2.9.0
      */
-    public function buildAstUnionType();
+    public function buildAstUnionType(): ASTUnionType;
 
     /**
      * Builds a new node for the intersection type.
-     *
-     * @return ASTIntersectionType
      */
-    public function buildAstIntersectionType();
+    public function buildAstIntersectionType(): ASTIntersectionType;
 
     /**
      * Builds a new literal node.
      *
      * @param string $image The source image for the literal node.
-     * @return ASTLiteral
      * @since  0.9.6
      */
-    public function buildAstLiteral(string $image);
+    public function buildAstLiteral(string $image): ASTLiteral;
 
     /**
      * Builds a new php string node.
@@ -1106,34 +1013,30 @@ interface Builder extends IteratorAggregate
      * // |-- ASTLiteral             -  ">"
      * </code>
      *
-     * @return ASTString
      * @since  0.9.10
      */
-    public function buildAstString();
+    public function buildAstString(): ASTString;
 
     /**
      * Builds a new php array node.
      *
-     * @return ASTArray
      * @since  1.0.0
      */
-    public function buildAstArray();
+    public function buildAstArray(): ASTArray;
 
     /**
      * Builds a new array element node.
      *
-     * @return ASTArrayElement
      * @since  1.0.0
      */
-    public function buildAstArrayElement();
+    public function buildAstArrayElement(): ASTArrayElement;
 
     /**
      * Builds a new heredoc node.
      *
-     * @return ASTHeredoc
      * @since  0.9.12
      */
-    public function buildAstHeredoc();
+    public function buildAstHeredoc(): ASTHeredoc;
 
     /**
      * Builds a new constant definition node.
@@ -1148,10 +1051,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The source code image for this node.
-     * @return ASTConstantDefinition
      * @since  0.9.6
      */
-    public function buildAstConstantDefinition(string $image);
+    public function buildAstConstantDefinition(string $image): ASTConstantDefinition;
 
     /**
      * Builds a new constant declarator node.
@@ -1185,181 +1087,160 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The source code image for this node.
-     * @return ASTConstantDeclarator
      * @since  0.9.6
      */
-    public function buildAstConstantDeclarator(string $image);
+    public function buildAstConstantDeclarator(string $image): ASTConstantDeclarator;
 
     /**
      * Builds a new comment node instance.
      *
      * @param string $cdata The comment text.
-     * @return ASTComment
      * @since  0.9.8
      */
-    public function buildAstComment(string $cdata);
+    public function buildAstComment(string $cdata): ASTComment;
 
     /**
      * Builds a new unary expression node instance.
      *
      * @param string $image The unary expression image/character.
-     * @return ASTUnaryExpression
      * @since  0.9.11
      */
-    public function buildAstUnaryExpression(string $image);
+    public function buildAstUnaryExpression(string $image): ASTUnaryExpression;
 
     /**
      * Builds a new cast-expression node instance.
      *
      * @param string $image The cast-expression image/character.
-     * @return ASTCastExpression
      * @since  0.10.0
      */
-    public function buildAstCastExpression(string $image);
+    public function buildAstCastExpression(string $image): ASTCastExpression;
 
     /**
      * Builds a new postfix-expression node instance.
      *
      * @param string $image The postfix-expression image/character.
-     * @return ASTPostfixExpression
      * @since  0.10.0
      */
-    public function buildAstPostfixExpression(string $image);
+    public function buildAstPostfixExpression(string $image): ASTPostfixExpression;
 
     /**
      * Builds a new pre-increment-expression node instance.
      *
-     * @return ASTPreIncrementExpression
      * @since  0.10.0
      */
-    public function buildAstPreIncrementExpression();
+    public function buildAstPreIncrementExpression(): ASTPreIncrementExpression;
 
     /**
      * Builds a new pre-decrement-expression node instance.
      *
-     * @return ASTPreDecrementExpression
      * @since  0.10.0
      */
-    public function buildAstPreDecrementExpression();
+    public function buildAstPreDecrementExpression(): ASTPreDecrementExpression;
 
     /**
      * Builds a new function/method scope instance.
      *
-     * @return ASTScope
      * @since  0.9.12
      */
-    public function buildAstScope();
+    public function buildAstScope(): ASTScope;
 
     /**
      * Builds a new statement instance.
      *
-     * @return ASTStatement
      * @since  0.9.12
      */
-    public function buildAstStatement();
+    public function buildAstStatement(): ASTStatement;
 
     /**
      * Builds a new return-statement node instance.
      *
      * @param string $image The source code image for this node.
-     * @return ASTReturnStatement
      * @since  0.9.12
      */
-    public function buildAstReturnStatement(string $image);
+    public function buildAstReturnStatement(string $image): ASTReturnStatement;
 
     /**
      * Builds a new break-statement node instance.
      *
      * @param string $image The source code image for this node.
-     * @return ASTBreakStatement
      * @since  0.9.12
      */
-    public function buildAstBreakStatement(string $image);
+    public function buildAstBreakStatement(string $image): ASTBreakStatement;
 
     /**
      * Builds a new continue-statement node instance.
      *
      * @param string $image The source code image for this node.
-     * @return ASTContinueStatement
      * @since  0.9.12
      */
-    public function buildAstContinueStatement(string $image);
+    public function buildAstContinueStatement(string $image): ASTContinueStatement;
 
     /**
      * Builds a new scope-statement instance.
      *
-     * @return ASTScopeStatement
      * @since  0.9.12
      */
-    public function buildAstScopeStatement();
+    public function buildAstScopeStatement(): ASTScopeStatement;
 
     /**
      * Builds a new try-statement instance.
      *
      * @param string $image The source code image for this node.
-     * @return ASTTryStatement
      * @since  0.9.12
      */
-    public function buildAstTryStatement(string $image);
+    public function buildAstTryStatement(string $image): ASTTryStatement;
 
     /**
      * Builds a new throw-statement instance.
      *
      * @param string $image The source code image for this node.
-     * @return ASTThrowStatement
      * @since  0.9.12
      */
-    public function buildAstThrowStatement(string $image);
+    public function buildAstThrowStatement(string $image): ASTThrowStatement;
 
     /**
      * Builds a new goto-statement instance.
      *
      * @param string $image The source code image for this node.
-     * @return ASTGotoStatement
      * @since  0.9.12
      */
-    public function buildAstGotoStatement(string $image);
+    public function buildAstGotoStatement(string $image): ASTGotoStatement;
 
     /**
      * Builds a new label-statement instance.
      *
      * @param string $image The source code image for this node.
-     * @return ASTLabelStatement
      * @since  0.9.12
      */
-    public function buildAstLabelStatement(string $image);
+    public function buildAstLabelStatement(string $image): ASTLabelStatement;
 
     /**
      * Builds a new global-statement instance.
      *
-     * @return ASTGlobalStatement
      * @since  0.9.12
      */
-    public function buildAstGlobalStatement();
+    public function buildAstGlobalStatement(): ASTGlobalStatement;
 
     /**
      * Builds a new unset-statement instance.
      *
-     * @return ASTUnsetStatement
      * @since  0.9.12
      */
-    public function buildAstUnsetStatement();
+    public function buildAstUnsetStatement(): ASTUnsetStatement;
 
     /**
      * Builds a new exit-statement instance.
      *
      * @param string $image The source code image for this node.
-     * @return ASTEchoStatement
      * @since  0.9.12
      */
-    public function buildAstEchoStatement(string $image);
+    public function buildAstEchoStatement(string $image): ASTEchoStatement;
 
     /**
      * Builds a new yield-statement instance.
      *
      * @param string $image The source code image for this node.
-     * @return ASTYieldStatement
      * @since  $version$
      */
-    public function buildAstYieldStatement(string $image);
+    public function buildAstYieldStatement(string $image): ASTYieldStatement;
 }

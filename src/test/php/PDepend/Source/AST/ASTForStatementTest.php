@@ -317,10 +317,8 @@ class ASTForStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTForStatement
      */
-    private function getFirstForStatementInFunction()
+    private function getFirstForStatementInFunction(): ASTForStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTForStatement::class

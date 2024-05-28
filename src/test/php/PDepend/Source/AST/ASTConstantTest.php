@@ -120,10 +120,8 @@ class ASTConstantTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTConstant
      */
-    private function getFirstConstantInFunction()
+    private function getFirstConstantInFunction(): ASTConstant
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTConstant::class

@@ -57,17 +57,13 @@ interface ASTNode
 {
     /**
      * Returns the source image of this ast node.
-     *
-     * @return string
      */
-    public function getImage();
+    public function getImage(): string;
 
     /**
      * Returns the start line for this ast node.
-     *
-     * @return int
      */
-    public function getStartLine();
+    public function getStartLine(): int;
 
     /**
      * Returns the start column for this ast node.
@@ -76,10 +72,8 @@ interface ASTNode
 
     /**
      * Returns the end line for this ast node.
-     *
-     * @return int
      */
-    public function getEndLine();
+    public function getEndLine(): int;
 
     /**
      * Returns the end column for this ast node.
@@ -89,10 +83,9 @@ interface ASTNode
     /**
      * Returns the node instance for the given index or throws an exception.
      *
-     * @return ASTNode
      * @throws OutOfBoundsException When no node exists at the given index.
      */
-    public function getChild(int $index);
+    public function getChild(int $index): self;
 
     /**
      * This method returns all direct children of the actual node.
@@ -125,7 +118,7 @@ interface ASTNode
      *                     is only for internal usage.
      * @return T[]
      */
-    public function findChildrenOfType($targetType, array &$results = []);
+    public function findChildrenOfType($targetType, array &$results = []): array;
 
     /**
      * Returns the parent node of this node or <b>null</b> when this node is
@@ -144,7 +137,7 @@ interface ASTNode
      *
      * @return ASTNode[]
      */
-    public function getParentsOfType(string $parentType);
+    public function getParentsOfType(string $parentType): array;
 
     /**
      * Returns a doc comment for this node or <b>null</b> when no comment was
@@ -152,7 +145,7 @@ interface ASTNode
      *
      * @return ?string
      */
-    public function getComment();
+    public function getComment(): ?string;
 
     /**
      * Sets the raw doc comment for this node.

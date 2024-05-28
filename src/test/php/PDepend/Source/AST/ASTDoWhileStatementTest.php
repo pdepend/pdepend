@@ -129,10 +129,8 @@ class ASTDoWhileStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTDoWhileStatement
      */
-    private function getFirstDoWhileStatementInFunction()
+    private function getFirstDoWhileStatementInFunction(): ASTDoWhileStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTDoWhileStatement::class

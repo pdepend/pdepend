@@ -128,10 +128,8 @@ class TokenStackTest extends AbstractParserTestCase
 
     /**
      * Returns a test token instance.
-     *
-     * @return Token
      */
-    protected function createToken()
+    protected function createToken(): Token
     {
         return new Token(1, __CLASS__, 13, 17, 23, 42);
     }

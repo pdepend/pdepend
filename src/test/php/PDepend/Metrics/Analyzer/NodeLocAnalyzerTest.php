@@ -662,10 +662,9 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Creates a ready to use node loc analyzer.
      *
-     * @return NodeLocAnalyzer
      * @since 1.0.0
      */
-    private function createAnalyzer()
+    private function createAnalyzer(): NodeLocAnalyzer
     {
         $analyzer = new NodeLocAnalyzer();
         $analyzer->setCache($this->cache);

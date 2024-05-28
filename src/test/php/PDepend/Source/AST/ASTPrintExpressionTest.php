@@ -55,10 +55,7 @@ namespace PDepend\Source\AST;
  */
 class ASTPrintExpressionTest extends ASTNodeTestCase
 {
-    /**
-     * @return ASTPrintExpression
-     */
-    public function testSimplePrintExpression()
+    public function testSimplePrintExpression(): ASTPrintExpression
     {
         $print = $this->getFirstPrintInFunction();
         static::assertInstanceOf(ASTPrintExpression::class, $print);
@@ -98,10 +95,7 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
         static::assertSame(9, $expr->getEndColumn());
     }
 
-    /**
-     * @return ASTPrintExpression
-     */
-    private function getFirstPrintInFunction()
+    private function getFirstPrintInFunction(): ASTPrintExpression
     {
         return $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType(ASTPrintExpression::class);

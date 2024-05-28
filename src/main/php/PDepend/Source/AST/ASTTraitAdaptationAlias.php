@@ -86,10 +86,8 @@ class ASTTraitAdaptationAlias extends ASTStatement
     /**
      * Returns the new method modifier or <b>-1</b> when this alias does not
      * specify a new method modifier.
-     *
-     * @return int
      */
-    public function getNewModifier()
+    public function getNewModifier(): int
     {
         return $this->newModifier;
     }
@@ -110,7 +108,7 @@ class ASTTraitAdaptationAlias extends ASTStatement
      *
      * @return ?string
      */
-    public function getNewName()
+    public function getNewName(): ?string
     {
         return $this->newName;
     }

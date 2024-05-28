@@ -71,10 +71,8 @@ class ASTRequireExpression extends ASTExpression
 
     /**
      * Does this node represent a <b>require_once</b>-expression?
-     *
-     * @return bool
      */
-    public function isOnce()
+    public function isOnce(): bool
     {
         return $this->once;
     }

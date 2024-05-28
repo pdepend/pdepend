@@ -110,10 +110,8 @@ class ImageConvert
 
     /**
      * Tests that the ImageMagick CLI tool <b>convert</b> exists.
-     *
-     * @return bool
      */
-    protected static function hasImagickConvert()
+    protected static function hasImagickConvert(): bool
     {
         /** @codeCoverageIgnoreStart */
         $desc = [

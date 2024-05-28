@@ -459,10 +459,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
-     *
-     * @return array
      */
-    public static function dataProviderParserResolvesQualifiedTypeNameInFunction()
+    public static function dataProviderParserResolvesQualifiedTypeNameInFunction(): array
     {
         return [
             ['issues/002-015-resolve-qualified-type-names.php', 'foo\bar'],
@@ -477,10 +475,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
-     *
-     * @return array
      */
-    public static function dataProviderParserResolvesQualifiedTypeNameInTypeSignature()
+    public static function dataProviderParserResolvesQualifiedTypeNameInTypeSignature(): array
     {
         return [
             ['issues/002-031-resolve-qualified-type-names.php', 'baz'],
@@ -494,10 +490,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
-     *
-     * @return array
      */
-    public static function dataProviderParserKeepsQualifiedTypeNameInFunction()
+    public static function dataProviderParserKeepsQualifiedTypeNameInFunction(): array
     {
         return [
             ['issues/002-016-resolve-qualified-type-names.php', ''],
@@ -512,10 +506,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
-     *
-     * @return array
      */
-    public static function dataProviderParserKeepsQualifiedTypeNameInTypeSignature()
+    public static function dataProviderParserKeepsQualifiedTypeNameInTypeSignature(): array
     {
         return [
             ['issues/002-032-resolve-qualified-type-names.php', 'foo\bar'],
@@ -527,10 +519,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
-     *
-     * @return array
      */
-    public static function dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax()
+    public static function dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax(): array
     {
         return [
             ['issues/002-017-resolve-qualified-type-names.php', 'foo\bar'],
@@ -544,10 +534,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
-     *
-     * @return array
      */
-    public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax()
+    public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax(): array
     {
         return [
             ['issues/002-033-resolve-qualified-type-names.php', 'baz\foo'],
@@ -560,10 +548,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
-     *
-     * @return array
      */
-    public static function dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax()
+    public static function dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax(): array
     {
         return [
             ['issues/002-018-resolve-qualified-type-names.php', ''],
@@ -577,10 +563,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
-     *
-     * @return array
      */
-    public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax()
+    public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax(): array
     {
         return [
             ['issues/002-034-resolve-qualified-type-names.php', 'baz\foo'],

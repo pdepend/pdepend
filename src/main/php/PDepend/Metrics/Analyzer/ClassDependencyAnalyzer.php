@@ -118,7 +118,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      *
      * @return array<int, AbstractASTClassOrInterface>
      */
-    public function getAfferents(AbstractASTArtifact $node)
+    public function getAfferents(AbstractASTArtifact $node): array
     {
         $afferents = [];
         if (isset($this->afferentNodes[$node->getId()])) {
@@ -133,7 +133,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      *
      * @return array<int, AbstractASTClassOrInterface>
      */
-    public function getEfferents(AbstractASTArtifact $node)
+    public function getEfferents(AbstractASTArtifact $node): array
     {
         $efferents = [];
         if (isset($this->efferentNodes[$node->getId()])) {
@@ -269,7 +269,7 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * @return bool If this method detects a cycle the return value is <b>true</b>
      *              otherwise this method will return <b>false</b>.
      */
-    protected function collectCycle(array &$list, AbstractASTArtifact $node)
+    protected function collectCycle(array &$list, AbstractASTArtifact $node): bool
     {
         if (in_array($node, $list, true)) {
             $list[] = $node;

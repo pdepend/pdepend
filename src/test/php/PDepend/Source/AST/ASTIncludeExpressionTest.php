@@ -166,10 +166,8 @@ class ASTIncludeExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTIncludeExpression
      */
-    private function getFirstIncludeExpressionInFunction()
+    private function getFirstIncludeExpressionInFunction(): ASTIncludeExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTIncludeExpression::class

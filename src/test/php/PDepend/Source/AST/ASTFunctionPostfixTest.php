@@ -244,10 +244,8 @@ class ASTFunctionPostfixTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTFunctionPostfix
      */
-    private function getFirstFunctionPostfixInFunction()
+    private function getFirstFunctionPostfixInFunction(): ASTFunctionPostfix
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTFunctionPostfix::class

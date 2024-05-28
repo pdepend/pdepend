@@ -58,10 +58,9 @@ class ASTVariableVariableTest extends ASTNodeTestCase
     /**
      * testVariableVariable
      *
-     * @return ASTVariableVariable
      * @since 1.0.2
      */
-    public function testVariableVariable()
+    public function testVariableVariable(): ASTVariableVariable
     {
         $variable = $this->getFirstVariableVariableInClass();
         static::assertInstanceOf(ASTVariableVariable::class, $variable);
@@ -111,10 +110,8 @@ class ASTVariableVariableTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTVariableVariable
      */
-    private function getFirstVariableVariableInClass()
+    private function getFirstVariableVariableInClass(): ASTVariableVariable
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTVariableVariable::class

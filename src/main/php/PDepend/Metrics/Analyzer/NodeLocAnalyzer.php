@@ -409,7 +409,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
      * @param bool $search Optional boolean flag, search start.
      * @return array<int, int>
      */
-    private function linesOfCode(array $tokens, bool $search = false)
+    private function linesOfCode(array $tokens, bool $search = false): array
     {
         $clines = [];
         $elines = [];

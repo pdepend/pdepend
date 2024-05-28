@@ -381,10 +381,9 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatement
      *
-     * @return ASTTraitUseStatement
      * @since 1.0.2
      */
-    public function testTraitUseStatement()
+    public function testTraitUseStatement(): ASTTraitUseStatement
     {
         $stmt = $this->getFirstTraitUseStatementInClass();
         static::assertInstanceOf(ASTTraitUseStatement::class, $stmt);
@@ -435,10 +434,9 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     /**
      * testTraitUseStatementInTrait
      *
-     * @return ASTTraitUseStatement
      * @since 1.0.2
      */
-    public function testTraitUseStatementInTrait()
+    public function testTraitUseStatementInTrait(): ASTTraitUseStatement
     {
         $stmt = $this->getFirstTraitUseStatementInTrait();
         static::assertInstanceOf(ASTTraitUseStatement::class, $stmt);
@@ -488,10 +486,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTTraitUseStatement
      */
-    private function getFirstTraitUseStatementInClass()
+    private function getFirstTraitUseStatementInClass(): ASTTraitUseStatement
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTTraitUseStatement::class
@@ -500,10 +496,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTTraitUseStatement
      */
-    private function getFirstTraitUseStatementInTrait()
+    private function getFirstTraitUseStatementInTrait(): ASTTraitUseStatement
     {
         return $this->getFirstNodeOfTypeInTrait(
             ASTTraitUseStatement::class

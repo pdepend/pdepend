@@ -61,10 +61,9 @@ class PHPParserGeneric extends PHPParserVersion83
      * Tests if the give token is a valid function name in the supported PHP
      * version.
      *
-     * @return bool
      * @since 2.3
      */
-    protected function isFunctionName(int $tokenType)
+    protected function isFunctionName(int $tokenType): bool
     {
         return match ($tokenType) {
             Tokens::T_CLONE,

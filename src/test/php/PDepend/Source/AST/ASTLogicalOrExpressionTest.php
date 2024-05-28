@@ -95,10 +95,8 @@ class ASTLogicalOrExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTLogicalOrExpression
      */
-    private function getFirstLogicalOrExpressionInFunction()
+    private function getFirstLogicalOrExpressionInFunction(): ASTLogicalOrExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTLogicalOrExpression::class

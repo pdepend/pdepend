@@ -139,40 +139,32 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
 
     /**
      * Returns the string representation of this class.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->fileName ?? '';
     }
 
     /**
      * Returns the physical file name for this object.
-     *
-     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->fileName ?? '';
     }
 
     /**
      * Returns the physical file name for this object.
-     *
-     * @return string|null
      */
-    public function getFileName()
+    public function getFileName(): ?string
     {
         return $this->fileName;
     }
 
     /**
      * Returns a id for this code node.
-     *
-     * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id ?? '';
     }
@@ -192,10 +184,8 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
 
     /**
      * Returns normalized source code with stripped whitespaces.
-     *
-     * @return string|null
      */
-    public function getSource()
+    public function getSource(): ?string
     {
         $this->readSource();
 
@@ -207,7 +197,7 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
      *
      * @return array<Token>
      */
-    public function getTokens()
+    public function getTokens(): array
     {
         /** @var Token[] */
         return (array) $this->cache
@@ -247,10 +237,9 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
      * this value must always be <em>1</em>, while it can be <em>0</em> for a
      * not existing dummy file.
      *
-     * @return int
      * @since  0.10.0
      */
-    public function getStartLine()
+    public function getStartLine(): int
     {
         if ($this->startLine === 0) {
             $this->readSource();
@@ -264,10 +253,9 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
      * this value must always be greater <em>0</em>, while it can be <em>0</em>
      * for a not existing dummy file.
      *
-     * @return int
      * @since  0.10.0
      */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         if ($this->endLine === 0) {
             $this->readSource();
@@ -281,10 +269,9 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
      * from the cache and not currently parsed. Otherwise this method will return
      * <b>false</b>.
      *
-     * @return bool
      * @since  0.10.0
      */
-    public function isCached()
+    public function isCached(): bool
     {
         return $this->cached;
     }

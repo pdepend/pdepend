@@ -76,10 +76,8 @@ class ASTInterface extends AbstractASTClassOrInterface
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
-     *
-     * @return bool
      */
-    public function isAbstract()
+    public function isAbstract(): bool
     {
         return true;
     }
@@ -99,10 +97,8 @@ class ASTInterface extends AbstractASTClassOrInterface
 
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
-     *
-     * @return bool
      */
-    public function isSubtypeOf(AbstractASTType $type)
+    public function isSubtypeOf(AbstractASTType $type): bool
     {
         if ($type === $this) {
             return true;
@@ -121,10 +117,9 @@ class ASTInterface extends AbstractASTClassOrInterface
     /**
      * Returns the declared modifiers for this type.
      *
-     * @return int
      * @since  0.9.4
      */
-    public function getModifiers()
+    public function getModifiers(): int
     {
         return $this->modifiers;
     }

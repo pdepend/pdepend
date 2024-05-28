@@ -192,9 +192,8 @@ class MemoryCacheDriver implements CacheDriver
      * type, so that it is only valid for a single call.
      *
      * @param string $key The concrete object key.
-     * @return string
      */
-    protected function getCacheKey(string $key)
+    protected function getCacheKey(string $key): string
     {
         $type = $this->type;
         $this->type = self::ENTRY_TYPE;

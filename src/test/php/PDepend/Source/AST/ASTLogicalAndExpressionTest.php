@@ -95,10 +95,8 @@ class ASTLogicalAndExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTLogicalAndExpression
      */
-    private function getFirstLogicalAndExpressionInFunction()
+    private function getFirstLogicalAndExpressionInFunction(): ASTLogicalAndExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTLogicalAndExpression::class

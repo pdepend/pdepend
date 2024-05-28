@@ -93,10 +93,8 @@ class ASTGotoStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTGotoStatement
      */
-    private function getFirstGotoStatementInFunction()
+    private function getFirstGotoStatementInFunction(): ASTGotoStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTGotoStatement::class

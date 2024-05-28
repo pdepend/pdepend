@@ -57,40 +57,32 @@ class ASTScalarType extends ASTType
     /**
      * This method will return <b>true</b> when this type is a php primitive.
      * For this concrete implementation the return value will be always true.
-     *
-     * @return bool
      */
-    public function isScalar()
+    public function isScalar(): bool
     {
         return true;
     }
 
     /**
      * This method will return <b>true</b> when this type is exactly null.
-     *
-     * @return bool
      */
-    public function isNull()
+    public function isNull(): bool
     {
         return $this->getImage() === 'null';
     }
 
     /**
      * This method will return <b>true</b> when this type is exactly false.
-     *
-     * @return bool
      */
-    public function isFalse()
+    public function isFalse(): bool
     {
         return $this->getImage() === 'false';
     }
 
     /**
      * This method will return <b>true</b> when this type is exactly false.
-     *
-     * @return bool
      */
-    public function isTrue()
+    public function isTrue(): bool
     {
         return $this->getImage() === 'true';
     }

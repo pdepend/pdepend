@@ -67,10 +67,8 @@ class TreeBuilderFactory
 
     /**
      * Generates the configuration tree builder.
-     *
-     * @return TreeBuilder
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $home = FileUtil::getUserHomeDirOrSysTempDir();
 

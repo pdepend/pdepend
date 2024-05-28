@@ -165,10 +165,8 @@ class ASTCommentTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTComment
      */
-    private function getFirstCommentInClass()
+    private function getFirstCommentInClass(): ASTComment
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTComment::class

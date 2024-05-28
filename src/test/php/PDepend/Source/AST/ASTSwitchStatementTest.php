@@ -84,10 +84,9 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatement
      *
-     * @return ASTSwitchStatement
      * @since 1.0.2
      */
-    public function testSwitchStatement()
+    public function testSwitchStatement(): ASTSwitchStatement
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
         static::assertInstanceOf(ASTSwitchStatement::class, $stmt);
@@ -174,10 +173,9 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementWithAlternativeScope
      *
-     * @return ASTSwitchStatement
      * @since 1.0.2
      */
-    public function testSwitchStatementWithAlternativeScope()
+    public function testSwitchStatementWithAlternativeScope(): ASTSwitchStatement
     {
         $stmt = $this->getFirstSwitchStatementInFunction();
         static::assertInstanceOf(ASTSwitchStatement::class, $stmt);
@@ -237,10 +235,9 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
     /**
      * testSwitchStatementWithNestedNonePhpCode
      *
-     * @return ASTSwitchStatement
      * @since 2.1.0
      */
-    public function testSwitchStatementWithNestedNonePhpCode()
+    public function testSwitchStatementWithNestedNonePhpCode(): ASTSwitchStatement
     {
         $switch = $this->getFirstSwitchStatementInFunction();
         static::assertInstanceOf(ASTSwitchStatement::class, $switch);
@@ -298,10 +295,8 @@ class ASTSwitchStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTSwitchStatement
      */
-    private function getFirstSwitchStatementInFunction()
+    private function getFirstSwitchStatementInFunction(): ASTSwitchStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTSwitchStatement::class

@@ -233,10 +233,9 @@ final class Type
      * extension.
      *
      * @param string $typeName The type name.
-     * @return bool
      * @throws ReflectionException
      */
-    public static function isInternalType(string $typeName)
+    public static function isInternalType(string $typeName): bool
     {
         self::initTypeToExtension();
 
@@ -251,10 +250,9 @@ final class Type
      * exists, this method will return <b>null</b>.
      *
      * @param string $typeName The type name.
-     * @return string|null
      * @throws ReflectionException
      */
-    public static function getTypePackage(string $typeName)
+    public static function getTypePackage(string $typeName): ?string
     {
         self::initTypeToExtension();
 
@@ -270,7 +268,7 @@ final class Type
      * @return array<string>
      * @throws ReflectionException
      */
-    public static function getInternalNamespaces()
+    public static function getInternalNamespaces(): array
     {
         if (!isset(self::$internalNamespaces)) {
             self::$internalNamespaces = [];
@@ -287,10 +285,9 @@ final class Type
      * php extension.
      *
      * @param string $packageName Name of a package.
-     * @return bool
      * @throws ReflectionException
      */
-    public static function isInternalPackage(string $packageName)
+    public static function isInternalPackage(string $packageName): bool
     {
         $packageNames = self::getInternalNamespaces();
 
@@ -302,9 +299,8 @@ final class Type
      * the list of scalar/none-object types.
      *
      * @param string $image The type identifier.
-     * @return bool
      */
-    public static function isScalarType(string $image)
+    public static function isScalarType(string $image): bool
     {
         $image = strtolower($image);
         if (isset(self::$scalarTypes[$image])) {
@@ -323,10 +319,9 @@ final class Type
      * the list of primitive types.
      *
      * @param string $image The type image.
-     * @return bool
      * @since  0.9.6
      */
-    public static function isPrimitiveType(string $image)
+    public static function isPrimitiveType(string $image): bool
     {
         return (self::getPrimitiveType($image) !== null);
     }
@@ -336,10 +331,9 @@ final class Type
      * image.
      *
      * @param string $image The found primitive type image.
-     * @return string|null
      * @since  0.9.6
      */
-    public static function getPrimitiveType(string $image)
+    public static function getPrimitiveType(string $image): ?string
     {
         $image = strtolower($image);
         if (isset(self::$primitiveTypes[$image])) {
@@ -359,10 +353,9 @@ final class Type
      * php array type.
      *
      * @param string $image The found type image.
-     * @return bool
      * @since  0.9.6
      */
-    public static function isArrayType(string $image)
+    public static function isArrayType(string $image): bool
     {
         return (strtolower($image) === 'array');
     }
@@ -375,7 +368,7 @@ final class Type
      * @return array<string, string>
      * @throws ReflectionException
      */
-    private static function initTypeToExtension()
+    private static function initTypeToExtension(): array
     {
         // Skip when already done.
         if (isset(self::$typeNameToExtension)) {

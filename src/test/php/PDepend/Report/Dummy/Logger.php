@@ -85,7 +85,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      *
      * @return array<string>
      */
-    public function getAcceptedAnalyzers()
+    public function getAcceptedAnalyzers(): array
     {
         return [
             'pdepend.analyzer.cyclomatic_complexity',
@@ -115,9 +115,8 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param Analyzer $analyzer The analyzer to log.
-     * @return bool
      */
-    public function log(Analyzer $analyzer)
+    public function log(Analyzer $analyzer): bool
     {
         $this->input['analyzers'][] = $analyzer;
 

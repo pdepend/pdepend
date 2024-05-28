@@ -162,7 +162,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      *
      * @return array<string, int>
      */
-    public function getStats(AbstractASTArtifact $node)
+    public function getStats(AbstractASTArtifact $node): array
     {
         $stats = [];
         if (isset($this->nodeMetrics[$node->getId()])) {
@@ -177,7 +177,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      *
      * @return AbstractASTArtifact[]
      */
-    public function getAfferents(AbstractASTArtifact $node)
+    public function getAfferents(AbstractASTArtifact $node): array
     {
         $afferents = [];
         if (isset($this->afferentNodes[$node->getId()])) {
@@ -193,7 +193,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      *
      * @return ASTNamespace[]
      */
-    public function getEfferents(AbstractASTArtifact $node)
+    public function getEfferents(AbstractASTArtifact $node): array
     {
         $efferents = [];
         if (isset($this->efferentNodes[$node->getId()])) {
@@ -211,7 +211,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * @param ASTNamespace $node
      * @return AbstractASTArtifact[]|null
      */
-    public function getCycle(AbstractASTArtifact $node)
+    public function getCycle(AbstractASTArtifact $node): ?array
     {
         if (array_key_exists($node->getId(), $this->collectedCycles)) {
             return $this->collectedCycles[$node->getId()];
@@ -450,7 +450,7 @@ class DependencyAnalyzer extends AbstractAnalyzer
      * @return bool If this method detects a cycle the return value is <b>true</b>
      *              otherwise this method will return <b>false</b>.
      */
-    protected function collectCycle(array &$list, ASTNamespace $namespace)
+    protected function collectCycle(array &$list, ASTNamespace $namespace): bool
     {
         if (in_array($namespace, $list, true)) {
             $list[] = $namespace;

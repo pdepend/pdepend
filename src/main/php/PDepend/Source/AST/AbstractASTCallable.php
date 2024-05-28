@@ -173,7 +173,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      *
      * @return Token[]
      */
-    public function getTokens()
+    public function getTokens(): array
     {
         /** @var Token[] */
         return (array) $this->cache
@@ -204,10 +204,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns the line number where the callable declaration starts.
      *
-     * @return int
      * @since  0.9.6
      */
-    public function getStartLine()
+    public function getStartLine(): int
     {
         return $this->startLine;
     }
@@ -215,10 +214,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns the line number where the callable declaration ends.
      *
-     * @return int
      * @since  0.9.6
      */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         return $this->endLine;
     }
@@ -226,10 +224,8 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns all {@link AbstractASTClassOrInterface}
      * objects this function depends on.
-     *
-     * @return ASTClassOrInterfaceReferenceIterator
      */
-    public function getDependencies()
+    public function getDependencies(): ASTClassOrInterfaceReferenceIterator
     {
         return new ASTClassOrInterfaceReferenceIterator(
             $this->findChildrenOfType(
@@ -243,10 +239,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * the return value of this callable. The returned value will be <b>null</b>
      * if there is no return value or the return value is scalat.
      *
-     * @return AbstractASTClassOrInterface|null
      * @since  0.9.5
      */
-    public function getReturnClass()
+    public function getReturnClass(): ?AbstractASTClassOrInterface
     {
         if ($this->returnClassReference) {
             return $this->returnClassReference->getType();
@@ -262,10 +257,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * Tests if this callable has a return class and return <b>true</b> if it is
      * configured.
      *
-     * @return bool
      * @since 2.2.4
      */
-    public function hasReturnClass()
+    public function hasReturnClass(): bool
     {
         if ($this->returnClassReference) {
             return true;
@@ -277,10 +271,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         return false;
     }
 
-    /**
-     * @return ASTType|null
-     */
-    public function getReturnType()
+    public function getReturnType(): ?ASTType
     {
         foreach ($this->nodes as $node) {
             if ($node instanceof ASTType) {
@@ -319,10 +310,8 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns an iterator with thrown exception
      * {@link AbstractASTClassOrInterface} instances.
-     *
-     * @return ASTClassOrInterfaceReferenceIterator
      */
-    public function getExceptionClasses()
+    public function getExceptionClasses(): ASTClassOrInterfaceReferenceIterator
     {
         return new ASTClassOrInterfaceReferenceIterator(
             $this->exceptionClassReferences,
@@ -334,7 +323,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      *
      * @return ASTParameter[]
      */
-    public function getParameters()
+    public function getParameters(): array
     {
         if (!isset($this->parameters)) {
             $this->initParameters();
@@ -347,10 +336,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * This method will return <b>true</b> when this method returns a value by
      * reference, otherwise the return value will be <b>false</b>.
      *
-     * @return bool
      * @since  0.9.5
      */
-    public function returnsReference()
+    public function returnsReference(): bool
     {
         return $this->returnsReference;
     }
@@ -373,7 +361,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * @return array<string, mixed>
      * @since  0.9.6
      */
-    public function getStaticVariables()
+    public function getStaticVariables(): array
     {
         $staticVariables = [];
 
@@ -403,10 +391,9 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * restored from the cache and not currently parsed. Otherwise this method
      * will return <b>false</b>.
      *
-     * @return bool
      * @since  0.10.0
      */
-    public function isCached()
+    public function isCached(): bool
     {
         return $this->compilationUnit?->isCached() ?? false;
     }

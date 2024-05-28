@@ -327,10 +327,8 @@ class EngineTest extends AbstractTestCase
 
     /**
      * Tests the newly added support for single file handling.
-     *
-     * @return ASTNamespace
      */
-    public function testSupportForSingleFileIssue90()
+    public function testSupportForSingleFileIssue90(): ASTNamespace
     {
         $engine = $this->createEngineFixture();
         $engine->addFile($this->createCodeResourceUriForTest());

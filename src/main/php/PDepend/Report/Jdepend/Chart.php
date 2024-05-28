@@ -94,7 +94,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      *
      * @return array<string>
      */
-    public function getAcceptedAnalyzers()
+    public function getAcceptedAnalyzers(): array
     {
         return ['pdepend.analyzer.dependency'];
     }
@@ -114,9 +114,8 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param Analyzer $analyzer The analyzer to log.
-     * @return bool
      */
-    public function log(Analyzer $analyzer)
+    public function log(Analyzer $analyzer): bool
     {
         if ($analyzer instanceof DependencyAnalyzer) {
             $this->analyzer = $analyzer;
@@ -217,7 +216,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
     /**
      * @return array<int, array{size: int, abstraction: int, instability: int, distance: int, name: string, ratio: int}>
      */
-    private function getItems()
+    private function getItems(): array
     {
         $items = [];
         foreach ($this->code as $namespace) {

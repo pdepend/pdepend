@@ -134,7 +134,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      *
      * @return \PDepend\Source\AST\ASTExpression[]
      */
-    public function testYieldKeyValue()
+    public function testYieldKeyValue(): array
     {
         $stmt = $this->getFirstYieldStatementInFunction();
         $nodes = $stmt->getChildren();
@@ -159,10 +159,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldValueAssignmentSimple
-     *
-     * @return ASTYieldStatement
      */
-    public function testYieldValueAssignmentSimple()
+    public function testYieldValueAssignmentSimple(): ASTYieldStatement
     {
         $yield = $this->getFirstYieldStatementInFunction();
         $nodes = $yield->getChildren();
@@ -187,10 +185,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldValueAssignmentKeyValue
-     *
-     * @return ASTYieldStatement
      */
-    public function testYieldValueAssignmentKeyValue()
+    public function testYieldValueAssignmentKeyValue(): ASTYieldStatement
     {
         $yield = $this->getFirstYieldStatementInFunction();
         $nodes = $yield->getChildren();
@@ -228,10 +224,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTYieldStatement
      */
-    private function getFirstYieldStatementInFunction()
+    private function getFirstYieldStatementInFunction(): ASTYieldStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTYieldStatement::class

@@ -619,10 +619,8 @@ class PHPTokenizerInternal implements FullTokenizer
 
     /**
      * Returns the name of the source file.
-     *
-     * @return ASTCompilationUnit
      */
-    public function getSourceFile()
+    public function getSourceFile(): ASTCompilationUnit
     {
         return $this->sourceFile;
     }
@@ -640,10 +638,8 @@ class PHPTokenizerInternal implements FullTokenizer
 
     /**
      * Returns the previous token or null if there is no one yet.
-     *
-     * @return Token|null
      */
-    public function prevToken()
+    public function prevToken(): ?Token
     {
         $this->tokenize();
 
@@ -656,10 +652,8 @@ class PHPTokenizerInternal implements FullTokenizer
 
     /**
      * Returns the current token or null if there is no more.
-     *
-     * @return Token|null
      */
-    public function currentToken()
+    public function currentToken(): ?Token
     {
         $this->tokenize();
 
@@ -673,10 +667,8 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the next token or {@link Tokenizer::T_EOF} if
      * there is no next token.
-     *
-     * @return int|Token
      */
-    public function next()
+    public function next(): int|Token
     {
         $this->tokenize();
 
@@ -690,10 +682,8 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the next token type or {@link Tokenizer::T_EOF} if
      * there is no next token.
-     *
-     * @return int
      */
-    public function peek()
+    public function peek(): int
     {
         $this->tokenize();
 
@@ -708,9 +698,8 @@ class PHPTokenizerInternal implements FullTokenizer
      * Returns the token type at the given position relatively to the current position.
      *
      * @param int $shift positive or negative to apply to the current index.
-     * @return int
      */
-    public function peekAt(int $shift)
+    public function peekAt(int $shift): int
     {
         $this->tokenize();
 
@@ -731,10 +720,9 @@ class PHPTokenizerInternal implements FullTokenizer
      * Returns the type of next token, after the current token. This method
      * ignores all comments between the current and the next token.
      *
-     * @return int|null
      * @since  0.9.12
      */
-    public function peekNext()
+    public function peekNext(): ?int
     {
         $this->tokenize();
 
@@ -756,10 +744,8 @@ class PHPTokenizerInternal implements FullTokenizer
     /**
      * Returns the previous token type or {@link Tokenizer::T_BOF}
      * if there is no previous token.
-     *
-     * @return int
      */
-    public function prev()
+    public function prev(): int
     {
         $this->tokenize();
 
@@ -776,7 +762,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * @param array{int, string, int} $token
      * @return array<int, array<int, int|string>>
      */
-    private function splitQualifiedNameToken(array $token)
+    private function splitQualifiedNameToken(array $token): array
     {
         $result = [];
 
@@ -807,7 +793,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * @param array<int|string> $token
      * @return array<int, array<int, int|string>>
      */
-    private function splitRelativeNameToken(array $token, string $namespace)
+    private function splitRelativeNameToken(array $token, string $namespace): array
     {
         $result = [
             [
@@ -844,7 +830,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * @param array<array{int, string, int}|string> $tokens Unprepared array of php tokens.
      * @return array<array<int, int|string>|string>
      */
-    private function substituteTokens(array $tokens)
+    private function substituteTokens(array $tokens): array
     {
         $result = [];
         $attributeComment = null;
@@ -1062,9 +1048,8 @@ class PHPTokenizerInternal implements FullTokenizer
      * was no none php token.
      *
      * @param array<array<int, int|string>|string> $tokens Reference to the current token stream.
-     * @return string|null
      */
-    private function consumeNonePhpTokens(array &$tokens)
+    private function consumeNonePhpTokens(array &$tokens): ?string
     {
         // The collected token content
         $content = null;
@@ -1097,7 +1082,7 @@ class PHPTokenizerInternal implements FullTokenizer
      * @param string $token The unknown string token.
      * @return array{int, string}
      */
-    private function generateUnknownToken(string $token)
+    private function generateUnknownToken(string $token): array
     {
         return [$this->unknownTokenID++, $token];
     }

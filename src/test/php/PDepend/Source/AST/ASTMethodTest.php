@@ -687,10 +687,8 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     /**
      * Returns the first method defined in a source file associated with the
      * given test case.
-     *
-     * @return ASTMethod
      */
-    protected function getFirstMethodInClass()
+    protected function getFirstMethodInClass(): ASTMethod
     {
         return $this->parseCodeResourceForTest()
             ->current()
@@ -702,10 +700,8 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * Creates an abstract item instance.
-     *
-     * @return AbstractASTArtifact
      */
-    protected function createItem()
+    protected function createItem(): AbstractASTArtifact
     {
         $method = new ASTMethod('method');
         $method->setCompilationUnit(new ASTCompilationUnit(__FILE__));

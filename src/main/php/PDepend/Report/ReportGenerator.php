@@ -58,9 +58,8 @@ interface ReportGenerator
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param Analyzer $analyzer The analyzer to log.
-     * @return bool
      */
-    public function log(Analyzer $analyzer);
+    public function log(Analyzer $analyzer): bool;
 
     /**
      * Closes the logger process and writes the output file.
@@ -75,5 +74,5 @@ interface ReportGenerator
      *
      * @return array<string>
      */
-    public function getAcceptedAnalyzers();
+    public function getAcceptedAnalyzers(): array;
 }

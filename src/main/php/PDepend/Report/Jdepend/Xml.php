@@ -131,7 +131,7 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      *
      * @return array<string>
      */
-    public function getAcceptedAnalyzers()
+    public function getAcceptedAnalyzers(): array
     {
         return ['pdepend.analyzer.dependency'];
     }
@@ -151,9 +151,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * with return <b>true</b>, otherwise the return value is <b>false</b>.
      *
      * @param Analyzer $analyzer The analyzer to log.
-     * @return bool
      */
-    public function log(Analyzer $analyzer)
+    public function log(Analyzer $analyzer): bool
     {
         if ($analyzer instanceof DependencyAnalyzer) {
             $this->analyzer = $analyzer;

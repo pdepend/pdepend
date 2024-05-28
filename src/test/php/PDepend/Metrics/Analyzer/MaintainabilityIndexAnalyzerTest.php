@@ -192,10 +192,9 @@ class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Returns a pre configured ccn analyzer.
      *
-     * @return MaintainabilityIndexAnalyzer
      * @since 1.0.0
      */
-    private function createAnalyzer()
+    private function createAnalyzer(): MaintainabilityIndexAnalyzer
     {
         $analyzer = new MaintainabilityIndexAnalyzer();
         $analyzer->setCache($this->cache);

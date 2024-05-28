@@ -59,10 +59,8 @@ class ASTMatchArgument extends ASTArguments
 {
     /**
      * Rather the given arguments list can still take one more argument.
-     *
-     * @return bool
      */
-    public function acceptsMoreArguments()
+    public function acceptsMoreArguments(): bool
     {
         return count($this->getChildren()) < 1;
     }

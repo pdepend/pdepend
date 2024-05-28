@@ -56,10 +56,8 @@ class ConfigurationInstance
 
     /**
      * Returns a configured config instance or <b>null</b>.
-     *
-     * @return Configuration|null
      */
-    public static function get()
+    public static function get(): ?Configuration
     {
         return self::$configuration;
     }

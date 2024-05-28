@@ -93,10 +93,8 @@ class ASTContinueStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTContinueStatement
      */
-    private function getFirstContinueStatementInFunction()
+    private function getFirstContinueStatementInFunction(): ASTContinueStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTContinueStatement::class

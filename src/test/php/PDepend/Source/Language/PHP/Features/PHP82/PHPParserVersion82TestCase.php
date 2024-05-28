@@ -56,10 +56,7 @@ use PDepend\Util\Cache\CacheDriver;
  */
 abstract class PHPParserVersion82TestCase extends AbstractTestCase
 {
-    /**
-     * @return AbstractPHPParser
-     */
-    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\PHPParserVersion82',

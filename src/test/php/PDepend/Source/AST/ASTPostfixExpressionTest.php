@@ -322,10 +322,8 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTPostfixExpression
      */
-    private function getFirstPostfixExpressionInClass()
+    private function getFirstPostfixExpressionInClass(): ASTPostfixExpression
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTPostfixExpression::class
@@ -334,10 +332,8 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTPostfixExpression
      */
-    private function getFirstPostfixExpressionInFunction()
+    private function getFirstPostfixExpressionInFunction(): ASTPostfixExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTPostfixExpression::class

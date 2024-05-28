@@ -60,10 +60,9 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
     /**
      * testTraitAdaptation
      *
-     * @return ASTTraitAdaptation
      * @since 1.0.2
      */
-    public function testTraitAdaptation()
+    public function testTraitAdaptation(): ASTTraitAdaptation
     {
         $scope = $this->getFirstTraitAdaptationInClass();
         static::assertInstanceOf(ASTTraitAdaptation::class, $scope);
@@ -113,10 +112,8 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTTraitAdaptation
      */
-    private function getFirstTraitAdaptationInClass()
+    private function getFirstTraitAdaptationInClass(): ASTTraitAdaptation
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTTraitAdaptation::class

@@ -177,10 +177,8 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTPreDecrementExpression
      */
-    private function getFirstPreDecrementExpressionInClass()
+    private function getFirstPreDecrementExpressionInClass(): ASTPreDecrementExpression
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTPreDecrementExpression::class
@@ -189,10 +187,8 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTPreDecrementExpression
      */
-    private function getFirstPreDecrementExpressionInFunction()
+    private function getFirstPreDecrementExpressionInFunction(): ASTPreDecrementExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTPreDecrementExpression::class

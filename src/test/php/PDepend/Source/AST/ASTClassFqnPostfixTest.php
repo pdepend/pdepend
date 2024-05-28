@@ -303,10 +303,8 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTClassFqnPostfix
      */
-    private function getFirstClassFqnPostfixInClass()
+    private function getFirstClassFqnPostfixInClass(): ASTClassFqnPostfix
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTClassFqnPostfix::class
@@ -315,10 +313,8 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTMemberPrimaryPrefix
      */
-    private function getFirstMemberPrimaryPrefixInClass()
+    private function getFirstMemberPrimaryPrefixInClass(): ASTMemberPrimaryPrefix
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTMemberPrimaryPrefix::class

@@ -229,10 +229,8 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
 
     /**
      * Returns an arguments instance for the currently executed test case.
-     *
-     * @return ASTArguments
      */
-    private function getFirstArgumentsOfFunction()
+    private function getFirstArgumentsOfFunction(): ASTArguments
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTArguments::class
@@ -241,10 +239,8 @@ class ASTArgumentsParsingTest extends AbstractParserTestCase
 
     /**
      * Returns an arguments instance for the currently executed test case.
-     *
-     * @return ASTArguments
      */
-    private function getFirstArgumentsOfMethod()
+    private function getFirstArgumentsOfMethod(): ASTArguments
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTArguments::class

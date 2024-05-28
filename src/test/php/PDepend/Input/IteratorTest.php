@@ -166,7 +166,7 @@ class IteratorTest extends AbstractTestCase
      * @param array<string> $extensions The accepted file extension.
      * @return array<string>
      */
-    protected function createFilteredFileList(array $extensions)
+    protected function createFilteredFileList(array $extensions): array
     {
         $files = new Iterator(
             new DirectoryIterator($this->createCodeResourceUriForTest()),

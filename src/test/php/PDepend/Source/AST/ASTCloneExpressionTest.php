@@ -93,10 +93,8 @@ class ASTCloneExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTCloneExpression
      */
-    private function getFirstCloneExpressionInFunction()
+    private function getFirstCloneExpressionInFunction(): ASTCloneExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTCloneExpression::class

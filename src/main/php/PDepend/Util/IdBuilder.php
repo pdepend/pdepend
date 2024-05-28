@@ -65,30 +65,24 @@ class IdBuilder
 
     /**
      * Generates an identifier for the given file instance.
-     *
-     * @return string
      */
-    public function forFile(ASTCompilationUnit $compilationUnit)
+    public function forFile(ASTCompilationUnit $compilationUnit): string
     {
         return $this->hash($compilationUnit->getFileName() ?? 'default');
     }
 
     /**
      * Generates an identifier for the given function instance.
-     *
-     * @return string
      */
-    public function forFunction(ASTFunction $function)
+    public function forFunction(ASTFunction $function): string
     {
         return $this->forOffsetItem($function, 'function');
     }
 
     /**
      * Generates an identifier for the given class, interface or trait instance.
-     *
-     * @return string
      */
-    public function forClassOrInterface(AbstractASTType $type)
+    public function forClassOrInterface(AbstractASTType $type): string
     {
         return $this->forOffsetItem(
             $type,
@@ -100,9 +94,8 @@ class IdBuilder
      * Generates an identifier for the given source item.
      *
      * @param string $prefix The item type identifier.
-     * @return string
      */
-    protected function forOffsetItem(AbstractASTArtifact $artifact, string $prefix)
+    protected function forOffsetItem(AbstractASTArtifact $artifact, string $prefix): string
     {
         $fileHash = $artifact->getCompilationUnit()?->getId() ?? 'default';
         $itemHash = $this->hash($prefix . ':' . strtolower($artifact->getImage()));
@@ -114,10 +107,8 @@ class IdBuilder
 
     /**
      * Generates an identifier for the given method instance.
-     *
-     * @return string
      */
-    public function forMethod(ASTMethod $method)
+    public function forMethod(ASTMethod $method): string
     {
         $hash = $this->hash(strtolower($method->getImage()));
 
@@ -133,9 +124,8 @@ class IdBuilder
      * Creates a base 36 hash for the given string.
      *
      * @param string $string The raw input identifier/string.
-     * @return string
      */
-    protected function hash(string $string)
+    protected function hash(string $string): string
     {
         return substr(base_convert(md5($string), 16, 36), 0, 11);
     }
@@ -146,9 +136,8 @@ class IdBuilder
      *
      * @param string $file The file identifier.
      * @param string $string The node identifier.
-     * @return string
      */
-    protected function getOffsetInFile(string $file, string $string)
+    protected function getOffsetInFile(string $file, string $string): string
     {
         if (isset($this->offsetInFile[$file][$string])) {
             $this->offsetInFile[$file][$string]++;

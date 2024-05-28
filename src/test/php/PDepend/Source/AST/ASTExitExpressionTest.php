@@ -58,10 +58,9 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithExitCode
      *
-     * @return ASTExitExpression
      * @since 1.0.1
      */
-    public function testExitExpressionWithExitCode()
+    public function testExitExpressionWithExitCode(): ASTExitExpression
     {
         $expr = $this->getFirstExitExpressionInFunction();
         static::assertInstanceOf(ASTExitExpression::class, $expr);
@@ -120,10 +119,9 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithEmptyArgs
      *
-     * @return ASTExitExpression
      * @since 1.0.1
      */
-    public function testExitExpressionWithEmptyArgs()
+    public function testExitExpressionWithEmptyArgs(): ASTExitExpression
     {
         $expr = $this->getFirstExitExpressionInFunction();
         static::assertInstanceOf(ASTExitExpression::class, $expr);
@@ -182,10 +180,9 @@ class ASTExitExpressionTest extends ASTNodeTestCase
     /**
      * testExitExpressionWithoutArgs
      *
-     * @return ASTExitExpression
      * @since 1.0.1
      */
-    public function testExitExpressionWithoutArgs()
+    public function testExitExpressionWithoutArgs(): ASTExitExpression
     {
         $expr = $this->getFirstExitExpressionInFunction();
         static::assertInstanceOf(ASTExitExpression::class, $expr);
@@ -235,10 +232,8 @@ class ASTExitExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTExitExpression
      */
-    private function getFirstExitExpressionInFunction()
+    private function getFirstExitExpressionInFunction(): ASTExitExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTExitExpression::class

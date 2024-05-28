@@ -60,10 +60,9 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      * Creates the PDepend summary report for the source associated with the
      * calling test case.
      *
-     * @return string
      * @since 0.10.0
      */
-    protected function createSummaryXmlForCallingTest()
+    protected function createSummaryXmlForCallingTest(): string
     {
         $this->changeWorkingDirectory(
             self::createCodeResourceURI('config/')
@@ -87,7 +86,7 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      *
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false)
+    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false): ASTArtifactList
     {
         return $this->parseSource(
             $this->getSourceFileForTestCase($testCase),
@@ -99,9 +98,8 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      * Returns the source file for the given test case.
      *
      * @param string $testCase The qualified test case name.
-     * @return string
      */
-    protected function getSourceFileForTestCase(string $testCase)
+    protected function getSourceFileForTestCase(string $testCase): string
     {
         [$class, $method] = explode('::', $testCase);
 

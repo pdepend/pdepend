@@ -191,10 +191,8 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTPreIncrementExpression
      */
-    private function getFirstPreIncrementExpressionInClass()
+    private function getFirstPreIncrementExpressionInClass(): ASTPreIncrementExpression
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTPreIncrementExpression::class
@@ -203,10 +201,8 @@ class ASTPreIncrementExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTPreIncrementExpression
      */
-    private function getFirstPreIncrementExpressionInFunction()
+    private function getFirstPreIncrementExpressionInFunction(): ASTPreIncrementExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTPreIncrementExpression::class

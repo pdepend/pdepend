@@ -53,17 +53,12 @@ namespace PDepend\Source\AST;
  */
 abstract class AbstractASTCombinationType extends ASTType
 {
-    /**
-     * @return string
-     */
-    abstract protected function getSymbol();
+    abstract protected function getSymbol(): string;
 
     /**
      * Return concatenated allowed types string representation.
-     *
-     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return implode($this->getSymbol(), array_map(function ($type) {
             $image = $type->getImage();

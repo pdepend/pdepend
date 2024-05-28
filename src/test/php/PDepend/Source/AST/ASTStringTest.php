@@ -242,10 +242,8 @@ class ASTStringTest extends ASTNodeTestCase
 
     /**
      * Returns a test member primary prefix.
-     *
-     * @return ASTString
      */
-    private function getFirstStringInFunction()
+    private function getFirstStringInFunction(): ASTString
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTString::class

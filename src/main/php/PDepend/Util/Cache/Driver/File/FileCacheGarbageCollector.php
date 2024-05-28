@@ -71,10 +71,8 @@ class FileCacheGarbageCollector
     /**
      * Removes all outdated cache files and returns the number of garbage
      * collected files.
-     *
-     * @return int
      */
-    public function garbageCollect()
+    public function garbageCollect(): int
     {
         if (false === file_exists($this->cacheDir)) {
             return 0;
@@ -103,10 +101,8 @@ class FileCacheGarbageCollector
 
     /**
      * Checks if the given file can be removed.
-     *
-     * @return bool
      */
-    private function isCollectibleFile(SplFileInfo $file)
+    private function isCollectibleFile(SplFileInfo $file): bool
     {
         if (false === $file->isFile()) {
             return false;
