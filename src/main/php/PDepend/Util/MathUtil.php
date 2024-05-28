@@ -60,7 +60,7 @@ final class MathUtil
      * @param numeric-string $right The right arithmetic operand.
      * @return numeric-string
      */
-    public static function mul($left, $right)
+    public static function mul(string $left, string $right): string
     {
         if (function_exists('bcmul')) {
             return bcmul($left, $right);
@@ -77,7 +77,7 @@ final class MathUtil
      * @param string $right The right arithmetic operand.
      * @return numeric-string
      */
-    public static function add(string $left, string $right)
+    public static function add(string $left, string $right): string
     {
         if (function_exists('bcadd')) {
             return bcadd($left, $right);
