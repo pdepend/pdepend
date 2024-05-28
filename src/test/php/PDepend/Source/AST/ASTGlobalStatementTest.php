@@ -93,10 +93,8 @@ class ASTGlobalStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTGlobalStatement
      */
-    private function getFirstGlobalStatementInFunction()
+    private function getFirstGlobalStatementInFunction(): ASTGlobalStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTGlobalStatement::class

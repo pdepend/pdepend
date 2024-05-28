@@ -135,20 +135,16 @@ abstract class AbstractASTNode implements ASTNode
 
     /**
      * Returns the source image of this ast node.
-     *
-     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->getMetadata(4);
     }
 
     /**
      * Returns the source image of this ast node without the namespace prefix.
-     *
-     * @return string
      */
-    public function getImageWithoutNamespace()
+    public function getImageWithoutNamespace(): string
     {
         $imagePath = explode('\\', $this->getMetadata(4));
 
@@ -157,10 +153,8 @@ abstract class AbstractASTNode implements ASTNode
 
     /**
      * Returns the start line for this ast node.
-     *
-     * @return int
      */
-    public function getStartLine()
+    public function getStartLine(): int
     {
         return $this->getMetadataInteger(0);
     }
@@ -175,10 +169,8 @@ abstract class AbstractASTNode implements ASTNode
 
     /**
      * Returns the end line for this ast node.
-     *
-     * @return int
      */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         return $this->getMetadataInteger(1);
     }
@@ -212,10 +204,9 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns an integer value that was stored under the given index.
      *
-     * @return int
      * @since 0.10.4
      */
-    protected function getMetadataInteger(int $index)
+    protected function getMetadataInteger(int $index): int
     {
         return (int) $this->getMetadata($index);
     }
@@ -234,10 +225,9 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns a boolean value that was stored under the given index.
      *
-     * @return bool
      * @since 0.10.4
      */
-    protected function getMetadataBoolean(int $index)
+    protected function getMetadataBoolean(int $index): bool
     {
         return (bool) $this->getMetadata($index);
     }
@@ -256,10 +246,9 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the value that was stored under the given index.
      *
-     * @return string
      * @since 0.10.4
      */
-    protected function getMetadata(int $index)
+    protected function getMetadata(int $index): string
     {
         $metadata = explode(':', $this->metadata, $this->getMetadataSize());
 
@@ -283,10 +272,9 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the total number of the used property bag.
      *
-     * @return int
      * @since 0.10.4
      */
-    protected function getMetadataSize()
+    protected function getMetadataSize(): int
     {
         return 5;
     }
@@ -294,10 +282,9 @@ abstract class AbstractASTNode implements ASTNode
     /**
      * Returns the node instance for the given index or throws an exception.
      *
-     * @return ASTNode
      * @throws OutOfBoundsException When no node exists at the given index.
      */
-    public function getChild(int $index)
+    public function getChild(int $index): ASTNode
     {
         if (isset($this->nodes[$index])) {
             return $this->nodes[$index];
@@ -358,7 +345,7 @@ abstract class AbstractASTNode implements ASTNode
      *                     is only for internal usage.
      * @return T[]
      */
-    public function findChildrenOfType($targetType, array &$results = [])
+    public function findChildrenOfType($targetType, array &$results = []): array
     {
         foreach ($this->nodes as $node) {
             if ($node instanceof $targetType) {
@@ -403,7 +390,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @return ASTNode[]
      */
-    public function getParentsOfType(string $parentType)
+    public function getParentsOfType(string $parentType): array
     {
         $parents = [];
 
@@ -432,7 +419,7 @@ abstract class AbstractASTNode implements ASTNode
      *
      * @return ?string
      */
-    public function getComment()
+    public function getComment(): ?string
     {
         return $this->comment;
     }

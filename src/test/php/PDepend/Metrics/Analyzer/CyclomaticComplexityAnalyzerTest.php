@@ -341,10 +341,9 @@ class CyclomaticComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Returns a pre configured ccn analyzer.
      *
-     * @return CyclomaticComplexityAnalyzer
      * @since 1.0.0
      */
-    private function createAnalyzer()
+    private function createAnalyzer(): CyclomaticComplexityAnalyzer
     {
         $analyzer = new CyclomaticComplexityAnalyzer();
         $analyzer->setCache($this->cache);

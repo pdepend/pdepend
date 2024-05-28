@@ -56,10 +56,8 @@ class ASTEnumCase extends AbstractASTNode implements ASTArtifact
 
     /**
      * Returns the enum definition of this case.
-     *
-     * @return ASTEnum
      */
-    public function getEnum()
+    public function getEnum(): ASTEnum
     {
         return $this->enum;
     }
@@ -72,18 +70,12 @@ class ASTEnumCase extends AbstractASTNode implements ASTArtifact
         $this->enum = $enum;
     }
 
-    /**
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->getEnum()->getImage() . '::' . $this->getImage();
     }
 
-    /**
-     * @return ASTNode|null
-     */
-    public function getValue()
+    public function getValue(): ?ASTNode
     {
         return $this->nodes[0] ?? null;
     }

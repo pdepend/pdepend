@@ -56,7 +56,6 @@ interface FullTokenizer extends Tokenizer
      * Returns the token type at the given position relatively to the current position.
      *
      * @param int $shift positive or negative to apply to the current index.
-     * @return int
      */
-    public function peekAt(int $shift);
+    public function peekAt(int $shift): int;
 }

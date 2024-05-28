@@ -93,10 +93,8 @@ class ASTBooleanAndExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTBooleanAndExpression
      */
-    private function getFirstBooleanAndExpressionInFunction()
+    private function getFirstBooleanAndExpressionInFunction(): ASTBooleanAndExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTBooleanAndExpression::class

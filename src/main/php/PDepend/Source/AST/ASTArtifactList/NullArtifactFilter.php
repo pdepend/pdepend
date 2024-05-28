@@ -56,10 +56,8 @@ class NullArtifactFilter implements ArtifactFilter
     /**
      * Returns <b>true</b> if the given node should be part of the node iterator,
      * otherwise this method will return <b>false</b>.
-     *
-     * @return bool
      */
-    public function accept(ASTArtifact $node)
+    public function accept(ASTArtifact $node): bool
     {
         return true;
     }

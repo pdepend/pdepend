@@ -193,9 +193,8 @@ class FileCacheDriver implements CacheDriver
      * This method reads the raw data from the given <em>$file</em>.
      *
      * @param string $file The cache file name.
-     * @return string
      */
-    protected function read(string $file)
+    protected function read(string $file): string
     {
         $handle = fopen($file, 'rb');
         if (!$handle) {
@@ -239,9 +238,8 @@ class FileCacheDriver implements CacheDriver
      * directory and the current entry type.
      *
      * @param string $key The cache key for the given data.
-     * @return string
      */
-    protected function getCacheFile(string $key)
+    protected function getCacheFile(string $key): string
     {
         $cacheFile = $this->getCacheFileWithoutExtension($key) .
                      '.' . $this->version .
@@ -259,9 +257,8 @@ class FileCacheDriver implements CacheDriver
      * extension.
      *
      * @param string $key The cache key for the given data.
-     * @return string
      */
-    protected function getCacheFileWithoutExtension(string $key)
+    protected function getCacheFileWithoutExtension(string $key): string
     {
         if (is_string($this->cacheKey)) {
             $key = md5($key . $this->cacheKey);

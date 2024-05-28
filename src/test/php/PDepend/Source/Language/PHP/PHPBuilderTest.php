@@ -1869,10 +1869,8 @@ class PHPBuilderTest extends AbstractTestCase
 
     /**
      * Creates a clean builder test instance.
-     *
-     * @return PHPBuilder
      */
-    protected function createBuilder()
+    protected function createBuilder(): PHPBuilder
     {
         $builder = new PHPBuilder();
         $builder->setCache($this->createCacheFixture());

@@ -182,10 +182,8 @@ class ASTParentReferenceTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTParentReference
      */
-    private function getFirstParentReferenceInClass()
+    private function getFirstParentReferenceInClass(): ASTParentReference
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTParentReference::class

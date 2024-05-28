@@ -109,7 +109,7 @@ class PHPParserVersion81Test extends AbstractTestCase
     /**
      * @return \PDepend\Source\AST\AbstractASTClassOrInterface[]
      */
-    public function testParserResolvesDependenciesInDocComments()
+    public function testParserResolvesDependenciesInDocComments(): array
     {
         $namespaces = $this->parseCodeResourceForTest();
         $classes = $namespaces[0]->getClasses();
@@ -648,10 +648,8 @@ class PHPParserVersion81Test extends AbstractTestCase
 
     /**
      * testSpaceshipOperatorWithArrays
-     *
-     * @return ASTExpression
      */
-    public function testSpaceshipOperatorWithArrays()
+    public function testSpaceshipOperatorWithArrays(): ASTExpression
     {
         $expr = $this->getFirstClassMethodForTestCase()
             ->getFirstChildOfType(ASTExpression::class)
@@ -719,10 +717,7 @@ class PHPParserVersion81Test extends AbstractTestCase
         $this->parseCodeResourceForTest();
     }
 
-    /**
-     * @return ASTNamespace
-     */
-    public function testGroupUseStatement()
+    public function testGroupUseStatement(): ASTNamespace
     {
         $namespaces = $this->parseCodeResourceForTest();
         static::assertNotNull($namespaces);
@@ -1506,10 +1501,7 @@ class PHPParserVersion81Test extends AbstractTestCase
         }
     }
 
-    /**
-     * @return AbstractPHPParser
-     */
-    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
         return $this->getAbstractClassMock(
             'PDepend\\Source\\Language\\PHP\\AbstractPHPParser',

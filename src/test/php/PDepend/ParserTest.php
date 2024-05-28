@@ -502,7 +502,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return ASTArtifactList<ASTFunction>
      */
-    public function testParserSetsCorrectFunctionReturnType()
+    public function testParserSetsCorrectFunctionReturnType(): ASTArtifactList
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -930,7 +930,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function testParserSetsFileLevelFunctionPackage()
+    public function testParserSetsFileLevelFunctionPackage(): ASTArtifactList
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -1442,10 +1442,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Returns an interface instance from the mixed code test file.
-     *
-     * @return ASTInterface
      */
-    protected function getInterfaceForTest()
+    protected function getInterfaceForTest(): ASTInterface
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -1457,7 +1455,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return ASTArtifactList<ASTMethod>
      */
-    protected function getInterfaceMethodsForTest()
+    protected function getInterfaceMethodsForTest(): ASTArtifactList
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -1469,10 +1467,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Returns a class instance from the mixed code test file.
-     *
-     * @return ASTClass
      */
-    protected function getClassForTest()
+    protected function getClassForTest(): ASTClass
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -1484,7 +1480,7 @@ class ParserTest extends AbstractTestCase
      *
      * @return ASTArtifactList<ASTMethod>
      */
-    protected function getClassMethodsForTest()
+    protected function getClassMethodsForTest(): ASTArtifactList
     {
         $namespaces = $this->parseCodeResourceForTest();
 

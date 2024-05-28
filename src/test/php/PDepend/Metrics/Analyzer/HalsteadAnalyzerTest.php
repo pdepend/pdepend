@@ -288,10 +288,9 @@ class HalsteadAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Returns a pre configured ccn analyzer.
      *
-     * @return HalsteadAnalyzer
      * @since 1.0.0
      */
-    private function createAnalyzer()
+    private function createAnalyzer(): HalsteadAnalyzer
     {
         $analyzer = new HalsteadAnalyzer();
         $analyzer->setCache($this->cache);

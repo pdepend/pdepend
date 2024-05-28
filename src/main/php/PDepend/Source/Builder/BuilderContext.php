@@ -96,10 +96,9 @@ interface BuilderContext
      * Returns the trait instance for the given qualified name.
      *
      * @param string $qualifiedName Full qualified trait name.
-     * @return ASTTrait
      * @since  1.0.0
      */
-    public function getTrait(string $qualifiedName);
+    public function getTrait(string $qualifiedName): ASTTrait;
 
     /**
      * Returns the class instance for the given qualified name.
@@ -110,8 +109,6 @@ interface BuilderContext
 
     /**
      * Returns a class or an interface instance for the given qualified name.
-     *
-     * @return AbstractASTClassOrInterface
      */
-    public function getClassOrInterface(string $qualifiedName);
+    public function getClassOrInterface(string $qualifiedName): AbstractASTClassOrInterface;
 }

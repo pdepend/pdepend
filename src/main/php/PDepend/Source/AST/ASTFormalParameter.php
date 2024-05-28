@@ -71,10 +71,8 @@ class ASTFormalParameter extends AbstractASTNode
 
     /**
      * Checks if this parameter has a type.
-     *
-     * @return bool
      */
-    public function hasType()
+    public function hasType(): bool
     {
         return (reset($this->nodes) instanceof ASTType);
     }
@@ -82,10 +80,9 @@ class ASTFormalParameter extends AbstractASTNode
     /**
      * Returns the type of this parameter.
      *
-     * @return ASTType
      * @throws OutOfBoundsException
      */
-    public function getType()
+    public function getType(): ASTType
     {
         $child = $this->getChild(0);
         if ($child instanceof ASTType) {
@@ -99,10 +96,9 @@ class ASTFormalParameter extends AbstractASTNode
      * This method will return <b>true</b> when the parameter is declared as a
      * variable argument list <b>...</b>.
      *
-     * @return bool
      * @since 2.0.7
      */
-    public function isVariableArgList()
+    public function isVariableArgList(): bool
     {
         return $this->getMetadataBoolean(6);
     }
@@ -119,10 +115,8 @@ class ASTFormalParameter extends AbstractASTNode
     /**
      * This method will return <b>true</b> when the parameter is passed by
      * reference.
-     *
-     * @return bool
      */
-    public function isPassedByReference()
+    public function isPassedByReference(): bool
     {
         return $this->getMetadataBoolean(5);
     }
@@ -138,11 +132,10 @@ class ASTFormalParameter extends AbstractASTNode
     /**
      * Returns the total number of the used property bag.
      *
-     * @return int
      * @see    ASTNode#getMetadataSize()
      * @since  0.10.4
      */
-    protected function getMetadataSize()
+    protected function getMetadataSize(): int
     {
         return 7;
     }
@@ -150,10 +143,9 @@ class ASTFormalParameter extends AbstractASTNode
     /**
      * Returns the declared modifiers for this type.
      *
-     * @return int
      * @since  0.9.4
      */
-    public function getModifiers()
+    public function getModifiers(): int
     {
         return $this->modifiers;
     }
@@ -194,10 +186,8 @@ class ASTFormalParameter extends AbstractASTNode
      * returned value will be <b>false</b>.
      *
      * Can happen only on constructor promotion property.
-     *
-     * @return bool
      */
-    public function isPromoted()
+    public function isPromoted(): bool
     {
         return ($this->getModifiers() & (State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE)) !== 0;
     }
@@ -207,10 +197,8 @@ class ASTFormalParameter extends AbstractASTNode
      * returned value will be <b>false</b>.
      *
      * Can happen only on constructor promotion property.
-     *
-     * @return bool
      */
-    public function isPublic()
+    public function isPublic(): bool
     {
         return ($this->getModifiers() & State::IS_PUBLIC) === State::IS_PUBLIC;
     }
@@ -220,10 +208,8 @@ class ASTFormalParameter extends AbstractASTNode
      * returned value will be <b>false</b>.
      *
      * Can happen only on constructor promotion property.
-     *
-     * @return bool
      */
-    public function isProtected()
+    public function isProtected(): bool
     {
         return ($this->getModifiers() & State::IS_PROTECTED) === State::IS_PROTECTED;
     }
@@ -233,10 +219,8 @@ class ASTFormalParameter extends AbstractASTNode
      * returned value will be <b>false</b>.
      *
      * Can happen only on constructor promotion property.
-     *
-     * @return bool
      */
-    public function isPrivate()
+    public function isPrivate(): bool
     {
         return ($this->getModifiers() & State::IS_PRIVATE) === State::IS_PRIVATE;
     }

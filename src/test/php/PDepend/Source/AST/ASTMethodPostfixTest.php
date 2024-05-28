@@ -661,10 +661,8 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTMethodPostfix
      */
-    private function getFirstMethodPostfixInFunction()
+    private function getFirstMethodPostfixInFunction(): ASTMethodPostfix
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTMethodPostfix::class
@@ -673,10 +671,8 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTMemberPrimaryPrefix
      */
-    private function getFirstMemberPrimaryPrefixInFunction()
+    private function getFirstMemberPrimaryPrefixInFunction(): ASTMemberPrimaryPrefix
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTMemberPrimaryPrefix::class
@@ -685,10 +681,8 @@ class ASTMethodPostfixTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTMemberPrimaryPrefix
      */
-    private function getFirstMemberPrimaryPrefixInClass()
+    private function getFirstMemberPrimaryPrefixInClass(): ASTMemberPrimaryPrefix
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTMemberPrimaryPrefix::class

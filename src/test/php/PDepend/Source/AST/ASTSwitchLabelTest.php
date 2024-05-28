@@ -97,10 +97,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabel
      *
-     * @return ASTSwitchLabel
      * @since 1.0.2
      */
-    public function testSwitchLabel()
+    public function testSwitchLabel(): ASTSwitchLabel
     {
         $label = $this->getFirstSwitchLabelInFunction();
         static::assertInstanceOf(ASTSwitchLabel::class, $label);
@@ -180,10 +179,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCode
      *
-     * @return ASTSwitchLabel
      * @since 2.1.0
      */
-    public function testSwitchLabelWithNestedNonePhpCode()
+    public function testSwitchLabelWithNestedNonePhpCode(): ASTSwitchLabel
     {
         $label = $this->getFirstSwitchLabelInFunction();
         static::assertInstanceOf(ASTSwitchLabel::class, $label);
@@ -242,10 +240,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelDefault
      *
-     * @return ASTSwitchLabel
      * @since 1.0.2
      */
-    public function testSwitchLabelDefault()
+    public function testSwitchLabelDefault(): ASTSwitchLabel
     {
         $label = $this->getFirstSwitchLabelInFunction();
         static::assertInstanceOf(ASTSwitchLabel::class, $label);
@@ -324,10 +321,9 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
     /**
      * testSwitchLabelWithNestedNonePhpCode
      *
-     * @return ASTSwitchLabel
      * @since 2.1.0
      */
-    public function testSwitchLabelDefaultWithNestedNonePhpCode()
+    public function testSwitchLabelDefaultWithNestedNonePhpCode(): ASTSwitchLabel
     {
         $label = $this->getFirstSwitchLabelInFunction();
         static::assertInstanceOf(ASTSwitchLabel::class, $label);
@@ -403,10 +399,8 @@ class ASTSwitchLabelTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTSwitchLabel
      */
-    private function getFirstSwitchLabelInFunction()
+    private function getFirstSwitchLabelInFunction(): ASTSwitchLabel
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTSwitchLabel::class

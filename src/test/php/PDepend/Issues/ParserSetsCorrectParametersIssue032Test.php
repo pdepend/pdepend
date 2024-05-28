@@ -151,7 +151,7 @@ class ParserSetsCorrectParametersIssue032Test extends AbstractFeatureTestCase
      *
      * @return ASTParameter[]
      */
-    private function getParametersOfFirstMethod()
+    private function getParametersOfFirstMethod(): array
     {
         $namespaces = $this->parseTestCase();
 

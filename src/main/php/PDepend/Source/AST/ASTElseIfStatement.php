@@ -57,10 +57,9 @@ class ASTElseIfStatement extends ASTStatement
      * Returns <b>true</b> when this <b>elseif</b>-statement is followed by an
      * <b>else</b>-statement.
      *
-     * @return bool
      * @since  0.9.12
      */
-    public function hasElse()
+    public function hasElse(): bool
     {
         return count($this->nodes) === 3;
     }

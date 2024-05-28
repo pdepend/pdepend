@@ -64,10 +64,8 @@ final class CollectionArtifactFilter implements ArtifactFilter
 
     /**
      * Singleton method for this filter class.
-     *
-     * @return CollectionArtifactFilter
      */
-    public static function getInstance()
+    public static function getInstance(): self
     {
         if (!isset(self::$instance)) {
             self::$instance = new self();
@@ -90,10 +88,8 @@ final class CollectionArtifactFilter implements ArtifactFilter
     /**
      * Returns <b>true</b> if the given node should be part of the node iterator,
      * otherwise this method will return <b>false</b>.
-     *
-     * @return bool
      */
-    public function accept(ASTArtifact $node)
+    public function accept(ASTArtifact $node): bool
     {
         if ($this->filter === null) {
             return true;

@@ -155,10 +155,8 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
 
     /**
      * testClassReferenceForJavaStyleArrayNotation
-     *
-     * @return ASTClass
      */
-    public function testClassReferenceForJavaStyleArrayNotation()
+    public function testClassReferenceForJavaStyleArrayNotation(): ASTClass
     {
         $function = $this->getFirstFunctionForTestCaseInternal();
         $type = $function->getReturnClass();
@@ -573,10 +571,8 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     /**
      * This method will return the first function instance within the source
      * file of the calling test case.
-     *
-     * @return ASTFunction
      */
-    private function getFirstFunctionForTestCaseInternal()
+    private function getFirstFunctionForTestCaseInternal(): ASTFunction
     {
         return $this->parseCodeResourceForTest()
             ->current()

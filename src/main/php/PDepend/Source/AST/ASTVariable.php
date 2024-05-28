@@ -63,10 +63,9 @@ class ASTVariable extends ASTExpression
      * This method will return <b>true</b> when this variable instance represents
      * the <b>$this</b> scope of a class instance.
      *
-     * @return bool
      * @since  0.10.0
      */
-    public function isThis()
+    public function isThis(): bool
     {
         return ($this->getImage() === '$this');
     }

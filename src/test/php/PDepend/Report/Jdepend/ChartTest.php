@@ -309,7 +309,7 @@ class ChartTest extends AbstractTestCase
     /**
      * @return ASTNamespace[]
      */
-    private function createPackages()
+    private function createPackages(): array
     {
         $packages = [];
         foreach (func_get_args() as $i => $userDefined) {
@@ -322,10 +322,7 @@ class ChartTest extends AbstractTestCase
         return $packages;
     }
 
-    /**
-     * @return ASTNamespace
-     */
-    private function createPackage(bool $userDefined, string $packageName)
+    private function createPackage(bool $userDefined, string $packageName): ASTNamespace
     {
         $packageA = new ASTNamespace($packageName);
         $type = $this->getMockBuilder(ASTClass::class)

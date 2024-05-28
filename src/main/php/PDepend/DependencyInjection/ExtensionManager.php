@@ -83,7 +83,7 @@ class ExtensionManager
      *
      * @return array<Extension>
      */
-    public function getActivatedExtensions()
+    public function getActivatedExtensions(): array
     {
         return $this->extensions;
     }

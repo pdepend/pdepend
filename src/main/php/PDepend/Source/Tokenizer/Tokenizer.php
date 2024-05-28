@@ -61,10 +61,8 @@ interface Tokenizer
 
     /**
      * Returns the name of the source file.
-     *
-     * @return ASTCompilationUnit|null
      */
-    public function getSourceFile();
+    public function getSourceFile(): ?ASTCompilationUnit;
 
     /**
      * Sets a new php source file.
@@ -84,26 +82,22 @@ interface Tokenizer
     /**
      * Returns the previous token or null if there is no one yet.
      *
-     * @return Token|null
      * @since  2.6.0
      */
-    public function prevToken();
+    public function prevToken(): ?Token;
 
     /**
      * Returns the current token or null if there is no more.
      *
-     * @return Token|null
      * @since  2.6.0
      */
-    public function currentToken();
+    public function currentToken(): ?Token;
 
     /**
      * Returns the next token type or {@link Tokenizer::T_EOF} if
      * there is no next token.
-     *
-     * @return int
      */
-    public function peek();
+    public function peek(): int;
 
     /**
      * Returns the type of next token, after the current token. This method
@@ -112,13 +106,11 @@ interface Tokenizer
      * @return ?int
      * @since  0.9.12
      */
-    public function peekNext();
+    public function peekNext(): ?int;
 
     /**
      * Returns the previous token type or {@link Tokenizer::T_BOF}
      * if there is no previous token.
-     *
-     * @return int
      */
-    public function prev();
+    public function prev(): int;
 }

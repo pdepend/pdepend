@@ -68,7 +68,7 @@ class MethodStrategy extends AbstractASTVisitor implements CodeRankStrategyI
      *
      * @return array<string, array{in: string[], out: string[], name: string, type: class-string}>
      */
-    public function getCollectedNodes()
+    public function getCollectedNodes(): array
     {
         return $this->nodes;
     }

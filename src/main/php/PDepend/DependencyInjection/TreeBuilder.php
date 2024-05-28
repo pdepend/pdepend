@@ -68,20 +68,16 @@ class TreeBuilder
 
     /**
      * Get the root node of the built tree.
-     *
-     * @return ArrayNodeDefinition
      */
-    public function getRootNode()
+    public function getRootNode(): ArrayNodeDefinition
     {
         return $this->rootNode;
     }
 
     /**
      * Get the base Symfony tree builder.
-     *
-     * @return BaseTreeBuilder
      */
-    public function getTreeBuilder()
+    public function getTreeBuilder(): BaseTreeBuilder
     {
         return $this->treeBuilder;
     }

@@ -201,10 +201,8 @@ class ASTElseIfStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTElseIfStatement
      */
-    private function getFirstElseIfStatementInFunction()
+    private function getFirstElseIfStatementInFunction(): ASTElseIfStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTElseIfStatement::class

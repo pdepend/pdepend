@@ -93,10 +93,8 @@ class ASTCompoundExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTCompoundExpression
      */
-    private function getFirstExpressionInFunction()
+    private function getFirstExpressionInFunction(): ASTCompoundExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTCompoundExpression::class

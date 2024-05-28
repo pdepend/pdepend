@@ -410,7 +410,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @return array<string, mixed>
      */
-    private function calculateClassMetrics()
+    private function calculateClassMetrics(): array
     {
         $namespaces = $this->parseTestCaseSource($this->getCallingTestMethod());
 
@@ -427,10 +427,9 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testGetNodeMetricsForTrait
      *
-     * @return array
      * @since 1.0.6
      */
-    public function testGetNodeMetricsForTrait()
+    public function testGetNodeMetricsForTrait(): array
     {
         $metrics = $this->calculateTraitMetrics();
 
@@ -592,7 +591,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      * @return array<string, mixed>
      * @since 1.0.6
      */
-    private function calculateTraitMetrics()
+    private function calculateTraitMetrics(): array
     {
         $namespaces = $this->parseCodeResourceForTest();
 

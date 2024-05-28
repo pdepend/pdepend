@@ -62,7 +62,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      *
      * @return ASTParameter[]
      */
-    protected function getParametersOfFirstFunction()
+    protected function getParametersOfFirstFunction(): array
     {
         return $this->getFirstFunctionForTestCase()
             ->getParameters();
@@ -73,7 +73,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      *
      * @return ASTArtifactList<ASTNamespace>
      */
-    protected function parseTestCase(?string $testCase = null)
+    protected function parseTestCase(?string $testCase = null): ASTArtifactList
     {
         if ($testCase === null) {
             $testCase = $this->getTestCaseMethod();
@@ -88,7 +88,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      *
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false)
+    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false): ASTArtifactList
     {
         [$class, $method] = explode('::', $testCase);
         if (preg_match('([^\d](\d+)Test$)', $class, $match) === 0) {
@@ -100,10 +100,8 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
 
     /**
      * Returns a php callback for the calling test case method.
-     *
-     * @return string
      */
-    protected function getTestCaseMethod()
+    protected function getTestCaseMethod(): string
     {
         $trace = debug_backtrace();
         foreach ($trace as $frame) {

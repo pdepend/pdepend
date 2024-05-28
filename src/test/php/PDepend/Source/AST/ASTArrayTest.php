@@ -137,10 +137,8 @@ class ASTArrayTest extends ASTNodeTestCase
 
     /**
      * Returns an array instance for the currently executed test case.
-     *
-     * @return ASTArray
      */
-    private function getFirstArrayInFunction()
+    private function getFirstArrayInFunction(): ASTArray
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTArray::class

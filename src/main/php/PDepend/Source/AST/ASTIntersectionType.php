@@ -55,10 +55,8 @@ class ASTIntersectionType extends AbstractASTCombinationType
 {
     /**
      * For this specific type it is always an intersection type.
-     *
-     * @return bool
      */
-    public function isIntersection()
+    public function isIntersection(): bool
     {
         return true;
     }

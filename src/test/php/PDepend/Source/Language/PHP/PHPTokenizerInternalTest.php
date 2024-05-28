@@ -586,7 +586,7 @@ class PHPTokenizerInternalTest extends AbstractTestCase
      *
      * @return array<int>
      */
-    private function getTokenTypesForTest()
+    private function getTokenTypesForTest(): array
     {
         $tokenizer = new PHPTokenizerInternal();
         $tokenizer->setSourceFile($this->createCodeResourceUriForTest());

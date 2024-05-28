@@ -86,10 +86,8 @@ class Command
 
     /**
      * Performs the main cli process and returns the exit code.
-     *
-     * @return int
      */
-    public function run()
+    public function run(): int
     {
         $this->application = new Application();
 
@@ -481,10 +479,9 @@ class Command
      * Prints all available log options and returns the length of the longest
      * option.
      *
-     * @return int
      * @throws Exception
      */
-    protected function printLogOptions()
+    protected function printLogOptions(): int
     {
         $maxLength = 0;
         $options = [];
@@ -523,10 +520,9 @@ class Command
      * Prints the analyzer options.
      *
      * @param int $length Length of the longest option.
-     * @return int
      * @throws Exception
      */
-    protected function printAnalyzerOptions(int $length)
+    protected function printAnalyzerOptions(int $length): int
     {
         $options = $this->application->getAvailableAnalyzerOptions();
 
@@ -602,7 +598,7 @@ class Command
      *
      * @return int The exit code.
      */
-    public static function main()
+    public static function main(): int
     {
         $command = new self();
 
@@ -623,10 +619,7 @@ class Command
         echo PHP_EOL;
     }
 
-    /**
-     * @return string
-     */
-    private function getErrorTrace(Exception|Throwable $exception)
+    private function getErrorTrace(Exception|Throwable $exception): string
     {
         return $exception::class . '(' . $exception->getMessage() . ')' . PHP_EOL .
             '## ' . $exception->getFile() . '(' . $exception->getLine() . ')' . PHP_EOL .

@@ -80,10 +80,9 @@ class ReportGeneratorFactory
      *
      * @param string $identifier The generator identifier.
      * @param string $fileName The log output file name.
-     * @return ReportGenerator
      * @throws RuntimeException
      */
-    public function createGenerator(string $identifier, string $fileName)
+    public function createGenerator(string $identifier, string $fileName): ReportGenerator
     {
         if (!isset($this->instances[$identifier])) {
             $loggerServices = $this->container->findTaggedServiceIds('pdepend.logger');

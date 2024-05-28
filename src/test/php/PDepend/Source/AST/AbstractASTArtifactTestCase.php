@@ -75,7 +75,7 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
      *
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false)
+    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false): ASTArtifactList
     {
         [$class, $method] = explode('::', $testCase);
 
@@ -89,8 +89,6 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
 
     /**
      * Creates an abstract item instance.
-     *
-     * @return AbstractASTArtifact
      */
-    abstract protected function createItem();
+    abstract protected function createItem(): AbstractASTArtifact;
 }

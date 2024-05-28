@@ -113,10 +113,9 @@ class Configuration
      * for the given <b>$name</b> exists.
      *
      * @param string $name Name of the requested property.
-     * @return bool
      * @since  0.10.0
      */
-    public function __isset(string $name)
+    public function __isset(string $name): bool
     {
         return isset($this->settings->{$name});
     }

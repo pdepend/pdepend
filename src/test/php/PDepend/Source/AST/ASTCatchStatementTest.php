@@ -142,10 +142,8 @@ class ASTCatchStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTCatchStatement
      */
-    private function getFirstCatchStatementInFunction()
+    private function getFirstCatchStatementInFunction(): ASTCatchStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTCatchStatement::class

@@ -78,30 +78,24 @@ class ASTClass extends AbstractASTClassOrInterface
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
-     *
-     * @return bool
      */
-    public function isAbstract()
+    public function isAbstract(): bool
     {
         return (($this->modifiers & State::IS_EXPLICIT_ABSTRACT) === State::IS_EXPLICIT_ABSTRACT);
     }
 
     /**
      * This method will return <b>true</b> when this class is declared as final.
-     *
-     * @return bool
      */
-    public function isFinal()
+    public function isFinal(): bool
     {
         return (($this->modifiers & State::IS_FINAL) === State::IS_FINAL);
     }
 
     /**
      * This method will return <b>true</b> when this class is declared as readonly.
-     *
-     * @return bool
      */
-    public function isReadonly()
+    public function isReadonly(): bool
     {
         return (($this->modifiers & State::IS_READONLY) === State::IS_READONLY);
     }
@@ -109,10 +103,8 @@ class ASTClass extends AbstractASTClassOrInterface
     /**
      * Will return <b>true</b> if this class was declared anonymous in an
      * allocation expression.
-     *
-     * @return bool
      */
-    public function isAnonymous()
+    public function isAnonymous(): bool
     {
         return false;
     }
@@ -122,7 +114,7 @@ class ASTClass extends AbstractASTClassOrInterface
      *
      * @return ASTArtifactList<ASTProperty>
      */
-    public function getProperties()
+    public function getProperties(): ASTArtifactList
     {
         if (!isset($this->properties)) {
             $this->properties = [];
@@ -146,10 +138,8 @@ class ASTClass extends AbstractASTClassOrInterface
 
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
-     *
-     * @return bool
      */
-    public function isSubtypeOf(AbstractASTType $type)
+    public function isSubtypeOf(AbstractASTType $type): bool
     {
         if ($type === $this) {
             return true;
@@ -174,10 +164,9 @@ class ASTClass extends AbstractASTClassOrInterface
     /**
      * Returns the declared modifiers for this type.
      *
-     * @return int
      * @since  0.9.4
      */
-    public function getModifiers()
+    public function getModifiers(): int
     {
         return $this->modifiers;
     }

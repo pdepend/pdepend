@@ -118,7 +118,7 @@ class ASTFunction extends AbstractASTCallable
      *
      * @return ?ASTNamespace
      */
-    public function getNamespace()
+    public function getNamespace(): ?ASTNamespace
     {
         return $this->namespace;
     }
@@ -150,7 +150,7 @@ class ASTFunction extends AbstractASTCallable
      * @return ?string
      * @since  0.10.0
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
         return $this->namespaceName;
     }

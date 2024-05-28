@@ -202,10 +202,8 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTDeclareStatement
      */
-    private function getFirstDeclareStatementInFunction()
+    private function getFirstDeclareStatementInFunction(): ASTDeclareStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTDeclareStatement::class

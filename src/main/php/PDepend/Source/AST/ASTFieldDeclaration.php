@@ -72,10 +72,8 @@ class ASTFieldDeclaration extends AbstractASTNode
 {
     /**
      * Checks if this parameter has a type.
-     *
-     * @return bool
      */
-    public function hasType()
+    public function hasType(): bool
     {
         return (reset($this->nodes) instanceof ASTType);
     }
@@ -83,10 +81,9 @@ class ASTFieldDeclaration extends AbstractASTNode
     /**
      * Returns the type of this parameter.
      *
-     * @return ASTType
      * @throws OutOfBoundsException
      */
-    public function getType()
+    public function getType(): ASTType
     {
         $child = $this->getChild(0);
         if ($child instanceof ASTType) {
@@ -99,10 +96,8 @@ class ASTFieldDeclaration extends AbstractASTNode
     /**
      * This method returns a OR combined integer of the declared modifiers for
      * this property.
-     *
-     * @return int
      */
-    public function getModifiers()
+    public function getModifiers(): int
     {
         return $this->getMetadataInteger(5);
     }
@@ -138,10 +133,8 @@ class ASTFieldDeclaration extends AbstractASTNode
     /**
      * Returns <b>true</b> if this node is marked as public, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isPublic()
+    public function isPublic(): bool
     {
         return (($this->getModifiers() & State::IS_PUBLIC) === State::IS_PUBLIC);
     }
@@ -149,10 +142,8 @@ class ASTFieldDeclaration extends AbstractASTNode
     /**
      * Returns <b>true</b> if this node is marked as protected, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isProtected()
+    public function isProtected(): bool
     {
         return (($this->getModifiers() & State::IS_PROTECTED) === State::IS_PROTECTED);
     }
@@ -160,10 +151,8 @@ class ASTFieldDeclaration extends AbstractASTNode
     /**
      * Returns <b>true</b> if this node is marked as private, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isPrivate()
+    public function isPrivate(): bool
     {
         return (($this->getModifiers() & State::IS_PRIVATE) === State::IS_PRIVATE);
     }
@@ -171,10 +160,8 @@ class ASTFieldDeclaration extends AbstractASTNode
     /**
      * Returns <b>true</b> when this node is declared as static, otherwise
      * the returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isStatic()
+    public function isStatic(): bool
     {
         return (($this->getModifiers() & State::IS_STATIC) === State::IS_STATIC);
     }
@@ -182,11 +169,10 @@ class ASTFieldDeclaration extends AbstractASTNode
     /**
      * Returns the total number of the used property bag.
      *
-     * @return int
      * @see    ASTNode#getMetadataSize()
      * @since  0.10.4
      */
-    protected function getMetadataSize()
+    protected function getMetadataSize(): int
     {
         return 6;
     }

@@ -143,10 +143,8 @@ class CacheFactoryTest extends AbstractTestCase
 
     /**
      * Creates a prepared factory instance.
-     *
-     * @return CacheFactory
      */
-    protected function createFactoryFixture()
+    protected function createFactoryFixture(): CacheFactory
     {
         $application = new Application();
         $application->setConfigurationFile(getcwd() . '/pdepend.xml');

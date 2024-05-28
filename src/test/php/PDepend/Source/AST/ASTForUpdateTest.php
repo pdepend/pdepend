@@ -93,10 +93,8 @@ class ASTForUpdateTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTForUpdate
      */
-    private function getFirstForUpdateInFunction()
+    private function getFirstForUpdateInFunction(): ASTForUpdate
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTForUpdate::class

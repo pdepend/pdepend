@@ -98,10 +98,8 @@ class ASTAnonymousClass extends ASTClass
 
     /**
      * Returns the start line for this ast node.
-     *
-     * @return int
      */
-    public function getStartLine()
+    public function getStartLine(): int
     {
         return $this->getMetadataInteger(0);
     }
@@ -116,10 +114,8 @@ class ASTAnonymousClass extends ASTClass
 
     /**
      * Returns the end line for this ast node.
-     *
-     * @return int
      */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         return $this->getMetadataInteger(1);
     }
@@ -158,10 +154,8 @@ class ASTAnonymousClass extends ASTClass
     /**
      * Will return <b>true</b> if this class was declared anonymous in an
      * allocation expression.
-     *
-     * @return bool
      */
-    public function isAnonymous()
+    public function isAnonymous(): bool
     {
         return true;
     }
@@ -169,10 +163,9 @@ class ASTAnonymousClass extends ASTClass
     /**
      * Returns an integer value that was stored under the given index.
      *
-     * @return int
      * @since 0.10.4
      */
-    protected function getMetadataInteger(int $index)
+    protected function getMetadataInteger(int $index): int
     {
         return (int) $this->getMetadata($index);
     }
@@ -191,10 +184,9 @@ class ASTAnonymousClass extends ASTClass
     /**
      * Returns the value that was stored under the given index.
      *
-     * @return string
      * @since 0.10.4
      */
-    protected function getMetadata(int $index)
+    protected function getMetadata(int $index): string
     {
         $metadata = explode(':', $this->metadata, $this->getMetadataSize());
 
@@ -218,10 +210,9 @@ class ASTAnonymousClass extends ASTClass
     /**
      * Returns the total number of the used property bag.
      *
-     * @return int
      * @since 0.10.4
      */
-    protected function getMetadataSize()
+    protected function getMetadataSize(): int
     {
         return 4;
     }

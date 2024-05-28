@@ -106,7 +106,7 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
      *
      * @return ?ASTHeredoc
      */
-    protected function getFirstHeredocInClass()
+    protected function getFirstHeredocInClass(): ?ASTHeredoc
     {
         return $this->parseCodeResourceForTest()
             ->current()

@@ -78,10 +78,8 @@ class StrategyFactory
 
     /**
      * Creates the default code rank strategy.
-     *
-     * @return CodeRankStrategyI
      */
-    public function createDefaultStrategy()
+    public function createDefaultStrategy(): CodeRankStrategyI
     {
         return $this->createStrategy($this->defaultStrategy);
     }
@@ -90,11 +88,10 @@ class StrategyFactory
      * Creates a code rank strategy for the given identifier.
      *
      * @param string $strategyName The strategy identifier.
-     * @return CodeRankStrategyI
      * @throws InvalidArgumentException If the given <b>$id</b> is not valid or
      *                                  no matching class declaration exists.
      */
-    public function createStrategy(string $strategyName)
+    public function createStrategy(string $strategyName): CodeRankStrategyI
     {
         if (!isset($this->validStrategies[$strategyName])) {
             throw new InvalidArgumentException(

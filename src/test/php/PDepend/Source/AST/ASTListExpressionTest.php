@@ -60,10 +60,9 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpression
      *
-     * @return ASTListExpression
      * @since 1.0.2
      */
-    public function testListExpression()
+    public function testListExpression(): ASTListExpression
     {
         $expr = $this->getFirstListExpressionInFunction();
         static::assertInstanceOf(ASTListExpression::class, $expr);
@@ -114,10 +113,9 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithNestedList
      *
-     * @return ASTListExpression
      * @since 1.0.2
      */
-    public function testListExpressionWithNestedList()
+    public function testListExpressionWithNestedList(): ASTListExpression
     {
         $expr = $this->getFirstListExpressionInFunction();
         static::assertInstanceOf(ASTListExpression::class, $expr);
@@ -334,10 +332,9 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithKeys
      *
-     * @return ASTListExpression
      * @since 1.0.2
      */
-    public function testListExpressionWithKeys()
+    public function testListExpressionWithKeys(): ASTListExpression
     {
         $expr = $this->getFirstListExpressionInFunction();
         static::assertInstanceOf(ASTListExpression::class, $expr);
@@ -348,10 +345,9 @@ class ASTListExpressionTest extends ASTNodeTestCase
     /**
      * testListExpressionWithKeysAndNestedList
      *
-     * @return ASTListExpression
      * @since 1.0.2
      */
-    public function testListExpressionWithKeysAndNestedList()
+    public function testListExpressionWithKeysAndNestedList(): ASTListExpression
     {
         $expr = $this->getFirstListExpressionInFunction();
         static::assertInstanceOf(ASTListExpression::class, $expr);
@@ -361,10 +357,8 @@ class ASTListExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTListExpression
      */
-    private function getFirstListExpressionInFunction()
+    private function getFirstListExpressionInFunction(): ASTListExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTListExpression::class

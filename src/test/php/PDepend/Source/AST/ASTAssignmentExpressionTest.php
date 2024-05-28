@@ -272,10 +272,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testVariableAssignmentExpression
      *
-     * @return ASTAssignmentExpression
      * @since 1.0.1
      */
-    public function testVariableAssignmentExpression()
+    public function testVariableAssignmentExpression(): ASTAssignmentExpression
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
         static::assertInstanceOf(ASTAssignmentExpression::class, $expr);
@@ -326,10 +325,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testStaticPropertyAssignmentExpression
      *
-     * @return ASTAssignmentExpression
      * @since 1.0.1
      */
-    public function testStaticPropertyAssignmentExpression()
+    public function testStaticPropertyAssignmentExpression(): ASTAssignmentExpression
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
         static::assertInstanceOf(ASTAssignmentExpression::class, $expr);
@@ -380,10 +378,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testObjectPropertyAssignmentExpression
      *
-     * @return ASTAssignmentExpression
      * @since 1.0.1
      */
-    public function testObjectPropertyAssignmentExpression()
+    public function testObjectPropertyAssignmentExpression(): ASTAssignmentExpression
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
         static::assertInstanceOf(ASTAssignmentExpression::class, $expr);
@@ -434,10 +431,9 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
     /**
      * testChainedPropertyAssignmentExpression
      *
-     * @return ASTAssignmentExpression
      * @since 1.0.1
      */
-    public function testChainedPropertyAssignmentExpression()
+    public function testChainedPropertyAssignmentExpression(): ASTAssignmentExpression
     {
         $expr = $this->getFirstAssignmentExpressionInFunction();
         static::assertInstanceOf(ASTAssignmentExpression::class, $expr);
@@ -487,10 +483,8 @@ class ASTAssignmentExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a test assignment-expression.
-     *
-     * @return ASTAssignmentExpression
      */
-    private function getFirstAssignmentExpressionInFunction()
+    private function getFirstAssignmentExpressionInFunction(): ASTAssignmentExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTAssignmentExpression::class

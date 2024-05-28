@@ -281,7 +281,7 @@ class Engine
      * @return ASTArtifactList<ASTNamespace>
      * @throws InvalidArgumentException
      */
-    public function analyze()
+    public function analyze(): ASTArtifactList
     {
         $this->builder = new PHPBuilder();
 
@@ -318,10 +318,9 @@ class Engine
     /**
      * Returns the number of analyzed php classes and interfaces.
      *
-     * @return int
      * @throws RuntimeException
      */
-    public function countClasses()
+    public function countClasses(): int
     {
         if (!isset($this->namespaces)) {
             $msg = 'countClasses() doesn\'t work before the source was analyzed.';
@@ -343,7 +342,7 @@ class Engine
      *
      * @return ParserException[]
      */
-    public function getExceptions()
+    public function getExceptions(): array
     {
         return $this->parseExceptions;
     }
@@ -351,10 +350,9 @@ class Engine
     /**
      * Returns the number of analyzed namespaces.
      *
-     * @return int
      * @throws RuntimeException
      */
-    public function countNamespaces()
+    public function countNamespaces(): int
     {
         if (!isset($this->namespaces)) {
             $msg = 'countNamespaces() doesn\'t work before the source was analyzed.';
@@ -375,11 +373,10 @@ class Engine
     /**
      * Returns the analyzed namespace for the given name.
      *
-     * @return ASTNamespace
      * @throws OutOfBoundsException
      * @throws RuntimeException
      */
-    public function getNamespace(string $name)
+    public function getNamespace(string $name): ASTNamespace
     {
         if (!isset($this->namespaces)) {
             $msg = 'getNamespace() doesn\'t work before the source was analyzed.';
@@ -401,7 +398,7 @@ class Engine
      * @return ASTArtifactList<ASTNamespace>
      * @throws RuntimeException
      */
-    public function getNamespaces()
+    public function getNamespaces(): ASTArtifactList
     {
         if (!isset($this->namespaces)) {
             $msg = 'getNamespaces() doesn\'t work before the source was analyzed.';
@@ -586,7 +583,7 @@ class Engine
      * @return ArrayIterator<int, string>
      * @throws RuntimeException
      */
-    private function createFileIterator()
+    private function createFileIterator(): ArrayIterator
     {
         if (count($this->directories) === 0 && count($this->files) === 0) {
             throw new RuntimeException('No source directory and file set.');
@@ -647,7 +644,7 @@ class Engine
      * @return Analyzer[]
      * @throws InvalidArgumentException
      */
-    private function createAnalyzers(array $options)
+    private function createAnalyzers(array $options): array
     {
         $analyzers = $this->analyzerFactory->createRequiredForGenerators($this->generators);
 
@@ -672,10 +669,7 @@ class Engine
         return $analyzers;
     }
 
-    /**
-     * @return bool
-     */
-    private function isPhpStream(string $path)
+    private function isPhpStream(string $path): bool
     {
         return str_starts_with($path, $this->phpStreamPrefix);
     }

@@ -138,10 +138,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitAdaptationAlias
      *
-     * @return ASTTraitAdaptationAlias
      * @since 1.0.2
      */
-    public function testTraitAdaptationAlias()
+    public function testTraitAdaptationAlias(): ASTTraitAdaptationAlias
     {
         $alias = $this->getFirstTraitAdaptationAliasInClass();
         static::assertInstanceOf(ASTTraitAdaptationAlias::class, $alias);
@@ -191,10 +190,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTTraitAdaptationAlias
      */
-    private function getFirstTraitAdaptationAliasInClass()
+    private function getFirstTraitAdaptationAliasInClass(): ASTTraitAdaptationAlias
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTTraitAdaptationAlias::class
@@ -204,10 +201,9 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
     /**
      * testTraitReference
      *
-     * @return ASTTraitReference
      * @since 1.0.2
      */
-    public function testTraitReference()
+    public function testTraitReference(): ASTTraitReference
     {
         $reference = $this->getFirstTraitReferenceInClass();
         static::assertInstanceOf(ASTTraitReference::class, $reference);
@@ -257,10 +253,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTTraitReference
      */
-    private function getFirstTraitReferenceInClass()
+    private function getFirstTraitReferenceInClass(): ASTTraitReference
     {
         return $this->getFirstTraitAdaptationAliasInClass()
             ->getFirstChildOfType(ASTTraitReference::class);

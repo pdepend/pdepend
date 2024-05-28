@@ -89,7 +89,7 @@ class TokenStack
      *
      * @return Token[]
      */
-    public function pop()
+    public function pop(): array
     {
         $tokens = $this->tokens;
         $this->tokens = isset($this->stack[--$this->offset]) ? $this->stack[$this->offset] : [];
@@ -107,9 +107,8 @@ class TokenStack
      * This method will add a new token to the currently active token scope.
      *
      * @param Token $token The token to add.
-     * @return Token
      */
-    public function add(Token $token)
+    public function add(Token $token): Token
     {
         return ($this->tokens[] = $token);
     }

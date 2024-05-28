@@ -56,10 +56,7 @@ class ASTTypeArray extends ASTType
     /** The visual image for this node type. */
     public const IMAGE = 'array';
 
-    /**
-     * @return string
-     */
-    public function getImage()
+    public function getImage(): string
     {
         return self::IMAGE;
     }
@@ -68,10 +65,8 @@ class ASTTypeArray extends ASTType
      * This method will return <b>true</b> when the underlying type is an array.
      * For this concrete type implementation the returned value will be always
      * <b>true</b>.
-     *
-     * @return bool
      */
-    public function isArray()
+    public function isArray(): bool
     {
         return true;
     }

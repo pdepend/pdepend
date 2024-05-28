@@ -56,10 +56,7 @@ class ASTTypeCallable extends ASTType
     /** The visual image for this node type. */
     public const IMAGE = 'callable';
 
-    /**
-     * @return string
-     */
-    public function getImage()
+    public function getImage(): string
     {
         return self::IMAGE;
     }

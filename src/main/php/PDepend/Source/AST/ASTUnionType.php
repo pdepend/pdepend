@@ -57,10 +57,8 @@ class ASTUnionType extends AbstractASTCombinationType
     /**
      * This method will return <b>true</b> when this type use union pipe to specify multiple types.
      * For this concrete implementation the return value will be always true.
-     *
-     * @return bool
      */
-    public function isUnion()
+    public function isUnion(): bool
     {
         return true;
     }

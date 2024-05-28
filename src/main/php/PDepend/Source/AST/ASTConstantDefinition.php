@@ -66,10 +66,8 @@ class ASTConstantDefinition extends AbstractASTNode
     /**
      * This method returns a OR combined integer of the declared modifiers for
      * this property.
-     *
-     * @return int
      */
-    public function getModifiers()
+    public function getModifiers(): int
     {
         return $this->getMetadataInteger(5);
     }
@@ -104,10 +102,8 @@ class ASTConstantDefinition extends AbstractASTNode
     /**
      * Returns <b>true</b> if this node is marked as public, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isPublic()
+    public function isPublic(): bool
     {
         return (($this->getModifiers() & State::IS_PUBLIC) === State::IS_PUBLIC);
     }
@@ -115,10 +111,8 @@ class ASTConstantDefinition extends AbstractASTNode
     /**
      * Returns <b>true</b> if this node is marked as protected, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isProtected()
+    public function isProtected(): bool
     {
         return (($this->getModifiers() & State::IS_PROTECTED) === State::IS_PROTECTED);
     }
@@ -126,10 +120,8 @@ class ASTConstantDefinition extends AbstractASTNode
     /**
      * Returns <b>true</b> if this node is marked as private, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isPrivate()
+    public function isPrivate(): bool
     {
         return (($this->getModifiers() & State::IS_PRIVATE) === State::IS_PRIVATE);
     }
@@ -137,11 +129,10 @@ class ASTConstantDefinition extends AbstractASTNode
     /**
      * Returns the total number of the used property bag.
      *
-     * @return int
      * @see    ASTNode#getMetadataSize()
      * @since  0.10.4
      */
-    protected function getMetadataSize()
+    protected function getMetadataSize(): int
     {
         return 6;
     }

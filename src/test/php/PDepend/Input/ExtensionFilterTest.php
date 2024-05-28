@@ -94,7 +94,7 @@ class ExtensionFilterTest extends AbstractTestCase
      * @param array<string> $includes The file extensions
      * @return array<string>
      */
-    protected function createFilteredFileList(array $includes)
+    protected function createFilteredFileList(array $includes): array
     {
         $filter = new ExtensionFilter($includes);
 

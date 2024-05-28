@@ -247,10 +247,8 @@ class ASTLiteralTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTLiteral
      */
-    private function getFirstLiteralInFunction()
+    private function getFirstLiteralInFunction(): ASTLiteral
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTLiteral::class

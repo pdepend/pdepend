@@ -89,10 +89,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * testClassReferenceForJavaStyleArrayNotation
-     *
-     * @return AbstractASTClassOrInterface
      */
-    public function testClassReferenceForJavaStyleArrayNotation()
+    public function testClassReferenceForJavaStyleArrayNotation(): AbstractASTClassOrInterface
     {
         $declaration = $this->getFirstFieldDeclarationInClass();
         $reference = $declaration->getFirstChildOfType(
@@ -293,10 +291,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTFieldDeclaration
      */
-    private function getFirstFieldDeclarationInClass()
+    private function getFirstFieldDeclarationInClass(): ASTFieldDeclaration
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTFieldDeclaration::class
@@ -305,10 +301,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * Returns valid field declation modifiers.
-     *
-     * @return array
      */
-    public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations()
+    public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations(): array
     {
         return [
             [State::IS_PRIVATE],
@@ -331,10 +325,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * Returns invalid field declation modifiers.
-     *
-     * @return array
      */
-    public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers()
+    public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers(): array
     {
         return [
             [State::IS_ABSTRACT],

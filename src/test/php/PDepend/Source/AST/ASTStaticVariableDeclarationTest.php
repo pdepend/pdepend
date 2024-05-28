@@ -58,10 +58,9 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
     /**
      * testStaticVariableDeclaration
      *
-     * @return ASTStaticVariableDeclaration
      * @since 1.0.2
      */
-    public function testStaticVariableDeclaration()
+    public function testStaticVariableDeclaration(): ASTStaticVariableDeclaration
     {
         $declaration = $this->getFirstStaticVariableDeclarationInFunction();
         static::assertInstanceOf(ASTStaticVariableDeclaration::class, $declaration);
@@ -111,10 +110,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTStaticVariableDeclaration
      */
-    private function getFirstStaticVariableDeclarationInFunction()
+    private function getFirstStaticVariableDeclarationInFunction(): ASTStaticVariableDeclaration
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTStaticVariableDeclaration::class

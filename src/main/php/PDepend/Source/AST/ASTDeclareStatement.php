@@ -96,7 +96,7 @@ class ASTDeclareStatement extends ASTStatement
      *
      * @return ASTValue[]
      */
-    public function getValues()
+    public function getValues(): array
     {
         return $this->values;
     }

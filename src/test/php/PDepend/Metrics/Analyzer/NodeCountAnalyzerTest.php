@@ -289,10 +289,7 @@ class NodeCountAnalyzerTest extends AbstractMetricsTestCase
         );
     }
 
-    /**
-     * @return NodeCountAnalyzer
-     */
-    private function createAnalyzer()
+    private function createAnalyzer(): NodeCountAnalyzer
     {
         return new NodeCountAnalyzer();
     }

@@ -61,7 +61,7 @@ class ASTTraitUseStatement extends ASTStatement
      *
      * @return ASTMethod[]
      */
-    public function getAllMethods()
+    public function getAllMethods(): array
     {
         if (!isset($this->allMethods)) {
             $this->allMethods = [];
@@ -81,10 +81,8 @@ class ASTTraitUseStatement extends ASTStatement
      * by precedence statement in this use statement. It will return <b>true</b>
      * if the given <b>$method</b> is excluded, otherwise the return value of
      * this method will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function hasExcludeFor(ASTMethod $method)
+    public function hasExcludeFor(ASTMethod $method): bool
     {
         $methodName = strtolower($method->getImage());
         $methodParent = $method->getParent();
@@ -132,7 +130,7 @@ class ASTTraitUseStatement extends ASTStatement
      *
      * @return ASTMethod[]
      */
-    private function getAliasesFor(ASTMethod $method)
+    private function getAliasesFor(ASTMethod $method): array
     {
         $name = strtolower($method->getImage());
 
@@ -195,7 +193,7 @@ class ASTTraitUseStatement extends ASTStatement
      *
      * @return ASTTraitAdaptationAlias[]
      */
-    private function getAliases()
+    private function getAliases(): array
     {
         return $this->findChildrenOfType(ASTTraitAdaptationAlias::class);
     }

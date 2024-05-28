@@ -74,10 +74,8 @@ class ASTVariableDeclarator extends ASTExpression
     /**
      * Returns the initial declaration value for this node or <b>null</b> when
      * no default value exists.
-     *
-     * @return ASTValue|null
      */
-    public function getValue()
+    public function getValue(): ?ASTValue
     {
         return $this->value;
     }

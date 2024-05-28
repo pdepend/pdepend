@@ -159,10 +159,8 @@ class CloverReportTest extends AbstractTestCase
 
     /**
      * Creates a clover coverage report instance.
-     *
-     * @return CloverReport
      */
-    private function createCloverReport()
+    private function createCloverReport(): CloverReport
     {
         $sxml = simplexml_load_file(__DIR__ . '/_files/clover.xml');
 
@@ -171,10 +169,8 @@ class CloverReportTest extends AbstractTestCase
 
     /**
      * Creates a clover coverage report instance.
-     *
-     * @return CloverReport
      */
-    private function createNamespacedCloverReport()
+    private function createNamespacedCloverReport(): CloverReport
     {
         $sxml = simplexml_load_file(__DIR__ . '/_files/clover-namespaced.xml');
 
@@ -185,9 +181,8 @@ class CloverReportTest extends AbstractTestCase
      * Creates a mocked method instance.
      *
      * @param string $name Name of the mock method.
-     * @return ASTMethod
      */
-    private function createMethodMock(string $name, int $startLine = 1, int $endLine = 4)
+    private function createMethodMock(string $name, int $startLine = 1, int $endLine = 4): ASTMethod
     {
         $file = $this->getMockBuilder(ASTCompilationUnit::class)
             ->setConstructorArgs([null])

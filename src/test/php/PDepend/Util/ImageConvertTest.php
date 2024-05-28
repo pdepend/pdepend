@@ -163,10 +163,8 @@ class ImageConvertTest extends AbstractTestCase
 
     /**
      * Returns a temporary input svg fixture.
-     *
-     * @return string
      */
-    protected function createInputSvg()
+    protected function createInputSvg(): string
     {
         $input = $this->createRunResourceURI(uniqid('input_')) . '.svg';
         copy(__DIR__ . '/_input/pyramid.svg', $input);

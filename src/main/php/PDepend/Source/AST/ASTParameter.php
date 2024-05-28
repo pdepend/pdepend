@@ -101,10 +101,8 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
 
     /**
      * This method returns a string representation of this parameter.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $required = $this->isOptional() ? 'optional' : 'required';
         $reference = $this->isPassedByReference() ? '&' : '';
@@ -150,20 +148,16 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
 
     /**
      * Returns the item name.
-     *
-     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->variableDeclarator->getImage();
     }
 
     /**
      * Returns the line number where the item declaration can be found.
-     *
-     * @return int
      */
-    public function getStartLine()
+    public function getStartLine(): int
     {
         return $this->formalParameter->getStartLine();
     }
@@ -173,7 +167,7 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      *
      * @return int The last source line for this item.
      */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         return $this->formalParameter->getEndLine();
     }
@@ -184,7 +178,7 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      * @return ?AbstractASTCallable
      * @since  0.9.5
      */
-    public function getDeclaringFunction()
+    public function getDeclaringFunction(): ?AbstractASTCallable
     {
         return $this->declaringFunction;
     }
@@ -203,11 +197,10 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      * This method will return the class where the parent method was declared.
      * The returned value will be <b>null</b> if the parent is a function.
      *
-     * @return AbstractASTClassOrInterface|null
      * @since  0.9.5
      * @todo Review this for refactoring, maybe create a empty getParent()?
      */
-    public function getDeclaringClass()
+    public function getDeclaringClass(): ?AbstractASTClassOrInterface
     {
         if ($this->declaringFunction instanceof ASTMethod) {
             return $this->declaringFunction->getParent();
@@ -218,10 +211,8 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
 
     /**
      * Returns the parameter position in the method/function signature.
-     *
-     * @return int
      */
-    public function getPosition()
+    public function getPosition(): int
     {
         return $this->position;
     }
@@ -240,10 +231,9 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      * Returns the class type of this parameter. This method will return
      * <b>null</b> for all scalar type, only classes or interfaces are used.
      *
-     * @return AbstractASTClassOrInterface|null
      * @since  0.9.5
      */
-    public function getClass()
+    public function getClass(): ?AbstractASTClassOrInterface
     {
         $classReference = $this->formalParameter->getFirstChildOfType(
             ASTClassOrInterfaceReference::class,
@@ -259,10 +249,9 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      * This method will return <b>true</b> when the parameter is passed by
      * reference.
      *
-     * @return bool
      * @since  0.9.5
      */
-    public function isPassedByReference()
+    public function isPassedByReference(): bool
     {
         return $this->formalParameter->isPassedByReference();
     }
@@ -271,10 +260,9 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      * This method will return <b>true</b> when the parameter was declared with
      * the array type hint, otherwise the it will return <b>false</b>.
      *
-     * @return bool
      * @since  0.9.5
      */
-    public function isArray()
+    public function isArray(): bool
     {
         $node = $this->formalParameter->getChild(0);
 
@@ -286,10 +274,9 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      * scalar or it is an <b>array</b> or type explicit declared with a default
      * value <b>null</b>.
      *
-     * @return bool
      * @since  0.9.5
      */
-    public function allowsNull()
+    public function allowsNull(): bool
     {
         $node = $this->formalParameter->getChild(0);
 
@@ -316,10 +303,9 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      * This method will return <b>true</b> when this parameter is optional and
      * can be left blank on invocation.
      *
-     * @return bool
      * @since  0.9.5
      */
-    public function isOptional()
+    public function isOptional(): bool
     {
         return $this->optional;
     }
@@ -342,10 +328,9 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
      * This method will return <b>true</b> when the parameter declaration
      * contains a default value.
      *
-     * @return bool
      * @since  0.9.5
      */
-    public function isDefaultValueAvailable()
+    public function isDefaultValueAvailable(): bool
     {
         $value = $this->variableDeclarator->getValue();
         if ($value === null) {
@@ -373,18 +358,13 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
 
     /**
      * Returns the wrapped formal parameter instance.
-     *
-     * @return ASTFormalParameter
      */
-    public function getFormalParameter()
+    public function getFormalParameter(): ASTFormalParameter
     {
         return $this->formalParameter;
     }
 
-    /**
-     * @return bool
-     */
-    private function isTypeAllowingNull(ASTNode $node)
+    private function isTypeAllowingNull(ASTNode $node): bool
     {
         if ($node instanceof ASTUnionType) {
             foreach ($node->getChildren() as $child) {

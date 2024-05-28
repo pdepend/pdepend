@@ -64,10 +64,8 @@ abstract class Extension
 {
     /**
      * Return name of the extension
-     *
-     * @return string
      */
-    abstract public function getName();
+    abstract public function getName(): string;
 
     /**
      * Loads a specific configuration.
@@ -107,27 +105,23 @@ abstract class Extension
      *
      * @return CompilerPassInterface[]
      */
-    public function getCompilerPasses()
+    public function getCompilerPasses(): array
     {
         return [];
     }
 
     /**
      * Returns name of the service definition config without extension and path.
-     *
-     * @return string
      */
-    protected function getServiceDefinitionsName()
+    protected function getServiceDefinitionsName(): string
     {
         return 'services';
     }
 
     /**
      * Returns service definition configs path.
-     *
-     * @return string
      */
-    protected function getServiceDefinitionsPath()
+    protected function getServiceDefinitionsPath(): string
     {
         $reflection = new ReflectionClass($this);
 

@@ -86,10 +86,8 @@ class PHPDependBug13405179Test extends AbstractRegressionTestCase
 
     /**
      * Returns the class names of all file aware logger classes.
-     *
-     * @return array
      */
-    public static function getLoggerClassNames()
+    public static function getLoggerClassNames(): array
     {
         return [
             [Chart::class, 'svg'],

@@ -599,10 +599,8 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Returns the first interface in the test case file.
-     *
-     * @return ASTInterface
      */
-    private function getFirstInterface()
+    private function getFirstInterface(): ASTInterface
     {
         $namespaces = $this->parseTestCase();
 
@@ -613,10 +611,8 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Returns the first class in the test case file.
-     *
-     * @return ASTClass
      */
-    private function getFirstClass()
+    private function getFirstClass(): ASTClass
     {
         $namespaces = $this->parseTestCase();
 
@@ -627,10 +623,8 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Returns the first method in the test case file.
-     *
-     * @return ASTMethod
      */
-    private function getFirstMethod()
+    private function getFirstMethod(): ASTMethod
     {
         $namespaces = $this->parseTestCase();
 
@@ -643,10 +637,8 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 
     /**
      * Returns the first function in the test case file.
-     *
-     * @return ASTFunction
      */
-    private function getFirstFunction()
+    private function getFirstFunction(): ASTFunction
     {
         $namespaces = $this->parseTestCase();
 

@@ -194,10 +194,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * This method will return <b>true</b> when this type has a declaration in
      * the analyzed source files.
-     *
-     * @return bool
      */
-    public function isUserDefined()
+    public function isUserDefined(): bool
     {
         return $this->userDefined;
     }
@@ -216,7 +214,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return ASTArtifactList<ASTMethod>
      */
-    public function getMethods()
+    public function getMethods(): ASTArtifactList
     {
         if (is_array($this->methods)) {
             return new ASTArtifactList($this->methods);
@@ -239,10 +237,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
     /**
      * Adds the given method to this type.
-     *
-     * @return ASTMethod
      */
-    public function addMethod(ASTMethod $method)
+    public function addMethod(ASTMethod $method): ASTMethod
     {
         if ($this instanceof AbstractASTClassOrInterface) {
             $method->setParent($this);
@@ -258,7 +254,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return Token[]
      */
-    public function getTokens()
+    public function getTokens(): array
     {
         /** @var Token[] */
         return (array) $this->cache
@@ -292,10 +288,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
             ->store($this->getId(), $tokens);
     }
 
-    /**
-     * @return string
-     */
-    public function getNamespacedName()
+    public function getNamespacedName(): string
     {
         if (null === $this->namespace || $this->namespace->isPackageAnnotation()) {
             return $this->name;
@@ -309,7 +302,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return ?string
      */
-    public function getNamespaceName()
+    public function getNamespaceName(): ?string
     {
         return $this->namespaceName;
     }
@@ -319,7 +312,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return ?ASTNamespace
      */
-    public function getNamespace()
+    public function getNamespace(): ?ASTNamespace
     {
         return $this->namespace;
     }
@@ -346,10 +339,8 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * This method will return <b>true</b> when this class or interface instance
      * was restored from the cache and not currently parsed. Otherwise this
      * method will return <b>false</b>.
-     *
-     * @return bool
      */
-    public function isCached()
+    public function isCached(): bool
     {
         return $this->compilationUnit?->isCached() ?? false;
     }
@@ -359,16 +350,15 @@ abstract class AbstractASTType extends AbstractASTArtifact
      *
      * @return ASTMethod[]
      */
-    abstract public function getAllMethods();
+    abstract public function getAllMethods(): array;
 
     /**
      * Checks that this user type is a subtype of the given <b>$type</b>
      * instance.
      *
-     * @return bool
      * @since  1.0.6
      */
-    abstract public function isSubtypeOf(self $type);
+    abstract public function isSubtypeOf(self $type): bool;
 
     /**
      * Returns an array with {@link ASTMethod} objects
@@ -378,7 +368,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * @throws ASTTraitMethodCollisionException
      * @since  1.0.0
      */
-    protected function getTraitMethods()
+    protected function getTraitMethods(): array
     {
         $methods = [];
 

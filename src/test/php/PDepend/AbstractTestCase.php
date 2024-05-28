@@ -150,10 +150,9 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns the working directory for the currently executed test.
      *
-     * @return string
      * @since 1.0.0
      */
-    protected function getTestWorkingDirectory()
+    protected function getTestWorkingDirectory(): string
     {
         $resource = $this->createCodeResourceUriForTest();
         if (is_file($resource)) {
@@ -180,9 +179,8 @@ abstract class AbstractTestCase extends TestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $nodeType The searched node class.
-     * @return ASTNode
      */
-    protected function getFirstNodeOfTypeInFunction(string $nodeType)
+    protected function getFirstNodeOfTypeInFunction(string $nodeType): ASTNode
     {
         return $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType($nodeType);
@@ -191,10 +189,8 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns the first function found in a test file associated with the
      * given test case.
-     *
-     * @return ASTFunction
      */
-    protected function getFirstFunctionForTestCase()
+    protected function getFirstFunctionForTestCase(): ASTFunction
     {
         return $this->parseCodeResourceForTest()
             ->current()
@@ -202,10 +198,7 @@ abstract class AbstractTestCase extends TestCase
             ->current();
     }
 
-    /**
-     * @return ASTClosure
-     */
-    protected function getFirstClosureForTestCase()
+    protected function getFirstClosureForTestCase(): ASTClosure
     {
         return $this->parseCodeResourceForTest()
             ->current()
@@ -216,10 +209,8 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * Create a TextUi Runner
-     *
-     * @return TextUI\Runner
      */
-    protected function createTextUiRunner()
+    protected function createTextUiRunner(): TextUI\Runner
     {
         $application = $this->createTestApplication();
 
@@ -238,10 +229,9 @@ abstract class AbstractTestCase extends TestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $nodeType The searched node class.
-     * @return ASTNode
      * @since 1.0.0
      */
-    protected function getFirstNodeOfTypeInTrait(string $nodeType)
+    protected function getFirstNodeOfTypeInTrait(string $nodeType): ASTNode
     {
         return $this->getFirstTraitForTestCase()
             ->getFirstChildOfType($nodeType);
@@ -251,9 +241,8 @@ abstract class AbstractTestCase extends TestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $nodeType The searched node class.
-     * @return ASTNode
      */
-    protected function getFirstNodeOfTypeInClass(string $nodeType)
+    protected function getFirstNodeOfTypeInClass(string $nodeType): ASTNode
     {
         return $this->getFirstClassForTestCase()
             ->getFirstChildOfType($nodeType);
@@ -263,9 +252,8 @@ abstract class AbstractTestCase extends TestCase
      * Returns a node instance for the currently executed test case.
      *
      * @param string $nodeType The searched node class.
-     * @return ASTNode
      */
-    protected function getFirstNodeOfTypeInInterface(string $nodeType)
+    protected function getFirstNodeOfTypeInInterface(string $nodeType): ASTNode
     {
         return $this->getFirstInterfaceForTestCase()
             ->getFirstChildOfType($nodeType);
@@ -275,10 +263,9 @@ abstract class AbstractTestCase extends TestCase
      * Returns the first trait found in a test file associated with the given
      * test case.
      *
-     * @return ASTTrait
      * @since 1.0.0
      */
-    protected function getFirstTraitForTestCase()
+    protected function getFirstTraitForTestCase(): ASTTrait
     {
         return $this->parseCodeResourceForTest()
             ->current()
@@ -289,10 +276,8 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns the first class found in a test file associated with the given
      * test case.
-     *
-     * @return ASTClass
      */
-    protected function getFirstClassForTestCase()
+    protected function getFirstClassForTestCase(): ASTClass
     {
         return $this->parseCodeResourceForTest()
             ->current()
@@ -303,10 +288,8 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns the first method that could be found in the source file
      * associated with the calling test case.
-     *
-     * @return ASTMethod
      */
-    protected function getFirstClassMethodForTestCase()
+    protected function getFirstClassMethodForTestCase(): ASTMethod
     {
         return $this->parseCodeResourceForTest()
             ->current()
@@ -319,10 +302,8 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns the first interface that could be found in the source file
      * associated with the calling test case.
-     *
-     * @return ASTInterface
      */
-    protected function getFirstInterfaceForTestCase()
+    protected function getFirstInterfaceForTestCase(): ASTInterface
     {
         return $this->parseCodeResourceForTest()
             ->current()
@@ -333,10 +314,8 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns the first method that could be found in the source file
      * associated with the calling test case.
-     *
-     * @return ASTMethod
      */
-    protected function getFirstInterfaceMethodForTestCase()
+    protected function getFirstInterfaceMethodForTestCase(): ASTMethod
     {
         return $this->parseCodeResourceForTest()
             ->current()
@@ -349,10 +328,8 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
-     *
-     * @return AbstractASTClassOrInterface
      */
-    protected function getFirstTypeForTestCase()
+    protected function getFirstTypeForTestCase(): AbstractASTClassOrInterface
     {
         return $this->parseCodeResourceForTest()
             ->current()
@@ -363,20 +340,15 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns the first method that could be found in the code under test for
      * the calling test case.
-     *
-     * @return ASTMethod
      */
-    protected function getFirstMethodForTestCase()
+    protected function getFirstMethodForTestCase(): ASTMethod
     {
         return $this->getFirstTypeForTestCase()
             ->getMethods()
             ->current();
     }
 
-    /**
-     * @return ASTFormalParameter
-     */
-    protected function getFirstFormalParameterForTestCase()
+    protected function getFirstFormalParameterForTestCase(): ASTFormalParameter
     {
         return $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType(
@@ -391,7 +363,7 @@ abstract class AbstractTestCase extends TestCase
      * @param array $actual Previous filled list.
      * @return array<string>
      */
-    protected static function collectChildNodes(ASTNode $node, array $actual = [])
+    protected static function collectChildNodes(ASTNode $node, array $actual = []): array
     {
         foreach ($node->getChildren() as $child) {
             $actual[] = $child::class;
@@ -416,9 +388,8 @@ abstract class AbstractTestCase extends TestCase
      * Collects all children from a given node.
      *
      * @param ASTNode $node The current root node.
-     * @return array
      */
-    protected static function collectGraph(ASTNode $node)
+    protected static function collectGraph(ASTNode $node): array
     {
         $graph = [];
         foreach ($node->getChildren() as $child) {
@@ -448,10 +419,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a mocked class instance without calling the constructor.
      *
      * @param string $className Name of the class to mock.
-     * @return ASTProperty
      * @since 0.10.0
      */
-    protected function getMockWithoutConstructor(string $className)
+    protected function getMockWithoutConstructor(string $className): ASTProperty
     {
         $mock = $this->getMockBuilder($className)
             ->onlyMethods(['__construct'])
@@ -487,10 +457,9 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Creates a test configuration instance.
      *
-     * @return Util\Configuration
      * @since 0.10.0
      */
-    protected function createConfigurationFixture()
+    protected function createConfigurationFixture(): Util\Configuration
     {
         $application = $this->createTestApplication();
 
@@ -509,10 +478,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a PDepend instance configured with the code resource associated
      * with the calling test case.
      *
-     * @return Engine
      * @since 0.10.0
      */
-    protected function createEngineFixture()
+    protected function createEngineFixture(): Engine
     {
         $this->changeWorkingDirectory(
             self::createCodeResourceURI('config/')
@@ -527,10 +495,7 @@ abstract class AbstractTestCase extends TestCase
         return new Engine($configuration, $cacheFactory, $analyzerFactory);
     }
 
-    /**
-     * @return int
-     */
-    protected function silentRun(TextUI\Runner $runner)
+    protected function silentRun(TextUI\Runner $runner): int
     {
         $error = null;
 
@@ -555,10 +520,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a ready to use class fixture.
      *
      * @param string $name Optional class name.
-     * @return ASTClass
      * @since 1.0.2
      */
-    protected function createClassFixture(?string $name = null)
+    protected function createClassFixture(?string $name = null): ASTClass
     {
         $name = $name ?: static::class;
 
@@ -576,10 +540,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a ready to use interface fixture.
      *
      * @param string $name Optional interface name.
-     * @return ASTInterface
      * @since 1.0.2
      */
-    protected function createInterfaceFixture(?string $name = null)
+    protected function createInterfaceFixture(?string $name = null): ASTInterface
     {
         $name = $name ?: static::class;
 
@@ -594,10 +557,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a ready to use trait fixture.
      *
      * @param string $name Optional trait name.
-     * @return ASTTrait
      * @since 1.0.2
      */
-    protected function createTraitFixture(?string $name = null)
+    protected function createTraitFixture(?string $name = null): ASTTrait
     {
         $name = $name ?: static::class;
 
@@ -611,10 +573,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a ready to use function fixture.
      *
      * @param string $name Optional function name.
-     * @return ASTFunction
      * @since 1.0.2
      */
-    protected function createFunctionFixture(?string $name = null)
+    protected function createFunctionFixture(?string $name = null): ASTFunction
     {
         $name = $name ?: static::class;
 
@@ -630,10 +591,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a ready to use method fixture.
      *
      * @param string $name Optional method name.
-     * @return ASTMethod
      * @since 1.0.2
      */
-    protected function createMethodFixture(?string $name = null)
+    protected function createMethodFixture(?string $name = null): ASTMethod
     {
         $name = $name ?: static::class;
 
@@ -646,10 +606,8 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * Creates a temporary resource for the given file name.
-     *
-     * @return string
      */
-    protected function createRunResourceURI(?string $fileName = null)
+    protected function createRunResourceURI(?string $fileName = null): string
     {
         return tempnam(sys_get_temp_dir(), $fileName ?: uniqid());
     }
@@ -658,10 +616,9 @@ abstract class AbstractTestCase extends TestCase
      * Creates a code uri for the given file name.
      *
      * @param string $fileName The code file name.
-     * @return string
      * @throws ErrorException
      */
-    protected static function createCodeResourceURI(string $fileName)
+    protected static function createCodeResourceURI(string $fileName): string
     {
         $uri = realpath(__DIR__ . '/../../resources/files') . DIRECTORY_SEPARATOR . $fileName;
 
@@ -674,10 +631,8 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * Creates a code uri for the calling test case.
-     *
-     * @return string
      */
-    protected function createCodeResourceUriForTest()
+    protected function createCodeResourceUriForTest(): string
     {
         [$class, $method] = explode('::', $this->getCallingTestMethod());
 
@@ -707,10 +662,8 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * Returns the name of the calling test method.
-     *
-     * @return string
      */
-    protected function getCallingTestMethod()
+    protected function getCallingTestMethod(): string
     {
         foreach (debug_backtrace() as $frame) {
             if (str_starts_with($frame['function'], 'test')) {
@@ -764,7 +717,7 @@ abstract class AbstractTestCase extends TestCase
      * @param bool $ignoreAnnotations The parser should ignore annotations.
      * @return ASTArtifactList<ASTNamespace>
      */
-    protected function parseCodeResourceForTest(bool $ignoreAnnotations = false)
+    protected function parseCodeResourceForTest(bool $ignoreAnnotations = false): ASTArtifactList
     {
         return $this->parseSource(
             $this->createCodeResourceUriForTest(),
@@ -778,7 +731,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false)
+    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false): ASTArtifactList
     {
         [$class, $method] = explode('::', $testCase);
 
@@ -800,7 +753,7 @@ abstract class AbstractTestCase extends TestCase
      *
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseSource(string $fileOrDirectory, bool $ignoreAnnotations = false)
+    public function parseSource(string $fileOrDirectory, bool $ignoreAnnotations = false): ASTArtifactList
     {
         if (file_exists($fileOrDirectory) === false) {
             $fileOrDirectory = self::createCodeResourceURI($fileOrDirectory);
@@ -847,9 +800,8 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * @param Builder<mixed> $builder
-     * @return AbstractPHPParser
      */
-    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache)
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
         return new PHPParserGeneric(
             $tokenizer,

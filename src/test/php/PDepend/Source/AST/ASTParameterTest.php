@@ -204,10 +204,9 @@ class ASTParameterTest extends AbstractTestCase
      * Returns the first class method found in the test file associated with the
      * calling test method.
      *
-     * @return ASTMethod
      * @since 1.0.0
      */
-    private function getFirstMethodInClass()
+    private function getFirstMethodInClass(): ASTMethod
     {
         return $this->parseCodeResourceForTest()
             ->current()

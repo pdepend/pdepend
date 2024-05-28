@@ -99,10 +99,8 @@ class ASTConstantDeclarator extends AbstractASTNode
 
     /**
      * Returns the explicitly specified type of the constant.
-     *
-     * @return ASTType|null
      */
-    public function getType()
+    public function getType(): ?ASTType
     {
         return $this->type;
     }
@@ -117,10 +115,8 @@ class ASTConstantDeclarator extends AbstractASTNode
 
     /**
      * Returns the initial declaration value for this node.
-     *
-     * @return ASTValue|null
      */
-    public function getValue()
+    public function getValue(): ?ASTValue
     {
         return $this->value;
     }

@@ -58,10 +58,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testParserHandlesInlineScopeStatement
      *
-     * @return ASTScopeStatement
      * @since 1.0.0
      */
-    public function testParserHandlesInlineScopeStatement()
+    public function testParserHandlesInlineScopeStatement(): ASTScopeStatement
     {
         $stmt = $this->getFirstScopeStatementInFunction();
         static::assertCount(1, $stmt->getChildren());
@@ -72,12 +71,11 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedStartLine
      *
-     * @return ASTScopeStatement
      * @since 1.0.0
      *
      * @depends testParserHandlesInlineScopeStatement
      */
-    public function testInlineScopeStatementHasExpectedStartLine(ASTScopeStatement $stmt)
+    public function testInlineScopeStatementHasExpectedStartLine(ASTScopeStatement $stmt): ASTScopeStatement
     {
         static::assertEquals(4, $stmt->getStartLine());
 
@@ -87,12 +85,11 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedStartColumn
      *
-     * @return ASTScopeStatement
      * @since 1.0.0
      *
      * @depends testInlineScopeStatementHasExpectedStartLine
      */
-    public function testInlineScopeStatementHasExpectedStartColumn(ASTScopeStatement $stmt)
+    public function testInlineScopeStatementHasExpectedStartColumn(ASTScopeStatement $stmt): ASTScopeStatement
     {
         static::assertEquals(5, $stmt->getStartColumn());
 
@@ -102,12 +99,11 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testInlineScopeStatementHasExpectedEndLine
      *
-     * @return ASTScopeStatement
      * @since 1.0.0
      *
      * @depends testInlineScopeStatementHasExpectedStartColumn
      */
-    public function testInlineScopeStatementHasExpectedEndLine(ASTScopeStatement $stmt)
+    public function testInlineScopeStatementHasExpectedEndLine(ASTScopeStatement $stmt): ASTScopeStatement
     {
         static::assertEquals(5, $stmt->getEndLine());
 
@@ -129,10 +125,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatement
      *
-     * @return ASTScopeStatement
      * @since 1.0.2
      */
-    public function testScopeStatement()
+    public function testScopeStatement(): ASTScopeStatement
     {
         $stmt = $this->getFirstScopeStatementInFunction();
         static::assertInstanceOf(ASTScopeStatement::class, $stmt);
@@ -183,10 +178,9 @@ class ASTScopeStatementTest extends ASTNodeTestCase
     /**
      * testScopeStatementWithAlternative
      *
-     * @return ASTScopeStatement
      * @since 1.0.2
      */
-    public function testScopeStatementWithAlternative()
+    public function testScopeStatementWithAlternative(): ASTScopeStatement
     {
         $stmt = $this->getFirstScopeStatementInFunction();
         static::assertInstanceOf(ASTScopeStatement::class, $stmt);
@@ -236,10 +230,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTScopeStatement
      */
-    private function getFirstScopeStatementInFunction()
+    private function getFirstScopeStatementInFunction(): ASTScopeStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTScopeStatement::class

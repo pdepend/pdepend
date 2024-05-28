@@ -72,7 +72,7 @@ class ParserRegressionTest extends AbstractTestCase
      *
      * @return array<array>
      */
-    public static function dataProviderSourceFiles()
+    public static function dataProviderSourceFiles(): array
     {
         $files = [];
         foreach (new DirectoryIterator(self::createCodeResourceURI('parser_regression')) as $file) {

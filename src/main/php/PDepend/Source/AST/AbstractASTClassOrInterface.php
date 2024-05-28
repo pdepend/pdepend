@@ -97,10 +97,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns the parent class or <b>null</b> if this class has no parent.
      *
-     * @return ASTClass|ASTEnum|null
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      */
-    public function getParentClass()
+    public function getParentClass(): null|ASTClass|ASTEnum
     {
         // No parent? Stop here!
         if ($this->parentClassReference === null) {
@@ -134,7 +133,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * @throws ASTClassOrInterfaceRecursiveInheritanceException
      * @since  1.0.0
      */
-    public function getParentClasses()
+    public function getParentClasses(): array
     {
         $parents = [];
         $parent = $this;
@@ -153,10 +152,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns a reference onto the parent class of this class node or <b>null</b>.
      *
-     * @return ASTClassReference|null
      * @since  0.9.5
      */
-    public function getParentClassReference()
+    public function getParentClassReference(): ?ASTClassReference
     {
         return $this->parentClassReference;
     }
@@ -179,7 +177,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * @return ASTArtifactList<AbstractASTClassOrInterface>
      * @since  0.9.5
      */
-    public function getInterfaces()
+    public function getInterfaces(): ASTArtifactList
     {
         return new ASTArtifactList($this->getInterfacesClasses());
     }
@@ -190,7 +188,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * @return ASTClassOrInterfaceReference[]
      * @since  0.10.4
      */
-    public function getInterfaceReferences()
+    public function getInterfaceReferences(): array
     {
         return $this->interfaceReferences;
     }
@@ -212,7 +210,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @return array<string, mixed>
      */
-    public function getConstants()
+    public function getConstants(): array
     {
         $constants = $this->constants;
         if ($constants === null) {
@@ -228,7 +226,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @return array<string, ASTConstantDeclarator>
      */
-    public function getConstantDeclarators()
+    public function getConstantDeclarators(): array
     {
         if (!isset($this->constantDeclarators)) {
             $this->initConstantDeclarators();
@@ -243,10 +241,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      *
      * @phpstan-assert-if-true !null $this->constants
      * @param string $name Name of the searched constant.
-     * @return bool
      * @since  0.9.6
      */
-    public function hasConstant(string $name)
+    public function hasConstant(string $name): bool
     {
         if ($this->constants === null) {
             $this->constants = $this->initConstants();
@@ -277,7 +274,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * @return ASTMethod[]
      * @since  0.9.10
      */
-    public function getAllMethods()
+    public function getAllMethods(): array
     {
         $methods = [];
         foreach ($this->getInterfaces() as $interface) {
@@ -306,10 +303,8 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
     /**
      * Returns all {@link AbstractASTClassOrInterface}
      * objects this type depends on.
-     *
-     * @return ASTClassOrInterfaceReferenceIterator
      */
-    public function getDependencies()
+    public function getDependencies(): ASTClassOrInterfaceReferenceIterator
     {
         $references = $this->interfaceReferences;
         if ($this->parentClassReference !== null) {
@@ -321,24 +316,20 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
-     *
-     * @return bool
      */
-    abstract public function isAbstract();
+    abstract public function isAbstract(): bool;
 
     /**
      * Returns the declared modifiers for this type.
-     *
-     * @return int
      */
-    abstract public function getModifiers();
+    abstract public function getModifiers(): int;
 
     /**
      * Returns an array with all implemented interfaces.
      *
      * @return AbstractASTClassOrInterface[]
      */
-    protected function getInterfacesClasses()
+    protected function getInterfacesClasses(): array
     {
         $stack = $this->getParentClasses();
         array_unshift($stack, $this);

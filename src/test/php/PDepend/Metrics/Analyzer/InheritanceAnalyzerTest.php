@@ -298,10 +298,7 @@ class InheritanceAnalyzerTest extends AbstractMetricsTestCase
         return $metrics[$metric];
     }
 
-    /**
-     * @return InheritanceAnalyzer
-     */
-    private function createAnalyzer()
+    private function createAnalyzer(): InheritanceAnalyzer
     {
         return new InheritanceAnalyzer();
     }

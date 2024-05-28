@@ -78,7 +78,7 @@ abstract class AbstractASTVisitor implements ASTVisitor
      *
      * @return Iterator<ASTVisitListener>
      */
-    public function getVisitListeners()
+    public function getVisitListeners(): Iterator
     {
         return new ArrayIterator($this->listeners);
     }

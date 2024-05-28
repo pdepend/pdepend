@@ -503,10 +503,9 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testGetNodeMetricsForTrait
      *
-     * @return array
      * @since 1.0.6
      */
-    public function testGetNodeMetricsForTrait()
+    public function testGetNodeMetricsForTrait(): array
     {
         $metrics = $this->calculateTraitMetrics();
         static::assertIsArray($metrics);
@@ -569,10 +568,9 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testGetProjectMetricsForTrait
      *
-     * @return array
      * @since 1.0.6
      */
-    public function testGetProjectMetricsForTrait()
+    public function testGetProjectMetricsForTrait(): array
     {
         $analyzer = new CouplingAnalyzer();
         $analyzer->analyze($this->parseCodeResourceForTest());
@@ -629,7 +627,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * @return array<string, mixed>
      * @since 1.0.6
      */
-    private function calculateTraitMetrics()
+    private function calculateTraitMetrics(): array
     {
         $namespaces = $this->parseCodeResourceForTest();
 
@@ -666,7 +664,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * @return array<string, mixed>
      * @since 0.10.2
      */
-    private function calculateProjectMetrics(?string $testCase = null)
+    private function calculateProjectMetrics(?string $testCase = null): array
     {
         $testCase = ($testCase ?: $this->getCallingTestMethod());
 
@@ -679,10 +677,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Data provider that returns different test files and the corresponding
      * invocation count value.
-     *
-     * @return array
      */
-    public static function dataProviderAnalyzerCalculatesExpectedCallCount()
+    public static function dataProviderAnalyzerCalculatesExpectedCallCount(): array
     {
         return [
             [__METHOD__ . '#01', 0, 0],

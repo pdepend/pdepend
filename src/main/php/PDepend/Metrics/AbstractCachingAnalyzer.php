@@ -103,9 +103,8 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      * value will be <b>FALSE</b>.
      *
      * @param ASTClass|ASTCompilationUnit|ASTFunction|ASTInterface|ASTMethod $node
-     * @return bool
      */
-    protected function restoreFromCache(AbstractASTArtifact $node)
+    protected function restoreFromCache(AbstractASTArtifact $node): bool
     {
         $id = $node->getId();
         if ($node->isCached() && isset($this->metricsCached[$id])) {

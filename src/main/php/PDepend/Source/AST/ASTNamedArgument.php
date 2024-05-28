@@ -61,26 +61,17 @@ class ASTNamedArgument extends AbstractASTNode
         $this->addChild($value);
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return ASTNode
-     */
-    public function getValue()
+    public function getValue(): ASTNode
     {
         return $this->getChild(0);
     }
 
-    /**
-     * @return string
-     */
-    public function getImage()
+    public function getImage(): string
     {
         return sprintf('%s: %s', $this->name, $this->getChild(0)->getImage());
     }

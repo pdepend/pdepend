@@ -93,10 +93,8 @@ class ASTEvalExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTEvalExpression
      */
-    private function getFirstEvalExpressionInFunction()
+    private function getFirstEvalExpressionInFunction(): ASTEvalExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTEvalExpression::class

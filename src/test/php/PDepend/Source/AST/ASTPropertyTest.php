@@ -434,10 +434,8 @@ class ASTPropertyTest extends AbstractTestCase
 
     /**
      * Returns the first property found in the corresponding test file.
-     *
-     * @return ASTProperty
      */
-    private function getFirstPropertyInClass()
+    private function getFirstPropertyInClass(): ASTProperty
     {
         return $this->parseCodeResourceForTest()
             ->current()

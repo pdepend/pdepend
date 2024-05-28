@@ -73,7 +73,7 @@ class ASTTrait extends ASTClass
      * @since  1.0.6
      * @todo   Return properties declared by a trait.
      */
-    public function getProperties()
+    public function getProperties(): ASTArtifactList
     {
         /** @var ASTProperty[] $list */
         $list = [];
@@ -87,7 +87,7 @@ class ASTTrait extends ASTClass
      *
      * @return ASTMethod[]
      */
-    public function getAllMethods()
+    public function getAllMethods(): array
     {
         $methods = $this->getTraitMethods();
 
@@ -101,10 +101,9 @@ class ASTTrait extends ASTClass
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
      *
-     * @return bool
      * @todo   Should we handle trait subtypes?
      */
-    public function isSubtypeOf(AbstractASTType $type)
+    public function isSubtypeOf(AbstractASTType $type): bool
     {
         return false;
     }

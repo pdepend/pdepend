@@ -138,10 +138,8 @@ class ASTFinallyStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTFinallyStatement
      */
-    private function getFirstFinallyStatementInFunction()
+    private function getFirstFinallyStatementInFunction(): ASTFinallyStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTFinallyStatement::class

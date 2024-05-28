@@ -62,7 +62,7 @@ abstract class AbstractMetricsTestCase extends AbstractTestCase
      *
      * @return ASTArtifactList<ASTNamespace>
      */
-    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false)
+    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false): ASTArtifactList
     {
         [$class, $method] = explode('::', $testCase);
 

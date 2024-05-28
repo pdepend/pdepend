@@ -189,10 +189,9 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinition
      *
-     * @return ASTConstantDefinition
      * @since 1.0.2
      */
-    public function testConstantDefinition()
+    public function testConstantDefinition(): ASTConstantDefinition
     {
         $constant = $this->getFirstConstantDefinitionInClass();
         static::assertInstanceOf(ASTConstantDefinition::class, $constant);
@@ -243,10 +242,9 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     /**
      * testConstantDefinitionWithDeclarators
      *
-     * @return ASTConstantDefinition
      * @since 1.0.2
      */
-    public function testConstantDefinitionWithDeclarators()
+    public function testConstantDefinitionWithDeclarators(): ASTConstantDefinition
     {
         $constant = $this->getFirstConstantDefinitionInClass();
         static::assertInstanceOf(ASTConstantDefinition::class, $constant);
@@ -324,10 +322,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTConstantDefinition
      */
-    private function getFirstConstantDefinitionInClass()
+    private function getFirstConstantDefinitionInClass(): ASTConstantDefinition
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTConstantDefinition::class
@@ -336,10 +332,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * Returns valid field declation modifiers.
-     *
-     * @return array
      */
-    public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations()
+    public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations(): array
     {
         return [
             [State::IS_PRIVATE],
@@ -350,10 +344,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * Returns invalid field declation modifiers.
-     *
-     * @return array
      */
-    public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers()
+    public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers(): array
     {
         return [
             [State::IS_ABSTRACT],

@@ -91,10 +91,9 @@ class ExcludePathFilter implements Filter
      * exclude patterns as an absolute path.
      *
      * @param string $path The absolute path to a source file.
-     * @return bool
      * @since  0.10.0
      */
-    protected function notAbsolute(string $path)
+    protected function notAbsolute(string $path): bool
     {
         return !preg_match($this->pattern, str_replace('\\', '/', $path));
     }
@@ -104,10 +103,9 @@ class ExcludePathFilter implements Filter
      * exclude patterns as an relative path.
      *
      * @param string $path The relative path to a source file.
-     * @return bool
      * @since  0.10.0
      */
-    protected function notRelative(string $path)
+    protected function notRelative(string $path): bool
     {
         $subPath = str_replace('\\', '/', $path);
 

@@ -93,10 +93,8 @@ class ASTIdentifierTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTIdentifier
      */
-    private function getFirstIdentifierInFunction()
+    private function getFirstIdentifierInFunction(): ASTIdentifier
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTIdentifier::class

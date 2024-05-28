@@ -97,10 +97,8 @@ class ParserBug8927377Test extends AbstractRegressionTestCase
 
     /**
      * Returns the property postfix found in a class.
-     *
-     * @return ASTPropertyPostfix
      */
-    protected function getFirstPropertyPostfixInClass()
+    protected function getFirstPropertyPostfixInClass(): ASTPropertyPostfix
     {
         return $this->parseCodeResourceForTest()
             ->current()

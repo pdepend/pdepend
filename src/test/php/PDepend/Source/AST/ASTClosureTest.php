@@ -257,10 +257,8 @@ class ASTClosureTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTClosure
      */
-    private function getFirstClosureInFunction()
+    private function getFirstClosureInFunction(): ASTClosure
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTClosure::class

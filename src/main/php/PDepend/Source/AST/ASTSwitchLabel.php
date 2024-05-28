@@ -71,10 +71,8 @@ class ASTSwitchLabel extends AbstractASTNode
 
     /**
      * Returns <b>true</b> when this node is the default label.
-     *
-     * @return bool
      */
-    public function isDefault()
+    public function isDefault(): bool
     {
         return $this->default;
     }

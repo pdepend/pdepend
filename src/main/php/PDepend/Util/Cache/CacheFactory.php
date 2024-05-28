@@ -85,12 +85,11 @@ class CacheFactory
      * identifier.
      *
      * @param string $cacheKey The name/identifier for the cache instance.
-     * @return CacheDriver
      * @throws InvalidArgumentException
      * @throws RandomException
      * @throws RuntimeException
      */
-    public function create(?string $cacheKey = null)
+    public function create(?string $cacheKey = null): CacheDriver
     {
         if (false === isset($this->caches[$cacheKey])) {
             $this->caches[$cacheKey] = $this->createCache($cacheKey);
@@ -103,12 +102,11 @@ class CacheFactory
      * Creates a cache instance based on the supplied configuration.
      *
      * @param string|null $cacheKey The name/identifier for the cache instance.
-     * @return CacheDriver
      * @throws InvalidArgumentException If the configured cache driver is unknown.
      * @throws RandomException
      * @throws RuntimeException
      */
-    protected function createCache(?string $cacheKey = null)
+    protected function createCache(?string $cacheKey = null): CacheDriver
     {
         assert($this->configuration->cache instanceof stdClass);
 
@@ -131,10 +129,9 @@ class CacheFactory
      * @param string $location Cache root directory.
      * @param int $ttl Cache ttl
      * @param string|null $cacheKey The name/identifier for the cache instance.
-     * @return FileCacheDriver
      * @throws RuntimeException
      */
-    protected function createFileCache(string $location, int $ttl = self::DEFAULT_TTL, ?string $cacheKey = null)
+    protected function createFileCache(string $location, int $ttl = self::DEFAULT_TTL, ?string $cacheKey = null): FileCacheDriver
     {
         return new FileCacheDriver($location, $ttl, $cacheKey);
     }
@@ -142,10 +139,9 @@ class CacheFactory
     /**
      * Creates an in memory cache instance.
      *
-     * @return MemoryCacheDriver
      * @throws RandomException
      */
-    protected function createMemoryCache()
+    protected function createMemoryCache(): MemoryCacheDriver
     {
         return new MemoryCacheDriver();
     }

@@ -127,10 +127,8 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a test allocation expression.
-     *
-     * @return ASTAllocationExpression
      */
-    private function getFirstAllocationExpressionInFunction()
+    private function getFirstAllocationExpressionInFunction(): ASTAllocationExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTAllocationExpression::class

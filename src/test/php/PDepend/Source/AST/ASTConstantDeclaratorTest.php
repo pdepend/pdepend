@@ -104,10 +104,9 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     /**
      * testConstantDeclarator
      *
-     * @return ASTConstantDeclarator
      * @since 1.0.2
      */
-    public function testConstantDeclarator()
+    public function testConstantDeclarator(): ASTConstantDeclarator
     {
         $declarator = $this->getFirstConstantDeclaratorInClass();
         static::assertInstanceOf(ASTConstantDeclarator::class, $declarator);
@@ -157,10 +156,8 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTConstantDeclarator
      */
-    private function getFirstConstantDeclaratorInClass()
+    private function getFirstConstantDeclaratorInClass(): ASTConstantDeclarator
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTConstantDeclarator::class

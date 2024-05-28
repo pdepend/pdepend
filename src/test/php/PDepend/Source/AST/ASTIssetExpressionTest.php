@@ -125,10 +125,8 @@ class ASTIssetExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTIssetExpression
      */
-    private function getFirstIssetExpressionInFunction()
+    private function getFirstIssetExpressionInFunction(): ASTIssetExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTIssetExpression::class

@@ -127,10 +127,9 @@ class SymbolTable
      * value exists for the given key.
      *
      * @param string $key The key for a searched scope value.
-     * @return string|null
      * @throws NoActiveScopeException
      */
-    public function lookup(string $key)
+    public function lookup(string $key): ?string
     {
         $this->ensureActiveScopeExists();
 
@@ -157,7 +156,7 @@ class SymbolTable
      *
      * @return string normalized key
      */
-    private function normalizeKey(string $key)
+    private function normalizeKey(string $key): string
     {
         return strtolower($key);
     }

@@ -53,10 +53,7 @@ namespace PDepend\Source\AST;
  */
 class ASTClosure extends AbstractASTNode implements ASTCallable
 {
-    /**
-     * @return ASTType|null
-     */
-    public function getReturnType()
+    public function getReturnType(): ?ASTType
     {
         foreach ($this->nodes as $node) {
             if ($node instanceof ASTType) {
@@ -70,10 +67,8 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
     /**
      * This method will return <b>true</b> when this closure returns by
      * reference.
-     *
-     * @return bool
      */
-    public function returnsByReference()
+    public function returnsByReference(): bool
     {
         return $this->getMetadataBoolean(5);
     }
@@ -108,10 +103,9 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
      * }
      * </code>
      *
-     * @return bool
      * @since  1.0.0
      */
-    public function isStatic()
+    public function isStatic(): bool
     {
         return $this->getMetadataBoolean(6);
     }
@@ -130,11 +124,10 @@ class ASTClosure extends AbstractASTNode implements ASTCallable
     /**
      * Returns the total number of the used property bag.
      *
-     * @return int
      * @see    ASTNode#getMetadataSize()
      * @since  1.0.0
      */
-    protected function getMetadataSize()
+    protected function getMetadataSize(): int
     {
         return 7;
     }

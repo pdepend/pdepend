@@ -155,10 +155,8 @@ class ASTCompoundVariableTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTCompoundVariable
      */
-    private function getFirstVariableInFunction()
+    private function getFirstVariableInFunction(): ASTCompoundVariable
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTCompoundVariable::class

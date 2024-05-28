@@ -142,10 +142,8 @@ class ASTArtifactTest extends AbstractTestCase
 
     /**
      * Returns a mocked item instance.
-     *
-     * @return AbstractASTArtifact
      */
-    protected function getItemMock()
+    protected function getItemMock(): AbstractASTArtifact
     {
         return $this->getAbstractClassMock(
             AbstractASTArtifact::class,

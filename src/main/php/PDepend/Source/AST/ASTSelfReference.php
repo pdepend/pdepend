@@ -102,10 +102,9 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
     /**
      * Returns the visual representation for this node type.
      *
-     * @return string
      * @since  0.10.4
      */
-    public function getImage()
+    public function getImage(): string
     {
         return self::IMAGE;
     }
@@ -113,11 +112,10 @@ class ASTSelfReference extends ASTClassOrInterfaceReference
     /**
      * Returns the class or interface instance that this node instance represents.
      *
-     * @return AbstractASTClassOrInterface
      * @throws RuntimeException
      * @since  0.10.0
      */
-    public function getType()
+    public function getType(): AbstractASTClassOrInterface
     {
         if ($this->typeInstance === null) {
             if (!$this->context) {

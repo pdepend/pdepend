@@ -86,10 +86,8 @@ class ASTValue
 
     /**
      * This method will return <b>true</b> when the PHP-value is already set.
-     *
-     * @return bool
      */
-    public function isValueAvailable()
+    public function isValueAvailable(): bool
     {
         return $this->valueAvailable;
     }

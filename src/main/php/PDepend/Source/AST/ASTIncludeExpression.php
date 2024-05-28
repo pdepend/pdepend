@@ -71,10 +71,8 @@ class ASTIncludeExpression extends ASTExpression
 
     /**
      * Does this node represent a <b>include_once</b>-expression?
-     *
-     * @return bool
      */
-    public function isOnce()
+    public function isOnce(): bool
     {
         return $this->once;
     }

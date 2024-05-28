@@ -396,10 +396,8 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTPropertyPostfix
      */
-    private function getFirstPropertyPostfixInFunction()
+    private function getFirstPropertyPostfixInFunction(): ASTPropertyPostfix
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTPropertyPostfix::class
@@ -408,10 +406,8 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTMemberPrimaryPrefix
      */
-    private function getFirstMemberPrimaryPrefixInFunction()
+    private function getFirstMemberPrimaryPrefixInFunction(): ASTMemberPrimaryPrefix
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTMemberPrimaryPrefix::class
@@ -420,10 +416,8 @@ class ASTPropertyPostfixTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTMemberPrimaryPrefix
      */
-    private function getFirstMemberPrimaryPrefixInClass()
+    private function getFirstMemberPrimaryPrefixInClass(): ASTMemberPrimaryPrefix
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTMemberPrimaryPrefix::class

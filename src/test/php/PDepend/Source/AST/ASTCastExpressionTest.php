@@ -290,10 +290,8 @@ class ASTCastExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTCastExpression
      */
-    private function getFirstCastExpressionInFunction()
+    private function getFirstCastExpressionInFunction(): ASTCastExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTCastExpression::class

@@ -87,10 +87,9 @@ class ASTClassOrInterfaceReference extends ASTType
     /**
      * Returns the concrete type instance associated with with this placeholder.
      *
-     * @return AbstractASTClassOrInterface
      * @throws RuntimeException
      */
-    public function getType()
+    public function getType(): AbstractASTClassOrInterface
     {
         if ($this->typeInstance === null) {
             if (!$this->context) {

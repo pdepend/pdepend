@@ -60,10 +60,9 @@ class ASTStaticReference extends ASTSelfReference
     /**
      * Returns the visual representation for this node type.
      *
-     * @return string
      * @since  0.10.4
      */
-    public function getImage()
+    public function getImage(): string
     {
         return self::IMAGE;
     }

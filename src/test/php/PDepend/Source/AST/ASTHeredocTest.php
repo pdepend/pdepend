@@ -106,10 +106,8 @@ class ASTHeredocTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTHeredoc
      */
-    private function getFirstHeredocInFunction()
+    private function getFirstHeredocInFunction(): ASTHeredoc
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTHeredoc::class
@@ -118,10 +116,8 @@ class ASTHeredocTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTHeredoc
      */
-    private function getFirstHeredocInClass()
+    private function getFirstHeredocInClass(): ASTHeredoc
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTHeredoc::class

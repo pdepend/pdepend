@@ -95,10 +95,9 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpression
      *
-     * @return ASTRequireExpression
      * @since 1.0.2
      */
-    public function testRequireExpression()
+    public function testRequireExpression(): ASTRequireExpression
     {
         $expr = $this->getFirstRequireExpressionInFunction();
         static::assertInstanceOf(ASTRequireExpression::class, $expr);
@@ -149,10 +148,9 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
     /**
      * testRequireExpressionWithParenthesis
      *
-     * @return ASTRequireExpression
      * @since 1.0.2
      */
-    public function testRequireExpressionWithParenthesis()
+    public function testRequireExpressionWithParenthesis(): ASTRequireExpression
     {
         $expr = $this->getFirstRequireExpressionInFunction();
         static::assertInstanceOf(ASTRequireExpression::class, $expr);
@@ -202,10 +200,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTRequireExpression
      */
-    private function getFirstRequireExpressionInFunction()
+    private function getFirstRequireExpressionInFunction(): ASTRequireExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTRequireExpression::class

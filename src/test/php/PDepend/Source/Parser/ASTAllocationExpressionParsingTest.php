@@ -261,10 +261,9 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
      * Returns the first allocation expression found in the test file associated
      * with the calling test method.
      *
-     * @return ASTAllocationExpression
      * @since 1.0.1
      */
-    private function getFirstAllocationInClass()
+    private function getFirstAllocationInClass(): ASTAllocationExpression
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTAllocationExpression::class

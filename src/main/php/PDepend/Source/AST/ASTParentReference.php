@@ -84,20 +84,17 @@ final class ASTParentReference extends ASTClassOrInterfaceReference
     /**
      * Returns the visual representation for this node type.
      *
-     * @return string
      * @since  0.10.4
      */
-    public function getImage()
+    public function getImage(): string
     {
         return self::IMAGE;
     }
 
     /**
      * Returns the concrete type instance associated with with this placeholder.
-     *
-     * @return AbstractASTClassOrInterface
      */
-    public function getType()
+    public function getType(): AbstractASTClassOrInterface
     {
         return $this->reference->getType();
     }

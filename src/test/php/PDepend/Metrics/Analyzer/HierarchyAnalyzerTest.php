@@ -143,10 +143,7 @@ class HierarchyAnalyzerTest extends AbstractMetricsTestCase
         static::assertSame([], $analyzer->getNodeMetrics($class));
     }
 
-    /**
-     * @return HierarchyAnalyzer
-     */
-    private function createAnalyzer()
+    private function createAnalyzer(): HierarchyAnalyzer
     {
         return new HierarchyAnalyzer();
     }

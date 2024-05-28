@@ -69,10 +69,9 @@ class ASTArguments extends AbstractASTNode
     /**
      * This method will return true if the argument list is declared as foo(...)
      *
-     * @return bool
      * @since 2.11.0
      */
-    public function isVariadicPlaceholder()
+    public function isVariadicPlaceholder(): bool
     {
         return $this->getMetadataBoolean(4);
     }
@@ -89,10 +88,8 @@ class ASTArguments extends AbstractASTNode
 
     /**
      * Rather the given arguments list can still take one more argument.
-     *
-     * @return bool
      */
-    public function acceptsMoreArguments()
+    public function acceptsMoreArguments(): bool
     {
         return true;
     }

@@ -58,10 +58,9 @@ class ASTTypeArrayTest extends ASTNodeTestCase
     /**
      * testArrayType
      *
-     * @return ASTTypeArray
      * @since 1.0.2
      */
-    public function testArrayType()
+    public function testArrayType(): ASTTypeArray
     {
         $type = $this->getFirstArrayTypeInFunction();
         static::assertInstanceOf(ASTTypeArray::class, $type);
@@ -129,10 +128,8 @@ class ASTTypeArrayTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTTypeArray
      */
-    private function getFirstArrayTypeInFunction()
+    private function getFirstArrayTypeInFunction(): ASTTypeArray
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTTypeArray::class

@@ -98,10 +98,8 @@ class ASTEnum extends AbstractASTClassOrInterface
      *   - either: ASTScalarType('string')
      *   - or:     ASTScalarType('int')
      * Returns null if basic enumeration: https://www.php.net/manual/en/language.enumerations.basics.php
-     *
-     * @return ASTScalarType|null
      */
-    public function getType()
+    public function getType(): ?ASTScalarType
     {
         return $this->type;
     }
@@ -109,30 +107,24 @@ class ASTEnum extends AbstractASTClassOrInterface
     /**
      * Returns <b>true</b> if backed enumeration: https://www.php.net/manual/en/language.enumerations.backed.php
      * Returns <b>false</b> if basic enumeration: https://www.php.net/manual/en/language.enumerations.basics.php
-     *
-     * @return bool
      */
-    public function isBacked()
+    public function isBacked(): bool
     {
         return $this->type !== null;
     }
 
     /**
      * Returns <b>true</b> if this is an abstract class or an interface.
-     *
-     * @return bool
      */
-    public function isAbstract()
+    public function isAbstract(): bool
     {
         return false;
     }
 
     /**
      * This method will return <b>true</b> when this class is declared as final.
-     *
-     * @return bool
      */
-    public function isFinal()
+    public function isFinal(): bool
     {
         return true;
     }
@@ -140,10 +132,8 @@ class ASTEnum extends AbstractASTClassOrInterface
     /**
      * Will return <b>true</b> if this class was declared anonymous in an
      * allocation expression.
-     *
-     * @return bool
      */
-    public function isAnonymous()
+    public function isAnonymous(): bool
     {
         return false;
     }
@@ -153,7 +143,7 @@ class ASTEnum extends AbstractASTClassOrInterface
      *
      * @return ASTArtifactList<ASTEnumCase>
      */
-    public function getCases()
+    public function getCases(): ASTArtifactList
     {
         return new ASTArtifactList(
             $this->findChildrenOfType(ASTEnumCase::class),
@@ -165,7 +155,7 @@ class ASTEnum extends AbstractASTClassOrInterface
      *
      * @return ASTArtifactList<ASTProperty>
      */
-    public function getProperties()
+    public function getProperties(): ASTArtifactList
     {
         /** @var ASTProperty[] $list */
         $list = [];
@@ -176,7 +166,7 @@ class ASTEnum extends AbstractASTClassOrInterface
     /**
      * @return ASTArtifactList<AbstractASTClassOrInterface>
      */
-    public function getInterfaces()
+    public function getInterfaces(): ASTArtifactList
     {
         $unitEnum = new ASTInterface('UnitEnum');
 
@@ -220,10 +210,8 @@ class ASTEnum extends AbstractASTClassOrInterface
 
     /**
      * Checks that this user type is a subtype of the given <b>$type</b> instance.
-     *
-     * @return bool
      */
-    public function isSubtypeOf(AbstractASTType $type)
+    public function isSubtypeOf(AbstractASTType $type): bool
     {
         if ($type === $this) {
             return true;
@@ -248,10 +236,9 @@ class ASTEnum extends AbstractASTClassOrInterface
     /**
      * Returns the declared modifiers for this type.
      *
-     * @return int
      * @since  0.9.4
      */
-    public function getModifiers()
+    public function getModifiers(): int
     {
         return $this->modifiers;
     }

@@ -93,10 +93,8 @@ class ASTLogicalXorExpressionTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTLogicalXorExpression
      */
-    private function getFirstLogicalXorExpressionInFunction()
+    private function getFirstLogicalXorExpressionInFunction(): ASTLogicalXorExpression
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTLogicalXorExpression::class

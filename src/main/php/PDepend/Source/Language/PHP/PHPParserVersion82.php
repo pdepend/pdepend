@@ -79,10 +79,8 @@ abstract class PHPParserVersion82 extends AbstractPHPParser
 
     /**
      * Tests if the given image is a PHP 8.2 type hint.
-     *
-     * @return bool
      */
-    protected function isScalarOrCallableTypeHint(string $image)
+    protected function isScalarOrCallableTypeHint(string $image): bool
     {
         if (strtolower($image) === 'true') {
             return true;
@@ -101,11 +99,10 @@ abstract class PHPParserVersion82 extends AbstractPHPParser
     }
 
     /**
-     * @return ASTType
      * @throws UnexpectedTokenException
      * @throws TokenStreamEndException
      */
-    protected function parseSingleTypeHint()
+    protected function parseSingleTypeHint(): ASTType
     {
         $this->consumeComments();
 
@@ -134,10 +131,7 @@ abstract class PHPParserVersion82 extends AbstractPHPParser
         }
     }
 
-    /**
-     * @return bool
-     */
-    protected function canNotBeStandAloneType(ASTNode $type)
+    protected function canNotBeStandAloneType(ASTNode $type): bool
     {
         return false;
     }

@@ -74,10 +74,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
     /**
      * This method returns a string representation of this parameter.
      *
-     * @return string
      * @since  0.9.6
      */
-    public function __toString()
+    public function __toString(): string
     {
         $static = '';
 
@@ -103,10 +102,8 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
 
     /**
      * Returns the item name.
-     *
-     * @return string
      */
-    public function getImage()
+    public function getImage(): string
     {
         return $this->variableDeclarator->getImage();
     }
@@ -115,10 +112,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
      * This method returns a OR combined integer of the declared modifiers for
      * this property.
      *
-     * @return int
      * @since  0.9.6
      */
-    public function getModifiers()
+    public function getModifiers(): int
     {
         return $this->fieldDeclaration->getModifiers();
     }
@@ -126,10 +122,8 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
     /**
      * Returns <b>true</b> if this node is marked as public, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isPublic()
+    public function isPublic(): bool
     {
         return $this->fieldDeclaration->isPublic();
     }
@@ -137,10 +131,8 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
     /**
      * Returns <b>true</b> if this node is marked as protected, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isProtected()
+    public function isProtected(): bool
     {
         return $this->fieldDeclaration->isProtected();
     }
@@ -148,10 +140,8 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
     /**
      * Returns <b>true</b> if this node is marked as private, otherwise the
      * returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isPrivate()
+    public function isPrivate(): bool
     {
         return $this->fieldDeclaration->isPrivate();
     }
@@ -159,10 +149,8 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
     /**
      * Returns <b>true</b> when this node is declared as static, otherwise
      * the returned value will be <b>false</b>.
-     *
-     * @return bool
      */
-    public function isStatic()
+    public function isStatic(): bool
     {
         return $this->fieldDeclaration->isStatic();
     }
@@ -171,10 +159,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
      * This method will return <b>true</b> when this property doc comment
      * contains an array type hint, otherwise the it will return <b>false</b>.
      *
-     * @return bool
      * @since  0.9.6
      */
-    public function isArray()
+    public function isArray(): bool
     {
         $typeNode = $this->fieldDeclaration->getFirstChildOfType(
             ASTType::class,
@@ -190,10 +177,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
      * This method will return <b>true</b> when this property doc comment
      * contains a primitive type hint, otherwise the it will return <b>false</b>.
      *
-     * @return bool
      * @since  0.9.6
      */
-    public function isScalar()
+    public function isScalar(): bool
     {
         $typeNode = $this->fieldDeclaration->getFirstChildOfType(
             ASTType::class,
@@ -209,10 +195,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
      * Returns the type of this property. This method will return <b>null</b>
      * for all scalar type, only class properties will have a type.
      *
-     * @return AbstractASTClassOrInterface|null
      * @since  0.9.5
      */
-    public function getClass()
+    public function getClass(): ?AbstractASTClassOrInterface
     {
         $reference = $this->fieldDeclaration->getFirstChildOfType(
             ASTClassOrInterfaceReference::class,
@@ -229,7 +214,7 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
      *
      * @return ?string
      */
-    public function getComment()
+    public function getComment(): ?string
     {
         return $this->fieldDeclaration->getComment();
     }
@@ -237,10 +222,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
     /**
      * Returns the line number where the property declaration can be found.
      *
-     * @return int
      * @since  0.9.6
      */
-    public function getStartLine()
+    public function getStartLine(): int
     {
         return $this->variableDeclarator->getStartLine();
     }
@@ -258,10 +242,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
     /**
      * Returns the line number where the property declaration ends.
      *
-     * @return int
      * @since  0.9.6
      */
-    public function getEndLine()
+    public function getEndLine(): int
     {
         return $this->variableDeclarator->getEndLine();
     }
@@ -279,10 +262,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
     /**
      * This method will return the class where this property was declared.
      *
-     * @return AbstractASTClassOrInterface
      * @since  0.9.6
      */
-    public function getDeclaringClass()
+    public function getDeclaringClass(): AbstractASTClassOrInterface
     {
         return $this->declaringClass;
     }
@@ -301,10 +283,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
      * This method will return <b>true</b> when the parameter declaration
      * contains a default value.
      *
-     * @return bool
      * @since  0.9.6
      */
-    public function isDefaultValueAvailable()
+    public function isDefaultValueAvailable(): bool
     {
         $value = $this->variableDeclarator->getValue();
         if ($value === null) {

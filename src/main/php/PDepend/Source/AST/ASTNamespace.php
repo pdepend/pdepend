@@ -86,10 +86,9 @@ class ASTNamespace extends AbstractASTArtifact
      * <b>class/method</b> is user defined. Otherwise this method will return
      * <b>false</b>.
      *
-     * @return bool
      * @since  0.9.10
      */
-    public function isUserDefined()
+    public function isUserDefined(): bool
     {
         if (!isset($this->userDefined)) {
             $this->userDefined = $this->checkUserDefined();
@@ -103,10 +102,9 @@ class ASTNamespace extends AbstractASTArtifact
      * <b>class/method</b> is user defined. Otherwise this method will return
      * <b>false</b>.
      *
-     * @return bool
      * @since  0.9.10
      */
-    private function checkUserDefined()
+    private function checkUserDefined(): bool
     {
         foreach ($this->types as $type) {
             if ($type->isUserDefined()) {
@@ -124,7 +122,7 @@ class ASTNamespace extends AbstractASTArtifact
      * @return ASTArtifactList<ASTTrait>
      * @since  1.0.0
      */
-    public function getTraits()
+    public function getTraits(): ASTArtifactList
     {
         return $this->getTypesOfType(ASTTrait::class);
     }
@@ -135,7 +133,7 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @return ASTArtifactList<ASTClass>
      */
-    public function getClasses()
+    public function getClasses(): ASTArtifactList
     {
         return $this->getTypesOfType(ASTClass::class);
     }
@@ -146,7 +144,7 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @return ASTArtifactList<ASTEnum>
      */
-    public function getEnums()
+    public function getEnums(): ASTArtifactList
     {
         return $this->getTypesOfType(ASTEnum::class);
     }
@@ -157,7 +155,7 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @return ASTArtifactList<ASTInterface>
      */
-    public function getInterfaces()
+    public function getInterfaces(): ASTArtifactList
     {
         return $this->getTypesOfType(ASTInterface::class);
     }
@@ -172,7 +170,7 @@ class ASTNamespace extends AbstractASTArtifact
      * @return ASTArtifactList<T>
      * @since  1.0.0
      */
-    private function getTypesOfType($className)
+    private function getTypesOfType($className): ASTArtifactList
     {
         $types = [];
         foreach ($this->types as $type) {
@@ -190,7 +188,7 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @return ASTArtifactList<AbstractASTClassOrInterface>
      */
-    public function getTypes()
+    public function getTypes(): ASTArtifactList
     {
         return new ASTArtifactList($this->types);
     }
@@ -199,9 +197,8 @@ class ASTNamespace extends AbstractASTArtifact
      * Adds the given type to this namespace and returns the input type instance.
      *
      * @param AbstractASTClassOrInterface $type
-     * @return AbstractASTClassOrInterface
      */
-    public function addType(AbstractASTType $type)
+    public function addType(AbstractASTType $type): AbstractASTClassOrInterface
     {
         // Skip if this namespace already contains this type
         if (in_array($type, $this->types, true)) {
@@ -242,17 +239,15 @@ class ASTNamespace extends AbstractASTArtifact
      *
      * @return ASTArtifactList<ASTFunction>
      */
-    public function getFunctions()
+    public function getFunctions(): ASTArtifactList
     {
         return new ASTArtifactList($this->functions);
     }
 
     /**
      * Adds the given function to this namespace and returns the input instance.
-     *
-     * @return ASTFunction
      */
-    public function addFunction(ASTFunction $function)
+    public function addFunction(ASTFunction $function): ASTFunction
     {
         $namespace = $function->getNamespace();
         if ($namespace !== null) {
@@ -279,10 +274,7 @@ class ASTNamespace extends AbstractASTArtifact
         }
     }
 
-    /**
-     * @return bool
-     */
-    public function isPackageAnnotation()
+    public function isPackageAnnotation(): bool
     {
         return $this->packageAnnotation;
     }

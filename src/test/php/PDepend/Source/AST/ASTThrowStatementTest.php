@@ -58,10 +58,9 @@ class ASTThrowStatementTest extends ASTNodeTestCase
     /**
      * testThrowStatement
      *
-     * @return ASTThrowStatement
      * @since 1.0.2
      */
-    public function testThrowStatement()
+    public function testThrowStatement(): ASTThrowStatement
     {
         $stmt = $this->getFirstThrowStatementInFunction();
         static::assertInstanceOf(ASTThrowStatement::class, $stmt);
@@ -111,10 +110,8 @@ class ASTThrowStatementTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTThrowStatement
      */
-    private function getFirstThrowStatementInFunction()
+    private function getFirstThrowStatementInFunction(): ASTThrowStatement
     {
         return $this->getFirstNodeOfTypeInFunction(
             ASTThrowStatement::class

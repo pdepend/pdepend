@@ -55,8 +55,6 @@ interface Report
 {
     /**
      * Returns the percentage code coverage for the given item instance.
-     *
-     * @return float
      */
-    public function getCoverage(AbstractASTArtifact $artifact);
+    public function getCoverage(AbstractASTArtifact $artifact): float;
 }

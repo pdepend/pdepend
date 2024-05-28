@@ -77,10 +77,9 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * testTraitReference
      *
-     * @return ASTTraitReference
      * @since 1.0.2
      */
-    public function testTraitReference()
+    public function testTraitReference(): ASTTraitReference
     {
         $reference = $this->getFirstTraitReferenceInClass();
         static::assertInstanceOf(ASTTraitReference::class, $reference);
@@ -130,10 +129,8 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
 
     /**
      * Returns a node instance for the currently executed test case.
-     *
-     * @return ASTTraitReference
      */
-    private function getFirstTraitReferenceInClass()
+    private function getFirstTraitReferenceInClass(): ASTTraitReference
     {
         return $this->getFirstNodeOfTypeInClass(
             ASTTraitReference::class
@@ -153,10 +150,8 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
 
     /**
      * Returns a mocked builder context instance.
-     *
-     * @return BuilderContext
      */
-    protected function getBuilderContextMock()
+    protected function getBuilderContextMock(): BuilderContext
     {
         $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();

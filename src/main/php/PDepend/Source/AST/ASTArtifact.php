@@ -53,8 +53,6 @@ interface ASTArtifact extends ASTNode
 {
     /**
      * Returns a id for this code node.
-     *
-     * @return string
      */
-    public function getId();
+    public function getId(): string;
 }
