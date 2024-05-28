@@ -195,10 +195,8 @@ class ASTNamespace extends AbstractASTArtifact
 
     /**
      * Adds the given type to this namespace and returns the input type instance.
-     *
-     * @param AbstractASTClassOrInterface $type
      */
-    public function addType(AbstractASTType $type): AbstractASTClassOrInterface
+    public function addType(AbstractASTClassOrInterface $type): AbstractASTClassOrInterface
     {
         // Skip if this namespace already contains this type
         if (in_array($type, $this->types, true)) {
