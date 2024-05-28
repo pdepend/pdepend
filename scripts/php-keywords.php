@@ -1,4 +1,5 @@
 <?php
+
 $url = 'https://raw.githubusercontent.com/php/php-src/master/Zend/zend_language_scanner.l';
 $file = basename($url);
 
@@ -11,10 +12,10 @@ if (isset($argv[1])) {
     if (false === file_exists($argv[1])) {
         fwrite(STDERR, "The given zend_language_scanner.l does not exist.\n");
         fwrite(STDERR, "Usage:\n~ \$ php-keywords.php <path/to/zend_language_scanner.l> [<phpversion>]\n");
+
         exit(23);
-    } else {
-        $file = $argv[1];
     }
+    $file = $argv[1];
 } elseif (false === file_exists($file) || time() - filemtime($file) > 7200) {
     shell_exec(sprintf("wget -c '%s'", $url));
     touch($file);
@@ -30,6 +31,7 @@ $regexp = '(
 
 if (!preg_match_all($regexp, $data, $matches)) {
     fwrite(STDERR, "No matches found :-(\nUsage:\n~ \$ php-keywords.php <path/to/zend_language_scanner.l>\n");
+
     exit(42);
 }
 
@@ -126,13 +128,14 @@ function dump($type, array $valid)
         implode(
             "\n",
             array_map(
-                static fn ($token) => sprintf('            case Tokens::%s:', $token),
+                static fn($token) => sprintf('            case Tokens::%s:', $token),
                 $valid[$type]
             )
         )
     );
 
     echo $code;
+
     return $code;
 }
 
@@ -143,6 +146,7 @@ if (false === isset($argv[2])) {
 $parserFile = sprintf(__DIR__ . '/../src/main/php/PDepend/Source/Language/PHP/PHPParserVersion%s.php', $argv[2]);
 if (false === file_exists($parserFile)) {
     fwrite(STDERR, "The given parser version does not exist.\n");
+
     exit(42);
 }
 

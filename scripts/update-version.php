@@ -43,6 +43,10 @@
 
 namespace PDepend;
 
+use Iterator;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+
 /**
  * Utility class that we use to recalculate the cache hash/version.
  *
@@ -51,9 +55,7 @@ namespace PDepend;
  */
 class CacheVersionUpdater
 {
-    /**
-     * The source directory.
-     */
+    /** The source directory. */
     private readonly string $rootDirectory;
 
     /**
@@ -66,14 +68,10 @@ class CacheVersionUpdater
         '/Metrics',
     ];
 
-    /**
-     * The target file, where this script will persist the new cache version.
-     */
+    /** The target file, where this script will persist the new cache version. */
     private string $targetFile = '/Util/Cache/CacheDriver.php';
 
-    /**
-     * Regular expression used to replace a previous cache version.
-     */
+    /** Regular expression used to replace a previous cache version. */
     private string $targetRegexp = '(@version:[a-f0-9]{32}:@)';
 
     /**
@@ -137,6 +135,7 @@ class CacheVersionUpdater
                 $files[] = (string) $file;
             }
         }
+
         return $files;
     }
 
@@ -144,7 +143,7 @@ class CacheVersionUpdater
      * Does the given path represent a file that has the expected file extension?
      *
      * @param string $path Path to a file or directory.
-     * @return boolean
+     * @return bool
      */
     protected function accept($path)
     {
@@ -155,12 +154,12 @@ class CacheVersionUpdater
      * Creates an iterator with all files below the given directory.
      *
      * @param string $path Path to a directory.
-     * @return \Iterator
+     * @return Iterator
      */
     protected function createFileIterator($path)
     {
-        return new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($path)
+        return new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($path)
         );
     }
 
@@ -171,7 +170,7 @@ class CacheVersionUpdater
      */
     public static function main(array $args): void
     {
-        $updater = new CacheVersionUpdater();
+        $updater = new self();
         $updater->run();
     }
 }

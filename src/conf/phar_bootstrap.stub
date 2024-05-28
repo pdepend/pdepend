@@ -39,7 +39,7 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
-  */
+ */
 
 // Map this phar archive
 Phar::mapPhar('${archive.alias}');
@@ -49,13 +49,12 @@ set_include_path('phar://${archive.alias}/' . PATH_SEPARATOR . get_include_path(
 
 // Run command line interface if this is the called file
 if (isset($argv[0]) && realpath($argv[0]) === __FILE__) {
-
     // Set memory limit to max allowed
     ini_set('memory_limit', -1);
 
     // Load command line utility
     include_once 'phar://${archive.alias}/vendor/autoload.php';
 
-    exit(\PDepend\TextUI\Command::main($argv));
+    exit(PDepend\TextUI\Command::main($argv));
 }
 __HALT_COMPILER();
