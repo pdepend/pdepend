@@ -225,6 +225,7 @@ class ASTArtifactListTest extends AbstractTestCase
     {
         $this->expectException(BadMethodCallException::class);
 
+        /** @var ASTArtifactList<ASTClass> */
         $iterator = new ASTArtifactList([]);
         $iterator[0] = new ASTClass('Class');
     }
