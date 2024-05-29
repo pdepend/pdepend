@@ -104,6 +104,8 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
     /**
      * Data provider that returns a list of actual input and expected output
      * primitive types.
+     *
+     * @return list<list<string>>
      */
     public static function dataProviderParserSetsExpectedPrimitivePropertyType(): array
     {

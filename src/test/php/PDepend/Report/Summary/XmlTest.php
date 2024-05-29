@@ -293,7 +293,10 @@ class XmlTest extends AbstractTestCase
         );
     }
 
-    public static function dataProviderNodeAware()
+    /**
+     * @return list<list<string>>
+     */
+    public static function dataProviderNodeAware(): array
     {
         return [
             [
@@ -307,7 +310,7 @@ class XmlTest extends AbstractTestCase
         ];
     }
 
-    protected function getNormalizedPathXml($fileName)
+    protected function getNormalizedPathXml(string $fileName): string
     {
         return preg_replace(
             ['(file\s+name="[^"]+")', '(generated="[^"]*")'],

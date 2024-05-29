@@ -268,7 +268,7 @@ class PyramidTest extends AbstractTestCase
         unlink($output);
     }
 
-    private function createCouplingAnalyzer()
+    private function createCouplingAnalyzer(): CouplingAnalyzer
     {
         $mock = $this->getMockBuilder(CouplingAnalyzer::class)
             ->getMock();
@@ -284,7 +284,7 @@ class PyramidTest extends AbstractTestCase
         return $mock;
     }
 
-    private function createComplexityAnalyzer()
+    private function createComplexityAnalyzer(): CyclomaticComplexityAnalyzer
     {
         $mock = $this->getMockBuilder(CyclomaticComplexityAnalyzer::class)
             ->getMock();
@@ -299,7 +299,7 @@ class PyramidTest extends AbstractTestCase
         return $mock;
     }
 
-    private function createInheritanceAnalyzer()
+    private function createInheritanceAnalyzer(): InheritanceAnalyzer
     {
         $mock = $this->getMockBuilder(InheritanceAnalyzer::class)
             ->getMock();
@@ -315,7 +315,7 @@ class PyramidTest extends AbstractTestCase
         return $mock;
     }
 
-    private function createNodeCountAnalyzer()
+    private function createNodeCountAnalyzer(): NodeCountAnalyzer
     {
         $mock = $this->getMockBuilder(NodeCountAnalyzer::class)
             ->getMock();
@@ -333,7 +333,7 @@ class PyramidTest extends AbstractTestCase
         return $mock;
     }
 
-    private function createNodeLocAnalyzer()
+    private function createNodeLocAnalyzer(): NodeLocAnalyzer
     {
         $mock = $this->getMockBuilder(NodeLocAnalyzer::class)
             ->getMock();

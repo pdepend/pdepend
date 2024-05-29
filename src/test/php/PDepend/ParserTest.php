@@ -43,6 +43,7 @@
 
 namespace PDepend;
 
+use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTForeachStatement;
@@ -1499,6 +1500,9 @@ class ParserTest extends AbstractTestCase
 
     /**
      * Generic comment test method.
+     *
+     * @template T of ASTArtifact
+     * @param ASTArtifactList<T> $nodes
      */
     protected function doTestParserSetsCorrectDocComment(ASTArtifactList $nodes, int $indent = 1): void
     {

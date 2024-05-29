@@ -165,6 +165,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param string $testCase Name of the calling test case.
      * @param int $ccn The entire cyclomatic complexity number.
+     * @return array<mixed>
      */
     private function calculateCrapIndex(string $testCase, int $ccn): array
     {

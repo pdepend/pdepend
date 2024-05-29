@@ -86,6 +86,8 @@ class PHPDependBug13405179Test extends AbstractRegressionTestCase
 
     /**
      * Returns the class names of all file aware logger classes.
+     *
+     * @return list<list<string>>
      */
     public static function getLoggerClassNames(): array
     {

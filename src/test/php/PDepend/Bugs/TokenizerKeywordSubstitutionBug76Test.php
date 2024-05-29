@@ -82,6 +82,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
     /**
      * Data provider for the substitution bug in object and class operator
      * chains.
+     *
+     * @return list<array<mixed>>
      */
     public static function dataProviderTokenizerKeywordSubstitutionInOperatorChain(): array
     {

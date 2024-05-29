@@ -219,7 +219,7 @@ abstract class AbstractTestCase extends TestCase
         return $application->getRunner();
     }
 
-    protected function createTestApplication()
+    protected function createTestApplication(): Application
     {
         $application = new Application();
         $application->setConfigurationFile(__DIR__ . '/../../resources/pdepend.xml.dist');
@@ -368,7 +368,7 @@ abstract class AbstractTestCase extends TestCase
      * Collects all children from a given node.
      *
      * @param ASTNode $node The current root node.
-     * @param array $actual Previous filled list.
+     * @param array<mixed> $actual Previous filled list.
      * @return array<string>
      */
     protected static function collectChildNodes(ASTNode $node, array $actual = []): array
@@ -396,6 +396,7 @@ abstract class AbstractTestCase extends TestCase
      * Collects all children from a given node.
      *
      * @param ASTNode $node The current root node.
+     * @return array<mixed>
      */
     protected static function collectGraph(ASTNode $node): array
     {
@@ -415,7 +416,7 @@ abstract class AbstractTestCase extends TestCase
      * object graph.
      *
      * @param ASTNode $node The root node.
-     * @param array $graph Expected class structure.
+     * @param array<mixed> $graph Expected class structure.
      */
     protected static function assertGraph(ASTNode $node, array $graph): void
     {
@@ -787,11 +788,6 @@ abstract class AbstractTestCase extends TestCase
             $builder,
             $cache
         );
-    }
-
-    protected function getAbstractClassMock($originalClassName, array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = [], $cloneArguments = false)
-    {
-        return $this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
     }
 
     /**

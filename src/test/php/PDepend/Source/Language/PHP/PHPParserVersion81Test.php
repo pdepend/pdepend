@@ -971,23 +971,17 @@ class PHPParserVersion81Test extends AbstractTestCase
 
     public function testAbstractMethodOverriding(): void
     {
-        /** @var ASTArtifactList $classes */
         $classes = $this->parseCodeResourceForTest()->current()->getClasses();
-
-        /** @var ASTClass $class */
         $class = $classes[1];
+        static::assertInstanceOf(ASTClass::class, $class);
 
-        /** @var ASTArtifactList $classes */
         $methods = $class->getMethods();
-
-        /** @var ASTMethod $method */
         $method = $methods[0];
+        static::assertInstanceOf(ASTMethod::class, $method);
 
-        /** @var ASTArtifactList $parameters */
         $parameters = $method->getParameters();
-
-        /** @var ASTParameter $parameter */
         $parameter = $parameters[0];
+        static::assertInstanceOf(ASTParameter::class, $parameter);
 
         static::assertTrue($method->isAbstract());
         static::assertSame('int', $method->getReturnType()->getImage());
@@ -1512,8 +1506,8 @@ class PHPParserVersion81Test extends AbstractTestCase
 
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
-        return $this->getAbstractClassMock(
-            'PDepend\\Source\\Language\\PHP\\AbstractPHPParser',
+        return $this->getMockForAbstractClass(
+            AbstractPHPParser::class,
             [$tokenizer, $builder, $cache]
         );
     }

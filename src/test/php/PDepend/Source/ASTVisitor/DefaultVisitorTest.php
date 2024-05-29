@@ -346,7 +346,7 @@ class DefaultVisitorTest extends AbstractTestCase
      */
     public function testGetVisitListenersReturnsIterator(): void
     {
-        $visitor = $this->getAbstractClassMock(AbstractASTVisitor::class);
+        $visitor = $this->getMockForAbstractClass(AbstractASTVisitor::class);
         static::assertInstanceOf('Iterator', $visitor->getVisitListeners());
     }
 
@@ -355,7 +355,7 @@ class DefaultVisitorTest extends AbstractTestCase
      */
     public function testGetVisitListenersContainsAddedListener(): void
     {
-        $visitor = $this->getAbstractClassMock(AbstractASTVisitor::class);
+        $visitor = $this->getMockForAbstractClass(AbstractASTVisitor::class);
 
         $listener = $this->getMockBuilder(ASTVisitListener::class)
             ->getMock();

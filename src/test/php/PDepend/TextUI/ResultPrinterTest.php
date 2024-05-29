@@ -211,7 +211,10 @@ class ResultPrinterTest extends AbstractTestCase
         );
     }
 
-    private static function expectOutput($expected, $action): void
+    /**
+     * @param callable(): void $action
+     */
+    private static function expectOutput(string $expected, callable $action): void
     {
         ob_start();
         $action();

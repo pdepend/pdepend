@@ -316,8 +316,9 @@ class RunnerTest extends AbstractTestCase
      *
      * @param Runner $runner The runner instance.
      * @param $pathName The source path.
+     * @return array<mixed>
      */
-    private function runRunnerAndReturnStatistics(Runner $runner, $pathName): array
+    private function runRunnerAndReturnStatistics(Runner $runner, string $pathName): array
     {
         $logFile = $this->createRunResourceURI();
 

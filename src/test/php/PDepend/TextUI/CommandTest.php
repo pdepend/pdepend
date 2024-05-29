@@ -291,6 +291,9 @@ class CommandTest extends AbstractTestCase
 
     /**
      * Executes the command class and returns an array with namespace statistics.
+     *
+     * @param array<mixed> $argv
+     * @return array<mixed>
      */
     private function runCommandAndReturnStatistics(array $argv, string $pathName): array
     {
@@ -607,7 +610,7 @@ class CommandTest extends AbstractTestCase
      * Executes the text ui command and returns the exit code and the output as
      * an array <b>array($exitCode, $output)</b>.
      *
-     * @param ?array $argv The cli parameters.
+     * @param ?array<mixed> $argv The cli parameters.
      * @return array<mixed>
      */
     private function executeCommand(?array $argv = null): array
@@ -625,7 +628,7 @@ class CommandTest extends AbstractTestCase
     /**
      * Prepares a fake <b>$argv</b>.
      *
-     * @param ?array $argv The cli parameters.
+     * @param ?array<mixed> $argv The cli parameters.
      */
     private function prepareArgv(?array $argv = null): void
     {

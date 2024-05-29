@@ -216,7 +216,7 @@ class XmlTest extends AbstractTestCase
         );
     }
 
-    protected function getNormalizedPathXml($fileName)
+    protected function getNormalizedPathXml(string $fileName): string
     {
         return preg_replace(
             ['(file\s+name="[^"]+")', '(generated="[^"]*")'],

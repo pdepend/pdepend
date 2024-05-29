@@ -285,7 +285,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
         static::assertEquals($expected, $actual);
     }
 
-    private function getEndLineOfThisFile()
+    private function getEndLineOfThisFile(): int
     {
         return __LINE__ + 3;
     }

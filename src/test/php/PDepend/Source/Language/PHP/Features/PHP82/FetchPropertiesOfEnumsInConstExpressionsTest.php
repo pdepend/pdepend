@@ -117,7 +117,7 @@ class FetchPropertiesOfEnumsInConstExpressionsTest extends PHPParserVersion82Tes
         static::assertSame('E::Foo->{VALUE}', $this->constructImage($declaration->getValue()->getValue()));
     }
 
-    public function constructImage(ASTNode $node)
+    public function constructImage(ASTNode $node): string
     {
         $self = $this;
 

@@ -267,7 +267,7 @@ class ASTCallableTest extends AbstractTestCase
      */
     protected function getCallableMock(): AbstractASTCallable
     {
-        return $this->getAbstractClassMock(
+        return $this->getMockForAbstractClass(
             AbstractASTCallable::class,
             [__CLASS__]
         );

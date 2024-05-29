@@ -73,7 +73,7 @@ class MatchExpressionTest extends PHPParserVersion81TestCase
         $this->checkMatchExpression('Baz');
     }
 
-    private function checkMatchExpression($namespacePrefix = null): void
+    private function checkMatchExpression(?string $namespacePrefix = null): void
     {
         $matchImage = implode('\\', array_filter([$namespacePrefix, 'match']));
 

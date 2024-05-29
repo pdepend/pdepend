@@ -178,10 +178,10 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testGetParentsOfTypeReturnsExpectedParentNodes(): void
     {
-        $parent0 = $this->getAbstractClassMock(ASTScope::class);
-        $parent1 = $this->getAbstractClassMock(AbstractASTNode::class);
-        $parent2 = $this->getAbstractClassMock(ASTScope::class);
-        $parent3 = $this->getAbstractClassMock(AbstractASTNode::class);
+        $parent0 = $this->getMockForAbstractClass(ASTScope::class);
+        $parent1 = $this->getMockForAbstractClass(AbstractASTNode::class);
+        $parent2 = $this->getMockForAbstractClass(ASTScope::class);
+        $parent3 = $this->getMockForAbstractClass(AbstractASTNode::class);
 
         $node = $this->createNodeInstance();
 
@@ -273,7 +273,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testGetFirstChildOfTypeReturnsFirstMatchingChild(): void
     {
-        $child0 = $this->getAbstractClassMock(
+        $child0 = $this->getMockForAbstractClass(
             ASTIndexExpression::class
         );
 
@@ -293,10 +293,10 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testGetFirstChildOfTypeReturnsFirstMatchingChildRecursive(): void
     {
-        $child0 = $this->getAbstractClassMock(
+        $child0 = $this->getMockForAbstractClass(
             ASTIndexExpression::class
         );
-        $child1 = $this->getAbstractClassMock(
+        $child1 = $this->getMockForAbstractClass(
             ASTArguments::class
         );
 
@@ -332,7 +332,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testFindChildrenOfTypeReturnsDirectChild(): void
     {
         $child0 = $this->getNodeMock();
-        $child1 = $this->getAbstractClassMock(ASTScope::class);
+        $child1 = $this->getMockForAbstractClass(ASTScope::class);
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -352,7 +352,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testFindChildrenOfTypeReturnsIndirectChild(): void
     {
         $child0 = $this->getNodeMock();
-        $child1 = $this->getAbstractClassMock(ASTScope::class);
+        $child1 = $this->getMockForAbstractClass(ASTScope::class);
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -371,9 +371,9 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testFindChildrenOfTypeReturnsDirectAndIndirectChild(): void
     {
-        $child0 = $this->getAbstractClassMock(ASTScope::class);
-        $child1 = $this->getAbstractClassMock(ASTScope::class);
-        $child2 = $this->getAbstractClassMock(ASTScope::class);
+        $child0 = $this->getMockForAbstractClass(ASTScope::class);
+        $child1 = $this->getMockForAbstractClass(ASTScope::class);
+        $child2 = $this->getMockForAbstractClass(ASTScope::class);
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -550,7 +550,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     private function getNodeMock(): AbstractASTNode
     {
-        return $this->getAbstractClassMock(AbstractASTNode::class);
+        return $this->getMockForAbstractClass(AbstractASTNode::class);
     }
 
     /**
@@ -670,13 +670,14 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     /**
      * Creates a concrete node implementation.
      */
-    protected function createNodeInstance(): AbstractASTArtifact|AbstractASTNode
+    protected function createNodeInstance(): object
     {
         $class = substr(static::class, 0, -4);
+        static::assertTrue(class_exists($class), "Class {$class} does not exist.");
 
         $reflection = new ReflectionClass($class);
         if ($reflection->isAbstract()) {
-            return $this->getAbstractClassMock($class, [__METHOD__]);
+            return $this->getMockForAbstractClass($class, [__METHOD__]);
         }
 
         return $reflection->newInstanceArgs([__METHOD__]);

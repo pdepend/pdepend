@@ -77,6 +77,8 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTestCase
 
     /**
      * Data provider for the reserved keyword as constant name test.
+     *
+     * @return list<list<string>>
      */
     public static function dataProviderReservedKeywordAsTypeConstantName(): array
     {

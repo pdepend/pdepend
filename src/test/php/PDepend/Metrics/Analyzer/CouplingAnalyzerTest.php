@@ -503,6 +503,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testGetNodeMetricsForTrait
      *
+     * @return array<mixed>
      * @since 1.0.6
      */
     public function testGetNodeMetricsForTrait(): array
@@ -516,7 +517,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testGetNodeMetricsForTraitReturnsExpectedMetricSet
      *
-     * @param array $metrics Calculated coupling metrics.
+     * @param array<string, mixed> $metrics Calculated coupling metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -529,7 +530,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testCalculateCEMetricForTrait
      *
-     * @param array $metrics Calculated coupling metrics.
+     * @param array<string, int> $metrics Calculated coupling metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -542,7 +543,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testCalculateCBOMetricForTrait
      *
-     * @param array $metrics Calculated coupling metrics.
+     * @param array<string, int> $metrics Calculated coupling metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -555,7 +556,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testCalculateCAMetricForTrait
      *
-     * @param array $metrics Calculated coupling metrics.
+     * @param array<string, int> $metrics Calculated coupling metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -568,6 +569,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testGetProjectMetricsForTrait
      *
+     * @return array<mixed>
      * @since 1.0.6
      */
     public function testGetProjectMetricsForTrait(): array
@@ -584,7 +586,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testGetProjectMetricsForTraitReturnsExpectedMetricSet
      *
-     * @param array $metrics Calculated coupling metrics.
+     * @param array<string, mixed> $metrics Calculated coupling metrics.
      * @since 1.0.6
      *
      * @depends testGetProjectMetricsForTrait
@@ -597,7 +599,7 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testCalculateCallsMetricForTrait
      *
-     * @param array $metrics Calculated coupling metrics.
+     * @param array<string, int> $metrics Calculated coupling metrics.
      * @since 1.0.6
      *
      * @depends testGetProjectMetricsForTrait
@@ -610,9 +612,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testCalculateFanoutMetricForTrait
      *
-     * @param array $metrics Calculated coupling metrics.
+     * @param array<string, int> $metrics Calculated coupling metrics.
      * @since 1.0.6
-     *
      * @depends testGetProjectMetricsForTrait
      */
     public function testCalculateFanoutMetricForTrait(array $metrics): void
@@ -677,6 +678,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Data provider that returns different test files and the corresponding
      * invocation count value.
+     *
+     * @return list<mixed>
      */
     public static function dataProviderAnalyzerCalculatesExpectedCallCount(): array
     {

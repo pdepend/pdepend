@@ -136,7 +136,7 @@ class FileCacheDriverTest extends AbstractDriverTestCase
         static::assertNull($cachedValue);
     }
 
-    private function getCacheFilePath($cacheKey, $cacheType, $storedKey)
+    private function getCacheFilePath(string $cacheKey, string $cacheType, string $storedKey): string
     {
         $key = md5($storedKey . $cacheKey);
         $dir = substr($key, 0, 2);

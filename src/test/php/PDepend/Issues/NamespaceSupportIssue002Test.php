@@ -467,6 +467,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
+     *
+     * @return list<list<string>>
      */
     public static function dataProviderParserResolvesQualifiedTypeNameInFunction(): array
     {
@@ -483,6 +485,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
+     *
+     * @return list<list<string>>
      */
     public static function dataProviderParserResolvesQualifiedTypeNameInTypeSignature(): array
     {
@@ -498,6 +502,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
+     *
+     * @return list<list<string>>
      */
     public static function dataProviderParserKeepsQualifiedTypeNameInFunction(): array
     {
@@ -514,6 +520,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
+     *
+     * @return list<list<string>>
      */
     public static function dataProviderParserKeepsQualifiedTypeNameInTypeSignature(): array
     {
@@ -527,6 +535,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
+     *
+     * @return list<list<string>>
      */
     public static function dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax(): array
     {
@@ -542,6 +552,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
+     *
+     * @return list<list<string>>
      */
     public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax(): array
     {
@@ -556,6 +568,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
+     *
+     * @return list<list<string>>
      */
     public static function dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax(): array
     {
@@ -571,6 +585,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     /**
      * Data provider method that returns test data for class name resolving
      * tests.
+     *
+     * @return list<list<string>>
      */
     public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax(): array
     {

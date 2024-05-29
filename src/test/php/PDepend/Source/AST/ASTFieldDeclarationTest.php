@@ -301,6 +301,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * Returns valid field declation modifiers.
+     *
+     * @return array<mixed>
      */
     public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations(): array
     {
@@ -325,6 +327,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * Returns invalid field declation modifiers.
+     *
+     * @return array<mixed>
      */
     public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers(): array
     {

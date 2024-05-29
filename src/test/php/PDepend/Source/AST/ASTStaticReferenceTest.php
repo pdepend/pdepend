@@ -65,7 +65,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeReturnsInjectedConstructorTargetArgument(): void
     {
-        $target = $this->getAbstractClassMock(
+        $target = $this->getMockForAbstractClass(
             AbstractASTClassOrInterface::class,
             [__CLASS__]
         );
@@ -81,7 +81,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull(): void
     {
-        $target = $this->getAbstractClassMock(
+        $target = $this->getMockForAbstractClass(
             AbstractASTClassOrInterface::class,
             [__CLASS__]
         );
@@ -220,7 +220,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
 
         return new ASTStaticReference(
             $context,
-            $this->getAbstractClassMock(
+            $this->getMockForAbstractClass(
                 AbstractASTClassOrInterface::class,
                 [__CLASS__]
             )

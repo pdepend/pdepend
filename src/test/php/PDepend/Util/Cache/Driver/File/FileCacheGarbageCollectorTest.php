@@ -117,7 +117,7 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         static::assertSame(1, $garbageCollector->garbageCollect());
     }
 
-    protected function createFile($mtime = 0, $atime = 0)
+    protected function createFile(int $mtime = 0, int $atime = 0): string
     {
         $time = time();
 
