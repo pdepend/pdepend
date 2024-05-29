@@ -43,6 +43,7 @@ namespace PDepend\Source\Language\PHP;
 
 use OutOfBoundsException;
 use PDepend\AbstractTestCase;
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
@@ -107,12 +108,14 @@ class PHPParserVersion81Test extends AbstractTestCase
     }
 
     /**
-     * @return \PDepend\Source\AST\AbstractASTClassOrInterface[]
+     * @return AbstractASTClassOrInterface[]
      */
     public function testParserResolvesDependenciesInDocComments(): array
     {
         $namespaces = $this->parseCodeResourceForTest();
         $classes = $namespaces[0]->getClasses();
+
+        /** @var AbstractASTClassOrInterface[] */
         $dependencies = $classes[0]->findChildrenOfType(ASTClassOrInterfaceReference::class);
 
         static::assertCount(1, $dependencies);
@@ -655,6 +658,7 @@ class PHPParserVersion81Test extends AbstractTestCase
             ->getFirstChildOfType(ASTExpression::class)
             ->getChild(1);
 
+        static::assertInstanceOf(ASTExpression::class, $expr);
         static::assertSame('<=>', $expr->getImage());
 
         return $expr;

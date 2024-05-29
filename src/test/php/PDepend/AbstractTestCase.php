@@ -63,7 +63,6 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
-use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Builder\BuilderContext;
@@ -178,7 +177,9 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $nodeType The searched node class.
+     * @template T of ASTNode
+     * @param class-string<T> $nodeType The searched node class.
+     * @return T
      */
     protected function getFirstNodeOfTypeInFunction(string $nodeType): ASTNode
     {
@@ -228,7 +229,9 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $nodeType The searched node class.
+     * @template T of ASTNode
+     * @param class-string<T> $nodeType The searched node class.
+     * @return T
      * @since 1.0.0
      */
     protected function getFirstNodeOfTypeInTrait(string $nodeType): ASTNode
@@ -240,7 +243,9 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $nodeType The searched node class.
+     * @template T of ASTNode
+     * @param class-string<T> $nodeType The searched node class.
+     * @return T
      */
     protected function getFirstNodeOfTypeInClass(string $nodeType): ASTNode
     {
@@ -251,7 +256,9 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Returns a node instance for the currently executed test case.
      *
-     * @param string $nodeType The searched node class.
+     * @template T of ASTNode
+     * @param class-string<T> $nodeType The searched node class.
+     * @return T
      */
     protected function getFirstNodeOfTypeInInterface(string $nodeType): ASTNode
     {
@@ -418,10 +425,12 @@ abstract class AbstractTestCase extends TestCase
     /**
      * Creates a mocked class instance without calling the constructor.
      *
-     * @param string $className Name of the class to mock.
+     * @template T of ASTNode
+     * @param class-string<T> $className Name of the class to mock.
+     * @return T
      * @since 0.10.0
      */
-    protected function getMockWithoutConstructor(string $className): ASTProperty
+    protected function getMockWithoutConstructor(string $className): ASTNode
     {
         $mock = $this->getMockBuilder($className)
             ->onlyMethods(['__construct'])

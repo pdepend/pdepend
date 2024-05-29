@@ -161,6 +161,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $function = $this->getFirstFunctionForTestCaseInternal();
         $type = $function->getReturnClass();
 
+        static::assertInstanceOf(ASTClass::class, $type);
         static::assertEquals('Sindelfingen', $type->getImage());
 
         return $type;

@@ -132,11 +132,13 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     /**
      * testYieldKeyValue
      *
-     * @return \PDepend\Source\AST\ASTExpression[]
+     * @return ASTExpression[]
      */
     public function testYieldKeyValue(): array
     {
         $stmt = $this->getFirstYieldStatementInFunction();
+
+        /** @var ASTExpression[] */
         $nodes = $stmt->getChildren();
 
         static::assertCount(2, $nodes);
@@ -147,7 +149,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     /**
      * testYieldKeyValueChildNodes
      *
-     * @param \PDepend\Source\AST\ASTExpression[] $nodes
+     * @param ASTExpression[] $nodes
      *
      * @depends testYieldKeyValue
      */

@@ -66,7 +66,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
     /**
      * Dummy node metrics.
      *
-     * @var array<string, array>
+     * @var array<string, int>
      */
     protected array $nodeMetrics;
 
@@ -74,7 +74,7 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
      * Constructs a new analyzer dummy instance.
      *
      * @param array<string, mixed> $projectMetrics Dummy project metrics.
-     * @param array<string, array> $nodeMetrics Dummy node metrics.
+     * @param array<string, int> $nodeMetrics Dummy node metrics.
      */
     public function __construct(array $projectMetrics = [], array $nodeMetrics = [])
     {

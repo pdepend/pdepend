@@ -1447,7 +1447,10 @@ class ParserTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        return $namespaces[2]->getTypes()->current();
+        $interface = $namespaces[2]->getTypes()->current();
+        static::assertInstanceOf(ASTInterface::class, $interface);
+
+        return $interface;
     }
 
     /**
@@ -1472,7 +1475,10 @@ class ParserTest extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
 
-        return $namespaces[1]->getTypes()->current();
+        $class = $namespaces[1]->getTypes()->current();
+        static::assertInstanceOf(ASTClass::class, $class);
+
+        return $class;
     }
 
     /**
