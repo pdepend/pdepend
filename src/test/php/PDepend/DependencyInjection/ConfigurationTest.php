@@ -63,7 +63,7 @@ class ConfigurationTest extends AbstractTestCase
 {
     public function testSymfony(): void
     {
-        $config = new Configuration([new TestExtension()]);
+        $config = new Configuration([TestExtension::create()]);
 
         static::assertInstanceOf(
             TreeBuilder::class,

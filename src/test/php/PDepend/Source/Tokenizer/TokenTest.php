@@ -61,7 +61,7 @@ class TokenTest extends AbstractTestCase
      */
     public function testConstructorSetsTypeProperty(): void
     {
-        $token = new Token(1, 2, 4, 8, 16, 32);
+        $token = new Token(1, '2', 4, 8, 16, 32);
         static::assertEquals(1, $token->type);
     }
 
@@ -70,7 +70,7 @@ class TokenTest extends AbstractTestCase
      */
     public function testConstructorSetsImageProperty(): void
     {
-        $token = new Token(1, 2, 4, 8, 16, 32);
+        $token = new Token(1, '2', 4, 8, 16, 32);
         static::assertEquals(2, $token->image);
     }
 
@@ -79,7 +79,7 @@ class TokenTest extends AbstractTestCase
      */
     public function testConstructorSetsStartLineProperty(): void
     {
-        $token = new Token(1, 2, 4, 8, 16, 32);
+        $token = new Token(1, '2', 4, 8, 16, 32);
         static::assertEquals(4, $token->startLine);
     }
 
@@ -88,7 +88,7 @@ class TokenTest extends AbstractTestCase
      */
     public function testConstructorSetsEndLineProperty(): void
     {
-        $token = new Token(1, 2, 4, 8, 16, 32);
+        $token = new Token(1, '2', 4, 8, 16, 32);
         static::assertEquals(8, $token->endLine);
     }
 
@@ -97,7 +97,7 @@ class TokenTest extends AbstractTestCase
      */
     public function testConstructorSetsStartColumnProperty(): void
     {
-        $token = new Token(1, 2, 4, 8, 16, 32);
+        $token = new Token(1, '2', 4, 8, 16, 32);
         static::assertEquals(16, $token->startColumn);
     }
 
@@ -106,7 +106,7 @@ class TokenTest extends AbstractTestCase
      */
     public function testConstructorSetsEndColumnProperty(): void
     {
-        $token = new Token(1, 2, 4, 8, 16, 32);
+        $token = new Token(1, '2', 4, 8, 16, 32);
         static::assertEquals(32, $token->endColumn);
     }
 }

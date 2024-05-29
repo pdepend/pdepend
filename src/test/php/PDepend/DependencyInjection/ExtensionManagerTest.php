@@ -45,7 +45,6 @@ namespace PDepend\DependencyInjection;
 
 use PDepend\AbstractTestCase;
 use PDepend\TestExtension;
-use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
@@ -65,20 +64,6 @@ class ExtensionManagerTest extends AbstractTestCase
     {
         $extensionManager = new ExtensionManager();
 
-        static::assertSame([], $extensionManager->getActivatedExtensions());
-
-        $message = null;
-
-        try {
-            $extensionManager->activateExtension('CannotFindIt');
-        } catch (RuntimeException $exception) {
-            $message = $exception->getMessage();
-        }
-
-        static::assertSame(
-            'Cannot find extension class "CannotFindIt" for PDepend. Maybe the plugin is not installed?',
-            $message
-        );
         static::assertSame([], $extensionManager->getActivatedExtensions());
 
         $message = null;

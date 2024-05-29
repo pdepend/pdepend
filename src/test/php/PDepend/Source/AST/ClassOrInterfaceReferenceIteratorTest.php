@@ -65,10 +65,10 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
     public function testIteratorReturnsExpectedClasses(): void
     {
         $class1 = new ASTClass('c1');
-        $class1->setId(md5(23));
+        $class1->setId(md5('23'));
 
         $class2 = new ASTClass('c2');
-        $class2->setId(md5(42));
+        $class2->setId(md5('42'));
 
         $reference1 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
@@ -101,10 +101,10 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
     public function testIteratorReturnsSameClassOnlyOnce(): void
     {
         $class1 = new ASTClass('c1');
-        $class1->setId(md5(23));
+        $class1->setId(md5('23'));
 
         $class2 = new ASTClass('c2');
-        $class2->setId(md5(23));
+        $class2->setId(md5('23'));
 
         $reference1 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()

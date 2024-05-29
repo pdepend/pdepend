@@ -41,6 +41,7 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
+use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTEnum;
@@ -108,7 +109,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 'HasColor' => 'HasColor',
             ],
             array_map(
-                static fn(ASTInterface $interface) => $interface->getImage(),
+                static fn(AbstractASTClassOrInterface $interface) => $interface->getImage(),
                 iterator_to_array($enum->getInterfaces())
             )
         );

@@ -109,7 +109,7 @@ abstract class AbstractTestCase extends TestCase
         $this->clearRunResources($run);
 
         if (defined('STDERR') === false) {
-            define('STDERR', fopen('php://stderr', true));
+            define('STDERR', fopen('php://stderr', '1'));
         }
     }
 
@@ -813,9 +813,9 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * @param Builder<mixed> $builder
+     * @param PHPBuilder<mixed> $builder
      */
-    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
+    protected function createPHPParser(Tokenizer $tokenizer, PHPBuilder $builder, CacheDriver $cache): AbstractPHPParser
     {
         return new PHPParserGeneric(
             $tokenizer,

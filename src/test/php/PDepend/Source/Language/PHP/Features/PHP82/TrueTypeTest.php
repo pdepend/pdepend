@@ -44,6 +44,7 @@ namespace PDepend\Source\Language\PHP\Features\PHP82;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTVariableDeclarator;
@@ -63,8 +64,8 @@ class TrueTypeTest extends PHPParserVersion82TestCase
         $class = $this->getFirstClassForTestCase();
         $children = $class->getChildren();
 
-        /** @var array[] $declarations */
-        $declarations = array_map(function (ASTFieldDeclaration $child) {
+        $declarations = array_map(function (ASTNode $child): array {
+            static::assertInstanceOf(ASTFieldDeclaration::class, $child);
             $childChildren = $child->getChildren();
 
             return [

@@ -331,14 +331,14 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch(): void
     {
-        $node1 = $this->getMockBuilder(ASTNode::class)
+        $node1 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
             ->will(static::returnValue(null));
 
-        $node2 = $this->getMockBuilder(ASTNode::class)
+        $node2 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node2->expects(static::never())
@@ -358,20 +358,20 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch(): void
     {
-        $node1 = $this->getMockBuilder(ASTNode::class)
+        $node1 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node1->expects(static::never())
             ->method('getFirstChildOfType');
 
-        $node2 = $this->getMockBuilder(ASTNode::class)
+        $node2 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
             ->will(static::returnValue(null));
 
-        $node3 = $this->getMockBuilder(ASTNode::class)
+        $node3 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node3->expects(static::once())
@@ -391,14 +391,14 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull(): void
     {
-        $node1 = $this->getMockBuilder(ASTNode::class)
+        $node1 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
             ->will(static::returnValue(null));
 
-        $node2 = $this->getMockBuilder(ASTNode::class)
+        $node2 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node2->expects(static::once())
@@ -418,14 +418,14 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
      */
     public function testFindChildrenOfTypeReturnsExpectedResult(): void
     {
-        $node1 = $this->getMockBuilder(ASTNode::class)
+        $node1 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node1->expects(static::once())
             ->method('findChildrenOfType')
             ->will(static::returnValue([]));
 
-        $node2 = $this->getMockBuilder(ASTNode::class)
+        $node2 = $this->getMockBuilder(AbstractASTNode::class)
             ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
             ->getMock();
         $node2->expects(static::once())

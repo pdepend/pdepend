@@ -44,6 +44,7 @@
 namespace PDepend\Source\AST;
 
 use PDepend\AbstractTestCase;
+use PDepend\Source\Tokenizer\Token;
 
 /**
  * Test case for the code file class.
@@ -127,15 +128,16 @@ class ASTCompilationUnitTest extends AbstractTestCase
             ->method('type')
             ->with(static::equalTo('tokens'))
             ->will(static::returnValue($cache));
+        $payload = [$this->getMockBuilder(Token::class)->disableOriginalConstructor()->getMock()];
         $cache->expects(static::once())
             ->method('store')
-            ->with(static::equalTo(__FUNCTION__), static::equalTo([1, 2, 3]));
+            ->with(static::equalTo(__FUNCTION__), static::equalTo($payload));
 
         $compilationUnit = new ASTCompilationUnit(null);
         $compilationUnit->setCache($cache);
         $compilationUnit->setId(__FUNCTION__);
 
-        $compilationUnit->setTokens([1, 2, 3]);
+        $compilationUnit->setTokens($payload);
     }
 
     /**
