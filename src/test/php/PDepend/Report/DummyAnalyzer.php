@@ -65,7 +65,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     /**
      * Constructs a new analyzer instance.
      *
-     * @param array<string, mixed> $options Global option array, every analyzer
+     * @param array<string, array<int, string>|string> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
     public function __construct(private array $options = [])
@@ -136,5 +136,14 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      */
     public function setOptions(array $options = []): void
     {
+        $this->options = $options;
+    }
+
+    /**
+     * @return array<string, array<int, string>|string>
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 }

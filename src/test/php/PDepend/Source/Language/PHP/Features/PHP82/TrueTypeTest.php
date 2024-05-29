@@ -73,13 +73,9 @@ class TrueTypeTest extends PHPParserVersion82TestCase
             ];
         }, $children);
 
-        foreach (
-            [
-                ['true', '$truthy'],
-            ] as $index => $expected
-        ) {
+        foreach ([['true', '$truthy']] as $index => $expected) {
             [$expectedType, $expectedVariable] = $expected;
-            $expectedTypeClass = $expected[2] ?? ASTScalarType::class;
+            $expectedTypeClass = ASTScalarType::class;
             [$type, $variable] = $declarations[$index];
 
             static::assertInstanceOf(
