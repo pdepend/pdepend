@@ -77,6 +77,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use RuntimeException;
 
 /**
  * Abstract test case implementation for the PDepend namespace.
@@ -504,6 +505,9 @@ abstract class AbstractTestCase extends TestCase
         return new Engine($configuration, $cacheFactory, $analyzerFactory);
     }
 
+    /**
+     * @throws RuntimeException
+     */
     protected function silentRun(TextUI\Runner $runner): int
     {
         $error = null;
@@ -761,6 +765,7 @@ abstract class AbstractTestCase extends TestCase
      * and node builder implementations.
      *
      * @return ASTArtifactList<ASTNamespace>
+     * @throws ErrorException
      */
     public function parseSource(string $fileOrDirectory, bool $ignoreAnnotations = false): ASTArtifactList
     {

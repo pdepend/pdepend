@@ -43,7 +43,7 @@
 
 namespace PDepend\Metrics;
 
-use Exception;
+use ErrorException;
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
@@ -78,7 +78,7 @@ abstract class AbstractMetricsTestCase extends AbstractTestCase
                 ),
                 $ignoreAnnotations
             );
-        } catch (Exception) {
+        } catch (ErrorException) {
         }
 
         return parent::parseSource(

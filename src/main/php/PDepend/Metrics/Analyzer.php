@@ -57,7 +57,7 @@ interface Analyzer
     /**
      * Constructs a new analyzer instance.
      *
-     * @param array<string, mixed> $options Global option array, every analyzer
+     * @param array<string, array<int, string>|string> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
     public function __construct(array $options = []);
