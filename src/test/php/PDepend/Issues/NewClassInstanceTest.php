@@ -43,9 +43,11 @@
 
 namespace PDepend\Issues;
 
+use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTAssignmentExpression;
 use PDepend\Source\AST\ASTLiteral;
+use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTVariable;
 
@@ -79,19 +81,22 @@ class NewClassInstanceTest extends AbstractFeatureTestCase
         static::assertCount(5, $instructions);
         $self = $this;
 
-        $expressions = array_map(function (ASTStatement $statement) use ($self) {
+        $expressions = array_map(function (ASTNode $statement): AbstractASTNode {
+            static::assertInstanceOf(ASTStatement::class, $statement);
             $children = $statement->getChildren();
 
-            $self->assertCount(1, $children);
-            $self->assertInstanceOf(ASTAssignmentExpression::class, $children[0]);
+            static::assertArrayHasKey(0, $children);
+            static::assertInstanceOf(ASTAssignmentExpression::class, $children[0]);
 
             $children = $children[0]->getChildren();
-            $self->assertCount(2, $children);
-            $self->assertInstanceOf(ASTVariable::class, $children[0]);
-            $self->assertMatchesRegularExpression('/^\$object\d+$/', $children[0]->getImage());
-            $self->assertInstanceOf(ASTAllocationExpression::class, $children[1]);
+            static::assertArrayHasKey(0, $children);
+            static::assertInstanceOf(ASTVariable::class, $children[0]);
+            static::assertMatchesRegularExpression('/^\$object\d+$/', $children[0]->getImage());
+            static::assertArrayHasKey(1, $children);
+            static::assertInstanceOf(ASTAllocationExpression::class, $children[1]);
             $children = $children[1]->getChildren();
-            $self->assertCount(1, $children);
+            static::assertArrayHasKey(0, $children);
+            static::assertInstanceOf(AbstractASTNode::class, $children[0]);
 
             return $children[0];
         }, array_slice($instructions, 1, 3));

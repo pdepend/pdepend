@@ -62,6 +62,15 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
  */
 abstract class Extension
 {
+    final private function __construct()
+    {
+    }
+
+    public static function create(): self
+    {
+        return new static();
+    }
+
     /**
      * Return name of the extension
      */

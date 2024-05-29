@@ -43,8 +43,6 @@
 
 namespace PDepend\DependencyInjection;
 
-use RuntimeException;
-
 /**
  * Manage activation and registration of extensions for PDepend.
  *
@@ -60,20 +58,10 @@ class ExtensionManager
      * Activate an extension based on a class name.
      *
      * @param class-string<Extension> $className
-     * @throws RuntimeException
      */
     public function activateExtension($className): void
     {
-        if (!class_exists($className)) {
-            throw new RuntimeException(
-                sprintf(
-                    'Cannot find extension class "%s" for PDepend. Maybe the plugin is not installed?',
-                    $className,
-                ),
-            );
-        }
-
-        $extension = new $className();
+        $extension = $className::create();
 
         $this->extensions[$extension->getName()] = $extension;
     }

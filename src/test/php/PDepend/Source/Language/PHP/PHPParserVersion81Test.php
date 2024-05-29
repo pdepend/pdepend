@@ -1123,13 +1123,12 @@ class PHPParserVersion81Test extends AbstractTestCase
 
     public function testTypedProperties(): void
     {
-        /** @var ASTClass $class */
         $class = $this->getFirstClassForTestCase();
         $children = $class->getChildren();
 
-        /** @var ASTFieldDeclaration $mixedDeclaration */
         $mixedDeclaration = array_shift($children);
 
+        static::assertInstanceOf(ASTFieldDeclaration::class, $mixedDeclaration);
         static::assertFalse($mixedDeclaration->hasType());
 
         $message = null;
@@ -1142,8 +1141,8 @@ class PHPParserVersion81Test extends AbstractTestCase
 
         static::assertSame('The parameter does not have a type specification.', $message);
 
-        /** @var array[] $declarations */
-        $declarations = array_map(function (ASTFieldDeclaration $child) {
+        $declarations = array_map(function (ASTNode $child): array {
+            static::assertInstanceOf(ASTFieldDeclaration::class, $child);
             $childChildren = $child->getChildren();
 
             return [
@@ -1470,11 +1469,10 @@ class PHPParserVersion81Test extends AbstractTestCase
         $class = $this->getFirstClassForTestCase();
         $children = $class->getChildren();
 
-        static::assertInstanceOf(ASTFieldDeclaration::class, $children[0]);
-        static::assertTrue($children[0]->hasType());
-
-        $declarations = array_map(function (ASTFieldDeclaration $child) {
+        $declarations = array_map(function (ASTNode $child) {
+            static::assertInstanceOf(ASTFieldDeclaration::class, $child);
             $childChildren = $child->getChildren();
+            static::assertTrue($child->hasType());
 
             return [
                 $child->hasType() ? $child->getType() : null,

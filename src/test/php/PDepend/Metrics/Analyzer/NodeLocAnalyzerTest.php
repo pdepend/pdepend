@@ -628,7 +628,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
     public function testAnalyzerIgnoresFilesWithoutFileName(): void
     {
         $compilationUnit = new ASTCompilationUnit(null);
-        $compilationUnit->setId(42);
+        $compilationUnit->setId('42');
 
         $analyzer = $this->createAnalyzer();
         $analyzer->visitCompilationUnit($compilationUnit);
