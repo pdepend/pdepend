@@ -62,12 +62,12 @@ class Utf8UtilTest extends AbstractTestCase
         static::assertSame('', Utf8Util::ensureEncoding(''));
         static::assertSame(
             'Été für baño',
-            Utf8Util::ensureEncoding(base64_decode('w4l0w6kgZsO8ciBiYcOxbw==', true)),
+            Utf8Util::ensureEncoding(base64_decode('w4l0w6kgZsO8ciBiYcOxbw==', true) ?: ''),
             'Éüñ UTF-8 should stay Éüñ UTF-8'
         );
         static::assertSame(
             'Été für baño',
-            Utf8Util::ensureEncoding(base64_decode('yXTpIGb8ciBiYfFv', true)),
+            Utf8Util::ensureEncoding(base64_decode('yXTpIGb8ciBiYfFv', true) ?: ''),
             'Éüñ ISO-8859-1 should become Éüñ UTF-8'
         );
     }

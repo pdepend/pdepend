@@ -96,7 +96,7 @@ class FileCacheDriverTest extends AbstractDriverTestCase
         $key = md5('bazfoo');
         $dir = substr($key, 0, 2);
 
-        static::assertCount(1, glob("{$this->cacheDir}/{$dir}/{$key}*.bar"));
+        static::assertCount(1, glob("{$this->cacheDir}/{$dir}/{$key}*.bar") ?: []);
     }
 
     /**

@@ -104,7 +104,7 @@ class ImageConvertTest extends AbstractTestCase
      */
     public function testSvgFixtureContainsExpectedNumberOfFontFamilyDefinitions(): void
     {
-        $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg');
+        $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg') ?: '';
         static::assertEquals(25, substr_count($svg, 'font-family:Arial'));
     }
 
@@ -126,7 +126,7 @@ class ImageConvertTest extends AbstractTestCase
 
         ImageConvert::convert($input, $output);
 
-        $svg = file_get_contents($output);
+        $svg = file_get_contents($output) ?: '';
         static::assertEquals(25, substr_count($svg, 'font-family:Verdana'));
     }
 
@@ -135,7 +135,7 @@ class ImageConvertTest extends AbstractTestCase
      */
     public function testSvgFixtureContainsExpectedNumberOfFontSizeDefinitions(): void
     {
-        $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg');
+        $svg = file_get_contents(__DIR__ . '/_input/pyramid.svg') ?: '';
         static::assertEquals(25, substr_count($svg, 'font-size:11px'));
     }
 
@@ -157,7 +157,7 @@ class ImageConvertTest extends AbstractTestCase
 
         ImageConvert::convert($input, $output);
 
-        $svg = file_get_contents($output);
+        $svg = file_get_contents($output) ?: '';
         static::assertEquals(25, substr_count($svg, 'font-size:14px'));
     }
 

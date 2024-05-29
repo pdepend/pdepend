@@ -143,7 +143,9 @@ abstract class AbstractTestCase extends TestCase
             $directory = $this->getTestWorkingDirectory();
         }
 
-        $this->workingDirectory = getcwd();
+        $cwd = getcwd();
+        static::assertNotFalse($cwd);
+        $this->workingDirectory = $cwd;
         chdir($directory);
     }
 
@@ -456,6 +458,7 @@ abstract class AbstractTestCase extends TestCase
                 continue;
             }
             $pathName = realpath($file->getPathname());
+            static::assertNotFalse($pathName);
             if ($file->isDir()) {
                 $this->clearRunResources($pathName);
                 rmdir($pathName);
@@ -623,7 +626,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function createRunResourceURI(?string $fileName = null): string
     {
-        return tempnam(sys_get_temp_dir(), $fileName ?: uniqid());
+        return tempnam(sys_get_temp_dir(), $fileName ?: uniqid()) ?: '';
     }
 
     /**
@@ -657,7 +660,9 @@ abstract class AbstractTestCase extends TestCase
         // Strip first two parts
         array_shift($parts);
 
-        if (!preg_match('(Version\d+Test$)', end($parts)) && preg_match('(\D(\d+Test)$)', end($parts), $match)) {
+        $part = end($parts);
+        static::assertNotFalse($part);
+        if (!preg_match('(Version\d+Test$)', $part) && preg_match('(\D(\d+Test)$)', $part, $match)) {
             array_pop($parts);
             $parts[] = $match[1];
 
@@ -683,7 +688,7 @@ abstract class AbstractTestCase extends TestCase
     {
         foreach (debug_backtrace() as $frame) {
             if (str_starts_with($frame['function'], 'test')) {
-                return "{$frame['class']}::{$frame['function']}";
+                return ($frame['class'] ?? '') . '::' . $frame['function'];
             }
         }
 
@@ -764,6 +769,7 @@ abstract class AbstractTestCase extends TestCase
         $builder = new PHPBuilder();
 
         foreach ($files as $file) {
+            static::assertNotFalse($file);
             $tokenizer = new PHPTokenizerInternal();
             $tokenizer->setSourceFile($file);
 

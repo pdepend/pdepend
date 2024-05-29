@@ -327,7 +327,7 @@ class RunnerTest extends AbstractTestCase
 
         $this->silentRun($runner);
 
-        $data = unserialize(file_get_contents($logFile));
+        $data = unserialize(file_get_contents($logFile) ?: '');
         $code = $data['code'];
 
         $actual = [];

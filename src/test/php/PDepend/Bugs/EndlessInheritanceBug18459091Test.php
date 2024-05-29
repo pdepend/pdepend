@@ -211,7 +211,7 @@ class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
         $command = new Command();
         $command->run();
 
-        $output = ob_get_clean();
+        $output = ob_get_clean() ?: '';
         static::assertStringContainsString(' is part of an endless inheritance hierarchy', $output);
     }
 }

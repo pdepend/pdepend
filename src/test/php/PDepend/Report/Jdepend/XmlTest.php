@@ -138,7 +138,7 @@ class XmlTest extends AbstractTestCase
         return preg_replace(
             '(sourceFile="[^"]+/([^/"]+)")',
             'sourceFile="' . $path . '/\\1"',
-            file_get_contents($fileName)
+            file_get_contents($fileName) ?: ''
         );
     }
 }

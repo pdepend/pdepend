@@ -315,7 +315,7 @@ class XmlTest extends AbstractTestCase
         return preg_replace(
             ['(file\s+name="[^"]+")', '(generated="[^"]*")'],
             ['file name="' . __FILE__ . '"', 'generated=""'],
-            file_get_contents($fileName)
+            file_get_contents($fileName) ?: ''
         );
     }
 }

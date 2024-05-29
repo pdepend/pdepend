@@ -575,8 +575,10 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch(): void
     {
+        /** @var class-string */
+        $class = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
         $node2 = $this->getMockBuilder(AbstractASTNode::class)
-            ->setMockClassName('PDepend_Source_AST_ASTNode_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node2->expects(static::never())
             ->method('getFirstChildOfType')
@@ -594,14 +596,18 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch(): void
     {
+        /** @var class-string */
+        $class = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
         $node1 = $this->getMockBuilder(AbstractASTNode::class)
-            ->setMockClassName('PDepend_Source_AST_ASTNode_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node1->expects(static::never())
             ->method('getFirstChildOfType');
 
+        /** @var class-string */
+        $class = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
         $node3 = $this->getMockBuilder(AbstractASTNode::class)
-            ->setMockClassName('PDepend_Source_AST_ASTNode_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node3->expects(static::once())
             ->method('getFirstChildOfType')
@@ -619,6 +625,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull(): void
     {
+        /** @var class-string */
         $name = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
 
         $node2 = $this->getMockBuilder(AbstractASTNode::class)
@@ -631,7 +638,9 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node = $this->createNodeInstance();
         $node->addChild($node2);
 
-        static::assertNull($node->getFirstChildOfType($name . '_'));
+        /** @var class-string<ASTNode> */
+        $class = $name . '_';
+        static::assertNull($node->getFirstChildOfType($class));
     }
 
     /**
@@ -639,6 +648,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testFindChildrenOfTypeReturnsExpectedResult(): void
     {
+        /** @var class-string<ASTNode> */
         $name = 'PDepend_Source_AST_ASTNode_' . md5(microtime());
 
         $node2 = $this->getMockBuilder(AbstractASTNode::class)
@@ -670,8 +680,9 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     /**
      * Creates a concrete node implementation.
      */
-    protected function createNodeInstance(): object
+    protected function createNodeInstance(): AbstractASTNode|ASTAnonymousClass
     {
+        /** @var class-string<AbstractASTNode|ASTAnonymousClass> */
         $class = substr(static::class, 0, -4);
         static::assertTrue(class_exists($class), "Class {$class} does not exist.");
 

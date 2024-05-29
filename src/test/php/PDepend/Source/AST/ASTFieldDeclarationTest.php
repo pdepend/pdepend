@@ -242,7 +242,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $declaration = $this->createNodeInstance();
-        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         static::assertEquals(
             [
                 'comment',

@@ -72,7 +72,7 @@ class CommandTest extends AbstractTestCase
 
         $data = @parse_ini_file(__DIR__ . '/../../../../../build.properties');
 
-        $this->versionOutput = sprintf('PDepend %s%s%s', $data['project.version'], PHP_EOL, PHP_EOL);
+        $this->versionOutput = sprintf('PDepend %s%s%s', $data['project.version'] ?? '', PHP_EOL, PHP_EOL);
         $this->usageOutput = 'Usage: pdepend [options] [logger] <dir[,dir[,...]]>' . PHP_EOL . PHP_EOL;
     }
 
@@ -309,7 +309,7 @@ class CommandTest extends AbstractTestCase
 
         $this->executeCommand($argv);
 
-        $data = unserialize(file_get_contents($logFile));
+        $data = unserialize(file_get_contents($logFile) ?: '');
         $code = $data['code'];
 
         $actual = [];
@@ -517,7 +517,7 @@ class CommandTest extends AbstractTestCase
     {
         ob_start();
         $exitCode = MockCommand::main();
-        $output = ob_get_contents();
+        $output = ob_get_contents() ?: '';
         ob_end_clean();
 
         static::assertSame('Critical error:' . PHP_EOL . '===============' . PHP_EOL . 'Bad usage', trim($output));
@@ -527,6 +527,7 @@ class CommandTest extends AbstractTestCase
     public function testDebugErrorDisplay(): void
     {
         $file = tempnam(sys_get_temp_dir(), 'err');
+        static::assertNotFalse($file);
         $streamProperty = new ReflectionClass(Log::class);
         $streamProperty->setStaticPropertyValue('stream', fopen($file, 'a+b'));
 
@@ -534,11 +535,11 @@ class CommandTest extends AbstractTestCase
 
         ob_start();
         $exitCode = MockCommand::main();
-        $output = ob_get_contents();
+        $output = ob_get_contents() ?: '';
         ob_end_clean();
 
         Log::setSeverity(2);
-        $error = file_get_contents($file);
+        $error = file_get_contents($file) ?: '';
         unlink($file);
         $streamProperty->setStaticPropertyValue('stream', STDERR);
 

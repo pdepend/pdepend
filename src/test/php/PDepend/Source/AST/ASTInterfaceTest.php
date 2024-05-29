@@ -67,15 +67,19 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch(): void
     {
+        /** @var class-string */
+        $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
         $node1 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
             ->will(static::returnValue(null));
 
+        /** @var class-string */
+        $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
         $node2 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node2->expects(static::never())
             ->method('getFirstChildOfType')
@@ -94,21 +98,27 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch(): void
     {
+        /** @var class-string */
+        $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
         $node1 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node1->expects(static::never())
             ->method('getFirstChildOfType');
 
+        /** @var class-string */
+        $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
         $node2 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
             ->will(static::returnValue(null));
 
+        /** @var class-string */
+        $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
         $node3 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node3->expects(static::once())
             ->method('getFirstChildOfType')
@@ -127,15 +137,19 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull(): void
     {
+        /** @var class-string */
+        $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
         $node1 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
             ->will(static::returnValue(null));
 
+        /** @var class-string */
+        $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
         $node2 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Mock_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
@@ -145,9 +159,9 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface->addChild($node1);
         $interface->addChild($node2);
 
-        $child = $interface->getFirstChildOfType(
-            'Mock_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        /** @var class-string<ASTNode> */
+        $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
+        $child = $interface->getFirstChildOfType($class);
         static::assertNull($child);
     }
 

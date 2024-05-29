@@ -221,6 +221,6 @@ class ResultPrinterTest extends AbstractTestCase
         $output = ob_get_contents();
         ob_end_clean();
 
-        static::assertSame($expected, trim($output));
+        static::assertSame($expected, trim($output ?: ''));
     }
 }

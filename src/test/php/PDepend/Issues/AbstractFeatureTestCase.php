@@ -109,7 +109,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
         $trace = debug_backtrace();
         foreach ($trace as $frame) {
             if (str_starts_with($frame['function'], 'test')) {
-                return $frame['class'] . '::' . $frame['function'];
+                return ($frame['class'] ?? '') . '::' . $frame['function'];
             }
         }
 
