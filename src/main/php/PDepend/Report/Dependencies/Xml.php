@@ -242,6 +242,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
 
     /**
      * Visits a namespace node.
+     *
+     * @throws RuntimeException
      */
     public function visitNamespace(ASTNamespace $namespace): void
     {

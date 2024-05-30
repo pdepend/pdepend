@@ -101,7 +101,9 @@ class ApplicationTest extends AbstractTestCase
     public function testSetConfigurationFileAndThrowInvalidArgumentException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessageMatches('(^The configuration file ".*fileThatDoesNotExists\\.txt" doesn\\\'t exist\\.$)');
+        $this->expectExceptionMessageMatches(
+            '(^The configuration file ".*fileThatDoesNotExists\\.txt" doesn\\\'t exist\\.$)'
+        );
 
         $filename = __DIR__ . '/fileThatDoesNotExists.txt';
 

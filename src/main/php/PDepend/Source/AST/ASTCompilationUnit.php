@@ -278,6 +278,8 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
 
     /**
      * Reads the source file if required.
+     *
+     * @throws RuntimeException
      */
     protected function readSource(): void
     {

@@ -866,7 +866,12 @@ class PHPTokenizerInternal implements FullTokenizer
                 foreach ($this->splitQualifiedNameToken($token) as $subToken) {
                     $result[] = $subToken;
                 }
-            } elseif (is_array($token) && $temp === T_NAME_RELATIVE && preg_match('/^namespace\\\\(.*)$/', $token[1], $match) && $match) {
+            } elseif (
+                is_array($token)
+                && $temp === T_NAME_RELATIVE
+                && preg_match('/^namespace\\\\(.*)$/', $token[1], $match)
+                && $match
+            ) {
                 foreach ($this->splitRelativeNameToken($token, $match[1]) as $subToken) {
                     $result[] = $subToken;
                 }

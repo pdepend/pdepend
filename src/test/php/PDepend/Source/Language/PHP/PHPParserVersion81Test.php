@@ -948,7 +948,11 @@ class PHPParserVersion81Test extends AbstractTestCase
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
-        static::assertFalse($type->isScalar(), 'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php');
+        static::assertNotNull($type);
+        static::assertFalse(
+            $type->isScalar(),
+            'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php'
+        );
         static::assertFalse($type->isArray());
         static::assertSame('object', $type->getImage());
     }
@@ -957,7 +961,10 @@ class PHPParserVersion81Test extends AbstractTestCase
     {
         $type = $this->getFirstFormalParameterForTestCase()->getType();
 
-        static::assertFalse($type->isScalar(), 'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php');
+        static::assertFalse(
+            $type->isScalar(),
+            'object should not be scalar according to https://www.php.net/manual/en/function.is-scalar.php'
+        );
         static::assertFalse($type->isArray());
         static::assertSame('object', $type->getImage());
     }

@@ -55,7 +55,8 @@ use InvalidArgumentException;
 class ASTEnum extends AbstractASTClassOrInterface
 {
     /**
-     * @param ?ASTScalarType $type ASTScalarType if backed enumeration: https://www.php.net/manual/en/language.enumerations.backed.php
+     * @param ?ASTScalarType $type ASTScalarType if backed enumeration:
+     *                             https://www.php.net/manual/en/language.enumerations.backed.php
      *   - either: ASTScalarType('string')
      *   - or:     ASTScalarType('int')
      * null if basic enumeration: https://www.php.net/manual/en/language.enumerations.basics.php

@@ -129,6 +129,8 @@ abstract class Extension
 
     /**
      * Returns service definition configs path.
+     *
+     * @throws RuntimeException
      */
     protected function getServiceDefinitionsPath(): string
     {

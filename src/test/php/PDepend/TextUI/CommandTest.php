@@ -407,7 +407,8 @@ class CommandTest extends AbstractTestCase
              <symfony:container xmlns:symfony="http://symfony.com/schema/dic/services"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns="http://pdepend.org/schema/dic/pdepend"
-                 xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+                 xsi:schemaLocation="http://symfony.com/schema/dic/services
+                 http://symfony.com/schema/dic/services/services-1.0.xsd">
                <config>
                    <cache>
                      <driver>memory</driver>
@@ -564,15 +565,42 @@ class CommandTest extends AbstractTestCase
         $startsWith = '/^' . preg_quote($startsWith) . '/';
         static::assertMatchesRegularExpression($startsWith, $actual);
 
-        static::assertMatchesRegularExpression('(  --configuration=<file>[ ]+Optional\s+PDepend\s+configuration\s+file\.)', $actual);
-        static::assertMatchesRegularExpression('(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)', $actual);
-        static::assertMatchesRegularExpression('(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)', $actual);
-        static::assertMatchesRegularExpression('(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+namespaces\.)', $actual);
-        static::assertMatchesRegularExpression('(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)', $actual);
-        static::assertMatchesRegularExpression('(  --help[ ]+Print\s+this\s+help\s+text\.)', $actual);
-        static::assertMatchesRegularExpression('(  --version[ ]+Print\s+the\s+current\s+version\.)', $actual);
-        static::assertMatchesRegularExpression('(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)', $actual);
-        static::assertMatchesRegularExpression('(  --quiet[ ]+Prints\s+errors\s+only\.)', $actual);
+        static::assertMatchesRegularExpression(
+            '(  --configuration=<file>[ ]+Optional\s+PDepend\s+configuration\s+file\.)',
+            $actual
+        );
+        static::assertMatchesRegularExpression(
+            '(  --suffix=<ext\[,\.{3}\]>[ ]+List\s+of\s+valid\s+PHP\s+file\s+extensions\.)',
+            $actual
+        );
+        static::assertMatchesRegularExpression(
+            '(  --ignore=<dir\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+directories\.)',
+            $actual
+        );
+        static::assertMatchesRegularExpression(
+            '(  --exclude=<pkg\[,\.{3}\]>[ ]+List\s+of\s+exclude\s+namespaces\.)',
+            $actual
+        );
+        static::assertMatchesRegularExpression(
+            '(  --without-annotations[ ]+Do\s+not\s+parse\s+doc\s+comment\s+annotations\.)',
+            $actual
+        );
+        static::assertMatchesRegularExpression(
+            '(  --help[ ]+Print\s+this\s+help\s+text\.)',
+            $actual
+        );
+        static::assertMatchesRegularExpression(
+            '(  --version[ ]+Print\s+the\s+current\s+version\.)',
+            $actual
+        );
+        static::assertMatchesRegularExpression(
+            '(  -d key\[=value\][ ]+Sets\s+a\s+php.ini\s+value\.)',
+            $actual
+        );
+        static::assertMatchesRegularExpression(
+            '(  --quiet[ ]+Prints\s+errors\s+only\.)',
+            $actual
+        );
     }
 
     /**

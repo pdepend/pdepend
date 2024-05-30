@@ -430,7 +430,10 @@ abstract class AbstractPHPParser
         $allowed = State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE;
         $modifiers &= $allowed;
 
-        if ($this->classOrInterface instanceof ASTInterface && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0) {
+        if (
+            $this->classOrInterface instanceof ASTInterface
+            && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0
+        ) {
             throw new InvalidStateException(
                 $this->requireNextToken()->startLine,
                 (string) $this->compilationUnit,
@@ -613,8 +616,9 @@ abstract class AbstractPHPParser
             return false;
         }
 
-        for ($i = 0; $type = $this->tokenizer->peekAt($i); $i++) {
-            switch ($type) {
+        $i = 0;
+        while (true) {
+            switch ($this->tokenizer->peekAt($i++)) {
                 case Tokens::T_COMMENT:
                 case Tokens::T_DOC_COMMENT:
                 case Tokens::T_ARRAY:
@@ -644,8 +648,6 @@ abstract class AbstractPHPParser
                     return false;
             }
         }
-
-        return false;
     }
 
     /**
@@ -1150,6 +1152,9 @@ abstract class AbstractPHPParser
     /**
      * This method parses an optional class modifier. Valid class modifiers are
      * <b>final</b> or <b>abstract</b>.
+     *
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      */
     private function parseClassModifiers(): void
     {
@@ -1377,6 +1382,8 @@ abstract class AbstractPHPParser
      * This method will parse a list of modifiers and a following property or
      * method.
      *
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      * @since 0.9.6
      */
     private function parseMethodOrFieldDeclaration(int $modifiers = 0): ASTNode
@@ -1742,8 +1749,9 @@ abstract class AbstractPHPParser
      * @param T $callable
      * @return T
      */
-    private function parseCallableDeclarationAddition(AbstractASTCallable|ASTClosure $callable): AbstractASTCallable|ASTClosure
-    {
+    private function parseCallableDeclarationAddition(
+        AbstractASTCallable|ASTClosure $callable
+    ): AbstractASTCallable|ASTClosure {
         $this->consumeComments();
         if (Tokens::T_COLON !== $this->tokenizer->peek()) {
             return $callable;
@@ -2020,8 +2028,9 @@ abstract class AbstractPHPParser
      * @throws ParserException
      * @since 2.3
      */
-    private function parseAllocationExpressionTypeReference(ASTAllocationExpression $allocation): ASTAllocationExpression
-    {
+    private function parseAllocationExpressionTypeReference(
+        ASTAllocationExpression $allocation
+    ): ASTAllocationExpression {
         return $this->parseAnonymousClassDeclaration($allocation)
             ?: $this->parseExpressionTypeReference($allocation, true);
     }
@@ -2030,6 +2039,8 @@ abstract class AbstractPHPParser
      * Parse the instanciation for new keyword without arguments.
      *
      * @throws ParserException
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      */
     private function parseAllocationExpressionValue(): ASTAllocationExpression
     {
@@ -2113,6 +2124,9 @@ abstract class AbstractPHPParser
 
     /**
      * Throws an exception if the given token is not a valid list unpacking opening token for current PHP level.
+     *
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      */
     private function ensureTokenIsListUnpackingOpening(int $tokenType, ?Token $unexpectedToken = null): void
     {
@@ -2577,7 +2591,10 @@ abstract class AbstractPHPParser
      */
     protected function setNodePositionsAndReturn(ASTNode $node, array &$tokens = []): ASTNode
     {
-        $tokens = $this->stripTrailingComments($this->tokenStack->pop());
+        $tokens = $this->tokenStack->pop();
+        if (count($tokens) > 1) {
+            $tokens = $this->stripTrailingComments($tokens);
+        }
 
         $end = $tokens[count($tokens) - 1];
         $start = $tokens[0];
@@ -2604,8 +2621,11 @@ abstract class AbstractPHPParser
     {
         $comments = [Tokens::T_COMMENT, Tokens::T_DOC_COMMENT];
 
-        while (count($tokens) > 1 && in_array(end($tokens)->type, $comments, true)) {
+        while ($tokens && in_array(end($tokens)->type, $comments, true)) {
             array_pop($tokens);
+            if (count($tokens) === 1) {
+                break;
+            }
         }
 
         return $tokens;
@@ -2695,6 +2715,10 @@ abstract class AbstractPHPParser
         return $expr;
     }
 
+    /**
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
+     */
     private function parseStandAloneExpressionTypeReference(int $tokenType): ASTClassOrInterfaceReference
     {
         return match ($tokenType) {
@@ -3188,6 +3212,7 @@ abstract class AbstractPHPParser
      * was found this method will throw an InvalidStateException.
      *
      * @throws ParserException
+     * @throws InvalidStateException
      * @since 1.0.1
      */
     private function parseExpression(): ASTNode
@@ -3579,6 +3604,7 @@ abstract class AbstractPHPParser
      * expressions.
      *
      * @return ?ASTNode
+     * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
      * @since 2.2
      */
@@ -3668,6 +3694,8 @@ abstract class AbstractPHPParser
      * @param T $switch The parent switch stmt.
      * @return T
      * @throws ParserException
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      * @since 0.9.8
      */
     private function parseSwitchStatementBody(ASTSwitchStatement $switch): ASTSwitchStatement
@@ -3777,6 +3805,7 @@ abstract class AbstractPHPParser
      * @param T $label The context switch label.
      * @return T
      * @throws ParserException
+     * @throws TokenStreamEndException
      */
     private function parseSwitchLabelBody(ASTSwitchLabel $label): ASTSwitchLabel
     {
@@ -3855,6 +3884,8 @@ abstract class AbstractPHPParser
      * This method parses a try-statement + associated catch-statements.
      *
      * @throws ParserException
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      * @since 0.9.12
      */
     private function parseTryStatement(): ASTTryStatement
@@ -5164,6 +5195,8 @@ abstract class AbstractPHPParser
      * variables, object/static method. All these expressions are valid in
      * several php language constructs like, isset, empty, unset etc.
      *
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      * @since 0.9.12
      */
     private function parseVariableOrConstantOrPrimaryPrefix(): ASTNode
@@ -5895,6 +5928,8 @@ abstract class AbstractPHPParser
      * @template T of ASTArray
      * @param T $array
      * @return T
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      * @since 1.0.0
      */
     private function parseArray(ASTArray $array, bool $static = false): ASTArray
@@ -5973,6 +6008,7 @@ abstract class AbstractPHPParser
      * Check if the given array/list is a value and so does not have consecutive commas in it,
      * or if it's a destructuring list and so check the syntax is valid in the current PHP level.
      *
+     * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
      */
     private function ensureArrayIsValid(bool $useSquaredBrackets, ?Token $openingToken, ?Token $consecutiveComma): void
@@ -5992,6 +6028,8 @@ abstract class AbstractPHPParser
     /**
      * Parses a single match key.
      *
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      * @since 2.9.0
      */
     private function parseMatchEntryKey(): ASTNode
@@ -6069,6 +6107,8 @@ abstract class AbstractPHPParser
      * An array element can have a simple value, a key/value pair, a value by
      * reference or a key/value pair with a referenced value.
      *
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      * @since 1.0.0
      */
     private function parseArrayElement(bool $static = false): ASTArrayElement
@@ -6842,7 +6882,10 @@ abstract class AbstractPHPParser
         $token = $this->tokenizer->currentToken();
         $types = [$firstType];
 
-        while ($this->tokenizer->peekNext() !== Tokens::T_VARIABLE && $this->addTokenToStackIfType(Tokens::T_BITWISE_AND)) {
+        while (
+            $this->tokenizer->peekNext() !== Tokens::T_VARIABLE
+            && $this->addTokenToStackIfType(Tokens::T_BITWISE_AND)
+        ) {
             $types[] = $this->parseSingleTypeHint();
         }
 
@@ -7366,6 +7409,8 @@ abstract class AbstractPHPParser
 
     /**
      * @param array<string> $previousElements
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      */
     private function parseQualifiedNameElement(array $previousElements): ?string
     {
@@ -7586,6 +7631,8 @@ abstract class AbstractPHPParser
     /**
      * Constant cannot be typed before PHP 8.3.
      *
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      * @since  1.16.0
      */
     protected function parseTypedConstantDeclarator(): ASTConstantDeclarator
@@ -7624,6 +7671,8 @@ abstract class AbstractPHPParser
      * }
      * </code>
      *
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      * @since 0.9.6
      */
     private function parseConstantDeclarator(): ASTConstantDeclarator
@@ -7899,6 +7948,7 @@ abstract class AbstractPHPParser
      * parameter, property or constant declaration.
      *
      * @return ?ASTValue
+     * @throws MissingValueException
      * @since 0.9.5
      */
     private function parseStaticValue(): ?ASTValue
@@ -8060,6 +8110,7 @@ abstract class AbstractPHPParser
      * @template T of ASTValue
      * @param T $value
      * @return T|null
+     * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
      */
     private function parseStaticValueVersionSpecific(ASTValue $value): ?ASTValue
@@ -8705,6 +8756,10 @@ abstract class AbstractPHPParser
         return new TokenStreamEndException($this->tokenizer);
     }
 
+    /**
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
+     */
     protected function checkEllipsisInExpressionSupport(): void
     {
         throw $this->getUnexpectedNextTokenException();
@@ -8716,6 +8771,7 @@ abstract class AbstractPHPParser
      *  $value = $nullableValue ?? throw new InvalidArgumentException();
      *  $value = $falsableValue ?: throw new InvalidArgumentException();
      *
+     * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
      */
     private function parseThrowExpression(): ASTThrowStatement
@@ -8755,6 +8811,10 @@ abstract class AbstractPHPParser
     /**
      * Parses enum declaration signature. available since PHP 8.1. Ex.:
      *  enum Suit: string
+     *
+     * @throws TokenException
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
      */
     private function parseEnumSignature(): ASTEnum
     {
@@ -8825,6 +8885,8 @@ abstract class AbstractPHPParser
 
     /**
      * Return the next token if it exists, else throw a TokenStreamEndException.
+     *
+     * @throws TokenStreamEndException
      */
     private function requireNextToken(): Token
     {
@@ -8839,6 +8901,7 @@ abstract class AbstractPHPParser
 
     /**
      * @param string $numberRepresentation integer number as it appears in the code, `0xfe4`, `1_000_000`
+     * @throws InvalidArgumentException
      */
     private function parseIntegerNumberImage(string $numberRepresentation): int
     {
@@ -8873,6 +8936,10 @@ abstract class AbstractPHPParser
         }
     }
 
+    /**
+     * @throws TokenStreamEndException
+     * @throws UnexpectedTokenException
+     */
     private function parseEnumCase(): ASTEnumCase
     {
         $this->tokenStack->add($this->requireNextToken());

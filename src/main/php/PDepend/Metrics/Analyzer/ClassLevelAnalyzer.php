@@ -111,6 +111,8 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
 
     /**
      * Processes all {@link ASTNamespace} code nodes.
+     *
+     * @throws RuntimeException
      */
     public function analyze($namespaces): void
     {
@@ -151,6 +153,7 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * Adds a required sub analyzer.
      *
      * @param Analyzer $analyzer The sub analyzer instance.
+     * @throws InvalidArgumentException
      */
     public function addAnalyzer(Analyzer $analyzer): void
     {
