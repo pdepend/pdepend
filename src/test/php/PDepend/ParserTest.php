@@ -1156,8 +1156,9 @@ class ParserTest extends AbstractTestCase
         $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
 
         static::assertTrue($parameters[0]->isDefaultValueAvailable());
-        static::assertInstanceOf(ASTParentReference::class, $parameters[0]->getDefaultValue());
-        static::assertSame('parent', $parameters[0]->getDefaultValue()->getImage());
+        $value = $parameters[0]->getDefaultValue();
+        static::assertInstanceOf(ASTParentReference::class, $value);
+        static::assertSame('parent', $value->getImage());
     }
 
     /**

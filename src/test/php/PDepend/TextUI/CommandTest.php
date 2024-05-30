@@ -45,9 +45,12 @@ namespace PDepend\TextUI;
 
 use PDepend\AbstractTestCase;
 use PDepend\MockCommand;
+use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTNamespace;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 use ReflectionClass;
+use stdClass;
 
 /**
  * Test case for the text ui command.
@@ -118,6 +121,7 @@ class CommandTest extends AbstractTestCase
     public function testPrintHelp(): void
     {
         [, $actual] = $this->executeCommand(['--help']);
+        static::assertIsString($actual);
         $this->assertHelpOutput($actual);
     }
 
@@ -146,6 +150,7 @@ class CommandTest extends AbstractTestCase
     {
         [, $actual] = $this->executeCommand();
         $startsWith = 'Unknown error, no $argv array available.' . PHP_EOL . PHP_EOL;
+        static::assertIsString($actual);
         $this->assertHelpOutput($actual, $startsWith);
     }
 
@@ -155,6 +160,7 @@ class CommandTest extends AbstractTestCase
     public function testCommandDisplaysHelpIfNoOptionsWereSpecified(): void
     {
         [, $actual] = $this->executeCommand([]);
+        static::assertIsString($actual);
         $this->assertHelpOutput($actual);
     }
 
@@ -310,10 +316,13 @@ class CommandTest extends AbstractTestCase
         $this->executeCommand($argv);
 
         $data = unserialize(file_get_contents($logFile) ?: '');
+        static::assertIsArray($data);
         $code = $data['code'];
+        static::assertInstanceOf(ASTArtifactList::class, $code);
 
         $actual = [];
         foreach ($code as $namespace) {
+            static::assertInstanceOf(ASTNamespace::class, $namespace);
             $statistics = [
                 'functions' => [],
                 'classes' => [],
@@ -433,6 +442,7 @@ class CommandTest extends AbstractTestCase
 
         $config = ConfigurationInstance::get();
         static::assertNotNull($config);
+        static::assertInstanceOf(stdClass::class, $config->cache);
         static::assertEquals('memory', $config->cache->driver);
     }
 
@@ -442,6 +452,7 @@ class CommandTest extends AbstractTestCase
     public function testTextUiCommandOutputContainsExpectedCoverageReportOption(): void
     {
         [, $actual] = $this->executeCommand([]);
+        static::assertIsString($actual);
         static::assertStringContainsString('--coverage-report=<file>', $actual);
     }
 
@@ -492,6 +503,7 @@ class CommandTest extends AbstractTestCase
         [$exitCode, $actual] = $this->executeCommand($argv);
 
         static::assertSame(Command::CLI_ERROR, $exitCode);
+        static::assertIsString($actual);
         static::assertStringContainsString(
             sprintf('The configuration file "%s" doesn\'t exist.', $configFile),
             $actual
@@ -511,6 +523,7 @@ class CommandTest extends AbstractTestCase
         [$exitCode, $actual] = $this->executeCommand($argv);
 
         static::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
+        static::assertIsString($actual);
         static::assertEmpty('', $actual);
     }
 

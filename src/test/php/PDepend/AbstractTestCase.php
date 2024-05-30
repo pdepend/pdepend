@@ -386,7 +386,7 @@ abstract class AbstractTestCase extends TestCase
      * Collects all children from a given node.
      *
      * @param ASTNode $node The current root node.
-     * @param array<mixed> $actual Previous filled list.
+     * @param array<string> $actual Previous filled list.
      * @return array<string>
      */
     protected static function collectChildNodes(ASTNode $node, array $actual = []): array

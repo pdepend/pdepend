@@ -201,8 +201,10 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
         static::assertCount(1, $parameters);
 
         static::assertInstanceOf(ASTParameter::class, $parameters[0]);
+        $value = $parameters[0]->getDefaultValue();
+        static::assertInstanceOf(ASTNode::class, $value);
 
-        static::assertSame('testClassFqnPostfixAsParameterInitializer', $parameters[0]->getDefaultValue()->getImage());
+        static::assertSame('testClassFqnPostfixAsParameterInitializer', $value->getImage());
     }
 
     /**
@@ -217,8 +219,10 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
         static::assertCount(1, $parameters);
 
         static::assertInstanceOf(ASTParameter::class, $parameters[0]);
+        $value = $parameters[0]->getDefaultValue();
+        static::assertInstanceOf(ASTNode::class, $value);
 
-        static::assertSame('self', $parameters[0]->getDefaultValue()->getImage());
+        static::assertSame('self', $value->getImage());
     }
 
     /**

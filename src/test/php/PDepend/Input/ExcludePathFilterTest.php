@@ -46,6 +46,7 @@ namespace PDepend\Input;
 use PDepend\AbstractTestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 
 /**
  * Test case for the exclude path filter.
@@ -207,7 +208,8 @@ class ExcludePathFilterTest extends AbstractTestCase
         $actual = [];
         foreach ($files as $file) {
             if (
-                $filter->accept($file, $file)
+                $file instanceof SplFileInfo
+                && $filter->accept($file, $file)
                 && $file->isFile()
                 && false === stripos($file->getPathname(), '.svn')
             ) {

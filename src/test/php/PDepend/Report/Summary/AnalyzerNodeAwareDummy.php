@@ -58,14 +58,14 @@ class AnalyzerNodeAwareDummy implements AnalyzerNodeAware
     /**
      * Dummy node metrics.
      *
-     * @var array<string, array<mixed>>
+     * @var array<string, array<string, int>>
      */
     protected array $nodeMetrics;
 
     /**
      * Constructs a new analyzer dummy instance.
      *
-     * @param array<string, array<mixed>> $nodeMetrics Dummy node metrics.
+     * @param array<string, array<string, int>> $nodeMetrics Dummy node metrics.
      */
     public function __construct(array $nodeMetrics = [])
     {

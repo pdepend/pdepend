@@ -309,7 +309,9 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueConstant(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        static::assertSame('E_MY_ERROR', $parameters[0]->getDefaultValue()->getImage());
+        $value = $parameters[0]->getDefaultValue();
+        static::assertInstanceOf(ASTNode::class, $value);
+        static::assertSame('E_MY_ERROR', $value->getImage());
     }
 
     /**
@@ -328,11 +330,14 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserHandlesParameterDefaultValueClassConstant(): void
     {
         $parameters = $this->getParametersOfFirstFunction();
-        static::assertTrue($parameters[0]->isDefaultValueAvailable());
-        static::assertSame('\\PDepend\\Code', $parameters[0]->getDefaultValue()->getImage());
+        $value = $parameters[0]->getDefaultValue();
+        static::assertInstanceOf(ASTNode::class, $value);
+        static::assertSame('\\PDepend\\Code', $value->getImage());
 
-        /** @var ASTNode $node */
-        $node = $parameters[0]->getDefaultValue()->getChild(0);
+        $value = $parameters[0]->getDefaultValue();
+        static::assertInstanceOf(ASTNode::class, $value);
+        $node = $value->getChild(0);
+        static::assertInstanceOf(ASTNode::class, $node);
         $image = implode(
             $node->getImage(),
             array_map(static fn(ASTNode $node) => $node->getImage(), $node->getChildren()),

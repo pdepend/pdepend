@@ -50,7 +50,9 @@ use PDepend\Input\ExcludePathFilter;
 use PDepend\Input\ExtensionFilter;
 use PDepend\Input\Filter;
 use PDepend\Report\ReportGeneratorFactory;
+use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
+use PDepend\Source\AST\ASTNamespace;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -328,10 +330,13 @@ class RunnerTest extends AbstractTestCase
         $this->silentRun($runner);
 
         $data = unserialize(file_get_contents($logFile) ?: '');
+        static::assertIsArray($data);
         $code = $data['code'];
+        static::assertInstanceOf(ASTArtifactList::class, $code);
 
         $actual = [];
         foreach ($code as $namespace) {
+            static::assertInstanceOf(ASTNamespace::class, $namespace);
             $statistics = [
                 'functions' => [],
                 'classes' => [],

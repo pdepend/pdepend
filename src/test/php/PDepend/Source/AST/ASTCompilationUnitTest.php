@@ -223,6 +223,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
     {
         $file = new ASTCompilationUnit(null);
         $file = unserialize(serialize($file));
+        static::assertInstanceOf(ASTCompilationUnit::class, $file);
 
         static::assertTrue($file->isCached());
     }

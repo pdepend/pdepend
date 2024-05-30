@@ -95,6 +95,7 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
 
         $reference = new ASTStaticReference($context, $target);
         $reference = unserialize(serialize($reference));
+        static::assertInstanceOf(ASTStaticReference::class, $reference);
         $reference->getType();
     }
 

@@ -541,6 +541,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $node->addChild($this->getNodeMock());
 
         $copy = unserialize(serialize($node));
+        static::assertInstanceOf(ASTNode::class, $copy);
 
         static::assertSame($copy, $copy->getChild(1)->getParent());
     }

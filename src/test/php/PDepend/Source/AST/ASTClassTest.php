@@ -688,6 +688,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame($copy, $copy->getMethods()->current()->getParent());
     }
@@ -699,6 +700,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame(
             $copy->getCompilationUnit(),
@@ -713,6 +715,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame(
             $orig->getParentClass(),
@@ -727,6 +730,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame(
             $orig->getInterfaces()->current(),
@@ -743,6 +747,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $method = $orig->getMethods()->current();
 
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame(
             $method->getReturnClass(),
@@ -757,6 +762,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame(
             $orig->getNamespace(),
@@ -771,6 +777,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame($copy, $orig->getNamespace()?->getClasses()->current());
     }
@@ -782,6 +789,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
         $namespace = $orig->getNamespace();
 
         static::assertNotNull($namespace);

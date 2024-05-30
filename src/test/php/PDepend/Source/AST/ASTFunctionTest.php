@@ -467,6 +467,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTFunction::class, $copy);
 
         static::assertSame(
             $orig->getDependencies()->current(),
@@ -481,6 +482,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTFunction::class, $copy);
 
         static::assertSame(
             $orig->getReturnClass(),
@@ -495,6 +497,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTFunction::class, $copy);
 
         static::assertSame(
             $orig->getDependencies()->current(),
@@ -509,6 +512,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTFunction::class, $copy);
 
         static::assertSame(
             $orig->getExceptionClasses()->current(),
@@ -523,6 +527,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTFunction::class, $copy);
 
         static::assertSame(
             $orig->getDependencies()->current(),
@@ -537,6 +542,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTFunction::class, $copy);
 
         static::assertSame($orig->getNamespace(), $copy->getNamespace());
     }
@@ -548,10 +554,11 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTFunction::class, $copy);
 
         static::assertEquals(
             'Baz',
-            $copy->getNamespace()->getClasses()->current()->getImage()
+            $copy->getNamespace()?->getClasses()->current()->getImage()
         );
     }
 
@@ -562,8 +569,9 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTFunction::class, $copy);
 
-        static::assertCount(1, $copy->getNamespace()->getFunctions());
+        static::assertCount(1, $copy->getNamespace()?->getFunctions() ?? []);
     }
 
     /**
@@ -573,6 +581,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTFunction::class, $copy);
 
         static::assertSame($copy, $orig->getNamespace()?->getFunctions()->current());
     }

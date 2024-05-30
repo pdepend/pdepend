@@ -639,6 +639,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTMethod::class, $copy);
 
         static::assertSame(
             $orig->getDependencies()->current(),
@@ -653,6 +654,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTMethod::class, $copy);
 
         static::assertSame(
             $orig->getReturnClass(),
@@ -667,6 +669,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTMethod::class, $copy);
 
         static::assertSame(
             $orig->getDependencies()->current(),
@@ -681,6 +684,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTMethod::class, $copy);
 
         static::assertSame(
             $orig->getExceptionClasses()->current(),
@@ -695,6 +699,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstMethodInClass();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTMethod::class, $copy);
 
         static::assertSame(
             $orig->getDependencies()->current(),

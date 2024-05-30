@@ -434,7 +434,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     }
 
     /**
-     * @param array<mixed> $options
+     * @param array<string, array<int, string>|string> $options
      * @return array<mixed>
      */
     protected function getCodeRankForTestCase(array $options = [])
@@ -443,7 +443,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     }
 
     /**
-     * @param array<mixed> $options
+     * @param array<string, array<int, string>|string> $options
      * @return array<mixed>
      */
     protected function getReverseCodeRankForTestCase(array $options = [])
@@ -452,7 +452,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     }
 
     /**
-     * @param array<mixed> $options
+     * @param array<string, array<int, string>|string> $options
      * @return array<mixed>
      */
     protected function getCodeRankOrReverseCodeRank(string $metricName, array $options = [])

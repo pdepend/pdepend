@@ -56,10 +56,10 @@ use PDepend\Source\AST\ASTArtifact;
  */
 class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
 {
-    /** @var array<mixed> Test project metrics */
+    /** @var array<string, int> Test project metrics */
     public array $projectMetrics = [];
 
-    /** @var array<mixed> Test node metrics. */
+    /** @var array<string, array<string, int>> Test node metrics. */
     public array $nodeMetrics = [];
 
     /**

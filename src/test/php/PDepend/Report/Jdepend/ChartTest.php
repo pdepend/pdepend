@@ -324,6 +324,7 @@ class ChartTest extends AbstractTestCase
     {
         $packages = [];
         foreach (func_get_args() as $i => $userDefined) {
+            static::assertIsBool($userDefined);
             $packages[] = $this->createPackage(
                 $userDefined,
                 'package' . $i
