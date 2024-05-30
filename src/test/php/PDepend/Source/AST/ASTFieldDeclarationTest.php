@@ -81,7 +81,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
         $declaration = $class->getFirstChildOfType(
             ASTFieldDeclaration::class
         );
-        $reference = $declaration->getFirstChildOfType(
+        $reference = $declaration?->getFirstChildOfType(
             ASTClassOrInterfaceReference::class
         );
         static::assertNull($reference);
@@ -97,8 +97,9 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
             ASTClassOrInterfaceReference::class
         );
 
-        $type = $reference->getType();
+        $type = $reference?->getType();
 
+        static::assertNotNull($type);
         static::assertEquals('Sindelfingen', $type->getImage());
 
         return $type;

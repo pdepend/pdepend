@@ -98,7 +98,7 @@ class ASTCatchStatementTest extends ASTNodeTestCase
     {
         $variable = $this->getFirstCatchStatementInFunction()
             ->getFirstChildOfType(ASTVariable::class);
-        static::assertEquals(8, $variable->getStartLine());
+        static::assertEquals(8, $variable?->getStartLine());
     }
 
     /**
@@ -108,7 +108,7 @@ class ASTCatchStatementTest extends ASTNodeTestCase
     {
         $variable = $this->getFirstCatchStatementInFunction()
             ->getFirstChildOfType(ASTVariable::class);
-        static::assertEquals(9, $variable->getStartColumn());
+        static::assertEquals(9, $variable?->getStartColumn());
     }
 
     /**
@@ -118,7 +118,7 @@ class ASTCatchStatementTest extends ASTNodeTestCase
     {
         $variable = $this->getFirstCatchStatementInFunction()
             ->getFirstChildOfType(ASTVariable::class);
-        static::assertEquals(8, $variable->getStartLine());
+        static::assertEquals(8, $variable?->getStartLine());
     }
 
     /**
@@ -128,7 +128,7 @@ class ASTCatchStatementTest extends ASTNodeTestCase
     {
         $variable = $this->getFirstCatchStatementInFunction()
             ->getFirstChildOfType(ASTVariable::class);
-        static::assertEquals(10, $variable->getEndColumn());
+        static::assertEquals(10, $variable?->getEndColumn());
     }
 
     /**

@@ -63,9 +63,9 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     {
         $namespace = $this->getFirstClassForTestCase()
             ->getParentClass()
-            ->getNamespace();
+            ?->getNamespace();
 
-        static::assertEquals('foo', $namespace->getImage());
+        static::assertEquals('foo', $namespace?->getImage());
     }
 
     /**
@@ -79,12 +79,12 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->current();
 
         $parentClass = $class->getParentClass();
-        static::assertEquals('FooBar', $parentClass->getImage());
-        static::assertEquals('foo', $parentClass->getNamespace()->getImage());
+        static::assertEquals('FooBar', $parentClass?->getImage());
+        static::assertEquals('foo', $parentClass?->getNamespace()?->getImage());
 
         $interface = $class->getInterfaces()->current();
         static::assertEquals('Bar', $interface->getImage());
-        static::assertEquals('foo', $interface->getNamespace()->getImage());
+        static::assertEquals('foo', $interface->getNamespace()?->getImage());
     }
 
     /**
@@ -99,8 +99,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->current();
 
         $parentClass = $class->getParentClass();
-        static::assertEquals('Bar', $parentClass->getImage());
-        static::assertEquals('foo\bar', $parentClass->getNamespace()->getImage());
+        static::assertEquals('Bar', $parentClass?->getImage());
+        static::assertEquals('foo\bar', $parentClass?->getNamespace()?->getImage());
     }
 
     /**
@@ -202,7 +202,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->getClasses()
             ->current();
 
-        static::assertEquals('bar', $class->getNamespace()->getImage());
+        static::assertEquals('bar', $class->getNamespace()?->getImage());
     }
 
     /**
@@ -217,7 +217,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->getClasses()
             ->current();
 
-        static::assertEquals('bar', $class->getNamespace()->getImage());
+        static::assertEquals('bar', $class->getNamespace()?->getImage());
     }
 
     /**
@@ -288,7 +288,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->getFunctions()
             ->current();
 
-        static::assertEquals('foo\bar', $function->getNamespace()->getImage());
+        static::assertEquals('foo\bar', $function->getNamespace()?->getImage());
     }
 
     /**
@@ -308,7 +308,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->getDependencies()
             ->current();
 
-        static::assertEquals($namespaceName, $dependency->getNamespace()->getImage());
+        static::assertEquals($namespaceName, $dependency->getNamespace()?->getImage());
     }
 
     /**
@@ -329,10 +329,10 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
         $dependency = $function->getDependencies()
             ->current();
 
-        static::assertEquals($namespaceName, $dependency->getNamespace()->getImage());
+        static::assertEquals($namespaceName, $dependency->getNamespace()?->getImage());
         static::assertStringContainsString(
-            $function->getNamespace()->getImage(),
-            $dependency->getNamespace()->getImage()
+            $function->getNamespace()?->getImage() ?? '',
+            $dependency->getNamespace()?->getImage() ?? ''
         );
     }
 
@@ -353,7 +353,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->getDependencies()
             ->current();
 
-        static::assertEquals($namespaceName, $dependency->getNamespace()->getImage());
+        static::assertEquals($namespaceName, $dependency->getNamespace()?->getImage());
     }
 
     /**
@@ -373,7 +373,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->getDependencies()
             ->current();
 
-        static::assertEquals($namespaceName, $dependency->getNamespace()->getImage());
+        static::assertEquals($namespaceName, $dependency->getNamespace()?->getImage());
     }
 
     /**
@@ -395,7 +395,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->getDependencies()
             ->current();
 
-        static::assertEquals($namespaceName, $dependency->getNamespace()->getImage());
+        static::assertEquals($namespaceName, $dependency->getNamespace()?->getImage());
     }
 
     /**
@@ -417,7 +417,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->getDependencies()
             ->current();
 
-        static::assertEquals($namespaceName, $dependency->getNamespace()->getImage());
+        static::assertEquals($namespaceName, $dependency->getNamespace()?->getImage());
     }
 
     /**
@@ -439,7 +439,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->getDependencies()
             ->current();
 
-        static::assertEquals($namespaceName, $dependency->getNamespace()->getImage());
+        static::assertEquals($namespaceName, $dependency->getNamespace()?->getImage());
     }
 
     /**
@@ -461,7 +461,7 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->getDependencies()
             ->current();
 
-        static::assertEquals($namespaceName, $dependency->getNamespace()->getImage());
+        static::assertEquals($namespaceName, $dependency->getNamespace()?->getImage());
     }
 
     /**

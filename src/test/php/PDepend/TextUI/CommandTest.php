@@ -432,6 +432,7 @@ class CommandTest extends AbstractTestCase
         $this->executeCommand($argv);
 
         $config = ConfigurationInstance::get();
+        static::assertNotNull($config);
         static::assertEquals('memory', $config->cache->driver);
     }
 

@@ -457,7 +457,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        static::assertSame($copy, $orig->getNamespace()->getInterfaces()->current());
+        static::assertSame($copy, $orig->getNamespace()?->getInterfaces()->current());
     }
 
     /**
@@ -468,7 +468,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstInterfaceForTestCase();
         $copy = unserialize(serialize($orig));
 
-        static::assertEquals(1, $orig->getNamespace()->getInterfaces()->count());
+        static::assertEquals(1, $orig->getNamespace()?->getInterfaces()->count());
     }
 
     /**

@@ -62,15 +62,17 @@ class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestC
      */
     public function testParserSetsExpectedParentTypeHintReference(): void
     {
-        $parameters = $this->parseCodeResourceForTest()
+        $class = $this->parseCodeResourceForTest()
             ->current()
             ->getClasses()
             ->current()
             ->getMethods()
             ->current()
-            ->getParameters();
+            ->getParameters()[0]
+            ->getClass();
 
-        static::assertSame('Bar', $parameters[0]->getClass()->getImage());
+        static::assertNotNull($class);
+        static::assertSame('Bar', $class->getImage());
     }
 
     /**

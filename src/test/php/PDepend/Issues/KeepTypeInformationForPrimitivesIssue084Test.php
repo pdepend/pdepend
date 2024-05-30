@@ -72,9 +72,9 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
             ->getClasses()
             ->current()
             ->getFirstChildOfType(ASTFieldDeclaration::class)
-            ->getFirstChildOfType(ASTType::class);
+            ?->getFirstChildOfType(ASTType::class);
 
-        static::assertEquals($expected, $type->getImage());
+        static::assertEquals($expected, $type?->getImage());
     }
 
     /**
@@ -84,9 +84,9 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
     {
         $type = $this->getFirstClassForTestCase()
             ->getFirstChildOfType(ASTFieldDeclaration::class)
-            ->getFirstChildOfType(ASTType::class);
+            ?->getFirstChildOfType(ASTType::class);
 
-        static::assertTrue($type->isArray());
+        static::assertTrue($type?->isArray());
     }
 
     /**
@@ -96,9 +96,9 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
     {
         $type = $this->getFirstClassForTestCase()
             ->getFirstChildOfType(ASTFieldDeclaration::class)
-            ->getFirstChildOfType(ASTType::class);
+            ?->getFirstChildOfType(ASTType::class);
 
-        static::assertTrue($type->isArray());
+        static::assertTrue($type?->isArray());
     }
 
     /**

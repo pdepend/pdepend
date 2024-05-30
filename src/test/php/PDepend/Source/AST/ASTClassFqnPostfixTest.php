@@ -151,10 +151,10 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
         $variableDeclarator = $fieldDeclaration->getChild(0);
 
         static::assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
-        static::assertTrue($variableDeclarator->getValue()->isValueAvailable());
+        static::assertTrue($variableDeclarator->getValue()?->isValueAvailable());
 
         /** @var ASTClassOrInterfaceReference $classReference */
-        $classReference = $variableDeclarator->getValue()->getValue();
+        $classReference = $variableDeclarator->getValue()?->getValue();
         static::assertInstanceOf(ASTClassOrInterfaceReference::class, $classReference);
 
         static::assertSame('\\Iterator', $classReference->getImage());
@@ -180,10 +180,10 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
         $variableDeclarator = $fieldDeclaration->getChild(0);
 
         static::assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
-        static::assertTrue($variableDeclarator->getValue()->isValueAvailable());
+        static::assertTrue($variableDeclarator->getValue()?->isValueAvailable());
 
         /** @var ASTSelfReference $classReference */
-        $classReference = $variableDeclarator->getValue()->getValue();
+        $classReference = $variableDeclarator->getValue()?->getValue();
         static::assertInstanceOf(ASTSelfReference::class, $classReference);
 
         static::assertSame('self', $classReference->getImage());

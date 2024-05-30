@@ -75,7 +75,7 @@ class ASTEnumTest extends AbstractASTArtifactTestCase
         static::assertInstanceOf(ASTEnum::class, $deserializedEnum);
         static::assertSame('test', $deserializedEnum->getImage());
         static::assertInstanceOf(ASTScalarType::class, $deserializedEnum->getType());
-        static::assertSame('string', $deserializedEnum->getType()->getImage());
+        static::assertSame('string', $deserializedEnum->getType()?->getImage());
     }
 
     public function testVisit(): void

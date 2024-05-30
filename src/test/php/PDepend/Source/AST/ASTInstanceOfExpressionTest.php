@@ -196,7 +196,7 @@ class ASTInstanceOfExpressionTest extends ASTNodeTestCase
             ASTInstanceOfExpression::class
         );
 
-        $reference = $instanceOf->getChild(0);
+        $reference = $instanceOf?->getChild(0);
         static::assertInstanceOf($type, $reference);
         static::assertEquals($image, $reference->getImage());
     }

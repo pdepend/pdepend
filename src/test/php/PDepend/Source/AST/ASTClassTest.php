@@ -320,7 +320,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         static::assertEquals(
             'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
-            $methods['foo']->getParent()->getImage()
+            $methods['foo']->getParent()?->getImage()
         );
     }
 
@@ -772,7 +772,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
 
-        static::assertSame($copy, $orig->getNamespace()->getClasses()->current());
+        static::assertSame($copy, $orig->getNamespace()?->getClasses()->current());
     }
 
     /**
@@ -782,8 +782,10 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        $namespace = $orig->getNamespace();
 
-        static::assertCount(1, $orig->getNamespace()->getClasses());
+        static::assertNotNull($namespace);
+        static::assertCount(1, $namespace->getClasses());
     }
 
     /**

@@ -214,6 +214,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     public function testIncrementPostfixExpressionArrayPropertyPostfix(): void
     {
         $expr = $this->getFirstPostfixExpressionInClass()->getParent();
+        static::assertNotNull($expr);
         $this->assertGraphEquals(
             $expr,
             [
@@ -270,6 +271,7 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     public function testDecrementPostfixExpressionArrayPropertyPostfix(): void
     {
         $expr = $this->getFirstPostfixExpressionInClass()->getParent();
+        static::assertNotNull($expr);
         $this->assertGraphEquals(
             $expr,
             [

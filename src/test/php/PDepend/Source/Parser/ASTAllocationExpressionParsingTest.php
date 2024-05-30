@@ -128,6 +128,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType(ASTAllocationExpression::class);
+        static::assertNotNull($allocation);
         $reference = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTClassReference::class, $reference);
@@ -141,6 +142,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     {
         $method = $this->getFirstClassMethodForTestCase();
         $allocation = $method->getFirstChildOfType(ASTAllocationExpression::class);
+        static::assertNotNull($allocation);
         $self = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTSelfReference::class, $self);
@@ -154,6 +156,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     {
         $method = $this->getFirstClassMethodForTestCase();
         $allocation = $method->getFirstChildOfType(ASTAllocationExpression::class);
+        static::assertNotNull($allocation);
         $parent = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTParentReference::class, $parent);
@@ -167,6 +170,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType(ASTAllocationExpression::class);
+        static::assertNotNull($allocation);
         $reference = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTClassReference::class, $reference);
@@ -180,6 +184,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType(ASTAllocationExpression::class);
+        static::assertNotNull($allocation);
         $reference = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTClassReference::class, $reference);
@@ -193,6 +198,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType(ASTAllocationExpression::class);
+        static::assertNotNull($allocation);
         $reference = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTClassReference::class, $reference);
@@ -206,6 +212,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType(ASTAllocationExpression::class);
+        static::assertNotNull($allocation);
         $variable = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTVariable::class, $variable);
@@ -219,6 +226,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     {
         $function = $this->getFirstFunctionForTestCase();
         $allocation = $function->getFirstChildOfType(ASTAllocationExpression::class);
+        static::assertNotNull($allocation);
         $vvariable = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTVariableVariable::class, $vvariable);
@@ -236,6 +244,7 @@ class ASTAllocationExpressionParsingTest extends AbstractParserTestCase
     {
         $method = $this->getFirstClassMethodForTestCase();
         $allocation = $method->getFirstChildOfType(ASTAllocationExpression::class);
+        static::assertNotNull($allocation);
         $reference = $allocation->getChild(0);
 
         static::assertInstanceOf(ASTStaticReference::class, $reference);

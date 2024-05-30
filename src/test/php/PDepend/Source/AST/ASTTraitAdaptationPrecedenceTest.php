@@ -204,7 +204,10 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
      */
     private function getFirstTraitReferenceInClass(): ASTTraitReference
     {
-        return $this->getFirstTraitAdaptationPrecedenceInClass()
+        $node = $this->getFirstTraitAdaptationPrecedenceInClass()
             ->getFirstChildOfType(ASTTraitReference::class);
+        static::assertNotNull($node);
+
+        return $node;
     }
 }

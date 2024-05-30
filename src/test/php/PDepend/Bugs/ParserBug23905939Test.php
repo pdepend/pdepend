@@ -71,7 +71,7 @@ class ParserBug23905939Test extends AbstractRegressionTestCase
             ->getClasses()
             ->current();
 
-        static::assertEquals('my.package', $class->getNamespace()->getImage());
+        static::assertEquals('my.package', $class->getNamespace()?->getImage());
     }
 
     /**
@@ -86,6 +86,6 @@ class ParserBug23905939Test extends AbstractRegressionTestCase
             ->getInterfaces()
             ->current();
 
-        static::assertEquals('my.package', $interface->getNamespace()->getImage());
+        static::assertEquals('my.package', $interface->getNamespace()?->getImage());
     }
 }

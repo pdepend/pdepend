@@ -186,8 +186,11 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function getFirstNodeOfTypeInFunction(string $nodeType): ASTNode
     {
-        return $this->getFirstFunctionForTestCase()
+        $node = $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType($nodeType);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
@@ -204,11 +207,14 @@ abstract class AbstractTestCase extends TestCase
 
     protected function getFirstClosureForTestCase(): ASTClosure
     {
-        return $this->parseCodeResourceForTest()
+        $node = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current()
             ->getFirstChildOfType(ASTClosure::class);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
@@ -239,8 +245,11 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function getFirstNodeOfTypeInTrait(string $nodeType): ASTNode
     {
-        return $this->getFirstTraitForTestCase()
+        $node = $this->getFirstTraitForTestCase()
             ->getFirstChildOfType($nodeType);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
@@ -252,8 +261,11 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function getFirstNodeOfTypeInClass(string $nodeType): ASTNode
     {
-        return $this->getFirstClassForTestCase()
+        $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType($nodeType);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
@@ -265,8 +277,11 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function getFirstNodeOfTypeInInterface(string $nodeType): ASTNode
     {
-        return $this->getFirstInterfaceForTestCase()
+        $node = $this->getFirstInterfaceForTestCase()
             ->getFirstChildOfType($nodeType);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
@@ -360,10 +375,11 @@ abstract class AbstractTestCase extends TestCase
 
     protected function getFirstFormalParameterForTestCase(): ASTFormalParameter
     {
-        return $this->getFirstFunctionForTestCase()
-            ->getFirstChildOfType(
-                ASTFormalParameter::class
-            );
+        $node = $this->getFirstFunctionForTestCase()
+            ->getFirstChildOfType(ASTFormalParameter::class);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**

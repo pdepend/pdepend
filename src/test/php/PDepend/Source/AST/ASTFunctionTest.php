@@ -574,7 +574,7 @@ class ASTFunctionTest extends AbstractASTArtifactTestCase
         $orig = $this->getFirstFunctionForTestCaseInternal();
         $copy = unserialize(serialize($orig));
 
-        static::assertSame($copy, $orig->getNamespace()->getFunctions()->current());
+        static::assertSame($copy, $orig->getNamespace()?->getFunctions()->current());
     }
 
     /**

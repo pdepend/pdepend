@@ -87,7 +87,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     public function testParserInjectsExpectedScalarValueIntoConstantDeclarator(): void
     {
         $declarator = $this->getFirstConstantDeclaratorInClass();
-        static::assertEquals(42, $declarator->getValue()->getValue());
+        static::assertEquals(42, $declarator->getValue()?->getValue());
     }
 
     /**
@@ -98,7 +98,7 @@ class ASTConstantDeclaratorTest extends ASTNodeTestCase
     public function testParserInjectsExpectedHeredocValueIntoConstantDeclarator(): void
     {
         $declarator = $this->getFirstConstantDeclaratorInClass();
-        static::assertEquals('Testing!', $declarator->getValue()->getValue());
+        static::assertEquals('Testing!', $declarator->getValue()?->getValue());
     }
 
     /**

@@ -440,7 +440,7 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     public function testParserNotSetsUserDefinedFlagForUnknownClass(): void
     {
         $class = $this->getFirstClass();
-        $actual = $class->getParentClass()->isUserDefined();
+        $actual = $class->getParentClass()?->isUserDefined();
 
         static::assertFalse($actual);
     }

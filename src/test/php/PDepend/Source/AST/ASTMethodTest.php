@@ -130,7 +130,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedRootClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        static::assertEquals('Foo', $method->getReturnClass()->getImage());
+        static::assertEquals('Foo', $method->getReturnClass()?->getImage());
     }
 
     /**
@@ -139,7 +139,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        static::assertEquals('Baz', $method->getReturnClass()->getImage());
+        static::assertEquals('Baz', $method->getReturnClass()?->getImage());
     }
 
     /**
@@ -148,7 +148,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedArrayRootClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        static::assertEquals('Foo', $method->getReturnClass()->getImage());
+        static::assertEquals('Foo', $method->getReturnClass()?->getImage());
     }
 
     /**
@@ -157,7 +157,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
     public function testGetReturnClassForMethodWithNamespacedArrayClass(): void
     {
         $method = $this->getFirstMethodInClass();
-        static::assertEquals('Baz', $method->getReturnClass()->getImage());
+        static::assertEquals('Baz', $method->getReturnClass()?->getImage());
     }
 
     /**

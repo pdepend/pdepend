@@ -135,10 +135,13 @@ class XmlTest extends AbstractTestCase
     {
         $path = $this->createCodeResourceUriForTest();
 
-        return preg_replace(
+        $string = preg_replace(
             '(sourceFile="[^"]+/([^/"]+)")',
             'sourceFile="' . $path . '/\\1"',
             file_get_contents($fileName) ?: ''
         );
+        static::assertNotNull($string);
+
+        return $string;
     }
 }

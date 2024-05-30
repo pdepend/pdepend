@@ -126,7 +126,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     public function testYieldInsideForeach(): void
     {
         $stmt = $this->getFirstYieldStatementInFunction();
-        static::assertInstanceOf(ASTForeachStatement::class, $stmt->getParent()->getParent());
+        static::assertInstanceOf(ASTForeachStatement::class, $stmt->getParent()?->getParent());
     }
 
     /**
@@ -181,7 +181,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     {
         static::assertInstanceOf(
             ASTAssignmentExpression::class,
-            $yield->getParent()->getParent()
+            $yield->getParent()?->getParent()
         );
     }
 
@@ -207,7 +207,7 @@ class ASTYieldStatementTest extends ASTNodeTestCase
     {
         static::assertInstanceOf(
             ASTAssignmentExpression::class,
-            $yield->getParent()->getParent()->getParent()
+            $yield->getParent()?->getParent()?->getParent()
         );
     }
 

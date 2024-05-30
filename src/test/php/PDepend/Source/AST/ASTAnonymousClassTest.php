@@ -113,7 +113,10 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
 
     private function getFirstAnonymousClassInFunction(): ASTAnonymousClass
     {
-        return $this->getFirstFunctionForTestCase()
+        $node = $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType(ASTAnonymousClass::class);
+        static::assertNotNull($node);
+
+        return $node;
     }
 }

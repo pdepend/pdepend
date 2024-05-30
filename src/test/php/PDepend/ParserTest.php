@@ -270,7 +270,7 @@ class ParserTest extends AbstractTestCase
         $class = $namespace->getClasses()->current();
         static::assertNotNull($class);
 
-        $actual = $class->getCompilationUnit()->getComment();
+        $actual = $class->getCompilationUnit()?->getComment();
         static::assertNotNull($actual);
 
         $expected = "/**\n"
@@ -298,7 +298,7 @@ class ParserTest extends AbstractTestCase
         $class = $namespace->getClasses()->current();
         static::assertNotNull($class);
 
-        $actual = $class->getCompilationUnit()->getComment();
+        $actual = $class->getCompilationUnit()?->getComment();
         static::assertNull($actual);
     }
 
@@ -316,7 +316,7 @@ class ParserTest extends AbstractTestCase
         $function = $namespace->getFunctions()->current();
         static::assertNotNull($function);
 
-        $actual = $function->getCompilationUnit()->getComment();
+        $actual = $function->getCompilationUnit()?->getComment();
         static::assertNull($actual);
     }
 
@@ -465,10 +465,10 @@ class ParserTest extends AbstractTestCase
     {
         $method = $this->getClassForTest()
             ->getParentClass()
-            ->getMethods()
+            ?->getMethods()
             ->current();
 
-        static::assertTrue($method->isAbstract());
+        static::assertTrue($method?->isAbstract());
     }
 
     /**
@@ -482,9 +482,9 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $dependencies = $function->getDependencies();
-        static::assertEquals('PDepend1', $dependencies->current()->getNamespace()->getImage());
+        static::assertEquals('PDepend1', $dependencies->current()->getNamespace()?->getImage());
         $dependencies->next();
-        static::assertEquals('PDepend2', $dependencies->current()->getNamespace()->getImage());
+        static::assertEquals('PDepend2', $dependencies->current()->getNamespace()?->getImage());
     }
 
     /**
@@ -546,7 +546,7 @@ class ParserTest extends AbstractTestCase
             ],
             [
                 'function' => $functions[1]->getImage(),
-                'returnClass' => $functions[1]->getReturnClass()->getImage(),
+                'returnClass' => $functions[1]->getReturnClass()?->getImage(),
             ]
         );
     }
@@ -565,7 +565,7 @@ class ParserTest extends AbstractTestCase
             ],
             [
                 'function' => $functions[2]->getImage(),
-                'returnClass' => $functions[2]->getReturnClass()->getImage(),
+                'returnClass' => $functions[2]->getReturnClass()?->getImage(),
             ]
         );
     }
@@ -642,7 +642,7 @@ class ParserTest extends AbstractTestCase
         $actual = [];
         foreach ($nodes as $method) {
             $actual[] = $method->getImage();
-            $actual[] = $method->getReturnClass() ? $method->getReturnClass()->getImage() : null;
+            $actual[] = $method->getReturnClass()?->getImage();
         }
 
         static::assertEquals(
@@ -764,7 +764,7 @@ class ParserTest extends AbstractTestCase
 
         $actual = [];
         foreach ($nodes as $node) {
-            $className = $node->getClass() ? $node->getClass()->getImage() : null;
+            $className = $node->getClass()?->getImage();
             $actual[$node->getImage()] = $className;
         }
 
@@ -802,7 +802,7 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getClass();
 
-        static::assertEquals('Runtime', $class->getImage());
+        static::assertEquals('Runtime', $class?->getImage());
     }
 
     /**
@@ -826,7 +826,7 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getClass();
 
-        static::assertEquals('Session', $type->getImage());
+        static::assertEquals('Session', $type?->getImage());
     }
 
     /**
@@ -849,7 +849,7 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getReturnClass();
 
-        static::assertSame('Runtime', $type->getImage());
+        static::assertSame('Runtime', $type?->getImage());
     }
 
     /**
@@ -872,7 +872,7 @@ class ParserTest extends AbstractTestCase
             ->current()
             ->getReturnClass();
 
-        static::assertSame('Session', $type->getImage());
+        static::assertSame('Session', $type?->getImage());
     }
 
     /**
@@ -973,7 +973,7 @@ class ParserTest extends AbstractTestCase
     {
         $functions = $namespaces[0]->getFunctions();
 
-        static::assertEquals('PHP\\Depend', $functions[0]->getNamespace()->getImage());
+        static::assertEquals('PHP\\Depend', $functions[0]->getNamespace()?->getImage());
     }
 
     /**
@@ -986,7 +986,7 @@ class ParserTest extends AbstractTestCase
     ): void {
         $functions = $namespaces[0]->getFunctions();
 
-        static::assertEquals('PHP\\Depend', $functions[1]->getNamespace()->getImage());
+        static::assertEquals('PHP\\Depend', $functions[1]->getNamespace()?->getImage());
     }
 
     /**
@@ -999,7 +999,7 @@ class ParserTest extends AbstractTestCase
     ): void {
         $functions = $namespaces[1]->getFunctions();
 
-        static::assertEquals('PDepend\\Test', $functions[0]->getNamespace()->getImage());
+        static::assertEquals('PDepend\\Test', $functions[0]->getNamespace()?->getImage());
     }
 
     /**
@@ -1222,9 +1222,9 @@ class ParserTest extends AbstractTestCase
     {
         $namespace = $this->getFirstClassForTestCase()
             ->getParentClass()
-            ->getNamespace();
+            ?->getNamespace();
 
-        static::assertEquals('foo\bar\baz', $namespace->getImage());
+        static::assertEquals('foo\bar\baz', $namespace?->getImage());
     }
 
     /**
@@ -1234,9 +1234,9 @@ class ParserTest extends AbstractTestCase
     {
         $namespace = $this->getFirstClassForTestCase()
             ->getParentClass()
-            ->getNamespace();
+            ?->getNamespace();
 
-        static::assertEquals('bar', $namespace->getImage());
+        static::assertEquals('bar', $namespace?->getImage());
     }
 
     /**
@@ -1268,7 +1268,7 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $string = $function->getFirstChildOfType(ASTString::class);
-        $image = $string->getChild(0)->getImage();
+        $image = $string?->getChild(0)->getImage();
 
         static::assertEquals('\$foobar', $image);
     }
@@ -1284,7 +1284,7 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $string = $function->getFirstChildOfType(ASTString::class);
-        $image = $string->getChild(0)->getImage();
+        $image = $string?->getChild(0)->getImage();
 
         static::assertEquals('\\\\\"', $image);
     }
@@ -1300,7 +1300,7 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $string = $function->getFirstChildOfType(ASTString::class);
-        $variable = $string->getChild(0);
+        $variable = $string?->getChild(0);
 
         static::assertInstanceOf(ASTVariable::class, $variable);
     }
@@ -1316,7 +1316,7 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $string = $function->getFirstChildOfType(ASTString::class);
-        $variable = $string->getChild(0);
+        $variable = $string?->getChild(0);
 
         static::assertInstanceOf(ASTVariable::class, $variable);
     }
@@ -1334,7 +1334,7 @@ class ParserTest extends AbstractTestCase
             ->current();
 
         $string = $method->getFirstChildOfType(ASTString::class);
-        static::assertInstanceOf(ASTLiteral::class, $string->getChild(1));
+        static::assertInstanceOf(ASTLiteral::class, $string?->getChild(1));
     }
 
     /**

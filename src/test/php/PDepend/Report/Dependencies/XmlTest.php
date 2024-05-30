@@ -218,10 +218,13 @@ class XmlTest extends AbstractTestCase
 
     protected function getNormalizedPathXml(string $fileName): string
     {
-        return preg_replace(
+        $string = preg_replace(
             ['(file\s+name="[^"]+")', '(generated="[^"]*")'],
             ['file name="' . __FILE__ . '"', 'generated=""'],
             file_get_contents($fileName) ?: ''
         );
+        static::assertNotNull($string);
+
+        return $string;
     }
 }
