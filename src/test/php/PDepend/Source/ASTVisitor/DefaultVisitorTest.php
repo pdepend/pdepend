@@ -280,9 +280,12 @@ class DefaultVisitorTest extends AbstractTestCase
         $trait->addMethod($method0 = new ASTMethod('m0'));
         $trait->addMethod($method1 = new ASTMethod('m1'));
 
-        $visitor = $this->createMock(AbstractASTVisitor::class);
-        $visitor->method('visitMethod')
-            ->willReturnOnConsecutiveCalls(static::equalTo($method0), static::equalTo($method1));
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
+            ->onlyMethods(['visitMethod'])
+            ->getMock();
+
+        $visitor->expects(static::exactly(2))
+            ->method('visitMethod');
 
         $visitor->dispatch($trait);
     }
