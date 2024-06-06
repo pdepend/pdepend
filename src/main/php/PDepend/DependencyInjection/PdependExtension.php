@@ -61,7 +61,7 @@ class PdependExtension extends SymfonyExtension
 {
     /**
      * @param array<array<array<array<string>>>> $configs
-     * @return void
+     * @throws RuntimeException
      *
      * {@inheritDoc}
      */

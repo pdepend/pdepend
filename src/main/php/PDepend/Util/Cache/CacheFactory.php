@@ -131,8 +131,11 @@ class CacheFactory
      * @param string|null $cacheKey The name/identifier for the cache instance.
      * @throws RuntimeException
      */
-    protected function createFileCache(string $location, int $ttl = self::DEFAULT_TTL, ?string $cacheKey = null): FileCacheDriver
-    {
+    protected function createFileCache(
+        string $location,
+        int $ttl = self::DEFAULT_TTL,
+        ?string $cacheKey = null
+    ): FileCacheDriver {
         return new FileCacheDriver($location, $ttl, $cacheKey);
     }
 

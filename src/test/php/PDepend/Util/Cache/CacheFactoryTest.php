@@ -133,7 +133,9 @@ class CacheFactoryTest extends AbstractTestCase
     public function testCreateThrowsExpectedExceptionForUnknownCacheDriver(): void
     {
         $this->expectException(InvalidConfigurationException::class);
-        $this->expectExceptionMessage('The value "fail" is not allowed for path "pdepend.cache.driver". Permissible values: "file", "memory"');
+        $this->expectExceptionMessage(
+            'The value "fail" is not allowed for path "pdepend.cache.driver". Permissible values: "file", "memory"'
+        );
 
         $this->changeWorkingDirectory();
 

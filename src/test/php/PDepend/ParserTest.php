@@ -944,8 +944,9 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace(ASTArtifactList $namespaces): void
-    {
+    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace(
+        ASTArtifactList $namespaces
+    ): void {
         $functions = $namespaces[0]->getFunctions();
         static::assertCount(2, $functions);
     }
@@ -955,8 +956,9 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace(ASTArtifactList $namespaces): void
-    {
+    public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace(
+        ASTArtifactList $namespaces
+    ): void {
         $functions = $namespaces[1]->getFunctions();
         static::assertCount(1, $functions);
     }
@@ -978,8 +980,9 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileExpectedPackageForSecondFunctionInFirstNamespace(ASTArtifactList $namespaces): void
-    {
+    public function testParserSetsFileExpectedPackageForSecondFunctionInFirstNamespace(
+        ASTArtifactList $namespaces
+    ): void {
         $functions = $namespaces[0]->getFunctions();
 
         static::assertEquals('PHP\\Depend', $functions[1]->getNamespace()->getImage());
@@ -990,8 +993,9 @@ class ParserTest extends AbstractTestCase
      *
      * @depends testParserSetsFileLevelFunctionPackage
      */
-    public function testParserSetsFileExpectedPackageForFirstFunctionInSecondNamespace(ASTArtifactList $namespaces): void
-    {
+    public function testParserSetsFileExpectedPackageForFirstFunctionInSecondNamespace(
+        ASTArtifactList $namespaces
+    ): void {
         $functions = $namespaces[1]->getFunctions();
 
         static::assertEquals('PDepend\\Test', $functions[0]->getNamespace()->getImage());

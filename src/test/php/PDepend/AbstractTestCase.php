@@ -675,6 +675,8 @@ abstract class AbstractTestCase extends TestCase
 
     /**
      * Returns the name of the calling test method.
+     *
+     * @throws ErrorException
      */
     protected function getCallingTestMethod(): string
     {
@@ -685,43 +687,6 @@ abstract class AbstractTestCase extends TestCase
         }
 
         throw new ErrorException('No calling test case found.');
-    }
-
-    /**
-     * Initializes the test environment.
-     */
-    public static function init(): void
-    {
-        // First register autoloader
-        spl_autoload_register([__CLASS__, 'autoload']);
-
-        // Is it not installed?
-        if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
-            $path = realpath(__DIR__ . '/../../../main/php/');
-            $path .= PATH_SEPARATOR . get_include_path();
-            set_include_path($path);
-        }
-
-        // Set test path
-        $path = realpath(__DIR__ . '/..');
-        $path .= PATH_SEPARATOR . get_include_path();
-        set_include_path($path);
-    }
-
-    /**
-     * Autoloader for the test cases.
-     *
-     * @param string $className Name of the missing class.
-     */
-    public static function autoload(string $className): void
-    {
-        $file = strtr($className, '\\', DIRECTORY_SEPARATOR) . '.php';
-        if (is_file(__DIR__ . '/../../../main/php/PDepend/Engine.php')) {
-            $file = __DIR__ . '/../../../main/php/' . $file;
-        }
-        if (file_exists($file)) {
-            include $file;
-        }
     }
 
     /**
@@ -845,5 +810,3 @@ abstract class AbstractTestCase extends TestCase
         }
     }
 }
-
-AbstractTestCase::init();

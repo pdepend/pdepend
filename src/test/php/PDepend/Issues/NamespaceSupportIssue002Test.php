@@ -384,8 +384,10 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax
      */
-    public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax(string $fileName, string $namespaceName): void
-    {
+    public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax(
+        string $fileName,
+        string $namespaceName
+    ): void {
         $dependency = $this->parseSource($fileName)
             ->current()
             ->getTypes()
@@ -404,8 +406,10 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax
      */
-    public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax(string $fileName, string $namespaceName): void
-    {
+    public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax(
+        string $fileName,
+        string $namespaceName
+    ): void {
         $dependency = $this->parseSource($fileName)
             ->current()
             ->getFunctions()
@@ -424,8 +428,10 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax
      */
-    public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax(string $fileName, string $namespaceName): void
-    {
+    public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax(
+        string $fileName,
+        string $namespaceName
+    ): void {
         $dependency = $this->parseSource($fileName)
             ->current()
             ->getTypes()
@@ -444,8 +450,10 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      * @param string $namespaceName Name of the expected namespace.
      * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax
      */
-    public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax(string $fileName, string $namespaceName): void
-    {
+    public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax(
+        string $fileName,
+        string $namespaceName
+    ): void {
         $dependency = $this->parseSource($fileName)
             ->current()
             ->getFunctions()

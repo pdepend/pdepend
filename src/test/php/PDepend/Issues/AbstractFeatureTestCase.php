@@ -87,6 +87,7 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
      * and node builder implementations.
      *
      * @return ASTArtifactList<ASTNamespace>
+     * @throws ErrorException
      */
     public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false): ASTArtifactList
     {
@@ -100,6 +101,8 @@ abstract class AbstractFeatureTestCase extends AbstractTestCase
 
     /**
      * Returns a php callback for the calling test case method.
+     *
+     * @throws ErrorException
      */
     protected function getTestCaseMethod(): string
     {
