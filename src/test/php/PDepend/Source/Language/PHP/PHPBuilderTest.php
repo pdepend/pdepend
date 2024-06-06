@@ -626,7 +626,7 @@ class PHPBuilderTest extends AbstractTestCase
         $builder = $this->createBuilder();
         static::assertEquals(
             '+reflection',
-            $builder->getClassOrInterface('Reflection')->getNamespace()->getImage()
+            $builder->getClassOrInterface('Reflection')->getNamespace()?->getImage()
         );
     }
 
@@ -637,11 +637,9 @@ class PHPBuilderTest extends AbstractTestCase
      */
     public function testGetClassOrInterfaceStripsLeadingBackslashFromClass(): void
     {
-        $builder = $this->createBuilder();
-        static::assertEquals(
-            'foo\bar',
-            $builder->getClassOrInterface('\foo\bar\Baz')->getNamespace()->getImage()
-        );
+        $namespace = $this->createBuilder()->getClassOrInterface('\foo\bar\Baz')->getNamespace();
+        static::assertNotNull($namespace);
+        static::assertEquals('foo\bar', $namespace->getImage());
     }
 
     /**

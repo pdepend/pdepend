@@ -46,6 +46,7 @@ namespace PDepend\Util\Coverage;
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTMethod;
+use SimpleXMLElement;
 
 /**
  * Test case for the {@link \PDepend\Util\Coverage\CloverReport} class.
@@ -163,6 +164,7 @@ class CloverReportTest extends AbstractTestCase
     private function createCloverReport(): CloverReport
     {
         $sxml = simplexml_load_file(__DIR__ . '/_files/clover.xml');
+        static::assertInstanceOf(SimpleXMLElement::class, $sxml);
 
         return new CloverReport($sxml);
     }
@@ -173,6 +175,7 @@ class CloverReportTest extends AbstractTestCase
     private function createNamespacedCloverReport(): CloverReport
     {
         $sxml = simplexml_load_file(__DIR__ . '/_files/clover-namespaced.xml');
+        static::assertInstanceOf(SimpleXMLElement::class, $sxml);
 
         return new CloverReport($sxml);
     }

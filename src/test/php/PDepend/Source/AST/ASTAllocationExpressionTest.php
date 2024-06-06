@@ -86,7 +86,7 @@ class ASTAllocationExpressionTest extends ASTNodeTestCase
         $expr = $this->getFirstAllocationExpressionInFunction();
         $arg = $expr->getFirstChildOfType(ASTArguments::class);
 
-        static::assertEquals($expr, $arg->getParent());
+        static::assertEquals($expr, $arg?->getParent());
     }
 
     /**

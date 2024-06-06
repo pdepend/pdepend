@@ -57,7 +57,7 @@ abstract class PHPParserVersion81TestCase extends AbstractTestCase
 {
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
-        return $this->getAbstractClassMock(
+        return $this->getMockForAbstractClass(
             'PDepend\\Source\\Language\\PHP\\AbstractPHPParser',
             [$tokenizer, $builder, $cache]
         );

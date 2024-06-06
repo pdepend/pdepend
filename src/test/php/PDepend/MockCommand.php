@@ -27,7 +27,7 @@ class MockCommand extends Command
         throw new RuntimeException('Bad usage', 42, $cause);
     }
 
-    private function getCause()
+    private function getCause(): BadMethodCallException
     {
         return new BadMethodCallException('Cause', 33);
     }

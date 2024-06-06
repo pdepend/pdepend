@@ -260,19 +260,19 @@ class XmlTest extends AbstractTestCase
         $metricsOne = [];
         $metricsTwo = [];
         foreach ($this->namespaces as $namespace) {
-            $metricsOne[$namespace->getId()] = array_shift($input);
-            $metricsTwo[$namespace->getId()] = array_shift($input);
+            $metricsOne[$namespace->getId()] = array_shift($input) ?? [];
+            $metricsTwo[$namespace->getId()] = array_shift($input) ?? [];
             foreach ($namespace->getClasses() as $class) {
-                $metricsOne[$class->getId()] = array_shift($input);
-                $metricsTwo[$class->getId()] = array_shift($input);
+                $metricsOne[$class->getId()] = array_shift($input) ?? [];
+                $metricsTwo[$class->getId()] = array_shift($input) ?? [];
                 foreach ($class->getMethods() as $method) {
-                    $metricsOne[$method->getId()] = array_shift($input);
-                    $metricsTwo[$method->getId()] = array_shift($input);
+                    $metricsOne[$method->getId()] = array_shift($input) ?? [];
+                    $metricsTwo[$method->getId()] = array_shift($input) ?? [];
                 }
             }
             foreach ($namespace->getFunctions() as $function) {
-                $metricsOne[$function->getId()] = array_shift($input);
-                $metricsTwo[$function->getId()] = array_shift($input);
+                $metricsOne[$function->getId()] = array_shift($input) ?? [];
+                $metricsTwo[$function->getId()] = array_shift($input) ?? [];
             }
         }
 
@@ -293,7 +293,10 @@ class XmlTest extends AbstractTestCase
         );
     }
 
-    public static function dataProviderNodeAware()
+    /**
+     * @return list<list<string>>
+     */
+    public static function dataProviderNodeAware(): array
     {
         return [
             [
@@ -307,12 +310,15 @@ class XmlTest extends AbstractTestCase
         ];
     }
 
-    protected function getNormalizedPathXml($fileName)
+    protected function getNormalizedPathXml(string $fileName): string
     {
-        return preg_replace(
+        $string = preg_replace(
             ['(file\s+name="[^"]+")', '(generated="[^"]*")'],
             ['file name="' . __FILE__ . '"', 'generated=""'],
-            file_get_contents($fileName)
+            file_get_contents($fileName) ?: ''
         );
+        static::assertNotNull($string);
+
+        return $string;
     }
 }

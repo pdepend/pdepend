@@ -54,7 +54,7 @@ use PDepend\Application;
  */
 class ReportGeneratorFactoryTest extends AbstractTestCase
 {
-    private function createReportGeneratorFactory()
+    private function createReportGeneratorFactory(): ReportGeneratorFactory
     {
         $application = new Application();
 

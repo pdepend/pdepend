@@ -115,7 +115,7 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
-        return $this->getAbstractClassMock(
+        return $this->getMockForAbstractClass(
             AbstractPHPParser::class,
             [$tokenizer, $builder, $cache]
         );

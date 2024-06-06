@@ -140,7 +140,7 @@ class ASTTraitReferenceTest extends ASTNodeTestCase
     /**
      * Creates a concrete node implementation.
      */
-    protected function createNodeInstance(): AbstractASTArtifact|AbstractASTNode
+    protected function createNodeInstance(): AbstractASTNode|ASTAnonymousClass
     {
         return new ASTTraitReference(
             $this->getBuilderContextMock(),

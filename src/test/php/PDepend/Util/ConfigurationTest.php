@@ -84,7 +84,7 @@ class ConfigurationTest extends AbstractTestCase
         $settings->foo = 42;
 
         $configuration = new Configuration($settings);
-        echo $configuration->bar;
+        static::assertNotNull($configuration->bar);
     }
 
     /**

@@ -173,8 +173,12 @@ class ChartTest extends AbstractTestCase
         $xpath = new DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
 
-        static::assertEquals(1, $xpath->query("//s:ellipse[@title='package0']")->length);
-        static::assertEquals(1, $xpath->query("//s:ellipse[@title='package1']")->length);
+        $xmlElement = $xpath->query("//s:ellipse[@title='package0']");
+        static::assertNotFalse($xmlElement);
+        static::assertEquals(1, $xmlElement->length);
+        $xmlElement = $xpath->query("//s:ellipse[@title='package1']");
+        static::assertNotFalse($xmlElement);
+        static::assertEquals(1, $xmlElement->length);
     }
 
     /**
@@ -199,7 +203,9 @@ class ChartTest extends AbstractTestCase
         $xpath = new DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
 
-        static::assertEquals(0, $xpath->query("//s:ellipse[@title='package1']")->length);
+        $xmlElement = $xpath->query("//s:ellipse[@title='package1']");
+        static::assertNotFalse($xmlElement);
+        static::assertEquals(0, $xmlElement->length);
     }
 
     /**
@@ -257,14 +263,18 @@ class ChartTest extends AbstractTestCase
         $xpath = new DOMXPath($svg);
         $xpath->registerNamespace('s', 'http://www.w3.org/2000/svg');
 
-        $ellipseA = $xpath->query("//s:ellipse[@title='package0']")->item(0);
+        $xmlElement = $xpath->query("//s:ellipse[@title='package0']");
+        static::assertNotFalse($xmlElement);
+        $ellipseA = $xmlElement->item(0);
         static::assertInstanceOf(DOMElement::class, $ellipseA);
         $matrixA = $ellipseA->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixA, $matches);
         static::assertEquals(1, $matches[1]);
         static::assertEquals(1, $matches[4]);
 
-        $ellipseB = $xpath->query("//s:ellipse[@title='package1']")->item(0);
+        $xmlElement = $xpath->query("//s:ellipse[@title='package1']");
+        static::assertNotFalse($xmlElement);
+        $ellipseB = $xmlElement->item(0);
         static::assertInstanceOf(DOMElement::class, $ellipseB);
         $matrixB = $ellipseB->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixB, $matches);
@@ -299,6 +309,7 @@ class ChartTest extends AbstractTestCase
         static::assertFileExists($fileName);
 
         $info = getimagesize($fileName);
+        static::assertNotFalse($info);
         // $this->assertEquals(390, $info[0]);
         // $this->assertEquals(250, $info[1]);
         static::assertEquals('image/png', $info['mime']);
@@ -313,6 +324,7 @@ class ChartTest extends AbstractTestCase
     {
         $packages = [];
         foreach (func_get_args() as $i => $userDefined) {
+            static::assertIsBool($userDefined);
             $packages[] = $this->createPackage(
                 $userDefined,
                 'package' . $i

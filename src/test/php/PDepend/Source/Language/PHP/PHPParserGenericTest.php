@@ -871,7 +871,7 @@ class PHPParserGenericTest extends AbstractTestCase
         $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTReturnStatement');
 
-        static::assertSame('**', $node->getChild(0)->getChild(1)->getImage());
+        static::assertSame('**', $node?->getChild(0)->getChild(1)->getImage());
     }
 
     /**
@@ -952,6 +952,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isScalar());
         static::assertSame('int', $type->getImage());
     }
@@ -963,6 +964,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertFalse($type->isScalar());
         static::assertSame('self', $type->getImage());
     }
@@ -974,6 +976,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertFalse($type->isScalar());
         static::assertSame('parent', $type->getImage());
     }
@@ -985,6 +988,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isScalar());
         static::assertSame('float', $type->getImage());
     }
@@ -996,6 +1000,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isScalar());
         static::assertSame('string', $type->getImage());
     }
@@ -1007,6 +1012,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isScalar());
         static::assertSame('bool', $type->getImage());
     }
@@ -1018,6 +1024,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isArray());
         static::assertSame('array', $type->getImage());
     }
@@ -1029,6 +1036,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertFalse($type->isScalar());
         static::assertFalse($type->isArray());
 
@@ -1042,6 +1050,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertFalse($type->isScalar());
         static::assertFalse($type->isArray());
 
@@ -1055,6 +1064,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isScalar());
         static::assertSame('int', $type->getImage());
     }
@@ -1066,6 +1076,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isScalar());
         static::assertSame('float', $type->getImage());
     }
@@ -1077,6 +1088,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isScalar());
         static::assertSame('string', $type->getImage());
     }
@@ -1088,6 +1100,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isScalar());
         static::assertSame('bool', $type->getImage());
     }
@@ -1099,6 +1112,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isArray());
         static::assertSame('array', $type->getImage());
     }
@@ -1110,6 +1124,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertFalse($type->isScalar());
         static::assertFalse($type->isArray());
 
@@ -1123,6 +1138,7 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertFalse($type->isScalar());
         static::assertFalse($type->isArray());
 
@@ -1136,9 +1152,9 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $expr = $this->getFirstClassMethodForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+            ?->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
 
-        static::assertSame('<=>', $expr->getImage());
+        static::assertSame('<=>', $expr?->getImage());
     }
 
     /**
@@ -1148,9 +1164,9 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $expr = $this->getFirstClassMethodForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+            ?->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
 
-        static::assertSame('<=>', $expr->getImage());
+        static::assertSame('<=>', $expr?->getImage());
     }
 
     /**
@@ -1160,9 +1176,9 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $expr = $this->getFirstClassMethodForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getChild(1);
+            ?->getChild(1);
 
-        static::assertSame('<=>', $expr->getImage());
+        static::assertSame('<=>', $expr?->getImage());
 
         return $expr;
     }
@@ -1206,9 +1222,9 @@ class PHPParserGenericTest extends AbstractTestCase
     {
         $expr = $this->getFirstClassMethodForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
-            ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
+            ?->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression');
 
-        static::assertSame('??', $expr->getImage());
+        static::assertSame('??', $expr?->getImage());
     }
 
     public function testListKeywordAsMethodName(): void
@@ -1242,7 +1258,7 @@ class PHPParserGenericTest extends AbstractTestCase
 
         static::assertEquals(
             'FooLibrary\Bar\Baz\ClassB',
-            $class->getParentClass()->getNamespacedName()
+            $class->getParentClass()?->getNamespacedName()
         );
     }
 
@@ -1256,7 +1272,7 @@ class PHPParserGenericTest extends AbstractTestCase
 
         static::assertEquals(
             'FooLibrary\Bar\Baz\ClassD',
-            $class->getParentClass()->getNamespacedName()
+            $class->getParentClass()?->getNamespacedName()
         );
     }
 

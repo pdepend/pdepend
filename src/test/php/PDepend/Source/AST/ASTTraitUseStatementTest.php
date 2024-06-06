@@ -66,11 +66,11 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testHasExcludeForReturnsFalseIfNoInsteadExists(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $useStmt = $class->getFirstChildOfType(
-            ASTTraitUseStatement::class
-        );
+        $useStmt = $class->getFirstChildOfType(ASTTraitUseStatement::class);
+        static::assertNotNull($useStmt);
         $methods = $useStmt->getAllMethods();
 
+        static::assertArrayHasKey(0, $methods);
         static::assertFalse($useStmt->hasExcludeFor($methods[0]));
     }
 
@@ -80,11 +80,11 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testHasExcludeForReturnsFalseIfMethodNotAffectedByInstead(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $useStmt = $class->getFirstChildOfType(
-            ASTTraitUseStatement::class
-        );
+        $useStmt = $class->getFirstChildOfType(ASTTraitUseStatement::class);
+        static::assertNotNull($useStmt);
         $methods = $useStmt->getAllMethods();
 
+        static::assertArrayHasKey(0, $methods);
         static::assertFalse($useStmt->hasExcludeFor($methods[0]));
     }
 
@@ -94,11 +94,11 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
     public function testHasExcludeForReturnsTrueIfMethodAffectedByInstead(): void
     {
         $class = $this->getFirstClassForTestCase();
-        $useStmt = $class->getFirstChildOfType(
-            ASTTraitUseStatement::class
-        );
+        $useStmt = $class->getFirstChildOfType(ASTTraitUseStatement::class);
+        static::assertNotNull($useStmt);
         $methods = $useStmt->getAllMethods();
 
+        static::assertArrayHasKey(0, $methods);
         static::assertTrue($useStmt->hasExcludeFor($methods[0]));
     }
 
@@ -111,8 +111,10 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $useStmt = $class->getFirstChildOfType(
             ASTTraitUseStatement::class
         );
+        static::assertNotNull($useStmt);
         $methods = $useStmt->getAllMethods();
 
+        static::assertArrayHasKey(0, $methods);
         static::assertTrue($useStmt->hasExcludeFor($methods[0]));
     }
 
@@ -131,6 +133,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $getTraitMethods->setAccessible(true);
         $methods = $getTraitMethods->invoke($class);
 
+        static::assertIsArray($methods);
         static::assertSame(['test'], array_keys($methods));
     }
 
@@ -149,6 +152,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
         $getTraitMethods->setAccessible(true);
         $methods = $getTraitMethods->invoke($class);
 
+        static::assertIsArray($methods);
         static::assertSame(['testa', 'testb'], array_keys($methods));
     }
 
@@ -293,7 +297,7 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
         static::assertEquals(
             'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
-            $methods[0]->getParent()->getImage()
+            $methods[0]->getParent()?->getImage()
         );
     }
 

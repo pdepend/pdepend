@@ -137,6 +137,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             ->getFunctions()
             ->current()
             ->getCompilationUnit();
+        static::assertNotNull($file);
 
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
@@ -214,6 +215,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             ->getClasses()
             ->current()
             ->getCompilationUnit();
+        static::assertNotNull($file);
 
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
@@ -263,6 +265,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             ->getInterfaces()
             ->current()
             ->getCompilationUnit();
+        static::assertNotNull($file);
 
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);
@@ -420,6 +423,7 @@ class NodeLocAnalyzerTest extends AbstractMetricsTestCase
             ->getClasses()
             ->current()
             ->getCompilationUnit();
+        static::assertNotNull($file);
 
         $analyzer = $this->createAnalyzer();
         $analyzer->analyze($namespaces);

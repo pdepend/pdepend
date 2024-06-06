@@ -58,7 +58,7 @@ class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
 
         $lines = array_map(
             static fn(string $line) => trim($line, " \t\n\r\0\x0B/*"),
-            explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")),
+            explode("\n", trim($function->getComment() ?: '', " \t\n\r\0\x0B/*")),
         );
 
         static::assertSame([
@@ -74,7 +74,7 @@ class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
 
         $lines = array_map(
             static fn($line) => trim($line, " \t\n\r\0\x0B/*"),
-            explode("\n", trim($function->getComment(), " \t\n\r\0\x0B/*")),
+            explode("\n", trim($function->getComment() ?: '', " \t\n\r\0\x0B/*")),
         );
 
         static::assertSame([

@@ -53,6 +53,7 @@ class NeverReturnTypeTest extends PHPParserVersion81TestCase
     public function testFunctionReturnType(): void
     {
         $type = $this->getFirstFunctionForTestCase()->getReturnType();
+        static::assertNotNull($type);
 
         static::assertTrue($type->isScalar());
         static::assertSame('never', $type->getImage());
@@ -61,6 +62,7 @@ class NeverReturnTypeTest extends PHPParserVersion81TestCase
     public function testMethodReturnType(): void
     {
         $type = $this->getFirstMethodForTestCase()->getReturnType();
+        static::assertNotNull($type);
 
         static::assertTrue($type->isScalar());
         static::assertSame('never', $type->getImage());
@@ -70,6 +72,7 @@ class NeverReturnTypeTest extends PHPParserVersion81TestCase
     {
         $type = $this->getFirstClosureForTestCase()->getReturnType();
 
+        static::assertNotNull($type);
         static::assertTrue($type->isScalar());
         static::assertSame('never', $type->getImage());
     }

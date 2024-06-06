@@ -81,7 +81,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
         $declaration = $class->getFirstChildOfType(
             ASTFieldDeclaration::class
         );
-        $reference = $declaration->getFirstChildOfType(
+        $reference = $declaration?->getFirstChildOfType(
             ASTClassOrInterfaceReference::class
         );
         static::assertNull($reference);
@@ -97,8 +97,9 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
             ASTClassOrInterfaceReference::class
         );
 
-        $type = $reference->getType();
+        $type = $reference?->getType();
 
+        static::assertNotNull($type);
         static::assertEquals('Sindelfingen', $type->getImage());
 
         return $type;
@@ -242,7 +243,6 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public function testMagicSleepReturnsExpectedSetOfPropertyNames(): void
     {
         $declaration = $this->createNodeInstance();
-        static::assertInstanceof(ASTFieldDeclaration::class, $declaration);
         static::assertEquals(
             [
                 'comment',
@@ -301,6 +301,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * Returns valid field declation modifiers.
+     *
+     * @return array<mixed>
      */
     public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations(): array
     {
@@ -325,6 +327,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
 
     /**
      * Returns invalid field declation modifiers.
+     *
+     * @return array<mixed>
      */
     public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers(): array
     {

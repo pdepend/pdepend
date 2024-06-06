@@ -143,7 +143,9 @@ abstract class AbstractTestCase extends TestCase
             $directory = $this->getTestWorkingDirectory();
         }
 
-        $this->workingDirectory = getcwd();
+        $cwd = getcwd();
+        static::assertNotFalse($cwd);
+        $this->workingDirectory = $cwd;
         chdir($directory);
     }
 
@@ -184,8 +186,11 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function getFirstNodeOfTypeInFunction(string $nodeType): ASTNode
     {
-        return $this->getFirstFunctionForTestCase()
+        $node = $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType($nodeType);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
@@ -202,11 +207,14 @@ abstract class AbstractTestCase extends TestCase
 
     protected function getFirstClosureForTestCase(): ASTClosure
     {
-        return $this->parseCodeResourceForTest()
+        $node = $this->parseCodeResourceForTest()
             ->current()
             ->getFunctions()
             ->current()
             ->getFirstChildOfType(ASTClosure::class);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
@@ -219,7 +227,7 @@ abstract class AbstractTestCase extends TestCase
         return $application->getRunner();
     }
 
-    protected function createTestApplication()
+    protected function createTestApplication(): Application
     {
         $application = new Application();
         $application->setConfigurationFile(__DIR__ . '/../../resources/pdepend.xml.dist');
@@ -237,8 +245,11 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function getFirstNodeOfTypeInTrait(string $nodeType): ASTNode
     {
-        return $this->getFirstTraitForTestCase()
+        $node = $this->getFirstTraitForTestCase()
             ->getFirstChildOfType($nodeType);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
@@ -250,8 +261,11 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function getFirstNodeOfTypeInClass(string $nodeType): ASTNode
     {
-        return $this->getFirstClassForTestCase()
+        $node = $this->getFirstClassForTestCase()
             ->getFirstChildOfType($nodeType);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
@@ -263,8 +277,11 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function getFirstNodeOfTypeInInterface(string $nodeType): ASTNode
     {
-        return $this->getFirstInterfaceForTestCase()
+        $node = $this->getFirstInterfaceForTestCase()
             ->getFirstChildOfType($nodeType);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
@@ -358,17 +375,18 @@ abstract class AbstractTestCase extends TestCase
 
     protected function getFirstFormalParameterForTestCase(): ASTFormalParameter
     {
-        return $this->getFirstFunctionForTestCase()
-            ->getFirstChildOfType(
-                ASTFormalParameter::class
-            );
+        $node = $this->getFirstFunctionForTestCase()
+            ->getFirstChildOfType(ASTFormalParameter::class);
+        static::assertNotNull($node);
+
+        return $node;
     }
 
     /**
      * Collects all children from a given node.
      *
      * @param ASTNode $node The current root node.
-     * @param array $actual Previous filled list.
+     * @param array<string> $actual Previous filled list.
      * @return array<string>
      */
     protected static function collectChildNodes(ASTNode $node, array $actual = []): array
@@ -396,6 +414,7 @@ abstract class AbstractTestCase extends TestCase
      * Collects all children from a given node.
      *
      * @param ASTNode $node The current root node.
+     * @return array<mixed>
      */
     protected static function collectGraph(ASTNode $node): array
     {
@@ -415,7 +434,7 @@ abstract class AbstractTestCase extends TestCase
      * object graph.
      *
      * @param ASTNode $node The root node.
-     * @param array $graph Expected class structure.
+     * @param array<mixed> $graph Expected class structure.
      */
     protected static function assertGraph(ASTNode $node, array $graph): void
     {
@@ -455,6 +474,7 @@ abstract class AbstractTestCase extends TestCase
                 continue;
             }
             $pathName = realpath($file->getPathname());
+            static::assertNotFalse($pathName);
             if ($file->isDir()) {
                 $this->clearRunResources($pathName);
                 rmdir($pathName);
@@ -622,7 +642,7 @@ abstract class AbstractTestCase extends TestCase
      */
     protected function createRunResourceURI(?string $fileName = null): string
     {
-        return tempnam(sys_get_temp_dir(), $fileName ?: uniqid());
+        return tempnam(sys_get_temp_dir(), $fileName ?: uniqid()) ?: '';
     }
 
     /**
@@ -656,7 +676,9 @@ abstract class AbstractTestCase extends TestCase
         // Strip first two parts
         array_shift($parts);
 
-        if (!preg_match('(Version\d+Test$)', end($parts)) && preg_match('(\D(\d+Test)$)', end($parts), $match)) {
+        $part = end($parts);
+        static::assertNotFalse($part);
+        if (!preg_match('(Version\d+Test$)', $part) && preg_match('(\D(\d+Test)$)', $part, $match)) {
             array_pop($parts);
             $parts[] = $match[1];
 
@@ -682,7 +704,7 @@ abstract class AbstractTestCase extends TestCase
     {
         foreach (debug_backtrace() as $frame) {
             if (str_starts_with($frame['function'], 'test')) {
-                return "{$frame['class']}::{$frame['function']}";
+                return ($frame['class'] ?? '') . '::' . $frame['function'];
             }
         }
 
@@ -763,6 +785,7 @@ abstract class AbstractTestCase extends TestCase
         $builder = new PHPBuilder();
 
         foreach ($files as $file) {
+            static::assertNotFalse($file);
             $tokenizer = new PHPTokenizerInternal();
             $tokenizer->setSourceFile($file);
 
@@ -787,11 +810,6 @@ abstract class AbstractTestCase extends TestCase
             $builder,
             $cache
         );
-    }
-
-    protected function getAbstractClassMock($originalClassName, array $arguments = [], $mockClassName = '', $callOriginalConstructor = true, $callOriginalClone = true, $callAutoload = true, $mockedMethods = [], $cloneArguments = false)
-    {
-        return $this->getMockForAbstractClass($originalClassName, $arguments, $mockClassName, $callOriginalConstructor, $callOriginalClone, $callAutoload, $mockedMethods, $cloneArguments);
     }
 
     /**

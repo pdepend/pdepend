@@ -47,7 +47,6 @@ use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
 use PDepend\Report\NoLogOutputException;
-use PDepend\Source\AST\ASTArtifactList;
 
 /**
  * Test case for the jdepend xml logger.
@@ -60,9 +59,6 @@ use PDepend\Source\AST\ASTArtifactList;
  */
 class XmlTest extends AbstractTestCase
 {
-    /** Test code structure. */
-    protected ASTArtifactList $packages;
-
     /** Test dependency analyzer. */
     protected DependencyAnalyzer $analyzer;
 
@@ -139,10 +135,13 @@ class XmlTest extends AbstractTestCase
     {
         $path = $this->createCodeResourceUriForTest();
 
-        return preg_replace(
+        $string = preg_replace(
             '(sourceFile="[^"]+/([^/"]+)")',
             'sourceFile="' . $path . '/\\1"',
-            file_get_contents($fileName)
+            file_get_contents($fileName) ?: ''
         );
+        static::assertNotNull($string);
+
+        return $string;
     }
 }

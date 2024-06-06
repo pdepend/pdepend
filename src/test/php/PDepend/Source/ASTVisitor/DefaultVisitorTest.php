@@ -280,9 +280,12 @@ class DefaultVisitorTest extends AbstractTestCase
         $trait->addMethod($method0 = new ASTMethod('m0'));
         $trait->addMethod($method1 = new ASTMethod('m1'));
 
-        $visitor = $this->createMock(AbstractASTVisitor::class);
-        $visitor->method('visitMethod')
-            ->willReturnOnConsecutiveCalls(static::equalTo($method0), static::equalTo($method1));
+        $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
+            ->onlyMethods(['visitMethod'])
+            ->getMock();
+
+        $visitor->expects(static::exactly(2))
+            ->method('visitMethod');
 
         $visitor->dispatch($trait);
     }
@@ -343,7 +346,7 @@ class DefaultVisitorTest extends AbstractTestCase
      */
     public function testGetVisitListenersReturnsIterator(): void
     {
-        $visitor = $this->getAbstractClassMock(AbstractASTVisitor::class);
+        $visitor = $this->getMockForAbstractClass(AbstractASTVisitor::class);
         static::assertInstanceOf('Iterator', $visitor->getVisitListeners());
     }
 
@@ -352,7 +355,7 @@ class DefaultVisitorTest extends AbstractTestCase
      */
     public function testGetVisitListenersContainsAddedListener(): void
     {
-        $visitor = $this->getAbstractClassMock(AbstractASTVisitor::class);
+        $visitor = $this->getMockForAbstractClass(AbstractASTVisitor::class);
 
         $listener = $this->getMockBuilder(ASTVisitListener::class)
             ->getMock();

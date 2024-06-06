@@ -93,12 +93,15 @@ class ASTFormalParameterParsingTest extends AbstractParserTestCase
      */
     private function getFirstMethodFormalParameter(): ASTFormalParameter
     {
-        return $this->parseCodeResourceForTest()
+        $param = $this->parseCodeResourceForTest()
             ->current()
             ->getTypes()
             ->current()
             ->getMethods()
             ->current()
             ->getFirstChildOfType(ASTFormalParameter::class);
+        static::assertNotNull($param);
+
+        return $param;
     }
 }

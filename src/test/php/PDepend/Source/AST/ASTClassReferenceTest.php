@@ -99,6 +99,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
      */
     public function testReturnValueOfMagicSleepContainsContextProperty(): void
     {
+        $class = $this->createNodeInstance();
         static::assertEquals(
             [
                 'context',
@@ -106,7 +107,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
                 'metadata',
                 'nodes',
             ],
-            $this->createNodeInstance()->__sleep()
+            $class->__sleep()
         );
     }
 
@@ -215,7 +216,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
     /**
      * Creates a concrete node implementation.
      */
-    protected function createNodeInstance(): AbstractASTArtifact|AbstractASTNode
+    protected function createNodeInstance(): AbstractASTNode|ASTAnonymousClass
     {
         return new ASTClassReference(
             $this->getBuilderContextMock(),

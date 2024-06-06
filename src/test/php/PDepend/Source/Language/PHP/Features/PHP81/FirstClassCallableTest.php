@@ -55,42 +55,42 @@ class FirstClassCallableTest extends PHPParserVersion81TestCase
     public function testFirstClassCallable(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)->isVariadicPlaceholder());
+        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)?->isVariadicPlaceholder());
     }
 
     public function testFirstClassCallableWithComments(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)->isVariadicPlaceholder());
+        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)?->isVariadicPlaceholder());
     }
 
     public function testFirstClassCallableObjectMethod(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)->isVariadicPlaceholder());
+        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)?->isVariadicPlaceholder());
     }
 
     public function testFirstClassCallableDynamicMethod(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)->isVariadicPlaceholder());
+        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)?->isVariadicPlaceholder());
     }
 
     public function testFirstClassCallableStaticMethod(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)->isVariadicPlaceholder());
+        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)?->isVariadicPlaceholder());
     }
 
     public function testFirstClassCallableDynamicStaticMethod(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)->isVariadicPlaceholder());
+        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)?->isVariadicPlaceholder());
     }
 
     public function testFirstClassCallableInvocableObject(): void
     {
         $method = $this->getFirstMethodForTestCase();
-        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)->isVariadicPlaceholder());
+        static::assertTrue($method->getFirstChildOfType(ASTArguments::class)?->isVariadicPlaceholder());
     }
 }

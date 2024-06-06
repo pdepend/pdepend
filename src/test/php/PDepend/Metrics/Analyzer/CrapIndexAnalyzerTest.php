@@ -165,6 +165,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param string $testCase Name of the calling test case.
      * @param int $ccn The entire cyclomatic complexity number.
+     * @return array<mixed>
      */
     private function calculateCrapIndex(string $testCase, int $ccn): array
     {
@@ -201,7 +202,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
     {
         $pathName = $this->createRunResourceURI('clover.xml');
 
-        $content = file_get_contents(__DIR__ . '/_files/clover.xml');
+        $content = file_get_contents(__DIR__ . '/_files/clover.xml') ?: '';
         $directory = dirname($this->createCodeResourceUriForTest()) . DIRECTORY_SEPARATOR;
         $content = str_replace('${pathName}', $directory, $content);
         file_put_contents($pathName, $content);

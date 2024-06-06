@@ -83,14 +83,6 @@ class ASTVariableTest extends ASTNodeTestCase
     }
 
     /**
-     * testAcceptInvokesAcceptOnChildNode
-     */
-    public function testAcceptInvokesAcceptOnChildNode(): void
-    {
-        // Not valid for leaf nodes.
-    }
-
-    /**
      * testVariable
      *
      * @since 1.0.2

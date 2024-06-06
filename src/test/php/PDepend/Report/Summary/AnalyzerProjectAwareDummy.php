@@ -57,14 +57,14 @@ class AnalyzerProjectAwareDummy implements AnalyzerProjectAware
     /**
      * Dummy project metrics.
      *
-     * @var array<string, mixed>
+     * @var array<string, int>
      */
     protected array $projectMetrics;
 
     /**
      * Constructs a new analyzer dummy instance.
      *
-     * @param array<string, mixed> $projectMetrics Dummy project metrics.
+     * @param array<string, int> $projectMetrics Dummy project metrics.
      */
     public function __construct(array $projectMetrics = [])
     {

@@ -332,6 +332,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * Returns valid field declation modifiers.
+     *
+     * @return list<array<int, mixed>>
      */
     public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations(): array
     {
@@ -344,6 +346,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * Returns invalid field declation modifiers.
+     *
+     * @return array<mixed>
      */
     public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers(): array
     {

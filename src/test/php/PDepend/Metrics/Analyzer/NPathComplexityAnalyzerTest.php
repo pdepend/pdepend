@@ -447,9 +447,10 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * Returns the NPath Complexity of the first function found in source file
      * associated with the calling test case.
      *
+     * @return numeric-string
      * @since 0.9.12
      */
-    private function calculateFunctionMetric(): int
+    private function calculateFunctionMetric(): string
     {
         return $this->calculateNPathComplexity(
             $this->getFirstFunctionForTestCaseInternal()
@@ -474,9 +475,10 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
      * Returns the NPath Complexity of the first method found in source file
      * associated with the calling test case.
      *
+     * @return numeric-string
      * @since 0.9.12
      */
-    private function calculateMethodMetric(): int
+    private function calculateMethodMetric(): string
     {
         return $this->calculateNPathComplexity(
             $this->getFirstMethodForTestCaseInternal()
@@ -502,9 +504,10 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Calculates the NPath complexity for the given callable instance.
      *
+     * @return numeric-string
      * @since 0.9.12
      */
-    private function calculateNPathComplexity(AbstractASTCallable $callable): int
+    private function calculateNPathComplexity(AbstractASTCallable $callable): string
     {
         $analyzer = $this->createAnalyzer();
         $analyzer->dispatch($callable);

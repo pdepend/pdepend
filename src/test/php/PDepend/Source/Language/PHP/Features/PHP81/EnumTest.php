@@ -96,7 +96,7 @@ class EnumTest extends PHPParserVersion81TestCase
 
         static::assertInstanceOf(ASTEnum::class, $enum);
         static::assertSame('Suit', $enum->getImage());
-        static::assertSame('string', $enum->getType()->getImage());
+        static::assertSame('string', $enum->getType()?->getImage());
         static::assertTrue($enum->isBacked());
         static::assertTrue($enum->isFinal());
         static::assertFalse($enum->isAnonymous());
@@ -135,7 +135,7 @@ class EnumTest extends PHPParserVersion81TestCase
                 'SPADES' => "'spades'",
             ],
             array_map(
-                static fn(ASTEnumCase $case) => $case->getValue()->getImage(),
+                static fn(ASTEnumCase $case) => $case->getValue()?->getImage(),
                 iterator_to_array($cases)
             )
         );

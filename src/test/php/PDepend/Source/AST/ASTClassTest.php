@@ -320,7 +320,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         static::assertEquals(
             'testGetAllMethodsHandlesTraitMethodPrecedenceUsedTraitOne',
-            $methods['foo']->getParent()->getImage()
+            $methods['foo']->getParent()?->getImage()
         );
     }
 
@@ -543,15 +543,19 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedFirstMatch(): void
     {
+        /** @var class-string */
+        $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
         $node1 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
             ->will(static::returnValue(null));
 
+        /** @var class-string */
+        $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
         $node2 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node2->expects(static::never())
             ->method('getFirstChildOfType')
@@ -570,21 +574,27 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNestedMatch(): void
     {
+        /** @var class-string */
+        $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
         $node1 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node1->expects(static::never())
             ->method('getFirstChildOfType');
 
+        /** @var class-string */
+        $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
         $node2 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
             ->will(static::returnValue(null));
 
+        /** @var class-string */
+        $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
         $node3 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node3->expects(static::once())
             ->method('getFirstChildOfType')
@@ -603,15 +613,19 @@ class ASTClassTest extends AbstractASTArtifactTestCase
      */
     public function testGetFirstChildOfTypeReturnsTheExpectedNull(): void
     {
+        /** @var class-string */
+        $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
         $node1 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
             ->will(static::returnValue(null));
 
+        /** @var class-string */
+        $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
         $node2 = $this->getMockBuilder(ASTNode::class)
-            ->setMockClassName('Class_' . __FUNCTION__ . '_' . md5(microtime()))
+            ->setMockClassName($class)
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
@@ -622,9 +636,9 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $class->addChild($node1);
         $class->addChild($node2);
 
-        $child = $class->getFirstChildOfType(
-            'Class_' . __FUNCTION__ . '_' . md5(microtime())
-        );
+        /** @var class-string<ASTNode> */
+        $type = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
+        $child = $class->getFirstChildOfType($type);
         static::assertNull($child);
     }
 
@@ -674,6 +688,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame($copy, $copy->getMethods()->current()->getParent());
     }
@@ -685,6 +700,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame(
             $copy->getCompilationUnit(),
@@ -699,6 +715,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame(
             $orig->getParentClass(),
@@ -713,6 +730,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame(
             $orig->getInterfaces()->current(),
@@ -729,6 +747,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $method = $orig->getMethods()->current();
 
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame(
             $method->getReturnClass(),
@@ -743,6 +762,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
         static::assertSame(
             $orig->getNamespace(),
@@ -757,8 +777,9 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
 
-        static::assertSame($copy, $orig->getNamespace()->getClasses()->current());
+        static::assertSame($copy, $orig->getNamespace()?->getClasses()->current());
     }
 
     /**
@@ -768,8 +789,11 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     {
         $orig = $this->getFirstClassForTestCase();
         $copy = unserialize(serialize($orig));
+        static::assertInstanceOf(ASTClass::class, $copy);
+        $namespace = $orig->getNamespace();
 
-        static::assertCount(1, $orig->getNamespace()->getClasses());
+        static::assertNotNull($namespace);
+        static::assertCount(1, $namespace->getClasses());
     }
 
     /**

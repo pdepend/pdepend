@@ -162,6 +162,7 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
 
         /** @var ASTClass $class */
         $class = $classes[0];
+        static::assertInstanceOf(ASTClass::class, $class);
 
         $constantDeclarator = $class->getChild(2)->getChild(0);
         static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);

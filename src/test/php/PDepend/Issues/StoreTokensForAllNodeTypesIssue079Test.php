@@ -170,6 +170,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
         $tokens = $function->getTokens();
         $token = reset($tokens);
 
+        static::assertNotFalse($token);
         static::assertEquals($token->startLine, $function->getStartLine());
     }
 
@@ -188,6 +189,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
         $tokens = $function->getTokens();
         $token = end($tokens);
 
+        static::assertNotFalse($token);
         static::assertEquals($token->endLine, $function->getEndLine());
     }
 
@@ -301,6 +303,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
         $tokens = $method->getTokens();
         $token = reset($tokens);
 
+        static::assertNotFalse($token);
         static::assertEquals($token->startLine, $method->getStartLine());
     }
 
@@ -321,6 +324,7 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
         $tokens = $method->getTokens();
         $token = end($tokens);
 
+        static::assertNotFalse($token);
         static::assertEquals($token->endLine, $method->getEndLine());
     }
 

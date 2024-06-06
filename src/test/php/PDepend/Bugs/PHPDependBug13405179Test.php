@@ -44,6 +44,7 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Report\FileAwareGenerator;
 use PDepend\Report\Jdepend\Chart;
 use PDepend\Report\Jdepend\Xml as JdependXml;
 use PDepend\Report\Overview\Pyramid;
@@ -65,7 +66,7 @@ class PHPDependBug13405179Test extends AbstractRegressionTestCase
     /**
      * testLogFileIsCreatedForUnstructuredCode
      *
-     * @param string $className Class name of a logger implementation.
+     * @param class-string<FileAwareGenerator> $className Class name of a logger implementation.
      * @param string $extension Log file extension.
      * @dataProvider getLoggerClassNames
      */
@@ -86,6 +87,8 @@ class PHPDependBug13405179Test extends AbstractRegressionTestCase
 
     /**
      * Returns the class names of all file aware logger classes.
+     *
+     * @return list<list<string>>
      */
     public static function getLoggerClassNames(): array
     {

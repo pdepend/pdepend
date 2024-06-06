@@ -126,6 +126,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
         );
 
         [$exitCode, $output] = $this->runTextUICommand();
+        static::assertIsString($output);
 
         static::assertStringNotContainsString('Following errors occurred:', $output);
     }
@@ -145,6 +146,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
             ]
         );
         [$exitCode, $output] = $this->runTextUICommand();
+        static::assertIsString($output);
 
         static::assertStringContainsString('Unexpected token: ), line: 7, col: 49, file:', $output);
     }
@@ -164,6 +166,8 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     /**
      * Executes PDepend's text ui command and returns the exit code and shell
      * output.
+     *
+     * @return array<mixed>
      */
     protected function runTextUICommand(): array
     {

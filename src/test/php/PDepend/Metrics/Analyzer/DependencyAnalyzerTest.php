@@ -57,13 +57,13 @@ use PDepend\Source\Builder\Builder;
  */
 class DependencyAnalyzerTest extends AbstractMetricsTestCase
 {
-    /** The used node builder. */
+    /** @var Builder<mixed> The used node builder. */
     protected Builder $builder;
 
     /**
      * Input test data.
      *
-     * @var array<string, array>
+     * @var array<string, array<mixed>>
      */
     private array $input = [
         '+global' => [

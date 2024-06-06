@@ -427,6 +427,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testGetNodeMetricsForTrait
      *
+     * @return array<mixed>
      * @since 1.0.6
      */
     public function testGetNodeMetricsForTrait(): array
@@ -441,7 +442,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testGetNodeMetricsForTraitReturnsExpectedMetricSet
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, mixed> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -457,7 +458,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct IMPL values.
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -470,7 +471,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the calculated Class Interface Size(CSI) is correct.
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -483,7 +484,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the calculated Class SiZe(CSZ) metric is correct.
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -496,7 +497,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * testCalculateNpmMetricForClassWithPublicMethod
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -509,7 +510,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct VARS metric
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -522,7 +523,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct VARSi metric
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -535,7 +536,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct VARSnp metric
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -548,7 +549,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct WMC metric.
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -561,7 +562,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct WMCi metric.
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait
@@ -574,7 +575,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that the analyzer calculates the correct WMCnp metric.
      *
-     * @param array $metrics Calculated class metrics.
+     * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
      *
      * @depends testGetNodeMetricsForTrait

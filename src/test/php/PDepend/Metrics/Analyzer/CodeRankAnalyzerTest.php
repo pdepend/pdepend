@@ -60,7 +60,7 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Test input data.
      *
-     * @var array<string, array>
+     * @var array<string, array<mixed>>
      */
     private array $input = [
         'package1' => ['cr' => 0.2775, 'rcr' => 0.385875],
@@ -433,17 +433,29 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         static::assertCount(0, $metrics);
     }
 
+    /**
+     * @param array<string, array<int, string>|string> $options
+     * @return array<mixed>
+     */
     protected function getCodeRankForTestCase(array $options = [])
     {
         return $this->getCodeRankOrReverseCodeRank('cr', $options);
     }
 
+    /**
+     * @param array<string, array<int, string>|string> $options
+     * @return array<mixed>
+     */
     protected function getReverseCodeRankForTestCase(array $options = [])
     {
         return $this->getCodeRankOrReverseCodeRank('rcr', $options);
     }
 
-    protected function getCodeRankOrReverseCodeRank($metricName, array $options = [])
+    /**
+     * @param array<string, array<int, string>|string> $options
+     * @return array<mixed>
+     */
+    protected function getCodeRankOrReverseCodeRank(string $metricName, array $options = [])
     {
         $namespaces = $this->parseCodeResourceForTest();
 

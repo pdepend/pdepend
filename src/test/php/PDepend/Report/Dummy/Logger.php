@@ -47,6 +47,7 @@ use PDepend\Metrics\Analyzer;
 use PDepend\Report\CodeAwareGenerator;
 use PDepend\Report\FileAwareGenerator;
 use PDepend\Source\AST\ASTArtifactList;
+use PDepend\Source\AST\ASTNamespace;
 
 /**
  * Dummy generator for testing
@@ -62,7 +63,7 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
     /**
      * The logger input data.
      *
-     * @var array<string, mixed>
+     * @var array{code: ?ASTArtifactList<ASTNamespace>, analyzers: list<Analyzer>}
      */
     private array $input = [
         'code' => null,
@@ -104,6 +105,8 @@ class Logger implements CodeAwareGenerator, FileAwareGenerator
 
     /**
      * Sets the context code nodes.
+     *
+     * @param ASTArtifactList<ASTNamespace> $artifacts
      */
     public function setArtifacts(ASTArtifactList $artifacts): void
     {

@@ -97,7 +97,10 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
 
     private function getFirstPrintInFunction(): ASTPrintExpression
     {
-        return $this->getFirstFunctionForTestCase()
+        $node = $this->getFirstFunctionForTestCase()
             ->getFirstChildOfType(ASTPrintExpression::class);
+        static::assertNotNull($node);
+
+        return $node;
     }
 }
