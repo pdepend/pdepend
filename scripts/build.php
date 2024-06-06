@@ -8,8 +8,8 @@ $version = parse_ini_file($root . 'build.properties')['project.version'] ?? '@pa
 echo 'PDepend ', $version, PHP_EOL, PHP_EOL;
 
 $phar = new Phar($archiveName);
-$phar->buildFromDirectory($root, '/^'.preg_quote($root, '/').'src\/main/');
-$phar->buildFromDirectory($root, '/^'.preg_quote($root, '/').'vendor(?!.*\/symfony\/.*\/Test\/).*$/');
+$phar->buildFromDirectory($root, '/^' . preg_quote($root, '/') . 'src\/main/');
+$phar->buildFromDirectory($root, '/^' . preg_quote($root, '/') . 'vendor(?!.*\/symfony\/.*\/Test\/).*$/');
 
 $patchList = [
     'src/main/php/PDepend/TextUI/Command.php',

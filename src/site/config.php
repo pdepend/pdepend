@@ -7,9 +7,7 @@ use Gregwar\RST\Parser;
 
 class ParagraphClassNode extends ParagraphNode
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $class;
 
     public function __construct($value = null, $class = null)
@@ -27,7 +25,7 @@ class ParagraphClassNode extends ParagraphNode
             return '';
         }
 
-        return '<p'.($class ? ' class="'.$class.'"' : '').'>'.$text.'</p>';
+        return '<p' . ($class ? ' class="' . $class . '"' : '') . '>' . $text . '</p>';
     }
 }
 
@@ -42,11 +40,9 @@ class ClassDirective extends Directive
     }
 
     /**
-     * @param Parser $parser
      * @param ParagraphNode $node
-     * @param array $options
      */
-    public function process(Parser $parser, $node, mixed $variable, mixed $data, array $options)
+    public function process(Parser $parser, $node, mixed $variable, mixed $data, array $options): void
     {
         $node = new ParagraphClassNode($node->getValue(), $data);
 
@@ -56,11 +52,9 @@ class ClassDirective extends Directive
 
 class PHPDependEnvironment extends Environment
 {
-    public static $letters = array('=', '-', '`', '~', '*', '^', '"');
+    public static $letters = ['=', '-', '`', '~', '*', '^', '"'];
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $baseHref;
 
     public function getBaseHref()
@@ -68,12 +62,12 @@ class PHPDependEnvironment extends Environment
         return $this->baseHref;
     }
 
-    public function reset()
+    public function reset(): void
     {
         parent::reset();
 
         $this->baseHref = ltrim(getenv('BASE_HREF') ?: '', ':');
-        $this->titleLetters = array(
+        $this->titleLetters = [
             2 => '=',
             3 => '-',
             4 => '`',
@@ -81,31 +75,31 @@ class PHPDependEnvironment extends Environment
             6 => '*',
             7 => '^',
             8 => '"',
-        );
+        ];
     }
 
     public function relativeUrl($url)
     {
         $root = substr($url, 0, 1) === '/';
 
-        return ($root ? $this->getBaseHref().'/' : '').parent::relativeUrl($url);
+        return ($root ? $this->getBaseHref() . '/' : '') . parent::relativeUrl($url);
     }
 }
 
-$env = new PHPDependEnvironment;
+$env = new PHPDependEnvironment();
 $parser = new Parser($env);
 $parser->registerDirective(new ClassDirective());
 
-return array(
-    'index'            => 'news.html',
-    'baseHref'         => $env->getBaseHref(),
-    'cname'            => getenv('CNAME'),
-    'websiteDirectory' => __DIR__.'/../../dist/website',
-    'sourceDirectory'  => __DIR__.'/rst',
-    'assetsDirectory'  => __DIR__.'/resources/web',
-    'layout'           => __DIR__.'/resources/layout.php',
-    'publishPhar'      => 'pdepend/pdepend',
-    'extensions'       => array(
+return [
+    'index' => 'news.html',
+    'baseHref' => $env->getBaseHref(),
+    'cname' => getenv('CNAME'),
+    'websiteDirectory' => __DIR__ . '/../../dist/website',
+    'sourceDirectory' => __DIR__ . '/rst',
+    'assetsDirectory' => __DIR__ . '/resources/web',
+    'layout' => __DIR__ . '/resources/layout.php',
+    'publishPhar' => 'pdepend/pdepend',
+    'extensions' => [
         'rst' => function ($file) use ($parser) {
             $parser->getEnvironment()->setCurrentDirectory(dirname($file));
             $content = $parser->parseFile($file);
@@ -126,5 +120,5 @@ return array(
 
             return preg_replace('/^\s*<hr\s*\/?>/', '', $content);
         },
-    ),
-);
+    ],
+];

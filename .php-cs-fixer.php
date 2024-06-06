@@ -6,9 +6,10 @@
  * you can change this configuration by importing this file.
  */
 $config = new PhpCsFixer\Config();
+
 return $config
     ->setRiskyAllowed(true)
-    ->setParallelConfig(\PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
+    ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
     ->setRules([
         '@PhpCsFixer' => true, // Gets overwritten by rules below
         '@PER-CS2.0' => true,
@@ -29,22 +30,22 @@ return $config
                 'magic',
                 'phpunit',
                 // We do not want to order methods
-                //'method_public',
-                //'method_protected',
-                //'method_private',
-            ]
+                // 'method_public',
+                // 'method_protected',
+                // 'method_private',
+            ],
         ],
         'single_line_empty_body' => false, // Not adhering to PER CS v2
         'trailing_comma_in_multiline' => [
             'after_heredoc' => true,
             'elements' => [
                 // Not adhering to PER CS v2; we don't want trailing commas for arguments
-                //'arguments',
+                // 'arguments',
                 'arrays',
                 'match',
                 // Not adhering to PER CS v2; we don't want trailing commas for parameters
-                //'parameters'
-            ]
+                // 'parameters'
+            ],
         ],
         'fully_qualified_strict_types' => true,
         'global_namespace_import' => true,
@@ -99,9 +100,7 @@ return $config
         'phpdoc_types_order' => ['null_adjustment' => 'always_last'],
         'phpdoc_var_annotation_correct_order' => true,
 
-        /*
-         * PHP CS Fixer rules
-         */
+        // PHP CS Fixer rules
 
         // Each line of multi-line DocComments must have an asterisk [PSR-5] and must be aligned with the first one.
         'align_multiline_comment' => true,
@@ -129,8 +128,8 @@ return $config
                 'throw',
                 'try',
                 'yield',
-                'yield_from'
-            ]
+                'yield_from',
+            ],
         ],
         // Class, trait and interface elements must be separated with one or none blank line.
         'class_attributes_separation' => ['elements' => ['method' => 'one']],
@@ -145,7 +144,7 @@ return $config
         // There must not be spaces around `declare` statement parentheses.
         'declare_parentheses' => true,
         // Replaces short-echo `<?=` with long format `<?php echo`/`<?php print` syntax, or vice-versa.
-        'echo_tag_syntax' => ['format' => 'short', 'shorten_simple_statements_only' => true ],
+        'echo_tag_syntax' => ['format' => 'short', 'shorten_simple_statements_only' => true],
         // Empty loop-body must be in configured style.
         'empty_loop_body' => true,
         // Empty loop-condition must be in configured style.
@@ -209,8 +208,8 @@ return $config
                 'square_brace_block',
                 'switch',
                 'throw',
-                'use'
-            ]
+                'use',
+            ],
         ],
         // The namespace declaration line shouldn't contain leading whitespace.
         'no_leading_namespace_whitespace' => true,
@@ -239,13 +238,13 @@ return $config
                 'clone',
                 'continue',
                 'echo_print',
-                //'negative_instanceof',
+                // 'negative_instanceof',
                 'others',
-                //'return',
+                // 'return',
                 'switch_case',
                 'yield',
-                'yield_from'
-            ]
+                'yield_from',
+            ],
         ],
         // Imports should not be aliased as the same name.
         'no_unneeded_import_alias' => true,
@@ -272,8 +271,8 @@ return $config
         // Operators - when multiline - must always be at the beginning or at the end of the line.
         // TODO Decide whether to put boolean operators at the end or the beginning. Either way lead to 10 changed files.
         'operator_linebreak' => false,
-        //'operator_linebreak' => ['only_booleans' => true, 'position' => 'beginning'],
-        //'operator_linebreak' => ['only_booleans' => true, 'position' => 'end'],
+        // 'operator_linebreak' => ['only_booleans' => true, 'position' => 'beginning'],
+        // 'operator_linebreak' => ['only_booleans' => true, 'position' => 'end'],
         // Sort union types and intersection types using configured order.
         'ordered_types' => true,
         // PHPUnit annotations should be a FQCNs including a root namespace.
@@ -357,9 +356,7 @@ return $config
         // Write conditions in Yoda style (`true`), non-Yoda style (`['equal' => false, 'identical' => false, 'less_and_greater' => false]`) or ignore those conditions (`null`) based on configuration.
         'yoda_style' => false,
 
-        /*
-         * Additional rules, mostly risky ones
-         */
+        // Additional rules, mostly risky ones
 
         '@PHPUnit100Migration:risky' => true,
         '@PER-CS2.0:risky' => true,
@@ -393,7 +390,7 @@ return $config
         'php_unit_strict' => false, // Risky
         'php_unit_test_annotation' => true, // Risky
         'php_unit_test_case_static_method_calls' => true, // Risky
-        'phpdoc_line_span' => ['const' => 'single','property' => 'single'],
+        'phpdoc_line_span' => ['const' => 'single', 'property' => 'single'],
         'phpdoc_param_order' => true,
         'phpdoc_tag_casing' => true,
         'regular_callable_call' => true, // Risky
@@ -410,7 +407,10 @@ return $config
         PhpCsFixer\Finder::create()
             ->exclude('vendor')
             ->in([
+                __DIR__ . '/scripts',
+                __DIR__ . '/src/bin',
                 __DIR__ . '/src/main/php/PDepend',
+                __DIR__ . '/src/site',
                 __DIR__ . '/src/test/php',
             ])
     );
