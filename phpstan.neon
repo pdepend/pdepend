@@ -1,6 +1,9 @@
 parameters:
     paths:
+        - scripts
+        - src/bin
         - src/main
+        - src/site
         - src/test/php
     rememberPossiblyImpureFunctionValues: false
     excludePaths:
