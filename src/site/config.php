@@ -16,7 +16,7 @@ class ParagraphClassNode extends ParagraphNode
         $this->class = $class;
     }
 
-    public function render()
+    public function render(): string
     {
         $text = trim($this->value);
         $class = $this->class;
@@ -34,7 +34,7 @@ class ClassDirective extends Directive
     /**
      * Get the directive name
      */
-    public function getName()
+    public function getName(): string
     {
         return 'class';
     }
@@ -54,10 +54,9 @@ class PHPDependEnvironment extends Environment
 {
     public static $letters = ['=', '-', '`', '~', '*', '^', '"'];
 
-    /** @var string */
-    protected $baseHref;
+    protected string $baseHref;
 
-    public function getBaseHref()
+    public function getBaseHref(): string
     {
         return $this->baseHref;
     }
@@ -78,7 +77,7 @@ class PHPDependEnvironment extends Environment
         ];
     }
 
-    public function relativeUrl($url)
+    public function relativeUrl($url): string
     {
         $root = substr($url, 0, 1) === '/';
 
