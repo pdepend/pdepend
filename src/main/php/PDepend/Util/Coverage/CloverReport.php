@@ -68,7 +68,10 @@ class CloverReport implements Report
      */
     public function __construct(SimpleXMLElement $sxml)
     {
-        $this->readProjectCoverage($sxml->project);
+        $project = $sxml->project;
+        if ($project) {
+            $this->readProjectCoverage($project);
+        }
     }
 
     /**
