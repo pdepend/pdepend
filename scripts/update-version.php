@@ -43,9 +43,11 @@
 
 namespace PDepend;
 
+use Exception;
 use Iterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use SplFileInfo;
 
 /**
  * Utility class that we use to recalculate the cache hash/version.
@@ -79,7 +81,11 @@ class CacheVersionUpdater
      */
     public function __construct()
     {
-        $this->rootDirectory = realpath(__DIR__ . '/../src/main/php/PDepend');
+        $root = realpath(__DIR__ . '/../src/main/php/PDepend');
+        if (!$root) {
+            throw new Exception('Unable find application root');
+        }
+        $this->rootDirectory = $root;
     }
 
     /**
@@ -101,6 +107,9 @@ class CacheVersionUpdater
         $file = $this->rootDirectory . $this->targetFile;
 
         $code = file_get_contents($file);
+        if (!$code) {
+            throw new Exception('Unable to load file: ' . $file);
+        }
         $code = preg_replace($this->targetRegexp, "@version:{$checksum}:@", $code);
         file_put_contents($file, $code);
     }
@@ -122,7 +131,7 @@ class CacheVersionUpdater
      * Reads all files below the given <b>$path</b>.
      *
      * @param string $path The parent directory or a file.
-     * @return array(string)
+     * @return array<string>
      */
     protected function readFiles($path)
     {
@@ -154,7 +163,7 @@ class CacheVersionUpdater
      * Creates an iterator with all files below the given directory.
      *
      * @param string $path Path to a directory.
-     * @return Iterator
+     * @return Iterator<int, SplFileInfo>
      */
     protected function createFileIterator($path)
     {
@@ -166,7 +175,7 @@ class CacheVersionUpdater
     /**
      * The main method starts the cache version updater.
      *
-     * @param array $args Cli arguments.
+     * @param list<string> $args Cli arguments.
      */
     public static function main(array $args): void
     {

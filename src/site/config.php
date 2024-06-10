@@ -7,10 +7,9 @@ use Gregwar\RST\Parser;
 
 class ParagraphClassNode extends ParagraphNode
 {
-    /** @var string */
-    protected $class;
+    private ?string $class;
 
-    public function __construct($value = null, $class = null)
+    public function __construct(mixed $value = null, ?string $class = null)
     {
         parent::__construct($value);
         $this->class = $class;
@@ -41,6 +40,8 @@ class ClassDirective extends Directive
 
     /**
      * @param ParagraphNode $node
+     * @param ?string $data
+     * @param array<mixed> $options
      */
     public function process(Parser $parser, $node, mixed $variable, mixed $data, array $options): void
     {
@@ -52,6 +53,7 @@ class ClassDirective extends Directive
 
 class PHPDependEnvironment extends Environment
 {
+    /** @var list<string> */
     public static $letters = ['=', '-', '`', '~', '*', '^', '"'];
 
     protected string $baseHref;
@@ -77,6 +79,9 @@ class PHPDependEnvironment extends Environment
         ];
     }
 
+    /**
+     * @param string $url
+     */
     public function relativeUrl($url): string
     {
         $root = substr($url, 0, 1) === '/';
@@ -110,12 +115,12 @@ return [
                 $hash = preg_replace('/[^a-z0-9]+/', '-', strtolower(trim($match['content'])));
 
                 return "<a id=\"$hash\"></a>\n<h$level>$content</h$level>";
-            }, $content);
+            }, $content) ?: $content;
             $content = preg_replace(
                 '/pdepend-(\d+\.\S+)/',
                 '<a href="https://github.com/pdepend/pdepend/releases/tag/$1" title="$0 release">$0</a>',
                 $content
-            );
+            ) ?: $content;
 
             return preg_replace('/^\s*<hr\s*\/?>/', '', $content);
         },

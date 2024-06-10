@@ -7,7 +7,7 @@ $versionsMatches = [];
 $count = preg_match_all(
     "/^pdepend-(\d+\.\d+\.\d+) \(\d{4}\/\d{2}\/\d{2}\)\n" .
     '^=*$/m',
-    file_get_contents(__DIR__ . '/../../CHANGELOG.md'),
+    file_get_contents(__DIR__ . '/../../CHANGELOG.md') ?: '',
     $versionsMatches
 );
 

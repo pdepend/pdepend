@@ -22,6 +22,11 @@ if (isset($argv[1])) {
 }
 
 $data = file_get_contents($file);
+if (!$data) {
+    fwrite(STDERR, "Failed to fetch file.\n");
+
+    exit(33);
+}
 
 $regexp = '(
     \s+<ST_IN_SCRIPTING>"([a-z_]+)"\s*\{
@@ -87,9 +92,16 @@ $methodCode .= dump('constant', $valid);
 $methodCode .= dump('function', $valid);
 $methodCode .= dump('namespace', $valid);
 
-function test($type, $code, $image, $constant, array &$valid)
+/**
+ * @param array<string, list<string>> $valid
+ * @return array<string, list<string>>
+ */
+function test(string $type, string $code, string $image, string $constant, array &$valid)
 {
     $file = tempnam(sys_get_temp_dir(), 'php-keyword_');
+    if (!$file) {
+        return $valid;
+    }
 
     file_put_contents($file, sprintf($code, $image));
     exec(sprintf("%s -l '%s'", PHP_BINARY, $file), $output, $retval);
@@ -103,7 +115,10 @@ function test($type, $code, $image, $constant, array &$valid)
     return $valid;
 }
 
-function dump($type, array $valid)
+/**
+ * @param array<array<string>> $valid
+ */
+function dump(string $type, array $valid): string
 {
     $code = sprintf(
         '
@@ -128,7 +143,7 @@ function dump($type, array $valid)
         implode(
             "\n",
             array_map(
-                static fn($token) => sprintf('            case Tokens::%s:', $token),
+                static fn(string $token) => sprintf('            case Tokens::%s:', $token),
                 $valid[$type]
             )
         )
@@ -144,13 +159,11 @@ if (false === isset($argv[2])) {
 }
 
 $parserFile = sprintf(__DIR__ . '/../src/main/php/PDepend/Source/Language/PHP/PHPParserVersion%s.php', $argv[2]);
-if (false === file_exists($parserFile)) {
+if (!file_exists($parserFile) || !($parserCode = file_get_contents($parserFile))) {
     fwrite(STDERR, "The given parser version does not exist.\n");
 
     exit(42);
 }
-
-$parserCode = file_get_contents($parserFile);
 
 preg_match(
     '(\s+/\* Keyword test methods {{{ \*/\s*([^\s].*[^\s])\s*/\* }}} Keyword test methods \*/)sU',
