@@ -94,6 +94,7 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
         static::assertEquals(
             [
                 'metadata',
+                'properties',
                 'constants',
                 'interfaceReferences',
                 'parentClassReference',
@@ -108,6 +109,11 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
                 'startLine',
                 'userDefined',
                 'id',
+                'methods',
+                'startColumn',
+                'endColumn',
+                'parent',
+                'compilationUnit',
             ],
             $class->__sleep()
         );

@@ -54,7 +54,6 @@ use PDepend\ProcessListener;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
 use PDepend\Source\Builder\Builder;
-use PDepend\Source\Tokenizer\Tokenizer;
 
 /**
  * Fun result printer that uses dbus to show a notification window.
@@ -92,14 +91,14 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts parsing of a new file.
      */
-    public function startFileParsing(Tokenizer $tokenizer): void
+    public function startFileParsing(): void
     {
     }
 
     /**
      * Is called when PDepend has finished a file.
      */
-    public function endFileParsing(Tokenizer $tokenizer): void
+    public function endFileParsing(): void
     {
         ++$this->parsedFiles;
     }

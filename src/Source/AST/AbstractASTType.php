@@ -88,12 +88,10 @@ abstract class AbstractASTType extends AbstractASTArtifact
     protected int $modifiers = 0;
 
     /**
-     * Temporary property that only holds methods during the parsing process.
-     *
-     * @var ASTMethod[]|null
+     * @var ASTMethod[]
      * @since 1.0.2
      */
-    protected ?array $methods = [];
+    protected array $methods = [];
 
     /** The parent namespace for this class. */
     private ?ASTNamespace $namespace = null;
@@ -108,14 +106,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function __sleep(): array
     {
-        if (is_array($this->methods)) {
-            $this->cache
-                ->type('methods')
-                ->store($this->getId(), $this->methods);
-
-            $this->methods = null;
-        }
-
         return [
             'cache',
             'context',
@@ -128,6 +118,11 @@ abstract class AbstractASTType extends AbstractASTArtifact
             'startLine',
             'userDefined',
             'id',
+            'methods',
+            'startColumn',
+            'endColumn',
+            'parent',
+            'compilationUnit',
         ];
     }
 
@@ -140,8 +135,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function __wakeup(): void
     {
-        $this->methods = null;
-
         foreach ($this->nodes as $node) {
             $node->setParent($this);
         }
@@ -216,23 +209,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function getMethods(): ASTArtifactList
     {
-        if (is_array($this->methods)) {
-            return new ASTArtifactList($this->methods);
-        }
-
-        /** @var ASTMethod[] */
-        $methods = (array) $this->cache
-            ->type('methods')
-            ->restore($this->getId());
-
-        if ($this instanceof AbstractASTClassOrInterface) {
-            foreach ($methods as $method) {
-                $method->compilationUnit = $this->compilationUnit;
-                $method->setParent($this);
-            }
-        }
-
-        return new ASTArtifactList($methods);
+        return new ASTArtifactList($this->methods);
     }
 
     /**

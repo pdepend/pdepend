@@ -61,6 +61,11 @@ class ASTClass extends AbstractASTClassOrInterface
      */
     private array $properties;
 
+    public function __sleep(): array
+    {
+        return ['properties', ...parent::__sleep()];
+    }
+
     /**
      * The magic wakeup method will be called by PHP's runtime environment when
      * a serialized instance of this class was unserialized. This implementation

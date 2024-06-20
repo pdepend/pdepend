@@ -44,7 +44,6 @@
 namespace PDepend;
 
 use ArrayIterator;
-use DirectoryIterator;
 use ErrorException;
 use Exception;
 use Imagick;
@@ -101,13 +100,6 @@ abstract class AbstractTestCase extends TestCase
     {
         parent::setUp();
 
-        $run = __DIR__ . '/_run';
-        if (file_exists($run) === false) {
-            mkdir($run, 0o755);
-        }
-
-        $this->clearRunResources($run);
-
         if (defined('STDERR') === false) {
             define('STDERR', fopen('php://stderr', '1'));
         }
@@ -120,7 +112,6 @@ abstract class AbstractTestCase extends TestCase
     {
         CollectionArtifactFilter::getInstance()->setFilter();
 
-        $this->clearRunResources();
         $this->resetWorkingDirectory();
 
         if (function_exists('gc_collect_cycles')) {
@@ -458,30 +449,6 @@ abstract class AbstractTestCase extends TestCase
             ->getMock();
 
         return $mock;
-    }
-
-    /**
-     * Clears all temporary resources.
-     */
-    private function clearRunResources(?string $dir = null): void
-    {
-        if ($dir === null) {
-            $dir = __DIR__ . '/_run';
-        }
-
-        foreach (new DirectoryIterator($dir) as $file) {
-            if ($file->isDot() || $file->getFilename() === '.svn') {
-                continue;
-            }
-            $pathName = realpath($file->getPathname());
-            static::assertNotFalse($pathName);
-            if ($file->isDir()) {
-                $this->clearRunResources($pathName);
-                rmdir($pathName);
-            } else {
-                unlink($pathName);
-            }
-        }
     }
 
     /**

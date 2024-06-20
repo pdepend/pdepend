@@ -82,6 +82,8 @@ class Runner
      */
     private array $excludeDirectories = ['.git', '.svn', 'CVS'];
 
+    private bool $isWorker = false;
+
     /**
      * List of exclude namespaces.
      *
@@ -156,6 +158,11 @@ class Runner
     public function setExcludeDirectories(array $excludeDirectories): void
     {
         $this->excludeDirectories = $excludeDirectories;
+    }
+
+    public function setWorker(): void
+    {
+        $this->isWorker = true;
     }
 
     /**
@@ -236,6 +243,10 @@ class Runner
             $engine->addFileFilter($filter);
         }
 
+        if ($this->isWorker) {
+            $engine->setWorker();
+        }
+
         if (count($this->excludeNamespaces) > 0) {
             $exclude = $this->excludeNamespaces;
             $filter = new PackageArtifactFilter($exclude);
@@ -259,7 +270,7 @@ class Runner
             throw new RuntimeException($e->getMessage(), self::EXCEPTION_EXIT, $e);
         }
 
-        if (count($this->loggerMap) === 0) {
+        if (!$this->isWorker && count($this->loggerMap) === 0) {
             throw new RuntimeException('No output specified.', self::EXCEPTION_EXIT);
         }
 

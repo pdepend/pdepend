@@ -45,6 +45,7 @@ namespace PDepend;
 
 use AppendIterator;
 use ArrayIterator;
+use Fidry\CpuCoreCounter\CpuCoreCounter;
 use GlobIterator;
 use InvalidArgumentException;
 use OutOfBoundsException;
@@ -68,9 +69,10 @@ use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Parser\ParserException;
-use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheFactory;
 use PDepend\Util\Configuration;
+use React\EventLoop\Factory as LoopFactory;
+use React\Stream\WritableStreamInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
@@ -133,6 +135,8 @@ class Engine
     /** A filter for namespace. */
     private ArtifactFilter $codeFilter;
 
+    private bool $isWorker = false;
+
     /** Should the parse ignore doc comment annotations? */
     private bool $withoutAnnotations = false;
 
@@ -154,7 +158,7 @@ class Engine
      * List of all {@link ParserException} that were caught during
      * the parsing process.
      *
-     * @var ParserException[]
+     * @var list<ParserException>
      */
     private array $parseExceptions = [];
 
@@ -255,6 +259,11 @@ class Engine
         $this->options = $options;
     }
 
+    public function setWorker(): void
+    {
+        $this->isWorker = true;
+    }
+
     /**
      * Should the parse ignore doc comment annotations?
      */
@@ -286,7 +295,9 @@ class Engine
     {
         $this->builder = new PHPBuilder();
 
+        $this->fireStartParseProcess($this->builder);
         $this->performParseProcess();
+        $this->fireEndParseProcess($this->builder);
 
         // Get global filter collection
         $collection = CollectionArtifactFilter::getInstance();
@@ -437,20 +448,20 @@ class Engine
     /**
      * Sends the start file parsing event.
      */
-    protected function fireStartFileParsing(Tokenizer $tokenizer): void
+    protected function fireStartFileParsing(): void
     {
         foreach ($this->listeners as $listener) {
-            $listener->startFileParsing($tokenizer);
+            $listener->startFileParsing();
         }
     }
 
     /**
      * Sends the end file parsing event.
      */
-    protected function fireEndFileParsing(Tokenizer $tokenizer): void
+    protected function fireEndFileParsing(): void
     {
         foreach ($this->listeners as $listener) {
-            $listener->endFileParsing($tokenizer);
+            $listener->endFileParsing();
         }
     }
 
@@ -504,39 +515,142 @@ class Engine
         // Reset list of thrown exceptions
         $this->parseExceptions = [];
 
-        $tokenizer = new PHPTokenizerInternal();
+        if ($this->isWorker) {
+            $this->runWorker();
 
-        $this->fireStartParseProcess($this->builder);
-
-        foreach ($this->createFileIterator() as $file) {
-            $tokenizer->setSourceFile($file);
-
-            $parser = new PHPParserGeneric(
-                $tokenizer,
-                $this->builder,
-                $this->cacheFactory->create(),
-            );
-            assert($this->configuration->parser instanceof stdClass);
-            assert(is_int($this->configuration->parser->nesting));
-            $parser->setMaxNestingLevel($this->configuration->parser->nesting);
-
-            // Disable annotation parsing?
-            if ($this->withoutAnnotations) {
-                $parser->setIgnoreAnnotations();
-            }
-
-            $this->fireStartFileParsing($tokenizer);
-
-            try {
-                $parser->parse();
-            } catch (ParserException $e) {
-                $this->parseExceptions[] = $e;
-            }
-
-            $this->fireEndFileParsing($tokenizer);
+            return;
         }
 
-        $this->fireEndParseProcess($this->builder);
+        $files = $this->createFileIterator();
+        $fileCount = count($files);
+
+        if ($fileCount > 1) {
+            $coreCount = (new CpuCoreCounter())->getCount();
+            if ($coreCount > 1) {
+                $this->runMultiProcessParse($files, $fileCount, $coreCount);
+
+                return;
+            }
+        }
+
+        $tokenizer = new PHPTokenizerInternal();
+
+        foreach ($files as $file) {
+            $this->fireStartFileParsing();
+            $this->parseFile($tokenizer, $file);
+            $this->fireEndFileParsing();
+        }
+    }
+
+    private function runWorker(): void
+    {
+        $stdin = fopen('php://stdin', 'rb');
+        if ($stdin === false) {
+            throw new RuntimeException('Unable to acquire input stream');
+        }
+
+        $tokenizer = new PHPTokenizerInternal();
+
+        while (($file = fgets($stdin)) !== false) {
+            $file = trim($file);
+            if ($file === '') {
+                continue;
+            }
+
+            $this->parseFile($tokenizer, $file);
+
+            if ($this->parseExceptions) {
+                echo base64_encode(serialize(array_pop($this->parseExceptions))) . "\n";
+                $this->parseExceptions = [];
+
+                continue;
+            }
+
+            $namespaces = $this->builder->getNamespaces();
+            echo base64_encode(serialize($namespaces)) . "\n";
+            $this->builder = new PHPBuilder();
+        }
+    }
+
+    /**
+     * @param ArrayIterator<int, string> $files
+     */
+    private function runMultiProcessParse(ArrayIterator $files, int $fileCount, int $coreCount): void
+    {
+        $processFactory = new ProcessFactory($this->withoutAnnotations);
+        $loop = LoopFactory::create();
+        $proccessCount = min($fileCount, $coreCount);
+        $buffers = [];
+        for ($proccessNo = 0; $proccessNo < $proccessCount; $proccessNo++) {
+            $process = $processFactory->create();
+            $buffers[$proccessNo] = '';
+            $process->start($loop);
+
+            assert(is_callable($process->stdout));
+            $process->stdout->on('data', function (string $chunk) use (&$buffers, $proccessNo, $files, $process): void {
+                $buffers[$proccessNo] .= $chunk;
+
+                while (($pos = strpos($buffers[$proccessNo], "\n")) !== false) {
+                    $this->fireStartFileParsing();
+                    $line = substr($buffers[$proccessNo], 0, $pos);
+                    $buffers[$proccessNo] = substr($buffers[$proccessNo], $pos + 1);
+
+                    $serializedData = base64_decode($line, true);
+                    if ($serializedData === false) {
+                        throw new RuntimeException('Unable to decode message: ' . $line);
+                    }
+
+                    $data = unserialize($serializedData);
+
+                    if ($data instanceof ParserException) {
+                        $this->parseExceptions[] = $data;
+                    }
+
+                    if ($process->stdin instanceof WritableStreamInterface) {
+                        if ($files->valid()) {
+                            $process->stdin->write($files->current() . "\n");
+                            $files->next();
+                        } else {
+                            $process->stdin->end();
+                        }
+                    }
+                    $this->fireEndFileParsing();
+                }
+            });
+
+            if ($process->stdin instanceof WritableStreamInterface) {
+                $process->stdin->write($files->current() . "\n");
+                $files->next();
+            }
+        }
+        $loop->run();
+        $cache = $this->cacheFactory->create();
+        $this->builder->setCache($cache);
+    }
+
+    private function parseFile(PHPTokenizerInternal $tokenizer, string $file): void
+    {
+        $tokenizer->setSourceFile($file);
+
+        $parser = new PHPParserGeneric(
+            $tokenizer,
+            $this->builder,
+            $this->cacheFactory->create(),
+        );
+        assert($this->configuration->parser instanceof stdClass);
+        assert(is_int($this->configuration->parser->nesting));
+        $parser->setMaxNestingLevel($this->configuration->parser->nesting);
+
+        // Disable annotation parsing?
+        if ($this->withoutAnnotations) {
+            $parser->setIgnoreAnnotations();
+        }
+
+        try {
+            $parser->parse();
+        } catch (ParserException $e) {
+            $this->parseExceptions[] = $e;
+        }
     }
 
     /**

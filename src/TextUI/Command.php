@@ -214,7 +214,11 @@ class Command
             unset($options['--without-annotations']);
         }
 
-        if (isset($options['--quiet'])) {
+        if (isset($options['--worker'])) {
+            $runSilent = true;
+            $this->runner->setWorker();
+            unset($options['--worker']);
+        } elseif (isset($options['--quiet'])) {
             $runSilent = true;
             unset($options['--quiet']);
         } else {

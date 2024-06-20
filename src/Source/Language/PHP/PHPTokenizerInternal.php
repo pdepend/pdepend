@@ -937,7 +937,11 @@ class PHPTokenizerInternal implements FullTokenizer
             }
 
             if (in_array($temp, [T_PRIVATE, T_PROTECTED, T_PUBLIC], true)
-                && $tokens[$index + 1][0] === '(' && $tokens[$index + 2][1] === 'set' && $tokens[$index + 3][0] === ')'
+                && isset($tokens[$index + 3])
+                && is_string($tokens[$index + 1])
+                && is_array($tokens[$index + 2])
+                && is_string($tokens[$index + 3])
+                && $tokens[$index + 1] === '(' && $tokens[$index + 2][1] === 'set' && $tokens[$index + 3] === ')'
             ) {
                 $skipTo = $index + 4;
                 $result[] = match ($temp) {

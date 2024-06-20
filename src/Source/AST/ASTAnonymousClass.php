@@ -83,8 +83,6 @@ class ASTAnonymousClass extends ASTClass
      */
     public function __wakeup(): void
     {
-        $this->methods = null;
-
         foreach ($this->nodes as $node) {
             $node->setParent($this);
         }
