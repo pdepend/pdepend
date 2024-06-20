@@ -45,6 +45,7 @@ namespace PDepend;
 
 use AppendIterator;
 use ArrayIterator;
+use Fidry\CpuCoreCounter\CpuCoreCounter;
 use GlobIterator;
 use InvalidArgumentException;
 use OutOfBoundsException;
@@ -507,31 +508,40 @@ class Engine
 
         $this->fireStartParseProcess($this->builder);
 
-        foreach ($this->createFileIterator() as $file) {
-            $tokenizer->setSourceFile($file);
+        $processCount = (new CpuCoreCounter())->getCount();
+        $files = $this->createFileIterator();
+        $fileCount = count($files);
+        $filesPerProcess = ceil($fileCount / $processCount);
+        for ($proccessNo = 0; $proccessNo < $processCount; $proccessNo++) {
+            $firstFile = $filesPerProcess * $proccessNo;
+            $lastFile = min($firstFile + $filesPerProcess, $fileCount);
+            for ($fileNo = $firstFile; $fileNo < $lastFile; $fileNo++) {
+                $file = $files[$fileNo];
+                $tokenizer->setSourceFile($file);
 
-            $parser = new PHPParserGeneric(
-                $tokenizer,
-                $this->builder,
-                $this->cacheFactory->create(),
-            );
-            assert($this->configuration->parser instanceof stdClass);
-            $parser->setMaxNestingLevel($this->configuration->parser->nesting);
+                $parser = new PHPParserGeneric(
+                    $tokenizer,
+                    $this->builder,
+                    $this->cacheFactory->create(),
+                );
+                assert($this->configuration->parser instanceof stdClass);
+                $parser->setMaxNestingLevel($this->configuration->parser->nesting);
 
-            // Disable annotation parsing?
-            if ($this->withoutAnnotations) {
-                $parser->setIgnoreAnnotations();
+                // Disable annotation parsing?
+                if ($this->withoutAnnotations) {
+                    $parser->setIgnoreAnnotations();
+                }
+
+                $this->fireStartFileParsing($tokenizer);
+
+                try {
+                    $parser->parse();
+                } catch (ParserException $e) {
+                    $this->parseExceptions[] = $e;
+                }
+
+                $this->fireEndFileParsing($tokenizer);
             }
-
-            $this->fireStartFileParsing($tokenizer);
-
-            try {
-                $parser->parse();
-            } catch (ParserException $e) {
-                $this->parseExceptions[] = $e;
-            }
-
-            $this->fireEndFileParsing($tokenizer);
         }
 
         $this->fireEndParseProcess($this->builder);
