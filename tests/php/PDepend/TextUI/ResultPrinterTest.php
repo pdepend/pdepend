@@ -48,7 +48,6 @@ use PDepend\Metrics\Analyzer\ClassLevelAnalyzer;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\Language\PHP\PHPBuilder;
-use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -69,13 +68,11 @@ class ResultPrinterTest extends AbstractTestCase
     {
         // Create dummy objects
         $builder = new PHPBuilder();
-        $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(__FILE__);
 
         $printer = new ResultPrinter();
 
         ob_start();
-        $printer->startFileParsing($tokenizer);
+        $printer->startFileParsing();
         $printer->endParseProcess($builder);
         $actual = ob_get_contents();
         ob_end_clean();
@@ -92,14 +89,12 @@ class ResultPrinterTest extends AbstractTestCase
     {
         // Create dummy objects
         $builder = new PHPBuilder();
-        $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(__FILE__);
 
         $printer = new ResultPrinter();
 
         ob_start();
         for ($i = 0; $i < 73; ++$i) {
-            $printer->startFileParsing($tokenizer);
+            $printer->startFileParsing();
         }
         $printer->endParseProcess($builder);
         $actual = ob_get_contents();
@@ -204,7 +199,7 @@ class ResultPrinterTest extends AbstractTestCase
             function (): void {
                 $printer = new ResultPrinter();
 
-                $printer->endFileParsing(new PHPTokenizerInternal());
+                $printer->endFileParsing();
                 $printer->startAnalyzeProcess();
                 $printer->endAnalyzeProcess();
                 $printer->endLogProcess();

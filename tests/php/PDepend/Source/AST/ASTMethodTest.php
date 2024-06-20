@@ -104,6 +104,10 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
                 'returnsReference',
                 'returnClassReference',
                 'exceptionClassReferences',
+                'startColumn',
+                'endColumn',
+                'parent',
+                'compilationUnit',
             ],
             $method->__sleep()
         );

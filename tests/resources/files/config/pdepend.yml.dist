@@ -5,5 +5,4 @@ pdepend:
 
   cache:
     driver: file
-    location: ../../../php/PDepend/_run/cache
     ttl: 2592000

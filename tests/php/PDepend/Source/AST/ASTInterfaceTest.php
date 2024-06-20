@@ -794,6 +794,11 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
                 'startLine',
                 'userDefined',
                 'id',
+                'methods',
+                'startColumn',
+                'endColumn',
+                'parent',
+                'compilationUnit',
             ],
             $interface->__sleep()
         );

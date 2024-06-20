@@ -49,7 +49,6 @@ use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
 use PDepend\Source\Builder\Builder;
-use PDepend\Source\Tokenizer\Tokenizer;
 
 /**
  * Prints current the PDepend status information.
@@ -90,7 +89,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend starts parsing of a new file.
      */
-    public function startFileParsing(Tokenizer $tokenizer): void
+    public function startFileParsing(): void
     {
         $this->step();
     }
@@ -98,7 +97,7 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
     /**
      * Is called when PDepend has finished a file.
      */
-    public function endFileParsing(Tokenizer $tokenizer): void
+    public function endFileParsing(): void
     {
     }
 

@@ -1446,6 +1446,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
         static::assertEquals(
             [
+                'properties',
                 'constants',
                 'interfaceReferences',
                 'parentClassReference',
@@ -1460,6 +1461,11 @@ class ASTClassTest extends AbstractASTArtifactTestCase
                 'startLine',
                 'userDefined',
                 'id',
+                'methods',
+                'startColumn',
+                'endColumn',
+                'parent',
+                'compilationUnit',
             ],
             $class->__sleep()
         );

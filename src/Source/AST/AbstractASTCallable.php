@@ -115,6 +115,10 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
             'returnsReference',
             'returnClassReference',
             'exceptionClassReferences',
+            'startColumn',
+            'endColumn',
+            'parent',
+            'compilationUnit',
         ];
     }
 

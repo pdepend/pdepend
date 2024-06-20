@@ -3,6 +3,10 @@ interface pkg2FooI extends pkg1FooI {
 
 }
 
+class Bar {
+
+}
+
 abstract class pkg2Bar extends pkg1Bar {
     public static function doIt(?Bar $foo = null)
     {
@@ -13,7 +17,7 @@ abstract class pkg2Bar extends pkg1Bar {
 class pkg2Foobar extends pkg1Bar {
     public $bar = null;
     protected static $manager = null;
-    
+
     /**
      * Command manager singleton method which returns a configured instance
      * or <b>null</b>.
