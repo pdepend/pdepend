@@ -58,6 +58,11 @@ class ASTInterface extends AbstractASTClassOrInterface
      * always abstract.
      */
     protected int $modifiers = State::IS_IMPLICIT_ABSTRACT;
+    
+    public function __sleep(): array
+    {
+        return ['modifiers', ...parent::__sleep()];
+    }
 
     /**
      * The magic wakeup method will be called by PHP's runtime environment when

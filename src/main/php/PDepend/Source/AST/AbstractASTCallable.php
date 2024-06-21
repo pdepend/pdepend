@@ -104,13 +104,17 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     public function __sleep(): array
     {
         return [
-            'cache',
             'id',
             'name',
-            'nodes',
+            'comment',
             'startLine',
             'endLine',
-            'comment',
+            'startColumn',
+            'endColumn',
+            'parent',
+            'compilationUnit',
+            'cache',
+            'nodes',
             'returnsReference',
             'returnClassReference',
             'exceptionClassReferences',

@@ -41,27 +41,46 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Bugs;
+namespace PDepend;
 
-/**
- * Test case for bug #98. The default package contains software artifacts like
- * functions or classes that are broken. This can result in a fatal error during
- * the analysis phase.
- *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
- */
-class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegressionTestCase
+use React\ChildProcess\Process;
+
+final class ProcessFactory
 {
+    public function create(
+        int $start,
+        int $count
+    ): Process {
+        $commandArgs = $this->getCommandArgs($start, $count);
+        // var_dump(implode(' ', $commandArgs));
+
+        return new Process(implode(' ', $commandArgs), null, null);
+    }
+
     /**
-     * Tests that the result does not contain an interface with a broken body.
+     * @return list<string>
      */
-    public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody(): void
+    public function getCommandArgs(int $start, int $count): array
     {
-        $pdepend = $this->createEngineFixture();
-        $pdepend->addFile($this->createCodeResourceUriForTest());
-        $pdepend->analyze();
+        $phpBinary = PHP_BINARY;
+
+        $mainScript = realpath(__DIR__ . '/../../../php-cs-fixer');
+        if (false === $mainScript
+            && isset($_SERVER['argv'][0])
+            && str_contains($_SERVER['argv'][0], 'pdepend')
+        ) {
+            $mainScript = $_SERVER['argv'][0];
+        }
+
+        $commandArgs = [
+            $phpBinary,
+            escapeshellarg($mainScript),
+            '--worker',
+            '--file-offset=' . $start,
+            '--file-count=' . $count,
+            ...array_slice($_SERVER['argv'], 1),
+        ];
+
+        return $commandArgs;
     }
 }

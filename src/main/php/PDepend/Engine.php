@@ -72,6 +72,7 @@ use PDepend\Source\Parser\ParserException;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheFactory;
 use PDepend\Util\Configuration;
+use React\EventLoop\Factory as LoopFactory;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
@@ -114,13 +115,6 @@ class Engine
     private PHPBuilder $builder;
 
     /**
-     * Generated {@link ASTNamespace} objects.
-     *
-     * @var ASTArtifactList<ASTNamespace>
-     */
-    private ASTArtifactList $namespaces;
-
-    /**
      * List of all registered {@link ReportGenerator} instances.
      *
      * @var ReportGenerator[]
@@ -132,6 +126,14 @@ class Engine
 
     /** A filter for namespace. */
     private ArtifactFilter $codeFilter;
+
+    /** Number of files to skip */
+    private int $fileOffset = 0;
+
+    /** Number of files to process */
+    private ?int $fileCount = null;
+
+    private bool $isWorker = false;
 
     /** Should the parse ignore doc comment annotations? */
     private bool $withoutAnnotations = false;
@@ -255,6 +257,21 @@ class Engine
         $this->options = $options;
     }
 
+    public function setFileOffset(int $fileOffset): void
+    {
+        $this->fileOffset = $fileOffset;
+    }
+
+    public function setFileCount(int $fileCount): void
+    {
+        $this->fileCount = $fileCount;
+    }
+
+    public function setWorker(): void
+    {
+        $this->isWorker = true;
+    }
+
     /**
      * Should the parse ignore doc comment annotations?
      */
@@ -279,13 +296,13 @@ class Engine
      * Analyzes the registered directories and returns the collection of
      * analyzed namespace.
      *
-     * @return ASTArtifactList<ASTNamespace>
      * @throws InvalidArgumentException
      */
-    public function analyze(): ASTArtifactList
+    public function analyze(): void
     {
         $this->builder = new PHPBuilder();
 
+        $start = microtime(true);
         $this->performParseProcess();
 
         // Get global filter collection
@@ -293,6 +310,8 @@ class Engine
         $collection->setFilter($this->codeFilter);
 
         $collection->setFilter();
+
+        $start = microtime(true);
 
         $this->performAnalyzeProcess();
 
@@ -302,6 +321,7 @@ class Engine
         $namespaces = $this->builder->getNamespaces();
 
         $this->fireStartLogProcess();
+        $start = microtime(true);
 
         foreach ($this->generators as $generator) {
             // Check for code aware loggers
@@ -312,29 +332,6 @@ class Engine
         }
 
         $this->fireEndLogProcess();
-
-        return ($this->namespaces = $namespaces);
-    }
-
-    /**
-     * Returns the number of analyzed php classes and interfaces.
-     *
-     * @throws RuntimeException
-     */
-    public function countClasses(): int
-    {
-        if (!isset($this->namespaces)) {
-            $msg = 'countClasses() doesn\'t work before the source was analyzed.';
-
-            throw new RuntimeException($msg);
-        }
-
-        $classes = 0;
-        foreach ($this->namespaces as $namespace) {
-            $classes += count($namespace->getTypes());
-        }
-
-        return $classes;
     }
 
     /**
@@ -349,108 +346,42 @@ class Engine
     }
 
     /**
-     * Returns the number of analyzed namespaces.
-     *
-     * @throws RuntimeException
-     */
-    public function countNamespaces(): int
-    {
-        if (!isset($this->namespaces)) {
-            $msg = 'countNamespaces() doesn\'t work before the source was analyzed.';
-
-            throw new RuntimeException($msg);
-        }
-
-        $count = 0;
-        foreach ($this->namespaces as $namespace) {
-            if ($namespace->isUserDefined()) {
-                ++$count;
-            }
-        }
-
-        return $count;
-    }
-
-    /**
-     * Returns the analyzed namespace for the given name.
-     *
-     * @throws OutOfBoundsException
-     * @throws RuntimeException
-     */
-    public function getNamespace(string $name): ASTNamespace
-    {
-        if (!isset($this->namespaces)) {
-            $msg = 'getNamespace() doesn\'t work before the source was analyzed.';
-
-            throw new RuntimeException($msg);
-        }
-        foreach ($this->namespaces as $namespace) {
-            if ($namespace->getImage() === $name) {
-                return $namespace;
-            }
-        }
-
-        throw new OutOfBoundsException(sprintf('Unknown namespace "%s".', $name));
-    }
-
-    /**
-     * Returns an array with the analyzed namespace.
-     *
-     * @return ASTArtifactList<ASTNamespace>
-     * @throws RuntimeException
-     */
-    public function getNamespaces(): ASTArtifactList
-    {
-        if (!isset($this->namespaces)) {
-            $msg = 'getNamespaces() doesn\'t work before the source was analyzed.';
-
-            throw new RuntimeException($msg);
-        }
-
-        return $this->namespaces;
-    }
-
-    /**
      * Send the start parsing process event.
-     *
-     * @param Builder<ASTNamespace> $builder The used node builder instance.
      */
-    protected function fireStartParseProcess(Builder $builder): void
+    protected function fireStartParseProcess(): void
     {
         foreach ($this->listeners as $listener) {
-            $listener->startParseProcess($builder);
+            $listener->startParseProcess();
         }
     }
 
     /**
      * Send the end parsing process event.
-     *
-     * @param Builder<ASTNamespace> $builder The used node builder instance.
      */
-    protected function fireEndParseProcess(Builder $builder): void
+    protected function fireEndParseProcess(): void
     {
         foreach ($this->listeners as $listener) {
-            $listener->endParseProcess($builder);
+            $listener->endParseProcess();
         }
     }
 
     /**
      * Sends the start file parsing event.
      */
-    protected function fireStartFileParsing(Tokenizer $tokenizer): void
+    protected function fireStartFileParsing(): void
     {
         foreach ($this->listeners as $listener) {
-            $listener->startFileParsing($tokenizer);
+            $listener->startFileParsing();
         }
     }
 
     /**
      * Sends the end file parsing event.
      */
-    protected function fireEndFileParsing(Tokenizer $tokenizer): void
+    protected function fireEndFileParsing(): void
     {
         foreach ($this->listeners as $listener) {
-            $listener->endFileParsing($tokenizer);
+            $listener->endFileParsing();
         }
     }
 
@@ -506,17 +437,52 @@ class Engine
 
         $tokenizer = new PHPTokenizerInternal();
 
-        $this->fireStartParseProcess($this->builder);
+        $this->fireStartParseProcess();
 
-        $processCount = (new CpuCoreCounter())->getCount();
         $files = $this->createFileIterator();
-        $fileCount = count($files);
-        $filesPerProcess = ceil($fileCount / $processCount);
-        for ($proccessNo = 0; $proccessNo < $processCount; $proccessNo++) {
-            $firstFile = $filesPerProcess * $proccessNo;
-            $lastFile = min($firstFile + $filesPerProcess, $fileCount);
-            for ($fileNo = $firstFile; $fileNo < $lastFile; $fileNo++) {
-                $file = $files[$fileNo];
+
+        $singleProcess = true;
+        if (!$this->isWorker && function_exists('proc_open') ) {
+            $processCount = (new CpuCoreCounter())->getCount();
+            if ($processCount > 1) {
+                $singleProcess = false;
+                $processFactory = new ProcessFactory();
+                $buffers = [];
+                $loop = LoopFactory::create();
+                $fileCount = count($files);
+                $filesPerProcess = max(1, ceil($fileCount / $processCount));
+                for ($proccessNo = 0; $proccessNo < $processCount; $proccessNo++) {
+                    $firstFile = $filesPerProcess * $proccessNo;
+                    $filesInChunk = min($firstFile + $filesPerProcess, $fileCount) - $firstFile;
+                    if ($filesInChunk < 1) {
+                        break;
+                    }
+                    $process = $processFactory->create($firstFile, $filesInChunk);
+                    $process->start($loop);
+                    $buffers[$proccessNo] = '';
+                    $process->stdout->on('data', function ($output) use (&$buffers, $proccessNo): void {
+                        $buffers[$proccessNo] .= $output;
+                    });
+                    $process->stdout->on('end', function () use ($filesInChunk): void {
+                        for ($i=0;$i<$filesInChunk;$i++) {
+                            $this->fireStartFileParsing();
+                            $this->fireEndFileParsing();
+                        }
+                    });
+                }
+                $loop->run();
+                $cache = $this->cacheFactory->create();
+                $this->builder->setCache($cache);
+                foreach ($buffers as $buffer) {
+                    unserialize($buffer);
+                }
+            }
+        }
+
+        if ($singleProcess || $this->isWorker) {
+            $files = array_slice($files->getArrayCopy(), $this->fileOffset, $this->fileCount);
+
+            foreach ($files as $file) {
                 $tokenizer->setSourceFile($file);
 
                 $parser = new PHPParserGeneric(
@@ -532,7 +498,7 @@ class Engine
                     $parser->setIgnoreAnnotations();
                 }
 
-                $this->fireStartFileParsing($tokenizer);
+                $this->fireStartFileParsing();
 
                 try {
                     $parser->parse();
@@ -540,11 +506,17 @@ class Engine
                     $this->parseExceptions[] = $e;
                 }
 
-                $this->fireEndFileParsing($tokenizer);
+                $this->fireEndFileParsing();
+            }
+
+            if ($this->isWorker) {
+                echo serialize($this->builder->getNamespaces());
+
+                exit;
             }
         }
 
-        $this->fireEndParseProcess($this->builder);
+        $this->fireEndParseProcess();
     }
 
     /**

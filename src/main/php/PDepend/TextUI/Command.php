@@ -46,6 +46,7 @@ namespace PDepend\TextUI;
 use Exception;
 use PDepend\Application;
 use PDepend\DbusUI\ResultPrinter as DbusResultPrinter;
+use PDepend\Parallel\ProcessWorker;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 use RuntimeException;
@@ -157,6 +158,8 @@ class Command
         // Create a new text ui runner
         $this->runner = $this->application->getRunner();
 
+        $allOptions = $this->options;
+
         $this->assignArguments();
 
         // Get a copy of all options
@@ -208,7 +211,12 @@ class Command
             unset($options['--without-annotations']);
         }
 
-        if (isset($options['--quiet'])) {
+        if (isset($options['--worker'])) {
+            $runSilent = true;
+            $this->runner->setWorker();
+            $this->runner->addProcessListener(new ProcessWorker());
+            unset($options['--worker'], $options['--quiet']);
+        } elseif (isset($options['--quiet'])) {
             $runSilent = true;
             unset($options['--quiet']);
         } else {
@@ -363,6 +371,15 @@ class Command
             $this->runner->setExcludeDirectories($directories);
 
             unset($this->options['--ignore']);
+        }
+
+        if (isset($this->options['--file-offset']) && is_string($this->options['--file-offset'])) {
+            $this->runner->setFileOffset((int) $this->options['--file-offset']);
+            unset($this->options['--file-offset']);
+        }
+        if (isset($this->options['--file-count']) && is_string($this->options['--file-count'])) {
+            $this->runner->setFileCount((int) $this->options['--file-count']);
+            unset($this->options['--file-count']);
         }
 
         // Check for exclude namespace option
