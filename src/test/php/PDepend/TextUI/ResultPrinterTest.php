@@ -66,16 +66,11 @@ class ResultPrinterTest extends AbstractTestCase
      */
     public function testResultPrinterOutputForSingleEntry(): void
     {
-        // Create dummy objects
-        $builder = new PHPBuilder();
-        $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(__FILE__);
-
         $printer = new ResultPrinter();
 
         ob_start();
-        $printer->startFileParsing($tokenizer);
-        $printer->endParseProcess($builder);
+        $printer->startFileParsing();
+        $printer->endParseProcess();
         $actual = ob_get_contents();
         ob_end_clean();
 
@@ -89,18 +84,13 @@ class ResultPrinterTest extends AbstractTestCase
      */
     public function testResultPrinterOutputForMultipleEntries(): void
     {
-        // Create dummy objects
-        $builder = new PHPBuilder();
-        $tokenizer = new PHPTokenizerInternal();
-        $tokenizer->setSourceFile(__FILE__);
-
         $printer = new ResultPrinter();
 
         ob_start();
         for ($i = 0; $i < 73; ++$i) {
-            $printer->startFileParsing($tokenizer);
+            $printer->startFileParsing();
         }
-        $printer->endParseProcess($builder);
+        $printer->endParseProcess();
         $actual = ob_get_contents();
         ob_end_clean();
 
@@ -167,7 +157,7 @@ class ResultPrinterTest extends AbstractTestCase
             function (): void {
                 $printer = new ResultPrinter();
 
-                $printer->startParseProcess(new PHPBuilder());
+                $printer->startParseProcess();
             }
         );
     }
@@ -203,7 +193,7 @@ class ResultPrinterTest extends AbstractTestCase
             function (): void {
                 $printer = new ResultPrinter();
 
-                $printer->endFileParsing(new PHPTokenizerInternal());
+                $printer->endFileParsing();
                 $printer->startAnalyzeProcess();
                 $printer->endAnalyzeProcess();
                 $printer->endLogProcess();

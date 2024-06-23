@@ -82,6 +82,14 @@ class Runner
      */
     private array $excludeDirectories = ['.git', '.svn', 'CVS'];
 
+    /** Number of files to skip */
+    private int $fileOffset;
+
+    /** Number of files to process */
+    private int $fileCount;
+
+    private bool $isWorker = false;
+
     /**
      * List of exclude namespaces.
      *
@@ -156,6 +164,21 @@ class Runner
     public function setExcludeDirectories(array $excludeDirectories): void
     {
         $this->excludeDirectories = $excludeDirectories;
+    }
+
+    public function setFileOffset(int $fileOffset): void
+    {
+        $this->fileOffset = $fileOffset;
+    }
+
+    public function setFileCount(int $fileCount): void
+    {
+        $this->fileCount = $fileCount;
+    }
+
+    public function setWorker(): void
+    {
+        $this->isWorker = true;
     }
 
     /**
@@ -234,6 +257,17 @@ class Runner
             $exclude = $this->excludeDirectories;
             $filter = new ExcludePathFilter($exclude);
             $engine->addFileFilter($filter);
+        }
+
+        if (isset($this->fileOffset)) {
+            $engine->setFileOffset($this->fileOffset);
+        }
+        if (isset($this->fileCount)) {
+            $engine->setFileCount($this->fileCount);
+        }
+
+        if ($this->isWorker) {
+            $engine->setWorker();
         }
 
         if (count($this->excludeNamespaces) > 0) {

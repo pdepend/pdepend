@@ -112,7 +112,7 @@ class MemoryCacheDriver implements CacheDriver
      */
     public function __wakeup(): void
     {
-        $this->cache = self::$staticCache[$this->staticId];
+        $this->cache = self::$staticCache[$this->staticId] ?? [];
     }
 
     /**

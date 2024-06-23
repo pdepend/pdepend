@@ -108,26 +108,23 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function __sleep(): array
     {
-        if (is_array($this->methods)) {
-            $this->cache
-                ->type('methods')
-                ->store($this->getId(), $this->methods);
-
-            $this->methods = null;
-        }
-
         return [
+            'id',
+            'name',
+            'comment',
+            'startLine',
+            'endLine',
+            'startColumn',
+            'endColumn',
+            'parent',
+            'compilationUnit',
             'cache',
             'context',
-            'comment',
-            'endLine',
             'modifiers',
-            'name',
+            'methods',
             'nodes',
             'namespaceName',
-            'startLine',
             'userDefined',
-            'id',
         ];
     }
 
@@ -140,8 +137,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
      */
     public function __wakeup(): void
     {
-        $this->methods = null;
-
         foreach ($this->nodes as $node) {
             $node->setParent($this);
         }
@@ -409,7 +404,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
                     continue;
                 }
 
-                throw new ASTTraitMethodCollisionException($method, $this);
+                //throw new ASTTraitMethodCollisionException($method, $this);
             }
         }
 

@@ -60,6 +60,11 @@ class ASTClass extends AbstractASTClassOrInterface
      * @var ASTProperty[]
      */
     private array $properties;
+    
+    public function __sleep(): array
+    {
+        return ['properties', ...parent::__sleep()];
+    }
 
     /**
      * The magic wakeup method will be called by PHP's runtime environment when

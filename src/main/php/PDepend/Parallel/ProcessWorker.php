@@ -41,27 +41,56 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Bugs;
+namespace PDepend\Parallel;
+
+use PDepend\Metrics\Analyzer;
+use PDepend\ProcessListener;
+use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Tokenizer\Tokenizer;
 
 /**
- * Test case for bug #98. The default package contains software artifacts like
- * functions or classes that are broken. This can result in a fatal error during
- * the analysis phase.
- *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
+ * Transmit worker process events to the main process.
  */
-class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegressionTestCase
+class ProcessWorker extends AbstractASTVisitListener implements ProcessListener
 {
-    /**
-     * Tests that the result does not contain an interface with a broken body.
-     */
-    public function testDefaultPackageDoesNotContainsInterfaceWithBrokenBody(): void
+    public function startParseProcess(): void
     {
-        $pdepend = $this->createEngineFixture();
-        $pdepend->addFile($this->createCodeResourceUriForTest());
-        $pdepend->analyze();
+    }
+
+    public function endParseProcess(): void
+    {
+    }
+
+    public function startFileParsing(): void
+    {
+    }
+
+    public function endFileParsing(): void
+    {
+    }
+
+    public function startAnalyzeProcess(): void
+    {
+    }
+
+    public function endAnalyzeProcess(): void
+    {
+    }
+
+    public function startLogProcess(): void
+    {
+    }
+
+    public function endLogProcess(): void
+    {
+    }
+
+    public function startAnalyzer(Analyzer $analyzer): void
+    {
+    }
+
+    public function endAnalyzer(Analyzer $analyzer): void
+    {
     }
 }
