@@ -289,7 +289,7 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
             (str_starts_with($this->fileName, 'php://') || file_exists($this->fileName))
         ) {
             $source = file_get_contents($this->fileName);
-            if (!$source) {
+            if ($source === false) {
                 throw new RuntimeException('File not found ' . $this->fileName);
             }
 

@@ -913,7 +913,7 @@ class PHPTokenizerInternal implements FullTokenizer
 
         // No longer replacing short open tags since some want to track them.
         $source = $this->sourceFile->getSource();
-        if (!$source) {
+        if ($source === null) {
             throw new RuntimeException('No source was given');
         }
 
