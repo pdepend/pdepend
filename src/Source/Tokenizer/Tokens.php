@@ -574,6 +574,9 @@ interface Tokens
     /** Marks a setter restricted to public. */
     public const T_PUBLIC_SET = 329;
 
+    /** Marks an attribute token. */
+    public const T_ATTRIBUTE = 355;
+
     /** Marks any content not between php tags. */
     public const T_NO_PHP = 255;
 }
