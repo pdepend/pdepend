@@ -541,8 +541,7 @@ class NPathComplexityAnalyzer extends AbstractCachingAnalyzer implements Analyze
         if ($node instanceof ASTConditionalExpression) {
             $this->dispatch($node);
             $sum += $this->complexityCollector;
-        } elseif (
-            $node instanceof ASTBooleanAndExpression
+        } elseif ($node instanceof ASTBooleanAndExpression
             || $node instanceof ASTBooleanOrExpression
             || $node instanceof ASTLogicalAndExpression
             || $node instanceof ASTLogicalOrExpression

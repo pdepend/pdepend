@@ -283,8 +283,7 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
      */
     protected function readSource(): void
     {
-        if (
-            $this->source === null &&
+        if ($this->source === null &&
             $this->fileName &&
             (str_starts_with($this->fileName, 'php://') || file_exists($this->fileName))
         ) {

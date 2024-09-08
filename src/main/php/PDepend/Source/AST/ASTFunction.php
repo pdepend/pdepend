@@ -115,8 +115,6 @@ class ASTFunction extends AbstractASTCallable
 
     /**
      * Returns the parent namespace for this function.
-     *
-     * @return ?ASTNamespace
      */
     public function getNamespace(): ?ASTNamespace
     {
@@ -147,7 +145,6 @@ class ASTFunction extends AbstractASTCallable
      * Returns the name of the parent namespace/package or <b>NULL</b> when this
      * function does not belong to a namespace.
      *
-     * @return ?string
      * @since  0.10.0
      */
     public function getNamespaceName(): ?string

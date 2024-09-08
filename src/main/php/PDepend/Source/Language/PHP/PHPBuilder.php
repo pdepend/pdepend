@@ -1872,8 +1872,7 @@ class PHPBuilder implements Builder
         $namespaces = $this->namespaces;
 
         // Remove default package if empty
-        if (
-            count($this->defaultPackage->getTypes()) === 0
+        if (count($this->defaultPackage->getTypes()) === 0
             && count($this->defaultPackage->getFunctions()) === 0
         ) {
             unset($namespaces[self::DEFAULT_NAMESPACE]);
@@ -2280,8 +2279,6 @@ class PHPBuilder implements Builder
     /**
      * This method will persist a trait instance for later reuse.
      *
-     * @param ?string $traitName
-     * @param ?string $namespaceName
      * @since 1.0.0
      */
     protected function storeTrait(?string $traitName, ?string $namespaceName, ASTTrait $trait): void
@@ -2299,8 +2296,6 @@ class PHPBuilder implements Builder
     /**
      * This method will persist a class instance for later reuse.
      *
-     * @param ?string $className
-     * @param ?string $namespaceName
      * @since 0.9.5
      */
     protected function storeClass(?string $className, ?string $namespaceName, ASTClass $class): void
@@ -2318,8 +2313,6 @@ class PHPBuilder implements Builder
     /**
      * This method will persist a class instance for later reuse.
      *
-     * @param ?string $enumName
-     * @param ?string $namespaceName
      * @since 2.11.0
      */
     protected function storeEnum(?string $enumName, ?string $namespaceName, ASTEnum $enum): void
@@ -2337,8 +2330,6 @@ class PHPBuilder implements Builder
     /**
      * This method will persist an interface instance for later reuse.
      *
-     * @param ?string $interfaceName
-     * @param ?string $namespaceName
      * @since 0.9.5
      */
     protected function storeInterface(?string $interfaceName, ?string $namespaceName, ASTInterface $interface): void
@@ -2440,7 +2431,6 @@ class PHPBuilder implements Builder
      * @template T of ASTNode
      *
      * @param class-string<T> $className
-     * @param ?string $image
      * @return T
      * @since 0.9.12
      */

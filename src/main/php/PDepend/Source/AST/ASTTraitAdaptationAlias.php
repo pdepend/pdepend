@@ -53,11 +53,7 @@ namespace PDepend\Source\AST;
  */
 class ASTTraitAdaptationAlias extends ASTStatement
 {
-    /**
-     * The new aliased method name.
-     *
-     * @var ?string
-     */
+    /** The new aliased method name. */
     protected ?string $newName = null;
 
     /** The new method modifier for the imported method. */
@@ -105,8 +101,6 @@ class ASTTraitAdaptationAlias extends ASTStatement
     /**
      * Returns the new aliased method name or <b>NULL</b> when this alias does
      * not specify a new method name.
-     *
-     * @return ?string
      */
     public function getNewName(): ?string
     {

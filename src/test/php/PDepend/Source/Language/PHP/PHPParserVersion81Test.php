@@ -1171,31 +1171,30 @@ class PHPParserVersion81Test extends AbstractTestCase
             ];
         }, $children);
 
-        foreach (
-            [
-                ['int', '$id'],
-                ['float', '$money'],
-                ['bool', '$active'],
-                ['string', '$name'],
-                ['array', '$list', ASTTypeArray::class],
-                ['self', '$parent', ASTSelfReference::class],
-                ['callable', '$event', ASTTypeCallable::class],
-                ['\Closure', '$fqn', ASTClassOrInterfaceReference::class],
-                ['iterable', '$actions', ASTTypeIterable::class],
-                ['object', '$bag', ASTClassOrInterfaceReference::class],
-                ['Role', '$role', ASTClassOrInterfaceReference::class],
-                ['?int', '$idN'],
-                ['?float', '$moneyN'],
-                ['?bool', '$activeN'],
-                ['?string', '$nameN'],
-                ['?array', '$listN', ASTTypeArray::class],
-                ['?self', '$parentN', ASTSelfReference::class],
-                ['?callable', '$eventN', ASTTypeCallable::class],
-                ['?\Closure', '$fqnN', ASTClassOrInterfaceReference::class],
-                ['?iterable', '$actionsN', ASTTypeIterable::class],
-                ['?object', '$bagN', ASTClassOrInterfaceReference::class],
-                ['?Role', '$roleN', ASTClassOrInterfaceReference::class],
-            ] as $index => $expected
+        foreach ([
+            ['int', '$id'],
+            ['float', '$money'],
+            ['bool', '$active'],
+            ['string', '$name'],
+            ['array', '$list', ASTTypeArray::class],
+            ['self', '$parent', ASTSelfReference::class],
+            ['callable', '$event', ASTTypeCallable::class],
+            ['\Closure', '$fqn', ASTClassOrInterfaceReference::class],
+            ['iterable', '$actions', ASTTypeIterable::class],
+            ['object', '$bag', ASTClassOrInterfaceReference::class],
+            ['Role', '$role', ASTClassOrInterfaceReference::class],
+            ['?int', '$idN'],
+            ['?float', '$moneyN'],
+            ['?bool', '$activeN'],
+            ['?string', '$nameN'],
+            ['?array', '$listN', ASTTypeArray::class],
+            ['?self', '$parentN', ASTSelfReference::class],
+            ['?callable', '$eventN', ASTTypeCallable::class],
+            ['?\Closure', '$fqnN', ASTClassOrInterfaceReference::class],
+            ['?iterable', '$actionsN', ASTTypeIterable::class],
+            ['?object', '$bagN', ASTClassOrInterfaceReference::class],
+            ['?Role', '$roleN', ASTClassOrInterfaceReference::class],
+        ] as $index => $expected
         ) {
             [$expectedType, $expectedVariable] = $expected;
             $expectedTypeClass = $expected[2] ?? ASTScalarType::class;
@@ -1495,10 +1494,9 @@ class PHPParserVersion81Test extends AbstractTestCase
             ];
         }, $children);
 
-        foreach (
-            [
-                ['null|int|float', '$number', ASTUnionType::class],
-            ] as $index => $expected
+        foreach ([
+            ['null|int|float', '$number', ASTUnionType::class],
+        ] as $index => $expected
         ) {
             [$expectedType, $expectedVariable, $expectedTypeClass] = $expected;
             [$type, $variable] = $declarations[$index];

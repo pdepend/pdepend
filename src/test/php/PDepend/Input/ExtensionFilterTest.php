@@ -107,8 +107,7 @@ class ExtensionFilterTest extends AbstractTestCase
 
         $actual = [];
         foreach ($files as $file) {
-            if (
-                $file instanceof SplFileInfo
+            if ($file instanceof SplFileInfo
                 && $filter->accept($file, $file)
                 && $file->isFile()
                 && false === stripos($file->getPathname(), '.svn')

@@ -44,8 +44,8 @@
 
 namespace PDepend\Util\Cache\Driver;
 
+use Exception;
 use PDepend\Util\Cache\CacheDriver;
-use Random\RandomException;
 
 /**
  * A memory based cache implementation.
@@ -86,7 +86,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * Instantiates a new in memory cache instance.
      *
-     * @throws RandomException
+     * @throws Exception
      */
     public function __construct()
     {

@@ -103,7 +103,6 @@ interface Tokenizer
      * Returns the type of next token, after the current token. This method
      * ignores all comments between the current and the next token.
      *
-     * @return ?int
      * @since  0.9.12
      */
     public function peekNext(): ?int;

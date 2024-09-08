@@ -172,11 +172,11 @@ preg_match(
 );
 
 $parserCode = str_replace(
-    $match[0],
+    $match[0] ?? '',
     str_replace(
-        $match[1],
+        $match[1] ?? '',
         trim($methodCode),
-        $match[0]
+        $match[0] ?? ''
     ),
     $parserCode
 );

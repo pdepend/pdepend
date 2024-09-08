@@ -299,8 +299,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
     /**
      * Returns the name of the parent namespace.
-     *
-     * @return ?string
      */
     public function getNamespaceName(): ?string
     {
@@ -309,8 +307,6 @@ abstract class AbstractASTType extends AbstractASTArtifact
 
     /**
      * Returns the parent namespace for this class.
-     *
-     * @return ?ASTNamespace
      */
     public function getNamespace(): ?ASTNamespace
     {

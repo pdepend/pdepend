@@ -211,8 +211,7 @@ class Application
 
         foreach ($loggerServices as $loggerServiceTags) {
             foreach ($loggerServiceTags as $loggerServiceTag) {
-                if (
-                    isset($loggerServiceTag['option'], $loggerServiceTag['message'])
+                if (isset($loggerServiceTag['option'], $loggerServiceTag['message'])
                     && is_string($loggerServiceTag['option'])
                     && is_string($loggerServiceTag['message'])
                 ) {

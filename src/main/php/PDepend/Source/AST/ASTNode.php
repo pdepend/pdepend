@@ -142,8 +142,6 @@ interface ASTNode
     /**
      * Returns a doc comment for this node or <b>null</b> when no comment was
      * found.
-     *
-     * @return ?string
      */
     public function getComment(): ?string;
 

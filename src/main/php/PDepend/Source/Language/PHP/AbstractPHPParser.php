@@ -430,8 +430,7 @@ abstract class AbstractPHPParser
         $allowed = State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE;
         $modifiers &= $allowed;
 
-        if (
-            $this->classOrInterface instanceof ASTInterface
+        if ($this->classOrInterface instanceof ASTInterface
             && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0
         ) {
             throw new InvalidStateException(
@@ -3603,7 +3602,6 @@ abstract class AbstractPHPParser
      * in the base version. In this method you can implement version specific
      * expressions.
      *
-     * @return ?ASTNode
      * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
      * @since 2.2
@@ -5571,8 +5569,7 @@ abstract class AbstractPHPParser
                 $this->consumeToken(Tokens::T_COMMA);
                 $this->consumeComments();
 
-                if (
-                    $inCall &&
+                if ($inCall &&
                     $this->tokenizer->peek() === Tokens::T_PARENTHESIS_CLOSE
                 ) {
                     break;
@@ -6882,8 +6879,7 @@ abstract class AbstractPHPParser
         $token = $this->tokenizer->currentToken();
         $types = [$firstType];
 
-        while (
-            $this->tokenizer->peekNext() !== Tokens::T_VARIABLE
+        while ($this->tokenizer->peekNext() !== Tokens::T_VARIABLE
             && $this->addTokenToStackIfType(Tokens::T_BITWISE_AND)
         ) {
             $types[] = $this->parseSingleTypeHint();
@@ -7317,8 +7313,7 @@ abstract class AbstractPHPParser
             // Remove alias and add real namespace
             array_shift($fragments);
             array_unshift($fragments, $mapsTo);
-        } elseif (
-            isset($this->namespaceName)
+        } elseif (isset($this->namespaceName)
             && !$this->namespacePrefixReplaced
         ) {
             // Prepend current namespace
@@ -7712,7 +7707,6 @@ abstract class AbstractPHPParser
      * Parses the value of a php constant. By default this can be only static
      * values that were allowed in the oldest supported PHP version.
      *
-     * @return ?ASTValue
      * @since 2.2.x
      */
     protected function parseConstantDeclaratorValue(): ?ASTValue
@@ -7780,8 +7774,7 @@ abstract class AbstractPHPParser
         // Fetch next token type
         $tokenType = $this->tokenizer->peek();
 
-        if (
-            $tokenType === Tokens::T_PARENTHESIS_OPEN
+        if ($tokenType === Tokens::T_PARENTHESIS_OPEN
             || $tokenType === Tokens::T_DOUBLE_COLON
         ) {
             return $this->setNodePositionsAndReturn(
@@ -7904,7 +7897,6 @@ abstract class AbstractPHPParser
      * This method will parse a default value after a parameter/static variable/constant
      * declaration.
      *
-     * @return ?ASTValue
      * @since 2.11.0
      */
     private function parseVariableDefaultValue(): ?ASTValue
@@ -7923,7 +7915,6 @@ abstract class AbstractPHPParser
      * This method will parse a static value or a static array as it is
      * used as default value for a parameter or property declaration.
      *
-     * @return ?ASTValue
      * @since 0.9.6
      */
     private function parseStaticValueOrStaticArray(): ?ASTValue
@@ -7947,7 +7938,6 @@ abstract class AbstractPHPParser
      * This method will parse a static default value as it is used for a
      * parameter, property or constant declaration.
      *
-     * @return ?ASTValue
      * @throws MissingValueException
      * @since 0.9.5
      */
@@ -8396,7 +8386,6 @@ abstract class AbstractPHPParser
      * Returns the name of a declared names. When the parsed code is not namespaced
      * this method will return the name from the @package annotation.
      *
-     * @return ?string
      * @since 0.9.8
      */
     private function getNamespaceOrPackageName(): ?string
@@ -8442,8 +8431,7 @@ abstract class AbstractPHPParser
         }
 
         // Check for doc level comment
-        if (
-            $this->globalPackageName === Builder::DEFAULT_NAMESPACE
+        if ($this->globalPackageName === Builder::DEFAULT_NAMESPACE
             && $this->isFileComment()
         ) {
             $this->globalPackageName = $package;
@@ -8837,8 +8825,7 @@ abstract class AbstractPHPParser
             $this->consumeToken(Tokens::T_COLON);
             $type = $this->parseTypeHint();
 
-            if (
-                !($type instanceof ASTScalarType) ||
+            if (!($type instanceof ASTScalarType) ||
                 !in_array($type->getImage(), ['int', 'string'], true)
             ) {
                 throw new TokenException(

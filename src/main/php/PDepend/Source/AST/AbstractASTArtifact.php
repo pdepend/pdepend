@@ -236,8 +236,6 @@ abstract class AbstractASTArtifact implements ASTArtifact
 
     /**
      * Sets the raw doc comment for this node.
-     *
-     * @param ?string $comment
      */
     public function setComment(?string $comment): void
     {

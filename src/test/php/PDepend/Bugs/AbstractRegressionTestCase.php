@@ -43,6 +43,7 @@
 
 namespace PDepend\Bugs;
 
+use Exception;
 use PDepend\AbstractTestCase;
 use PDepend\Report\Summary\Xml;
 use PDepend\Source\AST\ASTArtifactList;
@@ -104,6 +105,10 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
         [$class, $method] = explode('::', $testCase);
 
         preg_match('(Bug(\d+)Test$)', $class, $match);
+
+        if (!isset($match[1])) {
+            throw new Exception('Unable to find tests case ID');
+        }
 
         return self::createCodeResourceURI(
             sprintf('bugs/%s/%s.php', $match[1], $method)

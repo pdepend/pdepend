@@ -189,7 +189,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
             $layer->appendChild($ellipse);
 
             $result = preg_match('#\\\\([^\\\\]+)$#', $item['name'], $found);
-            if ($result && count($found)) {
+            if ($result) {
                 $angle = random_int(0, 314) / 100 - 1.57;
                 $legend = $legendTemplate->cloneNode(true);
                 $legend->setAttribute('x', (string) ($e + $item['ratio'] * (1 + cos($angle))));

@@ -211,8 +211,6 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
 
     /**
      * Returns the doc comment for this item or <b>null</b>.
-     *
-     * @return ?string
      */
     public function getComment(): ?string
     {

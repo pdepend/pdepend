@@ -269,8 +269,8 @@ class ChartTest extends AbstractTestCase
         static::assertInstanceOf(DOMElement::class, $ellipseA);
         $matrixA = $ellipseA->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixA, $matches);
-        static::assertEquals(1, $matches[1]);
-        static::assertEquals(1, $matches[4]);
+        static::assertEquals(1, $matches[1] ?? null);
+        static::assertEquals(1, $matches[4] ?? null);
 
         $xmlElement = $xpath->query("//s:ellipse[@title='package1']");
         static::assertNotFalse($xmlElement);
@@ -278,8 +278,8 @@ class ChartTest extends AbstractTestCase
         static::assertInstanceOf(DOMElement::class, $ellipseB);
         $matrixB = $ellipseB->getAttribute('transform');
         preg_match('/matrix\(([^,]+),([^,]+),([^,]+),([^,]+),([^,]+),([^,]+)\)/', $matrixB, $matches);
-        static::assertEqualsWithDelta(0.3333333, $matches[1], 0.000001);
-        static::assertEqualsWithDelta(0.3333333, $matches[4], 0.000001);
+        static::assertEqualsWithDelta(0.3333333, $matches[1] ?? null, 0.000001);
+        static::assertEqualsWithDelta(0.3333333, $matches[4] ?? null, 0.000001);
     }
 
     /**

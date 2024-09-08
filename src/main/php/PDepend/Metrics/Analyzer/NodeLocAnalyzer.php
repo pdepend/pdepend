@@ -431,8 +431,7 @@ class NodeLocAnalyzer extends AbstractCachingAnalyzer implements
         for (; $i < $count; ++$i) {
             $token = $tokens[$i];
 
-            if (
-                $token->type === Tokens::T_COMMENT
+            if ($token->type === Tokens::T_COMMENT
                 || $token->type === Tokens::T_DOC_COMMENT
             ) {
                 $lines = &$clines;

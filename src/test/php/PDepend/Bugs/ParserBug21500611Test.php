@@ -103,8 +103,6 @@ class ParserBug21500611Test extends AbstractRegressionTestCase
 
     /**
      * Returns the first heredoc found in a class.
-     *
-     * @return ?ASTHeredoc
      */
     protected function getFirstHeredocInClass(): ?ASTHeredoc
     {

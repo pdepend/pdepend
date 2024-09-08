@@ -77,7 +77,6 @@ final class CollectionArtifactFilter implements ArtifactFilter
     /**
      * Sets the used filter instance.
      *
-     * @param ?ArtifactFilter $filter
      * @since  0.9.12
      */
     public function setFilter(?ArtifactFilter $filter = null): void

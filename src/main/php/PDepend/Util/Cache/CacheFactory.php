@@ -44,11 +44,11 @@
 
 namespace PDepend\Util\Cache;
 
+use Exception;
 use InvalidArgumentException;
 use PDepend\Util\Cache\Driver\FileCacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
 use PDepend\Util\Configuration;
-use Random\RandomException;
 use RuntimeException;
 use stdClass;
 
@@ -85,9 +85,7 @@ class CacheFactory
      * identifier.
      *
      * @param string $cacheKey The name/identifier for the cache instance.
-     * @throws InvalidArgumentException
-     * @throws RandomException
-     * @throws RuntimeException
+     * @throws Exception
      */
     public function create(?string $cacheKey = null): CacheDriver
     {
@@ -103,8 +101,7 @@ class CacheFactory
      *
      * @param string|null $cacheKey The name/identifier for the cache instance.
      * @throws InvalidArgumentException If the configured cache driver is unknown.
-     * @throws RandomException
-     * @throws RuntimeException
+     * @throws Exception
      */
     protected function createCache(?string $cacheKey = null): CacheDriver
     {
@@ -142,7 +139,7 @@ class CacheFactory
     /**
      * Creates an in memory cache instance.
      *
-     * @throws RandomException
+     * @throws Exception
      */
     protected function createMemoryCache(): MemoryCacheDriver
     {

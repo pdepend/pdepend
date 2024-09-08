@@ -175,7 +175,6 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
     /**
      * Returns the parent function or method instance or <b>null</b>
      *
-     * @return ?AbstractASTCallable
      * @since  0.9.5
      */
     public function getDeclaringFunction(): ?AbstractASTCallable
@@ -284,8 +283,7 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
             return true;
         }
 
-        if (
-            !($node instanceof ASTTypeArray)
+        if (!($node instanceof ASTTypeArray)
             && !($node instanceof ASTScalarType)
             && $this->getClass() === null
         ) {

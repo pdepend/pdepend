@@ -185,8 +185,7 @@ class Command
                     return self::INPUT_ERROR;
                 }
                 assert(is_string($value));
-                if (
-                    $analyzerOptions[$option]['value'] === 'file'
+                if ($analyzerOptions[$option]['value'] === 'file'
                     && !file_exists($value)
                 ) {
                     echo 'Specified file ' . $option . '=' . $value
