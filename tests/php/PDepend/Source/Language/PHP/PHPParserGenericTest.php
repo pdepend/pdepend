@@ -690,8 +690,7 @@ class PHPParserGenericTest extends AbstractTestCase
      */
     public function testParserAllowsKeywordCallableAsPropertyName(): void
     {
-        $method = $this->getFirstClassMethodForTestCase();
-        static::assertNotNull($method);
+        $this->getFirstClassMethodForTestCase();
     }
 
     public function testParserHandlesExtraParenthesisForIsset(): void
@@ -1229,8 +1228,7 @@ class PHPParserGenericTest extends AbstractTestCase
 
     public function testListKeywordAsMethodName(): void
     {
-        $method = $this->getFirstMethodForTestCase();
-        static::assertNotNull($method);
+        $this->getFirstMethodForTestCase();
     }
 
     public function testListKeywordAsFunctionNameThrowsException(): void
@@ -1243,7 +1241,7 @@ class PHPParserGenericTest extends AbstractTestCase
     public function testGroupUseStatement(): ASTNamespace
     {
         $namespaces = $this->parseCodeResourceForTest();
-        static::assertNotNull($namespaces);
+        static::assertNotSame(0, $namespaces->count());
 
         return $namespaces[0];
     }

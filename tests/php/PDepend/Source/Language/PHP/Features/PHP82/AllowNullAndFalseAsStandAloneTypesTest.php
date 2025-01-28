@@ -43,7 +43,6 @@ namespace PDepend\Source\Language\PHP\Features\PHP82;
 
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
-use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTScalarType;
@@ -103,7 +102,6 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
     {
         $class = $this->getFirstClassForTestCase();
 
-        /** @var ASTMethod[] $methods */
         $methods = $class->getMethods();
         $nullish = $methods[0]->getReturnType();
         $falsy = $methods[1]->getReturnType();

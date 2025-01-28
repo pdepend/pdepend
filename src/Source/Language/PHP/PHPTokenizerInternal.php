@@ -1000,7 +1000,7 @@ class PHPTokenizerInternal implements FullTokenizer
                 }
             }
 
-            if ($type) {
+            if ($type && is_string($image)) {
                 $rtrim = rtrim($image);
                 $lines = substr_count($rtrim, "\n");
                 if ($lines === 0) {

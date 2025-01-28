@@ -560,7 +560,10 @@ abstract class AbstractTestCase extends TestCase
         $name = $name ?: static::class;
 
         $class = new ASTClass($name);
-        $class->setCompilationUnit(new ASTCompilationUnit($GLOBALS['argv'][0]));
+
+        /** @var array<string> */
+        $arg = $GLOBALS['argv'];
+        $class->setCompilationUnit(new ASTCompilationUnit($arg[0]));
         $class->setCache(new MemoryCacheDriver());
         $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
@@ -580,7 +583,10 @@ abstract class AbstractTestCase extends TestCase
         $name = $name ?: static::class;
 
         $interface = new ASTInterface($name);
-        $interface->setCompilationUnit(new ASTCompilationUnit($GLOBALS['argv'][0]));
+
+        /** @var array<string> */
+        $arg = $GLOBALS['argv'];
+        $interface->setCompilationUnit(new ASTCompilationUnit($arg[0]));
         $interface->setCache(new MemoryCacheDriver());
 
         return $interface;
@@ -613,7 +619,10 @@ abstract class AbstractTestCase extends TestCase
         $name = $name ?: static::class;
 
         $function = new ASTFunction($name);
-        $function->setCompilationUnit(new ASTCompilationUnit($GLOBALS['argv'][0]));
+
+        /** @var array<string> */
+        $arg = $GLOBALS['argv'];
+        $function->setCompilationUnit(new ASTCompilationUnit($arg[0]));
         $function->setCache(new MemoryCacheDriver());
         $function->addChild(new ASTFormalParameters());
 

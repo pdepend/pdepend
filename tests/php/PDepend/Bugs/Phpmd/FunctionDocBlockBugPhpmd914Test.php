@@ -69,7 +69,6 @@ class FunctionDocBlockBugPhpmd914Test extends AbstractRegressionTestCase
 
     public function testMethodDocBlockCanBeRead(): void
     {
-        /** @var ASTFunction $function */
         $function = $this->getFirstClassMethodForTestCase();
 
         $lines = array_map(

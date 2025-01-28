@@ -103,11 +103,15 @@ class ASTArtifactListTest extends AbstractTestCase
      */
     public function testNodeIteratorReturnsObjectsUnique(): void
     {
+        $object2 = new ASTClass('o2');
+        $object1 = new ASTClass('o1');
+        $object3 = new ASTClass('o3');
+
         $iterator = new ASTArtifactList(
             [
-                $object2 = new ASTClass('o2'),
-                $object1 = new ASTClass('o1'),
-                $object3 = new ASTClass('o3'),
+                $object2,
+                $object1,
+                $object3,
                 $object1,
                 $object2,
                 $object3,

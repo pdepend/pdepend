@@ -99,6 +99,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
      * gets serialized. It returns an array with those properties that should be
      * cached for all callable instances.
      *
+     * @return list<string>
      * @since  0.10.0
      */
     public function __sleep(): array
@@ -171,11 +172,11 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
     /**
      * Returns the tokens found in the function body.
      *
-     * @return Token[]
+     * @return array<int, Token>
      */
     public function getTokens(): array
     {
-        /** @var Token[] */
+        /** @var array<int, Token> */
         return (array) $this->cache
             ->type('tokens')
             ->restore($this->getId());

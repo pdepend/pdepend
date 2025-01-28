@@ -1,5 +1,6 @@
 #!/usr/bin/env php
 <?php
+
 /**
  * This file is part of PDepend.
  *
@@ -184,4 +185,4 @@ class CacheVersionUpdater
     }
 }
 
-CacheVersionUpdater::main($_SERVER['argv']);
+CacheVersionUpdater::main($argv);

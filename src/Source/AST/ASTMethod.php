@@ -63,7 +63,7 @@ class ASTMethod extends AbstractASTCallable
      * gets serialized. It returns an array with those properties that should be
      * cached for method instances.
      *
-     * @return array<string>
+     * @return list<string>
      * @since  0.10.0
      */
     public function __sleep(): array

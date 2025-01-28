@@ -432,11 +432,7 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      */
     public function testGetNodeMetricsForTrait(): array
     {
-        $metrics = $this->calculateTraitMetrics();
-
-        static::assertIsArray($metrics);
-
-        return $metrics;
+        return $this->calculateTraitMetrics();
     }
 
     /**

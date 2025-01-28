@@ -43,7 +43,6 @@ namespace PDepend\Source\Language\PHP\Features\PHP82;
 
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTFieldDeclaration;
-use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTScalarType;
@@ -98,10 +97,8 @@ class TrueTypeTest extends PHPParserVersion82TestCase
     {
         $class = $this->getFirstClassForTestCase();
 
-        /** @var ASTMethod[] $methods */
         $methods = $class->getMethods();
 
-        /** @var ASTScalarType $truthy */
         $truthy = $methods[0]->getReturnType();
 
         static::assertInstanceOf(ASTScalarType::class, $truthy);

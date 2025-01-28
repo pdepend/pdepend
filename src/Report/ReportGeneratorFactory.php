@@ -85,6 +85,7 @@ class ReportGeneratorFactory
     public function createGenerator(string $identifier, string $fileName): ReportGenerator
     {
         if (!isset($this->instances[$identifier])) {
+            /** @var array<string, array<array<string, string>>> */
             $loggerServices = $this->container->findTaggedServiceIds('pdepend.logger');
 
             $logger = null;

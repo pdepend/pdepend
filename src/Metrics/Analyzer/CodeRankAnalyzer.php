@@ -144,7 +144,10 @@ class CodeRankAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware
             // Collect all nodes
             foreach ($this->strategies as $strategy) {
                 $collected = $strategy->getCollectedNodes();
-                $this->nodes = array_merge_recursive($collected, $this->nodes);
+
+                /** @var array<string, array<string, array<int, string>>> */
+                $nodes = array_merge_recursive($collected, $this->nodes);
+                $this->nodes = $nodes;
             }
 
             // Init node metrics

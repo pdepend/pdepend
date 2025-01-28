@@ -429,7 +429,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
         $class = new ASTClass('PDepend');
         $metrics = $this->analyzer->getNodeMetrics($class);
 
-        static::assertIsArray($metrics);
         static::assertCount(0, $metrics);
     }
 

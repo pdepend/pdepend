@@ -268,7 +268,6 @@ class ParserTest extends AbstractTestCase
         static::assertEquals('default\package', $namespace->getImage());
 
         $class = $namespace->getClasses()->current();
-        static::assertNotNull($class);
 
         $actual = $class->getCompilationUnit()?->getComment();
         static::assertNotNull($actual);
@@ -296,7 +295,6 @@ class ParserTest extends AbstractTestCase
         static::assertEquals('+global', $namespace->getImage());
 
         $class = $namespace->getClasses()->current();
-        static::assertNotNull($class);
 
         $actual = $class->getCompilationUnit()?->getComment();
         static::assertNull($actual);
@@ -314,7 +312,6 @@ class ParserTest extends AbstractTestCase
         static::assertEquals('+global', $namespace->getImage());
 
         $function = $namespace->getFunctions()->current();
-        static::assertNotNull($function);
 
         $actual = $function->getCompilationUnit()?->getComment();
         static::assertNull($actual);
@@ -1176,8 +1173,7 @@ class ParserTest extends AbstractTestCase
      */
     public function testParserHandlesSelfKeywordAsParameterTypeHint(): void
     {
-        $parameters = $this->getFirstClassMethodForTestCase()->getParameters();
-        static::assertNotNull($parameters[0]);
+        $this->getFirstClassMethodForTestCase()->getParameters();
     }
 
     /**

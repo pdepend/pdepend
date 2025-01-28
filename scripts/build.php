@@ -3,6 +3,8 @@
 $root = realpath(__DIR__ . '/../') . '/';
 
 $archiveName = 'pdepend.phar';
+
+/** @var string */
 $version = parse_ini_file($root . 'build.properties')['project.version'] ?? '@package_version@';
 
 echo 'PDepend ', $version, PHP_EOL, PHP_EOL;

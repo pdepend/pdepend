@@ -118,11 +118,15 @@ class DefaultListenerTest extends AbstractTestCase
         $visitor->dispatch($class);
 
         $actual = $listener->nodes;
+
+        /** @var array<string> */
+        $arg = $GLOBALS['argv'];
+        $path = realpath($arg[0]);
         $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
-            realpath($GLOBALS['argv'][0]) . '#start' => true,
-            realpath($GLOBALS['argv'][0]) . '#end' => true,
+            $path . '#start' => true,
+            $path . '#end' => true,
         ];
 
         static::assertEquals($expected, $actual);
@@ -144,11 +148,15 @@ class DefaultListenerTest extends AbstractTestCase
         $visitor->dispatch($interface);
 
         $actual = $listener->nodes;
+
+        /** @var array<string> */
+        $arg = $GLOBALS['argv'];
+        $path = realpath($arg[0]);
         $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
-            realpath($GLOBALS['argv'][0]) . '#start' => true,
-            realpath($GLOBALS['argv'][0]) . '#end' => true,
+            $path . '#start' => true,
+            $path . '#end' => true,
         ];
 
         static::assertEquals($expected, $actual);
@@ -170,11 +178,15 @@ class DefaultListenerTest extends AbstractTestCase
         $visitor->dispatch($function);
 
         $actual = $listener->nodes;
+
+        /** @var array<string> */
+        $arg = $GLOBALS['argv'];
+        $path = realpath($arg[0]);
         $expected = [
             __FUNCTION__ . '#start' => true,
             __FUNCTION__ . '#end' => true,
-            realpath($GLOBALS['argv'][0]) . '#start' => true,
-            realpath($GLOBALS['argv'][0]) . '#end' => true,
+            $path . '#start' => true,
+            $path . '#end' => true,
         ];
 
         static::assertEquals($expected, $actual);

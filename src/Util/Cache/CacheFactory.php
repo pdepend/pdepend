@@ -106,6 +106,9 @@ class CacheFactory
     protected function createCache(?string $cacheKey = null): CacheDriver
     {
         assert($this->configuration->cache instanceof stdClass);
+        assert(is_string($this->configuration->cache->driver));
+        assert(is_string($this->configuration->cache->location));
+        assert(is_int($this->configuration->cache->ttl));
 
         return match ($this->configuration->cache->driver) {
             'file' => $this->createFileCache(

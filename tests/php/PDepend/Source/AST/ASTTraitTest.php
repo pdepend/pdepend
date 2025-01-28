@@ -324,8 +324,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testTraitCanUseParentKeywordInMethodBody(): void
     {
-        $trait = $this->getFirstTraitForTest();
-        static::assertNotNull($trait);
+        $this->getFirstTraitForTest();
     }
 
     /**
@@ -333,8 +332,7 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      */
     public function testTraitCanUseParentKeywordAsMethodTypeHint(): void
     {
-        $trait = $this->getFirstTraitForTest();
-        static::assertNotNull($trait);
+        $this->getFirstTraitForTest();
     }
 
     public function testGetNamespacedName(): void

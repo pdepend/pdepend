@@ -87,6 +87,7 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
      * names of all those properties that should be cached for this class or
      * interface instance.
      *
+     * @return list<string>
      * @since  0.10.0
      */
     public function __sleep(): array

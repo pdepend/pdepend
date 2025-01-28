@@ -118,9 +118,12 @@ abstract class AbstractCachingAnalyzer extends AbstractAnalyzer implements Analy
      */
     protected function loadCache(): void
     {
-        $this->metricsCached = (array) $this->cache
+        /** @var array<string, TData> */
+        $nodes = (array) $this->cache
             ->type('metrics')
             ->restore(static::class);
+
+        $this->metricsCached = $nodes;
     }
 
     /**

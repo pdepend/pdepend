@@ -2584,7 +2584,7 @@ abstract class AbstractPHPParser
      * @template T of ASTNode
      *
      * @param T $node
-     * @param array<int, Token> $tokens
+     * @param array<Token> $tokens
      * @return T
      * @since 0.9.8
      */
@@ -2626,6 +2626,9 @@ abstract class AbstractPHPParser
                 break;
             }
         }
+
+        /** @var T */
+        $tokens = array_values($tokens);
 
         return $tokens;
     }
@@ -3664,7 +3667,10 @@ abstract class AbstractPHPParser
             }
         }
 
-        return array_values($expressions);
+        /** @var T */
+        $values = array_values($expressions);
+
+        return $values;
     }
 
     /**
@@ -6345,6 +6351,7 @@ abstract class AbstractPHPParser
      */
     private function parseConstructFormalParameterModifiers(): int
     {
+        /** @var array<int, int> */
         static $states = [
             Tokens::T_PUBLIC => State::IS_PUBLIC,
             Tokens::T_PROTECTED => State::IS_PROTECTED,

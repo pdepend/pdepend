@@ -685,7 +685,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     {
         /** @var class-string<AbstractASTNode|ASTAnonymousClass> */
         $class = substr(static::class, 0, -4);
-        static::assertTrue(class_exists($class), "Class {$class} does not exist.");
+        static::assertNotSame('', class_exists($class), "Class {$class} does not exist.");
 
         $reflection = new ReflectionClass($class);
         if ($reflection->isAbstract()) {
