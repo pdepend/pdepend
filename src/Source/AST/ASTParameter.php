@@ -122,15 +122,13 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
             if ($value === null) {
                 $default .= 'NULL';
                 $typeHint .= ($typeHint !== '' ? ' or NULL' : '');
-            } elseif ($value === false) {
-                $default .= 'false';
-            } elseif ($value === true) {
-                $default .= 'true';
+            } elseif (is_bool($value)) {
+                $default .= $value ? 'true' : 'false';
             } elseif (is_array($value)) {
                 $default .= 'Array';
             } elseif (is_string($value)) {
                 $default .= "'" . $value . "'";
-            } else {
+            } elseif ($value instanceof Stringable || is_int($value) || is_float($value)) {
                 $default .= $value;
             }
         }

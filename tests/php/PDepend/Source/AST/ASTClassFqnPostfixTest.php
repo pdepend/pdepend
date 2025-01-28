@@ -237,7 +237,6 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
         static::assertInstanceOf(ASTConstantDefinition::class, $constantDefinition);
 
-        /** @var ASTConstantDeclarator $constantDefinition */
         $constantDeclarator = $constantDefinition->getChild(0);
 
         static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
@@ -255,7 +254,6 @@ class ASTClassFqnPostfixTest extends ASTNodeTestCase
 
         static::assertInstanceOf(ASTConstantDefinition::class, $constantDefinition);
 
-        /** @var ASTConstantDeclarator $constantDefinition */
         $constantDeclarator = $constantDefinition->getChild(0);
 
         static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);

@@ -252,11 +252,11 @@ abstract class AbstractASTType extends AbstractASTArtifact
     /**
      * Returns an <b>array</b> with all tokens within this type.
      *
-     * @return Token[]
+     * @return array<int, Token>
      */
     public function getTokens(): array
     {
-        /** @var Token[] */
+        /** @var array<int, Token> */
         return (array) $this->cache
             ->type('tokens')
             ->restore($this->getId());

@@ -96,6 +96,7 @@ class MemoryCacheDriver implements CacheDriver
     /**
      * PHP's magic serialize sleep method.
      *
+     * @return list<string>
      * @since  1.0.2
      */
     public function __sleep(): array

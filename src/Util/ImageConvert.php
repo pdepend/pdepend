@@ -121,7 +121,7 @@ class ImageConvert
         ];
 
         $proc = proc_open('convert', $desc, $pipes);
-        if (is_resource($proc)) {
+        if (is_resource($proc) && is_array($pipes) && is_resource($pipes[0])) {
             fwrite($pipes[0], '-version');
             fclose($pipes[0]);
 
@@ -158,7 +158,8 @@ class ImageConvert
             // Check for font family
             if (isset($config->imageConvert->fontFamily)) {
                 // Get font family
-                $fontFamily = (string) $config->imageConvert->fontFamily;
+                /** @var string */
+                $fontFamily = $config->imageConvert->fontFamily;
                 // Replace CSS separators
                 $fontReplace = 'font-family:' . strtr($fontFamily, ';:', '  ');
                 $fontPattern = '/font-family:\s*Arial/';
@@ -169,7 +170,9 @@ class ImageConvert
             // Check for font size
             if (isset($config->imageConvert->fontSize)) {
                 // Get font size
-                $fontSize = abs((float) $config->imageConvert->fontSize);
+                /** @var float */
+                $fontSize = $config->imageConvert->fontSize;
+                $fontSize = abs($fontSize);
 
                 // Fetch all font-size expressions
                 preg_match_all('/font-size:\s*(\d+)/', $svg, $fontSizes);

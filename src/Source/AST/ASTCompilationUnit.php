@@ -103,7 +103,7 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
      * before it serializes an instance of this class. This method returns an
      * array with those property names that should be serialized.
      *
-     * @return array<string>
+     * @return list<string>
      * @since  0.10.0
      */
     public function __sleep(): array
@@ -195,11 +195,11 @@ class ASTCompilationUnit extends AbstractASTArtifact implements Stringable
     /**
      * Returns an <b>array</b> with all tokens within this file.
      *
-     * @return array<Token>
+     * @return array<int, Token>
      */
     public function getTokens(): array
     {
-        /** @var Token[] */
+        /** @var array<int, Token> */
         return (array) $this->cache
             ->type('tokens')
             ->restore($this->getId());

@@ -74,6 +74,7 @@ use PDepend\Util\Configuration;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use RuntimeException;
+use SplFileInfo;
 use SplFileObject;
 use stdClass;
 
@@ -516,6 +517,7 @@ class Engine
                 $this->cacheFactory->create(),
             );
             assert($this->configuration->parser instanceof stdClass);
+            assert(is_int($this->configuration->parser->nesting));
             $parser->setMaxNestingLevel($this->configuration->parser->nesting);
 
             // Disable annotation parsing?
@@ -553,6 +555,7 @@ class Engine
         $this->fireStartAnalyzeProcess();
 
         assert($this->configuration->parser instanceof stdClass);
+        assert(is_int($this->configuration->parser->nesting));
         ini_set('xdebug.max_nesting_level', $this->configuration->parser->nesting);
 
         foreach ($analyzerLoader as $analyzer) {
@@ -589,6 +592,7 @@ class Engine
             throw new RuntimeException('No source directory and file set.');
         }
 
+        /** @var AppendIterator<int, SplFileInfo|string, \Iterator<int, SplFileInfo|string>> */
         $fileIterator = new AppendIterator();
 
         foreach ($this->files as $file) {

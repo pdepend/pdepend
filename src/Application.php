@@ -205,20 +205,17 @@ class Application
     {
         $container = $this->getContainer();
 
+        /** @var array<array<array<string, string>>> */
         $loggerServices = $container->findTaggedServiceIds($serviceTag);
 
         $options = [];
 
         foreach ($loggerServices as $loggerServiceTags) {
             foreach ($loggerServiceTags as $loggerServiceTag) {
-                if (isset($loggerServiceTag['option'], $loggerServiceTag['message'])
-                    && is_string($loggerServiceTag['option'])
-                    && is_string($loggerServiceTag['message'])
-                ) {
-                    $hasValue = isset($loggerServiceTag['value']) && is_string($loggerServiceTag['value']);
+                if (isset($loggerServiceTag['option'], $loggerServiceTag['message'])) {
                     $options[$loggerServiceTag['option']] = [
                         'message' => $loggerServiceTag['message'],
-                        'value' => $hasValue ? $loggerServiceTag['value'] : 'file',
+                        'value' => $loggerServiceTag['value'] ?? 'file',
                     ];
                 }
             }

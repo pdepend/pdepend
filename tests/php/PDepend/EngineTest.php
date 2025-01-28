@@ -161,7 +161,6 @@ class EngineTest extends AbstractTestCase
 
         $function = $namespaces->current()->getFunctions()->current();
 
-        static::assertNotNull($function);
         static::assertEquals('foo', $function->getImage());
         static::assertEquals(0, $function->getExceptionClasses()->count());
     }
@@ -301,8 +300,6 @@ class EngineTest extends AbstractTestCase
 
         $namespace1 = $engine->analyze();
         $namespace2 = $engine->getNamespaces();
-
-        static::assertNotNull($namespace1);
 
         static::assertSame($namespace1, $namespace2);
     }

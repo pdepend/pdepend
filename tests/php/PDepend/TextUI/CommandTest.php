@@ -75,7 +75,10 @@ class CommandTest extends AbstractTestCase
 
         $data = @parse_ini_file(__DIR__ . '/../../../../build.properties');
 
-        $this->versionOutput = sprintf('PDepend %s%s%s', $data['project.version'] ?? '', PHP_EOL, PHP_EOL);
+        /** @var string */
+        $version = $data['project.version'] ?? '';
+
+        $this->versionOutput = sprintf('PDepend %s%s%s', $version, PHP_EOL, PHP_EOL);
         $this->usageOutput = 'Usage: pdepend [options] [logger] <dir[,dir[,...]]>' . PHP_EOL . PHP_EOL;
     }
 
@@ -524,7 +527,7 @@ class CommandTest extends AbstractTestCase
 
         static::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
         static::assertIsString($actual);
-        static::assertEmpty('', $actual);
+        static::assertEmpty($actual);
     }
 
     public function testErrorDisplay(): void

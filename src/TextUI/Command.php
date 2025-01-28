@@ -293,6 +293,7 @@ class Command
             return false;
         }
 
+        /** @var array<string> */
         $argv = $_SERVER['argv'];
 
         // Remove the pdepend command line file
@@ -309,9 +310,9 @@ class Command
 
         for ($i = 0, $c = count($argv); $i < $c; ++$i) {
             // Is it an ini_set option?
-            $arg = (string) $argv[$i];
+            $arg = $argv[$i];
             if ($arg === '-d' && isset($argv[$i + 1])) {
-                $arg = (string) $argv[++$i];
+                $arg = $argv[++$i];
                 if (!str_contains($arg, '=')) {
                     ini_set($arg, 'on');
                 } else {
@@ -403,7 +404,7 @@ class Command
         $version = '@package_version@';
         if (file_exists($build)) {
             $data = @parse_ini_file($build);
-            if (is_array($data)) {
+            if (is_array($data) && is_string($data['project.version'])) {
                 $version = $data['project.version'];
             }
         }

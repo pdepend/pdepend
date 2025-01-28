@@ -142,7 +142,6 @@ class InInitializersTest extends PHPParserVersion81TestCase
         static::assertTrue($str->isPromoted());
         static::assertTrue($str->isProtected());
 
-        /** @var ASTScalarType $variable */
         $type = $str->getChild(0);
         static::assertInstanceOf(ASTScalarType::class, $type);
         static::assertSame('string', $type->getImage());

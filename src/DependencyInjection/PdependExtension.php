@@ -89,12 +89,15 @@ class PdependExtension extends SymfonyExtension
         }
 
         $configuration = new Configuration($extensionManager->getActivatedExtensions());
+
+        /** @var array<string, array<string, mixed>> */
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../../resources'));
         $loader->load('services.xml');
 
         foreach ($extensionManager->getActivatedExtensions() as $extension) {
+            /** @var array<mixed> */
             $extensionConfig = $config['extensions'][$extension->getName()];
 
             $tempContainer = new ContainerBuilder(new ParameterBag([]));
@@ -114,7 +117,7 @@ class PdependExtension extends SymfonyExtension
     }
 
     /**
-     * @param array<string, array<string, string>> $config
+     * @param array<string, array<string, mixed>> $config
      */
     private function createSettings(array $config): stdClass
     {

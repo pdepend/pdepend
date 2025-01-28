@@ -108,8 +108,7 @@ class PHPParserVersion81Test extends AbstractTestCase
      */
     public function testParserAllowsKeywordCallableAsPropertyName(): void
     {
-        $method = $this->getFirstClassMethodForTestCase();
-        static::assertNotNull($method);
+        $this->getFirstClassMethodForTestCase();
     }
 
     /**
@@ -729,8 +728,7 @@ class PHPParserVersion81Test extends AbstractTestCase
 
     public function testListKeywordAsMethodName(): void
     {
-        $method = $this->getFirstMethodForTestCase();
-        static::assertNotNull($method);
+        $this->getFirstMethodForTestCase();
     }
 
     public function testListKeywordAsFunctionNameThrowsException(): void
@@ -743,7 +741,7 @@ class PHPParserVersion81Test extends AbstractTestCase
     public function testGroupUseStatement(): ASTNamespace
     {
         $namespaces = $this->parseCodeResourceForTest();
-        static::assertNotNull($namespaces);
+        static::assertNotSame(0, $namespaces->count());
 
         return $namespaces[0];
     }
@@ -1241,34 +1239,28 @@ class PHPParserVersion81Test extends AbstractTestCase
 
     public function testArrowFunctions(): void
     {
-        /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(
             ASTFunctionPostfix::class
         )->getChild(1)->getChild(0);
 
         static::assertInstanceOf(ASTClosure::class, $closure);
 
-        /** @var ASTFormalParameters $parameters */
         $parameters = $closure->getChild(0);
         static::assertInstanceOf(ASTFormalParameters::class, $parameters);
         static::assertCount(1, $parameters->getChildren());
 
-        /** @var ASTFormalParameter $parameter */
         $parameter = $parameters->getChild(0);
         static::assertInstanceOf(ASTFormalParameter::class, $parameter);
 
-        /** @var ASTVariableDeclarator $parameter */
         $variableDeclarator = $parameter->getChild(0);
         static::assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
         static::assertSame('$number', $variableDeclarator->getImage());
 
-        /** @var ASTReturnStatement $parameters */
         $return = $closure->getChild(1);
         static::assertInstanceOf(ASTReturnStatement::class, $return);
         static::assertSame('=>', $return->getImage());
         static::assertCount(1, $return->getChildren());
 
-        /** @var ASTExpression $expression */
         $expression = $return->getChild(0);
         static::assertInstanceOf(ASTExpression::class, $expression);
         static::assertSame([
@@ -1285,31 +1277,25 @@ class PHPParserVersion81Test extends AbstractTestCase
 
     public function testArrowFunctionsWithReturnType(): void
     {
-        /** @var ASTClosure $closure */
         $closure = $this->getFirstNodeOfTypeInFunction(ASTFunctionPostfix::class)->getChild(1)->getChild(0);
 
         static::assertInstanceOf(ASTClosure::class, $closure);
 
-        /** @var ASTFormalParameters $parameters */
         $parameters = $closure->getChild(0);
         static::assertInstanceOf(ASTFormalParameters::class, $parameters);
         static::assertCount(1, $parameters->getChildren());
 
-        /** @var ASTFormalParameter $parameter */
         $parameter = $parameters->getChild(0);
         static::assertInstanceOf(ASTFormalParameter::class, $parameter);
 
-        /** @var ASTVariableDeclarator $parameter */
         $variableDeclarator = $parameter->getChild(0);
         static::assertInstanceOf(ASTVariableDeclarator::class, $variableDeclarator);
         static::assertSame('$number', $variableDeclarator->getImage());
 
-        /** @var ASTScalarType $parameters */
         $type = $closure->getChild(1);
         static::assertInstanceOf(ASTScalarType::class, $type);
         static::assertSame('int', $type->getImage());
 
-        /** @var ASTReturnStatement $parameters */
         $return = $closure->getChild(2);
         static::assertInstanceOf(ASTReturnStatement::class, $return);
         static::assertSame('=>', $return->getImage());

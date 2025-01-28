@@ -17,7 +17,9 @@ class ParagraphClassNode extends ParagraphNode
 
     public function render(): string
     {
-        $text = trim($this->value);
+        /** @var string */
+        $text = $this->value;
+        $text = trim($text);
         $class = $this->class;
 
         if ($text === '') {
@@ -86,7 +88,10 @@ class PHPDependEnvironment extends Environment
     {
         $root = substr($url, 0, 1) === '/';
 
-        return ($root ? $this->getBaseHref() . '/' : '') . parent::relativeUrl($url);
+        /** @var string */
+        $url = parent::relativeUrl($url);
+
+        return ($root ? $this->getBaseHref() . '/' : '') . $url;
     }
 }
 
@@ -104,7 +109,7 @@ return [
     'layout' => __DIR__ . '/resources/layout.php',
     'publishPhar' => 'pdepend/pdepend',
     'extensions' => [
-        'rst' => function ($file) use ($parser) {
+        'rst' => function (string $file) use ($parser) {
             $parser->getEnvironment()->setCurrentDirectory(dirname($file));
             $content = $parser->parseFile($file);
             // Rewrite links anchors

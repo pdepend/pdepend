@@ -127,7 +127,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testTraitUseInsteadOfSelf(): void
     {
-        /** @var AbstractASTClassOrInterface $class */
         $class = $this->getFirstClassForTestCase();
         $getTraitMethods = new ReflectionMethod($class, 'getTraitMethods');
         $getTraitMethods->setAccessible(true);
@@ -146,7 +145,6 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
      */
     public function testTraitMethodAlias(): void
     {
-        /** @var AbstractASTClassOrInterface $class */
         $class = $this->getFirstClassForTestCase();
         $getTraitMethods = new ReflectionMethod($class, 'getTraitMethods');
         $getTraitMethods->setAccessible(true);
