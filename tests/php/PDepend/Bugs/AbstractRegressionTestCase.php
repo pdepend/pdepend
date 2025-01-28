@@ -99,6 +99,7 @@ abstract class AbstractRegressionTestCase extends AbstractTestCase
      * Returns the source file for the given test case.
      *
      * @param string $testCase The qualified test case name.
+     * @throws Exception When test case ID can't be found.
      */
     protected function getSourceFileForTestCase(string $testCase): string
     {

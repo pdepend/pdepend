@@ -1169,7 +1169,7 @@ class PHPParserVersion81Test extends AbstractTestCase
             ];
         }, $children);
 
-        foreach ([
+        $items = [
             ['int', '$id'],
             ['float', '$money'],
             ['bool', '$active'],
@@ -1192,8 +1192,8 @@ class PHPParserVersion81Test extends AbstractTestCase
             ['?iterable', '$actionsN', ASTTypeIterable::class],
             ['?object', '$bagN', ASTClassOrInterfaceReference::class],
             ['?Role', '$roleN', ASTClassOrInterfaceReference::class],
-        ] as $index => $expected
-        ) {
+        ];
+        foreach ($items as $index => $expected) {
             [$expectedType, $expectedVariable] = $expected;
             $expectedTypeClass = $expected[2] ?? ASTScalarType::class;
             [$type, $variable] = $declarations[$index];
@@ -1480,10 +1480,10 @@ class PHPParserVersion81Test extends AbstractTestCase
             ];
         }, $children);
 
-        foreach ([
+        $items = [
             ['null|int|float', '$number', ASTUnionType::class],
-        ] as $index => $expected
-        ) {
+        ];
+        foreach ($items as $index => $expected) {
             [$expectedType, $expectedVariable, $expectedTypeClass] = $expected;
             [$type, $variable] = $declarations[$index];
 

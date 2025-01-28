@@ -281,7 +281,8 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
             return true;
         }
 
-        if (!($node instanceof ASTTypeArray)
+        if (
+            !($node instanceof ASTTypeArray)
             && !($node instanceof ASTScalarType)
             && $this->getClass() === null
         ) {

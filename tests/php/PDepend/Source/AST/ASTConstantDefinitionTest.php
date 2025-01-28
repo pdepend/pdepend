@@ -71,6 +71,20 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
     }
 
     /**
+     * Returns valid field declation modifiers.
+     *
+     * @return list<array<int, mixed>>
+     */
+    public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations(): array
+    {
+        return [
+            [State::IS_PRIVATE],
+            [State::IS_PROTECTED],
+            [State::IS_PUBLIC],
+        ];
+    }
+
+    /**
      * Tests that the <b>setModifiers()</b> method throws an exception when an
      * invalid modifier or modifier combination was set.
      *
@@ -90,6 +104,39 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
         );
 
         $definition->setModifiers($modifiers);
+    }
+
+    /**
+     * Returns invalid field declation modifiers.
+     *
+     * @return array<mixed>
+     */
+    public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers(): array
+    {
+        return [
+            [State::IS_ABSTRACT],
+            [State::IS_STATIC],
+            [
+                State::IS_PRIVATE |
+                State::IS_ABSTRACT,
+            ],
+            [
+                State::IS_PROTECTED |
+                State::IS_ABSTRACT,
+            ],
+            [
+                State::IS_PUBLIC |
+                State::IS_STATIC,
+            ],
+            [
+                State::IS_PROTECTED |
+                State::IS_STATIC,
+            ],
+            [
+                State::IS_PRIVATE |
+                State::IS_STATIC,
+            ],
+        ];
     }
 
     /**
@@ -328,52 +375,5 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
         return $this->getFirstNodeOfTypeInClass(
             ASTConstantDefinition::class
         );
-    }
-
-    /**
-     * Returns valid field declation modifiers.
-     *
-     * @return list<array<int, mixed>>
-     */
-    public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations(): array
-    {
-        return [
-            [State::IS_PRIVATE],
-            [State::IS_PROTECTED],
-            [State::IS_PUBLIC],
-        ];
-    }
-
-    /**
-     * Returns invalid field declation modifiers.
-     *
-     * @return array<mixed>
-     */
-    public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers(): array
-    {
-        return [
-            [State::IS_ABSTRACT],
-            [State::IS_STATIC],
-            [
-                State::IS_PRIVATE |
-                State::IS_ABSTRACT,
-            ],
-            [
-                State::IS_PROTECTED |
-                State::IS_ABSTRACT,
-            ],
-            [
-                State::IS_PUBLIC |
-                State::IS_STATIC,
-            ],
-            [
-                State::IS_PROTECTED |
-                State::IS_STATIC,
-            ],
-            [
-                State::IS_PRIVATE |
-                State::IS_STATIC,
-            ],
-        ];
     }
 }

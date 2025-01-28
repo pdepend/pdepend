@@ -350,7 +350,8 @@ class CouplingAnalyzer extends AbstractAnalyzer implements AnalyzerNodeAware, An
         if (null === $coupledType) {
             return;
         }
-        if ($coupledType->isSubtypeOf($declaringType)
+        if (
+            $coupledType->isSubtypeOf($declaringType)
             || $declaringType->isSubtypeOf($coupledType)
         ) {
             return;

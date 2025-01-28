@@ -1872,7 +1872,8 @@ class PHPBuilder implements Builder
         $namespaces = $this->namespaces;
 
         // Remove default package if empty
-        if (count($this->defaultPackage->getTypes()) === 0
+        if (
+            count($this->defaultPackage->getTypes()) === 0
             && count($this->defaultPackage->getFunctions()) === 0
         ) {
             unset($namespaces[self::DEFAULT_NAMESPACE]);

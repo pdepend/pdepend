@@ -128,6 +128,32 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     }
 
     /**
+     * Returns valid field declation modifiers.
+     *
+     * @return array<mixed>
+     */
+    public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations(): array
+    {
+        return [
+            [State::IS_PRIVATE],
+            [State::IS_PROTECTED],
+            [State::IS_PUBLIC],
+            [
+                State::IS_PRIVATE |
+                State::IS_STATIC,
+            ],
+            [
+                State::IS_PROTECTED |
+                State::IS_STATIC,
+            ],
+            [
+                State::IS_PUBLIC |
+                State::IS_STATIC,
+            ],
+        ];
+    }
+
+    /**
      * Tests that the <b>setModifiers()</b> method throws an exception when an
      * invalid modifier or modifier combination was set.
      *
@@ -147,6 +173,36 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
         );
 
         $declaration->setModifiers($modifiers);
+    }
+
+    /**
+     * Returns invalid field declation modifiers.
+     *
+     * @return array<mixed>
+     */
+    public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers(): array
+    {
+        return [
+            [State::IS_ABSTRACT],
+            [State::IS_FINAL],
+            [
+                State::IS_PRIVATE |
+                State::IS_ABSTRACT,
+            ],
+            [
+                State::IS_PROTECTED |
+                State::IS_ABSTRACT,
+            ],
+            [
+                State::IS_PUBLIC |
+                State::IS_FINAL,
+            ],
+            [
+                State::IS_PUBLIC |
+                State::IS_STATIC |
+                State::IS_FINAL,
+            ],
+        ];
     }
 
     /**
@@ -297,61 +353,5 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
         return $this->getFirstNodeOfTypeInClass(
             ASTFieldDeclaration::class
         );
-    }
-
-    /**
-     * Returns valid field declation modifiers.
-     *
-     * @return array<mixed>
-     */
-    public static function dataProviderSetModifiersAcceptsExpectedModifierCombinations(): array
-    {
-        return [
-            [State::IS_PRIVATE],
-            [State::IS_PROTECTED],
-            [State::IS_PUBLIC],
-            [
-                State::IS_PRIVATE |
-                State::IS_STATIC,
-            ],
-            [
-                State::IS_PROTECTED |
-                State::IS_STATIC,
-            ],
-            [
-                State::IS_PUBLIC |
-                State::IS_STATIC,
-            ],
-        ];
-    }
-
-    /**
-     * Returns invalid field declation modifiers.
-     *
-     * @return array<mixed>
-     */
-    public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers(): array
-    {
-        return [
-            [State::IS_ABSTRACT],
-            [State::IS_FINAL],
-            [
-                State::IS_PRIVATE |
-                State::IS_ABSTRACT,
-            ],
-            [
-                State::IS_PROTECTED |
-                State::IS_ABSTRACT,
-            ],
-            [
-                State::IS_PUBLIC |
-                State::IS_FINAL,
-            ],
-            [
-                State::IS_PUBLIC |
-                State::IS_STATIC |
-                State::IS_FINAL,
-            ],
-        ];
     }
 }

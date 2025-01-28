@@ -430,7 +430,8 @@ abstract class AbstractPHPParser
         $allowed = State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE;
         $modifiers &= $allowed;
 
-        if ($this->classOrInterface instanceof ASTInterface
+        if (
+            $this->classOrInterface instanceof ASTInterface
             && ($modifiers & (State::IS_PROTECTED | State::IS_PRIVATE)) !== 0
         ) {
             throw new InvalidStateException(
@@ -5575,7 +5576,8 @@ abstract class AbstractPHPParser
                 $this->consumeToken(Tokens::T_COMMA);
                 $this->consumeComments();
 
-                if ($inCall &&
+                if (
+                    $inCall &&
                     $this->tokenizer->peek() === Tokens::T_PARENTHESIS_CLOSE
                 ) {
                     break;
@@ -6886,7 +6888,8 @@ abstract class AbstractPHPParser
         $token = $this->tokenizer->currentToken();
         $types = [$firstType];
 
-        while ($this->tokenizer->peekNext() !== Tokens::T_VARIABLE
+        while (
+            $this->tokenizer->peekNext() !== Tokens::T_VARIABLE
             && $this->addTokenToStackIfType(Tokens::T_BITWISE_AND)
         ) {
             $types[] = $this->parseSingleTypeHint();
@@ -7320,7 +7323,8 @@ abstract class AbstractPHPParser
             // Remove alias and add real namespace
             array_shift($fragments);
             array_unshift($fragments, $mapsTo);
-        } elseif (isset($this->namespaceName)
+        } elseif (
+            isset($this->namespaceName)
             && !$this->namespacePrefixReplaced
         ) {
             // Prepend current namespace
@@ -7781,7 +7785,8 @@ abstract class AbstractPHPParser
         // Fetch next token type
         $tokenType = $this->tokenizer->peek();
 
-        if ($tokenType === Tokens::T_PARENTHESIS_OPEN
+        if (
+            $tokenType === Tokens::T_PARENTHESIS_OPEN
             || $tokenType === Tokens::T_DOUBLE_COLON
         ) {
             return $this->setNodePositionsAndReturn(
@@ -8438,7 +8443,8 @@ abstract class AbstractPHPParser
         }
 
         // Check for doc level comment
-        if ($this->globalPackageName === Builder::DEFAULT_NAMESPACE
+        if (
+            $this->globalPackageName === Builder::DEFAULT_NAMESPACE
             && $this->isFileComment()
         ) {
             $this->globalPackageName = $package;
@@ -8832,7 +8838,8 @@ abstract class AbstractPHPParser
             $this->consumeToken(Tokens::T_COLON);
             $type = $this->parseTypeHint();
 
-            if (!($type instanceof ASTScalarType) ||
+            if (
+                !($type instanceof ASTScalarType) ||
                 !in_array($type->getImage(), ['int', 'string'], true)
             ) {
                 throw new TokenException(
