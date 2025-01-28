@@ -312,6 +312,23 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     }
 
     /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return list<list<string>>
+     */
+    public static function dataProviderParserResolvesQualifiedTypeNameInTypeSignature(): array
+    {
+        return [
+            ['issues/002-031-resolve-qualified-type-names.php', 'baz'],
+            ['issues/002-035-resolve-qualified-type-names.php', 'baz'],
+            ['issues/002-039-resolve-qualified-type-names.php', 'baz'],
+            ['issues/002-043-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-046-resolve-qualified-type-names.php', 'foo\foo'],
+        ];
+    }
+
+    /**
      * Tests that the parser expands a local name within the body of a
      * namespaced function correct.
      *
@@ -337,6 +354,24 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     }
 
     /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return list<list<string>>
+     */
+    public static function dataProviderParserResolvesQualifiedTypeNameInFunction(): array
+    {
+        return [
+            ['issues/002-015-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-019-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-023-resolve-qualified-type-names.php', 'foo\baz'],
+            ['issues/002-027-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-047-resolve-qualified-type-names.php', 'foo\foo'],
+            ['issues/002-051-resolve-qualified-type-names.php', 'baz\baz'],
+        ];
+    }
+
+    /**
      * Tests that the parser does not expand a qualified name within the
      * signature of a namespaced class or interface correct.
      *
@@ -357,6 +392,21 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     }
 
     /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return list<list<string>>
+     */
+    public static function dataProviderParserKeepsQualifiedTypeNameInTypeSignature(): array
+    {
+        return [
+            ['issues/002-032-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-036-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-040-resolve-qualified-type-names.php', 'foo\bar'],
+        ];
+    }
+
+    /**
      * Tests that the parser does not expand a qualified name within the body of
      * a namespaced function correct.
      *
@@ -374,6 +424,24 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->current();
 
         static::assertEquals($namespaceName, $dependency->getNamespace()?->getImage());
+    }
+
+    /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return list<list<string>>
+     */
+    public static function dataProviderParserKeepsQualifiedTypeNameInFunction(): array
+    {
+        return [
+            ['issues/002-016-resolve-qualified-type-names.php', ''],
+            ['issues/002-020-resolve-qualified-type-names.php', ''],
+            ['issues/002-024-resolve-qualified-type-names.php', 'baz'],
+            ['issues/002-028-resolve-qualified-type-names.php', 'bar'],
+            ['issues/002-048-resolve-qualified-type-names.php', 'foo'],
+            ['issues/002-052-resolve-qualified-type-names.php', 'bar'],
+        ];
     }
 
     /**
@@ -399,6 +467,22 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     }
 
     /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return list<list<string>>
+     */
+    public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax(): array
+    {
+        return [
+            ['issues/002-033-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-037-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-041-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-044-resolve-qualified-type-names.php', 'foo\foo'],
+        ];
+    }
+
+    /**
      * Tests that the parser resolves a type name when the name is prefixed with
      * PHP's namespace keyword.
      *
@@ -421,6 +505,23 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
     }
 
     /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return list<list<string>>
+     */
+    public static function dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax(): array
+    {
+        return [
+            ['issues/002-017-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-021-resolve-qualified-type-names.php', 'foo\bar'],
+            ['issues/002-025-resolve-qualified-type-names.php', 'foo\bar\baz'],
+            ['issues/002-029-resolve-qualified-type-names.php', 'foo\bar\baz'],
+            ['issues/002-049-resolve-qualified-type-names.php', 'bar\bar'],
+        ];
+    }
+
+    /**
      * Tests that the parser resolves a type name when the name is prefixed with
      * PHP's namespace keyword.
      *
@@ -440,6 +541,22 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ->current();
 
         static::assertEquals($namespaceName, $dependency->getNamespace()?->getImage());
+    }
+
+    /**
+     * Data provider method that returns test data for class name resolving
+     * tests.
+     *
+     * @return list<list<string>>
+     */
+    public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax(): array
+    {
+        return [
+            ['issues/002-034-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-038-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-042-resolve-qualified-type-names.php', 'baz\foo'],
+            ['issues/002-045-resolve-qualified-type-names.php', 'foo\foo'],
+        ];
     }
 
     /**
@@ -470,107 +587,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @return list<list<string>>
      */
-    public static function dataProviderParserResolvesQualifiedTypeNameInFunction(): array
-    {
-        return [
-            ['issues/002-015-resolve-qualified-type-names.php', 'foo\bar'],
-            ['issues/002-019-resolve-qualified-type-names.php', 'foo\bar'],
-            ['issues/002-023-resolve-qualified-type-names.php', 'foo\baz'],
-            ['issues/002-027-resolve-qualified-type-names.php', 'foo\bar'],
-            ['issues/002-047-resolve-qualified-type-names.php', 'foo\foo'],
-            ['issues/002-051-resolve-qualified-type-names.php', 'baz\baz'],
-        ];
-    }
-
-    /**
-     * Data provider method that returns test data for class name resolving
-     * tests.
-     *
-     * @return list<list<string>>
-     */
-    public static function dataProviderParserResolvesQualifiedTypeNameInTypeSignature(): array
-    {
-        return [
-            ['issues/002-031-resolve-qualified-type-names.php', 'baz'],
-            ['issues/002-035-resolve-qualified-type-names.php', 'baz'],
-            ['issues/002-039-resolve-qualified-type-names.php', 'baz'],
-            ['issues/002-043-resolve-qualified-type-names.php', 'foo\bar'],
-            ['issues/002-046-resolve-qualified-type-names.php', 'foo\foo'],
-        ];
-    }
-
-    /**
-     * Data provider method that returns test data for class name resolving
-     * tests.
-     *
-     * @return list<list<string>>
-     */
-    public static function dataProviderParserKeepsQualifiedTypeNameInFunction(): array
-    {
-        return [
-            ['issues/002-016-resolve-qualified-type-names.php', ''],
-            ['issues/002-020-resolve-qualified-type-names.php', ''],
-            ['issues/002-024-resolve-qualified-type-names.php', 'baz'],
-            ['issues/002-028-resolve-qualified-type-names.php', 'bar'],
-            ['issues/002-048-resolve-qualified-type-names.php', 'foo'],
-            ['issues/002-052-resolve-qualified-type-names.php', 'bar'],
-        ];
-    }
-
-    /**
-     * Data provider method that returns test data for class name resolving
-     * tests.
-     *
-     * @return list<list<string>>
-     */
-    public static function dataProviderParserKeepsQualifiedTypeNameInTypeSignature(): array
-    {
-        return [
-            ['issues/002-032-resolve-qualified-type-names.php', 'foo\bar'],
-            ['issues/002-036-resolve-qualified-type-names.php', 'foo\bar'],
-            ['issues/002-040-resolve-qualified-type-names.php', 'foo\bar'],
-        ];
-    }
-
-    /**
-     * Data provider method that returns test data for class name resolving
-     * tests.
-     *
-     * @return list<list<string>>
-     */
-    public static function dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax(): array
-    {
-        return [
-            ['issues/002-017-resolve-qualified-type-names.php', 'foo\bar'],
-            ['issues/002-021-resolve-qualified-type-names.php', 'foo\bar'],
-            ['issues/002-025-resolve-qualified-type-names.php', 'foo\bar\baz'],
-            ['issues/002-029-resolve-qualified-type-names.php', 'foo\bar\baz'],
-            ['issues/002-049-resolve-qualified-type-names.php', 'bar\bar'],
-        ];
-    }
-
-    /**
-     * Data provider method that returns test data for class name resolving
-     * tests.
-     *
-     * @return list<list<string>>
-     */
-    public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax(): array
-    {
-        return [
-            ['issues/002-033-resolve-qualified-type-names.php', 'baz\foo'],
-            ['issues/002-037-resolve-qualified-type-names.php', 'baz\foo'],
-            ['issues/002-041-resolve-qualified-type-names.php', 'baz\foo'],
-            ['issues/002-044-resolve-qualified-type-names.php', 'foo\foo'],
-        ];
-    }
-
-    /**
-     * Data provider method that returns test data for class name resolving
-     * tests.
-     *
-     * @return list<list<string>>
-     */
     public static function dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax(): array
     {
         return [
@@ -579,22 +595,6 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
             ['issues/002-026-resolve-qualified-type-names.php', 'baz'],
             ['issues/002-030-resolve-qualified-type-names.php', 'baz'],
             ['issues/002-050-resolve-qualified-type-names.php', 'baz\baz'],
-        ];
-    }
-
-    /**
-     * Data provider method that returns test data for class name resolving
-     * tests.
-     *
-     * @return list<list<string>>
-     */
-    public static function dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax(): array
-    {
-        return [
-            ['issues/002-034-resolve-qualified-type-names.php', 'baz\foo'],
-            ['issues/002-038-resolve-qualified-type-names.php', 'baz\foo'],
-            ['issues/002-042-resolve-qualified-type-names.php', 'baz\foo'],
-            ['issues/002-045-resolve-qualified-type-names.php', 'foo\foo'],
         ];
     }
 }

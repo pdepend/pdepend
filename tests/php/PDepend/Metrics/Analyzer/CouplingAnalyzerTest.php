@@ -652,24 +652,6 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
     }
 
     /**
-     * Parses the source code for the currently calling test method and returns
-     * the calculated project metrics.
-     *
-     * @param string $testCase Optional name of the calling test case.
-     * @return array<string, mixed>
-     * @since 0.10.2
-     */
-    private function calculateProjectMetrics(?string $testCase = null): array
-    {
-        $testCase = ($testCase ?: $this->getCallingTestMethod());
-
-        $analyzer = new CouplingAnalyzer();
-        $analyzer->analyze($this->parseTestCaseSource($testCase));
-
-        return $analyzer->getProjectMetrics();
-    }
-
-    /**
      * Data provider that returns different test files and the corresponding
      * invocation count value.
      *
@@ -698,5 +680,23 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
             [__METHOD__ . '#18', 1, 0],
             [__METHOD__ . '#19', 1, 1],
         ];
+    }
+
+    /**
+     * Parses the source code for the currently calling test method and returns
+     * the calculated project metrics.
+     *
+     * @param string $testCase Optional name of the calling test case.
+     * @return array<string, mixed>
+     * @since 0.10.2
+     */
+    private function calculateProjectMetrics(?string $testCase = null): array
+    {
+        $testCase = ($testCase ?: $this->getCallingTestMethod());
+
+        $analyzer = new CouplingAnalyzer();
+        $analyzer->analyze($this->parseTestCaseSource($testCase));
+
+        return $analyzer->getProjectMetrics();
     }
 }

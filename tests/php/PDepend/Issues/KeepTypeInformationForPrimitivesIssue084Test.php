@@ -78,6 +78,27 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
     }
 
     /**
+     * Data provider that returns a list of actual input and expected output
+     * primitive types.
+     *
+     * @return list<list<string>>
+     */
+    public static function dataProviderParserSetsExpectedPrimitivePropertyType(): array
+    {
+        return [
+            ['int', 'integer'],
+            ['INTEger', 'integer'],
+            ['float', 'float'],
+            ['real', 'float'],
+            ['double', 'float'],
+            ['bool', 'boolean'],
+            ['boolean', 'boolean'],
+            ['false', 'boolean'],
+            ['true', 'boolean'],
+        ];
+    }
+
+    /**
      * Tests that the parser sets the expected array type information.
      */
     public function testParserSetsExpectedArrayPropertyType(): void
@@ -99,26 +120,5 @@ class KeepTypeInformationForPrimitivesIssue084Test extends AbstractFeatureTestCa
             ?->getFirstChildOfType(ASTType::class);
 
         static::assertTrue($type?->isArray());
-    }
-
-    /**
-     * Data provider that returns a list of actual input and expected output
-     * primitive types.
-     *
-     * @return list<list<string>>
-     */
-    public static function dataProviderParserSetsExpectedPrimitivePropertyType(): array
-    {
-        return [
-            ['int', 'integer'],
-            ['INTEger', 'integer'],
-            ['float', 'float'],
-            ['real', 'float'],
-            ['double', 'float'],
-            ['bool', 'boolean'],
-            ['boolean', 'boolean'],
-            ['false', 'boolean'],
-            ['true', 'boolean'],
-        ];
     }
 }

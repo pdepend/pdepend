@@ -74,10 +74,11 @@ class AllowNullAndFalseAsStandAloneTypesTest extends PHPParserVersion82TestCase
             ];
         }, $children);
 
-        foreach ([
-            ['null', '$nullish'],
-            ['false', '$falsy'],
-        ] as $index => $expected
+        foreach (
+            [
+                ['null', '$nullish'],
+                ['false', '$falsy'],
+            ] as $index => $expected
         ) {
             [$expectedType, $expectedVariable] = $expected;
             $expectedTypeClass = ASTScalarType::class;

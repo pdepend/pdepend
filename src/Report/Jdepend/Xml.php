@@ -346,7 +346,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
             $this->dispatch($type);
         }
 
-        if ($this->concreteClasses->firstChild === null
+        if (
+            $this->concreteClasses->firstChild === null
             && $this->abstractClasses->firstChild === null
         ) {
             return;
