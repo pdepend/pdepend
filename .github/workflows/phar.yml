@@ -25,7 +25,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -64,7 +64,7 @@ jobs:
             sh -c "echo $PASSPHRASE | gpg --command-fd 0 --pinentry-mode loopback -u pgp@pdepend.org --batch --detach-sign --output pdepend.phar.asc pdepend.phar";
 
       - name: Upload pdepend.phar and pdepend.phar.asc
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           path: |
             pdepend.phar
