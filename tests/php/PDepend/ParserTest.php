@@ -415,6 +415,19 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
+     * testParserHandlesClassWithPropertyHooks
+     */
+    public function testParserHandlesClassWithPropertyHooks(): void
+    {
+        $class = $this->parseCodeResourceForTest()
+            ->current()
+            ->getClasses()
+            ->current();
+
+        static::assertCount(2, $class->getProperties());
+    }
+
+    /**
      * testParserHandlesInterfaceWithMultipleParentInterfaces
      */
     public function testParserHandlesInterfaceWithMultipleParentInterfaces(): void
