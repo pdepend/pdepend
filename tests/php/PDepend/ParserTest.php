@@ -1443,6 +1443,14 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
+     * Tests to ensure parentheses-free object instantiation is supported
+     */
+    public function testParenthesesFreeObjectInstantiationIsSupported(): void
+    {
+        $this->parseCodeResourceForTest();
+    }
+
+    /**
      * Returns an interface instance from the mixed code test file.
      */
     protected function getInterfaceForTest(): ASTInterface

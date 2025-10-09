@@ -5,7 +5,7 @@
  *
  * PHP Version 5
  *
- * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2025 Oliver Eglseder <oliver.eglseder@co-stack.com>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -37,52 +37,64 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @copyright 2025 Oliver Eglseder <oliver.eglseder@co-stack.com>. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.20
+ *
+ * @since 3.0
  */
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\ASTNode;
+use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
- * Concrete parser implementation that is very tolerant and accepts language
- * constructs and keywords that are reserved in newer php versions, but not in
- * older versions.
+ * Concrete parser implementation that supports features up to PHP version 8.4
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @copyright 2025 Oliver Eglseder <oliver.eglseder@co-stack.com>. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.20
+ *
+ * @since 3.0
  */
-class PHPParserGeneric extends PHPParserVersion84
+abstract class PHPParserVersion84 extends PHPParserVersion83
 {
     /**
-     * Tests if the give token is a valid function name in the supported PHP
-     * version.
+     * This method will be called when the base parser cannot handle an expression
+     * in the base version. In this method you can implement version specific
+     * expressions.
      *
-     * @since 2.3
+     * @throws UnexpectedTokenException
      */
-    protected function isFunctionName(int $tokenType): bool
+    protected function parseOptionalExpressionForVersion(): ?ASTNode
     {
-        return match ($tokenType) {
-            Tokens::T_CLONE,
-            Tokens::T_STRING,
-            Tokens::T_USE,
-            Tokens::T_GOTO,
-            Tokens::T_NULL,
-            Tokens::T_SELF,
-            Tokens::T_TRUE,
-            Tokens::T_FALSE,
-            Tokens::T_TRAIT,
-            Tokens::T_INSTEADOF,
-            Tokens::T_NAMESPACE,
-            Tokens::T_DIR,
-            Tokens::T_NS_C,
-            Tokens::T_YIELD,
-            Tokens::T_PARENT,
-            Tokens::T_TRAIT_C => true,
-            default => false,
-        };
+        return $this->parseExpressionVersion84()
+            ?: parent::parseOptionalExpressionForVersion();
+    }
+
+    /**
+     * In this method we implement parsing of PHP 8.4 specific expressions.
+     */
+    protected function parseExpressionVersion84(): ?ASTNode
+    {
+        $this->consumeComments();
+        $nextTokenType = $this->tokenizer->peek();
+
+        switch ($nextTokenType) {
+            case Tokens::T_OBJECT_OPERATOR:
+                $token = $this->consumeToken($nextTokenType);
+
+                $expr = $this->builder->buildAstExpression($token->image);
+                $expr->configureLinesAndColumns(
+                    $token->startLine,
+                    $token->endLine,
+                    $token->startColumn,
+                    $token->endColumn
+                );
+
+                return $expr;
+        }
+
+        return null;
     }
 }
