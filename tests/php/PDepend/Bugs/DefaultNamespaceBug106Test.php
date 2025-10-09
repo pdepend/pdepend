@@ -61,7 +61,9 @@ class DefaultNamespaceBug106Test extends AbstractRegressionTestCase
     {
         $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
         static::assertNotFalse($sxml);
-        static::assertCount(0, $sxml->xpath('//class[@name="RuntimeException"]'));
+        $elements = $sxml->xpath('//class[@name="RuntimeException"]');
+        static::assertNotNull($elements);
+        static::assertCount(0, $elements);
     }
 
     /**
@@ -71,6 +73,8 @@ class DefaultNamespaceBug106Test extends AbstractRegressionTestCase
     {
         $sxml = simplexml_load_file($this->createSummaryXmlForCallingTest());
         static::assertNotFalse($sxml);
-        static::assertCount(0, $sxml->xpath('//class[@name="RuntimeException"]'));
+        $elements = $sxml->xpath('//class[@name="RuntimeException"]');
+        static::assertNotNull($elements);
+        static::assertCount(0, $elements);
     }
 }

@@ -165,7 +165,7 @@ use PDepend\Util\Cache\CacheDriver;
  *
  * @template T
  *
- * @extends \IteratorAggregate<T>
+ * @extends IteratorAggregate<T>
  */
 interface Builder extends IteratorAggregate
 {

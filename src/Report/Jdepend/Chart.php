@@ -44,6 +44,7 @@
 namespace PDepend\Report\Jdepend;
 
 use DOMDocument;
+use DOMElement;
 use PDepend\Metrics\Analyzer;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\CodeAwareGenerator;
@@ -176,26 +177,31 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
             $element = $item['distance'] < $bias ? $good : $bad;
             $ellipse = $element->cloneNode(true);
 
-            $a = $item['ratio'] / 15;
             $e = (50 - $item['ratio']) + ($item['abstraction'] * 320);
             $f = (20 - $item['ratio'] + 190) - ($item['instability'] * 190);
 
-            $transform = "matrix({$a}, 0, 0, {$a}, {$e}, {$f})";
+            if ($ellipse instanceof DOMElement) {
+                $a = $item['ratio'] / 15;
 
-            $ellipse->setAttribute('id', uniqid('pdepend_'));
-            $ellipse->setAttribute('title', $item['name']);
-            $ellipse->setAttribute('transform', $transform);
+                $transform = "matrix({$a}, 0, 0, {$a}, {$e}, {$f})";
 
-            $layer->appendChild($ellipse);
+                $ellipse->setAttribute('id', uniqid('pdepend_'));
+                $ellipse->setAttribute('title', $item['name']);
+                $ellipse->setAttribute('transform', $transform);
+
+                $layer->appendChild($ellipse);
+            }
 
             $result = preg_match('#\\\\([^\\\\]+)$#', $item['name'], $found);
             if ($result) {
                 $angle = random_int(0, 314) / 100 - 1.57;
                 $legend = $legendTemplate->cloneNode(true);
-                $legend->setAttribute('x', (string) ($e + $item['ratio'] * (1 + cos($angle))));
-                $legend->setAttribute('y', (string) ($f + $item['ratio'] * (1 + sin($angle))));
-                $legend->nodeValue = $found[1];
-                $legendTemplate->parentNode->appendChild($legend);
+                if ($legend instanceof DOMElement) {
+                    $legend->setAttribute('x', (string) ($e + $item['ratio'] * (1 + cos($angle))));
+                    $legend->setAttribute('y', (string) ($f + $item['ratio'] * (1 + sin($angle))));
+                    $legend->nodeValue = $found[1];
+                    $legendTemplate->parentNode->appendChild($legend);
+                }
             }
         }
 

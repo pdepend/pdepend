@@ -91,19 +91,35 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
         $namespace = $class->getNamespace();
 
         if ($depClass !== $class) {
-            $this->initNode($class);
-            $this->initNode($depClass);
+            $classId = $class->getId();
+            $depClassId = $depClass->getId();
 
-            $this->nodes[$class->getId()]['in'][] = $depClass->getId();
-            $this->nodes[$depClass->getId()]['out'][] = $class->getId();
+            if (isset($this->nodes[$classId])) {
+                $this->nodes[$classId]['in'][] = $depClassId;
+            } else {
+                $this->initNode($class, in: [$depClassId]);
+            }
+            if (isset($this->nodes[$depClassId])) {
+                $this->nodes[$depClassId]['out'][] = $classId;
+            } else {
+                $this->initNode($depClass, out: [$classId]);
+            }
         }
 
         if ($depNamespace && $namespace && $depNamespace !== $namespace) {
-            $this->initNode($namespace);
-            $this->initNode($depNamespace);
+            $namespaceId = $namespace->getId();
+            $depNamespaceId = $depNamespace->getId();
 
-            $this->nodes[$namespace->getId()]['in'][] = $depNamespace->getId();
-            $this->nodes[$depNamespace->getId()]['out'][] = $namespace->getId();
+            if (isset($this->nodes[$namespaceId])) {
+                $this->nodes[$namespaceId]['in'][] = $depNamespaceId;
+            } else {
+                $this->initNode($namespace, in: [$depNamespaceId]);
+            }
+            if (isset($this->nodes[$depNamespaceId])) {
+                $this->nodes[$depNamespaceId]['out'][] = $namespaceId;
+            } else {
+                $this->initNode($depNamespace, out: [$namespaceId]);
+            }
         }
 
         $this->fireEndProperty($property);
@@ -111,16 +127,17 @@ class PropertyStrategy extends AbstractASTVisitor implements CodeRankStrategyI
 
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
+     *
+     * @param string[] $in
+     * @param string[] $out
      */
-    protected function initNode(AbstractASTArtifact $node): void
+    protected function initNode(AbstractASTArtifact $node, array $in = [], array $out = []): void
     {
-        if (!isset($this->nodes[$node->getId()])) {
-            $this->nodes[$node->getId()] = [
-                'in' => [],
-                'out' => [],
-                'name' => $node->getImage(),
-                'type' => $node::class,
-            ];
-        }
+        $this->nodes[$node->getId()] = [
+            'in' => $in,
+            'out' => $out,
+            'name' => $node->getImage(),
+            'type' => $node::class,
+        ];
     }
 }

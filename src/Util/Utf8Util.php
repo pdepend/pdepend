@@ -60,6 +60,6 @@ final class Utf8Util
             return $raw;
         }
 
-        return mb_convert_encoding($raw, 'UTF-8', mb_list_encodings());
+        return mb_convert_encoding($raw, 'UTF-8', mb_list_encodings()) ?: '';
     }
 }

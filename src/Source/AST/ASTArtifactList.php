@@ -58,8 +58,8 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
  *
  * @template T of ASTArtifact
  *
- * @implements \Iterator<int|string, T>
- * @implements \ArrayAccess<int|string, T>
+ * @implements Iterator<int|string, T>
+ * @implements ArrayAccess<int|string, T>
  */
 class ASTArtifactList implements ArrayAccess, Countable, Iterator
 {
@@ -163,7 +163,7 @@ class ASTArtifactList implements ArrayAccess, Countable, Iterator
     /**
      * Whether a offset exists
      *
-     * @param mixed $offset An offset to check for.
+     * @param int|string $offset An offset to check for.
      * @return bool Returns true on success or false on failure. The return
      *              value will be casted to boolean if non-boolean was returned.
      * @link   http://php.net/manual/en/arrayaccess.offsetexists.php
