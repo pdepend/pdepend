@@ -121,7 +121,7 @@ class ImageConvert
         ];
 
         $proc = proc_open('convert', $desc, $pipes);
-        if (is_resource($proc) && is_array($pipes) && is_resource($pipes[0])) {
+        if (is_resource($proc) && is_resource($pipes[0])) {
             fwrite($pipes[0], '-version');
             fclose($pipes[0]);
 

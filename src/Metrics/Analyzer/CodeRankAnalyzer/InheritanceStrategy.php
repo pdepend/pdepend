@@ -102,42 +102,57 @@ class InheritanceStrategy extends AbstractASTVisitor implements CodeRankStrategy
     {
         $namespace = $type->getNamespace();
 
-        if ($namespace) {
-            $this->initNode($namespace);
-        }
-        $this->initNode($type);
-
         foreach ($type->getDependencies() as $dependency) {
             $depPkg = $dependency->getNamespace();
 
-            $this->initNode($dependency);
-            if ($depPkg) {
-                $this->initNode($depPkg);
+            $typeId = $type->getId();
+            $depId = $dependency->getId();
+
+            if (isset($this->nodes[$typeId])) {
+                $this->nodes[$typeId]['in'][] = $depId;
+            } else {
+                $this->initNode($type, in: [$depId]);
             }
 
-            $this->nodes[$type->getId()]['in'][] = $dependency->getId();
-            $this->nodes[$dependency->getId()]['out'][] = $type->getId();
+            if (isset($this->nodes[$depId])) {
+                $this->nodes[$depId]['out'][] = $typeId;
+            } else {
+                $this->initNode($dependency, out: [$typeId]);
+            }
 
             // No self references
             if ($namespace && $depPkg && $namespace !== $depPkg) {
-                $this->nodes[$namespace->getId()]['in'][] = $depPkg->getId();
-                $this->nodes[$depPkg->getId()]['out'][] = $namespace->getId();
+                $namespaceId = $namespace->getId();
+                $depNamespaceId = $depPkg->getId();
+
+                if (isset($this->nodes[$namespaceId])) {
+                    $this->nodes[$namespaceId]['in'][] = $depNamespaceId;
+                } else {
+                    $this->initNode($namespace, in: [$depNamespaceId]);
+                }
+
+                if (isset($this->nodes[$depNamespaceId])) {
+                    $this->nodes[$depNamespaceId]['out'][] = $namespaceId;
+                } else {
+                    $this->initNode($depPkg, out: [$namespaceId]);
+                }
             }
         }
     }
 
     /**
      * Initializes the temporary node container for the given <b>$node</b>.
+     *
+     * @param string[] $in
+     * @param string[] $out
      */
-    protected function initNode(AbstractASTArtifact $node): void
+    protected function initNode(AbstractASTArtifact $node, array $in = [], array $out = []): void
     {
-        if (!isset($this->nodes[$node->getId()])) {
-            $this->nodes[$node->getId()] = [
-                'in' => [],
-                'out' => [],
-                'name' => $node->getImage(),
-                'type' => $node::class,
-            ];
-        }
+        $this->nodes[$node->getId()] = [
+            'in' => $in,
+            'out' => $out,
+            'name' => $node->getImage(),
+            'type' => $node::class,
+        ];
     }
 }
