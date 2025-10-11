@@ -3610,7 +3610,7 @@ abstract class AbstractPHPParser
      * @throws UnexpectedTokenException
      * @since 2.2
      */
-    private function parseOptionalExpressionForVersion(): ?ASTNode
+    protected function parseOptionalExpressionForVersion(): ?ASTNode
     {
         $this->consumeComments();
         $nextTokenType = $this->tokenizer->peek();
