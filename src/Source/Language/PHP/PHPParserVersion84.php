@@ -80,19 +80,18 @@ abstract class PHPParserVersion84 extends PHPParserVersion83
         $this->consumeComments();
         $nextTokenType = $this->tokenizer->peek();
 
-        switch ($nextTokenType) {
-            case Tokens::T_OBJECT_OPERATOR:
-                $token = $this->consumeToken($nextTokenType);
+        if ($nextTokenType === Tokens::T_OBJECT_OPERATOR) {
+            $token = $this->consumeToken($nextTokenType);
 
-                $expr = $this->builder->buildAstExpression($token->image);
-                $expr->configureLinesAndColumns(
-                    $token->startLine,
-                    $token->endLine,
-                    $token->startColumn,
-                    $token->endColumn
-                );
+            $expr = $this->builder->buildAstExpression($token->image);
+            $expr->configureLinesAndColumns(
+                $token->startLine,
+                $token->endLine,
+                $token->startColumn,
+                $token->endColumn
+            );
 
-                return $expr;
+            return $expr;
         }
 
         return null;
