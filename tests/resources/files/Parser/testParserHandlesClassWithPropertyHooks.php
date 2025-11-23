@@ -2,7 +2,6 @@
 
 class testParserHandlesClassWithPropertyHooks
 {
-    public private(set) string $data;
     public string $foo {
         get {
             return 'foo:' . $this->data;
