@@ -562,6 +562,15 @@ interface Tokens
     /** Marks an enum token. */
     public const T_ENUM = 372;
 
+    /** Marks a setter restricted to private. */
+    public const T_PRIVATE_SET = 327;
+
+    /** Marks a setter restricted to protected. */
+    public const T_PROTECTED_SET = 328;
+
+    /** Marks a setter restricted to public. */
+    public const T_PUBLIC_SET = 329;
+
     /** Marks any content not between php tags. */
     public const T_NO_PHP = 255;
 }

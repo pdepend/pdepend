@@ -1464,7 +1464,7 @@ abstract class AbstractPHPParser
      *
      * @throws UnexpectedTokenException
      */
-    private function parseUnknownDeclaration(int $tokenType, int $modifiers): AbstractASTNode
+    protected function parseUnknownDeclaration(int $tokenType, int $modifiers): AbstractASTNode
     {
         /**
          * Typed properties

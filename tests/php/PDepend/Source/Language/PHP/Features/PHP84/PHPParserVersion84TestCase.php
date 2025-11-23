@@ -3,8 +3,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -41,50 +39,27 @@
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
-namespace PDepend\Source\AST;
+namespace PDepend\Source\Language\PHP\Features\PHP84;
 
-use ReflectionClass;
-use ReflectionMethod;
-use ReflectionProperty;
+use PDepend\AbstractTestCase;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
 
 /**
- * Holds constants with internal state constants
- *
+ * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @group unittest
  */
-interface State
+abstract class PHPParserVersion84TestCase extends AbstractTestCase
 {
-    /** Marks a class or interface as implicit abstract. */
-    public const IS_IMPLICIT_ABSTRACT = ReflectionClass::IS_IMPLICIT_ABSTRACT;
-
-    /** Marks a class or interface as explicit abstract. */
-    public const IS_EXPLICIT_ABSTRACT = ReflectionClass::IS_EXPLICIT_ABSTRACT;
-
-    /** Marks a node as public. */
-    public const IS_PUBLIC = ReflectionMethod::IS_PUBLIC;
-
-    /** Marks a node as protected. */
-    public const IS_PROTECTED = ReflectionMethod::IS_PROTECTED;
-
-    /** Marks a node as private. */
-    public const IS_PRIVATE = ReflectionMethod::IS_PRIVATE;
-
-    /** Marks a node as abstract. */
-    public const IS_ABSTRACT = ReflectionMethod::IS_ABSTRACT;
-
-    /** Marks a node as final. */
-    public const IS_FINAL = ReflectionMethod::IS_FINAL;
-
-    /** Marks a node as static. */
-    public const IS_STATIC = ReflectionMethod::IS_STATIC;
-
-    /** Marks a node as readonly. */
-    public const IS_READONLY = ReflectionProperty::IS_READONLY;
-
-    /** Marks a property setter as private (asymmetric visibility). */
-    public const IS_PRIVATE_SET = 4096; // ReflectionProperty::IS_PRIVATE_SET
-
-    /** Marks a property setter as protected (asymmetric visibility). */
-    public const IS_PROTECTED_SET = 2048; // ReflectionProperty::IS_PROTECTED_SET
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
+    {
+        return $this->getMockForAbstractClass(
+            'PDepend\\Source\\Language\\PHP\\PHPParserVersion84',
+            [$tokenizer, $builder, $cache]
+        );
+    }
 }

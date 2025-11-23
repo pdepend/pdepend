@@ -118,7 +118,9 @@ class ASTFieldDeclaration extends AbstractASTNode
                   & ~State::IS_PROTECTED
                   & ~State::IS_PRIVATE
                   & ~State::IS_STATIC
-                  & ~State::IS_READONLY;
+                  & ~State::IS_READONLY
+                  & ~State::IS_PRIVATE_SET
+                  & ~State::IS_PROTECTED_SET;
 
         if (($expected & $modifiers) !== 0) {
             throw new InvalidArgumentException(
