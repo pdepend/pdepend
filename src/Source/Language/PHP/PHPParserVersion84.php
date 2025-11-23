@@ -45,7 +45,9 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\State;
 use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Tokens;
 
@@ -95,5 +97,37 @@ abstract class PHPParserVersion84 extends PHPParserVersion83
         }
 
         return null;
+    }
+
+    protected function parseUnknownDeclaration(int $tokenType, int $modifiers): AbstractASTNode
+    {
+        // Handle Asymmetric Property Visibility
+        if (in_array($tokenType, [Tokens::T_PRIVATE_SET, Tokens::T_PROTECTED_SET, Tokens::T_PUBLIC_SET], true)) {
+            switch ($tokenType) {
+                case Tokens::T_PRIVATE_SET:
+                    $modifiers |= State::IS_PRIVATE_SET;
+                    $modifiers &= ~State::IS_PUBLIC;
+
+                    break;
+
+                case Tokens::T_PROTECTED_SET:
+                    $modifiers |= State::IS_PROTECTED_SET;
+                    $modifiers &= ~State::IS_PUBLIC;
+
+                    break;
+
+                case Tokens::T_PUBLIC_SET:
+                    $modifiers |= State::IS_PUBLIC;
+
+                    break;
+            }
+
+            $this->consumeToken($tokenType);
+            $this->consumeComments();
+
+            $tokenType = $this->tokenizer->peek();
+        }
+
+        return parent::parseUnknownDeclaration($tokenType, $modifiers);
     }
 }

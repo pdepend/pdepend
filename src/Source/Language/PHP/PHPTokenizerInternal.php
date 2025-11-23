@@ -223,6 +223,21 @@ if (!defined('T_ENUM')) {
     define('T_ENUM', 42372);
 }
 
+/**
+ * Define PHP 8.4 tokens
+ */
+if (!defined('T_PRIVATE_SET')) {
+    define('T_PRIVATE_SET', 42450);
+}
+
+if (!defined('T_PROTECTED_SET')) {
+    define('T_PROTECTED_SET', 42451);
+}
+
+if (!defined('T_PUBLIC_SET')) {
+    define('T_PUBLIC_SET', 42452);
+}
+
 /** @codeCoverageIgnoreEnd */
 
 /**
@@ -382,6 +397,9 @@ class PHPTokenizerInternal implements FullTokenizer
         T_MATCH => Tokens::T_STRING,
         T_NULLSAFE_OBJECT_OPERATOR => Tokens::T_NULLSAFE_OBJECT_OPERATOR,
         T_READONLY => Tokens::T_READONLY,
+        T_PRIVATE_SET => Tokens::T_PRIVATE_SET,
+        T_PROTECTED_SET => Tokens::T_PROTECTED_SET,
+        T_PUBLIC_SET => Tokens::T_PUBLIC_SET,
     ];
 
     /**
@@ -836,11 +854,19 @@ class PHPTokenizerInternal implements FullTokenizer
         $attributeComment = null;
         $attributeCommentLine = null;
         $brackets = 0;
+        $asymmetricToken = false;
 
         foreach ($tokens as $index => $token) {
             $temp = (array) $token;
             $temp = $temp[0];
 
+            if ($asymmetricToken) {
+                if ($temp === ')') {
+                    $asymmetricToken = false;
+                }
+
+                continue;
+            }
             if ($attributeComment) {
                 if ($temp === '[') {
                     $brackets++;
@@ -884,6 +910,15 @@ class PHPTokenizerInternal implements FullTokenizer
                     '?->',
                     1,
                 ];
+
+                continue;
+            } elseif (in_array($temp, [T_PRIVATE, T_PROTECTED, T_PUBLIC], true) && $tokens[$index + 1][0] === '(' && $tokens[$index + 2][1] === 'set' && $tokens[$index + 3][0] === ')') {
+                $asymmetricToken = true;
+                $result[] = match ($temp) {
+                    T_PRIVATE => [T_PRIVATE_SET, 'private(set)', $token[2]],
+                    T_PROTECTED => [T_PROTECTED_SET, 'protected(set)', $token[2]],
+                    T_PUBLIC => [T_PUBLIC_SET, 'public(set)', $token[2]],
+                };
 
                 continue;
             } else {
