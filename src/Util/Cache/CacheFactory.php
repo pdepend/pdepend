@@ -87,7 +87,7 @@ class CacheFactory
      * @param string $cacheKey The name/identifier for the cache instance.
      * @throws Exception
      */
-    public function create(?string $cacheKey = null): CacheDriver
+    public function create(string $cacheKey = ''): CacheDriver
     {
         if (false === isset($this->caches[$cacheKey])) {
             $this->caches[$cacheKey] = $this->createCache($cacheKey);
