@@ -45,6 +45,8 @@
 namespace PDepend\Bugs;
 
 use PDepend\Source\AST\ASTPropertyPostfix;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Ticket;
 
 /**
  * Test case for bug #8927377.
@@ -52,11 +54,9 @@ use PDepend\Source\AST\ASTPropertyPostfix;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       https://www.pivotaltracker.com/story/show/8927377
- *
- * @ticket 8927377
- *
- * @group regressiontest
  */
+#[Ticket('8927377')]
+#[Group('regressiontest')]
 class ParserBug8927377Test extends AbstractRegressionTestCase
 {
     /**

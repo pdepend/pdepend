@@ -52,17 +52,18 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArtifactList\NullArtifactFilter} class.
  *
- * @covers \PDepend\Source\AST\ASTArtifactList\NullArtifactFilter
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
- *
- * @group unittest
  */
+#[CoversClass(NullArtifactFilter::class)]
+#[Group('unittest')]
 class NullArtifactFilterTest extends AbstractTestCase
 {
     /**

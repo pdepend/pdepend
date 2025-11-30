@@ -138,16 +138,17 @@ use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\ASTVariableDeclarator;
 use PDepend\Source\AST\ASTVariableVariable;
 use PDepend\Source\AST\ASTWhileStatement;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case implementation for the default node builder implementation.
  *
- * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(PHPBuilder::class)]
+#[Group('unittest')]
 class PHPBuilderTest extends AbstractTestCase
 {
     /**

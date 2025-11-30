@@ -50,16 +50,17 @@ use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the xml summary log.
  *
- * @covers \PDepend\Report\Dependencies\Xml
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Xml::class)]
+#[Group('unittest')]
 class XmlTest extends AbstractTestCase
 {
     /**
@@ -186,22 +187,22 @@ class XmlTest extends AbstractTestCase
         $type
             ->expects(static::any())
             ->method('getImage')
-            ->will(static::returnValue('class'));
+            ->willReturn('class');
         $type
             ->expects(static::any())
             ->method('getNamespaceName')
-            ->will(static::returnValue('namespace'));
+            ->willReturn('namespace');
 
         $analyzer = $this->getMockBuilder(ClassDependencyAnalyzer::class)
             ->getMock();
         $analyzer
             ->expects(static::any())
             ->method('getEfferents')
-            ->will(static::returnValue([$type]));
+            ->willReturn([$type]);
         $analyzer
             ->expects(static::any())
             ->method('getAfferents')
-            ->will(static::returnValue([$type, $type]));
+            ->willReturn([$type, $type]);
 
         $log = new Xml();
         $log->log($analyzer);

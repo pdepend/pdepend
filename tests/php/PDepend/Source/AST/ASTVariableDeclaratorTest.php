@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTVariableDeclarator} class.
  *
- * @covers \PDepend\Source\AST\ASTVariableDeclarator
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTVariableDeclarator::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTVariableDeclaratorTest extends ASTNodeTestCase
 {
     /**
@@ -107,9 +111,8 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
 
     /**
      * testVariableDeclaratorHasExpectedStartLine
-     *
-     * @depends testVariableDeclarator
      */
+    #[Depends('testVariableDeclarator')]
     public function testVariableDeclaratorHasExpectedStartLine(ASTVariableDeclarator $declarator): void
     {
         static::assertEquals(4, $declarator->getStartLine());
@@ -117,9 +120,8 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
 
     /**
      * testVariableDeclaratorHasExpectedStartColumn
-     *
-     * @depends testVariableDeclarator
      */
+    #[Depends('testVariableDeclarator')]
     public function testVariableDeclaratorHasExpectedStartColumn(ASTVariableDeclarator $declarator): void
     {
         static::assertEquals(12, $declarator->getStartColumn());
@@ -127,9 +129,8 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
 
     /**
      * testVariableDeclaratorHasExpectedEndLine
-     *
-     * @depends testVariableDeclarator
      */
+    #[Depends('testVariableDeclarator')]
     public function testVariableDeclaratorHasExpectedEndLine(ASTVariableDeclarator $declarator): void
     {
         static::assertEquals(4, $declarator->getEndLine());
@@ -137,9 +138,8 @@ class ASTVariableDeclaratorTest extends ASTNodeTestCase
 
     /**
      * testVariableDeclaratorHasExpectedEndColumn
-     *
-     * @depends testVariableDeclarator
      */
+    #[Depends('testVariableDeclarator')]
     public function testVariableDeclaratorHasExpectedEndColumn(ASTVariableDeclarator $declarator): void
     {
         static::assertEquals(17, $declarator->getEndColumn());

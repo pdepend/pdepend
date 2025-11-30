@@ -44,15 +44,16 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case issue 00000100.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       https://github.com/pdepend/pdepend/issues/100
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class TraitsNotHandledCorrrectBug00000100Test extends AbstractRegressionTestCase
 {
     /**

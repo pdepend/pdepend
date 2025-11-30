@@ -43,21 +43,23 @@
 
 namespace PDepend\Metrics\Analyzer;
 
+use PDepend\Metrics\AbstractCachingAnalyzer;
 use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the cyclomatic analyzer.
  *
- * @covers \PDepend\Metrics\AbstractCachingAnalyzer
- * @covers \PDepend\Metrics\Analyzer\MaintainabilityIndexAnalyzer
  * @copyright 2015 Matthias Mullie. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractCachingAnalyzer::class)]
+#[CoversClass(MaintainabilityIndexAnalyzer::class)]
+#[Group('unittest')]
 class MaintainabilityIndexAnalyzerTest extends AbstractMetricsTestCase
 {
     /** @since 1.0.0 */

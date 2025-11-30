@@ -45,19 +45,20 @@ namespace PDepend\DependencyInjection;
 
 use PDepend\AbstractTestCase;
 use PDepend\TestExtension;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Test cases for the {@link \PDepend\Application} class.
  *
- * @covers \PDepend\DependencyInjection\Extension
- * @covers \PDepend\DependencyInjection\ExtensionManager
- * @covers \PDepend\DependencyInjection\TreeBuilder
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Extension::class)]
+#[CoversClass(ExtensionManager::class)]
+#[CoversClass(TreeBuilder::class)]
+#[Group('unittest')]
 class ExtensionManagerTest extends AbstractTestCase
 {
     public function testExtensionManager(): void

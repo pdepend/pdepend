@@ -44,6 +44,7 @@
 namespace PDepend\Bugs;
 
 use PDepend\Source\Parser\InvalidStateException;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the parent keyword type hint bug no #87.
@@ -52,9 +53,8 @@ use PDepend\Source\Parser\InvalidStateException;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class ParentKeywordAsParameterTypeHintBug087Test extends AbstractRegressionTestCase
 {
     /**

@@ -46,17 +46,18 @@ namespace PDepend\Util\Coverage;
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTMethod;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use SimpleXMLElement;
 
 /**
  * Test case for the {@link \PDepend\Util\Coverage\CloverReport} class.
  *
- * @covers \PDepend\Util\Coverage\CloverReport
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(CloverReport::class)]
+#[Group('unittest')]
 class CloverReportTest extends AbstractTestCase
 {
     /**
@@ -192,20 +193,20 @@ class CloverReportTest extends AbstractTestCase
             ->getMock();
         $file->expects(static::any())
             ->method('getFileName')
-            ->will(static::returnValue('/' . $name . '.php'));
+            ->willReturn('/' . $name . '.php');
 
         $method = $this->getMockBuilder(ASTMethod::class)
             ->setConstructorArgs([$name])
             ->getMock();
         $method->expects(static::once())
             ->method('getCompilationUnit')
-            ->will(static::returnValue($file));
+            ->willReturn($file);
         $method->expects(static::once())
             ->method('getStartLine')
-            ->will(static::returnValue($startLine));
+            ->willReturn($startLine);
         $method->expects(static::once())
             ->method('getEndLine')
-            ->will(static::returnValue($endLine));
+            ->willReturn($endLine);
 
         return $method;
     }

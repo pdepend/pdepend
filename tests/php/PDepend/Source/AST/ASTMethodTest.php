@@ -45,18 +45,21 @@ namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
 use PDepend\Source\ASTVisitor\StubASTVisitor;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTMethod class.
  *
- * @covers \PDepend\Source\AST\AbstractASTCallable
- * @covers \PDepend\Source\AST\ASTMethod
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractASTCallable::class)]
+#[CoversClass(ASTMethod::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[CoversClass(ASTCompilationUnitNotFoundException::class)]
+#[Group('unittest')]
 class ASTMethodTest extends AbstractASTArtifactTestCase
 {
     /**
@@ -263,8 +266,6 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined
-     *
-     * @covers \PDepend\Source\AST\ASTCompilationUnitNotFoundException
      */
     public function testGetSourceFileThrowsExpectedExceptionWhenNoParentWasDefined(): void
     {
@@ -510,7 +511,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         /** @var class-string */
         $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
@@ -519,7 +520,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node2->expects(static::never())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         $method = new ASTMethod('Method');
         $method->addChild($node1);
@@ -549,7 +550,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         /** @var class-string */
         $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
@@ -558,7 +559,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node3->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue($node1));
+            ->willReturn($node1);
 
         $method = new ASTMethod('Method');
         $method->addChild($node2);
@@ -580,7 +581,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         /** @var class-string */
         $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
@@ -589,7 +590,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         $method = new ASTMethod('Method');
         $method->addChild($node1);
@@ -613,7 +614,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node1->expects(static::once())
             ->method('findChildrenOfType')
-            ->will(static::returnValue([]));
+            ->willReturn([]);
 
         /** @var class-string */
         $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
@@ -622,7 +623,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node2->expects(static::once())
             ->method('findChildrenOfType')
-            ->will(static::returnValue([]));
+            ->willReturn([]);
 
         $method = new ASTMethod('Method');
         $method->addChild($node1);

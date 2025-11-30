@@ -43,6 +43,8 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for bug 62 where reference in an instanceof operator weren't handled
  * correct.
@@ -51,9 +53,8 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class InstanceOfExpressionReferenceHandlingBug062Test extends AbstractRegressionTestCase
 {
     /**

@@ -44,17 +44,21 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitAdaptation} class.
  *
- * @covers \PDepend\Source\AST\ASTTraitAdaptation
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
- *
- * @group unittest
  */
+#[CoversClass(ASTTraitAdaptation::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTTraitAdaptationTest extends ASTNodeTestCase
 {
     /**
@@ -72,9 +76,8 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationHasExpectedStartLine
-     *
-     * @depends testTraitAdaptation
      */
+    #[Depends('testTraitAdaptation')]
     public function testTraitAdaptationHasExpectedStartLine(ASTTraitAdaptation $scope): void
     {
         static::assertEquals(5, $scope->getStartLine());
@@ -82,9 +85,8 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationHasExpectedStartColumn
-     *
-     * @depends testTraitAdaptation
      */
+    #[Depends('testTraitAdaptation')]
     public function testTraitAdaptationHasExpectedStartColumn(ASTTraitAdaptation $scope): void
     {
         static::assertEquals(32, $scope->getStartColumn());
@@ -92,9 +94,8 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationHasExpectedEndLine
-     *
-     * @depends testTraitAdaptation
      */
+    #[Depends('testTraitAdaptation')]
     public function testTraitAdaptationHasExpectedEndLine(ASTTraitAdaptation $scope): void
     {
         static::assertEquals(9, $scope->getEndLine());
@@ -102,9 +103,8 @@ class ASTTraitAdaptationTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationHasExpectedEndColumn
-     *
-     * @depends testTraitAdaptation
      */
+    #[Depends('testTraitAdaptation')]
     public function testTraitAdaptationHasExpectedEndColumn(ASTTraitAdaptation $scope): void
     {
         static::assertEquals(5, $scope->getEndColumn());

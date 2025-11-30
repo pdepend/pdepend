@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTYieldStatement} class.
  *
- * @covers \PDepend\Source\AST\ASTForeachStatement
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTForeachStatement::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTYieldStatementTest extends ASTNodeTestCase
 {
     /**
@@ -150,9 +154,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
      * testYieldKeyValueChildNodes
      *
      * @param ASTExpression[] $nodes
-     *
-     * @depends testYieldKeyValue
      */
+    #[Depends('testYieldKeyValue')]
     public function testYieldKeyValueChildNodes(array $nodes): void
     {
         static::assertEquals('$id', $nodes[0]->getImage());
@@ -174,9 +177,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldValueAssignmentSimpleParent
-     *
-     * @depends testYieldValueAssignmentSimple
      */
+    #[Depends('testYieldValueAssignmentSimple')]
     public function testYieldValueAssignmentSimpleParent(ASTStatement $yield): void
     {
         static::assertInstanceOf(
@@ -200,9 +202,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldValueAssignmentKeyValueParent
-     *
-     * @depends testYieldValueAssignmentKeyValue
      */
+    #[Depends('testYieldValueAssignmentKeyValue')]
     public function testYieldValueAssignmentKeyValueParent(ASTYieldStatement $yield): void
     {
         static::assertInstanceOf(
@@ -213,9 +214,8 @@ class ASTYieldStatementTest extends ASTNodeTestCase
 
     /**
      * testYieldValueAssignmentKeyValueChildren
-     *
-     * @depends testYieldValueAssignmentKeyValue
      */
+    #[Depends('testYieldValueAssignmentKeyValue')]
     public function testYieldValueAssignmentKeyValueChildren(ASTYieldStatement $yield): void
     {
         $nodes = $yield->getChildren();

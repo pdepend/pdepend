@@ -46,18 +46,21 @@ namespace PDepend\Source\AST;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Parser\InvalidStateException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStaticReference} class.
  *
- * @covers \PDepend\Source\AST\ASTStaticReference
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTStaticReference::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTStaticReferenceTest extends ASTNodeTestCase
 {
     /**
@@ -65,10 +68,9 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeReturnsInjectedConstructorTargetArgument(): void
     {
-        $target = $this->getMockForAbstractClass(
-            AbstractASTClassOrInterface::class,
-            [__CLASS__]
-        );
+        $target = $this->getMockBuilder(AbstractASTClassOrInterface::class)
+            ->setConstructorArgs([__CLASS__])
+            ->getMock();
         $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
 
@@ -81,10 +83,9 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull(): void
     {
-        $target = $this->getMockForAbstractClass(
-            AbstractASTClassOrInterface::class,
-            [__CLASS__]
-        );
+        $target = $this->getMockBuilder(AbstractASTClassOrInterface::class)
+            ->setConstructorArgs([__CLASS__])
+            ->getMock();
 
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
@@ -173,9 +174,8 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
 
     /**
      * testStaticReferenceHasExpectedStartLine
-     *
-     * @depends testStaticReference
      */
+    #[Depends('testStaticReference')]
     public function testStaticReferenceHasExpectedStartLine(ASTStaticReference $reference): void
     {
         static::assertEquals(5, $reference->getStartLine());
@@ -183,9 +183,8 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
 
     /**
      * testStaticReferenceHasExpectedStartColumn
-     *
-     * @depends testStaticReference
      */
+    #[Depends('testStaticReference')]
     public function testStaticReferenceHasExpectedStartColumn(ASTStaticReference $reference): void
     {
         static::assertEquals(13, $reference->getStartColumn());
@@ -193,9 +192,8 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
 
     /**
      * testStaticReferenceHasExpectedEndLine
-     *
-     * @depends testStaticReference
      */
+    #[Depends('testStaticReference')]
     public function testStaticReferenceHasExpectedEndLine(ASTStaticReference $reference): void
     {
         static::assertEquals(5, $reference->getEndLine());
@@ -203,9 +201,8 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
 
     /**
      * testStaticReferenceHasExpectedEndColumn
-     *
-     * @depends testStaticReference
      */
+    #[Depends('testStaticReference')]
     public function testStaticReferenceHasExpectedEndColumn(ASTStaticReference $reference): void
     {
         static::assertEquals(18, $reference->getEndColumn());
@@ -221,10 +218,9 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
 
         return new ASTStaticReference(
             $context,
-            $this->getMockForAbstractClass(
-                AbstractASTClassOrInterface::class,
-                [__CLASS__]
-            )
+            $this->getMockBuilder(AbstractASTClassOrInterface::class)
+                ->setConstructorArgs([__CLASS__])
+                ->getMock()
         );
     }
 

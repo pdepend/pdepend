@@ -53,18 +53,19 @@ use PDepend\Report\ReportGeneratorFactory;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PDepend\Source\AST\ASTNamespace;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Test case for the text ui runner.
  *
- * @covers \PDepend\TextUI\Runner
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Runner::class)]
+#[Group('unittest')]
 class RunnerTest extends AbstractTestCase
 {
     /**

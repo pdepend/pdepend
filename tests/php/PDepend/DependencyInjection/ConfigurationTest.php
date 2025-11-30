@@ -45,20 +45,21 @@ namespace PDepend\DependencyInjection;
 
 use PDepend\AbstractTestCase;
 use PDepend\TestExtension;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use ReflectionMethod;
 use ReflectionNamedType;
-use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder as SymfonyTreeBuilder;
 
 /**
  * Test cases for the {@link \PDepend\Application} class.
  *
- * @covers \PDepend\DependencyInjection\TreeBuilder
- * @covers \PDepend\DependencyInjection\TreeBuilderFactory
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(TreeBuilder::class)]
+#[CoversClass(TreeBuilderFactory::class)]
+#[Group('unittest')]
 class ConfigurationTest extends AbstractTestCase
 {
     public function testSymfony(): void
@@ -66,7 +67,7 @@ class ConfigurationTest extends AbstractTestCase
         $config = new Configuration([TestExtension::create()]);
 
         static::assertInstanceOf(
-            TreeBuilder::class,
+            SymfonyTreeBuilder::class,
             $config->getConfigTreeBuilder()
         );
 
@@ -78,6 +79,6 @@ class ConfigurationTest extends AbstractTestCase
         $type = $method->getReturnType();
         static::assertInstanceOf(ReflectionNamedType::class, $type);
 
-        static::assertSame(TreeBuilder::class, $type->getName());
+        static::assertSame(SymfonyTreeBuilder::class, $type->getName());
     }
 }

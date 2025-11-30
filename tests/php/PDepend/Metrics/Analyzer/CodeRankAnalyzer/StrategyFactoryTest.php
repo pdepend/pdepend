@@ -44,16 +44,17 @@
 namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the code rank property strategy.
  *
- * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(StrategyFactory::class)]
+#[Group('unittest')]
 class StrategyFactoryTest extends AbstractTestCase
 {
     /**

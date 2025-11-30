@@ -44,17 +44,18 @@
 namespace PDepend\Util\Coverage;
 
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
 
 /**
  * Test case for the {@link \PDepend\Util\Coverage\Factory} class.
  *
- * @covers \PDepend\Util\Coverage\Factory
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Factory::class)]
+#[Group('unittest')]
 class FactoryTest extends AbstractTestCase
 {
     /**

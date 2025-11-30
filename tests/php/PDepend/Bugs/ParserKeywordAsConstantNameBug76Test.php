@@ -43,6 +43,9 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the keyword substitution bug no 76.
  *
@@ -50,9 +53,8 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTestCase
 {
     /**
@@ -61,8 +63,8 @@ class ParserKeywordAsConstantNameBug76Test extends AbstractRegressionTestCase
      *
      * @param string $sourceFile Name of the test file.
      * @param string $constantName Name of the expected constant
-     * @dataProvider dataProviderReservedKeywordAsTypeConstantName
      */
+    #[DataProvider('dataProviderReservedKeywordAsTypeConstantName')]
     public function testReservedKeywordAsTypeConstantName(string $sourceFile, string $constantName): void
     {
         $namespaces = $this->parseSource($sourceFile);

@@ -44,16 +44,17 @@
 namespace PDepend\Util;
 
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for type utility class.
  *
- * @covers \PDepend\Util\Utf8Util
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Utf8Util::class)]
+#[Group('unittest')]
 class Utf8UtilTest extends AbstractTestCase
 {
     public function testEnsureEncoding(): void

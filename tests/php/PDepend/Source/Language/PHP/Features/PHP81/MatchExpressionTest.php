@@ -52,15 +52,18 @@ use PDepend\Source\AST\ASTReturnStatement;
 use PDepend\Source\AST\ASTSwitchLabel;
 use PDepend\Source\AST\ASTThrowStatement;
 use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @group unittest
- * @group php8
  */
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
+#[Group('php8')]
 class MatchExpressionTest extends PHPParserVersion81TestCase
 {
     public function testMatchExpression(): void

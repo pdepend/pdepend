@@ -47,16 +47,17 @@ use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPTokenizerInternal} class.
  *
- * @covers \PDepend\Source\Language\PHP\PHPTokenizerInternal
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(PHPTokenizerInternal::class)]
+#[Group('unittest')]
 class PHPTokenizerInternalTest extends AbstractTestCase
 {
     /**

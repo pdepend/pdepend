@@ -50,16 +50,18 @@ use PDepend\Source\AST\ASTLiteral;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for ticket 002, PHP 5.3 namespace support.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class NewClassInstanceTest extends AbstractFeatureTestCase
 {
     /**

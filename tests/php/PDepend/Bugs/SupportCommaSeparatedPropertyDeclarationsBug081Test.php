@@ -43,6 +43,8 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for bug 081 where PDepend does not handle comma separated property
  * declarations.
@@ -51,9 +53,8 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class SupportCommaSeparatedPropertyDeclarationsBug081Test extends AbstractRegressionTestCase
 {
     /**

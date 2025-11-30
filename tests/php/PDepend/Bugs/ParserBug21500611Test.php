@@ -46,6 +46,8 @@
 namespace PDepend\Bugs;
 
 use PDepend\Source\AST\ASTHeredoc;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Ticket;
 
 /**
  * Test case for bug #21500611.
@@ -54,11 +56,9 @@ use PDepend\Source\AST\ASTHeredoc;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link https://www.pivotaltracker.com/story/show/21500611
  * @since 1.0.0
- *
- * @ticket 21500611
- *
- * @group regressiontest
  */
+#[Ticket('21500611')]
+#[Group('regressiontest')]
 class ParserBug21500611Test extends AbstractRegressionTestCase
 {
     /**

@@ -44,18 +44,18 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
- * description
- *
- * @covers \PDepend\Source\AST\ASTClassOrInterfaceReference
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTClassOrInterfaceReference::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
 {
     /**
@@ -91,7 +91,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
         $context->expects(static::once())
             ->method('getClassOrInterface')
             ->with(static::equalTo(__CLASS__))
-            ->will(static::returnValue($class));
+            ->willReturn($class);
 
         $reference = new ASTClassOrInterfaceReference(
             $context,
@@ -113,7 +113,7 @@ class ASTClassOrInterfaceReferenceTest extends ASTNodeTestCase
         $context->expects(static::exactly(1))
             ->method('getClassOrInterface')
             ->with(static::equalTo(__CLASS__))
-            ->will(static::returnValue($class));
+            ->willReturn($class);
 
         $reference = new ASTClassOrInterfaceReference(
             $context,

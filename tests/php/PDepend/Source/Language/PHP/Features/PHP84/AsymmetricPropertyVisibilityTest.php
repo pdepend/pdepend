@@ -41,15 +41,19 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP84;
 
+use PDepend\Source\AST\ASTConstantDeclarator;
+use PDepend\Source\Language\PHP\PHPParserVersion84;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
- * @covers \PDepend\Source\AST\ASTConstantDeclarator
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion84
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
- * @group php8.4
  */
+#[CoversClass(ASTConstantDeclarator::class)]
+#[CoversClass(PHPParserVersion84::class)]
+#[Group('unittest')]
+#[Group('php8.4')]
 class AsymmetricPropertyVisibilityTest extends PHPParserVersion84TestCase
 {
     /**

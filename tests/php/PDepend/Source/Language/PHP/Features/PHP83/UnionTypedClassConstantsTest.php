@@ -53,17 +53,19 @@ use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTValue;
+use PDepend\Source\Language\PHP\PHPParserVersion83;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @covers \PDepend\Source\AST\ASTConstantDeclarator
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion83
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
- * @group php8.3
  */
+#[CoversClass(ASTConstantDeclarator::class)]
+#[CoversClass(PHPParserVersion83::class)]
+#[Group('unittest')]
+#[Group('php8.3')]
 class UnionTypedClassConstantsTest extends PHPParserVersion83TestCase
 {
     public function testInterface(): void

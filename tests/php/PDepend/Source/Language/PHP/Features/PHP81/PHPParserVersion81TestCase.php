@@ -46,20 +46,22 @@ use PDepend\Source\Builder\Builder;
 use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @group unittest
  */
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 abstract class PHPParserVersion81TestCase extends AbstractTestCase
 {
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
-        return $this->getMockForAbstractClass(
-            'PDepend\\Source\\Language\\PHP\\AbstractPHPParser',
-            [$tokenizer, $builder, $cache]
-        );
+        return $this->getMockBuilder(AbstractPHPParser::class)
+            ->setConstructorArgs([$tokenizer, $builder, $cache])
+            ->onlyMethods([])
+            ->getMock();
     }
 }

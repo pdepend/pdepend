@@ -45,19 +45,22 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTrait} class.
  *
- * @covers \PDepend\Source\AST\AbstractASTType
- * @covers \PDepend\Source\AST\ASTTrait
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
- *
- * @group unittest
  */
+#[CoversClass(AbstractASTType::class)]
+#[CoversClass(ASTTrait::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[CoversClass(ASTTraitMethodCollisionException::class)]
+#[Group('unittest')]
 class ASTTraitTest extends AbstractASTArtifactTestCase
 {
     /**
@@ -214,11 +217,8 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetAllMethodsWithMethodCollisionThrowsExpectedException
-     *
-     * @covers \PDepend\Source\AST\ASTTraitMethodCollisionException
-     *
-     * @group issue-154
      */
+    #[Group('issue-154')]
     public function testGetAllMethodsWithMethodCollisionThrowsExpectedException(): void
     {
         $this->expectException(ASTTraitMethodCollisionException::class);
@@ -232,11 +232,8 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
      * case with abstract methods.
      * No ASTTraitMethodCollisionException is thrown if only one method is not abstract.
      * Fix issue 154.
-     *
-     * @covers \PDepend\Source\AST\ASTTraitMethodCollisionException
-     *
-     * @group issue-154
      */
+    #[Group('issue-154')]
     public function testGetAllMethodsWithAbstractMethods(): void
     {
         $trait = $this->getFirstTraitForTest();

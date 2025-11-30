@@ -45,6 +45,8 @@ namespace PDepend\Bugs;
 
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokens;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the keyword substitution bug no 76.
@@ -53,9 +55,8 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
 {
     /**
@@ -64,8 +65,8 @@ class TokenizerKeywordSubstitutionBug76Test extends AbstractRegressionTestCase
      *
      * @param string $sourceFile Name of the text file.
      * @param array<int> $tokenTypes List of all expected token types.
-     * @dataProvider dataProviderTokenizerKeywordSubstitutionInOperatorChain
      */
+    #[DataProvider('dataProviderTokenizerKeywordSubstitutionInOperatorChain')]
     public function testTokenizerKeywordSubstitutionInOperatorChain(string $sourceFile, array $tokenTypes): void
     {
         $tokenizer = new PHPTokenizerInternal();

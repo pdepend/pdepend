@@ -45,16 +45,19 @@ namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifact;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the coupling analyzer.
  *
- * @covers \PDepend\Metrics\Analyzer\CouplingAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(CouplingAnalyzer::class)]
+#[Group('unittest')]
 class CouplingAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
@@ -516,9 +519,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, mixed> $metrics Calculated coupling metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics): void
     {
         static::assertEquals(['ca', 'cbo', 'ce'], array_keys($metrics));
@@ -529,9 +531,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated coupling metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateCEMetricForTrait(array $metrics): void
     {
         static::assertEquals(4, $metrics['ce']);
@@ -542,9 +543,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated coupling metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateCBOMetricForTrait(array $metrics): void
     {
         static::assertEquals(4, $metrics['cbo']);
@@ -555,9 +555,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated coupling metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateCAMetricForTrait(array $metrics): void
     {
         static::assertEquals(0, $metrics['ca']);
@@ -582,9 +581,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, mixed> $metrics Calculated coupling metrics.
      * @since 1.0.6
-     *
-     * @depends testGetProjectMetricsForTrait
      */
+    #[Depends('testGetProjectMetricsForTrait')]
     public function testGetProjectMetricsForTraitReturnsExpectedMetricSet(array $metrics): void
     {
         static::assertEquals(['calls', 'fanout'], array_keys($metrics));
@@ -595,9 +593,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated coupling metrics.
      * @since 1.0.6
-     *
-     * @depends testGetProjectMetricsForTrait
      */
+    #[Depends('testGetProjectMetricsForTrait')]
     public function testCalculateCallsMetricForTrait(array $metrics): void
     {
         static::assertEquals(7, $metrics['calls']);
@@ -608,8 +605,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated coupling metrics.
      * @since 1.0.6
-     * @depends testGetProjectMetricsForTrait
      */
+    #[Depends('testGetProjectMetricsForTrait')]
     public function testCalculateFanoutMetricForTrait(array $metrics): void
     {
         static::assertEquals(4, $metrics['fanout']);
@@ -638,8 +635,8 @@ class CouplingAnalyzerTest extends AbstractMetricsTestCase
      * @param string $testCase File with test source.
      * @param int $calls Number of expected calls.
      * @param int $fanout Expected fanout value.
-     * @dataProvider dataProviderAnalyzerCalculatesExpectedCallCount
      */
+    #[DataProvider('dataProviderAnalyzerCalculatesExpectedCallCount')]
     public function testAnalyzerCalculatesExpectedCallCount(
         string $testCase,
         int $calls,

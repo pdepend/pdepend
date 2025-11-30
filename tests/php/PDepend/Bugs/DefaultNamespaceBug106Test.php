@@ -43,15 +43,16 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for ticket #106, where internal classes appear in the metrics log
  * file.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class DefaultNamespaceBug106Test extends AbstractRegressionTestCase
 {
     /**

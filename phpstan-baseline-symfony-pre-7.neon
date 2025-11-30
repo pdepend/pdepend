@@ -1,0 +1,151 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^PHPDoc tag @return contains generic type Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\> but class Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/Configuration.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$builder contains generic type Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder\<Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder\<Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\>\>\>\>\>\> but class Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$builder contains generic type Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder\<Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\>\>\>\> but class Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$builder contains generic type Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\>\> but class Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$builder contains generic type Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder\<Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder\<Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\>\>\>\>\> but class Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$builder contains generic type Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder\<Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\>\>\> but class Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^PHPDoc tag @param for parameter \$builder contains generic type Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\> but class Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^PHPDoc tag @return contains generic type Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\>\> but class Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/TreeBuilder.php
+
+		-
+			message: '#^PHPDoc tag @return contains generic type Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\> but class Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 2
+			path: src/DependencyInjection/TreeBuilder.php
+
+		-
+			message: '#^PHPDoc tag @var for property PDepend\\DependencyInjection\\TreeBuilder\:\:\$rootNode contains generic type Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\>\> but class Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/TreeBuilder.php
+
+		-
+			message: '#^PHPDoc tag @var for property PDepend\\DependencyInjection\\TreeBuilder\:\:\$rootNode contains generic type Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\> but class Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/TreeBuilder.php
+
+		-
+			message: '#^PHPDoc tag @var for property PDepend\\DependencyInjection\\TreeBuilder\:\:\$treeBuilder contains generic type Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\> but class Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/TreeBuilder.php
+
+		-
+			message: '#^Property PDepend\\DependencyInjection\\TreeBuilder\:\:\$rootNode \(Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<''array''\>\>\) does not accept Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/DependencyInjection/TreeBuilder.php
+
+		-
+			message: '#^Call to an undefined method Symfony\\Component\\Config\\Definition\\Builder\\NodeDefinition\:\:children\(\)\.$#'
+			identifier: method.notFound
+			count: 1
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^Cannot call method addDefaultsIfNotSet\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^Cannot call method arrayNode\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 5
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^Cannot call method children\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^Cannot call method defaultValue\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 6
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^Cannot call method enumNode\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^Cannot call method info\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^Cannot call method integerNode\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^Cannot call method scalarNode\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^Cannot call method values\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^PHPDoc tag @return contains generic type Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<string\> but class Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder is not generic\.$#'
+			identifier: generics.notGeneric
+			count: 1
+			path: src/DependencyInjection/TreeBuilderFactory.php
+
+		-
+			message: '#^Parameter \#1 \$builder of method PDepend\\DependencyInjection\\Extension\:\:getConfig\(\) expects Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder\<Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\NodeBuilder\<Symfony\\Component\\Config\\Definition\\Builder\\ArrayNodeDefinition\<Symfony\\Component\\Config\\Definition\\Builder\\TreeBuilder\<''array''\>\>\>\>\>\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DependencyInjection/TreeBuilderFactory.php

@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTThrowStatement} class.
  *
- * @covers \PDepend\Source\AST\ASTThrowStatement
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTThrowStatement::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTThrowStatementTest extends ASTNodeTestCase
 {
     /**
@@ -70,9 +74,8 @@ class ASTThrowStatementTest extends ASTNodeTestCase
 
     /**
      * testThrowStatementHasExpectedStartLine
-     *
-     * @depends testThrowStatement
      */
+    #[Depends('testThrowStatement')]
     public function testThrowStatementHasExpectedStartLine(ASTThrowStatement $stmt): void
     {
         static::assertSame(4, $stmt->getStartLine());
@@ -80,9 +83,8 @@ class ASTThrowStatementTest extends ASTNodeTestCase
 
     /**
      * testThrowStatementHasExpectedStartColumn
-     *
-     * @depends testThrowStatement
      */
+    #[Depends('testThrowStatement')]
     public function testThrowStatementHasExpectedStartColumn(ASTThrowStatement $stmt): void
     {
         static::assertSame(5, $stmt->getStartColumn());
@@ -90,9 +92,8 @@ class ASTThrowStatementTest extends ASTNodeTestCase
 
     /**
      * testThrowStatementHasExpectedEndLine
-     *
-     * @depends testThrowStatement
      */
+    #[Depends('testThrowStatement')]
     public function testThrowStatementHasExpectedEndLine(ASTThrowStatement $stmt): void
     {
         static::assertSame(5, $stmt->getEndLine());
@@ -100,9 +101,8 @@ class ASTThrowStatementTest extends ASTNodeTestCase
 
     /**
      * testThrowStatementHasExpectedEndColumn
-     *
-     * @depends testThrowStatement
      */
+    #[Depends('testThrowStatement')]
     public function testThrowStatementHasExpectedEndColumn(ASTThrowStatement $stmt): void
     {
         static::assertSame(38, $stmt->getEndColumn());

@@ -45,17 +45,18 @@ namespace PDepend\Source\AST;
 
 use OutOfBoundsException;
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
 
 /**
  * Abstract test case for classes derived {@link \PDepend\Source\AST\ASTNode}ö
  *
- * @covers \PDepend\Source\AST\AbstractASTNode
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractASTNode::class)]
+#[Group('unittest')]
 abstract class ASTNodeTestCase extends AbstractTestCase
 {
     /**
@@ -178,10 +179,10 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testGetParentsOfTypeReturnsExpectedParentNodes(): void
     {
-        $parent0 = $this->getMockForAbstractClass(ASTScope::class);
-        $parent1 = $this->getMockForAbstractClass(AbstractASTNode::class);
-        $parent2 = $this->getMockForAbstractClass(ASTScope::class);
-        $parent3 = $this->getMockForAbstractClass(AbstractASTNode::class);
+        $parent0 = $this->getMockBuilder(ASTScope::class)->onlyMethods([])->getMock();
+        $parent1 = $this->getMockBuilder(AbstractASTNode::class)->onlyMethods([])->getMock();
+        $parent2 = $this->getMockBuilder(ASTScope::class)->onlyMethods([])->getMock();
+        $parent3 = $this->getMockBuilder(AbstractASTNode::class)->onlyMethods([])->getMock();
 
         $node = $this->createNodeInstance();
 
@@ -273,9 +274,9 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testGetFirstChildOfTypeReturnsFirstMatchingChild(): void
     {
-        $child0 = $this->getMockForAbstractClass(
-            ASTIndexExpression::class
-        );
+        $child0 = $this->getMockBuilder(ASTIndexExpression::class)
+            ->onlyMethods([])
+            ->getMock();
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -293,12 +294,12 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testGetFirstChildOfTypeReturnsFirstMatchingChildRecursive(): void
     {
-        $child0 = $this->getMockForAbstractClass(
-            ASTIndexExpression::class
-        );
-        $child1 = $this->getMockForAbstractClass(
-            ASTArguments::class
-        );
+        $child0 = $this->getMockBuilder(ASTIndexExpression::class)
+            ->onlyMethods([])
+            ->getMock();
+        $child1 = $this->getMockBuilder(ASTArguments::class)
+            ->onlyMethods([])
+            ->getMock();
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -332,7 +333,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testFindChildrenOfTypeReturnsDirectChild(): void
     {
         $child0 = $this->getNodeMock();
-        $child1 = $this->getMockForAbstractClass(ASTScope::class);
+        $child1 = $this->getMockBuilder(ASTScope::class)->onlyMethods([])->getMock();
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -352,7 +353,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testFindChildrenOfTypeReturnsIndirectChild(): void
     {
         $child0 = $this->getNodeMock();
-        $child1 = $this->getMockForAbstractClass(ASTScope::class);
+        $child1 = $this->getMockBuilder(ASTScope::class)->onlyMethods([])->getMock();
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -371,9 +372,9 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     public function testFindChildrenOfTypeReturnsDirectAndIndirectChild(): void
     {
-        $child0 = $this->getMockForAbstractClass(ASTScope::class);
-        $child1 = $this->getMockForAbstractClass(ASTScope::class);
-        $child2 = $this->getMockForAbstractClass(ASTScope::class);
+        $child0 = $this->getMockBuilder(ASTScope::class)->onlyMethods([])->getMock();
+        $child1 = $this->getMockBuilder(ASTScope::class)->onlyMethods([])->getMock();
+        $child2 = $this->getMockBuilder(ASTScope::class)->onlyMethods([])->getMock();
 
         $node = $this->getNodeMock();
         $node->addChild($child0);
@@ -551,7 +552,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
      */
     private function getNodeMock(): AbstractASTNode
     {
-        return $this->getMockForAbstractClass(AbstractASTNode::class);
+        return $this->getMockBuilder(AbstractASTNode::class)->onlyMethods([])->getMock();
     }
 
     /**
@@ -583,7 +584,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
             ->getMock();
         $node2->expects(static::never())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         $node = $this->createNodeInstance();
         $node->addChild($node2);
@@ -612,7 +613,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
             ->getMock();
         $node3->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue($node1));
+            ->willReturn($node1);
 
         $node = $this->createNodeInstance();
         $node->addChild($node3);
@@ -634,7 +635,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         $node = $this->createNodeInstance();
         $node->addChild($node2);
@@ -657,7 +658,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
             ->getMock();
         $node2->expects(static::once())
             ->method('findChildrenOfType')
-            ->will(static::returnValue([]));
+            ->willReturn([]);
 
         $node = $this->createNodeInstance();
         $node->addChild($node2);
@@ -689,7 +690,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
 
         $reflection = new ReflectionClass($class);
         if ($reflection->isAbstract()) {
-            return $this->getMockForAbstractClass($class, [__METHOD__]);
+            return $this->getMockBuilder($class)->setConstructorArgs([__METHOD__])->getMock();
         }
 
         return $reflection->newInstanceArgs([__METHOD__]);

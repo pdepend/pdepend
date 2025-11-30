@@ -47,16 +47,17 @@ use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTParameter;
 use PDepend\Source\AST\ASTTrait;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the default visit listener implementation.
  *
- * @covers \PDepend\Source\ASTVisitor\AbstractASTVisitor
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractASTVisitor::class)]
+#[Group('unittest')]
 class DefaultListenerTest extends AbstractTestCase
 {
     /**

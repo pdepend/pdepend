@@ -49,17 +49,18 @@ use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\Builder\Builder;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\Builder\BuilderContext\GlobalBuilderContext}
  * class.
  *
- * @covers \PDepend\Source\Builder\BuilderContext\GlobalBuilderContext
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(GlobalBuilderContext::class)]
+#[Group('unittest')]
 class GlobalBuilderContextTest extends AbstractTestCase
 {
     /**
@@ -154,7 +155,7 @@ class GlobalBuilderContextTest extends AbstractTestCase
         $builder->expects(static::once())
             ->method('getClass')
             ->with(static::equalTo(__CLASS__))
-            ->will(static::returnValue($class));
+            ->willReturn($class);
 
         $context = new GlobalBuilderContext($builder);
         $context->getClass(__CLASS__);

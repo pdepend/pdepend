@@ -43,18 +43,21 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTryStatement} class.
  *
- * @covers \PDepend\Source\AST\ASTTryStatement
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTTryStatement::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTTryStatementTest extends ASTNodeTestCase
 {
     /**
@@ -72,9 +75,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
 
     /**
      * Tests that the try-statement has the expected start line value.
-     *
-     * @depends testTryStatement
      */
+    #[Depends('testTryStatement')]
     public function testTryStatementHasExpectedStartLine(ASTTryStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
@@ -82,9 +84,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
 
     /**
      * Tests that the try-statement has the expected start column value.
-     *
-     * @depends testTryStatement
      */
+    #[Depends('testTryStatement')]
     public function testTryStatementHasExpectedStartColumn(ASTTryStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
@@ -92,9 +93,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
 
     /**
      * Tests that the try-statement has the expected end line value.
-     *
-     * @depends testTryStatement
      */
+    #[Depends('testTryStatement')]
     public function testTryStatementHasExpectedEndLine(ASTTryStatement $stmt): void
     {
         static::assertEquals(8, $stmt->getEndLine());
@@ -102,9 +102,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
 
     /**
      * Tests that the try-statement has the expected end column value.
-     *
-     * @depends testTryStatement
      */
+    #[Depends('testTryStatement')]
     public function testTryStatementHasExpectedEndColumn(ASTTryStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getEndColumn());
@@ -112,9 +111,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
 
     /**
      * testFirstChildOfTryStatementIsInstanceOfScopeStatement
-     *
-     * @depends testTryStatement
      */
+    #[Depends('testTryStatement')]
     public function testFirstChildOfTryStatementIsInstanceOfScopeStatement(ASTTryStatement $stmt): void
     {
         static::assertInstanceOf(ASTScopeStatement::class, $stmt->getChild(0));
@@ -122,9 +120,8 @@ class ASTTryStatementTest extends ASTNodeTestCase
 
     /**
      * testSecondChildOfTryStatementIsInstanceOfCatchStatement
-     *
-     * @depends testTryStatement
      */
+    #[Depends('testTryStatement')]
     public function testSecondChildOfTryStatementIsInstanceOfCatchStatement(ASTTryStatement $stmt): void
     {
         static::assertInstanceOf(ASTCatchStatement::class, $stmt->getChild(1));

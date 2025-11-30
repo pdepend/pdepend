@@ -43,14 +43,15 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the signed default value bug no. 71.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class SignedDefaultValueResultsInExceptionBug071Test extends AbstractRegressionTestCase
 {
     /**

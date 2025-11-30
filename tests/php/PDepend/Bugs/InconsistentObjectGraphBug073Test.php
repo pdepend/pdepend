@@ -43,15 +43,16 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for bug 73 that results in an inconsistent object graph and fatal
  * errors.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class InconsistentObjectGraphBug073Test extends AbstractRegressionTestCase
 {
     /**

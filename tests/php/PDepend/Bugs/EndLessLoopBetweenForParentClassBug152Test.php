@@ -44,15 +44,15 @@
 namespace PDepend\Bugs;
 
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for bug #152.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class EndLessLoopBetweenForParentClassBug152Test extends AbstractRegressionTestCase
 {
     /**

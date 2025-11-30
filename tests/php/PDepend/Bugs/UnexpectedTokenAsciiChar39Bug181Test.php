@@ -45,6 +45,8 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for bug 181, where an unexpected token in a chinese translation
  * file forces PDepend to quit.
@@ -55,9 +57,8 @@ namespace PDepend\Bugs;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link       http://tracker.pdepend.org/pdepend/issue_tracker/issue/181
  * @since 0.10.0
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class UnexpectedTokenAsciiChar39Bug181Test extends AbstractRegressionTestCase
 {
     /**

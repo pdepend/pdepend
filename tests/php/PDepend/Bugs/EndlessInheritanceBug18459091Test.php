@@ -51,6 +51,8 @@ use PDepend\Metrics\Analyzer\InheritanceAnalyzer;
 use PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException;
 use PDepend\TextUI\Command;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Ticket;
 
 /**
  * Test case for bug #18459091.
@@ -59,11 +61,9 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link https://www.pivotaltracker.com/story/show/18459091
  * @since 1.0.0
- *
- * @ticket 18459091
- *
- * @group regressiontest
  */
+#[Ticket('18459091')]
+#[Group('regressiontest')]
 class EndlessInheritanceBug18459091Test extends AbstractRegressionTestCase
 {
     /**

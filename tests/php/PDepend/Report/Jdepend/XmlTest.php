@@ -47,16 +47,17 @@ use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Report\DummyAnalyzer;
 use PDepend\Report\NoLogOutputException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the jdepend xml logger.
  *
- * @covers \PDepend\Report\Jdepend\Xml
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Xml::class)]
+#[Group('unittest')]
 class XmlTest extends AbstractTestCase
 {
     /** Test dependency analyzer. */

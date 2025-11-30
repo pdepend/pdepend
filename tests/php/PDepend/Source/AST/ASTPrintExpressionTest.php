@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTPrintExpression} class.
  *
- * @covers \PDepend\Source\AST\ASTPrintExpression
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTPrintExpression::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTPrintExpressionTest extends ASTNodeTestCase
 {
     public function testSimplePrintExpression(): ASTPrintExpression
@@ -63,33 +67,25 @@ class ASTPrintExpressionTest extends ASTNodeTestCase
         return $print;
     }
 
-    /**
-     * @depends testSimplePrintExpression
-     */
+    #[Depends('testSimplePrintExpression')]
     public function testSimplePrintExpressionHasExpectedStartLine(ASTPrintExpression $expr): void
     {
         static::assertSame(4, $expr->getStartLine());
     }
 
-    /**
-     * @depends testSimplePrintExpression
-     */
+    #[Depends('testSimplePrintExpression')]
     public function testSimplePrintExpressionHasExpectedEndLine(ASTPrintExpression $expr): void
     {
         static::assertSame(4, $expr->getEndLine());
     }
 
-    /**
-     * @depends testSimplePrintExpression
-     */
+    #[Depends('testSimplePrintExpression')]
     public function testSimplePrintExpressionHasExpectedStartColumn(ASTPrintExpression $expr): void
     {
         static::assertSame(5, $expr->getStartColumn());
     }
 
-    /**
-     * @depends testSimplePrintExpression
-     */
+    #[Depends('testSimplePrintExpression')]
     public function testSimplePrintExpressionHasExpectedEndColumn(ASTPrintExpression $expr): void
     {
         static::assertSame(9, $expr->getEndColumn());

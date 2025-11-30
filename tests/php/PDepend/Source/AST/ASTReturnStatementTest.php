@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTReturnStatement} class.
  *
- * @covers \PDepend\Source\AST\ASTReturnStatement
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTReturnStatement::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTReturnStatementTest extends ASTNodeTestCase
 {
     /**
@@ -70,9 +74,8 @@ class ASTReturnStatementTest extends ASTNodeTestCase
 
     /**
      * testReturnStatementHasExpectedStartLine
-     *
-     * @depends testReturnStatement
      */
+    #[Depends('testReturnStatement')]
     public function testReturnStatementHasExpectedStartLine(ASTReturnStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
@@ -80,9 +83,8 @@ class ASTReturnStatementTest extends ASTNodeTestCase
 
     /**
      * testReturnStatementHasExpectedStartColumn
-     *
-     * @depends testReturnStatement
      */
+    #[Depends('testReturnStatement')]
     public function testReturnStatementHasExpectedStartColumn(ASTReturnStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
@@ -90,9 +92,8 @@ class ASTReturnStatementTest extends ASTNodeTestCase
 
     /**
      * testReturnStatementHasExpectedEndLine
-     *
-     * @depends testReturnStatement
      */
+    #[Depends('testReturnStatement')]
     public function testReturnStatementHasExpectedEndLine(ASTReturnStatement $stmt): void
     {
         static::assertEquals(7, $stmt->getEndLine());
@@ -100,9 +101,8 @@ class ASTReturnStatementTest extends ASTNodeTestCase
 
     /**
      * testReturnStatementHasExpectedEndColumn
-     *
-     * @depends testReturnStatement
      */
+    #[Depends('testReturnStatement')]
     public function testReturnStatementHasExpectedEndColumn(ASTReturnStatement $stmt): void
     {
         static::assertEquals(6, $stmt->getEndColumn());

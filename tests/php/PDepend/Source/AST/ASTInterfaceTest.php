@@ -45,21 +45,23 @@ namespace PDepend\Source\AST;
 
 use BadMethodCallException;
 use PDepend\Source\Builder\BuilderContext;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the code interface class.
  *
- * @covers \PDepend\Source\AST\AbstractASTClassOrInterface
- * @covers \PDepend\Source\AST\AbstractASTType
- * @covers \PDepend\Source\AST\ASTInterface
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractASTClassOrInterface::class)]
+#[CoversClass(AbstractASTType::class)]
+#[CoversClass(ASTInterface::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTInterfaceTest extends AbstractASTArtifactTestCase
 {
     /**
@@ -74,7 +76,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         /** @var class-string */
         $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
@@ -83,7 +85,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node2->expects(static::never())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         $interface = $this->createItem();
         $interface->addChild($node1);
@@ -113,7 +115,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         /** @var class-string */
         $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
@@ -122,7 +124,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node3->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue($node1));
+            ->willReturn($node1);
 
         $interface = $this->createItem();
         $interface->addChild($node2);
@@ -144,7 +146,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         /** @var class-string */
         $class = 'Mock_' . __FUNCTION__ . '_' . md5(microtime());
@@ -153,7 +155,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         $interface = $this->createItem();
         $interface->addChild($node1);
@@ -487,7 +489,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $cache->expects(static::once())
             ->method('type')
             ->with(static::equalTo('tokens'))
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
         $cache->expects(static::once())
             ->method('restore');
 
@@ -507,7 +509,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $cache->expects(static::once())
             ->method('type')
             ->with(static::equalTo('tokens'))
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
         $cache->expects(static::once())
             ->method('store')
             ->with(static::isType('string'), static::equalTo($tokens));
@@ -534,7 +536,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $cache = $this->createCacheFixture();
         $cache->expects(static::once())
             ->method('type')
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
 
         $interface = $this->createItem();
         $interface->setCache($cache)
@@ -669,7 +671,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $cache = $this->createCacheFixture();
         $cache->expects(static::once())
             ->method('type')
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
 
         $interface = $this->createItem();
         $interface->setCache($cache)

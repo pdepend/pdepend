@@ -44,17 +44,21 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTypeCallable} class.
  *
- * @covers \PDepend\Source\AST\ASTTypeCallable
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
- *
- * @group unittest
  */
+#[CoversClass(ASTTypeCallable::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTTypeCallableTest extends ASTNodeTestCase
 {
     /**
@@ -80,9 +84,8 @@ class ASTTypeCallableTest extends ASTNodeTestCase
 
     /**
      * testCallableTypeHasExpectedStartLine
-     *
-     * @depends testCallableType
      */
+    #[Depends('testCallableType')]
     public function testCallableTypeHasExpectedStartLine(ASTTypeCallable $type): void
     {
         static::assertEquals(2, $type->getStartLine());
@@ -90,9 +93,8 @@ class ASTTypeCallableTest extends ASTNodeTestCase
 
     /**
      * testCallableTypeHasExpectedEndLine
-     *
-     * @depends testCallableType
      */
+    #[Depends('testCallableType')]
     public function testCallableTypeHasExpectedEndLine(ASTTypeCallable $type): void
     {
         static::assertEquals(2, $type->getEndLine());
@@ -100,9 +102,8 @@ class ASTTypeCallableTest extends ASTNodeTestCase
 
     /**
      * testCallableTypeHasExpectedStartColumn
-     *
-     * @depends testCallableType
      */
+    #[Depends('testCallableType')]
     public function testCallableTypeHasExpectedStartColumn(ASTTypeCallable $type): void
     {
         static::assertEquals(27, $type->getStartColumn());
@@ -110,9 +111,8 @@ class ASTTypeCallableTest extends ASTNodeTestCase
 
     /**
      * testCallableTypeHasExpectedEndColumn
-     *
-     * @depends testCallableType
      */
+    #[Depends('testCallableType')]
     public function testCallableTypeHasExpectedEndColumn(ASTTypeCallable $type): void
     {
         static::assertEquals(34, $type->getEndColumn());

@@ -185,4 +185,4 @@ class CacheVersionUpdater
     }
 }
 
-CacheVersionUpdater::main($argv);
+CacheVersionUpdater::main($argv ?? []);

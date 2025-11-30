@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTScope} class.
  *
- * @covers \PDepend\Source\AST\ASTScope
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTScope::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTScopeTest extends ASTNodeTestCase
 {
     /**
@@ -70,9 +74,8 @@ class ASTScopeTest extends ASTNodeTestCase
 
     /**
      * Tests that the scope-statement has the expected start line value.
-     *
-     * @depends testScope
      */
+    #[Depends('testScope')]
     public function testScopeHasExpectedStartLine(ASTScope $scope): void
     {
         static::assertEquals(3, $scope->getStartLine());
@@ -80,9 +83,8 @@ class ASTScopeTest extends ASTNodeTestCase
 
     /**
      * Tests that the scope-statement has the expected start column value.
-     *
-     * @depends testScope
      */
+    #[Depends('testScope')]
     public function testScopeHasExpectedStartColumn(ASTScope $scope): void
     {
         static::assertEquals(1, $scope->getStartColumn());
@@ -90,9 +92,8 @@ class ASTScopeTest extends ASTNodeTestCase
 
     /**
      * Tests that the scope-statement has the expected end line value.
-     *
-     * @depends testScope
      */
+    #[Depends('testScope')]
     public function testScopeHasExpectedEndLine(ASTScope $scope): void
     {
         static::assertEquals(8, $scope->getEndLine());
@@ -100,9 +101,8 @@ class ASTScopeTest extends ASTNodeTestCase
 
     /**
      * Tests that the scope-statement has the expected end column value.
-     *
-     * @depends testScope
      */
+    #[Depends('testScope')]
     public function testScopeHasExpectedEndColumn(ASTScope $scope): void
     {
         static::assertEquals(1, $scope->getEndColumn());

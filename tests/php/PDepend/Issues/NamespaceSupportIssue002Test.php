@@ -43,17 +43,20 @@
 
 namespace PDepend\Issues;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for ticket 002, PHP 5.3 namespace support.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
 {
     /**
@@ -297,8 +300,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     * @dataProvider dataProviderParserResolvesQualifiedTypeNameInTypeSignature
      */
+    #[DataProvider('dataProviderParserResolvesQualifiedTypeNameInTypeSignature')]
     public function testParserResolvesQualifiedTypeNameInTypeSignature(string $fileName, string $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
@@ -334,8 +337,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     * @dataProvider dataProviderParserResolvesQualifiedTypeNameInFunction
      */
+    #[DataProvider('dataProviderParserResolvesQualifiedTypeNameInFunction')]
     public function testParserResolvesQualifiedTypeNameInFunction(string $fileName, string $namespaceName): void
     {
         $namespaces = $this->parseSource($fileName);
@@ -377,8 +380,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     * @dataProvider dataProviderParserKeepsQualifiedTypeNameInTypeSignature
      */
+    #[DataProvider('dataProviderParserKeepsQualifiedTypeNameInTypeSignature')]
     public function testParserKeepsQualifiedTypeNameInTypeSignature(string $fileName, string $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
@@ -412,8 +415,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     * @dataProvider dataProviderParserKeepsQualifiedTypeNameInFunction
      */
+    #[DataProvider('dataProviderParserKeepsQualifiedTypeNameInFunction')]
     public function testParserKeepsQualifiedTypeNameInFunction(string $fileName, string $namespaceName): void
     {
         $dependency = $this->parseSource($fileName)
@@ -450,8 +453,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax
      */
+    #[DataProvider('dataProviderParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax')]
     public function testParserResolvesNamespaceKeywordInTypeSignatureSemicolonSyntax(
         string $fileName,
         string $namespaceName
@@ -488,8 +491,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax
      */
+    #[DataProvider('dataProviderParserResolvesNamespaceKeywordInFunctionSemicolonSyntax')]
     public function testParserResolvesNamespaceKeywordInFunctionSemicolonSyntax(
         string $fileName,
         string $namespaceName
@@ -527,8 +530,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     * @dataProvider dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax
      */
+    #[DataProvider('dataProviderParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax')]
     public function testParserResolvesNamespaceKeywordInTypeSignatureCurlyBraceSyntax(
         string $fileName,
         string $namespaceName
@@ -565,8 +568,8 @@ class NamespaceSupportIssue002Test extends AbstractFeatureTestCase
      *
      * @param string $fileName Name of the test file.
      * @param string $namespaceName Name of the expected namespace.
-     * @dataProvider dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax
      */
+    #[DataProvider('dataProviderParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax')]
     public function testParserResolvesNamespaceKeywordInFunctionCurlyBraceSyntax(
         string $fileName,
         string $namespaceName

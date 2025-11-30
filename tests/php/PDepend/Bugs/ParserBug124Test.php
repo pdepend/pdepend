@@ -45,16 +45,16 @@ namespace PDepend\Bugs;
 
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Tokenizer\Tokens;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Ticket;
 
 /**
  * Test case for bug #124.
  *
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @ticket 124
- *
- * @group regressiontest
  */
+#[Ticket('124')]
+#[Group('regressiontest')]
 class ParserBug124Test extends AbstractRegressionTestCase
 {
     /**

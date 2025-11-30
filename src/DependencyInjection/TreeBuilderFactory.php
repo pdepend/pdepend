@@ -44,7 +44,6 @@
 namespace PDepend\DependencyInjection;
 
 use PDepend\Util\FileUtil;
-use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
 /**
@@ -67,6 +66,8 @@ class TreeBuilderFactory
 
     /**
      * Generates the configuration tree builder.
+     *
+     * @return TreeBuilder<'array'>
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
@@ -74,7 +75,6 @@ class TreeBuilderFactory
 
         $treeBuilder = new TreeBuilder('pdepend', 'array');
         $rootNode = $treeBuilder->getRootNode();
-        assert($rootNode instanceof ArrayNodeDefinition);
         $nodes = $rootNode->children();
 
         $cacheNode = $nodes->arrayNode('cache')->addDefaultsIfNotSet()->children();

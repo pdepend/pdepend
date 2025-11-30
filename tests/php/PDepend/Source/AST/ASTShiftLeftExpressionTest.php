@@ -44,17 +44,21 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTShiftLeftExpression} class.
  *
- * @covers \PDepend\Source\AST\ASTShiftLeftExpression
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.1
- *
- * @group unittest
  */
+#[CoversClass(ASTShiftLeftExpression::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTShiftLeftExpressionTest extends ASTNodeTestCase
 {
     /**
@@ -79,9 +83,8 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
 
     /**
      * testShiftLeftExpressionHasExpectedStartLine
-     *
-     * @depends testShiftLeftExpression
      */
+    #[Depends('testShiftLeftExpression')]
     public function testShiftLeftExpressionHasExpectedStartLine(ASTShiftLeftExpression $expr): void
     {
         static::assertEquals(6, $expr->getStartLine());
@@ -89,9 +92,8 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
 
     /**
      * testShiftLeftExpressionHasExpectedStartColumn
-     *
-     * @depends testShiftLeftExpression
      */
+    #[Depends('testShiftLeftExpression')]
     public function testShiftLeftExpressionHasExpectedStartColumn(ASTShiftLeftExpression $expr): void
     {
         static::assertEquals(13, $expr->getStartColumn());
@@ -99,9 +101,8 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
 
     /**
      * testShiftLeftExpressionHasExpectedEndLine
-     *
-     * @depends testShiftLeftExpression
      */
+    #[Depends('testShiftLeftExpression')]
     public function testShiftLeftExpressionHasExpectedEndLine(ASTShiftLeftExpression $expr): void
     {
         static::assertEquals(6, $expr->getEndLine());
@@ -109,9 +110,8 @@ class ASTShiftLeftExpressionTest extends ASTNodeTestCase
 
     /**
      * testShiftLeftExpressionHasExpectedEndColumn
-     *
-     * @depends testShiftLeftExpression
      */
+    #[Depends('testShiftLeftExpression')]
     public function testShiftLeftExpressionHasExpectedEndColumn(ASTShiftLeftExpression $expr): void
     {
         static::assertEquals(14, $expr->getEndColumn());

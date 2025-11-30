@@ -45,18 +45,19 @@
 namespace PDepend\Source\AST;
 
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTClassOrInterfaceReferenceIterator}
  * class.
  *
- * @covers \PDepend\Source\AST\ASTClassOrInterfaceReferenceIterator
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since 1.0.0
- *
- * @group unittest
  */
+#[CoversClass(ASTClassOrInterfaceReferenceIterator::class)]
+#[Group('unittest')]
 class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
 {
     /**
@@ -75,14 +76,14 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
             ->getMock();
         $reference1->expects(static::once())
             ->method('getType')
-            ->will(static::returnValue($class1));
+            ->willReturn($class1);
 
         $reference2 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
             ->getMock();
         $reference2->expects(static::once())
             ->method('getType')
-            ->will(static::returnValue($class2));
+            ->willReturn($class2);
 
         $references = [$reference1, $reference2];
 
@@ -111,14 +112,14 @@ class ASTClassOrInterfaceReferenceIteratorTest extends AbstractTestCase
             ->getMock();
         $reference1->expects(static::once())
             ->method('getType')
-            ->will(static::returnValue($class1));
+            ->willReturn($class1);
 
         $reference2 = $this->getMockBuilder(ASTSelfReference::class)
             ->disableOriginalConstructor()
             ->getMock();
         $reference2->expects(static::once())
             ->method('getType')
-            ->will(static::returnValue($class2));
+            ->willReturn($class2);
 
         $references = [$reference1, $reference2];
 

@@ -44,17 +44,21 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTRequireExpression} class.
  *
- * @covers \PDepend\Source\AST\ASTRequireExpression
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.12
- *
- * @group unittest
  */
+#[CoversClass(ASTRequireExpression::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTRequireExpressionTest extends ASTNodeTestCase
 {
     /**
@@ -107,9 +111,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
 
     /**
      * testRequireExpressionHasExpectedStartLine
-     *
-     * @depends testRequireExpression
      */
+    #[Depends('testRequireExpression')]
     public function testRequireExpressionHasExpectedStartLine(ASTRequireExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
@@ -117,9 +120,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
 
     /**
      * testRequireExpressionHasExpectedStartColumn
-     *
-     * @depends testRequireExpression
      */
+    #[Depends('testRequireExpression')]
     public function testRequireExpressionHasExpectedStartColumn(ASTRequireExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
@@ -127,9 +129,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
 
     /**
      * testRequireExpressionHasExpectedEndLine
-     *
-     * @depends testRequireExpression
      */
+    #[Depends('testRequireExpression')]
     public function testRequireExpressionHasExpectedEndLine(ASTRequireExpression $expr): void
     {
         static::assertEquals(4, $expr->getEndLine());
@@ -137,9 +138,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
 
     /**
      * testRequireExpressionHasExpectedEndColumn
-     *
-     * @depends testRequireExpression
      */
+    #[Depends('testRequireExpression')]
     public function testRequireExpressionHasExpectedEndColumn(ASTRequireExpression $expr): void
     {
         static::assertEquals(35, $expr->getEndColumn());
@@ -160,9 +160,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
 
     /**
      * testRequireExpressionWithParenthesisHasExpectedStartLine
-     *
-     * @depends testRequireExpressionWithParenthesis
      */
+    #[Depends('testRequireExpressionWithParenthesis')]
     public function testRequireExpressionWithParenthesisHasExpectedStartLine(ASTRequireExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
@@ -170,9 +169,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
 
     /**
      * testRequireExpressionWithParenthesisHasExpectedStartColumn
-     *
-     * @depends testRequireExpressionWithParenthesis
      */
+    #[Depends('testRequireExpressionWithParenthesis')]
     public function testRequireExpressionWithParenthesisHasExpectedStartColumn(ASTRequireExpression $expr): void
     {
         static::assertEquals(5, $expr->getStartColumn());
@@ -180,9 +178,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
 
     /**
      * testRequireExpressionWithParenthesisHasExpectedEndLine
-     *
-     * @depends testRequireExpressionWithParenthesis
      */
+    #[Depends('testRequireExpressionWithParenthesis')]
     public function testRequireExpressionWithParenthesisHasExpectedEndLine(ASTRequireExpression $expr): void
     {
         static::assertEquals(6, $expr->getEndLine());
@@ -190,9 +187,8 @@ class ASTRequireExpressionTest extends ASTNodeTestCase
 
     /**
      * testRequireExpressionWithParenthesisHasExpectedEndColumn
-     *
-     * @depends testRequireExpressionWithParenthesis
      */
+    #[Depends('testRequireExpressionWithParenthesis')]
     public function testRequireExpressionWithParenthesisHasExpectedEndColumn(ASTRequireExpression $expr): void
     {
         static::assertEquals(5, $expr->getEndColumn());

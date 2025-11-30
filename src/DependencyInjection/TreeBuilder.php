@@ -51,8 +51,10 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder as BaseTreeBuilder;
  */
 class TreeBuilder
 {
+    /** @var ArrayNodeDefinition<BaseTreeBuilder<'array'>> */
     protected ArrayNodeDefinition $rootNode;
 
+    /** @var BaseTreeBuilder<'array'> */
     protected BaseTreeBuilder $treeBuilder;
 
     /**
@@ -62,12 +64,13 @@ class TreeBuilder
     {
         $this->treeBuilder = new BaseTreeBuilder($name, 'array');
         $rootNode = $this->treeBuilder->getRootNode();
-        assert($rootNode instanceof ArrayNodeDefinition);
         $this->rootNode = $rootNode;
     }
 
     /**
      * Get the root node of the built tree.
+     *
+     * @return ArrayNodeDefinition<BaseTreeBuilder<'array'>>
      */
     public function getRootNode(): ArrayNodeDefinition
     {
@@ -76,6 +79,8 @@ class TreeBuilder
 
     /**
      * Get the base Symfony tree builder.
+     *
+     * @return BaseTreeBuilder<'array'>
      */
     public function getTreeBuilder(): BaseTreeBuilder
     {

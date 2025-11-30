@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTUnsetStatement} class.
  *
- * @covers \PDepend\Source\AST\ASTUnsetStatement
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTUnsetStatement::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTUnsetStatementTest extends ASTNodeTestCase
 {
     /**
@@ -70,9 +74,8 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
 
     /**
      * testUnsetStatementHasExpectedStartLine
-     *
-     * @depends testUnsetStatement
      */
+    #[Depends('testUnsetStatement')]
     public function testUnsetStatementHasExpectedStartLine(ASTUnsetStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
@@ -80,9 +83,8 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
 
     /**
      * testUnsetStatementHasExpectedStartColumn
-     *
-     * @depends testUnsetStatement
      */
+    #[Depends('testUnsetStatement')]
     public function testUnsetStatementHasExpectedStartColumn(ASTUnsetStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
@@ -90,9 +92,8 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
 
     /**
      * testUnsetStatementHasExpectedEndLine
-     *
-     * @depends testUnsetStatement
      */
+    #[Depends('testUnsetStatement')]
     public function testUnsetStatementHasExpectedEndLine(ASTUnsetStatement $stmt): void
     {
         static::assertEquals(6, $stmt->getEndLine());
@@ -100,9 +101,8 @@ class ASTUnsetStatementTest extends ASTNodeTestCase
 
     /**
      * testUnsetStatementHasExpectedEndColumn
-     *
-     * @depends testUnsetStatement
      */
+    #[Depends('testUnsetStatement')]
     public function testUnsetStatementHasExpectedEndColumn(ASTUnsetStatement $stmt): void
     {
         static::assertEquals(22, $stmt->getEndColumn());

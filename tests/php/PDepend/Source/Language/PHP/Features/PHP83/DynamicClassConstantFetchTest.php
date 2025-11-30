@@ -47,16 +47,19 @@ use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTScope;
 use PDepend\Source\AST\ASTSelfReference;
 use PDepend\Source\AST\ASTVariable;
+use PDepend\Source\Language\PHP\PHPBuilder;
+use PDepend\Source\Language\PHP\PHPParserVersion83;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
- * @covers \PDepend\Source\Language\PHP\PHPBuilder
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
- * @group php8.3
  */
+#[CoversClass(PHPParserVersion83::class)]
+#[CoversClass(PHPBuilder::class)]
+#[Group('unittest')]
+#[Group('php8.3')]
 class DynamicClassConstantFetchTest extends PHPParserVersion83TestCase
 {
     public function testFetch(): void

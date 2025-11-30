@@ -43,19 +43,24 @@
 
 namespace PDepend\Issues;
 
+use PDepend\Engine;
 use PDepend\Input\ExtensionFilter;
 use PDepend\Report\Dummy\Logger;
 use PDepend\TextUI\Command;
+use PDepend\TextUI\Runner;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the catch error ticket #61.
  *
- * @covers \PDepend\Engine
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Engine::class)]
+#[CoversClass(Runner::class)]
+#[CoversClass(Command::class)]
+#[Group('unittest')]
 class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
 {
     /**
@@ -80,8 +85,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     /**
      * Tests that the {@link \PDepend\TextUI\Runner::hasErrors()} method will
      * return <b>false</b> when not parsing error occurred.
-     *
-     * @covers \PDepend\TextUI\Runner
      */
     public function testRunnerReturnsFalseWhenNoErrorOccurredDuringTheParsingProcess(): void
     {
@@ -96,8 +99,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     /**
      * Tests that the {@link \PDepend\TextUI\Runner::hasErrors()} method will
      * return <b>true</b> when a parsing error occurred.
-     *
-     * @covers \PDepend\TextUI\Runner
      */
     public function testRunnerReturnsTrueWhenAnErrorOccurredDuringTheParsingProcess(): void
     {
@@ -113,8 +114,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
     /**
      * Tests that the output does not contain the error hint when the parsing
      * process was successful.
-     *
-     * @covers \PDepend\TextUI\Command
      */
     public function testCommandDoesNotPrintErrorOutputOnSuccessfulParsingProcess(): void
     {
@@ -133,8 +132,6 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
 
     /**
      * testCommandPrintsExceptionMessageWhenAnErrorOccurredDuringTheParsingProcess
-     *
-     * @covers \PDepend\TextUI\Command
      */
     public function testCommandPrintsExceptionMessageWhenAnErrorOccurredDuringTheParsingProcess(): void
     {

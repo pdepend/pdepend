@@ -43,23 +43,25 @@
 
 namespace PDepend\Metrics\Analyzer;
 
+use PDepend\Metrics\AbstractCachingAnalyzer;
 use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the NPath complexity analyzer.
  *
- * @covers \PDepend\Metrics\AbstractCachingAnalyzer
- * @covers \PDepend\Metrics\Analyzer\NPathComplexityAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractCachingAnalyzer::class)]
+#[CoversClass(NPathComplexityAnalyzer::class)]
+#[Group('unittest')]
 class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
 {
     /** @since 1.0.0 */

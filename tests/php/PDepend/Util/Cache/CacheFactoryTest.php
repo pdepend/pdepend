@@ -47,17 +47,18 @@ use PDepend\AbstractTestCase;
 use PDepend\Application;
 use PDepend\Util\Cache\Driver\FileCacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 
 /**
  * Test case for the {@link \PDepend\Util\Cache\CacheFactory} class.
  *
- * @covers \PDepend\Util\Cache\CacheFactory
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group unittest
  */
+#[CoversClass(CacheFactory::class)]
+#[Group('unittest')]
 class CacheFactoryTest extends AbstractTestCase
 {
     /**

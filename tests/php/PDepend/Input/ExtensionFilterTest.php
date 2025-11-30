@@ -44,6 +44,8 @@
 namespace PDepend\Input;
 
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 use SplFileInfo;
@@ -51,12 +53,11 @@ use SplFileInfo;
 /**
  * Test case for the file extension filter.
  *
- * @covers \PDepend\Input\ExtensionFilter
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ExtensionFilter::class)]
+#[Group('unittest')]
 class ExtensionFilterTest extends AbstractTestCase
 {
     /**

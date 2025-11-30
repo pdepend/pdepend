@@ -49,15 +49,15 @@ use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Util\Cache\Driver\FileCacheDriver;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the integration of parser and builder together with the cache component.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group integrationtest
  */
+#[Group('regressiontest')]
 class BuilderParserCacheTest extends AbstractTestCase
 {
     /** The temporary cache directory. */

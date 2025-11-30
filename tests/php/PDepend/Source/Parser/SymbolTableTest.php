@@ -44,14 +44,14 @@
 namespace PDepend\Source\Parser;
 
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link SymbolTable} class.
- *
- * @covers \PDepend\Source\Parser\SymbolTable
- *
- * @group unittest
  */
+#[CoversClass(SymbolTable::class)]
+#[Group('unittest')]
 class SymbolTableTest extends AbstractTestCase
 {
     /**

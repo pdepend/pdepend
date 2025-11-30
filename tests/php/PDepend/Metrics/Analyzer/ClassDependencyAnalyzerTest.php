@@ -45,16 +45,17 @@ namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\Builder\Builder;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Tests the for the package metrics visitor.
  *
- * @covers \PDepend\Metrics\Analyzer\ClassDependencyAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group unittest
  */
+#[CoversClass(ClassDependencyAnalyzer::class)]
+#[Group('unittest')]
 class ClassDependencyAnalyzerTest extends AbstractMetricsTestCase
 {
     /** @var Builder<mixed> The used node builder. */

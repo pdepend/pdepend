@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTVariable} class.
  *
- * @covers \PDepend\Source\AST\ASTVariable
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTVariable::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTVariableTest extends ASTNodeTestCase
 {
     /**
@@ -97,9 +101,8 @@ class ASTVariableTest extends ASTNodeTestCase
 
     /**
      * testVariableHasExpectedStartLine
-     *
-     * @depends testVariable
      */
+    #[Depends('testVariable')]
     public function testVariableHasExpectedStartLine(ASTVariable $variable): void
     {
         static::assertEquals(6, $variable->getStartLine());
@@ -107,9 +110,8 @@ class ASTVariableTest extends ASTNodeTestCase
 
     /**
      * testVariableHasExpectedStartColumn
-     *
-     * @depends testVariable
      */
+    #[Depends('testVariable')]
     public function testVariableHasExpectedStartColumn(ASTVariable $variable): void
     {
         static::assertEquals(9, $variable->getStartColumn());
@@ -117,9 +119,8 @@ class ASTVariableTest extends ASTNodeTestCase
 
     /**
      * testVariableHasExpectedEndLine
-     *
-     * @depends testVariable
      */
+    #[Depends('testVariable')]
     public function testVariableHasExpectedEndLine(ASTVariable $variable): void
     {
         static::assertEquals(6, $variable->getEndLine());
@@ -127,9 +128,8 @@ class ASTVariableTest extends ASTNodeTestCase
 
     /**
      * testVariableHasExpectedEndColumn
-     *
-     * @depends testVariable
      */
+    #[Depends('testVariable')]
     public function testVariableHasExpectedEndColumn(ASTVariable $variable): void
     {
         static::assertEquals(10, $variable->getEndColumn());

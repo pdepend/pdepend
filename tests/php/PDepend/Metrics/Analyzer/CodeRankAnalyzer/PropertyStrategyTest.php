@@ -46,16 +46,17 @@ namespace PDepend\Metrics\Analyzer\CodeRankAnalyzer;
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTNamespace;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the code rank property strategy.
  *
- * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(PropertyStrategy::class)]
+#[Group('unittest')]
 class PropertyStrategyTest extends AbstractTestCase
 {
     /**
@@ -84,7 +85,7 @@ class PropertyStrategyTest extends AbstractTestCase
         }
 
         $expected = [
-            $idMap['PDepend_CodeRank_ClassA'] => [
+            $idMap['PDepend_CodeRank_ClassA'] ?? '' => [
                 'in' => [
                     $idMap['PDepend_CodeRank_ClassB'],
                     $idMap['PDepend_CodeRank_ClassC'],
@@ -95,7 +96,7 @@ class PropertyStrategyTest extends AbstractTestCase
                 'name' => 'PDepend_CodeRank_ClassA',
                 'type' => ASTClass::class,
             ],
-            $idMap['PDepend_CodeRank_ClassB'] => [
+            $idMap['PDepend_CodeRank_ClassB'] ?? '' => [
                 'in' => [
                     $idMap['PDepend_CodeRank_ClassC'],
                     $idMap['PDepend_CodeRank_ClassC'],
@@ -106,7 +107,7 @@ class PropertyStrategyTest extends AbstractTestCase
                 'name' => 'PDepend_CodeRank_ClassB',
                 'type' => ASTClass::class,
             ],
-            $idMap['PDepend_CodeRank_ClassC'] => [
+            $idMap['PDepend_CodeRank_ClassC'] ?? '' => [
                 'in' => [
                     $idMap['PDepend_CodeRank_ClassA'],
                 ],
@@ -118,7 +119,7 @@ class PropertyStrategyTest extends AbstractTestCase
                 'name' => 'PDepend_CodeRank_ClassC',
                 'type' => ASTClass::class,
             ],
-            $idMap['PDepend::CodeRankA'] => [
+            $idMap['PDepend::CodeRankA'] ?? '' => [
                 'in' => [
                     $idMap['PDepend::CodeRankB'],
                     $idMap['PDepend::CodeRankB'],
@@ -130,7 +131,7 @@ class PropertyStrategyTest extends AbstractTestCase
                 'name' => 'PDepend::CodeRankA',
                 'type' => ASTNamespace::class,
             ],
-            $idMap['PDepend::CodeRankB'] => [
+            $idMap['PDepend::CodeRankB'] ?? '' => [
                 'in' => [
                     $idMap['PDepend::CodeRankA'],
                 ],

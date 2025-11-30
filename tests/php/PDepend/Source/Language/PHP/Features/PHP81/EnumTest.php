@@ -49,14 +49,17 @@ use PDepend\Source\AST\ASTEnumCase;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTParameter;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @group unittest
- * @group php8.1
  */
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
+#[Group('php8.1')]
 class EnumTest extends PHPParserVersion81TestCase
 {
     public function testEnum(): void

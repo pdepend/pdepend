@@ -48,13 +48,16 @@ use PDepend\Source\AST\ASTFormalParameters;
 use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTValue;
 use PDepend\Source\AST\ASTVariableDeclarator;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @group unittest
- * @group php8.1
  */
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
+#[Group('php8.1')]
 class InInitializersTest extends PHPParserVersion81TestCase
 {
     public function testInInitializers(): void

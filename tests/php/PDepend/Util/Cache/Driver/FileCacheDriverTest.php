@@ -45,17 +45,18 @@ namespace PDepend\Util\Cache\Driver;
 
 use PDepend\Util\Cache\AbstractDriverTestCase;
 use PDepend\Util\Cache\CacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
 
 /**
  * Test case for the {@link \PDepend\Util\Cache\Driver\FileCacheDriver} class.
  *
- * @covers \PDepend\Util\Cache\Driver\FileCacheDriver
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(FileCacheDriver::class)]
+#[Group('unittest')]
 class FileCacheDriverTest extends AbstractDriverTestCase
 {
     /** Temporary cache directory. */

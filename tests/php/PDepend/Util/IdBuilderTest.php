@@ -50,17 +50,18 @@ use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Util\IdBuilder} class.
  *
- * @covers \PDepend\Util\IdBuilder
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @since 0.9.12
- *
- * @group unittest
  */
+#[CoversClass(IdBuilder::class)]
+#[Group('unittest')]
 class IdBuilderTest extends AbstractTestCase
 {
     /**

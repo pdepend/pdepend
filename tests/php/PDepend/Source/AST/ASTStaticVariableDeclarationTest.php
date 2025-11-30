@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStaticVariableDeclaration} class.
  *
- * @covers \PDepend\Source\AST\ASTStaticVariableDeclaration
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTStaticVariableDeclaration::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
 {
     /**
@@ -70,9 +74,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
 
     /**
      * Tests that the declaration has the expected start line value.
-     *
-     * @depends testStaticVariableDeclaration
      */
+    #[Depends('testStaticVariableDeclaration')]
     public function testStaticVariableDeclarationHasExpectedStartLine(ASTStaticVariableDeclaration $declaration): void
     {
         static::assertSame(4, $declaration->getStartLine());
@@ -80,9 +83,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
 
     /**
      * Tests that the declaration has the expected start column value.
-     *
-     * @depends testStaticVariableDeclaration
      */
+    #[Depends('testStaticVariableDeclaration')]
     public function testStaticVariableDeclarationHasExpectedStartColumn(ASTStaticVariableDeclaration $declaration): void
     {
         static::assertSame(5, $declaration->getStartColumn());
@@ -90,9 +92,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
 
     /**
      * Tests that the declaration has the expected end line value.
-     *
-     * @depends testStaticVariableDeclaration
      */
+    #[Depends('testStaticVariableDeclaration')]
     public function testStaticVariableDeclarationHasExpectedEndLine(ASTStaticVariableDeclaration $declaration): void
     {
         static::assertSame(5, $declaration->getEndLine());
@@ -100,9 +101,8 @@ class ASTStaticVariableDeclarationTest extends ASTNodeTestCase
 
     /**
      * Tests that the declaration has the expected end column value.
-     *
-     * @depends testStaticVariableDeclaration
      */
+    #[Depends('testStaticVariableDeclaration')]
     public function testStaticVariableDeclarationHasExpectedEndColumn(ASTStaticVariableDeclaration $declaration): void
     {
         static::assertSame(23, $declaration->getEndColumn());

@@ -1008,23 +1008,23 @@ class PHPTokenizerInternal implements FullTokenizer
                     $image = $token[1];
 
                     // Check for a context sensitive alternative
-                    if (isset(self::$alternativeMap[$type][$previousType])) {
-                        $type = self::$alternativeMap[$type][$previousType];
+                    if (isset(self::$alternativeMap[$type][$previousType ?? 0])) {
+                        $type = self::$alternativeMap[$type][$previousType ?? 0];
                     }
 
-                    if (isset(self::$reductionMap[$type][$previousType])) {
-                        $image = self::$reductionMap[$type][$previousType]['image'];
-                        $type = (int) self::$reductionMap[$type][$previousType]['type'];
+                    if (isset(self::$reductionMap[$type][$previousType ?? 0])) {
+                        $image = self::$reductionMap[$type][$previousType ?? 0]['image'];
+                        $type = (int) self::$reductionMap[$type][$previousType ?? 0]['type'];
 
                         $startColumn = $previousStartColumn;
 
                         array_pop($this->tokens);
                     }
-                } elseif (isset($tokenMap[$token[0]])) {
-                    $type = (int) $tokenMap[$token[0]];
+                } elseif (isset($tokenMap[$token[0] ?? ''])) {
+                    $type = (int) $tokenMap[$token[0] ?? ''];
                     // Check for a context sensitive alternative
-                    if (isset(self::$alternativeMap[$type][$previousType])) {
-                        $type = self::$alternativeMap[$type][$previousType];
+                    if (isset(self::$alternativeMap[$type][$previousType ?? 0])) {
+                        $type = self::$alternativeMap[$type][$previousType ?? 0];
                     }
 
                     $image = $token[1];
