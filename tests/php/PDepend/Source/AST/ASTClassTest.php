@@ -49,20 +49,24 @@ use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PDepend\Source\ASTVisitor\StubASTVisitor;
 use PDepend\Source\Builder\BuilderContext;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case implementation for the \PDepend\Source\AST\ASTClass class.
  *
- * @covers \PDepend\Source\AST\AbstractASTClassOrInterface
- * @covers \PDepend\Source\AST\AbstractASTType
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractASTClassOrInterface::class)]
+#[CoversClass(AbstractASTType::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[CoversClass(ASTTraitMethodCollisionException::class)]
+#[CoversClass(ASTClassOrInterfaceRecursiveInheritanceException::class)]
+#[Group('unittest')]
 class ASTClassTest extends AbstractASTArtifactTestCase
 {
     /**
@@ -338,11 +342,9 @@ class ASTClassTest extends AbstractASTArtifactTestCase
     /**
      * testGetAllMethodsWithMethodCollisionThrowsExpectedException
      *
-     * @covers \PDepend\Source\AST\ASTTraitMethodCollisionException
      * @since 1.0.0
-     *
-     * @group issue-154
      */
+    #[Group('issue-154')]
     public function testGetAllMethodsWithMethodCollisionThrowsExpectedException(): void
     {
         $this->expectException(ASTTraitMethodCollisionException::class);
@@ -550,7 +552,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         /** @var class-string */
         $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
@@ -559,7 +561,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node2->expects(static::never())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         $class = new ASTClass('Clazz');
         $class->addChild($node1);
@@ -589,7 +591,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         /** @var class-string */
         $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
@@ -598,7 +600,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node3->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue($node1));
+            ->willReturn($node1);
 
         $class = new ASTClass('Clazz');
         $class->addChild($node2);
@@ -620,7 +622,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node1->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         /** @var class-string */
         $class = 'Class_' . __FUNCTION__ . '_' . md5(microtime());
@@ -629,7 +631,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
             ->getMock();
         $node2->expects(static::once())
             ->method('getFirstChildOfType')
-            ->will(static::returnValue(null));
+            ->willReturn(null);
 
         $class = new ASTClass('Clazz');
         $class->setCache(new MemoryCacheDriver());
@@ -1155,7 +1157,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $cache->expects(static::once())
             ->method('type')
             ->with(static::equalTo('tokens'))
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
         $cache->expects(static::once())
             ->method('restore');
 
@@ -1175,7 +1177,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $cache->expects(static::once())
             ->method('type')
             ->with(static::equalTo('tokens'))
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
         $cache->expects(static::once())
             ->method('store')
             ->with(static::isType('string'), static::equalTo($tokens));
@@ -1202,7 +1204,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $cache = $this->createCacheFixture();
         $cache->expects(static::once())
             ->method('type')
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
 
         $class = new ASTClass(__CLASS__);
         $class->setCache($cache)
@@ -1233,7 +1235,7 @@ class ASTClassTest extends AbstractASTArtifactTestCase
         $cache = $this->createCacheFixture();
         $cache->expects(static::once())
             ->method('type')
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
 
         $class = new ASTClass(__CLASS__);
         $class->setCache($cache)
@@ -1272,8 +1274,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetParentClassThrowsExpectedExceptionWhenBothAreTheSame
-     *
-     * @covers \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testGetParentClassThrowsExpectedExceptionWhenBothAreTheSame(): void
     {
@@ -1337,8 +1337,6 @@ class ASTClassTest extends AbstractASTArtifactTestCase
 
     /**
      * testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy
-     *
-     * @covers \PDepend\Source\AST\ASTClassOrInterfaceRecursiveInheritanceException
      */
     public function testGetParentClassesThrowsExpectedExceptionForRecursiveInheritanceHierarchy(): void
     {

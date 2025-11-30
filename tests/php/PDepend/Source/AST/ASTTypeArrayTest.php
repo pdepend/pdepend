@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTypeArray} class.
  *
- * @covers \PDepend\Source\AST\ASTTypeArray
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTTypeArray::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTTypeArrayTest extends ASTNodeTestCase
 {
     /**
@@ -70,9 +74,8 @@ class ASTTypeArrayTest extends ASTNodeTestCase
 
     /**
      * testArrayTypeHasExpectedStartLine
-     *
-     * @depends testArrayType
      */
+    #[Depends('testArrayType')]
     public function testArrayTypeHasExpectedStartLine(ASTTypeArray $type): void
     {
         static::assertEquals(2, $type->getStartLine());
@@ -80,9 +83,8 @@ class ASTTypeArrayTest extends ASTNodeTestCase
 
     /**
      * testArrayTypeHasExpectedStartColumn
-     *
-     * @depends testArrayType
      */
+    #[Depends('testArrayType')]
     public function testArrayTypeHasExpectedStartColumn(ASTTypeArray $type): void
     {
         static::assertEquals(14, $type->getStartColumn());
@@ -90,9 +92,8 @@ class ASTTypeArrayTest extends ASTNodeTestCase
 
     /**
      * testArrayTypeHasExpectedEndLine
-     *
-     * @depends testArrayType
      */
+    #[Depends('testArrayType')]
     public function testArrayTypeHasExpectedEndLine(ASTTypeArray $type): void
     {
         static::assertEquals(2, $type->getEndLine());
@@ -100,9 +101,8 @@ class ASTTypeArrayTest extends ASTNodeTestCase
 
     /**
      * testArrayTypeHasExpectedEndColumn
-     *
-     * @depends testArrayType
      */
+    #[Depends('testArrayType')]
     public function testArrayTypeHasExpectedEndColumn(ASTTypeArray $type): void
     {
         static::assertEquals(18, $type->getEndColumn());

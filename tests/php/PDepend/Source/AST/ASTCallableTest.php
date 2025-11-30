@@ -45,16 +45,17 @@ namespace PDepend\Source\AST;
 
 use PDepend\AbstractTestCase;
 use PDepend\Source\Tokenizer\Token;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\AbstractASTCallable} class.
  *
- * @covers \PDepend\Source\AST\AbstractASTCallable
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractASTCallable::class)]
+#[Group('unittest')]
 class ASTCallableTest extends AbstractTestCase
 {
     /**
@@ -151,7 +152,7 @@ class ASTCallableTest extends AbstractTestCase
         $cache->expects(static::once())
             ->method('type')
             ->with(static::equalTo('tokens'))
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
         $cache->expects(static::once())
             ->method('restore');
 
@@ -171,7 +172,7 @@ class ASTCallableTest extends AbstractTestCase
         $cache->expects(static::once())
             ->method('type')
             ->with(static::equalTo('tokens'))
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
         $cache->expects(static::once())
             ->method('store');
 
@@ -202,7 +203,7 @@ class ASTCallableTest extends AbstractTestCase
         $cache = $this->createCacheFixture();
         $cache->expects(static::once())
             ->method('type')
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
 
         $callable = $this->getCallableMock();
         $callable->setCache($cache)
@@ -233,7 +234,7 @@ class ASTCallableTest extends AbstractTestCase
         $cache = $this->createCacheFixture();
         $cache->expects(static::once())
             ->method('type')
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
 
         $callable = $this->getCallableMock();
         $callable->setCache($cache)
@@ -267,9 +268,9 @@ class ASTCallableTest extends AbstractTestCase
      */
     protected function getCallableMock(): AbstractASTCallable
     {
-        return $this->getMockForAbstractClass(
-            AbstractASTCallable::class,
-            [__CLASS__]
-        );
+        return $this->getMockBuilder(AbstractASTCallable::class)
+            ->setConstructorArgs([__CLASS__])
+            ->onlyMethods([])
+            ->getMock();
     }
 }

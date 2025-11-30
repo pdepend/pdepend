@@ -43,6 +43,8 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for bug 102. The current parser implementation does not handle
  * the <b>namespace</b> keyword in parameter type hints.
@@ -51,9 +53,8 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class NamespaceKeywordInParameterTypeHintBug102Test extends AbstractRegressionTestCase
 {
     /**

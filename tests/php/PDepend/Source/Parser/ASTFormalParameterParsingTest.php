@@ -46,17 +46,19 @@ namespace PDepend\Source\Parser;
 
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTParentReference;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.10.2
- *
- * @group unittest
  */
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTFormalParameterParsingTest extends AbstractParserTestCase
 {
     /**

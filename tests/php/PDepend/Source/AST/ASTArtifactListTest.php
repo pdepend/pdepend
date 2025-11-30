@@ -46,16 +46,17 @@ namespace PDepend\Source\AST;
 use BadMethodCallException;
 use OutOfBoundsException;
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case the node iterator.
  *
- * @covers \PDepend\Source\AST\ASTArtifactList
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTArtifactList::class)]
+#[Group('unittest')]
 class ASTArtifactListTest extends AbstractTestCase
 {
     /**

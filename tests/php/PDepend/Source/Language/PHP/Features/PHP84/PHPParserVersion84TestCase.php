@@ -44,22 +44,25 @@ namespace PDepend\Source\Language\PHP\Features\PHP84;
 use PDepend\AbstractTestCase;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PDepend\Source\Language\PHP\PHPParserVersion84;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @group unittest
  */
+#[CoversClass(PHPParserVersion84::class)]
+#[Group('unittest')]
 abstract class PHPParserVersion84TestCase extends AbstractTestCase
 {
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
-        return $this->getMockForAbstractClass(
-            'PDepend\\Source\\Language\\PHP\\PHPParserVersion84',
-            [$tokenizer, $builder, $cache]
-        );
+        return $this->getMockBuilder(PHPParserVersion84::class)
+            ->setConstructorArgs([$tokenizer, $builder, $cache])
+            ->onlyMethods([])
+            ->getMock();
     }
 }

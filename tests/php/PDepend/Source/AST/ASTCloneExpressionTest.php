@@ -43,16 +43,19 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTCloneExpression} class.
  *
- * @covers \PDepend\Source\AST\ASTCloneExpression
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTCloneExpression::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTCloneExpressionTest extends ASTNodeTestCase
 {
     /**

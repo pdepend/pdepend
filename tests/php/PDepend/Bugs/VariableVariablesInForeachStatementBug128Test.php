@@ -43,6 +43,8 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the keyword substitution bug no 128.
  *
@@ -50,9 +52,8 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class VariableVariablesInForeachStatementBug128Test extends AbstractRegressionTestCase
 {
     /**

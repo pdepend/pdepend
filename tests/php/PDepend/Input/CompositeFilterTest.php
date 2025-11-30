@@ -44,16 +44,17 @@
 namespace PDepend\Input;
 
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the composite filter.
  *
- * @covers \PDepend\Input\CompositeFilter
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(CompositeFilter::class)]
+#[Group('unittest')]
 class CompositeFilterTest extends AbstractTestCase
 {
     /**

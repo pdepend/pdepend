@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStatement} class.
  *
- * @covers \PDepend\Source\AST\ASTStatement
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTStatement::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTStatementTest extends ASTNodeTestCase
 {
     /**
@@ -70,9 +74,8 @@ class ASTStatementTest extends ASTNodeTestCase
 
     /**
      * testStatementHasExpectedStartLine
-     *
-     * @depends testStatement
      */
+    #[Depends('testStatement')]
     public function testStatementHasExpectedStartLine(ASTStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
@@ -80,9 +83,8 @@ class ASTStatementTest extends ASTNodeTestCase
 
     /**
      * testStatementHasExpectedStartColumn
-     *
-     * @depends testStatement
      */
+    #[Depends('testStatement')]
     public function testStatementHasExpectedStartColumn(ASTStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
@@ -90,9 +92,8 @@ class ASTStatementTest extends ASTNodeTestCase
 
     /**
      * testStatementHasExpectedEndLine
-     *
-     * @depends testStatement
      */
+    #[Depends('testStatement')]
     public function testStatementHasExpectedEndLine(ASTStatement $stmt): void
     {
         static::assertEquals(8, $stmt->getEndLine());
@@ -100,9 +101,8 @@ class ASTStatementTest extends ASTNodeTestCase
 
     /**
      * testStatementHasExpectedEndColumn
-     *
-     * @depends testStatement
      */
+    #[Depends('testStatement')]
     public function testStatementHasExpectedEndColumn(ASTStatement $stmt): void
     {
         static::assertEquals(6, $stmt->getEndColumn());

@@ -44,6 +44,7 @@
 namespace PDepend\Util\Cache;
 
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Abstract test case that validates the behavior of concrete driver
@@ -51,9 +52,8 @@ use PDepend\AbstractTestCase;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group unittest
  */
+#[Group('unittest')]
 abstract class AbstractDriverTestCase extends AbstractTestCase
 {
     /**

@@ -41,16 +41,18 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP82;
 
+use PDepend\Source\Language\PHP\PHPParserVersion82;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
- * @group php8.2
  */
+#[CoversClass(PHPParserVersion82::class)]
+#[Group('unittest')]
+#[Group('php8.2')]
 class TypedClassConstantsTest extends PHPParserVersion82TestCase
 {
     public function testInterface(): void

@@ -50,6 +50,8 @@ use PDepend\Source\Builder\Builder;
 use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Util\Cache\CacheDriver;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Ticket;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
@@ -58,11 +60,9 @@ use PHPUnit\Framework\MockObject\MockObject;
  * @copyright 2008-2016 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link    https://github.com/pdepend/pdepend/issues/247
- *
- * @ticket 247
- *
- * @group regressiontest
  */
+#[Ticket('247')]
+#[Group('regressiontest')]
 class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTestCase
 {
     /**
@@ -115,9 +115,9 @@ class NamespacedConstsAndFunctionsBug00000247Test extends AbstractRegressionTest
      */
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
-        return $this->getMockForAbstractClass(
-            AbstractPHPParser::class,
-            [$tokenizer, $builder, $cache]
-        );
+        return $this->getMockBuilder(AbstractPHPParser::class)
+            ->setConstructorArgs([$tokenizer, $builder, $cache])
+            ->onlyMethods([])
+            ->getMock();
     }
 }

@@ -44,18 +44,22 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTStringIndexExpression} class.
  *
- * @covers \PDepend\Source\AST\ASTIndexExpression
- * @covers \PDepend\Source\AST\ASTStringIndexExpression
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.12
- *
- * @group unittest
  */
+#[CoversClass(ASTIndexExpression::class)]
+#[CoversClass(ASTStringIndexExpression::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTStringIndexExpressionTest extends ASTNodeTestCase
 {
     /**
@@ -73,9 +77,8 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
 
     /**
      * testStringIndexExpressionHasExpectedStartLine
-     *
-     * @depends testStringIndexExpression
      */
+    #[Depends('testStringIndexExpression')]
     public function testStringIndexExpressionHasExpectedStartLine(ASTStringIndexExpression $expr): void
     {
         static::assertEquals(4, $expr->getStartLine());
@@ -83,9 +86,8 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
 
     /**
      * testStringIndexExpressionHasExpectedStartColumn
-     *
-     * @depends testStringIndexExpression
      */
+    #[Depends('testStringIndexExpression')]
     public function testStringIndexExpressionHasExpectedStartColumn(ASTStringIndexExpression $expr): void
     {
         static::assertEquals(23, $expr->getStartColumn());
@@ -93,9 +95,8 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
 
     /**
      * testStringIndexExpressionHasExpectedEndLine
-     *
-     * @depends testStringIndexExpression
      */
+    #[Depends('testStringIndexExpression')]
     public function testStringIndexExpressionHasExpectedEndLine(ASTStringIndexExpression $expr): void
     {
         static::assertEquals(4, $expr->getEndLine());
@@ -103,9 +104,8 @@ class ASTStringIndexExpressionTest extends ASTNodeTestCase
 
     /**
      * testStringIndexExpressionHasExpectedEndColumn
-     *
-     * @depends testStringIndexExpression
      */
+    #[Depends('testStringIndexExpression')]
     public function testStringIndexExpressionHasExpectedEndColumn(ASTStringIndexExpression $expr): void
     {
         static::assertEquals(28, $expr->getEndColumn());

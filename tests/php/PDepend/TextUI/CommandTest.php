@@ -49,18 +49,19 @@ use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
 use stdClass;
 
 /**
  * Test case for the text ui command.
  *
- * @covers \PDepend\TextUI\Command
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Command::class)]
+#[Group('unittest')]
 class CommandTest extends AbstractTestCase
 {
     /** Expected output of the --version option. */
@@ -152,7 +153,11 @@ class CommandTest extends AbstractTestCase
     public function testCommandCliErrorMessageIfNoArgvArrayExists(): void
     {
         [, $actual] = $this->executeCommand();
-        $startsWith = 'Unknown error, no $argv array available.' . PHP_EOL . PHP_EOL;
+        if (false === (bool) ini_get('register_argc_argv')) {
+            $startsWith = 'Please enable register_argc_argv in your php.ini.' . PHP_EOL . PHP_EOL;
+        } else {
+            $startsWith = 'Unknown error, no $argv array available.' . PHP_EOL . PHP_EOL;
+        }
         static::assertIsString($actual);
         $this->assertHelpOutput($actual, $startsWith);
     }

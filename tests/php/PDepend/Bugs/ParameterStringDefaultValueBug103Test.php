@@ -43,6 +43,8 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for bug 103. The current parser implementation does not handle
  * string parameter default values as expected. For example the following source
@@ -52,9 +54,8 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class ParameterStringDefaultValueBug103Test extends AbstractRegressionTestCase
 {
     /**

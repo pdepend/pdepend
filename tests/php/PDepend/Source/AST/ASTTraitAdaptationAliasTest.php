@@ -44,17 +44,21 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitAdaptationAlias} class.
  *
- * @covers \PDepend\Source\AST\ASTTraitAdaptationAlias
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
- *
- * @group unittest
  */
+#[CoversClass(ASTTraitAdaptationAlias::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 {
     /**
@@ -150,9 +154,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationAliasHasExpectedStartLine
-     *
-     * @depends testTraitAdaptationAlias
      */
+    #[Depends('testTraitAdaptationAlias')]
     public function testTraitAdaptationAliasHasExpectedStartLine(ASTTraitAdaptationAlias $alias): void
     {
         static::assertEquals(6, $alias->getStartLine());
@@ -160,9 +163,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationAliasHasExpectedStartColumn
-     *
-     * @depends testTraitAdaptationAlias
      */
+    #[Depends('testTraitAdaptationAlias')]
     public function testTraitAdaptationAliasHasExpectedStartColumn(ASTTraitAdaptationAlias $alias): void
     {
         static::assertEquals(9, $alias->getStartColumn());
@@ -170,9 +172,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationAliasHasExpectedEndLine
-     *
-     * @depends testTraitAdaptationAlias
      */
+    #[Depends('testTraitAdaptationAlias')]
     public function testTraitAdaptationAliasHasExpectedEndLine(ASTTraitAdaptationAlias $alias): void
     {
         static::assertEquals(6, $alias->getEndLine());
@@ -180,9 +181,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationAliasHasExpectedEndColumn
-     *
-     * @depends testTraitAdaptationAlias
      */
+    #[Depends('testTraitAdaptationAlias')]
     public function testTraitAdaptationAliasHasExpectedEndColumn(ASTTraitAdaptationAlias $alias): void
     {
         static::assertEquals(46, $alias->getEndColumn());
@@ -213,9 +213,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testTraitReferenceHasExpectedStartLine
-     *
-     * @depends testTraitReference
      */
+    #[Depends('testTraitReference')]
     public function testTraitReferenceHasExpectedStartLine(ASTTraitReference $reference): void
     {
         static::assertEquals(7, $reference->getStartLine());
@@ -223,9 +222,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testTraitReferenceHasExpectedStartColumn
-     *
-     * @depends testTraitReference
      */
+    #[Depends('testTraitReference')]
     public function testTraitReferenceHasExpectedStartColumn(ASTTraitReference $reference): void
     {
         static::assertEquals(9, $reference->getStartColumn());
@@ -233,9 +231,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testTraitReferenceHasExpectedEndLine
-     *
-     * @depends testTraitReference
      */
+    #[Depends('testTraitReference')]
     public function testTraitReferenceHasExpectedEndLine(ASTTraitReference $reference): void
     {
         static::assertEquals(7, $reference->getEndLine());
@@ -243,9 +240,8 @@ class ASTTraitAdaptationAliasTest extends ASTNodeTestCase
 
     /**
      * testTraitReferenceHasExpectedEndColumn
-     *
-     * @depends testTraitReference
      */
+    #[Depends('testTraitReference')]
     public function testTraitReferenceHasExpectedEndColumn(ASTTraitReference $reference): void
     {
         static::assertEquals(36, $reference->getEndColumn());

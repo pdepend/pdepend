@@ -45,16 +45,17 @@ namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTClass;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the hierarchy analyzer.
  *
- * @covers \PDepend\Metrics\Analyzer\HierarchyAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group unittest
  */
+#[CoversClass(HierarchyAnalyzer::class)]
+#[Group('unittest')]
 class HierarchyAnalyzerTest extends AbstractMetricsTestCase
 {
     /**

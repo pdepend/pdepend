@@ -45,6 +45,7 @@ namespace PDepend\Bugs;
 
 use PDepend\Metrics\Analyzer\NPathComplexityAnalyzer;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for bug 95.
@@ -53,9 +54,8 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class NPathComplexityIsBrokenInVersion096Bug095Test extends AbstractRegressionTestCase
 {
     /**

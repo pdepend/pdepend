@@ -44,17 +44,24 @@
 namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
+use PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy;
+use PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy;
+use PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy;
 use PDepend\Source\AST\ASTClass;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the code metric analyzer class.
  *
- * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(CodeRankAnalyzer::class)]
+#[CoversClass(InheritanceStrategy::class)]
+#[CoversClass(MethodStrategy::class)]
+#[CoversClass(PropertyStrategy::class)]
+#[Group('unittest')]
 class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
@@ -85,8 +92,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCodeRankOfSimpleInheritanceExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
     public function testCodeRankOfSimpleInheritanceExample(): void
     {
@@ -102,8 +107,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testReverseCodeRankOfSimpleInheritanceExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
     public function testReverseCodeRankOfSimpleInheritanceExample(): void
     {
@@ -119,8 +122,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCodeRankOfNamespacedSameNameInheritanceExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
     public function testCodeRankOfNamespacedSameNameInheritanceExample(): void
     {
@@ -130,8 +131,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCodeRankOfNamespacedSameNamePropertyExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
     public function testCodeRankOfNamespacedSameNamePropertyExample(): void
     {
@@ -143,8 +142,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testReverseCodeRankOfNamespacedSameNamePropertyExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
     public function testReverseCodeRankOfNamespacedSameNamePropertyExample(): void
     {
@@ -156,8 +153,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCodeRankOfNamespacedSameNameMethodParamExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
     public function testCodeRankOfNamespacedSameNameMethodParamExample(): void
     {
@@ -169,8 +164,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testReverseCodeRankOfNamespacedSameNameMethodParamExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
     public function testReverseCodeRankOfNamespacedSameNameMethodParamExample(): void
     {
@@ -182,8 +175,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCodeRankOfNamespacedSameNameMethodReturnExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
     public function testCodeRankOfNamespacedSameNameMethodReturnExample(): void
     {
@@ -195,8 +186,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testReverseCodeRankOfNamespacedSameNameMethodReturnExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
     public function testReverseCodeRankOfNamespacedSameNameMethodReturnExample(): void
     {
@@ -208,8 +197,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCodeRankOfNamespacedSameNameMethodExceptionExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
     public function testCodeRankOfNamespacedSameNameMethodExceptionExample(): void
     {
@@ -221,8 +208,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testReverseCodeRankOfNamespacedSameNameMethodExceptionExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
     public function testReverseCodeRankOfNamespacedSameNameMethodExceptionExample(): void
     {
@@ -234,8 +219,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testReverseCodeRankOfNamespacedSameNameInheritanceExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
      */
     public function testReverseCodeRankOfNamespacedSameNameInheritanceExample(): void
     {
@@ -245,9 +228,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCodeRankOfOrderExampleWithInheritanceAndMethodStrategy
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
     public function testCodeRankOfOrderExampleWithInheritanceAndMethodStrategy(): void
     {
@@ -267,9 +247,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testReverseCodeRankOfOrderExampleWithInheritanceAndMethodStrategy
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
      */
     public function testReverseCodeRankOfOrderExampleWithInheritanceAndMethodStrategy(): void
     {
@@ -289,9 +266,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
     public function testCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy(): void
     {
@@ -311,9 +285,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testReverseCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
     public function testReverseCodeRankOfOrderExampleWithInheritanceAndPropertyStrategy(): void
     {
@@ -333,10 +304,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testCodeRankOfInternalInterfaceExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
     public function testCodeRankOfInternalInterfaceExample(): void
     {
@@ -355,10 +322,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
 
     /**
      * testReverseCodeRankOfInternalInterfaceExample
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
     public function testReverseCodeRankOfInternalInterfaceExample(): void
     {
@@ -377,10 +340,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests the result of the class rank calculation against previous computed
      * values.
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
     public function testGetNodeMetrics(): void
     {
@@ -414,10 +373,6 @@ class CodeRankAnalyzerTest extends AbstractMetricsTestCase
     /**
      * Tests that {@link \PDepend\Metrics\Analyzer\CodeRankAnalyzer::getNodeMetrics()}
      * returns an empty <b>array</b> for an unknown identifier.
-     *
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\InheritanceStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\MethodStrategy
-     * @covers \PDepend\Metrics\Analyzer\CodeRankAnalyzer\PropertyStrategy
      */
     public function testGetNodeMetricsInvalidIdentifier(): void
     {

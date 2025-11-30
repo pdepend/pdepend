@@ -43,16 +43,21 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTFieldDeclaration} class.
  *
- * @covers \PDepend\Source\AST\ASTFieldDeclaration
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTFieldDeclaration::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTFieldDeclarationTest extends ASTNodeTestCase
 {
     /**
@@ -105,9 +110,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
         return $type;
     }
 
-    /**
-     * @depends testClassReferenceForJavaStyleArrayNotation
-     */
+    #[Depends('testClassReferenceForJavaStyleArrayNotation')]
     public function testNamespaceForJavaStyleArrayNotation(AbstractASTClassOrInterface $type): void
     {
         static::assertEquals('Java\\Style', $type->getNamespaceName());
@@ -118,8 +121,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * valid combinations of modifiers.
      *
      * @param int $modifiers Combinations of valid modifiers.
-     * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
+    #[DataProvider('dataProviderSetModifiersAcceptsExpectedModifierCombinations')]
     public function testSetModifiersAcceptsExpectedModifierCombinations(int $modifiers): void
     {
         $declaration = new ASTFieldDeclaration();
@@ -158,8 +161,8 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
      * invalid modifier or modifier combination was set.
      *
      * @param int $modifiers Combinations of invalid modifiers.
-     * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
+    #[DataProvider('dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers')]
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers(int $modifiers): void
     {
         $declaration = new ASTFieldDeclaration();

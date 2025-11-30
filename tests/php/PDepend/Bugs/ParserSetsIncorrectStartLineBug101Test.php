@@ -43,15 +43,16 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Tests that the parser handles a closure that returns a reference correct.
  * This test is related to bug #94.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class ParserSetsIncorrectStartLineBug101Test extends AbstractRegressionTestCase
 {
     /**

@@ -43,16 +43,17 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Ticket;
+
 /**
  * Test case for bug #1.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @ticket 1
- *
- * @group regressiontest
  */
+#[Ticket('1')]
+#[Group('regressiontest')]
 class ParserBug001Test extends AbstractRegressionTestCase
 {
     /**

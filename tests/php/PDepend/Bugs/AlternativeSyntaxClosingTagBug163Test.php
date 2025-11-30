@@ -44,15 +44,16 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for ticket #163.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @link      http://tracker.pdepend.org/pdepend/issue_tracker/issue/163
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class AlternativeSyntaxClosingTagBug163Test extends AbstractRegressionTestCase
 {
     /**

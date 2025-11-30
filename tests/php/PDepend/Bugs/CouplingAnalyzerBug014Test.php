@@ -44,15 +44,15 @@
 namespace PDepend\Bugs;
 
 use PDepend\Metrics\Analyzer\CouplingAnalyzer;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case related to bug 14.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class CouplingAnalyzerBug014Test extends AbstractRegressionTestCase
 {
     /**

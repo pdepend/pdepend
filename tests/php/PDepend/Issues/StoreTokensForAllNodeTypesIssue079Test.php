@@ -43,8 +43,16 @@
 
 namespace PDepend\Issues;
 
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTParameter;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for issue #79 where we should store the tokens for each created
@@ -52,18 +60,20 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * http://tracker.pdepend.org/pdepend/issue_tracker/issue/79
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractPHPParser::class)]
+#[CoversClass(ASTClass::class)]
+#[CoversClass(ASTFunction::class)]
+#[CoversClass(ASTInterface::class)]
+#[CoversClass(ASTMethod::class)]
+#[CoversClass(ASTParameter::class)]
+#[Group('unittest')]
 class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 {
     /**
      * Tests that the parameter contains the start line of the first token.
-     *
-     * @covers \PDepend\Source\AST\ASTParameter
      */
     public function testParameterContainsStartLineOfFirstToken(): void
     {
@@ -78,8 +88,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parameter contains the end line of the last token.
-     *
-     * @covers \PDepend\Source\AST\ASTParameter
      */
     public function testParameterContainsEndLineOfLastToken(): void
     {
@@ -94,8 +102,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser stores the expected function tokens.
-     *
-     * @covers \PDepend\Source\AST\ASTFunction
      */
     public function testParserStoresExpectedFunctionTokens(): void
     {
@@ -121,8 +127,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser stores the expected function tokens.
-     *
-     * @covers \PDepend\Source\AST\ASTFunction
      */
     public function testParserStoresExpectedFunctionTokensWithParameters(): void
     {
@@ -157,8 +161,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the function uses the start line of the first token.
-     *
-     * @covers \PDepend\Source\AST\ASTFunction
      */
     public function testFunctionContainsStartLineOfFirstToken(): void
     {
@@ -176,8 +178,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the function uses the end line of the last token.
-     *
-     * @covers \PDepend\Source\AST\ASTFunction
      */
     public function testFunctionContainsEndLineOfLastToken(): void
     {
@@ -195,8 +195,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser stores the expected method tokens.
-     *
-     * @covers \PDepend\Source\AST\ASTMethod
      */
     public function testParserStoresExpectedMethodTokens(): void
     {
@@ -225,8 +223,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser stores the expected method tokens.
-     *
-     * @covers \PDepend\Source\AST\ASTMethod
      */
     public function testParserStoresExpectedMethodTokensWithStaticModifier(): void
     {
@@ -256,8 +252,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser stores the expected method tokens.
-     *
-     * @covers \PDepend\Source\AST\ASTMethod
      */
     public function testParserStoresExpectedMethodTokensWithStaticAndFinalModifiers(): void
     {
@@ -288,8 +282,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the method uses the start line of the first token.
-     *
-     * @covers \PDepend\Source\AST\ASTMethod
      */
     public function testMethodContainsStartLineOfFirstToken(): void
     {
@@ -309,8 +301,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the method uses the end line of the last token.
-     *
-     * @covers \PDepend\Source\AST\ASTMethod
      */
     public function testMethodContainsEndLineOfLastToken(): void
     {
@@ -330,8 +320,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser stores the expected class tokens.
-     *
-     * @covers \PDepend\Source\AST\ASTClass
      */
     public function testParserStoresExpectedClassTokens(): void
     {
@@ -359,8 +347,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser stores the expected class tokens.
-     *
-     * @covers \PDepend\Source\AST\ASTClass
      */
     public function testParserStoresExpectedClassTokensWithFinalModifier(): void
     {
@@ -389,8 +375,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser stores the expected class tokens.
-     *
-     * @covers \PDepend\Source\AST\ASTClass
      */
     public function testParserStoresExpectedClassTokensWithAbstractModifier(): void
     {
@@ -419,8 +403,6 @@ class StoreTokensForAllNodeTypesIssue079Test extends AbstractFeatureTestCase
 
     /**
      * Tests that the parser stores the expected interface tokens.
-     *
-     * @covers \PDepend\Source\AST\ASTInterface
      */
     public function testParserStoresExpectedInterfaceTokens(): void
     {

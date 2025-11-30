@@ -54,16 +54,17 @@ use PDepend\Source\AST\AbstractASTArtifact;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTNamespace;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the jdepend chart logger.
  *
- * @covers \PDepend\Report\Jdepend\Chart
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Chart::class)]
+#[Group('unittest')]
 class ChartTest extends AbstractTestCase
 {
     /** Temporary output file. */
@@ -219,33 +220,31 @@ class ChartTest extends AbstractTestCase
             ->getMock();
         $analyzer->expects(static::atLeastOnce())
             ->method('getStats')
-            ->will(
-                static::returnCallback(
-                    function (AbstractASTArtifact $node) use ($nodes) {
-                        $data = [
-                            $nodes[0]->getId() => [
-                                'a' => 0,
-                                'i' => 0,
-                                'd' => 0,
-                                'cc' => 250,
-                                'ac' => 250,
-                            ],
-                            $nodes[1]->getId() => [
-                                'a' => 0,
-                                'i' => 0,
-                                'd' => 0,
-                                'cc' => 50,
-                                'ac' => 50,
-                            ],
-                        ];
+            ->willReturnCallback(
+                function (AbstractASTArtifact $node) use ($nodes) {
+                    $data = [
+                        $nodes[0]->getId() => [
+                            'a' => 0,
+                            'i' => 0,
+                            'd' => 0,
+                            'cc' => 250,
+                            'ac' => 250,
+                        ],
+                        $nodes[1]->getId() => [
+                            'a' => 0,
+                            'i' => 0,
+                            'd' => 0,
+                            'cc' => 50,
+                            'ac' => 50,
+                        ],
+                    ];
 
-                        if (isset($data[$node->getId()])) {
-                            return $data[$node->getId()];
-                        }
-
-                        return [];
+                    if (isset($data[$node->getId()])) {
+                        return $data[$node->getId()];
                     }
-                )
+
+                    return [];
+                }
             );
 
         $nodes = new ASTArtifactList($nodes);
@@ -342,7 +341,7 @@ class ChartTest extends AbstractTestCase
             ->getMock();
         $type->expects(static::atLeastOnce())
             ->method('isUserDefined')
-            ->will(static::returnValue($userDefined));
+            ->willReturn($userDefined);
         $packageA->addType($type);
 
         return $packageA;

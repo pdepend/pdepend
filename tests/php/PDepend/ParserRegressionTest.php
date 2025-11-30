@@ -44,6 +44,8 @@
 namespace PDepend;
 
 use DirectoryIterator;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case that parses several files where we have found errors in PDepend's
@@ -51,17 +53,16 @@ use DirectoryIterator;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class ParserRegressionTest extends AbstractTestCase
 {
     /**
      * Tests that the parser handles the given source file.
      *
      * @param string $pathName Name of the file to parse.
-     * @dataProvider dataProviderSourceFiles
      */
+    #[DataProvider('dataProviderSourceFiles')]
     public function testParserHandlesSourceFileWithoutException(string $pathName): void
     {
         $this->parseSource($pathName);

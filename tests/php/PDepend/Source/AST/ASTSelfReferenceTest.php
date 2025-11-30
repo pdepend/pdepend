@@ -46,18 +46,21 @@ namespace PDepend\Source\AST;
 use PDepend\Source\Builder\Builder;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Parser\InvalidStateException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTSelfReference} class.
  *
- * @covers \PDepend\Source\AST\ASTSelfReference
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTSelfReference::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTSelfReferenceTest extends ASTNodeTestCase
 {
     /**
@@ -65,10 +68,9 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeReturnsInjectedConstructorTargetArgument(): void
     {
-        $target = $this->getMockForAbstractClass(
-            AbstractASTClassOrInterface::class,
-            [__CLASS__]
-        );
+        $target = $this->getMockBuilder(AbstractASTClassOrInterface::class)
+            ->setConstructorArgs([__CLASS__])
+            ->getMock();
         $context = $this->getMockBuilder(BuilderContext::class)
             ->getMock();
 
@@ -81,10 +83,9 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
      */
     public function testGetTypeInvokesBuilderContextWhenTypeInstanceIsNull(): void
     {
-        $target = $this->getMockForAbstractClass(
-            AbstractASTClassOrInterface::class,
-            [__CLASS__]
-        );
+        $target = $this->getMockBuilder(AbstractASTClassOrInterface::class)
+            ->setConstructorArgs([__CLASS__])
+            ->getMock();
 
         $builder = $this->getMockBuilder(Builder::class)
             ->getMock();
@@ -163,9 +164,8 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
 
     /**
      * testSelfReferenceHasExpectedStartLine
-     *
-     * @depends testSelfReference
      */
+    #[Depends('testSelfReference')]
     public function testSelfReferenceHasExpectedStartLine(ASTSelfReference $reference): void
     {
         static::assertEquals(5, $reference->getStartLine());
@@ -173,9 +173,8 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
 
     /**
      * testSelfReferenceHasExpectedStartColumn
-     *
-     * @depends testSelfReference
      */
+    #[Depends('testSelfReference')]
     public function testSelfReferenceHasExpectedStartColumn(ASTSelfReference $reference): void
     {
         static::assertEquals(13, $reference->getStartColumn());
@@ -183,9 +182,8 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
 
     /**
      * testSelfReferenceHasExpectedEndLine
-     *
-     * @depends testSelfReference
      */
+    #[Depends('testSelfReference')]
     public function testSelfReferenceHasExpectedEndLine(ASTSelfReference $reference): void
     {
         static::assertEquals(5, $reference->getEndLine());
@@ -193,9 +191,8 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
 
     /**
      * testSelfReferenceHasExpectedEndColumn
-     *
-     * @depends testSelfReference
      */
+    #[Depends('testSelfReference')]
     public function testSelfReferenceHasExpectedEndColumn(ASTSelfReference $reference): void
     {
         static::assertEquals(16, $reference->getEndColumn());
@@ -211,7 +208,7 @@ class ASTSelfReferenceTest extends ASTNodeTestCase
 
         return new ASTSelfReference(
             $context,
-            $this->getMockForAbstractClass(AbstractASTClassOrInterface::class, [__CLASS__])
+            $this->getMockBuilder(AbstractASTClassOrInterface::class)->setConstructorArgs([__CLASS__])->getMock()
         );
     }
 

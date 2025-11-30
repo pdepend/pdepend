@@ -53,16 +53,18 @@ use PDepend\Metrics\Analyzer\NodeCountAnalyzer;
 use PDepend\Metrics\Analyzer\NodeLocAnalyzer;
 use PDepend\Report\DummyAnalyzer;
 use PDepend\Report\NoLogOutputException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the overview pyramid logger.
  *
- * @covers \PDepend\Report\Overview\Pyramid
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Pyramid::class)]
+#[CoversClass(NoLogOutputException::class)]
+#[Group('unittest')]
 class PyramidTest extends AbstractTestCase
 {
     /**
@@ -86,8 +88,6 @@ class PyramidTest extends AbstractTestCase
     /**
      * Tests that the logger throws an exception if the log target wasn't
      * configured.
-     *
-     * @covers \PDepend\Report\NoLogOutputException
      */
     public function testThrowsExceptionForInvalidLogTarget(): void
     {
@@ -274,12 +274,12 @@ class PyramidTest extends AbstractTestCase
             ->getMock();
         $mock->expects(static::any())
             ->method('getProjectMetrics')
-            ->will(static::returnValue(
+            ->willReturn(
                 [
                     'fanout' => 8590,
                     'calls' => 15128,
                 ]
-            ));
+            );
 
         return $mock;
     }
@@ -290,11 +290,11 @@ class PyramidTest extends AbstractTestCase
             ->getMock();
         $mock->expects(static::any())
             ->method('getProjectMetrics')
-            ->will(static::returnValue(
+            ->willReturn(
                 [
                     'ccn2' => 5579,
                 ]
-            ));
+            );
 
         return $mock;
     }
@@ -305,12 +305,12 @@ class PyramidTest extends AbstractTestCase
             ->getMock();
         $mock->expects(static::any())
             ->method('getProjectMetrics')
-            ->will(static::returnValue(
+            ->willReturn(
                 [
                     'andc' => 0.31,
                     'ahh' => 0.12,
                 ]
-            ));
+            );
 
         return $mock;
     }
@@ -321,14 +321,14 @@ class PyramidTest extends AbstractTestCase
             ->getMock();
         $mock->expects(static::any())
             ->method('getProjectMetrics')
-            ->will(static::returnValue(
+            ->willReturn(
                 [
                     'nop' => 19,
                     'noc' => 384,
                     'nom' => 2018,
                     'nof' => 1600,
                 ]
-            ));
+            );
 
         return $mock;
     }
@@ -339,11 +339,11 @@ class PyramidTest extends AbstractTestCase
             ->getMock();
         $mock->expects(static::any())
             ->method('getProjectMetrics')
-            ->will(static::returnValue(
+            ->willReturn(
                 [
                     'eloc' => 35175,
                 ]
-            ));
+            );
 
         return $mock;
     }

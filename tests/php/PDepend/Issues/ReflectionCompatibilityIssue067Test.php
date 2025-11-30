@@ -48,19 +48,24 @@ use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\ASTParameter;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Parser\MissingValueException;
 use PDepend\Source\Parser\TokenStreamEndException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the Reflection API compatibility ticket #67.
  *
- * @covers \PDepend\Source\AST\ASTParameter
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTParameter::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[CoversClass(MissingValueException::class)]
+#[CoversClass(TokenStreamEndException::class)]
+#[Group('unittest')]
 class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
 {
     /**
@@ -579,8 +584,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser throws the expected exception when no default value
      * was defined.
-     *
-     * @covers \PDepend\Source\Parser\MissingValueException
      */
     public function testParserThrowsExpectedExceptionForMissingDefaultValue(): void
     {
@@ -592,8 +595,6 @@ class ReflectionCompatibilityIssue067Test extends AbstractFeatureTestCase
     /**
      * Tests that the parser throws the expected exception when it reaches the
      * end of file while it parses a parameter default value.
-     *
-     * @covers \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionWhenReachesEofWhileParsingDefaultValue(): void
     {

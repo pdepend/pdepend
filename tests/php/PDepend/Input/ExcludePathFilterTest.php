@@ -45,21 +45,21 @@ namespace PDepend\Input;
 
 use Exception;
 use PDepend\AbstractTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use ReflectionException;
 use ReflectionProperty;
 use SplFileInfo;
 
 /**
  * Test case for the exclude path filter.
  *
- * @covers \PDepend\Input\ExcludePathFilter
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ExcludePathFilter::class)]
+#[Group('unittest')]
 class ExcludePathFilterTest extends AbstractTestCase
 {
     /**
@@ -108,8 +108,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testPatternsWithSixtyThousandCharactersSetProtectedIsBulkToTrue
-     *
-     * @throws ReflectionException
      */
     public function testPatternsWithSixtyThousandCharactersSetProtectedIsBulkToTrue(): void
     {
@@ -124,8 +122,6 @@ class ExcludePathFilterTest extends AbstractTestCase
 
     /**
      * testPatternsWithLessThanThirtyThousandCharactersSetProtectedIsBulkToFalse
-     *
-     * @throws ReflectionException
      */
     public function testPatternsWithLessThanThirtyThousandCharactersSetProtectedIsBulkToFalse(): void
     {

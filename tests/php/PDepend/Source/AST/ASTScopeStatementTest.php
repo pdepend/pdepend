@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTScopeStatement} class.
  *
- * @covers \PDepend\Source\AST\ASTScopeStatement
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTScopeStatement::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTScopeStatementTest extends ASTNodeTestCase
 {
     /**
@@ -72,9 +76,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testInlineScopeStatementHasExpectedStartLine
      *
      * @since 1.0.0
-     *
-     * @depends testParserHandlesInlineScopeStatement
      */
+    #[Depends('testParserHandlesInlineScopeStatement')]
     public function testInlineScopeStatementHasExpectedStartLine(ASTScopeStatement $stmt): ASTScopeStatement
     {
         static::assertEquals(4, $stmt->getStartLine());
@@ -86,9 +89,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testInlineScopeStatementHasExpectedStartColumn
      *
      * @since 1.0.0
-     *
-     * @depends testInlineScopeStatementHasExpectedStartLine
      */
+    #[Depends('testInlineScopeStatementHasExpectedStartLine')]
     public function testInlineScopeStatementHasExpectedStartColumn(ASTScopeStatement $stmt): ASTScopeStatement
     {
         static::assertEquals(5, $stmt->getStartColumn());
@@ -100,9 +102,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testInlineScopeStatementHasExpectedEndLine
      *
      * @since 1.0.0
-     *
-     * @depends testInlineScopeStatementHasExpectedStartColumn
      */
+    #[Depends('testInlineScopeStatementHasExpectedStartColumn')]
     public function testInlineScopeStatementHasExpectedEndLine(ASTScopeStatement $stmt): ASTScopeStatement
     {
         static::assertEquals(5, $stmt->getEndLine());
@@ -114,9 +115,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
      * testInlineScopeStatementHasExpectedEndColumn
      *
      * @since 1.0.0
-     *
-     * @depends testInlineScopeStatementHasExpectedEndLine
      */
+    #[Depends('testInlineScopeStatementHasExpectedEndLine')]
     public function testInlineScopeStatementHasExpectedEndColumn(ASTScopeStatement $stmt): void
     {
         static::assertEquals(20, $stmt->getEndColumn());
@@ -137,9 +137,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
 
     /**
      * Tests that the scope-statement has the expected start line value.
-     *
-     * @depends testScopeStatement
      */
+    #[Depends('testScopeStatement')]
     public function testScopeStatementHasExpectedStartLine(ASTScopeStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
@@ -147,9 +146,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
 
     /**
      * Tests that the scope-statement has the expected start column value.
-     *
-     * @depends testScopeStatement
      */
+    #[Depends('testScopeStatement')]
     public function testScopeStatementHasExpectedStartColumn(ASTScopeStatement $stmt): void
     {
         static::assertEquals(34, $stmt->getStartColumn());
@@ -157,9 +155,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
 
     /**
      * Tests that the scope-statement has the expected end line value.
-     *
-     * @depends testScopeStatement
      */
+    #[Depends('testScopeStatement')]
     public function testScopeStatementHasExpectedEndLine(ASTScopeStatement $stmt): void
     {
         static::assertEquals(6, $stmt->getEndLine());
@@ -167,9 +164,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
 
     /**
      * Tests that the scope-statement has the expected end column value.
-     *
-     * @depends testScopeStatement
      */
+    #[Depends('testScopeStatement')]
     public function testScopeStatementHasExpectedEndColumn(ASTScopeStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getEndColumn());
@@ -190,9 +186,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
 
     /**
      * testScopeStatementWithAlternativeHasExpectedStartLine
-     *
-     * @depends testScopeStatementWithAlternative
      */
+    #[Depends('testScopeStatementWithAlternative')]
     public function testScopeStatementWithAlternativeHasExpectedStartLine(ASTScopeStatement $stmt): void
     {
         static::assertEquals(6, $stmt->getStartLine());
@@ -200,9 +195,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
 
     /**
      * testScopeStatementWithAlternativeHasExpectedStartColumn
-     *
-     * @depends testScopeStatementWithAlternative
      */
+    #[Depends('testScopeStatementWithAlternative')]
     public function testScopeStatementWithAlternativeHasExpectedStartColumn(ASTScopeStatement $stmt): void
     {
         static::assertEquals(13, $stmt->getStartColumn());
@@ -210,9 +204,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
 
     /**
      * testScopeStatementWithAlternativeHasExpectedEndLine
-     *
-     * @depends testScopeStatementWithAlternative
      */
+    #[Depends('testScopeStatementWithAlternative')]
     public function testScopeStatementWithAlternativeHasExpectedEndLine(ASTScopeStatement $stmt): void
     {
         static::assertEquals(17, $stmt->getEndLine());
@@ -220,9 +213,8 @@ class ASTScopeStatementTest extends ASTNodeTestCase
 
     /**
      * testScopeStatementWithAlternativeHasExpectedEndColumn
-     *
-     * @depends testScopeStatementWithAlternative
      */
+    #[Depends('testScopeStatementWithAlternative')]
     public function testScopeStatementWithAlternativeHasExpectedEndColumn(ASTScopeStatement $stmt): void
     {
         static::assertEquals(15, $stmt->getEndColumn());

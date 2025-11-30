@@ -43,21 +43,23 @@
 
 namespace PDepend\Metrics\Analyzer;
 
+use PDepend\Metrics\AbstractCachingAnalyzer;
 use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the node lines of code analyzer.
  *
- * @covers \PDepend\Metrics\AbstractCachingAnalyzer
- * @covers \PDepend\Metrics\Analyzer\NodeLocAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractCachingAnalyzer::class)]
+#[CoversClass(NodeLocAnalyzer::class)]
+#[Group('unittest')]
 class NodeLocAnalyzerTest extends AbstractMetricsTestCase
 {
     /** @since 1.0.0 */

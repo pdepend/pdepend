@@ -46,6 +46,9 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Ticket;
+
 /**
  * Test case for bug #104 and #95.
  *
@@ -54,12 +57,10 @@ namespace PDepend\Bugs;
  * @link       https://github.com/pdepend/pdepend/issues/95
  * @link       https://github.com/pdepend/pdepend/issues/104
  * @since 1.1.1
- *
- * @ticket 104
- * @ticket 95
- *
- * @group regressiontest
  */
+#[Ticket('104')]
+#[Ticket('95')]
+#[Group('regressiontest')]
 class ShortArraySyntaxInitializerBug00000104Test extends AbstractRegressionTestCase
 {
     /**

@@ -48,17 +48,19 @@ use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
 
 /**
  * Test case for the class level analyzer.
  *
- * @covers \PDepend\Metrics\Analyzer\ClassLevelAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ClassLevelAnalyzer::class)]
+#[Group('unittest')]
 class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
@@ -440,9 +442,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, mixed> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testGetNodeMetricsForTraitReturnsExpectedMetricSet(array $metrics): void
     {
         static::assertEquals(
@@ -456,9 +457,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateIMPLMetricForTrait(array $metrics): void
     {
         static::assertEquals(0, $metrics['impl']);
@@ -469,9 +469,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateCISMetricForTrait(array $metrics): void
     {
         static::assertEquals(2, $metrics['cis']);
@@ -482,9 +481,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateCSZMetricForTrait(array $metrics): void
     {
         static::assertEquals(3, $metrics['csz']);
@@ -495,9 +493,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateNpmMetricForTrait(array $metrics): void
     {
         static::assertEquals(2, $metrics['npm']);
@@ -508,9 +505,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateVARSMetricForTrait(array $metrics): void
     {
         static::assertEquals(0, $metrics['vars']);
@@ -521,9 +517,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateVARSiMetricForTrait(array $metrics): void
     {
         static::assertEquals(0, $metrics['varsi']);
@@ -534,9 +529,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateVARSnpMetricForTrait(array $metrics): void
     {
         static::assertEquals(0, $metrics['varsnp']);
@@ -547,9 +541,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateWMCMetricForTrait(array $metrics): void
     {
         static::assertEquals(10, $metrics['wmc']);
@@ -560,9 +553,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateWMCiMetricForTrait(array $metrics): void
     {
         static::assertEquals(10, $metrics['wmci']);
@@ -573,9 +565,8 @@ class ClassLevelAnalyzerTest extends AbstractMetricsTestCase
      *
      * @param array<string, int> $metrics Calculated class metrics.
      * @since 1.0.6
-     *
-     * @depends testGetNodeMetricsForTrait
      */
+    #[Depends('testGetNodeMetricsForTrait')]
     public function testCalculateWMCnpMetricForTrait(array $metrics): void
     {
         static::assertEquals(8, $metrics['wmcnp']);

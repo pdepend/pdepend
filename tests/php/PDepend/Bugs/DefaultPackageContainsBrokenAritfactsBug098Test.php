@@ -43,6 +43,8 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for bug #98. The default package contains software artifacts like
  * functions or classes that are broken. This can result in a fatal error during
@@ -50,9 +52,8 @@ namespace PDepend\Bugs;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class DefaultPackageContainsBrokenAritfactsBug098Test extends AbstractRegressionTestCase
 {
     /**

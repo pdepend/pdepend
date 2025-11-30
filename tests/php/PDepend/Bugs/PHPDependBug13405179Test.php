@@ -49,6 +49,9 @@ use PDepend\Report\Jdepend\Chart;
 use PDepend\Report\Jdepend\Xml as JdependXml;
 use PDepend\Report\Overview\Pyramid;
 use PDepend\Report\Summary\Xml as SummaryXml;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Ticket;
 
 /**
  * Test case for bug #13405179.
@@ -56,11 +59,9 @@ use PDepend\Report\Summary\Xml as SummaryXml;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link https://www.pivotaltracker.com/story/show/13405179
- *
- * @ticket 13405179
- *
- * @group regressiontest
  */
+#[Ticket('13405179')]
+#[Group('regressiontest')]
 class PHPDependBug13405179Test extends AbstractRegressionTestCase
 {
     /**
@@ -68,8 +69,8 @@ class PHPDependBug13405179Test extends AbstractRegressionTestCase
      *
      * @param class-string<FileAwareGenerator> $className Class name of a logger implementation.
      * @param string $extension Log file extension.
-     * @dataProvider getLoggerClassNames
      */
+    #[DataProvider('getLoggerClassNames')]
     public function testLogFileIsCreatedForUnstructuredCode(string $className, string $extension): void
     {
         $file = $this->createRunResourceURI() . '.' . $extension;

@@ -47,16 +47,17 @@ use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\PackageArtifactFilter;
 use PDepend\Source\AST\ASTClass;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the inheritance analyzer.
  *
- * @covers \PDepend\Metrics\Analyzer\InheritanceAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group unittest
  */
+#[CoversClass(InheritanceAnalyzer::class)]
+#[Group('unittest')]
 class InheritanceAnalyzerTest extends AbstractMetricsTestCase
 {
     /**

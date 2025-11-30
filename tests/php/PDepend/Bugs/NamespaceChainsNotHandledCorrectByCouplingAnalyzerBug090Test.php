@@ -44,6 +44,7 @@
 namespace PDepend\Bugs;
 
 use PDepend\Metrics\Analyzer\CouplingAnalyzer;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for bug 090 where the coupling analyzer calculates wrong results
@@ -54,9 +55,8 @@ use PDepend\Metrics\Analyzer\CouplingAnalyzer;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class NamespaceChainsNotHandledCorrectByCouplingAnalyzerBug090Test extends AbstractRegressionTestCase
 {
     /**

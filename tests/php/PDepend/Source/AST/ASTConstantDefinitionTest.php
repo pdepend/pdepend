@@ -43,16 +43,21 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTConstantDefinition} class.
  *
- * @covers \PDepend\Source\AST\ASTConstantDefinition
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTConstantDefinition::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTConstantDefinitionTest extends ASTNodeTestCase
 {
     /**
@@ -60,8 +65,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * valid combinations of modifiers.
      *
      * @param int $modifiers Combinations of valid modifiers.
-     * @dataProvider dataProviderSetModifiersAcceptsExpectedModifierCombinations
      */
+    #[DataProvider('dataProviderSetModifiersAcceptsExpectedModifierCombinations')]
     public function testSetModifiersAcceptsExpectedModifierCombinations(int $modifiers): void
     {
         $definition = new ASTConstantDefinition();
@@ -89,8 +94,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * invalid modifier or modifier combination was set.
      *
      * @param int $modifiers Combinations of invalid modifiers.
-     * @dataProvider dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers
      */
+    #[DataProvider('dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers')]
     public function testSetModifiersThrowsExpectedExceptionForInvalidModifiers(int $modifiers): void
     {
         $definition = new ASTConstantDefinition();
@@ -248,9 +253,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * testConstantDefinitionHasExpectedStartLine
-     *
-     * @depends testConstantDefinition
      */
+    #[Depends('testConstantDefinition')]
     public function testConstantDefinitionHasExpectedStartLine(ASTConstantDefinition $constant): void
     {
         static::assertEquals(4, $constant->getStartLine());
@@ -258,9 +262,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * testConstantDefinitionHasExpectedStartColumn
-     *
-     * @depends testConstantDefinition
      */
+    #[Depends('testConstantDefinition')]
     public function testConstantDefinitionHasExpectedStartColumn(ASTConstantDefinition $constant): void
     {
         static::assertEquals(5, $constant->getStartColumn());
@@ -268,9 +271,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * testConstantDefinitionHasExpectedEndLine
-     *
-     * @depends testConstantDefinition
      */
+    #[Depends('testConstantDefinition')]
     public function testConstantDefinitionHasExpectedEndLine(ASTConstantDefinition $constant): void
     {
         static::assertEquals(7, $constant->getEndLine());
@@ -278,9 +280,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
 
     /**
      * testConstantDefinitionHasExpectedEndColumn
-     *
-     * @depends testConstantDefinition
      */
+    #[Depends('testConstantDefinition')]
     public function testConstantDefinitionHasExpectedEndColumn(ASTConstantDefinition $constant): void
     {
         static::assertEquals(12, $constant->getEndColumn());
@@ -303,9 +304,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * testConstantDefinitionWithDeclaratorsHasExpectedStartLine
      *
      * @since 1.0.2
-     *
-     * @depends testConstantDefinitionWithDeclarators
      */
+    #[Depends('testConstantDefinitionWithDeclarators')]
     public function testConstantDefinitionWithDeclaratorsHasExpectedStartLine(ASTConstantDefinition $constant): void
     {
         static::assertEquals(4, $constant->getStartLine());
@@ -315,9 +315,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * testConstantDefinitionWithDeclaratorsHasExpectedStartColumn
      *
      * @since 1.0.2
-     *
-     * @depends testConstantDefinitionWithDeclarators
      */
+    #[Depends('testConstantDefinitionWithDeclarators')]
     public function testConstantDefinitionWithDeclaratorsHasExpectedStartColumn(ASTConstantDefinition $constant): void
     {
         static::assertEquals(5, $constant->getStartColumn());
@@ -327,9 +326,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * testConstantDefinitionWithDeclaratorsHasExpectedEndLine
      *
      * @since 1.0.2
-     *
-     * @depends testConstantDefinitionWithDeclarators
      */
+    #[Depends('testConstantDefinitionWithDeclarators')]
     public function testConstantDefinitionWithDeclaratorsHasExpectedEndLine(ASTConstantDefinition $constant): void
     {
         static::assertEquals(6, $constant->getEndLine());
@@ -339,9 +337,8 @@ class ASTConstantDefinitionTest extends ASTNodeTestCase
      * testConstantDefinitionWithDeclaratorsHasExpectedEndColumn
      *
      * @since 1.0.2
-     *
-     * @depends testConstantDefinitionWithDeclarators
      */
+    #[Depends('testConstantDefinitionWithDeclarators')]
     public function testConstantDefinitionWithDeclaratorsHasExpectedEndColumn(ASTConstantDefinition $constant): void
     {
         static::assertEquals(18, $constant->getEndColumn());

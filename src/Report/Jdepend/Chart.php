@@ -260,7 +260,7 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
 
             foreach ($items as &$item) {
                 if ($diff !== 0) {
-                    $item['ratio'] = 5 + (($item['size'] - $min) / $diff);
+                    $item['ratio'] = (int) (5 + (($item['size'] - $min) / $diff));
                 }
             }
         }

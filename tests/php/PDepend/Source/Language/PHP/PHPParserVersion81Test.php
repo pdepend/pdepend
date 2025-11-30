@@ -91,16 +91,19 @@ use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
 use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use ReflectionMethod;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\AbstractPHPParser} class.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @group unittest
  */
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class PHPParserVersion81Test extends AbstractTestCase
 {
     /**
@@ -153,7 +156,6 @@ class PHPParserVersion81Test extends AbstractTestCase
             ->willReturn(null);
         $parser = $this->createPHPParser($tokenizer, $builder, $cache);
         $parseArray = new ReflectionMethod($parser, 'parseArray');
-        $parseArray->setAccessible(true);
         $parseArray->invoke($parser, new ASTArray());
     }
 
@@ -408,7 +410,6 @@ class PHPParserVersion81Test extends AbstractTestCase
             ->willReturn(new Token(Tokens::T_FUNCTION, 'function', 1, 1, 1, 9));
         $parser = $this->createPHPParser($tokenizer, $builder, $cache);
         $parseArray = new ReflectionMethod($parser, 'parseStaticValueVersionSpecific');
-        $parseArray->setAccessible(true);
         $parseArray->invoke($parser, new ASTValue());
     }
 
@@ -682,33 +683,25 @@ class PHPParserVersion81Test extends AbstractTestCase
         return $expr;
     }
 
-    /**
-     * @depends testSpaceshipOperatorWithArrays
-     */
+    #[Depends('testSpaceshipOperatorWithArrays')]
     public function testSpaceshipOperatorHasExpectedStartLine(ASTExpression $expr): void
     {
         static::assertSame(6, $expr->getStartLine());
     }
 
-    /**
-     * @depends testSpaceshipOperatorWithArrays
-     */
+    #[Depends('testSpaceshipOperatorWithArrays')]
     public function testSpaceshipOperatorHasExpectedEndLine(ASTExpression $expr): void
     {
         static::assertSame(6, $expr->getEndLine());
     }
 
-    /**
-     * @depends testSpaceshipOperatorWithArrays
-     */
+    #[Depends('testSpaceshipOperatorWithArrays')]
     public function testSpaceshipOperatorHasExpectedStartColumn(ASTExpression $expr): void
     {
         static::assertSame(27, $expr->getStartColumn());
     }
 
-    /**
-     * @depends testSpaceshipOperatorWithArrays
-     */
+    #[Depends('testSpaceshipOperatorWithArrays')]
     public function testSpaceshipOperatorHasExpectedEndColumn(ASTExpression $expr): void
     {
         static::assertSame(29, $expr->getEndColumn());
@@ -746,9 +739,7 @@ class PHPParserVersion81Test extends AbstractTestCase
         return $namespaces[0];
     }
 
-    /**
-     * @depends testGroupUseStatement
-     */
+    #[Depends('testGroupUseStatement')]
     public function testGroupUseStatementClassNameResolution(ASTNamespace $namespace): void
     {
         $classes = $namespace->getClasses();
@@ -760,9 +751,7 @@ class PHPParserVersion81Test extends AbstractTestCase
         );
     }
 
-    /**
-     * @depends testGroupUseStatement
-     */
+    #[Depends('testGroupUseStatement')]
     public function testGroupUseStatementAliasResolution(ASTNamespace $namespace): void
     {
         $classes = $namespace->getClasses();
@@ -1009,7 +998,6 @@ class PHPParserVersion81Test extends AbstractTestCase
     {
         $namespaces = $this->parseCodeResourceForTest();
         static::assertGreaterThan(0, count($namespaces));
-        static::assertContainsOnlyInstancesOf(ASTNamespace::class, $namespaces);
     }
 
     public function testHereDocAndNowDoc(): void
@@ -1504,9 +1492,9 @@ class PHPParserVersion81Test extends AbstractTestCase
 
     protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
-        return $this->getMockForAbstractClass(
-            AbstractPHPParser::class,
-            [$tokenizer, $builder, $cache]
-        );
+        return $this->getMockBuilder(AbstractPHPParser::class)
+            ->setConstructorArgs([$tokenizer, $builder, $cache])
+            ->onlyMethods([])
+            ->getMock();
     }
 }

@@ -43,14 +43,15 @@
 
 namespace PDepend\Bugs;
 
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case issue 1412288686.
  *
  * @copyright 2008-2014 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class TrueFalseKeywordInNamespaceBug1412288686Test extends AbstractRegressionTestCase
 {
     /**

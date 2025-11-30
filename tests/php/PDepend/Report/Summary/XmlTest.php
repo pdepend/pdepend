@@ -49,16 +49,18 @@ use PDepend\Metrics\AnalyzerProjectAware;
 use PDepend\Report\NoLogOutputException;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the xml summary log.
  *
- * @covers \PDepend\Report\Summary\Xml
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Xml::class)]
+#[Group('unittest')]
 class XmlTest extends AbstractTestCase
 {
     /**
@@ -236,9 +238,7 @@ class XmlTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @dataProvider dataProviderNodeAware
-     */
+    #[DataProvider('dataProviderNodeAware')]
     public function testNodeAwareAnalyzer(string $fixture, string $expectation): void
     {
         $this->namespaces = $this->parseSource($fixture);

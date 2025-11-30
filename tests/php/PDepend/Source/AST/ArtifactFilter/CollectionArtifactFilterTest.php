@@ -46,18 +46,19 @@ namespace PDepend\Source\AST\ASTArtifactList;
 
 use PDepend\AbstractTestCase;
 use PDepend\Source\AST\ASTClass;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter}
  * class.
  *
- * @covers \PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
- *
- * @group unittest
  */
+#[CoversClass(CollectionArtifactFilter::class)]
+#[Group('unittest')]
 class CollectionArtifactFilterTest extends AbstractTestCase
 {
     /**

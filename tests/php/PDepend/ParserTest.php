@@ -57,6 +57,7 @@ use PDepend\Source\AST\ASTString;
 use PDepend\Source\AST\ASTVariable;
 use PDepend\Source\AST\State;
 use PDepend\Source\Builder\Builder;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
@@ -66,17 +67,19 @@ use PDepend\Source\Parser\UnexpectedTokenException;
 use PDepend\Source\Tokenizer\Token;
 use PDepend\Source\Tokenizer\Tokens;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use RuntimeException;
 
 /**
  * Test case implementation for the PDepend code parser.
  *
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group unittest
  */
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ParserTest extends AbstractTestCase
 {
     /**
@@ -512,9 +515,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param ASTArtifactList<ASTFunction> $functions
-     *
-     * @depends testParserSetsCorrectFunctionReturnType
      */
+    #[Depends('testParserSetsCorrectFunctionReturnType')]
     public function testParserSetsFunctionReturnTypeToNull(ASTArtifactList $functions): void
     {
         static::assertSame(
@@ -531,9 +533,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param ASTArtifactList<ASTFunction> $functions
-     *
-     * @depends testParserSetsCorrectFunctionReturnType
      */
+    #[Depends('testParserSetsCorrectFunctionReturnType')]
     public function testParserSetsExpectedFunctionReturnTypeOfFunctionTwo(ASTArtifactList $functions): void
     {
         static::assertSame(
@@ -550,9 +551,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param ASTArtifactList<ASTFunction> $functions
-     *
-     * @depends testParserSetsCorrectFunctionReturnType
      */
+    #[Depends('testParserSetsCorrectFunctionReturnType')]
     public function testParserSetsExpectedFunctionReturnTypeOfFunctionThree(ASTArtifactList $functions): void
     {
         static::assertSame(
@@ -939,9 +939,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param ASTArtifactList<ASTNamespace> $namespaces
-     *
-     * @depends testParserSetsFileLevelFunctionPackage
      */
+    #[Depends('testParserSetsFileLevelFunctionPackage')]
     public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInFirstNamespace(
         ASTArtifactList $namespaces
     ): void {
@@ -951,9 +950,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param ASTArtifactList<ASTNamespace> $namespaces
-     *
-     * @depends testParserSetsFileLevelFunctionPackage
      */
+    #[Depends('testParserSetsFileLevelFunctionPackage')]
     public function testParserSetsFileLevelFunctionPackageNumberOfFunctionsInSecondNamespace(
         ASTArtifactList $namespaces
     ): void {
@@ -963,9 +961,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param ASTArtifactList<ASTNamespace> $namespaces
-     *
-     * @depends testParserSetsFileLevelFunctionPackage
      */
+    #[Depends('testParserSetsFileLevelFunctionPackage')]
     public function testParserSetsFileExpectedPackageForFirstFunctionInFirstNamespace(ASTArtifactList $namespaces): void
     {
         $functions = $namespaces[0]->getFunctions();
@@ -975,9 +972,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param ASTArtifactList<ASTNamespace> $namespaces
-     *
-     * @depends testParserSetsFileLevelFunctionPackage
      */
+    #[Depends('testParserSetsFileLevelFunctionPackage')]
     public function testParserSetsFileExpectedPackageForSecondFunctionInFirstNamespace(
         ASTArtifactList $namespaces
     ): void {
@@ -988,9 +984,8 @@ class ParserTest extends AbstractTestCase
 
     /**
      * @param ASTArtifactList<ASTNamespace> $namespaces
-     *
-     * @depends testParserSetsFileLevelFunctionPackage
      */
+    #[Depends('testParserSetsFileLevelFunctionPackage')]
     public function testParserSetsFileExpectedPackageForFirstFunctionInSecondNamespace(
         ASTArtifactList $namespaces
     ): void {
@@ -1348,7 +1343,7 @@ class ParserTest extends AbstractTestCase
         $cache = $this->createCacheFixture();
         $cache->expects(static::once())
             ->method('restore')
-            ->will(static::returnValue(true));
+            ->willReturn(true);
         $cache->expects(static::never())
             ->method('store');
 

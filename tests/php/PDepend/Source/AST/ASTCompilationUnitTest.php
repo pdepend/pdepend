@@ -45,16 +45,17 @@ namespace PDepend\Source\AST;
 
 use PDepend\AbstractTestCase;
 use PDepend\Source\Tokenizer\Token;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the code file class.
  *
- * @covers \PDepend\Source\AST\ASTCompilationUnit
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTCompilationUnit::class)]
+#[Group('unittest')]
 class ASTCompilationUnitTest extends AbstractTestCase
 {
     /**
@@ -106,7 +107,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
         $cache->expects(static::once())
             ->method('type')
             ->with(static::equalTo('tokens'))
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
         $cache->expects(static::once())
             ->method('restore')
             ->with(static::equalTo(__FUNCTION__));
@@ -127,7 +128,7 @@ class ASTCompilationUnitTest extends AbstractTestCase
         $cache->expects(static::once())
             ->method('type')
             ->with(static::equalTo('tokens'))
-            ->will(static::returnValue($cache));
+            ->willReturn($cache);
         $payload = [$this->getMockBuilder(Token::class)->disableOriginalConstructor()->getMock()];
         $cache->expects(static::once())
             ->method('store')

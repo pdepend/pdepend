@@ -46,16 +46,17 @@ namespace PDepend\Metrics\Analyzer;
 use PDepend\Metrics\AbstractMetricsTestCase;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTNamespace;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the node count analyzer.
  *
- * @covers \PDepend\Metrics\Analyzer\NodeCountAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
- *
- * @group unittest
  */
+#[CoversClass(NodeCountAnalyzer::class)]
+#[Group('unittest')]
 class NodeCountAnalyzerTest extends AbstractMetricsTestCase
 {
     /**

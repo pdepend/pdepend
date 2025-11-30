@@ -45,16 +45,17 @@ namespace PDepend\Util\Cache\Driver;
 
 use PDepend\Util\Cache\AbstractDriverTestCase;
 use PDepend\Util\Cache\CacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Util\Cache\Driver\MemoryCacheDriver} class.
  *
- * @covers \PDepend\Util\Cache\Driver\MemoryCacheDriver
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(MemoryCacheDriver::class)]
+#[Group('unittest')]
 class MemoryCacheDriverTest extends AbstractDriverTestCase
 {
     /**

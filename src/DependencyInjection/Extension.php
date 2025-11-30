@@ -46,6 +46,8 @@ namespace PDepend\DependencyInjection;
 use ReflectionClass;
 use RuntimeException;
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
+use Symfony\Component\Config\Definition\Builder\NodeBuilder;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -101,6 +103,8 @@ abstract class Extension
 
     /**
      * Setups configuration for current extension.
+     *
+     * @param ArrayNodeDefinition<NodeBuilder<ArrayNodeDefinition<NodeBuilder<ArrayNodeDefinition<TreeBuilder<'array'>>>>>> $builder
      */
     public function getConfig(ArrayNodeDefinition $builder): void
     {

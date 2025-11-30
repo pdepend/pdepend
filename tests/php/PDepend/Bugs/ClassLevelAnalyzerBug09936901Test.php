@@ -47,6 +47,8 @@ namespace PDepend\Bugs;
 use PDepend\Metrics\Analyzer\ClassLevelAnalyzer;
 use PDepend\Metrics\Analyzer\CyclomaticComplexityAnalyzer;
 use PDepend\Util\Cache\Driver\MemoryCacheDriver;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\Ticket;
 
 /**
  * Test case related to bug #9936901.
@@ -54,11 +56,9 @@ use PDepend\Util\Cache\Driver\MemoryCacheDriver;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link https://www.pivotaltracker.com/story/show/9936901
- *
- * @ticket 9936901
- *
- * @group regressiontest
  */
+#[Ticket('9936901')]
+#[Group('regressiontest')]
 class ClassLevelAnalyzerBug09936901Test extends AbstractRegressionTestCase
 {
     /**

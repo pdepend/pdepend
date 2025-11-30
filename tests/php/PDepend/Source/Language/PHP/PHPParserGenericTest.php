@@ -60,17 +60,21 @@ use PDepend\Source\AST\ASTTypeArray;
 use PDepend\Source\AST\ASTTypeCallable;
 use PDepend\Source\Parser\TokenStreamEndException;
 use PDepend\Source\Parser\UnexpectedTokenException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\Language\PHP\PHPParserGeneric} class.
  *
- * @covers \PDepend\Source\Language\PHP\PHPParserGeneric
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 0.9.20
- *
- * @group unittest
  */
+#[CoversClass(PHPParserGeneric::class)]
+#[CoversClass(UnexpectedTokenException::class)]
+#[CoversClass(TokenStreamEndException::class)]
+#[Group('unittest')]
 class PHPParserGenericTest extends AbstractTestCase
 {
     /**
@@ -338,8 +342,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserThrowsExpectedExceptionOnTokenStreamEnd
-     *
-     * @covers \PDepend\Source\Parser\TokenStreamEndException
      */
     public function testParserThrowsExpectedExceptionOnTokenStreamEnd(): void
     {
@@ -350,8 +352,6 @@ class PHPParserGenericTest extends AbstractTestCase
 
     /**
      * testParserThrowsExpectedExceptionForUnexpectedTokenType
-     *
-     * @covers \PDepend\Source\Parser\UnexpectedTokenException
      */
     public function testParserThrowsExpectedExceptionForUnexpectedTokenType(): void
     {
@@ -1182,33 +1182,25 @@ class PHPParserGenericTest extends AbstractTestCase
         return $expr;
     }
 
-    /**
-     * @depends testSpaceshipOperatorWithArrays
-     */
+    #[Depends('testSpaceshipOperatorWithArrays')]
     public function testSpaceshipOperatorHasExpectedStartLine(ASTExpression $expr): void
     {
         static::assertSame(6, $expr->getStartLine());
     }
 
-    /**
-     * @depends testSpaceshipOperatorWithArrays
-     */
+    #[Depends('testSpaceshipOperatorWithArrays')]
     public function testSpaceshipOperatorHasExpectedEndLine(ASTExpression $expr): void
     {
         static::assertSame(6, $expr->getEndLine());
     }
 
-    /**
-     * @depends testSpaceshipOperatorWithArrays
-     */
+    #[Depends('testSpaceshipOperatorWithArrays')]
     public function testSpaceshipOperatorHasExpectedStartColumn(ASTExpression $expr): void
     {
         static::assertSame(27, $expr->getStartColumn());
     }
 
-    /**
-     * @depends testSpaceshipOperatorWithArrays
-     */
+    #[Depends('testSpaceshipOperatorWithArrays')]
     public function testSpaceshipOperatorHasExpectedEndColumn(ASTExpression $expr): void
     {
         static::assertSame(29, $expr->getEndColumn());
@@ -1246,9 +1238,7 @@ class PHPParserGenericTest extends AbstractTestCase
         return $namespaces[0];
     }
 
-    /**
-     * @depends testGroupUseStatement
-     */
+    #[Depends('testGroupUseStatement')]
     public function testGroupUseStatementClassNameResolution(ASTNamespace $namespace): void
     {
         $classes = $namespace->getClasses();
@@ -1260,9 +1250,7 @@ class PHPParserGenericTest extends AbstractTestCase
         );
     }
 
-    /**
-     * @depends testGroupUseStatement
-     */
+    #[Depends('testGroupUseStatement')]
     public function testGroupUseStatementAliasResolution(ASTNamespace $namespace): void
     {
         $classes = $namespace->getClasses();

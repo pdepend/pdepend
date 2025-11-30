@@ -44,19 +44,22 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Parser\InvalidStateException;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitAdaptationPrecedence} class.
  *
- * @covers \PDepend\Source\AST\ASTTraitAdaptationPrecedence
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
- *
- * @group unittest
  */
+#[CoversClass(ASTTraitAdaptationPrecedence::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 {
     /**
@@ -98,9 +101,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationPrecedenceHasExpectedStartLine
-     *
-     * @depends testTraitAdaptationPrecedence
      */
+    #[Depends('testTraitAdaptationPrecedence')]
     public function testTraitAdaptationPrecedenceHasExpectedStartLine(ASTTraitAdaptationPrecedence $precedence): void
     {
         static::assertEquals(6, $precedence->getStartLine());
@@ -108,9 +110,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationPrecedenceHasExpectedStartColumn
-     *
-     * @depends testTraitAdaptationPrecedence
      */
+    #[Depends('testTraitAdaptationPrecedence')]
     public function testTraitAdaptationPrecedenceHasExpectedStartColumn(ASTTraitAdaptationPrecedence $precedence): void
     {
         static::assertEquals(9, $precedence->getStartColumn());
@@ -118,9 +119,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationPrecedenceHasExpectedEndLine
-     *
-     * @depends testTraitAdaptationPrecedence
      */
+    #[Depends('testTraitAdaptationPrecedence')]
     public function testTraitAdaptationPrecedenceHasExpectedEndLine(ASTTraitAdaptationPrecedence $precedence): void
     {
         static::assertEquals(8, $precedence->getEndLine());
@@ -128,9 +128,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 
     /**
      * testTraitAdaptationPrecedenceHasExpectedEndColumn
-     *
-     * @depends testTraitAdaptationPrecedence
      */
+    #[Depends('testTraitAdaptationPrecedence')]
     public function testTraitAdaptationPrecedenceHasExpectedEndColumn(ASTTraitAdaptationPrecedence $precedence): void
     {
         static::assertEquals(56, $precedence->getEndColumn());
@@ -161,9 +160,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 
     /**
      * testTraitReferenceHasExpectedStartLine
-     *
-     * @depends testTraitReference
      */
+    #[Depends('testTraitReference')]
     public function testTraitReferenceHasExpectedStartLine(ASTTraitReference $reference): void
     {
         static::assertEquals(6, $reference->getStartLine());
@@ -171,9 +169,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 
     /**
      * testTraitReferenceHasExpectedStartColumn
-     *
-     * @depends testTraitReference
      */
+    #[Depends('testTraitReference')]
     public function testTraitReferenceHasExpectedStartColumn(ASTTraitReference $reference): void
     {
         static::assertEquals(9, $reference->getStartColumn());
@@ -181,9 +178,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 
     /**
      * testTraitReferenceHasExpectedEndLine
-     *
-     * @depends testTraitReference
      */
+    #[Depends('testTraitReference')]
     public function testTraitReferenceHasExpectedEndLine(ASTTraitReference $reference): void
     {
         static::assertEquals(6, $reference->getEndLine());
@@ -191,9 +187,8 @@ class ASTTraitAdaptationPrecedenceTest extends ASTNodeTestCase
 
     /**
      * testTraitReferenceHasExpectedEndColumn
-     *
-     * @depends testTraitReference
      */
+    #[Depends('testTraitReference')]
     public function testTraitReferenceHasExpectedEndColumn(ASTTraitReference $reference): void
     {
         static::assertEquals(36, $reference->getEndColumn());

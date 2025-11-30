@@ -68,6 +68,7 @@ class Configuration implements ConfigurationInterface
 
     /**
      * {@inheritDoc}
+     * @return TreeBuilder<'array'>
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {

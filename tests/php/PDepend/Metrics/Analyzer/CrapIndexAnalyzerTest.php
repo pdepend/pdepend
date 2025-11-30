@@ -44,16 +44,17 @@
 namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test cases for the {@link \PDepend\Metrics\Analyzer\CrapIndexAnalyzer} class.
  *
- * @covers \PDepend\Metrics\Analyzer\CrapIndexAnalyzer
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(CrapIndexAnalyzer::class)]
+#[Group('unittest')]
 class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
 {
     /**
@@ -219,7 +220,7 @@ class CrapIndexAnalyzerTest extends AbstractMetricsTestCase
             ->getMock();
         $mock->expects(static::any())
             ->method('getCCN2')
-            ->will(static::returnValue($ccn));
+            ->willReturn($ccn);
 
         return $mock;
     }

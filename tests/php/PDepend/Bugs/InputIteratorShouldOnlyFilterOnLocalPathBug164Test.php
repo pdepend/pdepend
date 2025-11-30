@@ -46,6 +46,7 @@ namespace PDepend\Bugs;
 use ArrayIterator;
 use PDepend\Input\Filter;
 use PDepend\Input\Iterator;
+use PHPUnit\Framework\Attributes\Group;
 use SplFileInfo;
 
 /**
@@ -54,9 +55,8 @@ use SplFileInfo;
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php  BSD License
  * @link http://tracker.pdepend.org/pdepend/issue_tracker/issue/164
- *
- * @group regressiontest
  */
+#[Group('regressiontest')]
 class InputIteratorShouldOnlyFilterOnLocalPathBug164Test extends AbstractRegressionTestCase
 {
     /**

@@ -45,16 +45,18 @@ namespace PDepend;
 
 use InvalidArgumentException;
 use PDepend\Source\AST\ASTNamespace;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
  * Test case for \PDepend\Engine facade.
  *
- * @covers \PDepend\Engine
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(Engine::class)]
+#[Group('unittest')]
 class EngineTest extends AbstractTestCase
 {
     /**
@@ -337,17 +339,13 @@ class EngineTest extends AbstractTestCase
         return $namespaces[0];
     }
 
-    /**
-     * @depends testSupportForSingleFileIssue90
-     */
+    #[Depends('testSupportForSingleFileIssue90')]
     public function testSupportForSingleFileIssue90ExpectedNumberOfClasses(ASTNamespace $namespace): void
     {
         static::assertCount(1, $namespace->getClasses());
     }
 
-    /**
-     * @depends testSupportForSingleFileIssue90
-     */
+    #[Depends('testSupportForSingleFileIssue90')]
     public function testSupportForSingleFileIssue90ExpectedNumberOfInterfaces(ASTNamespace $namespace): void
     {
         static::assertCount(1, $namespace->getInterfaces());

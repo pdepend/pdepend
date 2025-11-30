@@ -44,20 +44,22 @@
 
 namespace PDepend\Source\AST;
 
-use ReflectionException;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
 use ReflectionMethod;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTraitUseStatement} class.
  *
- * @covers \PDepend\Source\AST\ASTTraitUseStatement
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  * @since 1.0.0
- *
- * @group unittest
  */
+#[CoversClass(ASTTraitUseStatement::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTTraitUseStatementTest extends ASTNodeTestCase
 {
     /**
@@ -120,16 +122,12 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseInsteadOfSelf
-     *
-     * @throws ReflectionException
-     *
-     * @group issue-154
      */
+    #[Group('issue-154')]
     public function testTraitUseInsteadOfSelf(): void
     {
         $class = $this->getFirstClassForTestCase();
         $getTraitMethods = new ReflectionMethod($class, 'getTraitMethods');
-        $getTraitMethods->setAccessible(true);
         $methods = $getTraitMethods->invoke($class);
 
         static::assertIsArray($methods);
@@ -138,16 +136,12 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitMethodAlias
-     *
-     * @throws ReflectionException
-     *
-     * @group issue-154
      */
+    #[Group('issue-154')]
     public function testTraitMethodAlias(): void
     {
         $class = $this->getFirstClassForTestCase();
         $getTraitMethods = new ReflectionMethod($class, 'getTraitMethods');
-        $getTraitMethods->setAccessible(true);
         $methods = $getTraitMethods->invoke($class);
 
         static::assertIsArray($methods);
@@ -395,9 +389,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementHasExpectedStartLine
-     *
-     * @depends testTraitUseStatement
      */
+    #[Depends('testTraitUseStatement')]
     public function testTraitUseStatementHasExpectedStartLine(ASTTraitUseStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
@@ -405,9 +398,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementHasExpectedStartColumn
-     *
-     * @depends testTraitUseStatement
      */
+    #[Depends('testTraitUseStatement')]
     public function testTraitUseStatementHasExpectedStartColumn(ASTTraitUseStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
@@ -415,9 +407,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementHasExpectedEndLine
-     *
-     * @depends testTraitUseStatement
      */
+    #[Depends('testTraitUseStatement')]
     public function testTraitUseStatementHasExpectedEndLine(ASTTraitUseStatement $stmt): void
     {
         static::assertEquals(9, $stmt->getEndLine());
@@ -425,9 +416,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementHasExpectedEndColumn
-     *
-     * @depends testTraitUseStatement
      */
+    #[Depends('testTraitUseStatement')]
     public function testTraitUseStatementHasExpectedEndColumn(ASTTraitUseStatement $stmt): void
     {
         static::assertEquals(13, $stmt->getEndColumn());
@@ -448,9 +438,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementInTraitHasExpectedStartLine
-     *
-     * @depends testTraitUseStatementInTrait
      */
+    #[Depends('testTraitUseStatementInTrait')]
     public function testTraitUseStatementInTraitHasExpectedStartLine(ASTTraitUseStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getStartLine());
@@ -458,9 +447,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementInTraitHasExpectedStartColumn
-     *
-     * @depends testTraitUseStatementInTrait
      */
+    #[Depends('testTraitUseStatementInTrait')]
     public function testTraitUseStatementInTraitHasExpectedStartColumn(ASTTraitUseStatement $stmt): void
     {
         static::assertEquals(5, $stmt->getStartColumn());
@@ -468,9 +456,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementInTraitHasExpectedEndLine
-     *
-     * @depends testTraitUseStatementInTrait
      */
+    #[Depends('testTraitUseStatementInTrait')]
     public function testTraitUseStatementInTraitHasExpectedEndLine(ASTTraitUseStatement $stmt): void
     {
         static::assertEquals(4, $stmt->getEndLine());
@@ -478,9 +465,8 @@ class ASTTraitUseStatementTest extends ASTNodeTestCase
 
     /**
      * testTraitUseStatementInTraitHasExpectedEndColumn
-     *
-     * @depends testTraitUseStatementInTrait
      */
+    #[Depends('testTraitUseStatementInTrait')]
     public function testTraitUseStatementInTraitHasExpectedEndColumn(ASTTraitUseStatement $stmt): void
     {
         static::assertEquals(19, $stmt->getEndColumn());

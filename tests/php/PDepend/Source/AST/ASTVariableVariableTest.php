@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTVariableVariable} class.
  *
- * @covers \PDepend\Source\AST\ASTVariableVariable
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTVariableVariable::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTVariableVariableTest extends ASTNodeTestCase
 {
     /**
@@ -70,9 +74,8 @@ class ASTVariableVariableTest extends ASTNodeTestCase
 
     /**
      * testVariableVariableHasExpectedStartLine
-     *
-     * @depends testVariableVariable
      */
+    #[Depends('testVariableVariable')]
     public function testVariableVariableHasExpectedStartLine(ASTVariableVariable $variable): void
     {
         static::assertEquals(6, $variable->getStartLine());
@@ -80,9 +83,8 @@ class ASTVariableVariableTest extends ASTNodeTestCase
 
     /**
      * testVariableVariableHasExpectedStartColumn
-     *
-     * @depends testVariableVariable
      */
+    #[Depends('testVariableVariable')]
     public function testVariableVariableHasExpectedStartColumn(ASTVariableVariable $variable): void
     {
         static::assertEquals(9, $variable->getStartColumn());
@@ -90,9 +92,8 @@ class ASTVariableVariableTest extends ASTNodeTestCase
 
     /**
      * testVariableVariableHasExpectedEndLine
-     *
-     * @depends testVariableVariable
      */
+    #[Depends('testVariableVariable')]
     public function testVariableVariableHasExpectedEndLine(ASTVariableVariable $variable): void
     {
         static::assertEquals(8, $variable->getEndLine());
@@ -100,9 +101,8 @@ class ASTVariableVariableTest extends ASTNodeTestCase
 
     /**
      * testVariableVariableHasExpectedEndColumn
-     *
-     * @depends testVariableVariable
      */
+    #[Depends('testVariableVariable')]
     public function testVariableVariableHasExpectedEndColumn(ASTVariableVariable $variable): void
     {
         static::assertEquals(12, $variable->getEndColumn());

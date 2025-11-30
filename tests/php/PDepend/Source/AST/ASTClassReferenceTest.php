@@ -44,18 +44,20 @@
 namespace PDepend\Source\AST;
 
 use PDepend\Source\Builder\BuilderContext;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\MockObject\MockObject;
 
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTClassReference} class.
  *
- * @covers \PDepend\Source\AST\ASTClassReference
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTClassReference::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTClassReferenceTest extends ASTNodeTestCase
 {
     /**
@@ -70,7 +72,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
         $context->expects(static::once())
             ->method('getClass')
             ->with(static::equalTo(__CLASS__))
-            ->will(static::returnValue($class));
+            ->willReturn($class);
 
         $reference = new ASTClassReference($context, __CLASS__);
         $reference->getType();
@@ -88,7 +90,7 @@ class ASTClassReferenceTest extends ASTNodeTestCase
         $context->expects(static::exactly(1))
             ->method('getClass')
             ->with(static::equalTo(__CLASS__))
-            ->will(static::returnValue($class));
+            ->willReturn($class);
 
         $reference = new ASTClassReference($context, __CLASS__);
         $reference->getType();

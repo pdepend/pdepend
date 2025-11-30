@@ -43,16 +43,20 @@
 
 namespace PDepend\Source\AST;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Depends;
+use PHPUnit\Framework\Attributes\Group;
+
 /**
  * Test case for the {@link \PDepend\Source\AST\ASTTypeIterable} class.
  *
- * @covers \PDepend\Source\AST\ASTTypeIterable
- * @covers \PDepend\Source\Language\PHP\AbstractPHPParser
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- *
- * @group unittest
  */
+#[CoversClass(ASTTypeIterable::class)]
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
 class ASTTypeIterableTest extends ASTNodeTestCase
 {
     /**
@@ -70,9 +74,8 @@ class ASTTypeIterableTest extends ASTNodeTestCase
 
     /**
      * testIterableTypeHasExpectedStartLine
-     *
-     * @depends testIterableType
      */
+    #[Depends('testIterableType')]
     public function testIterableTypeHasExpectedStartLine(ASTTypeIterable $type): void
     {
         static::assertEquals(2, $type->getStartLine());
@@ -80,9 +83,8 @@ class ASTTypeIterableTest extends ASTNodeTestCase
 
     /**
      * testIterableTypeHasExpectedStartColumn
-     *
-     * @depends testIterableType
      */
+    #[Depends('testIterableType')]
     public function testIterableTypeHasExpectedStartColumn(ASTTypeIterable $type): void
     {
         static::assertEquals(24, $type->getStartColumn());
@@ -90,9 +92,8 @@ class ASTTypeIterableTest extends ASTNodeTestCase
 
     /**
      * testIterableTypeHasExpectedEndLine
-     *
-     * @depends testIterableType
      */
+    #[Depends('testIterableType')]
     public function testIterableTypeHasExpectedEndLine(ASTTypeIterable $type): void
     {
         static::assertEquals(2, $type->getEndLine());
@@ -100,9 +101,8 @@ class ASTTypeIterableTest extends ASTNodeTestCase
 
     /**
      * testIterableTypeHasExpectedEndColumn
-     *
-     * @depends testIterableType
      */
+    #[Depends('testIterableType')]
     public function testIterableTypeHasExpectedEndColumn(ASTTypeIterable $type): void
     {
         static::assertEquals(31, $type->getEndColumn());
