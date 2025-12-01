@@ -1,8 +1,12 @@
 <?xml version="1.0"?>
 <ruleset name="PDepend">
     <description>The coding standard for PDepend.</description>
+    <file>./bin</file>
+    <file>./resources</file>
+    <file>./scripts</file>
+    <file>./site</file>
     <file>./src</file>
-    <file>./tests/php/PDepend</file>
+    <file>./tests/php</file>
     <!-- Include Slevomat standard -->
 
 <!--    <config name="installed_paths" value="../../slevomat/coding-standard,../../../slevomat/coding-standard,../vendor/slevomat/coding-standard"/>-->

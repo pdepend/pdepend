@@ -2,10 +2,11 @@ includes:
 	- phpstan-baseline.neon.php
 parameters:
     paths:
-        - scripts
         - bin
-        - src
+        - resources
+        - scripts
         - site
+        - src
         - tests/php
     rememberPossiblyImpureFunctionValues: false
     excludePaths:

@@ -20,6 +20,8 @@ $includes = [];
 // only include baseline if composer.lock exists AND version is older than 7
 if ($symfonyVersion !== null && version_compare($symfonyVersion, '7.0.0', '<')) {
     $includes[] = __DIR__ . '/phpstan-baseline-symfony-pre-7.neon';
+} elseif (version_compare($symfonyVersion, '8.0.0', '>=')) {
+    $includes[] = __DIR__ . '/phpstan-baseline-symfony-post-7.neon';
 }
 
 $config = [];

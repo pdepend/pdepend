@@ -136,6 +136,12 @@ class Command
             }
 
             unset($this->options['--configuration']);
+        } elseif (file_exists(getcwd() . '/pdepend.yml')) {
+            $configurationFile = getcwd() . '/pdepend.yml';
+        } elseif (file_exists(getcwd() . '/pdepend.yml.dist')) {
+            $configurationFile = getcwd() . '/pdepend.yml.dist';
+        } elseif (file_exists(getcwd() . '/pdepend.php')) {
+            $configurationFile = getcwd() . '/pdepend.php';
         } elseif (file_exists(getcwd() . '/pdepend.xml')) {
             $configurationFile = getcwd() . '/pdepend.xml';
         } elseif (file_exists(getcwd() . '/pdepend.xml.dist')) {

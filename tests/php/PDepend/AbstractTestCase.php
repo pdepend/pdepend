@@ -230,7 +230,7 @@ abstract class AbstractTestCase extends TestCase
     protected function createTestApplication(): Application
     {
         $application = new Application();
-        $application->setConfigurationFile(__DIR__ . '/../../resources/pdepend.xml.dist');
+        $application->setConfigurationFile(__DIR__ . '/../../resources/pdepend.yml.dist');
 
         return $application;
     }
