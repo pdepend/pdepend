@@ -175,7 +175,9 @@ class ASTFormalParameter extends AbstractASTNode
         $expected = ~State::IS_PUBLIC
             & ~State::IS_PROTECTED
             & ~State::IS_PRIVATE
-            & ~State::IS_READONLY;
+            & ~State::IS_READONLY
+            & ~State::IS_PROTECTED_SET
+            & ~State::IS_PRIVATE_SET;
 
         if (($expected & $modifiers) !== 0) {
             throw new InvalidArgumentException('Invalid constructor property modifier given.');
@@ -192,7 +194,7 @@ class ASTFormalParameter extends AbstractASTNode
      */
     public function isPromoted(): bool
     {
-        return ($this->getModifiers() & (State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE)) !== 0;
+        return ($this->getModifiers() & (State::IS_PUBLIC | State::IS_PROTECTED | State::IS_PRIVATE | State::IS_PROTECTED_SET | State::IS_PRIVATE_SET)) !== 0;
     }
 
     /**
@@ -226,5 +228,27 @@ class ASTFormalParameter extends AbstractASTNode
     public function isPrivate(): bool
     {
         return ($this->getModifiers() & State::IS_PRIVATE) === State::IS_PRIVATE;
+    }
+
+    /**
+     * Returns <b>true</b> if this node is marked as protected(set), otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * Can happen only on constructor promotion property.
+     */
+    public function isProtectedSet(): bool
+    {
+        return ($this->getModifiers() & State::IS_PROTECTED_SET) === State::IS_PROTECTED_SET;
+    }
+
+    /**
+     * Returns <b>true</b> if this node is marked as private(set), otherwise the
+     * returned value will be <b>false</b>.
+     *
+     * Can happen only on constructor promotion property.
+     */
+    public function isPrivateSet(): bool
+    {
+        return ($this->getModifiers() & State::IS_PRIVATE_SET) === State::IS_PRIVATE_SET;
     }
 }

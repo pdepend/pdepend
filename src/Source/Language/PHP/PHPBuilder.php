@@ -124,6 +124,7 @@ use PDepend\Source\AST\ASTPostfixExpression;
 use PDepend\Source\AST\ASTPreDecrementExpression;
 use PDepend\Source\AST\ASTPreIncrementExpression;
 use PDepend\Source\AST\ASTPrintExpression;
+use PDepend\Source\AST\ASTPropertyHook;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTRequireExpression;
 use PDepend\Source\AST\ASTReturnStatement;
@@ -555,6 +556,23 @@ class PHPBuilder implements Builder
         $method->setCache($this->cache);
 
         return $method;
+    }
+
+    /**
+     * Builds a new property hook instance.
+     */
+    public function buildPropertyHook(string $name): ASTPropertyHook
+    {
+        $this->checkBuilderState();
+
+        // Debug method creation
+        Log::debug("Creating: \\PDepend\\Source\\AST\\ASTPropertyHook({$name})");
+
+        // Create a new method instance
+        $hook = new ASTPropertyHook($name);
+        $hook->setCache($this->cache);
+
+        return $hook;
     }
 
     /**

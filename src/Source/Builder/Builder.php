@@ -120,6 +120,7 @@ use PDepend\Source\AST\ASTPostfixExpression;
 use PDepend\Source\AST\ASTPreDecrementExpression;
 use PDepend\Source\AST\ASTPreIncrementExpression;
 use PDepend\Source\AST\ASTPrintExpression;
+use PDepend\Source\AST\ASTPropertyHook;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTRequireExpression;
 use PDepend\Source\AST\ASTReturnStatement;
@@ -299,6 +300,11 @@ interface Builder extends IteratorAggregate
      * Builds a new method instance.
      */
     public function buildMethod(string $name): ASTMethod;
+
+    /**
+     * Builds a new property hook instance.
+     */
+    public function buildPropertyHook(string $name): ASTPropertyHook;
 
     /**
      * Builds a new function instance.
