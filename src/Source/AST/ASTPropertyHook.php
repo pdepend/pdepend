@@ -39,67 +39,44 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
  */
 
 namespace PDepend\Source\AST;
 
 use InvalidArgumentException;
-use OutOfBoundsException;
 
 /**
- * This class represents a field or property declaration of a class.
- *
- * <code>
- * // Simple field declaration
- * class Foo {
- *     protected $foo;
- * }
- *
- * // Field declaration with multiple properties
- * class Foo {
- *     protected $foo = 23
- *               $bar = 42,
- *               $baz = null;
- * }
- * </code>
+ * Represents a PHP property hook node.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.6
  */
-class ASTFieldDeclaration extends AbstractASTNode
+class ASTPropertyHook extends AbstractASTCallable
 {
-    /**
-     * Checks if this parameter has a type.
-     */
-    public function hasType(): bool
-    {
-        return (reset($this->nodes) instanceof ASTType);
-    }
+    protected null|ASTFieldDeclaration|ASTFormalParameter $parentClass = null;
+
+    /** Defined modifiers for this property node. */
+    protected int $modifiers = 0;
 
     /**
-     * Returns the type of this parameter.
+     * The magic sleep method will be called by the PHP engine when this class
+     * gets serialized. It returns an array with those properties that should be
+     * cached for hook instances.
      *
-     * @throws OutOfBoundsException
+     * @return list<string>
      */
-    public function getType(): ASTType
+    public function __sleep(): array
     {
-        $child = $this->getChild(0);
-        if ($child instanceof ASTType) {
-            return $child;
-        }
-
-        throw new OutOfBoundsException('The parameter does not have a type specification.');
+        return ['modifiers', ...parent::__sleep()];
     }
 
     /**
      * This method returns a OR combined integer of the declared modifiers for
-     * this property.
+     * this hook.
      */
     public function getModifiers(): int
     {
-        return $this->getMetadataInteger(5);
+        return $this->modifiers;
     }
 
     /**
@@ -109,7 +86,6 @@ class ASTFieldDeclaration extends AbstractASTNode
      * This method will throw an exception when the value of given <b>$modifiers</b>
      * contains an invalid/unexpected modifier
      *
-     * @param int $modifiers The declared modifiers for this node.
      * @throws InvalidArgumentException If the given modifier contains unexpected values.
      */
     public function setModifiers(int $modifiers): void
@@ -117,19 +93,13 @@ class ASTFieldDeclaration extends AbstractASTNode
         $expected = ~State::IS_PUBLIC
                   & ~State::IS_PROTECTED
                   & ~State::IS_PRIVATE
-                  & ~State::IS_STATIC
-                  & ~State::IS_READONLY
-                  & ~State::IS_PRIVATE_SET
-                  & ~State::IS_PROTECTED_SET;
+                  & ~State::IS_FINAL;
 
         if (($expected & $modifiers) !== 0) {
-            throw new InvalidArgumentException(
-                'Invalid field modifiers given, allowed modifiers are ' .
-                'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_STATIC.',
-            );
+            throw new InvalidArgumentException('Invalid hook modifier given.');
         }
 
-        $this->setMetadataInteger(5, $modifiers);
+        $this->modifiers = $modifiers;
     }
 
     /**
@@ -138,7 +108,7 @@ class ASTFieldDeclaration extends AbstractASTNode
      */
     public function isPublic(): bool
     {
-        return (($this->getModifiers() & State::IS_PUBLIC) === State::IS_PUBLIC);
+        return (($this->modifiers & State::IS_PUBLIC) === State::IS_PUBLIC);
     }
 
     /**
@@ -147,7 +117,7 @@ class ASTFieldDeclaration extends AbstractASTNode
      */
     public function isProtected(): bool
     {
-        return (($this->getModifiers() & State::IS_PROTECTED) === State::IS_PROTECTED);
+        return (($this->modifiers & State::IS_PROTECTED) === State::IS_PROTECTED);
     }
 
     /**
@@ -156,44 +126,33 @@ class ASTFieldDeclaration extends AbstractASTNode
      */
     public function isPrivate(): bool
     {
-        return (($this->getModifiers() & State::IS_PRIVATE) === State::IS_PRIVATE);
+        return (($this->modifiers & State::IS_PRIVATE) === State::IS_PRIVATE);
     }
 
     /**
-     * Returns <b>true</b> if this node is marked as protected(set), otherwise the
+     * Returns <b>true</b> when this node is declared as final, otherwise the
      * returned value will be <b>false</b>.
      */
-    public function isProtectedSet(): bool
+    public function isFinal(): bool
     {
-        return (($this->getModifiers() & State::IS_PROTECTED_SET) === State::IS_PROTECTED_SET);
+        return (($this->modifiers & State::IS_FINAL) === State::IS_FINAL);
     }
 
     /**
-     * Returns <b>true</b> if this node is marked as private(set), otherwise the
-     * returned value will be <b>false</b>.
+     * Returns the parent type object or <b>null</b>
      */
-    public function isPrivateSet(): bool
+    public function getParent(): null|ASTFieldDeclaration|ASTFormalParameter
     {
-        return (($this->getModifiers() & State::IS_PRIVATE_SET) === State::IS_PRIVATE_SET);
+        return $this->parentClass;
     }
 
     /**
-     * Returns <b>true</b> when this node is declared as static, otherwise
-     * the returned value will be <b>false</b>.
-     */
-    public function isStatic(): bool
-    {
-        return (($this->getModifiers() & State::IS_STATIC) === State::IS_STATIC);
-    }
-
-    /**
-     * Returns the total number of the used property bag.
+     * Sets the parent type object.
      *
-     * @see    ASTNode#getMetadataSize()
-     * @since  0.10.4
+     * @param ASTFieldDeclaration|ASTFormalParameter|null $parent
      */
-    protected function getMetadataSize(): int
+    public function setParent(?ASTNode $parent): void
     {
-        return 6;
+        $this->parentClass = $parent;
     }
 }

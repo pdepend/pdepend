@@ -867,6 +867,7 @@ class PHPTokenizerInternal implements FullTokenizer
 
                 continue;
             }
+
             if ($attributeComment) {
                 if ($temp === '[') {
                     $brackets++;
@@ -884,15 +885,27 @@ class PHPTokenizerInternal implements FullTokenizer
                 }
 
                 $attributeComment .= is_array($token) ? $token[1] : $token;
-            } elseif ($temp === T_ATTRIBUTE) {
+
+                continue;
+            }
+
+            if ($temp === T_ATTRIBUTE) {
                 $attributeComment = '/* @';
                 $attributeCommentLine = $token[2];
                 $brackets = 1;
-            } elseif (is_array($token) && ($temp === T_NAME_QUALIFIED || $temp === T_NAME_FULLY_QUALIFIED)) {
+
+                continue;
+            }
+
+            if (is_array($token) && ($temp === T_NAME_QUALIFIED || $temp === T_NAME_FULLY_QUALIFIED)) {
                 foreach ($this->splitQualifiedNameToken($token) as $subToken) {
                     $result[] = $subToken;
                 }
-            } elseif (
+
+                continue;
+            }
+
+            if (
                 is_array($token)
                 && $temp === T_NAME_RELATIVE
                 && preg_match('/^namespace\\\\(.*)$/', $token[1], $match)
@@ -900,11 +913,19 @@ class PHPTokenizerInternal implements FullTokenizer
                 foreach ($this->splitRelativeNameToken($token, $match[1]) as $subToken) {
                     $result[] = $subToken;
                 }
-            } elseif (isset(self::$substituteTokens[$temp])) {
+
+                continue;
+            }
+
+            if (isset(self::$substituteTokens[$temp])) {
                 foreach (self::$substituteTokens[$temp] as $token) {
                     $result[] = $token;
                 }
-            } elseif ($temp === '?' && isset($tokens[$index + 1][0]) && $tokens[$index + 1][0] === T_OBJECT_OPERATOR) {
+
+                continue;
+            }
+
+            if ($temp === '?' && isset($tokens[$index + 1][0]) && $tokens[$index + 1][0] === T_OBJECT_OPERATOR) {
                 $tokens[$index + 1] = [
                     T_NULLSAFE_OBJECT_OPERATOR,
                     '?->',
@@ -912,7 +933,11 @@ class PHPTokenizerInternal implements FullTokenizer
                 ];
 
                 continue;
-            } elseif (in_array($temp, [T_PRIVATE, T_PROTECTED, T_PUBLIC], true) && $tokens[$index + 1][0] === '(' && $tokens[$index + 2][1] === 'set' && $tokens[$index + 3][0] === ')') {
+            }
+
+            if (in_array($temp, [T_PRIVATE, T_PROTECTED, T_PUBLIC], true)
+                && $tokens[$index + 1][0] === '(' && $tokens[$index + 2][1] === 'set' && $tokens[$index + 3][0] === ')'
+            ) {
                 $asymmetricToken = true;
                 $result[] = match ($temp) {
                     T_PRIVATE => [T_PRIVATE_SET, 'private(set)', $token[2]],
@@ -921,9 +946,9 @@ class PHPTokenizerInternal implements FullTokenizer
                 };
 
                 continue;
-            } else {
-                $result[] = $token;
             }
+
+            $result[] = $token;
         }
 
         return $result;
