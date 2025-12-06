@@ -1,0 +1,25 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Call to method load\(\) on an unknown class Symfony\\Component\\DependencyInjection\\Loader\\XmlFileLoader\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^Instantiated class Symfony\\Component\\DependencyInjection\\Loader\\XmlFileLoader not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/Application.php
+
+		-
+			message: '#^Call to method load\(\) on an unknown class Symfony\\Component\\DependencyInjection\\Loader\\XmlFileLoader\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/DependencyInjection/Extension.php
+
+		-
+			message: '#^Instantiated class Symfony\\Component\\DependencyInjection\\Loader\\XmlFileLoader not found\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/DependencyInjection/Extension.php

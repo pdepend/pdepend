@@ -52,7 +52,9 @@ use PDepend\TextUI\Runner;
 use PDepend\Util\Configuration;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\DependencyInjection\TaggedContainerInterface;
 
@@ -137,9 +139,6 @@ class Application
         return $obj;
     }
 
-    /**
-     * @throws Exception
-     */
     private function getContainer(): TaggedContainerInterface
     {
         if (!isset($this->container)) {
@@ -149,9 +148,6 @@ class Application
         return $this->container;
     }
 
-    /**
-     * @throws Exception
-     */
     private function createContainer(): TaggedContainerInterface
     {
         $extensions = [new PdependExtension()];
@@ -160,14 +156,26 @@ class Application
         $container->prependExtensionConfig('pdepend', []);
         $container->addCompilerPass(new DependencyInjection\Compiler\ProcessListenerPass());
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../resources'));
-
         foreach ($extensions as $extension) {
             $container->registerExtension($extension);
         }
 
         if (isset($this->configurationFile)) {
-            $loader->load($this->configurationFile);
+            $configFile = $this->configurationFile;
+            $locator = new FileLocator(__DIR__ . '/../resources');
+            if (str_ends_with($configFile, '.xml') || str_ends_with($configFile, '.xml.dist')) {
+                if (!class_exists(XmlFileLoader::class)) {
+                    throw new InvalidArgumentException('XML config is not supported when using Symfony 8+.');
+                }
+                $loader = new XmlFileLoader($container, $locator);
+                $loader->load($configFile);
+            } elseif (str_ends_with($configFile, '.php')) {
+                $loader = new PhpFileLoader($container, $locator);
+                $loader->load($configFile);
+            } else {
+                $loader = new YamlFileLoader($container, $locator);
+                $loader->load($configFile);
+            }
         }
 
         $container->compile();
@@ -199,7 +207,6 @@ class Application
 
     /**
      * @return array<string, array<string, string>>
-     * @throws Exception
      */
     private function getAvailableOptionsFor(string $serviceTag): array
     {

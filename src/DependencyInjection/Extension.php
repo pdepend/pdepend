@@ -51,6 +51,7 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
@@ -89,12 +90,17 @@ abstract class Extension
         $path = rtrim($this->getServiceDefinitionsPath(), DIRECTORY_SEPARATOR);
         $name = $this->getServiceDefinitionsName();
 
-        if (file_exists($path . DIRECTORY_SEPARATOR . ($file = $name . '.xml'))) {
-            $loader = new XmlFileLoader($container, new FileLocator($path));
+        $locator = new FileLocator($path);
+        if (class_exists(XmlFileLoader::class) && file_exists($path . DIRECTORY_SEPARATOR . ($file = $name . '.xml'))) {
+            $loader = new XmlFileLoader($container, $locator);
             $loader->load($file);
         }
         if (file_exists($path . DIRECTORY_SEPARATOR . ($file = $name . '.yml'))) {
-            $loader = new YamlFileLoader($container, new FileLocator($path));
+            $loader = new YamlFileLoader($container, $locator);
+            $loader->load($file);
+        }
+        if (file_exists($path . DIRECTORY_SEPARATOR . ($file = $name . '.php'))) {
+            $loader = new PhpFileLoader($container, $locator);
             $loader->load($file);
         }
 

@@ -1,0 +1,9 @@
+pdepend:
+  image-convert:
+    font-family: Arial
+    font-size: 12
+
+  cache:
+    driver: file
+    location: ../../../php/PDepend/_run/cache
+    ttl: 2592000

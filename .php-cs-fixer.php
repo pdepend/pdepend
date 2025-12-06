@@ -407,10 +407,11 @@ return $config
         PhpCsFixer\Finder::create()
             ->exclude('vendor')
             ->in([
-                __DIR__ . '/scripts',
                 __DIR__ . '/bin',
-                __DIR__ . '/src',
+                __DIR__ . '/resources',
+                __DIR__ . '/scripts',
                 __DIR__ . '/site',
+                __DIR__ . '/src',
                 __DIR__ . '/tests/php',
             ])
     );

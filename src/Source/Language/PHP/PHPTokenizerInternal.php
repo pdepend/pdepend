@@ -1008,13 +1008,13 @@ class PHPTokenizerInternal implements FullTokenizer
                     $image = $token[1];
 
                     // Check for a context sensitive alternative
-                    if (isset(self::$alternativeMap[$type][$previousType ?? 0])) {
-                        $type = self::$alternativeMap[$type][$previousType ?? 0];
+                    if (isset($previousType, self::$alternativeMap[$type][$previousType])) {
+                        $type = self::$alternativeMap[$type][$previousType];
                     }
 
-                    if (isset(self::$reductionMap[$type][$previousType ?? 0])) {
-                        $image = self::$reductionMap[$type][$previousType ?? 0]['image'];
-                        $type = (int) self::$reductionMap[$type][$previousType ?? 0]['type'];
+                    if (isset($previousType, self::$reductionMap[$type][$previousType])) {
+                        $image = self::$reductionMap[$type][$previousType]['image'];
+                        $type = (int) self::$reductionMap[$type][$previousType]['type'];
 
                         $startColumn = $previousStartColumn;
 
@@ -1023,8 +1023,8 @@ class PHPTokenizerInternal implements FullTokenizer
                 } elseif (isset($tokenMap[$token[0] ?? ''])) {
                     $type = (int) $tokenMap[$token[0] ?? ''];
                     // Check for a context sensitive alternative
-                    if (isset(self::$alternativeMap[$type][$previousType ?? 0])) {
-                        $type = self::$alternativeMap[$type][$previousType ?? 0];
+                    if (isset($previousType, self::$alternativeMap[$type][$previousType])) {
+                        $type = self::$alternativeMap[$type][$previousType];
                     }
 
                     $image = $token[1];

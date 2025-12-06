@@ -138,7 +138,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
         $this->prepareArgv(
             [
                 '--dummy-logger=' . $this->createRunResourceURI('pdepend.log'),
-                '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
+                '--configuration=' . __DIR__ . '/../../../resources/pdepend.yml.dist',
                 $this->createCodeResourceUriForTest(),
             ]
         );

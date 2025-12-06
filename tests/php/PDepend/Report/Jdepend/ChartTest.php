@@ -239,11 +239,7 @@ class ChartTest extends AbstractTestCase
                         ],
                     ];
 
-                    if (isset($data[$node->getId()])) {
-                        return $data[$node->getId()];
-                    }
-
-                    return [];
+                    return $data[$node->getId()] ?? [];
                 }
             );
 

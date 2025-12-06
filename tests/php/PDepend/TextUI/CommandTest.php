@@ -195,7 +195,7 @@ class CommandTest extends AbstractTestCase
             '--suffix=inc',
             '--ignore=code-5.2.x',
             '--exclude=pdepend.test2',
-            '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
+            '--configuration=' . __DIR__ . '/../../../resources/pdepend.yml.dist',
             '--dummy-logger=' . $logFile,
             $resource,
         ];
@@ -218,7 +218,7 @@ class CommandTest extends AbstractTestCase
 
         $argv = [
             '--suffix=inc',
-            '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
+            '--configuration=' . __DIR__ . '/../../../resources/pdepend.yml.dist',
             '--dummy-logger=' . $logFile,
             $resource,
         ];
@@ -314,7 +314,7 @@ class CommandTest extends AbstractTestCase
         $logFile = $this->createRunResourceURI();
 
         $argv[] = '--dummy-logger=' . $logFile;
-        $argv[] = '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist';
+        $argv[] = '--configuration=' . __DIR__ . '/../../../resources/pdepend.yml.dist';
         $argv[] = $pathName;
 
         if (file_exists($logFile)) {
@@ -419,22 +419,14 @@ class CommandTest extends AbstractTestCase
     public function testCommandHandlesConfigurationFileCorrect(): void
     {
         // Sample config file
-        $configFile = $this->createRunResourceURI('config.xml');
+        $configFile = $this->createRunResourceURI('config.yml');
         // Write a dummy config file.
         file_put_contents(
             $configFile,
-            '<?xml version="1.0"?>
-             <symfony:container xmlns:symfony="http://symfony.com/schema/dic/services"
-                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                 xmlns="http://pdepend.org/schema/dic/pdepend"
-                 xsi:schemaLocation="http://symfony.com/schema/dic/services
-                 http://symfony.com/schema/dic/services/services-1.0.xsd">
-               <config>
-                   <cache>
-                     <driver>memory</driver>
-                   </cache>
-               </config>
-             </symfony:container>'
+            'pdepend:
+  cache:
+    driver: memory
+'
         );
 
         $argv = [
@@ -490,7 +482,7 @@ class CommandTest extends AbstractTestCase
         $argv = [
             '--coverage-report=' . __DIR__ . '/_files/clover.xml',
             '--dummy-logger=' . $this->createRunResourceURI(),
-            '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
+            '--configuration=' . __DIR__ . '/../../../resources/pdepend.yml.dist',
             __FILE__,
         ];
 
@@ -524,7 +516,7 @@ class CommandTest extends AbstractTestCase
             '--quiet',
             '--coverage-report=' . __DIR__ . '/_files/clover.xml',
             '--dummy-logger=' . $this->createRunResourceURI(),
-            '--configuration=' . __DIR__ . '/../../../resources/pdepend.xml.dist',
+            '--configuration=' . __DIR__ . '/../../../resources/pdepend.yml.dist',
             __FILE__,
         ];
 

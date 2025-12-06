@@ -48,7 +48,7 @@ use stdClass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as SymfonyExtension;
-use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 /**
@@ -93,8 +93,8 @@ class PdependExtension extends SymfonyExtension
         /** @var array<string, array<string, mixed>> */
         $config = $this->processConfiguration($configuration, $configs);
 
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../../resources'));
-        $loader->load('services.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../../resources'));
+        $loader->load('services.php');
 
         foreach ($extensionManager->getActivatedExtensions() as $extension) {
             /** @var array<mixed> */

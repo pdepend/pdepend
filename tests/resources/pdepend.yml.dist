@@ -1,0 +1,4 @@
+pdepend:
+  extensions:
+    test:
+      class: PDepend\TestExtension
