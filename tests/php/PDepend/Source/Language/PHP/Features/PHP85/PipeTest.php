@@ -3,8 +3,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -39,50 +37,55 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.20
  */
 
-namespace PDepend\Source\Language\PHP;
+namespace PDepend\Source\Language\PHP\Features\PHP85;
 
-use PDepend\Source\Tokenizer\Tokens;
+use PDepend\Source\AST\ASTEchoStatement;
+use PDepend\Source\AST\ASTExpression;
+use PDepend\Source\AST\ASTMethod;
+use PDepend\Source\AST\ASTPipe;
+use PDepend\Source\Language\PHP\PHPBuilder;
+use PDepend\Source\Language\PHP\PHPParserVersion85;
+use PDepend\Source\Language\PHP\PHPTokenizerInternal;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Concrete parser implementation that is very tolerant and accepts language
- * constructs and keywords that are reserved in newer php versions, but not in
- * older versions.
- *
+ * @covers \PDepend\Source\AST\ASTConstantDeclarator
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion84
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.20
  */
-class PHPParserGeneric extends PHPParserVersion85
+#[CoversClass(PHPBuilder::class)]
+#[CoversClass(PHPTokenizerInternal::class)]
+#[CoversClass(ASTPipe::class)]
+#[CoversClass(PHPParserVersion85::class)]
+#[Group('unittest')]
+#[Group('php8.5')]
+class PipeTest extends PHPParserVersion85TestCase
 {
     /**
-     * Tests if the give token is a valid function name in the supported PHP
-     * version.
-     *
-     * @since 2.3
+     * testPipe
      */
-    protected function isFunctionName(int $tokenType): bool
+    public function testPipe(): void
     {
-        return match ($tokenType) {
-            Tokens::T_CLONE,
-            Tokens::T_STRING,
-            Tokens::T_USE,
-            Tokens::T_GOTO,
-            Tokens::T_NULL,
-            Tokens::T_SELF,
-            Tokens::T_TRUE,
-            Tokens::T_FALSE,
-            Tokens::T_TRAIT,
-            Tokens::T_INSTEADOF,
-            Tokens::T_NAMESPACE,
-            Tokens::T_DIR,
-            Tokens::T_NS_C,
-            Tokens::T_YIELD,
-            Tokens::T_PARENT,
-            Tokens::T_TRAIT_C => true,
-            default => false,
-        };
+        /** @var ASTMethod $method */
+        $method = $this->getFirstMethodForTestCase();
+
+        $echo = $method->getFirstChildOfType(ASTEchoStatement::class);
+        static::assertInstanceOf(ASTEchoStatement::class, $echo);
+        $chain = [];
+        $node = $echo;
+
+        $node = $node->getFirstChildOfType(ASTExpression::class);
+        static::assertInstanceOf(ASTExpression::class, $node);
+        foreach ($node->getChildren() as $variable) {
+            $chain[] = $variable->getImage();
+        }
+
+        $chain[] = $node->getImage();
+
+        static::assertSame(["' test '", '|>', 'trim', ''], $chain);
     }
 }

@@ -212,6 +212,10 @@ if (!defined('T_NULLSAFE_OBJECT_OPERATOR')) {
     define('T_NULLSAFE_OBJECT_OPERATOR', 42387);
 }
 
+if (!defined('T_PIPE')) {
+    define('T_PIPE', 42408);
+}
+
 /**
  * Define PHP 8.1 tokens
  */
@@ -396,6 +400,7 @@ class PHPTokenizerInternal implements FullTokenizer
         T_FN => Tokens::T_FN,
         T_MATCH => Tokens::T_STRING,
         T_NULLSAFE_OBJECT_OPERATOR => Tokens::T_NULLSAFE_OBJECT_OPERATOR,
+        T_PIPE => Tokens::T_PIPE,
         T_READONLY => Tokens::T_READONLY,
         T_PRIVATE_SET => Tokens::T_PRIVATE_SET,
         T_PROTECTED_SET => Tokens::T_PROTECTED_SET,
@@ -854,17 +859,13 @@ class PHPTokenizerInternal implements FullTokenizer
         $attributeComment = null;
         $attributeCommentLine = null;
         $brackets = 0;
-        $asymmetricToken = false;
+        $skipTo = 0;
 
         foreach ($tokens as $index => $token) {
             $temp = (array) $token;
             $temp = $temp[0];
 
-            if ($asymmetricToken) {
-                if ($temp === ')') {
-                    $asymmetricToken = false;
-                }
-
+            if ($skipTo > $index) {
                 continue;
             }
 
@@ -938,12 +939,19 @@ class PHPTokenizerInternal implements FullTokenizer
             if (in_array($temp, [T_PRIVATE, T_PROTECTED, T_PUBLIC], true)
                 && $tokens[$index + 1][0] === '(' && $tokens[$index + 2][1] === 'set' && $tokens[$index + 3][0] === ')'
             ) {
-                $asymmetricToken = true;
+                $skipTo = $index + 4;
                 $result[] = match ($temp) {
                     T_PRIVATE => [T_PRIVATE_SET, 'private(set)', $token[2]],
                     T_PROTECTED => [T_PROTECTED_SET, 'protected(set)', $token[2]],
                     T_PUBLIC => [T_PUBLIC_SET, 'public(set)', $token[2]],
                 };
+
+                continue;
+            }
+
+            if ($temp === '|' && isset($tokens[$index + 1]) && $tokens[$index + 1] === '>') {
+                $result[] = [T_PIPE, '|>', 1];
+                $skipTo = $index + 2;
 
                 continue;
             }

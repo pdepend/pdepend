@@ -120,6 +120,7 @@ use PDepend\Source\AST\ASTNamedArgument;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParentReference;
+use PDepend\Source\AST\ASTPipe;
 use PDepend\Source\AST\ASTPostfixExpression;
 use PDepend\Source\AST\ASTPreDecrementExpression;
 use PDepend\Source\AST\ASTPreIncrementExpression;
@@ -1006,6 +1007,16 @@ class PHPBuilder implements Builder
     public function buildAstBooleanAndExpression(): ASTBooleanAndExpression
     {
         return $this->buildAstNodeInstance(ASTBooleanAndExpression::class, '&&');
+    }
+
+    /**
+     * Builds a new pipe expression.
+     *
+     * @since  3.0.0
+     */
+    public function buildASTPipe(): ASTPipe
+    {
+        return $this->buildAstNodeInstance(ASTPipe::class, '|>');
     }
 
     /**
