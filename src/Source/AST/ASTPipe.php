@@ -39,50 +39,17 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.20
  */
 
-namespace PDepend\Source\Language\PHP;
-
-use PDepend\Source\Tokenizer\Tokens;
+namespace PDepend\Source\AST;
 
 /**
- * Concrete parser implementation that is very tolerant and accepts language
- * constructs and keywords that are reserved in newer php versions, but not in
- * older versions.
+ * This node class represents a boolean and-expression.
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.20
+ * @since 3.0.0
  */
-class PHPParserGeneric extends PHPParserVersion85
+class ASTPipe extends AbstractASTNode
 {
-    /**
-     * Tests if the give token is a valid function name in the supported PHP
-     * version.
-     *
-     * @since 2.3
-     */
-    protected function isFunctionName(int $tokenType): bool
-    {
-        return match ($tokenType) {
-            Tokens::T_CLONE,
-            Tokens::T_STRING,
-            Tokens::T_USE,
-            Tokens::T_GOTO,
-            Tokens::T_NULL,
-            Tokens::T_SELF,
-            Tokens::T_TRUE,
-            Tokens::T_FALSE,
-            Tokens::T_TRAIT,
-            Tokens::T_INSTEADOF,
-            Tokens::T_NAMESPACE,
-            Tokens::T_DIR,
-            Tokens::T_NS_C,
-            Tokens::T_YIELD,
-            Tokens::T_PARENT,
-            Tokens::T_TRAIT_C => true,
-            default => false,
-        };
-    }
 }

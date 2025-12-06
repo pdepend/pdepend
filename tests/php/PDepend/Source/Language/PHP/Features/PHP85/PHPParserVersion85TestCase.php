@@ -3,8 +3,6 @@
 /**
  * This file is part of PDepend.
  *
- * PHP Version 5
- *
  * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
@@ -39,50 +37,32 @@
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.20
  */
 
-namespace PDepend\Source\Language\PHP;
+namespace PDepend\Source\Language\PHP\Features\PHP85;
 
-use PDepend\Source\Tokenizer\Tokens;
+use PDepend\AbstractTestCase;
+use PDepend\Source\Builder\Builder;
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PDepend\Source\Language\PHP\PHPParserVersion85;
+use PDepend\Source\Tokenizer\Tokenizer;
+use PDepend\Util\Cache\CacheDriver;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Concrete parser implementation that is very tolerant and accepts language
- * constructs and keywords that are reserved in newer php versions, but not in
- * older versions.
- *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
- * @since 0.9.20
  */
-class PHPParserGeneric extends PHPParserVersion85
+#[CoversClass(PHPParserVersion85::class)]
+#[Group('unittest')]
+abstract class PHPParserVersion85TestCase extends AbstractTestCase
 {
-    /**
-     * Tests if the give token is a valid function name in the supported PHP
-     * version.
-     *
-     * @since 2.3
-     */
-    protected function isFunctionName(int $tokenType): bool
+    protected function createPHPParser(Tokenizer $tokenizer, Builder $builder, CacheDriver $cache): AbstractPHPParser
     {
-        return match ($tokenType) {
-            Tokens::T_CLONE,
-            Tokens::T_STRING,
-            Tokens::T_USE,
-            Tokens::T_GOTO,
-            Tokens::T_NULL,
-            Tokens::T_SELF,
-            Tokens::T_TRUE,
-            Tokens::T_FALSE,
-            Tokens::T_TRAIT,
-            Tokens::T_INSTEADOF,
-            Tokens::T_NAMESPACE,
-            Tokens::T_DIR,
-            Tokens::T_NS_C,
-            Tokens::T_YIELD,
-            Tokens::T_PARENT,
-            Tokens::T_TRAIT_C => true,
-            default => false,
-        };
+        return $this->getMockBuilder(PHPParserVersion85::class)
+            ->setConstructorArgs([$tokenizer, $builder, $cache])
+            ->onlyMethods([])
+            ->getMock();
     }
 }

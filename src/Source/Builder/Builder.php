@@ -116,6 +116,7 @@ use PDepend\Source\AST\ASTNamedArgument;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTParentReference;
+use PDepend\Source\AST\ASTPipe;
 use PDepend\Source\AST\ASTPostfixExpression;
 use PDepend\Source\AST\ASTPreDecrementExpression;
 use PDepend\Source\AST\ASTPreIncrementExpression;
@@ -578,6 +579,13 @@ interface Builder extends IteratorAggregate
      * @since  0.9.8
      */
     public function buildAstBooleanAndExpression(): ASTBooleanAndExpression;
+
+    /**
+     * Builds a new pipe expression.
+     *
+     * @since  3.0.0
+     */
+    public function buildASTPipe(): ASTPipe;
 
     /**
      * Builds a new boolean or-expression.

@@ -559,6 +559,9 @@ interface Tokens
     /** Token that represents the '?->' nullsafe object operator */
     public const T_NULLSAFE_OBJECT_OPERATOR = 387;
 
+    /** Token that represents the '|>' pipe operator */
+    public const T_PIPE = 408;
+
     /** Marks an enum token. */
     public const T_ENUM = 372;
 
