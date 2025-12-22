@@ -72,6 +72,7 @@ use PDepend\Source\Parser\ParserException;
 use PDepend\Util\Cache\CacheFactory;
 use PDepend\Util\Configuration;
 use React\EventLoop\Factory as LoopFactory;
+use React\Stream\ReadableStreamInterface;
 use React\Stream\WritableStreamInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -527,9 +528,9 @@ class Engine
         if ($fileCount > 1) {
             $coreCount = (new CpuCoreCounter())->getCount();
             if ($coreCount > 1) {
-                $this->runMultiProcessParse($files, $fileCount, $coreCount);
-
-                return;
+                if ($this->runMultiProcessParse($files, $fileCount, $coreCount)) {
+                    return;
+                }
             }
         }
 
@@ -575,7 +576,7 @@ class Engine
     /**
      * @param ArrayIterator<int, string> $files
      */
-    private function runMultiProcessParse(ArrayIterator $files, int $fileCount, int $coreCount): void
+    private function runMultiProcessParse(ArrayIterator $files, int $fileCount, int $coreCount): bool
     {
         $processFactory = new ProcessFactory($this->withoutAnnotations);
         $loop = LoopFactory::create();
@@ -586,7 +587,12 @@ class Engine
             $buffers[$proccessNo] = '';
             $process->start($loop);
 
-            assert(is_callable($process->stdout));
+            if (!$process->stdout instanceof ReadableStreamInterface
+                || !$process->stdin instanceof WritableStreamInterface
+            ) {
+                return false;
+            }
+
             $process->stdout->on('data', function (string $chunk) use (&$buffers, $proccessNo, $files, $process): void {
                 $buffers[$proccessNo] .= $chunk;
 
@@ -606,26 +612,24 @@ class Engine
                         $this->parseExceptions[] = $data;
                     }
 
-                    if ($process->stdin instanceof WritableStreamInterface) {
-                        if ($files->valid()) {
-                            $process->stdin->write($files->current() . "\n");
-                            $files->next();
-                        } else {
-                            $process->stdin->end();
-                        }
+                    if ($files->valid()) {
+                        $process->stdin->write($files->current() . "\n");
+                        $files->next();
+                    } else {
+                        $process->stdin->end();
                     }
                     $this->fireEndFileParsing();
                 }
             });
 
-            if ($process->stdin instanceof WritableStreamInterface) {
-                $process->stdin->write($files->current() . "\n");
-                $files->next();
-            }
+            $process->stdin->write($files->current() . "\n");
+            $files->next();
         }
         $loop->run();
         $cache = $this->cacheFactory->create();
         $this->builder->setCache($cache);
+
+        return true;
     }
 
     private function parseFile(PHPTokenizerInternal $tokenizer, string $file): void
