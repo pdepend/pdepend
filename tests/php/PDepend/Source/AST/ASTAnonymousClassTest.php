@@ -83,6 +83,16 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
         static::assertEquals(5, $expr->getEndColumn());
     }
 
+    public function testAnonymousClassSupportsProperties(): void
+    {
+        $property = $this->getFirstAnonymousClassInFunction()
+            ->getProperties()
+            ->current();
+
+        static::assertSame(5, $property->getStartLine());
+        static::assertSame(5, $property->getEndLine());
+    }
+
     /**
      * testMagicSleepMethodReturnsExpectedSetOfPropertyNames
      */
@@ -94,7 +104,6 @@ class ASTAnonymousClassTest extends ASTNodeTestCase
         static::assertEquals(
             [
                 'metadata',
-                'properties',
                 'constants',
                 'interfaceReferences',
                 'parentClassReference',

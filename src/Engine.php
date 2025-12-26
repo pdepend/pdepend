@@ -71,7 +71,7 @@ use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PDepend\Source\Parser\ParserException;
 use PDepend\Util\Cache\CacheFactory;
 use PDepend\Util\Configuration;
-use React\EventLoop\Factory as LoopFactory;
+use React\EventLoop\Loop;
 use React\Stream\ReadableStreamInterface;
 use React\Stream\WritableStreamInterface;
 use RecursiveDirectoryIterator;
@@ -579,7 +579,7 @@ class Engine
     private function runMultiProcessParse(ArrayIterator $files, int $fileCount, int $coreCount): bool
     {
         $processFactory = new ProcessFactory($this->withoutAnnotations);
-        $loop = LoopFactory::create();
+        $loop = Loop::get();
         $proccessCount = min($fileCount, $coreCount);
         $buffers = [];
         for ($proccessNo = 0; $proccessNo < $proccessCount; $proccessNo++) {

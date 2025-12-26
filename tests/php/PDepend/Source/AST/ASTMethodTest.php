@@ -94,6 +94,7 @@ class ASTMethodTest extends AbstractASTArtifactTestCase
         static::assertEquals(
             [
                 'modifiers',
+                'parentClass',
                 'cache',
                 'id',
                 'name',
