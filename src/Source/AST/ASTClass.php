@@ -63,7 +63,13 @@ class ASTClass extends AbstractASTClassOrInterface
 
     public function __sleep(): array
     {
-        return ['properties', ...parent::__sleep()];
+        $properties = parent::__sleep();
+
+        if (static::class === self::class) {
+            return ['properties', ...$properties];
+        }
+
+        return $properties;
     }
 
     /**

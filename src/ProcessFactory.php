@@ -60,16 +60,16 @@ final class ProcessFactory
     {
         $commandArgs = $this->getCommandArgs();
 
-        return new Process(
-            implode(' ', $commandArgs),
-            null,
-            null,
-            [
+        $fds = null;
+        if (extension_loaded('sockets')) {
+            $fds = [
                 ['socket'],
                 ['socket'],
                 ['socket'],
-            ]
-        );
+            ];
+        }
+
+        return new Process(implode(' ', $commandArgs), null, null, $fds);
     }
 
     /**
