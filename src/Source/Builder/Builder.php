@@ -52,6 +52,7 @@ use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTArrayIndexExpression;
 use PDepend\Source\AST\ASTAssignmentExpression;
+use PDepend\Source\AST\ASTAttribute;
 use PDepend\Source\AST\ASTBooleanAndExpression;
 use PDepend\Source\AST\ASTBooleanOrExpression;
 use PDepend\Source\AST\ASTBreakStatement;
@@ -1112,6 +1113,13 @@ interface Builder extends IteratorAggregate
      * @since  0.9.8
      */
     public function buildAstComment(string $cdata): ASTComment;
+
+    /**
+     * Builds a new attribute node instance.
+     *
+     * @param string $image The attribute text.
+     */
+    public function buildAstAttribute(string $image): ASTAttribute;
 
     /**
      * Builds a new unary expression node instance.

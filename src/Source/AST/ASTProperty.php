@@ -174,6 +174,14 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
     }
 
     /**
+     * @return ASTAttribute[]
+     */
+    public function getAttributes(): array
+    {
+        return $this->fieldDeclaration->findChildrenOfType(ASTAttribute::class);
+    }
+
+    /**
      * This method will return <b>true</b> when this property doc comment
      * contains a primitive type hint, otherwise the it will return <b>false</b>.
      *

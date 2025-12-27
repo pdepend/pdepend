@@ -47,11 +47,13 @@ use InvalidArgumentException;
 use PDepend\Source\AST\AbstractASTCallable;
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\AbstractASTType;
 use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTArray;
 use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTAssignmentExpression;
+use PDepend\Source\AST\ASTAttribute;
 use PDepend\Source\AST\ASTBooleanAndExpression;
 use PDepend\Source\AST\ASTBooleanOrExpression;
 use PDepend\Source\AST\ASTBreakStatement;
@@ -314,6 +316,9 @@ abstract class AbstractPHPParser
 
     /** The last parsed doc comment or <b>null</b>. */
     private ?string $docComment = null;
+
+    /** @var list<ASTAttribute> */
+    private array $attributes = [];
 
     /** Bitfield of last parsed modifiers. */
     private int $modifiers = 0;
@@ -731,6 +736,11 @@ abstract class AbstractPHPParser
 
                     break;
 
+                case Tokens::T_ATTRIBUTE:
+                    $this->attributes[] = $this->parseAttributeExpression();
+
+                    break;
+
                 default:
                     if (null === $this->parseOptionalStatement()) {
                         // Consume whatever token
@@ -789,6 +799,7 @@ abstract class AbstractPHPParser
     {
         $this->packageName = Builder::DEFAULT_NAMESPACE;
         $this->docComment = null;
+        $this->attributes = [];
         $this->modifiers = $modifiers;
         $this->echoing = $echoing;
     }
@@ -1025,10 +1036,19 @@ abstract class AbstractPHPParser
         $trait = $this->builder->buildTrait($qualifiedName);
         $trait->setCompilationUnit($this->compilationUnit);
         $trait->setComment($this->docComment);
+        $this->attachAttributes($trait);
         $trait->setId($this->idBuilder->forClassOrInterface($trait));
         $trait->setUserDefined();
 
         return $trait;
+    }
+
+    private function attachAttributes(AbstractASTCallable|AbstractASTNode|AbstractASTType $node): void
+    {
+        foreach ($this->attributes as $attribute) {
+            $node->addChild($attribute);
+        }
+        $this->attributes = [];
     }
 
     /**
@@ -1063,6 +1083,7 @@ abstract class AbstractPHPParser
         $interface = $this->builder->buildInterface($qualifiedName);
         $interface->setCompilationUnit($this->compilationUnit);
         $interface->setComment($this->docComment);
+        $this->attachAttributes($interface);
         $interface->setId($this->idBuilder->forClassOrInterface($interface));
         $interface->setUserDefined();
 
@@ -1128,6 +1149,7 @@ abstract class AbstractPHPParser
         $class->setCompilationUnit($this->compilationUnit);
         $class->setModifiers($this->modifiers);
         $class->setComment($this->docComment);
+        $this->attachAttributes($class);
         $class->setId($this->idBuilder->forClassOrInterface($class));
         $class->setUserDefined();
 
@@ -1350,6 +1372,11 @@ abstract class AbstractPHPParser
 
                     break;
 
+                case Tokens::T_ATTRIBUTE:
+                    $this->attributes[] = $this->parseAttributeExpression();
+
+                    break;
+
                 case Tokens::T_USE:
                     $classOrInterface->addChild($this->parseTraitUseStatement());
 
@@ -1525,6 +1552,7 @@ abstract class AbstractPHPParser
         $declaration = $this->builder->buildAstFieldDeclaration();
         $declaration->setModifiers($modifiers);
         $declaration->setComment($this->docComment);
+        $this->attachAttributes($declaration);
 
         $type = $this->parseFieldDeclarationType();
 
@@ -1592,6 +1620,7 @@ abstract class AbstractPHPParser
         $this->compilationUnit->addChild($callable);
 
         $callable->setComment($docComment);
+        $this->attachAttributes($callable);
         $callable->setTokens($this->tokenStack->pop());
         $this->prepareCallable($callable);
 
@@ -1705,6 +1734,7 @@ abstract class AbstractPHPParser
 
         $method = $this->builder->buildMethod($methodName);
         $method->setComment($this->docComment);
+        $this->attachAttributes($method);
         $method->setCompilationUnit($this->compilationUnit);
 
         $this->classOrInterface?->addMethod($method);
@@ -3620,6 +3650,36 @@ abstract class AbstractPHPParser
         );
 
         return $expr;
+    }
+
+    /**
+     * @throws TokenStreamEndException
+     */
+    private function parseAttributeExpression(): ASTAttribute
+    {
+        $start = $this->consumeToken(Tokens::T_ATTRIBUTE);
+        $attribute = $this->builder->buildASTAttribute($start->image);
+
+        if (is_object($expr = $this->parseOptionalExpression())) {
+            $attribute->addChild($expr);
+        }
+        while ($this->tokenizer->peek() === Tokens::T_COMMA) {
+            $this->consumeToken(Tokens::T_COMMA);
+            if (is_object($expr = $this->parseOptionalExpression())) {
+                $attribute->addChild($expr);
+            }
+        }
+
+        $end = $this->consumeToken(Tokens::T_SQUARED_BRACKET_CLOSE);
+
+        $attribute->configureLinesAndColumns(
+            $start->startLine,
+            $end->endLine,
+            $start->startColumn,
+            $end->endColumn,
+        );
+
+        return $attribute;
     }
 
     /**
@@ -6745,7 +6805,13 @@ abstract class AbstractPHPParser
     {
         $parameter = $this->builder->buildAstFormalParameter();
 
-        if (Tokens::T_ELLIPSIS === $this->tokenizer->peek()) {
+        $peek = $this->tokenizer->peek();
+
+        if (Tokens::T_ATTRIBUTE === $peek) {
+            $parameter->addChild($this->parseAttributeExpression());
+        }
+
+        if (Tokens::T_ELLIPSIS === $peek) {
             $this->consumeToken(Tokens::T_ELLIPSIS);
             $this->consumeComments();
 
@@ -8895,6 +8961,7 @@ abstract class AbstractPHPParser
         $enum->setCompilationUnit($this->compilationUnit);
         $enum->setModifiers($this->modifiers);
         $enum->setComment($this->docComment);
+        $this->attachAttributes($enum);
         $enum->setId($this->idBuilder->forClassOrInterface($enum));
         $enum->setUserDefined();
 

@@ -41,8 +41,8 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP81;
 
+use PDepend\Source\AST\ASTAttribute;
 use PDepend\Source\AST\ASTClass;
-use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -58,18 +58,48 @@ class AttributeTest extends PHPParserVersion81TestCase
 {
     public function testAttribute(): void
     {
-        $types = $this->parseCodeResourceForTest()
-            ->current()
-            ->getTypes();
+        $namespace = $this->parseCodeResourceForTest()->current();
 
-        /** @var ASTClass $class */
-        $class = $types[1];
-        $methods = $class->getAllMethods();
+        $classlikes = $namespace->getTypes();
 
-        /** @var ASTMethod $bMethod */
+        // Attribute1
+        static::assertCount(1, $classlikes[0]->findChildrenOfType(ASTAttribute::class));
+
+        /** @var ASTClass */
+        $a = $classlikes[1];
+
+        $aAttributes = $a->findChildrenOfType(ASTAttribute::class);
+        static::assertCount(7, $aAttributes);
+        // Attribute2
+        static::assertSame($a, $aAttributes[0]->getParent());
+        // Attribute3
+        static::assertSame($a, $aAttributes[1]->getParent());
+
+        // Prop
+        static::assertCount(1, $a->getProperties()[0]->getAttributes());
+
+        $methods = $a->getAllMethods();
+
+        $getById = $methods['getbyid'];
+        // Route
+        static::assertSame($getById, $getById->findChildrenOfType(ASTAttribute::class)[0]->getParent());
+
+        $bar = $methods['bar'];
+        // Bar
+        static::assertSame($bar, $bar->findChildrenOfType(ASTAttribute::class)[0]->getParent());
+
+        $foobar = $methods['foobar'];
+        // Foo, Bar
+        static::assertSame($foobar, $foobar->findChildrenOfType(ASTAttribute::class)[0]->getParent());
+
         $bMethod = $methods['b'];
         $parameters = $bMethod->getParameters();
 
+        // Foo
         static::assertSame('$bar', $parameters[0]->getImage());
+
+        $function = $namespace->getFunctions()->current();
+        // FunBar
+        static::assertSame($function, $function->findChildrenOfType(ASTAttribute::class)[0]->getParent());
     }
 }

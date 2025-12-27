@@ -54,6 +54,7 @@ use PDepend\Source\AST\ASTArrayElement;
 use PDepend\Source\AST\ASTArrayIndexExpression;
 use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTAssignmentExpression;
+use PDepend\Source\AST\ASTAttribute;
 use PDepend\Source\AST\ASTBooleanAndExpression;
 use PDepend\Source\AST\ASTBooleanOrExpression;
 use PDepend\Source\AST\ASTBreakStatement;
@@ -1678,6 +1679,16 @@ class PHPBuilder implements Builder
     public function buildAstComment(string $cdata): ASTComment
     {
         return $this->buildAstNodeInstance(ASTComment::class, $cdata);
+    }
+
+    /**
+     * Builds a new attribute node instance.
+     *
+     * @param string $image The attribute text.
+     */
+    public function buildAstAttribute(string $image): ASTAttribute
+    {
+        return $this->buildAstNodeInstance(ASTAttribute::class, $image);
     }
 
     /**

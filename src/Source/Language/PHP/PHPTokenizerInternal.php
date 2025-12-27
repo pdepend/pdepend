@@ -399,6 +399,7 @@ class PHPTokenizerInternal implements FullTokenizer
         // T_DOLLAR_OPEN_CURLY_BRACES  => Tokens::T_CURLY_BRACE_OPEN,
         T_FN => Tokens::T_FN,
         T_MATCH => Tokens::T_STRING,
+        T_ATTRIBUTE => Tokens::T_ATTRIBUTE,
         T_NULLSAFE_OBJECT_OPERATOR => Tokens::T_NULLSAFE_OBJECT_OPERATOR,
         T_PIPE => Tokens::T_PIPE,
         T_READONLY => Tokens::T_READONLY,
@@ -856,8 +857,6 @@ class PHPTokenizerInternal implements FullTokenizer
     private function substituteTokens(array $tokens): array
     {
         $result = [];
-        $attributeComment = null;
-        $attributeCommentLine = null;
         $brackets = 0;
         $skipTo = 0;
 
@@ -866,35 +865,6 @@ class PHPTokenizerInternal implements FullTokenizer
             $temp = $temp[0];
 
             if ($skipTo > $index) {
-                continue;
-            }
-
-            if ($attributeComment) {
-                if ($temp === '[') {
-                    $brackets++;
-                }
-
-                if ($temp === ']') {
-                    $brackets--;
-                }
-
-                if ($brackets <= 0) {
-                    $result[] = [T_COMMENT, "$attributeComment */", (string) $attributeCommentLine];
-                    $attributeComment = null;
-
-                    continue;
-                }
-
-                $attributeComment .= is_array($token) ? $token[1] : $token;
-
-                continue;
-            }
-
-            if ($temp === T_ATTRIBUTE) {
-                $attributeComment = '/* @';
-                $attributeCommentLine = $token[2];
-                $brackets = 1;
-
                 continue;
             }
 
