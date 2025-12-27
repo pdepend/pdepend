@@ -1,13 +1,18 @@
 <?php
 
-#[Attribute]
+#[Attribute1]
 class Foo
 {
 
 }
 
+#[Attribute2]
+#[Attribute3]
 class A
 {
+    #[Prop]
+    public int $prop;
+
     #[Route('/thing/{id}', name: 'get_thing_by_id', requirements: ["id" => "\d+"], methods: ['GET'])]
     public function getById(Request $request): Response
     {
@@ -20,8 +25,18 @@ class A
         // ...
     }
 
+    #[Foo, Bar]
+    public function foobar()
+    {
+        // ...
+    }
+
     public function b(#[Foo()] $bar)
     {
 
     }
+}
+
+#[FunBar]
+function funbar(): void {
 }

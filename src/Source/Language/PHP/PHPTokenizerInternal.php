@@ -399,6 +399,7 @@ class PHPTokenizerInternal implements FullTokenizer
         // T_DOLLAR_OPEN_CURLY_BRACES  => Tokens::T_CURLY_BRACE_OPEN,
         T_FN => Tokens::T_FN,
         T_MATCH => Tokens::T_STRING,
+        T_ATTRIBUTE => Tokens::T_ATTRIBUTE,
         T_NULLSAFE_OBJECT_OPERATOR => Tokens::T_NULLSAFE_OBJECT_OPERATOR,
         T_PIPE => Tokens::T_PIPE,
         T_READONLY => Tokens::T_READONLY,
