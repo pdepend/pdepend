@@ -282,7 +282,8 @@ class ASTCompilationUnitTest extends AbstractTestCase
         $file = new ASTCompilationUnit($this->createCodeResourceUriForTest());
 
         $actual = $file->getSource();
-        $expected = file_get_contents($this->createCodeResourceUriForTest());
+        $expected = file_get_contents($this->createCodeResourceUriForTest()) ?: '';
+        $expected = str_replace("\r\n", "\n", $expected);
 
         static::assertEquals($expected, $actual);
     }
