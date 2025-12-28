@@ -59,10 +59,10 @@ final class FileUtil
      */
     public static function getDefaultCacheDir(): string
     {
-        $home = self::getUserCacheDir();
+        $cacheDir = self::getUserCacheDir();
 
-        if (file_exists($home) && is_writable($home)) {
-            return $home;
+        if ($cacheDir && file_exists($cacheDir) && is_writable($cacheDir)) {
+            return $cacheDir;
         }
 
         return self::getSysTempDir();
@@ -81,19 +81,24 @@ final class FileUtil
      *
      * @since  0.10.0
      */
-    public static function getUserCacheDir(): string
+    public static function getUserCacheDir(): ?string
     {
-        $cacheHomeDir = getenv('XDG_CACHE_HOME');
-        if ($cacheHomeDir) {
-            return $cacheHomeDir;
-        }
-
-        $userHomeDir = getenv('HOME');
-        if ($userHomeDir) {
-            return $userHomeDir . '/.cache';
+        $cacheDir = getenv('XDG_CACHE_HOME');
+        if ($cacheDir) {
+            return $cacheDir;
         }
 
         // The HOME environment isn't always set on Windows, then we do a fallback to the HOMEDRIVE and HOMEPATH
-        return getenv('HOMEDRIVE') . getenv('HOMEPATH');
+        $homeDir = getenv('HOME') ?: getenv('HOMEDRIVE') . getenv('HOMEPATH');
+        if ($homeDir) {
+            $cacheDir = $homeDir . DIRECTORY_SEPARATOR . '.cache';
+            if (file_exists($homeDir) && !file_exists($cacheDir) && is_writable($homeDir)) {
+                mkdir($cacheDir);
+            }
+
+            return $cacheDir;
+        }
+
+        return null;
     }
 }
