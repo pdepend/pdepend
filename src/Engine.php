@@ -525,7 +525,7 @@ class Engine
         $files = $this->createFileIterator();
         $fileCount = count($files);
 
-        if ($fileCount > 1) {
+        if ($fileCount > 1 && (!defined('PHP_WINDOWS_VERSION_BUILD') || extension_loaded('sockets'))) {
             $coreCount = (new CpuCoreCounter())->getCount();
             if ($coreCount > 1) {
                 if ($this->runMultiProcessParse($files, $fileCount, $coreCount)) {
