@@ -57,9 +57,9 @@ final class FileUtil
      *
      * @since  0.10.0
      */
-    public static function getUserHomeDirOrSysTempDir(): string
+    public static function getDefaultCacheDir(): string
     {
-        $home = self::getUserHomeDir();
+        $home = self::getUserCacheDir();
 
         if (file_exists($home) && is_writable($home)) {
             return $home;
@@ -81,15 +81,19 @@ final class FileUtil
      *
      * @since  0.10.0
      */
-    public static function getUserHomeDir(): string
+    public static function getUserCacheDir(): string
     {
-        $userHomeDir = getenv('HOME');
-
-        if (!$userHomeDir) {
-            // The HOME environment isn't always set on Windows, then we do a fallback to the HOMEDRIVE and HOMEPATH
-            $userHomeDir = getenv('HOMEDRIVE') . getenv('HOMEPATH');
+        $cacheHomeDir = getenv('XDG_CACHE_HOME');
+        if ($cacheHomeDir) {
+            return $cacheHomeDir;
         }
 
-        return $userHomeDir;
+        $userHomeDir = getenv('HOME');
+        if ($userHomeDir) {
+            return $userHomeDir . '/.cache';
+        }
+
+        // The HOME environment isn't always set on Windows, then we do a fallback to the HOMEDRIVE and HOMEPATH
+        return getenv('HOMEDRIVE') . getenv('HOMEPATH');
     }
 }
