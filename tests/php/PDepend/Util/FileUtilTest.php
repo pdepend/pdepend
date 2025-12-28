@@ -69,25 +69,25 @@ class FileUtilTest extends AbstractTestCase
     }
 
     /**
-     * testGetUserHomeDirReturnsExpectedDirectory
+     * testGetUserCacheDirReturnsExpectedDirectory
      */
-    public function testGetUserHomeDirReturnsExpectedDirectory(): void
+    public function testGetUserCacheDirReturnsExpectedDirectory(): void
     {
         $homeDir = getenv('HOME') ?: getenv('HOMEDRIVE') . getenv('HOMEPATH');
         static::assertEquals(
-            $homeDir,
-            FileUtil::getUserHomeDir()
+            $homeDir . '/.cache',
+            FileUtil::getUserCacheDir()
         );
     }
 
     /**
-     * testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory
+     * testGetDefaultCacheDirReturnsExpectedUserHomeDirectory
      */
-    public function testGetUserHomeDirOrSysTempDirReturnsExpectedUserHomeDirectory(): void
+    public function testGetDefaultCacheDirReturnsExpectedUserHomeDirectory(): void
     {
         static::assertEquals(
-            getenv('HOME'),
-            FileUtil::getUserHomeDirOrSysTempDir()
+            getenv('HOME') . '/.cache',
+            FileUtil::getDefaultCacheDir()
         );
     }
 }

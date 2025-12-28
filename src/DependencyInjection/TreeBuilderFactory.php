@@ -71,7 +71,7 @@ class TreeBuilderFactory
      */
     public function getConfigTreeBuilder(): TreeBuilder
     {
-        $home = FileUtil::getUserHomeDirOrSysTempDir();
+        $home = FileUtil::getDefaultCacheDir();
 
         $treeBuilder = new TreeBuilder('pdepend', 'array');
         $rootNode = $treeBuilder->getRootNode();
@@ -81,7 +81,7 @@ class TreeBuilderFactory
         $cacheNode->enumNode('driver')->defaultValue('file')->values(['file', 'memory']);
         $cacheNode->scalarNode('location')
             ->info('This value is only used for the file cache.')
-            ->defaultValue($home . '/.pdepend');
+            ->defaultValue($home . '/pdepend');
         $cacheNode->integerNode('ttl')
             ->info('This value is only used for the file cache. Value in seconds.')
             ->defaultValue(self::DEFAULT_TTL);
