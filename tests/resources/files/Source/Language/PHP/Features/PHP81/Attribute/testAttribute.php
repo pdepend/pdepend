@@ -13,6 +13,11 @@ class A
     #[Prop]
     public int $prop;
 
+    public function __construct(#[Autowire] protected InjectedClass $dependency)
+    {
+
+    }
+
     #[Route('/thing/{id}', name: 'get_thing_by_id', requirements: ["id" => "\d+"], methods: ['GET'])]
     public function getById(Request $request): Response
     {

@@ -297,6 +297,14 @@ class ASTParameter extends AbstractASTArtifact implements Stringable
     }
 
     /**
+     * @return ASTAttribute[]
+     */
+    public function getAttributes(): array
+    {
+        return $this->formalParameter->findChildrenOfType(ASTAttribute::class);
+    }
+
+    /**
      * This method will return <b>true</b> when this parameter is optional and
      * can be left blank on invocation.
      *
