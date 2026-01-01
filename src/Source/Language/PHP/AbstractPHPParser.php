@@ -3660,14 +3660,17 @@ abstract class AbstractPHPParser
         $start = $this->consumeToken(Tokens::T_ATTRIBUTE);
         $attribute = $this->builder->buildASTAttribute($start->image);
 
-        if (is_object($expr = $this->parseOptionalExpression())) {
-            $attribute->addChild($expr);
-        }
-        while ($this->tokenizer->peek() === Tokens::T_COMMA) {
-            $this->consumeToken(Tokens::T_COMMA);
-            if (is_object($expr = $this->parseOptionalExpression())) {
-                $attribute->addChild($expr);
+        while (true) {
+            $allocation = $this->builder->buildAstAllocationExpression('new');
+            $allocation = $this->parseAllocationExpressionTypeReference($allocation);
+            if ($this->isNextTokenArguments()) {
+                $allocation->addChild($this->parseArguments());
             }
+            $attribute->addChild($allocation);
+            if ($this->tokenizer->peek() !== Tokens::T_COMMA) {
+                break;
+            }
+            $this->consumeToken(Tokens::T_COMMA);
         }
 
         $end = $this->consumeToken(Tokens::T_SQUARED_BRACKET_CLOSE);
@@ -6463,6 +6466,8 @@ abstract class AbstractPHPParser
 
         $parameter = $this->parseFormalParameterOrTypeHintOrByReference();
 
+        $this->attachAttributes($parameter);
+
         if ($modifier) {
             $parameter->setModifiers($modifier);
         }
@@ -6515,6 +6520,10 @@ abstract class AbstractPHPParser
 
             if ($tokenType === Tokens::T_PARENTHESIS_CLOSE) {
                 break;
+            }
+
+            if ($tokenType === Tokens::T_ATTRIBUTE) {
+                $this->attributes[] = $this->parseAttributeExpression();
             }
 
             $formalParameters->addChild(
