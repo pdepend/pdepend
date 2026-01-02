@@ -47,7 +47,6 @@ use PDepend\AbstractTestCase;
 use PDepend\Metrics\Analyzer\ClassLevelAnalyzer;
 use PDepend\Metrics\Analyzer\DependencyAnalyzer;
 use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\Language\PHP\PHPBuilder;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -66,14 +65,11 @@ class ResultPrinterTest extends AbstractTestCase
      */
     public function testResultPrinterOutputForSingleEntry(): void
     {
-        // Create dummy objects
-        $builder = new PHPBuilder();
-
         $printer = new ResultPrinter();
 
         ob_start();
         $printer->startFileParsing();
-        $printer->endParseProcess($builder);
+        $printer->endParseProcess();
         $actual = ob_get_contents();
         ob_end_clean();
 
@@ -87,16 +83,13 @@ class ResultPrinterTest extends AbstractTestCase
      */
     public function testResultPrinterOutputForMultipleEntries(): void
     {
-        // Create dummy objects
-        $builder = new PHPBuilder();
-
         $printer = new ResultPrinter();
 
         ob_start();
         for ($i = 0; $i < 73; ++$i) {
             $printer->startFileParsing();
         }
-        $printer->endParseProcess($builder);
+        $printer->endParseProcess();
         $actual = ob_get_contents();
         ob_end_clean();
 
@@ -159,11 +152,11 @@ class ResultPrinterTest extends AbstractTestCase
     public function testStartParseProcess(): void
     {
         self::expectOutput(
-            'Parsing source files:',
+            'Parsing 42 source files:',
             function (): void {
                 $printer = new ResultPrinter();
 
-                $printer->startParseProcess(new PHPBuilder());
+                $printer->startParseProcess(42);
             }
         );
     }

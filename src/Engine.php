@@ -296,9 +296,7 @@ class Engine
     {
         $this->builder = new PHPBuilder();
 
-        $this->fireStartParseProcess($this->builder);
         $this->performParseProcess();
-        $this->fireEndParseProcess($this->builder);
 
         // Get global filter collection
         $collection = CollectionArtifactFilter::getInstance();
@@ -424,25 +422,21 @@ class Engine
 
     /**
      * Send the start parsing process event.
-     *
-     * @param Builder<ASTNamespace> $builder The used node builder instance.
      */
-    protected function fireStartParseProcess(Builder $builder): void
+    protected function fireStartParseProcess(int $fileCount): void
     {
         foreach ($this->listeners as $listener) {
-            $listener->startParseProcess($builder);
+            $listener->startParseProcess($fileCount);
         }
     }
 
     /**
      * Send the end parsing process event.
-     *
-     * @param Builder<ASTNamespace> $builder The used node builder instance.
      */
-    protected function fireEndParseProcess(Builder $builder): void
+    protected function fireEndParseProcess(): void
     {
         foreach ($this->listeners as $listener) {
-            $listener->endParseProcess($builder);
+            $listener->endParseProcess();
         }
     }
 
@@ -524,11 +518,14 @@ class Engine
 
         $files = $this->createFileIterator();
         $fileCount = count($files);
+        $this->fireStartParseProcess($fileCount);
 
         if ($fileCount > 1 && (!defined('PHP_WINDOWS_VERSION_BUILD') || extension_loaded('sockets'))) {
             $coreCount = (new CpuCoreCounter())->getCount();
             if ($coreCount > 1) {
                 if ($this->runMultiProcessParse($files, $fileCount, $coreCount)) {
+                    $this->fireEndParseProcess();
+
                     return;
                 }
             }
@@ -541,6 +538,8 @@ class Engine
             $this->parseFile($tokenizer, $file);
             $this->fireEndFileParsing();
         }
+
+        $this->fireEndParseProcess();
     }
 
     private function runWorker(): void

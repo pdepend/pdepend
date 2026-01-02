@@ -71,10 +71,8 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
 
     /**
      * Is called when PDepend starts the file parsing process.
-     *
-     * @param Builder<ASTNamespace> $builder The used node builder instance.
      */
-    public function startParseProcess(Builder $builder): void
+    public function startParseProcess(int $fileCount): void
     {
         $this->startTime = time();
     }

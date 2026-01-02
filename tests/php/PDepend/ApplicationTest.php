@@ -98,7 +98,7 @@ class ApplicationTest extends AbstractTestCase
         unlink('foo.xml');
         chdir($cwd);
 
-        static::assertMatchesRegularExpression('/Parsing source files:\s*\.\s+1/', $output);
+        static::assertMatchesRegularExpression('/Parsing source file:\s*\.\s+1/', $output);
         static::assertMatchesRegularExpression('/<class\s.*name="FooBar"/', $xml);
         static::assertMatchesRegularExpression('/<file\s.*name="php:\/\/stdin"/', $xml);
     }

@@ -45,9 +45,7 @@ namespace PDepend;
 
 // @codeCoverageIgnoreStart
 use PDepend\Metrics\AnalyzerListener;
-use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\ASTVisitor\ASTVisitListener;
-use PDepend\Source\Builder\Builder;
 
 /**
  * This listener can be used to get informations about the current pdepend process.
@@ -59,17 +57,13 @@ interface ProcessListener extends AnalyzerListener, ASTVisitListener
 {
     /**
      * Is called when PDepend starts the file parsing process.
-     *
-     * @param Builder<ASTNamespace> $builder The used node builder instance.
      */
-    public function startParseProcess(Builder $builder): void;
+    public function startParseProcess(int $fileCount): void;
 
     /**
      * Is called when PDepend has finished the file parsing process.
-     *
-     * @param Builder<ASTNamespace> $builder The used node builder instance.
      */
-    public function endParseProcess(Builder $builder): void;
+    public function endParseProcess(): void;
 
     /**
      * Is called when PDepend starts parsing of a new file.
