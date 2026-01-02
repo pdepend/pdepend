@@ -46,9 +46,7 @@ namespace PDepend\TextUI;
 use PDepend\Metrics\Analyzer;
 use PDepend\ProcessListener;
 use PDepend\Source\AST\AbstractASTArtifact;
-use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\ASTVisitor\AbstractASTVisitListener;
-use PDepend\Source\Builder\Builder;
 
 /**
  * Prints current the PDepend status information.
@@ -66,22 +64,24 @@ class ResultPrinter extends AbstractASTVisitListener implements ProcessListener
 
     /**
      * Is called when PDepend starts the file parsing process.
-     *
-     * @param Builder<ASTNamespace> $builder
      */
-    public function startParseProcess(Builder $builder): void
+    public function startParseProcess(int $fileCount): void
     {
         $this->count = 0;
 
-        echo "Parsing source files:\n";
+        if ($fileCount > 1) {
+            echo "Parsing {$fileCount} source files:\n";
+
+            return;
+        }
+
+        echo "Parsing source file:\n";
     }
 
     /**
      * Is called when PDepend has finished the file parsing process.
-     *
-     * @param Builder<ASTNamespace> $builder
      */
-    public function endParseProcess(Builder $builder): void
+    public function endParseProcess(): void
     {
         $this->finish();
     }
