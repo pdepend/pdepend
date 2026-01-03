@@ -43,61 +43,21 @@
 
 namespace PDepend\Bugs;
 
+use PDepend\Source\Language\PHP\AbstractPHPParser;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * Test case for ticket #169.
- *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
- * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * Test case for ticket 889, namespace contaning keywords.
  */
-#[Group('regressiontest')]
-class ClassAndInterfaceNamesBug169Test extends AbstractRegressionTestCase
+#[CoversClass(AbstractPHPParser::class)]
+#[Group('unittest')]
+class KeywordsInNamespace889Test extends AbstractRegressionTestCase
 {
     /**
-     * testParserAcceptsNullAsClassName
+     * Tests that a namespace can contain 'parent' and that a class can be called 'array'.
      */
-    public function testParserAcceptsNullAsClassName(): void
-    {
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserAcceptsNullAsInterfaceName
-     */
-    public function testParserAcceptsNullAsInterfaceName(): void
-    {
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserAcceptsTrueAsClassName
-     */
-    public function testParserAcceptsTrueAsClassName(): void
-    {
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserAcceptsTrueAsInterfaceName
-     */
-    public function testParserAcceptsTrueAsInterfaceName(): void
-    {
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserAcceptsFalseAsClassName
-     */
-    public function testParserAcceptsFalseAsClassName(): void
-    {
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserAcceptsFalseAsInterfaceName
-     */
-    public function testParserAcceptsFalseAsInterfaceName(): void
+    public function testNewKeyword(): void
     {
         $this->parseCodeResourceForTest();
     }

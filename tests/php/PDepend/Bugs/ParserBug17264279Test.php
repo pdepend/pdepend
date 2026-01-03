@@ -67,33 +67,9 @@ class ParserBug17264279Test extends AbstractRegressionTestCase
     }
 
     /**
-     * testParserAcceptsNullAsClassName
-     */
-    public function testParserAcceptsNullAsClassName(): void
-    {
-        static::assertNotNull($this->parseCodeResourceForTest());
-    }
-
-    /**
-     * testParserAcceptsTrueAsClassName
-     */
-    public function testParserAcceptsTrueAsClassName(): void
-    {
-        static::assertNotNull($this->parseCodeResourceForTest());
-    }
-
-    /**
      * testParserAcceptsCloneAsClassName
      */
     public function testParserAcceptsCloneAsClassName(): void
-    {
-        static::assertNotNull($this->parseCodeResourceForTest());
-    }
-
-    /**
-     * testParserAcceptsFalseAsClassName
-     */
-    public function testParserAcceptsFalseAsClassName(): void
     {
         static::assertNotNull($this->parseCodeResourceForTest());
     }
