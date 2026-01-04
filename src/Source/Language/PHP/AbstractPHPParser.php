@@ -470,6 +470,8 @@ abstract class AbstractPHPParser
     {
         $this->consumeComments();
 
+        $this->parseClassModifiers();
+
         if (Tokens::T_CLASS !== $this->tokenizer->peek()) {
             return null;
         }
@@ -491,6 +493,7 @@ abstract class AbstractPHPParser
         );
         $class->setCompilationUnit($this->compilationUnit);
         $class->setUserDefined();
+        $class->setModifiers($this->modifiers);
 
         if ($this->isNextTokenArguments()) {
             $class->addChild($this->parseArguments());
