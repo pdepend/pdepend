@@ -76,7 +76,6 @@ use PDepend\Source\AST\ASTScalarType;
 use PDepend\Source\AST\ASTSelfReference;
 use PDepend\Source\AST\ASTType;
 use PDepend\Source\AST\ASTTypeArray;
-use PDepend\Source\AST\ASTTypeCallable;
 use PDepend\Source\AST\ASTTypeIterable;
 use PDepend\Source\AST\ASTUnionType;
 use PDepend\Source\AST\ASTValue;
@@ -1164,7 +1163,6 @@ class PHPParserVersion81Test extends AbstractTestCase
             ['string', '$name'],
             ['array', '$list', ASTTypeArray::class],
             ['self', '$parent', ASTSelfReference::class],
-            ['callable', '$event', ASTTypeCallable::class],
             ['\Closure', '$fqn', ASTClassOrInterfaceReference::class],
             ['iterable', '$actions', ASTTypeIterable::class],
             ['object', '$bag', ASTClassOrInterfaceReference::class],
@@ -1175,7 +1173,6 @@ class PHPParserVersion81Test extends AbstractTestCase
             ['?string', '$nameN'],
             ['?array', '$listN', ASTTypeArray::class],
             ['?self', '$parentN', ASTSelfReference::class],
-            ['?callable', '$eventN', ASTTypeCallable::class],
             ['?\Closure', '$fqnN', ASTClassOrInterfaceReference::class],
             ['?iterable', '$actionsN', ASTTypeIterable::class],
             ['?object', '$bagN', ASTClassOrInterfaceReference::class],

@@ -109,7 +109,7 @@ class UnionTypesTest extends PHPParserVersion81TestCase
         );
 
         static::assertInstanceOf(ASTUnionType::class, $return);
-        static::assertSame('array|iterable', $return->getImage());
+        static::assertSame('Countable|iterable', $return->getImage());
     }
 
     public function testUnionTypesStandaloneNull(): void

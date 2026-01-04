@@ -6,5 +6,5 @@ class Exception
     /**
      * @throws spl\ErrorException
      */
-    public function log();
+    public function log() {}
 }

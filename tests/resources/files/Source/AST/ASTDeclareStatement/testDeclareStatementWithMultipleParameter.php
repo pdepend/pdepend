@@ -1,5 +1,4 @@
 <?php
-function testDeclareStatementWithMultipleParameter()
-{
-    declare(ticks=42, encoding='UTF-8');
-}
+
+declare(strict_types=1, ticks=42);
+

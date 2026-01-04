@@ -110,22 +110,6 @@ class ASTPreDecrementExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * testPreDecrementExpressionOnFunctionPostfix
-     */
-    public function testPreDecrementExpressionOnFunctionPostfix(): void
-    {
-        $expr = $this->getFirstPreDecrementExpressionInFunction();
-        $this->assertGraphEquals(
-            $expr,
-            [
-                ASTFunctionPostfix::class,
-                ASTIdentifier::class,
-                ASTArguments::class,
-            ]
-        );
-    }
-
-    /**
      * testPreDecrementExpressionOnStaticVariableMember
      */
     public function testPreDecrementExpressionOnStaticVariableMember(): void

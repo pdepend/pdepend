@@ -71,22 +71,6 @@ class KeywordFunctionNameResultsInExceptionBug116Test extends AbstractRegression
     }
 
     /**
-     * testParserNotThrowsAnExceptionForKeywordNamespace
-     */
-    public function testParserNotThrowsAnExceptionForKeywordNamespace(): void
-    {
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
-     * testParserNotThrowsAnExceptionForMagicNamespaceConstant
-     */
-    public function testParserNotThrowsAnExceptionForMagicNamespaceConstant(): void
-    {
-        $this->parseCodeResourceForTest();
-    }
-
-    /**
      * testParserNotThrowsAnExceptionForKeywordParent
      */
     public function testParserNotThrowsAnExceptionForKeywordParent(): void

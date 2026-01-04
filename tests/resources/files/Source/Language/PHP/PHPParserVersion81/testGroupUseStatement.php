@@ -5,7 +5,7 @@ use function foo\math\{ sin, cos, cosh };
 
 use const foo\math\{ PI, E, GAMMA, GOLDEN_RATIO };
 
-use foo\math\{ Math, const PI, function sin, function cos, function cosh };
+use foo\math\{ Math, const PI2, function sin2, function cos2, function cosh2 };
 
 use my\math\{ const SINDELFINGEN };
 

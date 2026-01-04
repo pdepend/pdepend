@@ -64,7 +64,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
     public function testBreakStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstBreakStatementInFunction();
-        static::assertEquals(5, $stmt->getStartLine());
+        static::assertEquals(6, $stmt->getStartLine());
     }
 
     /**
@@ -73,7 +73,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
     public function testBreakStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstBreakStatementInFunction();
-        static::assertEquals(9, $stmt->getStartColumn());
+        static::assertEquals(13, $stmt->getStartColumn());
     }
 
     /**
@@ -82,7 +82,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
     public function testBreakStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstBreakStatementInFunction();
-        static::assertEquals(7, $stmt->getEndLine());
+        static::assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTBreakStatementTest extends ASTNodeTestCase
     public function testBreakStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstBreakStatementInFunction();
-        static::assertEquals(17, $stmt->getEndColumn());
+        static::assertEquals(21, $stmt->getEndColumn());
     }
 
     /**

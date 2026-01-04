@@ -1,7 +1,7 @@
 <?php
 function foo(
 
-    Bar
+    int
     $foo
     =
     42

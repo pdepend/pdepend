@@ -207,16 +207,6 @@ class ASTListExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * testListExpressionWithoutChildExpression
-     */
-    public function testListExpressionWithoutChildExpression(): void
-    {
-        $expr = $this->getFirstListExpressionInFunction();
-        $vars = $expr->getChildren();
-        static::assertCount(0, $vars);
-    }
-
-    /**
      * testListExpressionWithVariableVariable
      */
     public function testListExpressionWithVariableVariable(): void

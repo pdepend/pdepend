@@ -1,11 +1,11 @@
 <?php
+
 interface MIMethodInterface {
     function pdepend1($x);
     function pdepend2($x);
 }
 
-
-class MIMethodClass implements MIMethodInterface
+abstract class MIMethodClass implements MIMethodInterface
 {
     function pdepend1($x)
     {

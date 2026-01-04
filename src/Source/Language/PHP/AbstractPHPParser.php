@@ -2545,7 +2545,6 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         return match ($this->tokenizer->peek()) {
-            Tokens::T_CURLY_BRACE_OPEN => $this->parseStringIndexExpression($node),
             Tokens::T_SQUARED_BRACKET_OPEN => $this->parseArrayIndexExpression($node),
             default => $node,
         };
@@ -2607,31 +2606,6 @@ abstract class AbstractPHPParser
             $expr,
             Tokens::T_SQUARED_BRACKET_OPEN,
             Tokens::T_SQUARED_BRACKET_CLOSE,
-        );
-    }
-
-    /**
-     * Parses a mandatory array index expression.
-     *
-     * <code>
-     * //     ---
-     * $string{0};
-     * //     ---
-     * </code>
-     *
-     * @param AbstractASTNode $node The context source node.
-     * @since 0.9.12
-     */
-    private function parseStringIndexExpression(AbstractASTNode $node): AbstractASTNode
-    {
-        $expr = $this->builder->buildAstStringIndexExpression();
-        $expr->addChild($node);
-
-        return $this->parseIndexExpression(
-            $node,
-            $expr,
-            Tokens::T_CURLY_BRACE_OPEN,
-            Tokens::T_CURLY_BRACE_CLOSE,
         );
     }
 

@@ -2,5 +2,5 @@
 
 class Foo
 {
-    final private const BAR = "BAZ";
+    final public const BAR = "BAZ";
 }

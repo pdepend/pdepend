@@ -1,7 +1,7 @@
 <?php
 class Foo
 {
-    public function bar(): array | iterable
+    public function bar(): Countable | iterable
     {
         return [];
     }
