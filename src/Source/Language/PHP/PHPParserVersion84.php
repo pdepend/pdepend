@@ -217,7 +217,16 @@ abstract class PHPParserVersion84 extends PHPParserVersion83
     private function parsePropertyHook(int $tokenType, ASTFieldDeclaration|ASTFormalParameter $declaration): void
     {
         $this->consumeToken(Tokens::T_CURLY_BRACE_OPEN);
+
+        $this->consumeComments();
+
         $tokenType = $this->tokenizer->peek();
+
+        while ($tokenType === Tokens::T_ATTRIBUTE) {
+            $this->attributes[] = $this->parseAttributeExpression();
+            $this->consumeComments();
+            $tokenType = $this->tokenizer->peek();
+        }
 
         while ($tokenType === Tokens::T_STRING || $tokenType === Tokens::T_FINAL) {
             $modifiers = State::IS_PUBLIC;
@@ -230,6 +239,7 @@ abstract class PHPParserVersion84 extends PHPParserVersion83
             $token = $this->tokenizer->currentToken();
             assert($token instanceof Token);
             $hook = $this->builder->buildPropertyHook($token->image);
+            $this->attachAttributes($hook);
 
             if ($declaration->isProtected()) {
                 $modifiers = ($modifiers & ~State::IS_PUBLIC & ~State::IS_PRIVATE) | State::IS_PROTECTED;
@@ -252,6 +262,7 @@ abstract class PHPParserVersion84 extends PHPParserVersion83
 
             if ($tokenType === Tokens::T_PARENTHESIS_OPEN) {
                 $hook->addChild($this->parseFormalParameters($hook));
+                $tokenType = $this->tokenizer->peek();
             }
 
             if ($tokenType === Tokens::T_CURLY_BRACE_OPEN) {
