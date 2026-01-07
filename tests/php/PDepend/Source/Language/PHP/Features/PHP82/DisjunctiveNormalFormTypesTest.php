@@ -41,6 +41,7 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP82;
 
+use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClassOrInterfaceReference;
 use PDepend\Source\AST\ASTIntersectionType;
 use PDepend\Source\AST\ASTScalarType;
@@ -156,5 +157,15 @@ class DisjunctiveNormalFormTypesTest extends PHPParserVersion82TestCase
 
         static::assertInstanceOf(ASTUnionType::class, $type);
         static::assertSame('(A&B&C)|true|(D&((E&F)|G))', $type->getImage());
+    }
+
+    public function testPropertyNestedParentheses(): void
+    {
+        /** @var ASTClass */
+        $class = $this->parseCodeResourceForTest()->current()->getTypes()[0];
+        $type = $class->getProperties()[0]->getType();
+
+        static::assertInstanceOf(ASTUnionType::class, $type);
+        static::assertSame('(A&B&C)|true|(D&E)', $type->getImage());
     }
 }

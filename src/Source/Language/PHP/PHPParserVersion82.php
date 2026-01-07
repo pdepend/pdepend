@@ -66,6 +66,7 @@ abstract class PHPParserVersion82 extends AbstractPHPParser
 
     /** @var array<int, int> */
     protected array $possiblePropertyTypes = [
+        Tokens::T_PARENTHESIS_OPEN,
         Tokens::T_STRING,
         Tokens::T_ARRAY,
         Tokens::T_QUESTION_MARK,
