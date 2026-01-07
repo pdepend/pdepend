@@ -69,7 +69,7 @@ class AttributeTest extends PHPParserVersion81TestCase
         $a = $classlikes[1];
 
         $aAttributes = $a->findChildrenOfType(ASTAttribute::class);
-        static::assertCount(8, $aAttributes);
+        static::assertCount(12, $aAttributes);
         // Attribute2
         static::assertSame($a, $aAttributes[0]->getParent());
         // Attribute3
@@ -80,8 +80,12 @@ class AttributeTest extends PHPParserVersion81TestCase
 
         $methods = $a->getAllMethods();
 
-        // Autowire
+        // Promo1
         static::assertCount(1, $methods['__construct']->getParameters()[0]->getAttributes());
+        // Promo2 & Promo3
+        static::assertCount(2, $methods['__construct']->getParameters()[1]->getAttributes());
+        // Promo4
+        static::assertCount(1, $methods['__construct']->getParameters()[2]->getAttributes());
 
         $getById = $methods['getbyid'];
         // Route
@@ -95,6 +99,10 @@ class AttributeTest extends PHPParserVersion81TestCase
         // Foo, Bar
         static::assertSame($foobar, $foobar->findChildrenOfType(ASTAttribute::class)[0]->getParent());
 
+        $foobar2 = $methods['foobar2'];
+        // Foo, Bar,
+        static::assertSame($foobar2, $foobar2->findChildrenOfType(ASTAttribute::class)[0]->getParent());
+
         $bMethod = $methods['b'];
         $parameter = $bMethod->getParameters()[0];
         static::assertSame('$bar', $parameter->getImage());
@@ -104,5 +112,12 @@ class AttributeTest extends PHPParserVersion81TestCase
         $function = $namespace->getFunctions()->current();
         // FunBar
         static::assertSame($function, $function->findChildrenOfType(ASTAttribute::class)[0]->getParent());
+
+        /** @var ASTClass */
+        $b = $classlikes[2];
+        $bAttributes = $b->findChildrenOfType(ASTAttribute::class);
+        static::assertCount(1, $bAttributes);
+        // Foo
+        static::assertSame($b, $bAttributes[0]->getParent());
     }
 }

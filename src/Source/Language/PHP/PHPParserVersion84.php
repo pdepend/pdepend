@@ -223,7 +223,7 @@ abstract class PHPParserVersion84 extends PHPParserVersion83
         $tokenType = $this->tokenizer->peek();
 
         while ($tokenType === Tokens::T_ATTRIBUTE) {
-            $this->attributes[] = $this->parseAttributeExpression();
+            $this->parseAttributeExpression();
             $this->consumeComments();
             $tokenType = $this->tokenizer->peek();
         }
