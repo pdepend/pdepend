@@ -96,60 +96,6 @@ class PHPParserGenericTest extends AbstractTestCase
     }
 
     /**
-     * testParserAcceptsNullAsClassName
-     */
-    public function testParserAcceptsNullAsClassName(): void
-    {
-        $class = $this->getFirstTypeForTestCase();
-        static::assertSame('Null', $class->getImage());
-    }
-
-    /**
-     * testParserAcceptsNullAsInterfaceName
-     */
-    public function testParserAcceptsNullAsInterfaceName(): void
-    {
-        $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('Null', $interface->getImage());
-    }
-
-    /**
-     * testParserAcceptsTrueAsClassName
-     */
-    public function testParserAcceptsTrueAsClassName(): void
-    {
-        $class = $this->getFirstTypeForTestCase();
-        static::assertSame('True', $class->getImage());
-    }
-
-    /**
-     * testParserAcceptsTrueAsInterfaceName
-     */
-    public function testParserAcceptsTrueAsInterfaceName(): void
-    {
-        $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('True', $interface->getImage());
-    }
-
-    /**
-     * testParserAcceptsFalseAsClassName
-     */
-    public function testParserAcceptsFalseAsClassName(): void
-    {
-        $class = $this->getFirstTypeForTestCase();
-        static::assertSame('False', $class->getImage());
-    }
-
-    /**
-     * testParserAcceptsFalseAsInterfaceName
-     */
-    public function testParserAcceptsFalseAsInterfaceName(): void
-    {
-        $interface = $this->getFirstTypeForTestCase();
-        static::assertSame('False', $interface->getImage());
-    }
-
-    /**
      * testParserAcceptsInsteadofAsClassName
      */
     public function testParserAcceptsInsteadofAsClassName(): void

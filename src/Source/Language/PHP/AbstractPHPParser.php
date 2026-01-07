@@ -835,8 +835,9 @@ abstract class AbstractPHPParser
     private function parseClassName(): string
     {
         $type = $this->tokenizer->peek();
+        $isNamespace = $this->tokenizer->peekNext() === Tokens::T_BACKSLASH;
 
-        if ($this->isClassName($type)) {
+        if ($this->isClassName($type, $isNamespace)) {
             return $this->consumeToken($type)->image;
         }
 
@@ -848,26 +849,40 @@ abstract class AbstractPHPParser
      * name part.
      *
      * @param int $tokenType The type of a parsed token.
+     * @param bool $isNamespace Allso allow valid namespace elements.
+     *
+     * @see https://www.php.net/manual/en/reserved.other-reserved-words.php
      * @since 0.10.6
      */
-    private function isClassName(int $tokenType): bool
+    private function isClassName(int $tokenType, bool $isNamespace = false): bool
     {
-        return match ($tokenType) {
-            Tokens::T_DIR,
-            Tokens::T_USE,
-            Tokens::T_GOTO,
-            Tokens::T_NULL,
-            Tokens::T_NS_C,
-            Tokens::T_TRUE,
-            Tokens::T_CLONE,
+        if ($isNamespace && in_array($tokenType, [
             Tokens::T_FALSE,
-            Tokens::T_TRAIT,
-            Tokens::T_STRING,
-            Tokens::T_TRAIT_C,
+            Tokens::T_FINAL,
+            Tokens::T_NULL,
+            Tokens::T_PARENT,
+            Tokens::T_TRUE,
+            Tokens::T_SELF,
+        ], true)) {
+            return true;
+        }
+
+        return match ($tokenType) {
+            Tokens::T_ARRAY,
             Tokens::T_CALLABLE,
+            Tokens::T_CLASS,
+            Tokens::T_CLONE,
+            Tokens::T_DIR,
+            Tokens::T_FN,
+            Tokens::T_GOTO,
             Tokens::T_INSTEADOF,
             Tokens::T_NAMESPACE,
-            Tokens::T_READONLY => true,
+            Tokens::T_NS_C,
+            Tokens::T_READONLY,
+            Tokens::T_STRING,
+            Tokens::T_TRAIT,
+            Tokens::T_TRAIT_C,
+            Tokens::T_USE => true,
             default => false,
         };
     }
@@ -7451,6 +7466,7 @@ abstract class AbstractPHPParser
         // Consume comments and fetch first token type
         $this->consumeComments();
         $tokenType = $this->tokenizer->peek();
+        $isNamespace = $this->tokenizer->peekNext() === Tokens::T_BACKSLASH;
 
         $qualifiedName = [];
 
@@ -7464,7 +7480,7 @@ abstract class AbstractPHPParser
 
             // Set prefixed flag to true
             $this->namespacePrefixReplaced = true;
-        } elseif ($this->isClassName($tokenType)) {
+        } elseif ($this->isClassName($tokenType, $isNamespace)) {
             $qualifiedName[] = $this->parseClassName();
 
             $this->consumeComments();
