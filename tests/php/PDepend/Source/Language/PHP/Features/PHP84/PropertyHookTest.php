@@ -61,9 +61,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('php8.4')]
 class PropertyHookTest extends PHPParserVersion84TestCase
 {
-    /**
-     * testArrowHook
-     */
     public function testArrowHook(): void
     {
         $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
@@ -76,9 +73,6 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertFalse($hooks[0]->isFinal());
     }
 
-    /**
-     * testDefault
-     */
     public function testDefault(): void
     {
         $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
@@ -91,9 +85,6 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertFalse($hooks[0]->isFinal());
     }
 
-    /**
-     * testDefaultExpression
-     */
     public function testDefaultExpression(): void
     {
         $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
@@ -106,9 +97,6 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertFalse($hooks[0]->isFinal());
     }
 
-    /**
-     * testFinal
-     */
     public function testFinal(): void
     {
         $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
@@ -121,9 +109,6 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertTrue($hooks[0]->isFinal());
     }
 
-    /**
-     * testGetMethod
-     */
     public function testGetMethod(): void
     {
         $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
@@ -136,9 +121,6 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertFalse($hooks[0]->isFinal());
     }
 
-    /**
-     * testGetSet
-     */
     public function testGetSet(): void
     {
         $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
@@ -156,9 +138,6 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertFalse($hooks[1]->isFinal());
     }
 
-    /**
-     * testParentAccess
-     */
     public function testParentAccess(): void
     {
         $hooks = $this->parseCodeResourceForTest()
@@ -174,9 +153,6 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertFalse($hooks[0]->isFinal());
     }
 
-    /**
-     * testPromotion
-     */
     public function testPromotion(): void
     {
         $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
@@ -189,9 +165,6 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertFalse($hooks[0]->isFinal());
     }
 
-    /**
-     * testSetMethod
-     */
     public function testSetMethod(): void
     {
         $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
@@ -204,9 +177,6 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertFalse($hooks[0]->isFinal());
     }
 
-    /**
-     * testSetVisibility
-     */
     public function testSetVisibility(): void
     {
         $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
@@ -219,9 +189,24 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertFalse($hooks[0]->isFinal());
     }
 
-    /**
-     * testTyped
-     */
+    public function testTypedArrow(): void
+    {
+        $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
+
+        static::assertCount(1, $hooks);
+
+        static::assertTrue($hooks[0]->isPublic());
+        static::assertFalse($hooks[0]->isProtected());
+        static::assertFalse($hooks[0]->isPrivate());
+        static::assertFalse($hooks[0]->isFinal());
+
+        $param = $hooks[0]->findChildrenOfType(ASTFormalParameter::class);
+
+        static::assertCount(1, $param);
+
+        static::assertTrue($param[0]->hasType());
+    }
+
     public function testTyped(): void
     {
         $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
@@ -238,5 +223,29 @@ class PropertyHookTest extends PHPParserVersion84TestCase
         static::assertCount(1, $param);
 
         static::assertTrue($param[0]->hasType());
+    }
+
+    public function testAttribute(): void
+    {
+        $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
+
+        static::assertCount(1, $hooks);
+
+        static::assertTrue($hooks[0]->isPublic());
+        static::assertFalse($hooks[0]->isProtected());
+        static::assertFalse($hooks[0]->isPrivate());
+        static::assertFalse($hooks[0]->isFinal());
+    }
+
+    public function testComment(): void
+    {
+        $hooks = $this->getFirstTypeForTestCase()->findChildrenOfType(ASTPropertyHook::class);
+
+        static::assertCount(1, $hooks);
+
+        static::assertTrue($hooks[0]->isPublic());
+        static::assertFalse($hooks[0]->isProtected());
+        static::assertFalse($hooks[0]->isPrivate());
+        static::assertFalse($hooks[0]->isFinal());
     }
 }

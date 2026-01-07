@@ -290,6 +290,9 @@ abstract class AbstractPHPParser
         Tokens::T_FALSE,
     ];
 
+    /** @var list<ASTAttribute> */
+    protected array $attributes = [];
+
     /**
      * Internal state flag, that will be set to <b>true</b> when the parser has
      * prefixed a qualified name with the actual namespace.
@@ -316,9 +319,6 @@ abstract class AbstractPHPParser
 
     /** The last parsed doc comment or <b>null</b>. */
     private ?string $docComment = null;
-
-    /** @var list<ASTAttribute> */
-    private array $attributes = [];
 
     /** Bitfield of last parsed modifiers. */
     private int $modifiers = 0;
@@ -470,6 +470,8 @@ abstract class AbstractPHPParser
     {
         $this->consumeComments();
 
+        $this->parseClassModifiers();
+
         if (Tokens::T_CLASS !== $this->tokenizer->peek()) {
             return null;
         }
@@ -491,6 +493,7 @@ abstract class AbstractPHPParser
         );
         $class->setCompilationUnit($this->compilationUnit);
         $class->setUserDefined();
+        $class->setModifiers($this->modifiers);
 
         if ($this->isNextTokenArguments()) {
             $class->addChild($this->parseArguments());
@@ -1058,7 +1061,7 @@ abstract class AbstractPHPParser
         return $trait;
     }
 
-    private function attachAttributes(AbstractASTCallable|AbstractASTNode|AbstractASTType $node): void
+    protected function attachAttributes(AbstractASTCallable|AbstractASTNode|AbstractASTType $node): void
     {
         foreach ($this->attributes as $attribute) {
             $node->addChild($attribute);
@@ -3670,7 +3673,7 @@ abstract class AbstractPHPParser
     /**
      * @throws TokenStreamEndException
      */
-    private function parseAttributeExpression(): ASTAttribute
+    protected function parseAttributeExpression(): ASTAttribute
     {
         $start = $this->consumeToken(Tokens::T_ATTRIBUTE);
         $attribute = $this->builder->buildASTAttribute($start->image);
