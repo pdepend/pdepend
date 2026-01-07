@@ -344,6 +344,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
     protected function getTraitMethods(): array
     {
         $methods = [];
+        $visited = [];
 
         /** @var ASTTraitUseStatement[] */
         $uses = $this->findChildrenOfType(
@@ -358,6 +359,12 @@ abstract class AbstractASTType extends AbstractASTArtifact
                 $priorMethods[strtolower($precedence->getImage())] = true;
             }
             foreach ($use->getAllMethods() as $method) {
+                $id = $method->getParent()?->getNamespacedName() . ':' . $method->getImage();
+                if (isset($visited[$id])) {
+                    continue;
+                }
+                $visited[$id] = true;
+
                 foreach ($uses as $use2) {
                     if ($use2->hasExcludeFor($method)) {
                         continue 2;
