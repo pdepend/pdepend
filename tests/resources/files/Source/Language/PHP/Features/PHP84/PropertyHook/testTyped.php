@@ -1,8 +1,10 @@
 <?php
 
-class testTyped
+class PropertyHook
 {
     public string $name {
-        set (int|string $value) => strtolower((string)$value);
+        set(string  $value) {
+            $this->name = $value;
+        }
     }
 }
