@@ -140,7 +140,6 @@ use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTStaticReference;
 use PDepend\Source\AST\ASTStaticVariableDeclaration;
 use PDepend\Source\AST\ASTString;
-use PDepend\Source\AST\ASTStringIndexExpression;
 use PDepend\Source\AST\ASTSwitchLabel;
 use PDepend\Source\AST\ASTSwitchStatement;
 use PDepend\Source\AST\ASTThrowStatement;
@@ -877,22 +876,6 @@ class PHPBuilder implements Builder
     public function buildAstArrayIndexExpression(): ASTArrayIndexExpression
     {
         return $this->buildAstNodeInstance(ASTArrayIndexExpression::class);
-    }
-
-    /**
-     * Builds a new string-expression node.
-     *
-     * <code>
-     * //     --------
-     * $string{$index}
-     * //     --------
-     * </code>
-     *
-     * @since  0.9.12
-     */
-    public function buildAstStringIndexExpression(): ASTStringIndexExpression
-    {
-        return $this->buildAstNodeInstance(ASTStringIndexExpression::class);
     }
 
     /**

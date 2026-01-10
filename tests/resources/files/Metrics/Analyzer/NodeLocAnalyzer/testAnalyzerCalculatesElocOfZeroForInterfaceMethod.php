@@ -1,8 +1,7 @@
 <?php
-interface testAnalyzerCalculatesElocOfZeroForAbstractMethod
+interface testAnalyzerCalculatesElocOfZeroForInterfaceMethod
 {
-    abstract
-        function
-            fooBar()
-                ;
+    function
+        fooBar()
+            ;
 }

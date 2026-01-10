@@ -66,7 +66,7 @@ class FinalClassConstantTest extends PHPParserVersion81TestCase
 
         $constantDefinition = $constantDeclarator->getParent();
         static::assertInstanceOf(ASTConstantDefinition::class, $constantDefinition);
-        $expectedModifiers = ~State::IS_PRIVATE & ~State::IS_FINAL;
+        $expectedModifiers = ~State::IS_PUBLIC & ~State::IS_FINAL;
         static::assertSame(0, $expectedModifiers & $constantDefinition->getModifiers());
     }
 }

@@ -136,7 +136,6 @@ use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTStaticReference;
 use PDepend\Source\AST\ASTStaticVariableDeclaration;
 use PDepend\Source\AST\ASTString;
-use PDepend\Source\AST\ASTStringIndexExpression;
 use PDepend\Source\AST\ASTSwitchLabel;
 use PDepend\Source\AST\ASTSwitchStatement;
 use PDepend\Source\AST\ASTThrowStatement;
@@ -493,19 +492,6 @@ interface Builder extends IteratorAggregate
      * @since  0.9.12
      */
     public function buildAstArrayIndexExpression(): ASTArrayIndexExpression;
-
-    /**
-     * Builds a new string-expression node.
-     *
-     * <code>
-     * //     --------
-     * $string{$index}
-     * //     --------
-     * </code>
-     *
-     * @since  0.9.12
-     */
-    public function buildAstStringIndexExpression(): ASTStringIndexExpression;
 
     /**
      * Builds a new instanceof-expression node.

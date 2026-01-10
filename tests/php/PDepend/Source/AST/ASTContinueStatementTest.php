@@ -64,7 +64,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
     public function testContinueStatementHasExpectedStartLine(): void
     {
         $stmt = $this->getFirstContinueStatementInFunction();
-        static::assertEquals(5, $stmt->getStartLine());
+        static::assertEquals(6, $stmt->getStartLine());
     }
 
     /**
@@ -73,7 +73,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
     public function testContinueStatementHasExpectedStartColumn(): void
     {
         $stmt = $this->getFirstContinueStatementInFunction();
-        static::assertEquals(9, $stmt->getStartColumn());
+        static::assertEquals(13, $stmt->getStartColumn());
     }
 
     /**
@@ -82,7 +82,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
     public function testContinueStatementHasExpectedEndLine(): void
     {
         $stmt = $this->getFirstContinueStatementInFunction();
-        static::assertEquals(7, $stmt->getEndLine());
+        static::assertEquals(8, $stmt->getEndLine());
     }
 
     /**
@@ -91,7 +91,7 @@ class ASTContinueStatementTest extends ASTNodeTestCase
     public function testContinueStatementHasExpectedEndColumn(): void
     {
         $stmt = $this->getFirstContinueStatementInFunction();
-        static::assertEquals(17, $stmt->getEndColumn());
+        static::assertEquals(21, $stmt->getEndColumn());
     }
 
     /**

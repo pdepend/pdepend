@@ -39,6 +39,6 @@ class testAnalyzerRestoresExpectedMethodMetricsFromCache
         {
             return 42;
         }
-        return ($i ? 23 : (42 ? true : false) ? $i : $x);
+        return (($i ? 23 : (42 ? true : false)) ? $i : $x);
     }
 }

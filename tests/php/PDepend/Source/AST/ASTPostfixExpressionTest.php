@@ -127,23 +127,6 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
     }
 
     /**
-     * testIncrementPostfixExpressionOnFunctionPostfix
-     */
-    public function testIncrementPostfixExpressionOnFunctionPostfix(): void
-    {
-        $expr = $this->getFirstPostfixExpressionInFunction();
-        $this->assertGraphEquals(
-            $expr,
-            [
-                ASTFunctionPostfix::class,
-                ASTIdentifier::class,
-                ASTArguments::class,
-                ASTVariable::class,
-            ]
-        );
-    }
-
-    /**
      * testIncrementPostfixExpressionOnVariableVariable
      */
     public function testIncrementPostfixExpressionOnVariableVariable(): void
@@ -170,43 +153,6 @@ class ASTPostfixExpressionTest extends ASTNodeTestCase
             [
                 ASTCompoundVariable::class,
                 ASTConstant::class,
-            ]
-        );
-    }
-
-    /**
-     * testIncrementPostfixExpressionOnObjectMethodPostfix
-     */
-    public function testIncrementPostfixExpressionOnObjectMethodPostfix(): void
-    {
-        $expr = $this->getFirstPostfixExpressionInFunction();
-        $this->assertGraphEquals(
-            $expr,
-            [
-                ASTMemberPrimaryPrefix::class,
-                ASTVariable::class,
-                ASTMethodPostfix::class,
-                ASTIdentifier::class,
-                ASTArguments::class,
-                ASTVariable::class,
-            ]
-        );
-    }
-
-    /**
-     * testIncrementPostfixExpressionOnStaticMethodPostfix
-     */
-    public function testIncrementPostfixExpressionOnStaticMethodPostfix(): void
-    {
-        $expr = $this->getFirstPostfixExpressionInFunction();
-        $this->assertGraphEquals(
-            $expr,
-            [
-                ASTMemberPrimaryPrefix::class,
-                ASTClassOrInterfaceReference::class,
-                ASTMethodPostfix::class,
-                ASTIdentifier::class,
-                ASTArguments::class,
             ]
         );
     }

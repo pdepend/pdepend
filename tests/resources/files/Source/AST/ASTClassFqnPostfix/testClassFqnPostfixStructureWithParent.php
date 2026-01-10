@@ -1,5 +1,5 @@
 <?php
-class testClassFqnPostfixStructureWithParent extends ArrayAccess
+class testClassFqnPostfixStructureWithParent extends DivisionByZeroError
 {
     public function foo()
     {

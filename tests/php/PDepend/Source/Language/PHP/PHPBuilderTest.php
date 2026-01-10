@@ -119,7 +119,6 @@ use PDepend\Source\AST\ASTStatement;
 use PDepend\Source\AST\ASTStaticReference;
 use PDepend\Source\AST\ASTStaticVariableDeclaration;
 use PDepend\Source\AST\ASTString;
-use PDepend\Source\AST\ASTStringIndexExpression;
 use PDepend\Source\AST\ASTSwitchLabel;
 use PDepend\Source\AST\ASTSwitchStatement;
 use PDepend\Source\AST\ASTThrowStatement;
@@ -1268,17 +1267,6 @@ class PHPBuilderTest extends AbstractTestCase
         static::assertInstanceOf(
             ASTRequireExpression::class,
             $this->createBuilder()->buildAstRequireExpression()
-        );
-    }
-
-    /**
-     * testBuildASTStringIndexExpressionReturnsExpectedType
-     */
-    public function testBuildASTStringIndexExpressionReturnsExpectedType(): void
-    {
-        static::assertInstanceOf(
-            ASTStringIndexExpression::class,
-            $this->createBuilder()->buildAstStringIndexExpression()
         );
     }
 

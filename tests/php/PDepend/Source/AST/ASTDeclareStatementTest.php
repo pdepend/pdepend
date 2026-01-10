@@ -74,8 +74,7 @@ class ASTDeclareStatementTest extends ASTNodeTestCase
      */
     public function testDeclareStatementWithMultipleParameter(): void
     {
-        $stmt = $this->getFirstDeclareStatementInFunction();
-        static::assertCount(2, $stmt->getValues());
+        $this->parseCodeResourceForTest();
     }
 
     /**

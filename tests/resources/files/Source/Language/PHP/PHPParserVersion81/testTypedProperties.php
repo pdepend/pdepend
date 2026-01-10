@@ -7,7 +7,6 @@ class User {
     public string $name;
     public array $list;
     public self $parent;
-    public callable $event;
     public \Closure $fqn;
     public iterable $actions;
     public object $bag;
@@ -18,7 +17,6 @@ class User {
     public ?string $nameN;
     public ?array $listN;
     public ?self $parentN;
-    public ?callable $eventN;
     public ?\Closure $fqnN;
     public ?iterable $actionsN;
     public ?object $bagN;
