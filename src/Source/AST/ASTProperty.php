@@ -43,6 +43,7 @@
 
 namespace PDepend\Source\AST;
 
+use OutOfBoundsException;
 use Stringable;
 
 /**
@@ -171,6 +172,14 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
         }
 
         return $typeNode->isArray();
+    }
+
+    /**
+     * @throws OutOfBoundsException
+     */
+    public function getType(): ASTType
+    {
+        return $this->fieldDeclaration->getType();
     }
 
     /**
