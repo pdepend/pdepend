@@ -291,7 +291,7 @@ abstract class AbstractPHPParser
     ];
 
     /** @var list<ASTAttribute> */
-    protected array $attributes = [];
+    private array $attributes = [];
 
     /**
      * Internal state flag, that will be set to <b>true</b> when the parser has
@@ -736,11 +736,6 @@ abstract class AbstractPHPParser
                 case Tokens::T_CLOSE_TAG:
                     $this->parseNonePhpCode();
                     $this->reset();
-
-                    break;
-
-                case Tokens::T_ATTRIBUTE:
-                    $this->attributes[] = $this->parseAttributeExpression();
 
                     break;
 
@@ -1391,7 +1386,7 @@ abstract class AbstractPHPParser
                     break;
 
                 case Tokens::T_ATTRIBUTE:
-                    $this->attributes[] = $this->parseAttributeExpression();
+                    $this->parseAttributeExpression();
 
                     break;
 
@@ -3673,7 +3668,7 @@ abstract class AbstractPHPParser
     /**
      * @throws TokenStreamEndException
      */
-    protected function parseAttributeExpression(): ASTAttribute
+    protected function parseAttributeExpression(): void
     {
         $start = $this->consumeToken(Tokens::T_ATTRIBUTE);
         $attribute = $this->builder->buildASTAttribute($start->image);
@@ -3685,7 +3680,13 @@ abstract class AbstractPHPParser
                 $allocation->addChild($this->parseArguments());
             }
             $attribute->addChild($allocation);
-            if ($this->tokenizer->peek() !== Tokens::T_COMMA) {
+            $current = $this->tokenizer->peek();
+            if ($current === Tokens::T_COMMA && $this->tokenizer->peekNext() === Tokens::T_SQUARED_BRACKET_CLOSE) {
+                $this->consumeToken(Tokens::T_COMMA);
+
+                break;
+            }
+            if ($current !== Tokens::T_COMMA) {
                 break;
             }
             $this->consumeToken(Tokens::T_COMMA);
@@ -3700,7 +3701,7 @@ abstract class AbstractPHPParser
             $end->endColumn,
         );
 
-        return $attribute;
+        $this->attributes[] = $attribute;
     }
 
     /**
@@ -6540,8 +6541,10 @@ abstract class AbstractPHPParser
                 break;
             }
 
-            if ($tokenType === Tokens::T_ATTRIBUTE) {
-                $this->attributes[] = $this->parseAttributeExpression();
+            while ($tokenType === Tokens::T_ATTRIBUTE) {
+                $this->parseAttributeExpression();
+                $this->consumeComments();
+                $tokenType = $this->tokenizer->peek();
             }
 
             $formalParameters->addChild(
@@ -6833,10 +6836,6 @@ abstract class AbstractPHPParser
         $parameter = $this->builder->buildAstFormalParameter();
 
         $peek = $this->tokenizer->peek();
-
-        if (Tokens::T_ATTRIBUTE === $peek) {
-            $parameter->addChild($this->parseAttributeExpression());
-        }
 
         if (Tokens::T_ELLIPSIS === $peek) {
             $this->consumeToken(Tokens::T_ELLIPSIS);
@@ -7264,6 +7263,11 @@ abstract class AbstractPHPParser
 
             case Tokens::T_YIELD:
                 return $this->parseYield(true);
+
+            case Tokens::T_ATTRIBUTE:
+                $this->parseAttributeExpression();
+
+                return $this->parseOptionalStatement();
         }
 
         $this->tokenStack->push();

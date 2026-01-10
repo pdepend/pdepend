@@ -13,8 +13,16 @@ class A
     #[Prop]
     public int $prop;
 
-    public function __construct(#[Autowire] protected InjectedClass $dependency)
-    {
+    public function __construct(
+        #[Promo1]
+        protected int $name,
+        #[Promo2]
+        #[Promo3]
+        protected int $count,
+        #[Promo4]
+        /** Trailing comment */
+        protected array $list,
+    ) {
 
     }
 
@@ -36,6 +44,15 @@ class A
         // ...
     }
 
+    #[
+        Foo,
+        Bar,
+    ]
+    public function foobar2()
+    {
+        // ...
+    }
+
     public function b(#[Foo()] $bar)
     {
 
@@ -44,4 +61,11 @@ class A
 
 #[FunBar]
 function funbar(): void {
+}
+
+if (rand()) {
+    #[Foo(Bar::class)]
+    class B
+    {
+    }
 }
