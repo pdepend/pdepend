@@ -63,7 +63,7 @@ class ASTNamedArgument extends AbstractASTNode
 
     public function __sleep(): array
     {
-        return ['name', ...parent::__sleep()];;
+        return ['name', ...parent::__sleep()];
     }
 
     public function getName(): string
