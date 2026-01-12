@@ -240,6 +240,14 @@ class ASTTraitTest extends AbstractASTArtifactTestCase
         static::assertCount(1, $trait->getAllMethods());
     }
 
+    #[Group('issue-936')]
+    public function testGetAllMethodsWithDerivedTraitMethods(): void
+    {
+        /** @var ASTClass */
+        $classlikes = $this->parseCodeResourceForTest()->current()->getTypes()[3];
+        static::assertCount(1, $classlikes->getAllMethods());
+    }
+
     /**
      * testGetAllChildrenReturnsAnEmptyArrayByDefault
      *
