@@ -61,6 +61,11 @@ class ASTNamedArgument extends AbstractASTNode
         $this->addChild($value);
     }
 
+    public function __sleep(): array
+    {
+        return ['name', ...parent::__sleep()];
+    }
+
     public function getName(): string
     {
         return $this->name;
