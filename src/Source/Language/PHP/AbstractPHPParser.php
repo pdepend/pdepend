@@ -908,6 +908,7 @@ abstract class AbstractPHPParser
     protected function isConstantName(int $tokenType): bool
     {
         return match ($tokenType) {
+            Tokens::T_FN,
             Tokens::T_CALLABLE,
             Tokens::T_TRAIT,
             Tokens::T_EXTENDS,
