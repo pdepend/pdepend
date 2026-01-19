@@ -346,6 +346,9 @@ abstract class AbstractPHPParser
     /** True if current statement is echoing (such as after <?=) */
     private bool $echoing = false;
 
+    /** True if current statement is alternative else or elseif */
+    private bool $isAlternativeTerminated = false;
+
     /**
      * Constructs a new source parser.
      *
@@ -3153,7 +3156,10 @@ abstract class AbstractPHPParser
     private function parseOptionalAlternativeScopeTermination(): void
     {
         $tokenType = $this->tokenizer->peek();
+        $this->isAlternativeTerminated = false;
+
         if ($this->isAlternativeScopeTermination($tokenType)) {
+            $this->isAlternativeTerminated = true;
             $this->parseAlternativeScopeTermination($tokenType);
         }
     }
@@ -4196,8 +4202,13 @@ abstract class AbstractPHPParser
         $stmt = $this->builder->buildAstIfStatement($token->image);
         $stmt->addChild($this->parseParenthesisExpression());
 
+        $this->consumeComments();
+        $isAlternative = $this->tokenizer->peek() === Tokens::T_COLON;
+
         $this->parseStatementBody($stmt);
-        $this->parseOptionalElseOrElseIfStatement($stmt);
+        if (!$isAlternative || !$this->isAlternativeTerminated) {
+            $this->parseOptionalElseOrElseIfStatement($stmt);
+        }
 
         return $this->setNodePositionsAndReturn($stmt);
     }
@@ -4215,8 +4226,13 @@ abstract class AbstractPHPParser
         $stmt = $this->builder->buildAstElseIfStatement($token->image);
         $stmt->addChild($this->parseParenthesisExpression());
 
+        $this->consumeComments();
+        $isAlternative = $this->tokenizer->peek() === Tokens::T_COLON;
+
         $this->parseStatementBody($stmt);
-        $this->parseOptionalElseOrElseIfStatement($stmt);
+        if (!$isAlternative || !$this->isAlternativeTerminated) {
+            $this->parseOptionalElseOrElseIfStatement($stmt);
+        }
 
         return $this->setNodePositionsAndReturn($stmt);
     }
