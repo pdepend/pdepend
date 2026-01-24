@@ -163,6 +163,9 @@ class Engine
      */
     private array $parseExceptions = [];
 
+    /** number of cores to use for parsing */
+    private ?int $cores = null;
+
     /**
      * Constructs a new php depend facade.
      *
@@ -283,6 +286,12 @@ class Engine
         if (!in_array($listener, $this->listeners, true)) {
             $this->listeners[] = $listener;
         }
+    }
+
+    /** number of cores to use for parsing */
+    public function setCores(?int $cores): void
+    {
+        $this->cores = $cores;
     }
 
     /**
@@ -521,7 +530,7 @@ class Engine
         $this->fireStartParseProcess($fileCount);
 
         if ($fileCount > 1 && (!defined('PHP_WINDOWS_VERSION_BUILD') || extension_loaded('sockets'))) {
-            $coreCount = (new CpuCoreCounter())->getCount();
+            $coreCount = $this->cores ?? (new CpuCoreCounter())->getCount();
             if ($coreCount > 1) {
                 if ($this->runMultiProcessParse($files, $fileCount, $coreCount)) {
                     $this->fireEndParseProcess();
