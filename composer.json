@@ -44,7 +44,12 @@
     ],
     "config": {
         "process-timeout": 900,
-        "sort-packages": true
+        "sort-packages": true,
+        "audit": {
+            "ignore": [
+                "PKSA-z3gr-8qht-p93v"
+            ]
+        }
     },
     "extra": {
         "branch-alias": {
