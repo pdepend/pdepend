@@ -32,7 +32,7 @@ jobs:
         coverage: xdebug
 
     - name: Imagick SVG support
-      run: sudo apt-get install libmagickcore-6.q16-3-extra
+      run: sudo apt-get update && sudo apt-get install libmagickcore-6.q16-3-extra
 
     - name: Cache Composer packages
       id: composer-cache
