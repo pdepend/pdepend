@@ -80,6 +80,7 @@ use RuntimeException;
 use SplFileInfo;
 use SplFileObject;
 use stdClass;
+use Throwable;
 
 /**
  * PDepend analyzes php class files and generates metrics.
@@ -156,10 +157,10 @@ class Engine
     private array $options = [];
 
     /**
-     * List of all {@link ParserException} that were caught during
+     * List of all {@link Throwable} that were caught during
      * the parsing process.
      *
-     * @var list<ParserException>
+     * @var list<Throwable>
      */
     private array $parseExceptions = [];
 
@@ -351,7 +352,7 @@ class Engine
      * Returns an <b>array</b> with all {@link ParserException}
      * that were caught during the parsing process.
      *
-     * @return ParserException[]
+     * @return Throwable[]
      */
     public function getExceptions(): array
     {
@@ -607,7 +608,7 @@ class Engine
 
                     $data = unserialize($serializedData);
 
-                    if ($data instanceof ParserException) {
+                    if ($data instanceof Throwable) {
                         $this->parseExceptions[] = $data;
                     }
 
@@ -651,7 +652,7 @@ class Engine
 
         try {
             $parser->parse();
-        } catch (ParserException $e) {
+        } catch (Throwable $e) {
             $this->parseExceptions[] = $e;
         }
     }
