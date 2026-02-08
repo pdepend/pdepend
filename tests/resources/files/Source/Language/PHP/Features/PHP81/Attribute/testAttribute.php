@@ -69,3 +69,15 @@ if (rand()) {
     {
     }
 }
+
+function outerFunc() {
+    #[InnerAtt]
+    function innerFunc($abc)
+    {
+    }
+}
+
+function generator()
+{
+	return #[ClosureAtt] function ($abc) {};
+}

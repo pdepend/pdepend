@@ -43,6 +43,7 @@ namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 use PDepend\Source\AST\ASTAttribute;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClosure;
 use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -109,7 +110,9 @@ class AttributeTest extends PHPParserVersion81TestCase
         // Foo
         static::assertCount(1, $parameter->getAttributes());
 
-        $function = $namespace->getFunctions()->current();
+        $functions = $namespace->getFunctions();
+
+        $function = $functions[0];
         // FunBar
         static::assertSame($function, $function->findChildrenOfType(ASTAttribute::class)[0]->getParent());
 
@@ -119,5 +122,13 @@ class AttributeTest extends PHPParserVersion81TestCase
         static::assertCount(1, $bAttributes);
         // Foo
         static::assertSame($b, $bAttributes[0]->getParent());
+
+        $innerFunction = $functions[1];
+        // InnerAtt
+        static::assertSame($innerFunction, $innerFunction->findChildrenOfType(ASTAttribute::class)[0]->getParent());
+
+        $closure = $functions[3]->findChildrenOfType(ASTClosure::class)[0];
+        // ClosureAtt
+        static::assertSame($closure, $closure->findChildrenOfType(ASTAttribute::class)[0]->getParent());
     }
 }

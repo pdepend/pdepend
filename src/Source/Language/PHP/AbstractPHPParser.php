@@ -1709,6 +1709,7 @@ abstract class AbstractPHPParser
 
         $function = $this->builder->buildFunction($functionName);
         $function->setCompilationUnit($this->compilationUnit);
+        $this->attachAttributes($function);
         $function->setId($this->idBuilder->forFunction($function));
 
         $this->parseCallableDeclaration($function);
@@ -1780,6 +1781,7 @@ abstract class AbstractPHPParser
         }
 
         $closure = $this->builder->buildAstClosure();
+        $this->attachAttributes($closure);
         $closure->setReturnsByReference($this->parseOptionalByReference());
         $closure->addChild($this->parseFormalParameters($closure));
         $closure = $this->parseOptionalBoundVariables($closure);
@@ -3538,6 +3540,11 @@ abstract class AbstractPHPParser
                 case Tokens::T_COMMENT:
                 case Tokens::T_DOC_COMMENT:
                     $this->consumeToken($tokenType);
+
+                    break;
+
+                case Tokens::T_ATTRIBUTE:
+                    $this->parseAttributeExpression();
 
                     break;
 
