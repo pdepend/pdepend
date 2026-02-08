@@ -55,7 +55,7 @@ use Stringable;
 class ASTProperty extends AbstractASTArtifact implements Stringable
 {
     /** The parent type object. */
-    private ASTClass $declaringClass;
+    private AbstractASTClassOrInterface $declaringClass;
 
     /**
      * Constructs a new item for the given field declaration and variable
@@ -289,7 +289,7 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
      *
      * @since  0.9.6
      */
-    public function setDeclaringClass(ASTClass $declaringClass): void
+    public function setDeclaringClass(AbstractASTClassOrInterface $declaringClass): void
     {
         $this->declaringClass = $declaringClass;
     }

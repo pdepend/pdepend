@@ -59,6 +59,20 @@ class ASTInterface extends AbstractASTClassOrInterface
      */
     protected int $modifiers = State::IS_IMPLICIT_ABSTRACT;
 
+    /** @var ASTProperty[] */
+    private array $properties;
+
+    public function __sleep(): array
+    {
+        $properties = parent::__sleep();
+
+        if (static::class === self::class) {
+            return ['properties', ...$properties];
+        }
+
+        return $properties;
+    }
+
     /**
      * The magic wakeup method will be called by PHP's runtime environment when
      * a serialized instance of this class was unserialized. This implementation
@@ -80,6 +94,33 @@ class ASTInterface extends AbstractASTClassOrInterface
     public function isAbstract(): bool
     {
         return true;
+    }
+
+    /**
+     * Returns all properties for this class.
+     *
+     * @return ASTArtifactList<ASTProperty>
+     */
+    public function getProperties(): ASTArtifactList
+    {
+        if (!isset($this->properties)) {
+            $this->properties = [];
+
+            $declarations = $this->findChildrenOfType(ASTFieldDeclaration::class);
+            foreach ($declarations as $declaration) {
+                $declarators = $declaration->findChildrenOfType(ASTVariableDeclarator::class);
+
+                foreach ($declarators as $declarator) {
+                    $property = new ASTProperty($declaration, $declarator);
+                    $property->setDeclaringClass($this);
+                    $property->setCompilationUnit($this->getCompilationUnit());
+
+                    $this->properties[] = $property;
+                }
+            }
+        }
+
+        return new ASTArtifactList($this->properties);
     }
 
     /**

@@ -303,9 +303,9 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
      * Calculates the Variables Inheritance of a class metric, this method only
      * counts protected and public properties of parent classes.
      *
-     * @param ASTClass|ASTEnum|ASTTrait $class The context class instance.
+     * @param ASTClass|ASTTrait $class The context class instance.
      */
-    private function calculateVarsi(ASTClass|ASTEnum|ASTTrait $class): int
+    private function calculateVarsi(ASTClass|ASTTrait $class): int
     {
         // List of properties, this method only counts not overwritten properties
         $properties = [];
@@ -315,6 +315,9 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
         }
 
         foreach ($class->getParentClasses() as $parent) {
+            if ($parent instanceof ASTEnum) {
+                continue;
+            }
             foreach ($parent->getProperties() as $prop) {
                 if (!$prop->isPrivate() && !isset($properties[$prop->getImage()])) {
                     $properties[$prop->getImage()] = true;
@@ -378,7 +381,10 @@ class ClassLevelAnalyzer extends AbstractAnalyzer implements AggregateAnalyzer, 
     private function calculateAbstractASTClassOrInterfaceMetrics(ASTClass|ASTEnum|ASTTrait $class): void
     {
         $impl = count($class->getInterfaces());
-        $varsi = $this->calculateVarsi($class);
+        $varsi = 0;
+        if (!$class instanceof ASTEnum) {
+            $varsi = $this->calculateVarsi($class);
+        }
         $wmci = $this->calculateWmciForClass($class);
 
         $this->nodeMetrics[$class->getId()] = [

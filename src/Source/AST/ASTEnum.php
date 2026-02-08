@@ -154,19 +154,6 @@ class ASTEnum extends AbstractASTClassOrInterface
     }
 
     /**
-     * Returns empty ASTArtifactList, enum has no properties.
-     *
-     * @return ASTArtifactList<ASTProperty>
-     */
-    public function getProperties(): ASTArtifactList
-    {
-        /** @var ASTProperty[] $list */
-        $list = [];
-
-        return new ASTArtifactList($list);
-    }
-
-    /**
      * @return ASTArtifactList<AbstractASTClassOrInterface>
      */
     public function getInterfaces(): ASTArtifactList
