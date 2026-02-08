@@ -221,6 +221,14 @@ class Runner
     }
 
     /**
+     * set number of threads to use by the engine
+     */
+    public function setThreads(int $threads): void
+    {
+        $this->engine->setThreads($threads);
+    }
+
+    /**
      * Starts the main PDepend process and returns <b>true</b> after a successful
      * execution.
      *

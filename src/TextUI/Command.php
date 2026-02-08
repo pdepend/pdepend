@@ -214,6 +214,13 @@ class Command
             unset($options['--without-annotations']);
         }
 
+        // check whether threads are set and the option contains a value
+        if (isset($options['--threads'])) {
+            assert(is_numeric($options['--threads']));
+            $this->runner->setThreads((int) $options['--threads']);
+            unset($options['--threads']);
+        }
+
         if (isset($options['--worker'])) {
             $runSilent = true;
             $this->runner->setWorker();
@@ -473,6 +480,7 @@ class Command
             'Do not parse doc comment annotations.',
             $length,
         );
+        $this->printOption('--threads=<value>', 'Number of threads to use for parsing.', $length);
         echo PHP_EOL;
 
         $this->printOption('--quiet', 'Prints errors only.', $length);

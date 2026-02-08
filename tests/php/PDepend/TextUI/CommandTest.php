@@ -456,6 +456,13 @@ class CommandTest extends AbstractTestCase
         static::assertStringContainsString('--coverage-report=<file>', $actual);
     }
 
+    public function testTextUiCommandOutputContainsExpectedThreadsOption(): void
+    {
+        [, $actual] = $this->executeCommand([]);
+        static::assertIsString($actual);
+        static::assertStringContainsString('--threads=<value>', $actual);
+    }
+
     /**
      * testTextUiCommandFailesWithExpectedErrorCodeWhenCoverageReportFileDoesNotExist
      */
