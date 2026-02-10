@@ -127,9 +127,6 @@ abstract class AbstractASTVisitor implements ASTVisitor
             $this->dispatch($unit);
         }
 
-        foreach ($enum->getProperties() as $property) {
-            $this->dispatch($property);
-        }
         foreach ($enum->getMethods() as $method) {
             $this->dispatch($method);
         }

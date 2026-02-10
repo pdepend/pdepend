@@ -120,12 +120,13 @@ class ASTFieldDeclaration extends AbstractASTNode
                   & ~State::IS_STATIC
                   & ~State::IS_READONLY
                   & ~State::IS_PRIVATE_SET
-                  & ~State::IS_PROTECTED_SET;
+                  & ~State::IS_PROTECTED_SET
+                  & ~State::IS_ABSTRACT;
 
         if (($expected & $modifiers) !== 0) {
             throw new InvalidArgumentException(
                 'Invalid field modifiers given, allowed modifiers are ' .
-                'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_STATIC.',
+                'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE, IS_STATIC, IS_READONLY, IS_PRIVATE_SET, IS_PROTECTED_SET and IS_ABSTRACT.',
             );
         }
 

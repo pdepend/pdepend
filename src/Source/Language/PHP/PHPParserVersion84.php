@@ -254,27 +254,32 @@ abstract class PHPParserVersion84 extends PHPParserVersion83
                 }
             }
 
-            $hook->setModifiers($modifiers);
-
             $this->consumeToken(Tokens::T_STRING);
 
             $tokenType = $this->tokenizer->peek();
 
-            if ($tokenType === Tokens::T_PARENTHESIS_OPEN) {
-                $hook->addChild($this->parseFormalParameters($hook));
-                $tokenType = $this->tokenizer->peek();
+            if ($tokenType === Tokens::T_SEMICOLON) {
+                $this->consumeToken(Tokens::T_SEMICOLON);
+                $modifiers |= State::IS_ABSTRACT;
+            } else {
+                if ($tokenType === Tokens::T_PARENTHESIS_OPEN) {
+                    $hook->addChild($this->parseFormalParameters($hook));
+                    $tokenType = $this->tokenizer->peek();
+                }
+
+                if ($tokenType === Tokens::T_CURLY_BRACE_OPEN) {
+                    $hook->addChild($this->parseScope());
+                } else {
+                    $hook->addChild(
+                        $this->buildReturnStatement(
+                            $this->consumeToken(Tokens::T_DOUBLE_ARROW)
+                        )
+                    );
+                    $this->consumeToken(Tokens::T_SEMICOLON);
+                }
             }
 
-            if ($tokenType === Tokens::T_CURLY_BRACE_OPEN) {
-                $hook->addChild($this->parseScope());
-            } else {
-                $hook->addChild(
-                    $this->buildReturnStatement(
-                        $this->consumeToken(Tokens::T_DOUBLE_ARROW)
-                    )
-                );
-                $this->consumeToken(Tokens::T_SEMICOLON);
-            }
+            $hook->setModifiers($modifiers);
 
             $declaration->addChild($hook);
 

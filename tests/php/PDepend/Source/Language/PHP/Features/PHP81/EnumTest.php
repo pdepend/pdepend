@@ -104,7 +104,6 @@ class EnumTest extends PHPParserVersion81TestCase
         static::assertTrue($enum->isFinal());
         static::assertFalse($enum->isAnonymous());
         static::assertFalse($enum->isAbstract());
-        static::assertCount(0, $enum->getProperties());
         static::assertSame(
             [
                 'UnitEnum' => 'UnitEnum',

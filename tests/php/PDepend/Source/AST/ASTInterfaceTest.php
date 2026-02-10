@@ -780,6 +780,7 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
 
         static::assertEquals(
             [
+                'properties',
                 'constants',
                 'interfaceReferences',
                 'parentClassReference',
@@ -848,5 +849,11 @@ class ASTInterfaceTest extends AbstractASTArtifactTestCase
         $interface->setContext($context);
 
         return $interface;
+    }
+
+    public function testGetPropertiesReturnsExpectedNumberOfProperties(): void
+    {
+        $class = $this->getFirstInterfaceForTestCase();
+        static::assertCount(4, $class->getProperties());
     }
 }

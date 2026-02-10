@@ -93,6 +93,7 @@ class ASTPropertyHook extends AbstractASTCallable
         $expected = ~State::IS_PUBLIC
                   & ~State::IS_PROTECTED
                   & ~State::IS_PRIVATE
+                  & ~State::IS_ABSTRACT
                   & ~State::IS_FINAL;
 
         if (($expected & $modifiers) !== 0) {

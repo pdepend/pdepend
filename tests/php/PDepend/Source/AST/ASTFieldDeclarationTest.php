@@ -172,7 +172,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
         );
         $this->expectExceptionMessage(
             'Invalid field modifiers given, allowed modifiers are ' .
-            'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE and IS_STATIC.'
+            'IS_PUBLIC, IS_PROTECTED, IS_PRIVATE, IS_STATIC, IS_READONLY, IS_PRIVATE_SET, IS_PROTECTED_SET and IS_ABSTRACT.'
         );
 
         $declaration->setModifiers($modifiers);
@@ -186,16 +186,7 @@ class ASTFieldDeclarationTest extends ASTNodeTestCase
     public static function dataProviderSetModifiersThrowsExpectedExceptionForInvalidModifiers(): array
     {
         return [
-            [State::IS_ABSTRACT],
             [State::IS_FINAL],
-            [
-                State::IS_PRIVATE |
-                State::IS_ABSTRACT,
-            ],
-            [
-                State::IS_PROTECTED |
-                State::IS_ABSTRACT,
-            ],
             [
                 State::IS_PUBLIC |
                 State::IS_FINAL,
