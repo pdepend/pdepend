@@ -48,7 +48,6 @@ use PDepend\Metrics\Analyzer\CodeRankAnalyzer\CodeRankStrategyI;
 use PDepend\Metrics\Analyzer\CodeRankAnalyzer\StrategyFactory;
 use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\ASTArtifact;
-use PDepend\Source\AST\ASTNamespace;
 
 /**
  * Calculates the code rank metric for classes and namespaces.

@@ -46,7 +46,6 @@ namespace PDepend\Source\Language\PHP;
 use PDepend\Source\AST\ASTCompilationUnit;
 use PDepend\Source\Tokenizer\FullTokenizer;
 use PDepend\Source\Tokenizer\Token;
-use PDepend\Source\Tokenizer\Tokenizer;
 use PDepend\Source\Tokenizer\Tokens;
 use RuntimeException;
 

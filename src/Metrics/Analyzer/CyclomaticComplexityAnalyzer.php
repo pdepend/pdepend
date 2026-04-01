@@ -62,7 +62,6 @@ use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTLogicalAndExpression;
 use PDepend\Source\AST\ASTLogicalOrExpression;
 use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTSwitchLabel;
 use PDepend\Source\AST\ASTWhileStatement;

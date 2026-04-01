@@ -56,7 +56,6 @@ use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTEnum;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTTrait;
 use RuntimeException;

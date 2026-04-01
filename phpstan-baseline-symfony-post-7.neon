@@ -5,21 +5,25 @@ parameters:
 			identifier: class.notFound
 			count: 1
 			path: src/Application.php
+			reportUnmatched: false
 
 		-
 			message: '#^Instantiated class Symfony\\Component\\DependencyInjection\\Loader\\XmlFileLoader not found\.$#'
 			identifier: class.notFound
 			count: 1
 			path: src/Application.php
+			reportUnmatched: false
 
 		-
 			message: '#^Call to method load\(\) on an unknown class Symfony\\Component\\DependencyInjection\\Loader\\XmlFileLoader\.$#'
 			identifier: class.notFound
 			count: 1
 			path: src/DependencyInjection/Extension.php
+			reportUnmatched: false
 
 		-
 			message: '#^Instantiated class Symfony\\Component\\DependencyInjection\\Loader\\XmlFileLoader not found\.$#'
 			identifier: class.notFound
 			count: 1
 			path: src/DependencyInjection/Extension.php
+			reportUnmatched: false

@@ -50,7 +50,6 @@ use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTFunction;
 use PDepend\Source\AST\ASTInterface;
 use PDepend\Source\AST\ASTMethod;
-use PDepend\Source\AST\ASTNamespace;
 
 /**
  * This class calculates the Halstead Complexity Measures for the project,
