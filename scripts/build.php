@@ -11,6 +11,7 @@ echo 'PDepend ', $version, PHP_EOL, PHP_EOL;
 
 $phar = new Phar($archiveName);
 $phar->buildFromDirectory($root, '/^' . preg_quote($root, '/') . 'src/');
+$phar->buildFromDirectory($root, '/^' . preg_quote($root, '/') . 'resources/');
 $phar->buildFromDirectory($root, '/^' . preg_quote($root, '/') . 'vendor(?!.*\/symfony\/.*\/Test\/).*$/');
 
 $patchList = [

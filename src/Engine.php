@@ -167,6 +167,10 @@ class Engine
     /** number of threads to use for parsing */
     private ?int $threads = null;
 
+    private string $mainScript;
+
+    private ?string $workerCommandName = null;
+
     /**
      * Constructs a new php depend facade.
      *
@@ -295,6 +299,16 @@ class Engine
     public function setThreads(?int $threads): void
     {
         $this->threads = $threads;
+    }
+
+    public function setMainScript(string $mainScript): void
+    {
+        $this->mainScript = $mainScript;
+    }
+
+    public function setWorkerCommandName(string $workerCommandName): void
+    {
+        $this->workerCommandName = $workerCommandName;
     }
 
     /**
@@ -532,7 +546,9 @@ class Engine
         $fileCount = count($files);
         $this->fireStartParseProcess($fileCount);
 
-        if ($fileCount > 1 && (!defined('PHP_WINDOWS_VERSION_BUILD') || extension_loaded('sockets'))) {
+        $supportsParallel = !defined('PHP_WINDOWS_VERSION_BUILD') || extension_loaded('sockets');
+
+        if ($fileCount > 1 && isset($this->mainScript) && $supportsParallel) {
             $threadCount = $this->threads ?? (new CpuCoreCounter())->getCount();
             if ($threadCount > 1) {
                 if ($this->runMultiProcessParse($files, $fileCount, $threadCount)) {
@@ -589,7 +605,7 @@ class Engine
      */
     private function runMultiProcessParse(ArrayIterator $files, int $fileCount, int $coreCount): bool
     {
-        $processFactory = new ProcessFactory($this->withoutAnnotations);
+        $processFactory = new ProcessFactory($this->mainScript, $this->withoutAnnotations, $this->workerCommandName);
         $loop = Loop::get();
         $proccessCount = min($fileCount, $coreCount);
         $buffers = [];

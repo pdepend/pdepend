@@ -228,6 +228,16 @@ class Runner
         $this->engine->setThreads($threads);
     }
 
+    public function setMainScript(string $mainScript): void
+    {
+        $this->engine->setMainScript($mainScript);
+    }
+
+    public function setWorkerCommandName(string $workerCommandName): void
+    {
+        $this->engine->setWorkerCommandName($workerCommandName);
+    }
+
     /**
      * Starts the main PDepend process and returns <b>true</b> after a successful
      * execution.
