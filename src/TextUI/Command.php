@@ -221,6 +221,12 @@ class Command
             unset($options['--threads']);
         }
 
+        /** @var list<string> */
+        $argv = $_SERVER['argv'];
+        if (isset($argv[0]) && is_file($argv[0]) && str_contains(basename($argv[0]), 'pdepend')) {
+            $this->runner->setMainScript($argv[0]);
+        }
+
         if (isset($options['--worker'])) {
             $runSilent = true;
             $this->runner->setWorker();

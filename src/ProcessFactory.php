@@ -44,18 +44,16 @@
 namespace PDepend;
 
 use React\ChildProcess\Process;
-use RuntimeException;
 
 final class ProcessFactory
 {
     public function __construct(
+        private readonly string $mainScript,
         private readonly bool $withoutAnnotations,
+        private readonly ?string $workerCommandName = null,
     ) {
     }
 
-    /**
-     *  @throws RuntimeException
-     */
     public function create(): Process
     {
         $commandArgs = $this->getCommandArgs();
@@ -74,29 +72,17 @@ final class ProcessFactory
 
     /**
      * @return list<string>
-     *
-     * @throws RuntimeException
      */
     public function getCommandArgs(): array
     {
-        $phpBinary = PHP_BINARY;
-
-        /** @var list<string> */
-        $argv = $_SERVER['argv'];
-
-        $mainScript = realpath(__DIR__ . '/../bin/pdepend');
-        if (false === $mainScript && isset($argv[0]) && str_contains($argv[0], 'pdepend')) {
-            $mainScript = $argv[0];
-        }
-        if (false === $mainScript) {
-            throw new RuntimeException('Unable to determin main script');
-        }
-
         $commandArgs = [
-            $phpBinary,
-            escapeshellarg($mainScript),
-            '--worker',
+            PHP_BINARY,
+            escapeshellarg($this->mainScript),
         ];
+        if (null !== $this->workerCommandName) {
+            $commandArgs[] = $this->workerCommandName;
+        }
+        $commandArgs[] = '--worker';
         if ($this->withoutAnnotations) {
             $commandArgs[] = '--without-annotations';
         }
