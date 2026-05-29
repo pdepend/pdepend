@@ -291,6 +291,9 @@ abstract class AbstractPHPParser
     /** @var list<ASTAttribute> */
     private array $attributes = [];
 
+    /** True while parsing arguments of an attribute expression. */
+    private bool $inAttributeArguments = false;
+
     /**
      * Internal state flag, that will be set to <b>true</b> when the parser has
      * prefixed a qualified name with the actual namespace.
@@ -3663,7 +3666,13 @@ abstract class AbstractPHPParser
             $allocation = $this->builder->buildAstAllocationExpression('new');
             $allocation = $this->parseAllocationExpressionTypeReference($allocation);
             if ($this->isNextTokenArguments()) {
-                $allocation->addChild($this->parseArguments());
+                $this->inAttributeArguments = true;
+
+                try {
+                    $allocation->addChild($this->parseArguments());
+                } finally {
+                    $this->inAttributeArguments = false;
+                }
             }
             $attribute->addChild($allocation);
             $current = $this->tokenizer->peek();
@@ -5484,12 +5493,34 @@ abstract class AbstractPHPParser
         $this->consumeComments();
 
         if ($this->tokenizer->peek() === Tokens::T_DOUBLE_COLON) {
+            if (
+                !isset($this->classOrInterface)
+                && $this->inAttributeArguments
+                && $this->isClassConstantFetchAfterDoubleColon()
+            ) {
+                return $this->parseStaticMemberPrimaryPrefix(
+                    $this->builder->buildAstConstant($token->image),
+                );
+            }
+
             return $this->parseStaticMemberPrimaryPrefix(
                 $this->parseSelfReference($token),
             );
         }
 
         return $this->builder->buildAstConstant($token->image);
+    }
+
+    private function isClassConstantFetchAfterDoubleColon(): bool
+    {
+        return in_array(
+            $this->tokenizer->peekNext(),
+            [
+                Tokens::T_STRING,
+                Tokens::T_CLASS,
+            ],
+            true,
+        );
     }
 
     /**

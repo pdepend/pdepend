@@ -44,6 +44,8 @@ namespace PDepend\Source\Language\PHP\Features\PHP81;
 use PDepend\Source\AST\ASTAttribute;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClosure;
+use PDepend\Source\AST\ASTConstantPostfix;
+use PDepend\Source\AST\ASTNamedArgument;
 use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
@@ -57,6 +59,23 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('php8')]
 class AttributeTest extends PHPParserVersion81TestCase
 {
+    public function testAttributeArgumentAllowsSelfClassConstantFetch(): void
+    {
+        $class = $this->getFirstClassForTestCase();
+        $attribute = $class->findChildrenOfType(ASTAttribute::class)[0];
+
+        static::assertCount(1, $attribute->findChildrenOfType(ASTConstantPostfix::class));
+    }
+
+    public function testAttributeNamedArgumentAllowsSelfClassConstantFetch(): void
+    {
+        $class = $this->getFirstClassForTestCase();
+        $attribute = $class->findChildrenOfType(ASTAttribute::class)[0];
+
+        static::assertCount(1, $attribute->findChildrenOfType(ASTNamedArgument::class));
+        static::assertCount(1, $attribute->findChildrenOfType(ASTConstantPostfix::class));
+    }
+
     public function testAttribute(): void
     {
         $namespace = $this->parseCodeResourceForTest()->current();
