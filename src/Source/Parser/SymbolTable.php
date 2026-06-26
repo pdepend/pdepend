@@ -145,7 +145,7 @@ class SymbolTable
      */
     private function ensureActiveScopeExists(): void
     {
-        if (null === $this->scope) {
+        if ($this->scope === null) {
             throw new NoActiveScopeException();
         }
     }

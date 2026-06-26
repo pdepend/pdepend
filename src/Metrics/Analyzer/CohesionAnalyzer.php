@@ -48,7 +48,6 @@ use PDepend\Metrics\AnalyzerNodeAware;
 use PDepend\Source\AST\ASTArtifact;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTMethodPostfix;
-use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTProperty;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTSelfReference;

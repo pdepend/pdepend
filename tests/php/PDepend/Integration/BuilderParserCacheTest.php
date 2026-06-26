@@ -44,7 +44,6 @@
 namespace PDepend\Integration;
 
 use PDepend\AbstractTestCase;
-use PDepend\Source\Builder\Builder;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;

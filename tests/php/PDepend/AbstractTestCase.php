@@ -63,7 +63,6 @@ use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
 use PDepend\Source\AST\ASTNode;
 use PDepend\Source\AST\ASTTrait;
-use PDepend\Source\Builder\Builder;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PDepend\Source\Language\PHP\PHPBuilder;
