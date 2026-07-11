@@ -2710,9 +2710,17 @@ abstract class AbstractPHPParser
     {
         // Consume the "instanceof" keyword and strip comments
         $token = $this->consumeToken(Tokens::T_INSTANCEOF);
+        $expr = $this->builder->buildAstInstanceOfExpression($token->image);
+
+        $this->consumeComments();
+        if ($this->tokenizer->peek() === Tokens::T_PARENTHESIS_OPEN) {
+            $expr->addChild($this->parseParenthesisExpression());
+
+            return $expr;
+        }
 
         return $this->parseExpressionTypeReference(
-            $this->builder->buildAstInstanceOfExpression($token->image),
+            $expr,
             false,
         );
     }
