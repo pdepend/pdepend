@@ -8225,6 +8225,16 @@ abstract class AbstractPHPParser
 
                 case Tokens::T_STRING:
                 case Tokens::T_BACKSLASH:
+                    if ($tokenType === Tokens::T_BACKSLASH) {
+                        $scalarTokenTypes = [Tokens::T_NULL, Tokens::T_TRUE, Tokens::T_FALSE];
+
+                        if (in_array($this->tokenizer->peekNext(), $scalarTokenTypes, true)) {
+                            $this->consumeToken(Tokens::T_BACKSLASH);
+
+                            break;
+                        }
+                    }
+
                     $node = $this->builder->buildAstClassOrInterfaceReference(
                         $this->parseQualifiedName(),
                     );
