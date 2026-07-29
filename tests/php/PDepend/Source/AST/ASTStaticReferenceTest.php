@@ -47,7 +47,6 @@ use PDepend\Source\Builder\Builder;
 use PDepend\Source\Builder\BuilderContext;
 use PDepend\Source\Builder\BuilderContext\GlobalBuilderContext;
 use PDepend\Source\Language\PHP\AbstractPHPParser;
-use PDepend\Source\Parser\InvalidStateException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
@@ -101,33 +100,25 @@ class ASTStaticReferenceTest extends ASTNodeTestCase
     }
 
     /**
-     * Tests that an invalid static results in the expected exception.
+     * Tests that a static allocation outside of a class scope is parsed as a
+     * plain class reference.
      */
-    public function testStaticReferenceAllocationOutsideOfClassScopeThrowsExpectedException(): void
+    public function testStaticReferenceAllocationOutsideOfClassScope(): void
     {
-        $this->expectException(
-            InvalidStateException::class
-        );
-        $this->expectExceptionMessage(
-            'The keyword "static" was used outside of a class/method scope.'
-        );
-
-        $this->parseCodeResourceForTest();
+        $reference = $this->getFirstNodeOfTypeInFunction(ASTClassOrInterfaceReference::class);
+        static::assertNotInstanceOf(ASTStaticReference::class, $reference);
+        static::assertEquals('static', $reference->getImage());
     }
 
     /**
-     * Tests that an invalid static results in the expected exception.
+     * Tests that a static member primary prefix outside of a class scope is
+     * parsed as a plain class reference.
      */
-    public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScopeThrowsExpectedException(): void
+    public function testStaticReferenceMemberPrimaryPrefixOutsideOfClassScope(): void
     {
-        $this->expectException(
-            InvalidStateException::class
-        );
-        $this->expectExceptionMessage(
-            'The keyword "static" was used outside of a class/method scope.'
-        );
-
-        $this->parseCodeResourceForTest();
+        $reference = $this->getFirstNodeOfTypeInFunction(ASTClassOrInterfaceReference::class);
+        static::assertNotInstanceOf(ASTStaticReference::class, $reference);
+        static::assertEquals('static', $reference->getImage());
     }
 
     /**
