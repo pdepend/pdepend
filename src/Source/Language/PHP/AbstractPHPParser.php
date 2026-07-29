@@ -5396,25 +5396,22 @@ abstract class AbstractPHPParser
     /**
      * This method parses a {@link ASTStaticReference} node.
      *
+     * When the keyword "static" is used outside of a class scope, which is
+     * syntactically valid PHP that only fails at runtime, this method falls
+     * back to a plain {@link ASTClassOrInterfaceReference} because there is
+     * no class or interface the reference could point to.
+     *
      * @param Token $token The "static" keyword token.
-     * @throws ParserException
-     * @throws InvalidStateException
      * @since 0.9.6
      */
-    private function parseStaticReference(Token $token): ASTStaticReference
+    private function parseStaticReference(Token $token): ASTClassOrInterfaceReference
     {
         // Strip optional comments
         $this->consumeComments();
 
-        if (!isset($this->classOrInterface)) {
-            throw new InvalidStateException(
-                $token->startLine,
-                (string) $this->compilationUnit,
-                'The keyword "static" was used outside of a class/method scope.',
-            );
-        }
-
-        $ref = $this->builder->buildAstStaticReference($this->classOrInterface);
+        $ref = isset($this->classOrInterface)
+            ? $this->builder->buildAstStaticReference($this->classOrInterface)
+            : $this->builder->buildAstClassOrInterfaceReference('static');
         $ref->configureLinesAndColumns(
             $token->startLine,
             $token->endLine,
@@ -6805,7 +6802,7 @@ abstract class AbstractPHPParser
         return $this->parseSelfReference($this->consumeToken(Tokens::T_SELF));
     }
 
-    private function parseStaticType(): ASTStaticReference
+    private function parseStaticType(): ASTClassOrInterfaceReference
     {
         return $this->parseStaticReference($this->consumeToken(Tokens::T_STATIC));
     }
