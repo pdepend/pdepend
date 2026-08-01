@@ -246,15 +246,15 @@ class Chart extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareG
             ];
         }
 
-        // Sort items by size
+        // Sort items by size descending, so small packages are rendered on top of larger ones
         usort(
             $items,
-            static fn(array $a, array $b) => $a['size'] <=> $b['size'],
+            static fn(array $a, array $b) => $b['size'] <=> $a['size'],
         );
 
         if ($items) {
-            $max = $items[count($items) - 1]['size'];
-            $min = $items[0]['size'];
+            $max = $items[0]['size'];
+            $min = $items[count($items) - 1]['size'];
 
             $diff = (($max - $min) / 10);
 
