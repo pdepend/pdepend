@@ -618,7 +618,9 @@ class Engine
                 return false;
             }
 
-            $process->stdout->on('data', function (string $chunk) use (&$buffers, $proccessNo, $files, $process): void {
+            $stdin = $process->stdin;
+
+            $process->stdout->on('data', function (string $chunk) use (&$buffers, $proccessNo, $files, $stdin): void {
                 $buffers[$proccessNo] .= $chunk;
 
                 while (($pos = strpos($buffers[$proccessNo], "\n")) !== false) {
@@ -638,16 +640,16 @@ class Engine
                     }
 
                     if ($files->valid()) {
-                        $process->stdin->write($files->current() . "\n");
+                        $stdin->write($files->current() . "\n");
                         $files->next();
                     } else {
-                        $process->stdin->end();
+                        $stdin->end();
                     }
                     $this->fireEndFileParsing();
                 }
             });
 
-            $process->stdin->write($files->current() . "\n");
+            $stdin->write($files->current() . "\n");
             $files->next();
         }
         $loop->run();
