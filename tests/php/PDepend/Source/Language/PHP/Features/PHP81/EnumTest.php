@@ -62,6 +62,30 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('php8.1')]
 class EnumTest extends PHPParserVersion81TestCase
 {
+    public function testEnumBackingTypeCaseInsensitive(): void
+    {
+        $types = $this->parseCodeResourceForTest()
+            ->current()
+            ->getTypes();
+
+        static::assertCount(3, $types);
+
+        static::assertInstanceOf(ASTEnum::class, $types[0]);
+        static::assertSame('StringEnum', $types[0]->getImage());
+        static::assertTrue($types[0]->isBacked());
+        static::assertSame('String', $types[0]->getType()?->getImage());
+
+        static::assertInstanceOf(ASTEnum::class, $types[1]);
+        static::assertSame('IntEnum', $types[1]->getImage());
+        static::assertTrue($types[1]->isBacked());
+        static::assertSame('Int', $types[1]->getType()?->getImage());
+
+        static::assertInstanceOf(ASTEnum::class, $types[2]);
+        static::assertSame('MixedCaseStringEnum', $types[2]->getImage());
+        static::assertTrue($types[2]->isBacked());
+        static::assertSame('STRING', $types[2]->getType()?->getImage());
+    }
+
     public function testEnum(): void
     {
         $types = $this->parseCodeResourceForTest()

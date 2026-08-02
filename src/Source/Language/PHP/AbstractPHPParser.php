@@ -9023,7 +9023,7 @@ abstract class AbstractPHPParser
 
             if (
                 !($type instanceof ASTScalarType) ||
-                !in_array($type->getImage(), ['int', 'string'], true)
+                !in_array(strtolower($type->getImage()), ['int', 'string'], true)
             ) {
                 throw new TokenException(
                     "Enum backing type must be 'int' or 'string'",
