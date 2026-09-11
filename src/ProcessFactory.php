@@ -76,11 +76,11 @@ final class ProcessFactory
     public function getCommandArgs(): array
     {
         $commandArgs = [
-            PHP_BINARY,
+            escapeshellarg(PHP_BINARY),
             escapeshellarg($this->mainScript),
         ];
         if (null !== $this->workerCommandName) {
-            $commandArgs[] = $this->workerCommandName;
+            $commandArgs[] = escapeshellarg($this->workerCommandName);
         }
         $commandArgs[] = '--worker';
         if ($this->withoutAnnotations) {
@@ -91,7 +91,9 @@ final class ProcessFactory
         $argv = $_SERVER['argv'];
         foreach ($argv as $value) {
             if (str_starts_with($value, '--configuration=')) {
-                $commandArgs[] = trim($value);
+                $commandArgs[] = '--configuration=' . escapeshellarg(
+                    trim(substr($value, strlen('--configuration='))),
+                );
             }
         }
 

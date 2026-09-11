@@ -279,4 +279,16 @@ class ASTNamespace extends AbstractASTArtifact
     {
         $this->packageAnnotation = $packageAnnotation;
     }
+
+    public function sortByDeclaration(): void
+    {
+        uasort($this->types, self::compareByDeclaration(...));
+        uasort($this->functions, self::compareByDeclaration(...));
+    }
+
+    private static function compareByDeclaration(AbstractASTArtifact $left, AbstractASTArtifact $right): int
+    {
+        return [$left->getCompilationUnit()?->getFileName() ?? '', $left->getStartLine()]
+            <=> [$right->getCompilationUnit()?->getFileName() ?? '', $right->getStartLine()];
+    }
 }
