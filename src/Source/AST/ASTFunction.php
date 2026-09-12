@@ -96,6 +96,8 @@ class ASTFunction extends AbstractASTCallable
      */
     public function __wakeup(): void
     {
+        parent::__wakeup();
+
         $this->context->registerFunction($this);
     }
 

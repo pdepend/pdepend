@@ -62,12 +62,21 @@ use PDepend\Source\AST\ASTArtifactList;
 use PDepend\Source\AST\ASTArtifactList\ArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\CollectionArtifactFilter;
 use PDepend\Source\AST\ASTArtifactList\NullArtifactFilter;
+use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTCompilationUnit;
+use PDepend\Source\AST\ASTEnum;
+use PDepend\Source\AST\ASTFunction;
+use PDepend\Source\AST\ASTInterface;
+use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTNamespace;
+use PDepend\Source\AST\ASTTrait;
 use PDepend\Source\ASTVisitor\ASTVisitor;
 use PDepend\Source\Language\PHP\PHPBuilder;
 use PDepend\Source\Language\PHP\PHPParserGeneric;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
+use PDepend\Util\Cache\CacheDriver;
 use PDepend\Util\Cache\CacheFactory;
+use PDepend\Util\Cache\Driver\PackedTokenCacheDriver;
 use PDepend\Util\Configuration;
 use React\EventLoop\Loop;
 use React\Stream\ReadableStreamInterface;
@@ -585,15 +594,39 @@ class Engine
 
             $this->parseFile($tokenizer, $file);
 
-            if ($this->parseExceptions) {
-                echo base64_encode(serialize(array_pop($this->parseExceptions))) . "\n";
-                $this->parseExceptions = [];
-
-                continue;
-            }
+            $exception = array_pop($this->parseExceptions);
+            $this->parseExceptions = [];
 
             $namespaces = $this->builder->getNamespaces();
-            echo base64_encode(serialize($namespaces)) . "\n";
+
+            $tokens = [];
+            $collector = new TokenExchangeVisitor(
+                function (
+                    ASTClass|ASTCompilationUnit|ASTEnum|ASTFunction|ASTInterface|ASTMethod|ASTTrait $node,
+                ) use (
+                    &$tokens,
+                ): void {
+                    $id = $node->getId();
+                    if ($id !== '') {
+                        $tokens[$id] = $node->getTokens();
+                    }
+                },
+            );
+            foreach ($namespaces as $namespace) {
+                $collector->dispatch($namespace);
+            }
+
+            $annotated = [];
+            foreach ($namespaces as $namespace) {
+                $annotated[$namespace->getImage()] = $namespace->isPackageAnnotation();
+            }
+
+            echo WorkerProtocol::frame(serialize([
+                'namespaces' => $namespaces,
+                'tokens' => WorkerProtocol::packTokens($tokens),
+                'annotated' => $annotated,
+                'exception' => $exception,
+            ]));
             $this->builder = new PHPBuilder();
         }
     }
@@ -606,7 +639,18 @@ class Engine
         $processFactory = new ProcessFactory($this->mainScript, $this->withoutAnnotations, $this->workerCommandName);
         $loop = Loop::get();
         $proccessCount = min($fileCount, $coreCount);
+        $cache = new PackedTokenCacheDriver($this->cacheFactory->create());
+
         $buffers = [];
+
+        /** @var array<int, int> */
+        $inFlight = [];
+
+        /** @var array<int, string> */
+        $pending = [];
+        $sentFiles = 0;
+        $appliedFiles = 0;
+
         for ($proccessNo = 0; $proccessNo < $proccessCount; $proccessNo++) {
             $process = $processFactory->create();
             $buffers[$proccessNo] = '';
@@ -620,43 +664,111 @@ class Engine
 
             $stdin = $process->stdin;
 
-            $process->stdout->on('data', function (string $chunk) use (&$buffers, $proccessNo, $files, $stdin): void {
+            $process->stdout->on('data', function (string $chunk) use (
+                &$buffers,
+                &$inFlight,
+                &$pending,
+                &$sentFiles,
+                &$appliedFiles,
+                $proccessNo,
+                $files,
+                $stdin,
+                $cache,
+            ): void {
                 $buffers[$proccessNo] .= $chunk;
 
-                while (($pos = strpos($buffers[$proccessNo], "\n")) !== false) {
-                    $this->fireStartFileParsing();
-                    $line = substr($buffers[$proccessNo], 0, $pos);
-                    $buffers[$proccessNo] = substr($buffers[$proccessNo], $pos + 1);
+                while (($payload = WorkerProtocol::unframe($buffers[$proccessNo])) !== null) {
+                    $pending[$inFlight[$proccessNo]] = $payload;
 
-                    $serializedData = base64_decode($line, true);
-                    if ($serializedData === false) {
-                        throw new RuntimeException('Unable to decode message: ' . $line);
+                    while (isset($pending[$appliedFiles])) {
+                        $this->applyResult($pending[$appliedFiles], $cache);
+                        unset($pending[$appliedFiles]);
+                        $appliedFiles++;
                     }
 
-                    $data = unserialize($serializedData);
-
-                    if ($data instanceof Throwable) {
-                        $this->parseExceptions[] = $data;
-                    }
-
-                    if ($files->valid()) {
-                        $stdin->write($files->current() . "\n");
-                        $files->next();
-                    } else {
+                    if (!$files->valid()) {
                         $stdin->end();
+
+                        continue;
                     }
-                    $this->fireEndFileParsing();
+
+                    $stdin->write($files->current() . "\n");
+                    $files->next();
+                    $inFlight[$proccessNo] = $sentFiles++;
                 }
             });
 
             $stdin->write($files->current() . "\n");
             $files->next();
+            $inFlight[$proccessNo] = $sentFiles++;
         }
         $loop->run();
-        $cache = $this->cacheFactory->create();
+
         $this->builder->setCache($cache);
 
+        // Restore declaration order for stable reports.
+        foreach ($this->builder->getNamespaces() as $namespace) {
+            $namespace->sortByDeclaration();
+        }
+
         return true;
+    }
+
+    /**
+     * @throws RuntimeException
+     */
+    private function applyResult(string $payload, PackedTokenCacheDriver $cache): void
+    {
+        $this->fireStartFileParsing();
+
+        $data = unserialize($payload);
+        $exception = is_array($data) ? $data['exception'] ?? null : null;
+        $namespaces = is_array($data) ? $data['namespaces'] ?? null : null;
+        $tokens = is_array($data) ? $data['tokens'] ?? null : null;
+        $annotated = is_array($data) ? $data['annotated'] ?? null : null;
+
+        if (!$namespaces instanceof ASTArtifactList || !is_string($tokens) || !is_array($annotated)) {
+            throw new RuntimeException(sprintf(
+                'Malformed worker result, expected namespaces, tokens and namespace flags, got %s, %s and %s.',
+                get_debug_type($namespaces),
+                get_debug_type($tokens),
+                get_debug_type($annotated),
+            ));
+        }
+
+        if ($exception instanceof Throwable) {
+            $this->parseExceptions[] = $exception;
+        }
+
+        $cache->addPackedTokens($tokens);
+        $this->attachCache($namespaces, $cache);
+
+        foreach ($annotated as $name => $isAnnotation) {
+            $this->builder->buildNamespace((string) $name)->setPackageAnnotation((bool) $isAnnotation);
+        }
+
+        $this->fireEndFileParsing();
+    }
+
+    /**
+     * Replace the workers empty cache.
+     *
+     * @param ASTArtifactList<ASTNamespace> $namespaces
+     */
+    private function attachCache(ASTArtifactList $namespaces, CacheDriver $cache): void
+    {
+        $visitor = new TokenExchangeVisitor(
+            function (
+                ASTClass|ASTCompilationUnit|ASTEnum|ASTFunction|ASTInterface|ASTMethod|ASTTrait $node,
+            ) use (
+                $cache,
+            ): void {
+                $node->setCache($cache);
+            },
+        );
+        foreach ($namespaces as $namespace) {
+            $visitor->dispatch($namespace);
+        }
     }
 
     private function parseFile(PHPTokenizerInternal $tokenizer, string $file): void
