@@ -1,3 +1,88 @@
+pdepend-3.0.0 (unreleased)
+==========================
+
+New major release of PDepend. It requires PHP 8.1 or newer on a 64 bit build,
+parses files in parallel, moves the configuration file to YAML and adds native
+types to the whole public API.
+
+**This release contains breaking changes. See [UPGRADE.md](UPGRADE.md) for
+migration instructions.**
+
+Requirements
+------------
+
+- Changed [#703](https://github.com/pdepend/pdepend/pull/703): Drop support for PHP 5.3 through 7.4, PDepend now requires PHP 8.1 or newer.
+- Changed: A 64 bit PHP build is now required (`php-64bit`), NPath complexity no longer falls back to bcmath.
+- Changed [#728](https://github.com/pdepend/pdepend/pull/728): Dropped unsupported Symfony versions older then 5.4.
+- Changed [#905](https://github.com/pdepend/pdepend/pull/905): Add Symfony 8 support.
+- Changed [#727](https://github.com/pdepend/pdepend/pull/727): Upgrade the test suite to PHPUnit 10.
+
+Added
+-----
+
+- Added: Parallel parsing of source files, enabled by default with one worker per detected core.
+- Added [#945](https://github.com/pdepend/pdepend/pull/945): `--threads=<value>` to make core usage configurable, use `--threads=1` to parse in a single process.
+- Added: `Engine::setMainScript()` and `Engine::setWorkerCommandName()` so embedders can enable parallel parsing.
+- Added [#905](https://github.com/pdepend/pdepend/pull/905): YAML and PHP configuration files, `pdepend.yml`, `pdepend.yml.dist` and `pdepend.php` are now discovered before `pdepend.xml`.
+- Added [#894](https://github.com/pdepend/pdepend/pull/894): PHP 8.4 support for parentheses-free object instantiation.
+- Added: PHP 8.4 support for property hooks, exposed as `ASTPropertyHook`.
+- Added: PHP 8.4 support for asymmetric property visibility.
+- Added: PHP 8.5 support for the pipe operator, exposed as `ASTPipe`.
+- Added: Attributes are now part of the syntax tree as `ASTAttribute`, including attributes on promoted properties, closures and functions.
+- Added [#949](https://github.com/pdepend/pdepend/pull/949): Support for properties declared on interfaces.
+- Added [#920](https://github.com/pdepend/pdepend/pull/920): Windows CI, plus fixes for the cache directory and for running without `ext-sockets`.
+- Added [#884](https://github.com/pdepend/pdepend/pull/884): Support for large exclusion patterns.
+- Added: `startParseProcess()` now receives the total file count so process listeners can show progress.
+
+Changed
+-------
+
+- Changed [#885](https://github.com/pdepend/pdepend/pull/885): Use the common directory structure, `src/main/php/PDepend` became `src`, `src/bin` became `bin` and `src/test/php` became `tests/php`.
+- Changed: Native parameter, property and return types were added throughout the code base. Every PDepend interface and abstract class changed signature.
+- Changed: `ASTArtifact` now extends `ASTNode`.
+- Changed: The visitor pattern is inverted. `ASTNode::accept()` and `ASTVisitor::__call()` are gone, use `ASTVisitor::dispatch()` and `ASTVisitor::visit()`.
+- Changed: `ProcessListener` methods no longer receive the builder or tokenizer.
+- Changed [#746](https://github.com/pdepend/pdepend/pull/746): Seal up `AbstractPHPParser`, most previously `protected` methods are now `private`.
+- Changed: NPath complexity is reported as an `int` instead of a numeric string.
+- Changed [#826](https://github.com/pdepend/pdepend/pull/826): Improve and clean up `getNodeMetrics()` typing.
+- Changed: The default cache directory moved from `~/.pdepend` to `$XDG_CACHE_HOME/pdepend`, falling back to `~/.cache/pdepend`.
+- Changed: The default cache driver is always `file`, the PHP-build-dependent `memory` fallback was removed.
+- Changed [#959](https://github.com/pdepend/pdepend/pull/959): Sort the abstraction/instability chart draw order by volume so smaller bubbles stay visible.
+- Changed [#731](https://github.com/pdepend/pdepend/pull/731): Rewrite the PHAR build system.
+- Changed [#515](https://github.com/pdepend/pdepend/pull/515): Produce an out of bounds exception when fetching outside of the array bounds.
+- Changed: All `Throwable`s raised while parsing are collected instead of only `ParserException`, so `Engine::getExceptions()` now returns `Throwable[]`.
+
+Removed
+-------
+
+- Removed: `getName()` on artifacts, use `getImage()` instead.
+- Removed: `ASTCompilationUnit::free()`, `AbstractASTCallable::free()`, `getDocComment()` and `setDocComment()`.
+- Removed: `AbstractPHPParser::throwUnexpectedTokenException()`, use `getUnexpectedTokenException()`.
+- Removed: The `--optimization` command line option, which had been a no-op since 2.0.
+- Removed: `PDepend\Util\MathUtil` and `PDepend\Util\Workarounds`.
+- Removed: `PDepend\Metrics\AnalyzerIterator`.
+- Removed: `PDepend\Source\AST\ASTStringIndexExpression` and `Builder::buildAstStringIndexExpression()`, the `$string{0}` syntax was removed in PHP 8.0.
+- Removed: `PHPParserVersion53` through `PHPParserVersion81`, their behaviour is folded into `AbstractPHPParser` and `PHPParserVersion82`.
+- Removed: `Engine::TOKEN_STORAGE` and `Engine::PARSER_STORAGE`.
+- Removed [#735](https://github.com/pdepend/pdepend/pull/735): The `symfony/polyfill-php80` dependency.
+- Removed [#812](https://github.com/pdepend/pdepend/pull/812): Remaining Symfony legacy compatibility code.
+- Removed: The XSD schema for the XML configuration file.
+
+Fixed
+-----
+
+- Fixed [#926](https://github.com/pdepend/pdepend/pull/926): Improve parsing of fully qualified names.
+- Fixed [#927](https://github.com/pdepend/pdepend/pull/927): Allow modifiers on anonymous classes.
+- Fixed [#937](https://github.com/pdepend/pdepend/pull/937): Only apply traits once.
+- Fixed [#940](https://github.com/pdepend/pdepend/pull/940): Fix `ASTNamedArgument` serialization.
+- Fixed [#942](https://github.com/pdepend/pdepend/pull/942): Fix parsing nested alternate `if`/`else`/`elseif`.
+- Fixed [#950](https://github.com/pdepend/pdepend/pull/950): Fix parsing attributes on closures and functions, and `const` named `fn`.
+- Fixed: Fix parsing properties with disjunctive normal form type hints.
+- Fixed: Fix parsing `static` outside of a class, parenthesized `instanceof` types and namespace-prefixed scalar defaults.
+- Fixed [#795](https://github.com/pdepend/pdepend/pull/795): Protect against division by zero.
+- Fixed [#734](https://github.com/pdepend/pdepend/pull/734): Fulfil the `ReturnTypeWillChange` promise.
+- Fixed: Do not attempt to prepare the SVG report when the template file is missing.
+
 pdepend-2.16.2 (2023/12/17)
 ==========================
 
