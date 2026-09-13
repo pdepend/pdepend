@@ -162,6 +162,24 @@ abstract class PHPParserVersion84 extends PHPParserVersion83
             $this->consumeComments();
 
             $tokenType = $this->tokenizer->peek();
+
+            return $this->parsePostAsymmetricVisibilityModifiers($tokenType, $modifiers);
+        }
+
+        return parent::parseUnknownDeclaration($tokenType, $modifiers);
+    }
+
+    /**
+     * Hook for handling additional modifiers after asymmetric visibility tokens.
+     * Override in later parser versions to support new modifier combinations.
+     */
+    protected function parsePostAsymmetricVisibilityModifiers(int $tokenType, int $modifiers): AbstractASTNode
+    {
+        if ($tokenType === Tokens::T_READONLY) {
+            $modifiers |= State::IS_READONLY;
+            $this->consumeToken(Tokens::T_READONLY);
+            $this->consumeComments();
+            $tokenType = $this->tokenizer->peek();
         }
 
         return parent::parseUnknownDeclaration($tokenType, $modifiers);
