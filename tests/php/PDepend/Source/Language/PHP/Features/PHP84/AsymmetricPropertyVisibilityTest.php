@@ -46,6 +46,7 @@ use PDepend\Source\AST\ASTConstantDeclarator;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTFormalParameters;
+use PDepend\Source\AST\State;
 use PDepend\Source\Language\PHP\PHPParserVersion84;
 use PDepend\Source\Language\PHP\PHPTokenizerInternal;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -82,6 +83,27 @@ class AsymmetricPropertyVisibilityTest extends PHPParserVersion84TestCase
         static::assertFalse($properties[0]->isPrivate());
         static::assertFalse($properties[0]->isProtectedSet());
         static::assertTrue($properties[0]->isPrivateSet());
+    }
+
+    /**
+     * testReadonlyProperty
+     */
+    public function testReadonlyProperty(): void
+    {
+        $class = $this->getFirstTypeForTestCase();
+        assert($class instanceof ASTClass);
+
+        /** @var ASTFieldDeclaration[] $properties */
+        $properties = $class->getChildren();
+
+        static::assertCount(1, $properties);
+
+        static::assertTrue($properties[0]->isPublic());
+        static::assertFalse($properties[0]->isProtected());
+        static::assertFalse($properties[0]->isPrivate());
+        static::assertFalse($properties[0]->isProtectedSet());
+        static::assertTrue($properties[0]->isPrivateSet());
+        static::assertSame(State::IS_READONLY, $properties[0]->getModifiers() & State::IS_READONLY);
     }
 
     /**

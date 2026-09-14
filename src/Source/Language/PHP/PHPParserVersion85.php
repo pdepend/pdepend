@@ -45,7 +45,9 @@
 
 namespace PDepend\Source\Language\PHP;
 
+use PDepend\Source\AST\AbstractASTNode;
 use PDepend\Source\AST\ASTNode;
+use PDepend\Source\AST\State;
 use PDepend\Source\Tokenizer\Tokens;
 
 /**
@@ -84,5 +86,17 @@ abstract class PHPParserVersion85 extends PHPParserVersion84
         }
 
         return null;
+    }
+
+    protected function parsePostAsymmetricVisibilityModifiers(int $tokenType, int $modifiers): AbstractASTNode
+    {
+        if ($tokenType === Tokens::T_STATIC) {
+            $modifiers |= State::IS_STATIC;
+            $this->consumeToken(Tokens::T_STATIC);
+            $this->consumeComments();
+            $tokenType = $this->tokenizer->peek();
+        }
+
+        return parent::parsePostAsymmetricVisibilityModifiers($tokenType, $modifiers);
     }
 }
