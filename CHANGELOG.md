@@ -16,6 +16,7 @@ Requirements
 - Changed [#728](https://github.com/pdepend/pdepend/pull/728): Dropped unsupported Symfony versions older than 5.4.
 - Changed [#905](https://github.com/pdepend/pdepend/pull/905): Add Symfony 8 support.
 - Changed [#727](https://github.com/pdepend/pdepend/pull/727): Upgrade the test suite to PHPUnit 10.
+- Added: New runtime dependencies `fidry/cpu-core-counter`, `react/child-process` and `symfony/yaml`, needed for parallel parsing and YAML configuration.
 
 Added
 -----
