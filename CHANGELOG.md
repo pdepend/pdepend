@@ -23,7 +23,7 @@ Added
 
 - Added: Parallel parsing of source files, enabled by default with one worker per detected core.
 - Added [#945](https://github.com/pdepend/pdepend/pull/945): `--threads=<value>` to make core usage configurable, use `--threads=1` to parse in a single process.
-- Added: `Engine::setMainScript()` and `Engine::setWorkerCommandName()` so embedders can enable parallel parsing.
+- Added: `Engine::setMainScript()`, `Engine::setThreads()`, `Engine::setWorker()` and `Engine::setWorkerCommandName()` so embedders can enable and control parallel parsing.
 - Added [#905](https://github.com/pdepend/pdepend/pull/905): YAML and PHP configuration files, `pdepend.yml`, `pdepend.yml.dist` and `pdepend.php` are now discovered before `pdepend.xml`.
 - Added [#894](https://github.com/pdepend/pdepend/pull/894): PHP 8.4 support for parentheses-free object instantiation.
 - Added: PHP 8.4 support for property hooks, exposed as `ASTPropertyHook`.
