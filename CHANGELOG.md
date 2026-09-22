@@ -13,7 +13,7 @@ Requirements
 
 - Changed [#703](https://github.com/pdepend/pdepend/pull/703): Drop support for PHP 5.3 through 7.4, PDepend now requires PHP 8.1 or newer.
 - Changed: A 64 bit PHP build is now required (`php-64bit`), NPath complexity no longer falls back to bcmath.
-- Changed [#728](https://github.com/pdepend/pdepend/pull/728): Dropped unsupported Symfony versions older then 5.4.
+- Changed [#728](https://github.com/pdepend/pdepend/pull/728): Dropped unsupported Symfony versions older than 5.4.
 - Changed [#905](https://github.com/pdepend/pdepend/pull/905): Add Symfony 8 support.
 - Changed [#727](https://github.com/pdepend/pdepend/pull/727): Upgrade the test suite to PHPUnit 10.
 
