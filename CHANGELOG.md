@@ -83,6 +83,11 @@ Fixed
 - Fixed [#795](https://github.com/pdepend/pdepend/pull/795): Protect against division by zero.
 - Fixed [#734](https://github.com/pdepend/pdepend/pull/734): Fulfil the `ReturnTypeWillChange` promise.
 - Fixed: Do not attempt to prepare the SVG report when the template file is missing.
+- Fixed [#955](https://github.com/pdepend/pdepend/pull/955): Fix parsing class constant fetches in attribute arguments outside a class body.
+- Fixed [#961](https://github.com/pdepend/pdepend/pull/961): Fix parsing backed enums whose backing type is not written in lowercase.
+- Fixed [#873](https://github.com/pdepend/pdepend/pull/873): Do not fail on a clover report that has no `project` element.
+- Fixed [#824](https://github.com/pdepend/pdepend/pull/824): Avoid an undefined index notice when a node has no stored complexity metrics.
+- Fixed [#860](https://github.com/pdepend/pdepend/pull/860): Keep the original exception as the previous exception when the runner rethrows.
 
 pdepend-2.16.2 (2023/12/17)
 ==========================
