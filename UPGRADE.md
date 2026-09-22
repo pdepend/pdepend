@@ -13,6 +13,8 @@ A 64 bit PHP build is now required (`php-64bit` in `composer.json`), because NPa
 
 The supported Symfony components are 5.4, 6, 7 and 8. On Windows the `sockets` extension is required for parallel parsing.
 
+PDepend 3 pulls in three new runtime dependencies: `symfony/yaml` for the YAML configuration, and `react/child-process` plus `fidry/cpu-core-counter` for parallel parsing.
+
 ### Configuration file
 
 The configuration file is now YAML by default. PDepend looks for the following files in the current working directory, in order of priority, and uses the first one it finds:
