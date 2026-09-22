@@ -26,7 +26,7 @@ Added
 - Added: `Engine::setMainScript()`, `Engine::setThreads()`, `Engine::setWorker()` and `Engine::setWorkerCommandName()` so embedders can enable and control parallel parsing.
 - Added [#905](https://github.com/pdepend/pdepend/pull/905): YAML and PHP configuration files, `pdepend.yml`, `pdepend.yml.dist` and `pdepend.php` are now discovered before `pdepend.xml`.
 - Added [#894](https://github.com/pdepend/pdepend/pull/894): PHP 8.4 support for parentheses-free object instantiation.
-- Added: PHP 8.4 support for property hooks, exposed as `ASTPropertyHook`.
+- Added [#966](https://github.com/pdepend/pdepend/pull/966): PHP 8.4 support for property hooks, exposed as `ASTPropertyHook`, including static and readonly hooks.
 - Added: PHP 8.4 support for asymmetric property visibility.
 - Added: PHP 8.5 support for the pipe operator, exposed as `ASTPipe`.
 - Added: Attributes are now part of the syntax tree as `ASTAttribute`, including attributes on promoted properties, closures and functions.
