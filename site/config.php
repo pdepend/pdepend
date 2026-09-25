@@ -111,7 +111,7 @@ return [
     'extensions' => [
         'rst' => function (string $file) use ($parser) {
             $parser->getEnvironment()->setCurrentDirectory(dirname($file));
-            $content = $parser->parseFile($file);
+            $content = (string) $parser->parseFile($file);
             // Rewrite links anchors
             $content = preg_replace_callback('/(<a id="[^"]+"><\/a>)\s*<h(?<level>[1-6])([^>]*>)(?<content>[\s\S]*)<\/h\\g<level>>/U', function ($match) {
                 $level = $match['level'];
