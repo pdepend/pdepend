@@ -517,6 +517,106 @@ class CommandTest extends AbstractTestCase
         );
     }
 
+    public function testHelpListsMigrateConfigurationOnlyWhenSupported(): void
+    {
+        [, $actual] = $this->executeCommand(['--help']);
+        static::assertIsString($actual);
+        static::assertStringContainsString('--generate-configuration', $actual);
+
+        if (ConfigurationMigrator::isSupported()) {
+            static::assertStringContainsString('--migrate-configuration', $actual);
+        } else {
+            static::assertStringNotContainsString('--migrate-configuration', $actual);
+        }
+    }
+
+    public function testGenerateConfigurationWritesAnswersToFile(): void
+    {
+        $this->changeWorkingDirectory($this->createTemporaryDirectory());
+
+        $command = new class extends Command {
+            /** @var list<string> */
+            public array $answers = ['sqlite', 'memory', 'Luxi Sans'];
+
+            protected function readLine(): string
+            {
+                return (string) array_shift($this->answers);
+            }
+        };
+
+        $this->prepareArgv(['--generate-configuration']);
+        ob_start();
+        $exitCode = $command->run();
+        $output = ob_get_clean();
+
+        static::assertSame(Runner::SUCCESS_EXIT, $exitCode);
+        static::assertIsString($output);
+        static::assertSame(2, substr_count($output, 'Cache driver, file or memory [file]: '));
+        static::assertStringNotContainsString('Cache location', $output);
+
+        $yaml = file_get_contents('pdepend.yml');
+        unlink('pdepend.yml');
+        static::assertIsString($yaml);
+        static::assertStringContainsString('driver: memory', $yaml);
+        static::assertStringContainsString('font-family: \'Luxi Sans\'', $yaml);
+    }
+
+    public function testGenerateConfigurationRefusesToOverwrite(): void
+    {
+        $this->changeWorkingDirectory($this->createTemporaryDirectory());
+        file_put_contents('pdepend.yml', 'keep');
+
+        [$exitCode, $actual] = $this->executeCommand(['--generate-configuration']);
+        $content = file_get_contents('pdepend.yml');
+        unlink('pdepend.yml');
+
+        static::assertSame(Command::CLI_ERROR, $exitCode);
+        static::assertIsString($actual);
+        static::assertStringContainsString('already exists', $actual);
+        static::assertSame('keep', $content);
+    }
+
+    public function testMigrateConfigurationWritesYamlNextToXml(): void
+    {
+        if (!ConfigurationMigrator::isSupported()) {
+            static::markTestSkipped('XML configuration requires Symfony 7 or older.');
+        }
+
+        $this->changeWorkingDirectory($this->createTemporaryDirectory());
+        file_put_contents('pdepend.xml.dist', '<?xml version="1.0"?>
+<symfony:container xmlns:symfony="http://symfony.com/schema/dic/services"
+    xmlns="http://pdepend.org/schema/dic/pdepend">
+    <config>
+        <cache>
+            <driver>memory</driver>
+        </cache>
+    </config>
+</symfony:container>');
+
+        [$exitCode] = $this->executeCommand(['--migrate-configuration']);
+        $yaml = file_get_contents('pdepend.yml.dist');
+        unlink('pdepend.xml.dist');
+        unlink('pdepend.yml.dist');
+
+        static::assertSame(Runner::SUCCESS_EXIT, $exitCode);
+        static::assertSame("pdepend:\n  cache:\n    driver: memory\n", $yaml);
+    }
+
+    public function testMigrateConfigurationIsUnknownOptionWithoutXmlSupport(): void
+    {
+        if (ConfigurationMigrator::isSupported()) {
+            static::markTestSkipped('XML configuration is supported with Symfony 7 or older.');
+        }
+
+        $this->changeWorkingDirectory($this->createTemporaryDirectory());
+
+        [$exitCode, $actual] = $this->executeCommand(['--migrate-configuration']);
+
+        static::assertSame(Command::CLI_ERROR, $exitCode);
+        static::assertIsString($actual);
+        static::assertStringContainsString("Unknown option '--migrate-configuration' given.", $actual);
+    }
+
     public function testQuietModeWillSuppressVersionAndStatistics(): void
     {
         $argv = [
@@ -645,6 +745,15 @@ class CommandTest extends AbstractTestCase
         ob_end_clean();
 
         return [$exitCode, $output];
+    }
+
+    private function createTemporaryDirectory(): string
+    {
+        $directory = $this->createRunResourceURI('config');
+        unlink($directory);
+        mkdir($directory);
+
+        return $directory;
     }
 
     /**
