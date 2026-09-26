@@ -47,6 +47,7 @@ use Exception;
 use PDepend\Application;
 use PDepend\DbusUI\ResultPrinter as DbusResultPrinter;
 use PDepend\Util\ConfigurationInstance;
+use PDepend\Util\FileUtil;
 use PDepend\Util\Log;
 use RuntimeException;
 use Throwable;
@@ -119,6 +120,12 @@ class Command
             $this->printVersion();
 
             return Runner::SUCCESS_EXIT;
+        }
+        if (isset($this->options['--generate-configuration'])) {
+            return $this->generateConfiguration();
+        }
+        if (isset($this->options['--migrate-configuration']) && ConfigurationMigrator::isSupported()) {
+            return $this->migrateConfiguration();
         }
 
         $configurationFile = null;
@@ -419,6 +426,110 @@ class Command
     }
 
     /**
+     * Asks a few questions and writes a pdepend.yml to the current working directory.
+     */
+    private function generateConfiguration(): int
+    {
+        $this->printVersion();
+
+        $target = getcwd() . '/pdepend.yml';
+        if (file_exists($target)) {
+            echo 'A pdepend.yml file already exists in the current working directory.', PHP_EOL;
+
+            return self::CLI_ERROR;
+        }
+
+        echo 'Generating pdepend.yml in ', getcwd(), PHP_EOL, PHP_EOL;
+
+        do {
+            $cacheDriver = $this->ask('Cache driver, file or memory', 'file');
+        } while (!in_array($cacheDriver, ['file', 'memory'], true));
+
+        $cacheLocation = null;
+        if ($cacheDriver === 'file') {
+            $defaultLocation = FileUtil::getDefaultCacheDir() . '/pdepend';
+            $cacheLocation = $this->ask('Cache location', $defaultLocation);
+            if ($cacheLocation === $defaultLocation) {
+                $cacheLocation = null;
+            }
+        }
+
+        $fontFamily = $this->ask('Font family for charts', 'Arial');
+
+        $generator = new ConfigurationGenerator();
+        file_put_contents($target, $generator->generate($cacheDriver, $cacheLocation, $fontFamily));
+
+        echo PHP_EOL, 'Generated ', $target, PHP_EOL;
+
+        return Runner::SUCCESS_EXIT;
+    }
+
+    private function migrateConfiguration(): int
+    {
+        $this->printVersion();
+
+        $source = $this->options['--configuration'] ?? null;
+        if (!is_string($source)) {
+            $source = null;
+            foreach (['pdepend.xml', 'pdepend.xml.dist'] as $file) {
+                if (file_exists(getcwd() . '/' . $file)) {
+                    $source = getcwd() . '/' . $file;
+
+                    break;
+                }
+            }
+        }
+        if ($source === null || !file_exists($source)) {
+            echo 'No XML configuration file found to migrate.', PHP_EOL;
+
+            return self::CLI_ERROR;
+        }
+
+        $target = ConfigurationMigrator::getTargetFile($source);
+        if ($target === $source) {
+            echo 'The configuration file "', $source, '" is not an XML file.', PHP_EOL;
+
+            return self::CLI_ERROR;
+        }
+        if (file_exists($target)) {
+            echo 'The file "', $target, '" already exists.', PHP_EOL;
+
+            return self::CLI_ERROR;
+        }
+
+        try {
+            $yaml = (new ConfigurationMigrator())->migrate($source);
+        } catch (Exception $e) {
+            echo $e->getMessage(), PHP_EOL;
+
+            return self::CLI_ERROR;
+        }
+
+        file_put_contents($target, $yaml);
+
+        echo 'Migrated ', $source, ' to ', $target, PHP_EOL;
+        echo 'Delete the XML file once you have checked the result, it will not work with Symfony 8.', PHP_EOL;
+
+        return Runner::SUCCESS_EXIT;
+    }
+
+    private function ask(string $question, string $default): string
+    {
+        echo $question, ' [', $default, ']: ';
+
+        $answer = $this->readLine();
+
+        return $answer === '' ? $default : $answer;
+    }
+
+    protected function readLine(): string
+    {
+        $line = fgets(STDIN);
+
+        return $line === false ? '' : trim($line);
+    }
+
+    /**
      * Outputs the current PDepend version.
      */
     protected function printVersion(): void
@@ -462,6 +573,18 @@ class Command
             'Optional PDepend configuration file.',
             $length,
         );
+        $this->printOption(
+            '--generate-configuration',
+            'Generate a pdepend.yml configuration file.',
+            $length,
+        );
+        if (ConfigurationMigrator::isSupported()) {
+            $this->printOption(
+                '--migrate-configuration',
+                'Convert an XML configuration file to YAML.',
+                $length,
+            );
+        }
         echo PHP_EOL;
 
         $this->printOption(

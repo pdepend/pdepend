@@ -30,7 +30,15 @@ The loader is picked from the file extension, so an XML configuration still work
 XML config is not supported when using Symfony 8+.
 ```
 
-Convert your configuration now, even if you are not on Symfony 8 yet. What was previously:
+Convert your configuration now, even if you are not on Symfony 8 yet. While you are still on Symfony 7 or older, PDepend can do the conversion for you:
+
+```
+pdepend --migrate-configuration
+```
+
+This reads `pdepend.xml` (or `pdepend.xml.dist`, or the file given with `--configuration=<file>`) and writes `pdepend.yml` (or `pdepend.yml.dist`) next to it. It never overwrites an existing file and leaves the XML file in place, delete it once you have checked the result. Configuration files that define their own services or parameters are refused and have to be converted by hand.
+
+If you are already on Symfony 8 you will have to convert the file by hand. What was previously:
 
 ```xml
 <?xml version="1.0"?>
@@ -69,6 +77,8 @@ pdepend:
 ```
 
 The setting names are unchanged. Two cache defaults changed, see [Cache location](#cache-location). The shipped sample file is now `pdepend.yml.dist` instead of `pdepend.xml.dist`.
+
+To start a new configuration instead, `pdepend --generate-configuration` asks for the relevant information (with defaults) and writes a `pdepend.yml` to the current working directory. This works with every supported Symfony version.
 
 ### Parallel parsing
 
