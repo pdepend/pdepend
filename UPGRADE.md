@@ -94,7 +94,7 @@ pdepend --threads=1 src/
 
 Parse errors and progress output from the workers are collected and reported by the parent process, so `ProcessListener` callbacks are no longer strictly ordered file by file during parsing.
 
-Projects that construct `PDepend\Engine` themselves stay single process until they call `Engine::setMainScript()` with the script the worker processes should re-execute. `Engine::setThreads()` and `Engine::setWorkerCommandName()` are optional on top of that. Without `setThreads()` the detected core count is used.
+Projects that construct `PDepend\Engine` themselves stay single process until they call `Engine::setMainScript()` with the script the worker processes should re-execute. `Engine::setThreads()` and `Engine::setWorkerCommandName()` are optional on top of that. Without `setThreads()` the detected core count is used. The script has to boot the worker by calling `PDepend\TextUI\Command::main()`.
 
 ### Cache location
 
@@ -244,3 +244,13 @@ The repository moved to the conventional layout. This only matters if you refere
 | `src/site/`             | `site/`              |
 
 `vendor/bin/pdepend` is unaffected. The DI service definitions moved from `resources/services.xml` to `resources/services.php`, and the XSD schema for the XML configuration (`src/main/resources/schema/configuration.xsd`) has been dropped.
+
+### Backward compatibility within 3.x
+
+Everything public is covered by the compatibility promise for the lifetime of 3.x, except code marked `@internal`, which can change in any minor release. PHPStan and Psalm report its use from outside PDepend.
+
+- The parallel parsing plumbing: `WorkerProtocol`, `ProcessFactory`, `TokenExchangeVisitor`, `PackedTokenCacheDriver`, `Engine::setWorker()`, `Runner::setWorker()`, the `--worker` option and the data exchanged with the workers.
+- The per version parser classes `PHPParserVersion82` to `PHPParserVersion85` and the `protected` methods of `AbstractPHPParser` and `PHPParserGeneric`.
+- `TextUI\ConfigurationGenerator` and `TextUI\ConfigurationMigrator`.
+
+Enabling parallel parsing through `Engine::setMainScript()`, `Engine::setThreads()`, `Engine::setWorkerCommandName()` and `TextUI\Command::main()` is covered, as is using `PHPParserGeneric`, but subclassing the parser is not. `Source\Builder\Builder` gains a method whenever the parser learns new syntax, so calling it is covered, but implementing it is not.

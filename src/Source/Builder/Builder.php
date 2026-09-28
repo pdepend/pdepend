@@ -162,6 +162,10 @@ use PDepend\Util\Cache\CacheDriver;
 /**
  * Base interface for all code node builders.
  *
+ * New build methods are added whenever the parser learns new syntax, so this
+ * interface is only meant to be implemented by PDepend itself. Calling it is
+ * covered by the compatibility promise, implementing it is not.
+ *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  *

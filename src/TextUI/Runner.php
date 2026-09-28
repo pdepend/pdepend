@@ -160,6 +160,9 @@ class Runner
         $this->excludeDirectories = $excludeDirectories;
     }
 
+    /**
+     * @internal
+     */
     public function setWorker(): void
     {
         $this->isWorker = true;

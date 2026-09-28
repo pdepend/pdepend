@@ -744,6 +744,9 @@ class Command
     /**
      * Main method that starts the command line runner.
      *
+     * Applications that embed PDepend with parallel parsing call this from the
+     * script given to {@link \PDepend\Engine::setMainScript()} to boot a worker.
+     *
      * @return int The exit code.
      */
     public static function main(): int

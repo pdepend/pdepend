@@ -54,6 +54,7 @@ Changed
 - Changed [#731](https://github.com/pdepend/pdepend/pull/731): Rewrite the PHAR build system.
 - Changed [#515](https://github.com/pdepend/pdepend/pull/515): Produce an out of bounds exception when fetching outside of the array bounds.
 - Changed: All `Throwable`s raised while parsing are collected instead of only `ParserException`, so `Engine::getExceptions()` now returns `Throwable[]`.
+- Changed: Marked the parallel parsing plumbing, the per version parser classes, the `protected` parser methods and the configuration generator/migrator `@internal`. They are not covered by the 3.x compatibility promise.
 
 Removed
 -------

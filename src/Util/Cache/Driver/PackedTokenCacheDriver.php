@@ -48,6 +48,8 @@ use PDepend\WorkerProtocol;
 
 /**
  * Worker results carry their token streams as a packed blob.
+ *
+ * @internal
  */
 final class PackedTokenCacheDriver implements CacheDriver
 {

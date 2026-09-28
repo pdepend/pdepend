@@ -796,6 +796,7 @@ abstract class AbstractPHPParser
      *
      * @param int $modifiers Optional default modifiers.
      * @param bool $echoing True if current statement is echoing (such as after <?=).
+     * @internal
      */
     protected function reset(int $modifiers = 0, bool $echoing = false): void
     {
@@ -906,6 +907,9 @@ abstract class AbstractPHPParser
         throw $this->getUnexpectedNextTokenException();
     }
 
+    /**
+     * @internal
+     */
     protected function isConstantName(int $tokenType): bool
     {
         return match ($tokenType) {
@@ -985,6 +989,7 @@ abstract class AbstractPHPParser
      * Tests if the give token is a valid function name in the supported PHP
      * version.
      *
+     * @internal
      * @since 2.3
      */
     protected function isFunctionName(int $tokenType): bool
@@ -1061,6 +1066,9 @@ abstract class AbstractPHPParser
         return $trait;
     }
 
+    /**
+     * @internal
+     */
     protected function attachAttributes(AbstractASTCallable|AbstractASTNode|AbstractASTType $node): void
     {
         foreach ($this->attributes as $attribute) {
@@ -1429,6 +1437,7 @@ abstract class AbstractPHPParser
      * Override this in later PHPParserVersions as necessary
      *
      * @throws UnexpectedTokenException
+     * @internal
      */
     protected function parseUnknownTypeBody(
         int $tokenType,
@@ -1520,6 +1529,7 @@ abstract class AbstractPHPParser
      * Override this in later PHPParserVersions as necessary
      *
      * @throws UnexpectedTokenException
+     * @internal
      */
     protected function parseUnknownDeclaration(int $tokenType, int $modifiers): AbstractASTNode
     {
@@ -1605,6 +1615,7 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * @internal
      * @since 3.0.0
      */
     protected function parseFieldTermination(int $tokenType, ASTFieldDeclaration $declaration): void
@@ -2631,6 +2642,7 @@ abstract class AbstractPHPParser
      * @param T $node
      * @param array<Token> $tokens
      * @return T
+     * @internal
      * @since 0.9.8
      */
     protected function setNodePositionsAndReturn(ASTNode $node, array &$tokens = []): ASTNode
@@ -3664,6 +3676,7 @@ abstract class AbstractPHPParser
 
     /**
      * @throws TokenStreamEndException
+     * @internal
      */
     protected function parseAttributeExpression(): void
     {
@@ -3714,6 +3727,7 @@ abstract class AbstractPHPParser
      *
      * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
+     * @internal
      * @since 2.2
      */
     protected function parseOptionalExpressionForVersion(): ?ASTNode
@@ -4585,6 +4599,7 @@ abstract class AbstractPHPParser
     /**
      * This method builds a return statement from a given token.
      *
+     * @internal
      * @since 2.7.0
      */
     protected function buildReturnStatement(Token $token): ASTReturnStatement
@@ -6465,6 +6480,9 @@ abstract class AbstractPHPParser
         return $node;
     }
 
+    /**
+     * @internal
+     */
     protected function checkReadonlyToken(): int
     {
         if ($this->addTokenToStackIfType(Tokens::T_READONLY)) {
@@ -6476,6 +6494,8 @@ abstract class AbstractPHPParser
 
     /**
      * Parse the modifiers for construct parameter
+     *
+     * @internal
      */
     protected function parseConstructFormalParameterModifiers(): int
     {
@@ -6531,6 +6551,7 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * @internal
      * @since 3.0.0
      */
     protected function parsePromotedParameterExtensions(ASTFormalParameter $parameter): void
@@ -6542,6 +6563,7 @@ abstract class AbstractPHPParser
      *
      * @param ASTCallable $callable the callable object (closure, function or method)
      *                              requiring the given parameters list.
+     * @internal
      * @since 0.9.5
      */
     protected function parseFormalParameters(ASTCallable $callable): ASTFormalParameters
@@ -6885,6 +6907,7 @@ abstract class AbstractPHPParser
      * Tests if the given token type is a valid formal parameter in the supported
      * PHP version.
      *
+     * @internal
      * @since 1.0.0
      */
     protected function isTypeHint(int $tokenType): bool
@@ -6945,6 +6968,9 @@ abstract class AbstractPHPParser
         }
     }
 
+    /**
+     * @internal
+     */
     protected function parseSingleTypeHint(): ASTType
     {
         $this->consumeComments();
@@ -7077,6 +7103,9 @@ abstract class AbstractPHPParser
         return $type;
     }
 
+    /**
+     * @internal
+     */
     protected function canNotBeStandAloneType(ASTNode $type): bool
     {
         return $type instanceof ASTScalarType && ($type->isFalse() || $type->isNull());
@@ -7086,6 +7115,7 @@ abstract class AbstractPHPParser
      * Parses a type hint that is valid in the supported PHP version.
      *
      * @throws ParserException
+     * @internal
      * @since 1.0.0
      */
     protected function parseTypeHint(): ASTType
@@ -7110,6 +7140,7 @@ abstract class AbstractPHPParser
     /**
      * Extracts all dependencies from a callable body.
      *
+     * @internal
      * @since 0.9.12
      */
     protected function parseScope(): ASTScope
@@ -7551,6 +7582,8 @@ abstract class AbstractPHPParser
 
     /**
      * Determines if the given image is a PHP 7 type hint.
+     *
+     * @internal
      */
     protected function isScalarOrCallableTypeHint(string $image): bool
     {
@@ -7793,6 +7826,7 @@ abstract class AbstractPHPParser
      *
      * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
+     * @internal
      * @since  1.16.0
      */
     protected function parseTypedConstantDeclarator(): ASTConstantDeclarator
@@ -7872,6 +7906,7 @@ abstract class AbstractPHPParser
      * Parses the value of a php constant. By default this can be only static
      * values that were allowed in the oldest supported PHP version.
      *
+     * @internal
      * @since 2.2.x
      */
     protected function parseConstantDeclaratorValue(): ?ASTValue
@@ -8100,6 +8135,9 @@ abstract class AbstractPHPParser
         return $this->parseStaticValue();
     }
 
+    /**
+     * @internal
+     */
     protected function isStaticValueTerminator(int $tokenType): bool
     {
         return match ($tokenType) {
@@ -8279,6 +8317,9 @@ abstract class AbstractPHPParser
         throw new TokenStreamEndException($this->tokenizer);
     }
 
+    /**
+     * @internal
+     */
     protected function isStaticValueVersionSpecificTerminator(int $tokenType): bool
     {
         return match ($tokenType) {
@@ -8877,6 +8918,7 @@ abstract class AbstractPHPParser
      * @param int $tokenType The next expected token type.
      * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
+     * @internal
      */
     protected function consumeToken(int $tokenType): Token
     {
@@ -8895,6 +8937,8 @@ abstract class AbstractPHPParser
 
     /**
      * This method will consume all comment tokens from the token stream.
+     *
+     * @internal
      */
     protected function consumeComments(): void
     {
@@ -8943,6 +8987,7 @@ abstract class AbstractPHPParser
     /**
      * @throws TokenStreamEndException
      * @throws UnexpectedTokenException
+     * @internal
      */
     protected function checkEllipsisInExpressionSupport(): void
     {

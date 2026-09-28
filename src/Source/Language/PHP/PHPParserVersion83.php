@@ -54,6 +54,7 @@ use PDepend\Source\Tokenizer\Tokens;
  *
  * @copyright 2008-2017 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+ * @internal
  * @since 2.12
  */
 abstract class PHPParserVersion83 extends PHPParserVersion82

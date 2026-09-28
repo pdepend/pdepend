@@ -61,6 +61,8 @@ use PDepend\Source\ASTVisitor\AbstractASTVisitor;
  * be ferried across the process boundary explicitly. This visitor is used
  * on both ends: to collect the token data in the worker, and to re-attach it
  * to a working cache in the parent.
+ *
+ * @internal
  */
 class TokenExchangeVisitor extends AbstractASTVisitor
 {
