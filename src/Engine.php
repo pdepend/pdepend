@@ -275,6 +275,9 @@ class Engine
         $this->options = $options;
     }
 
+    /**
+     * @internal
+     */
     public function setWorker(): void
     {
         $this->isWorker = true;
@@ -308,11 +311,20 @@ class Engine
         $this->threads = $threads;
     }
 
+    /**
+     * Script the parallel worker processes re-execute. Parsing stays single
+     * process until this is set. The script must end up calling
+     * {@link \PDepend\TextUI\Command::main()}.
+     */
     public function setMainScript(string $mainScript): void
     {
         $this->mainScript = $mainScript;
     }
 
+    /**
+     * Sub-command passed to the main script ahead of the worker arguments,
+     * for applications that route it to {@link \PDepend\TextUI\Command::main()}.
+     */
     public function setWorkerCommandName(string $workerCommandName): void
     {
         $this->workerCommandName = $workerCommandName;

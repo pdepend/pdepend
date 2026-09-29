@@ -48,6 +48,8 @@ use RuntimeException;
 
 /**
  * Messages are length prefixed rather than newline delimited.
+ *
+ * @internal
  */
 final class WorkerProtocol
 {

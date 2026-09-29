@@ -53,6 +53,8 @@ use Symfony\Component\Yaml\Yaml;
  *
  * The conversion relies on Symfony's XmlFileLoader, which was removed in
  * Symfony 8, so it is only available with Symfony 7 or older.
+ *
+ * @internal
  */
 final class ConfigurationMigrator
 {

@@ -45,6 +45,8 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * Renders a pdepend.yml configuration file from the answers given.
+ *
+ * @internal
  */
 final class ConfigurationGenerator
 {

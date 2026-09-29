@@ -45,6 +45,9 @@ namespace PDepend;
 
 use React\ChildProcess\Process;
 
+/**
+ * @internal
+ */
 final class ProcessFactory
 {
     public function __construct(
