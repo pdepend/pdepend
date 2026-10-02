@@ -92,15 +92,6 @@ class AnalyzerNodeAndProjectAwareDummy implements AnalyzerNodeAware, AnalyzerPro
     }
 
     /**
-     * Removes the listener from this analyzer.
-     *
-     * @param AnalyzerListener $listener The listener instance.
-     */
-    public function removeAnalyzeListener(AnalyzerListener $listener): void
-    {
-    }
-
-    /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      */
     public function analyze($namespaces): void

@@ -226,7 +226,9 @@ class ASTEnum extends AbstractASTClassOrInterface
     /**
      * Returns the declared modifiers for this type.
      *
+     * @api
      * @since  0.9.4
+     * @deprecated Will be removed in PDepend 4.0.
      */
     public function getModifiers(): int
     {

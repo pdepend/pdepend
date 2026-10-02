@@ -51,5 +51,8 @@ namespace PDepend\Source\AST;
  */
 interface ASTCallable extends ASTNode
 {
+    /**
+     * @api
+     */
     public function getReturnType(): ?ASTType;
 }

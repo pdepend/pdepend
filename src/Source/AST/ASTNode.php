@@ -136,6 +136,7 @@ interface ASTNode
      * of <b>$parentType</b>.
      *
      * @return ASTNode[]
+     * @api
      */
     public function getParentsOfType(string $parentType): array;
 
@@ -149,6 +150,7 @@ interface ASTNode
      * Sets the raw doc comment for this node.
      *
      * @param ?string $comment The doc comment block for this node.
+     * @api
      */
     public function setComment(?string $comment): void;
 

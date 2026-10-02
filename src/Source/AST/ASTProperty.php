@@ -113,7 +113,9 @@ class ASTProperty extends AbstractASTArtifact implements Stringable
      * This method returns a OR combined integer of the declared modifiers for
      * this property.
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed in PDepend 4.0.
      */
     public function getModifiers(): int
     {

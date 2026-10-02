@@ -59,6 +59,9 @@ interface Analyzer
      *
      * @param array<string, array<int, string>|string> $options Global option array, every analyzer
      *                                      can extract the required options.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0.
      */
     public function __construct(array $options = []);
 
@@ -81,7 +84,9 @@ interface Analyzer
      * pdepend framework, while an analyzer that does not perform any action
      * for any reason should return <b>false</b>.
      *
+     * @api
      * @since  0.9.10
+     * @deprecated Will be removed from the interface in PDepend 4.0.
      */
     public function isEnabled(): bool;
 

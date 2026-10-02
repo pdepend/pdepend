@@ -138,6 +138,9 @@ class PdependExtension extends SymfonyExtension
         return $settings;
     }
 
+    /**
+     * @api
+     */
     public function getNamespace(): string
     {
         return 'http://pdepend.org/schema/dic/pdepend';

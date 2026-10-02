@@ -57,6 +57,8 @@ class AnalyzerFactory
 {
     /**
      * Create a new Analyzer Factory
+     *
+     * @api
      */
     public function __construct(
         private readonly ContainerInterface $container,

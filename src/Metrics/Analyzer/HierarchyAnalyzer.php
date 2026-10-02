@@ -79,20 +79,11 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
         M_NUMBER_OF_ROOT_CLASSES = 'roots',
         M_NUMBER_OF_LEAF_CLASSES = 'leafs';
 
-    /** Number of all analyzed functions. */
-    private int $fcs = 0;
-
-    /** Number of all analyzer methods. */
-    private int $mts = 0;
-
     /** Number of all analyzed classes. */
     private int $cls = 0;
 
     /** Number of all analyzed abstract classes. */
     private int $clsa = 0;
-
-    /** Number of all analyzed interfaces. */
-    private int $interfs = 0;
 
     /**
      * Number of all root classes within the analyzed source code.
@@ -224,7 +215,6 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     public function visitFunction(ASTFunction $function): void
     {
         $this->fireStartFunction($function);
-        ++$this->fcs;
         $this->fireEndFunction($function);
     }
 
@@ -234,8 +224,6 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     public function visitInterface(ASTInterface $interface): void
     {
         $this->fireStartInterface($interface);
-
-        ++$this->interfs;
 
         foreach ($interface->getMethods() as $method) {
             $this->dispatch($method);
@@ -250,7 +238,6 @@ class HierarchyAnalyzer extends AbstractAnalyzer implements AnalyzerFilterAware,
     public function visitMethod(ASTMethod $method): void
     {
         $this->fireStartMethod($method);
-        ++$this->mts;
         $this->fireEndMethod($method);
     }
 

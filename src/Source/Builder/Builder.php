@@ -182,7 +182,9 @@ interface Builder extends IteratorAggregate
      * Setter method for the currently used token cache.
      *
      * @return $this
+     * @api
      * @since  0.10.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function setCache(CacheDriver $cache): self;
 
@@ -206,14 +208,18 @@ interface Builder extends IteratorAggregate
      * Builds a new code type reference instance.
      *
      * @param string $qualifiedName The qualified name of the referenced type.
+     * @api
      * @since  0.9.5
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstClassOrInterfaceReference(string $qualifiedName): ASTClassOrInterfaceReference;
 
     /**
      * Builds a new php trait instance.
      *
+     * @api
      * @since  1.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildTrait(string $qualifiedName): ASTTrait;
 
@@ -235,11 +241,17 @@ interface Builder extends IteratorAggregate
 
     /**
      * Builds a new code class instance.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildClass(string $qualifiedName): ASTClass;
 
     /**
      * Builds an anonymous class instance.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAnonymousClass(): ASTAnonymousClass;
 
@@ -270,12 +282,17 @@ interface Builder extends IteratorAggregate
      * Builds a new code type reference instance.
      *
      * @param string $qualifiedName The qualified name of the referenced type.
+     * @api
      * @since  0.9.5
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstClassReference(string $qualifiedName): ASTClassReference;
 
     /**
      * Builds a new new interface instance.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildInterface(string $qualifiedName): ASTInterface;
 
@@ -292,34 +309,50 @@ interface Builder extends IteratorAggregate
      * instance when no matching type exists.
      *
      * @param string $qualifiedName The full qualified type identifier.
+     * @api
      * @since  0.9.5
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function getInterface(string $qualifiedName): ASTInterface;
 
     /**
      * Builds a new namespace instance.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildNamespace(string $name): ASTNamespace;
 
     /**
      * Builds a new method instance.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildMethod(string $name): ASTMethod;
 
     /**
      * Builds a new property hook instance.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildPropertyHook(string $name): ASTPropertyHook;
 
     /**
      * Builds a new function instance.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildFunction(string $name): ASTFunction;
 
     /**
      * Builds a new self reference instance.
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstSelfReference(AbstractASTClassOrInterface $type): ASTSelfReference;
 
@@ -327,21 +360,27 @@ interface Builder extends IteratorAggregate
      * Builds a new parent reference instance.
      *
      * @param ASTClassOrInterfaceReference $reference The type instance that reference the concrete target of parent.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstParentReference(ASTClassOrInterfaceReference $reference): ASTParentReference;
 
     /**
      * Builds a new static reference instance.
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstStaticReference(AbstractASTClassOrInterface $owner): ASTStaticReference;
 
     /**
      * Builds a new field declaration node.
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstFieldDeclaration(): ASTFieldDeclaration;
 
@@ -349,7 +388,9 @@ interface Builder extends IteratorAggregate
      * Builds a new variable declarator node.
      *
      * @param string $image The source image for the variable declarator.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstVariableDeclarator(string $image): ASTVariableDeclarator;
 
@@ -357,7 +398,9 @@ interface Builder extends IteratorAggregate
      * Builds a new constant node.
      *
      * @param string $image The source image for the constant.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstConstant(string $image): ASTConstant;
 
@@ -365,7 +408,9 @@ interface Builder extends IteratorAggregate
      * Builds a new variable node.
      *
      * @param string $image The source image for the variable.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstVariable(string $image): ASTVariable;
 
@@ -373,7 +418,9 @@ interface Builder extends IteratorAggregate
      * Builds a new variable variable node.
      *
      * @param string $image The source image for the variable variable.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstVariableVariable(string $image): ASTVariableVariable;
 
@@ -381,14 +428,18 @@ interface Builder extends IteratorAggregate
      * Builds a new compound variable node.
      *
      * @param string $image The source image for the compound variable.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstCompoundVariable(string $image): ASTCompoundVariable;
 
     /**
      * Builds a new compound expression node.
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstCompoundExpression(): ASTCompoundExpression;
 
@@ -396,35 +447,45 @@ interface Builder extends IteratorAggregate
      * Builds a new static variable declaration node.
      *
      * @param string $image The source image for the static declaration.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstStaticVariableDeclaration(string $image): ASTStaticVariableDeclaration;
 
     /**
      * Builds a new closure node.
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstClosure(): ASTClosure;
 
     /**
      * Builds a new formal parameters node.
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstFormalParameters(): ASTFormalParameters;
 
     /**
      * Builds a new formal parameter node.
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstFormalParameter(): ASTFormalParameter;
 
     /**
      * Builds a new expression node.
      *
+     * @api
      * @since 0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstExpression(?string $image = null): ASTExpression;
 
@@ -432,7 +493,9 @@ interface Builder extends IteratorAggregate
      * Builds a new assignment expression node.
      *
      * @param string $image The assignment operator.
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstAssignmentExpression(string $image): ASTAssignmentExpression;
 
@@ -440,7 +503,9 @@ interface Builder extends IteratorAggregate
      * Builds a new allocation expression node.
      *
      * @param string $image The source image of this expression.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstAllocationExpression(string $image): ASTAllocationExpression;
 
@@ -448,7 +513,9 @@ interface Builder extends IteratorAggregate
      * Builds a new eval-expression node.
      *
      * @param string $image The source image of this expression.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstEvalExpression(string $image): ASTEvalExpression;
 
@@ -456,7 +523,9 @@ interface Builder extends IteratorAggregate
      * Builds a new exit-expression instance.
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstExitExpression(string $image): ASTExitExpression;
 
@@ -464,7 +533,9 @@ interface Builder extends IteratorAggregate
      * Builds a new clone-expression node.
      *
      * @param string $image The source image of this expression.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstCloneExpression(string $image): ASTCloneExpression;
 
@@ -472,28 +543,36 @@ interface Builder extends IteratorAggregate
      * Builds a new list-expression node.
      *
      * @param string $image The source image of this expression.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstListExpression(string $image): ASTListExpression;
 
     /**
      * Builds a new include- or include_once-expression.
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstIncludeExpression(): ASTIncludeExpression;
 
     /**
      * Builds a new require- or require_once-expression.
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstRequireExpression(): ASTRequireExpression;
 
     /**
      * Builds a new array-expression node.
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstArrayIndexExpression(): ASTArrayIndexExpression;
 
@@ -501,7 +580,9 @@ interface Builder extends IteratorAggregate
      * Builds a new instanceof-expression node.
      *
      * @param string $image The source image of this expression.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstInstanceOfExpression(string $image): ASTInstanceOfExpression;
 
@@ -520,7 +601,9 @@ interface Builder extends IteratorAggregate
      * }
      * </code>
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstIssetExpression(): ASTIssetExpression;
 
@@ -533,7 +616,9 @@ interface Builder extends IteratorAggregate
      *         --------------
      * </code>
      *
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstConditionalExpression(): ASTConditionalExpression;
 
@@ -546,77 +631,99 @@ interface Builder extends IteratorAggregate
      * -------------
      * </code>
      *
+     * @api
      * @since 2.3
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstPrintExpression(): ASTPrintExpression;
 
     /**
      * Build a new shift left expression.
      *
+     * @api
      * @since  1.0.1
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstShiftLeftExpression(): ASTShiftLeftExpression;
 
     /**
      * Build a new shift right expression.
      *
+     * @api
      * @since  1.0.1
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstShiftRightExpression(): ASTShiftRightExpression;
 
     /**
      * Builds a new boolean and-expression.
      *
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstBooleanAndExpression(): ASTBooleanAndExpression;
 
     /**
      * Builds a new pipe expression.
      *
+     * @api
      * @since  3.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildASTPipe(): ASTPipe;
 
     /**
      * Builds a new boolean or-expression.
      *
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstBooleanOrExpression(): ASTBooleanOrExpression;
 
     /**
      * Builds a new logical <b>and</b>-expression.
      *
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstLogicalAndExpression(): ASTLogicalAndExpression;
 
     /**
      * Builds a new logical <b>or</b>-expression.
      *
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstLogicalOrExpression(): ASTLogicalOrExpression;
 
     /**
      * Builds a new logical <b>xor</b>-expression.
      *
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstLogicalXorExpression(): ASTLogicalXorExpression;
 
     /**
      * Builds a new trait use-statement node.
      *
+     * @api
      * @since  1.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstTraitUseStatement(): ASTTraitUseStatement;
 
     /**
      * Builds a new trait adaptation scope.
      *
+     * @api
      * @since  1.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstTraitAdaptation(): ASTTraitAdaptation;
 
@@ -624,7 +731,9 @@ interface Builder extends IteratorAggregate
      * Builds a new trait adaptation alias statement.
      *
      * @param string $image The trait method name.
+     * @api
      * @since  1.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstTraitAdaptationAlias(string $image): ASTTraitAdaptationAlias;
 
@@ -632,7 +741,9 @@ interface Builder extends IteratorAggregate
      * Builds a new trait adaptation precedence statement.
      *
      * @param string $image The trait method name.
+     * @api
      * @since  1.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstTraitAdaptationPrecedence(string $image): ASTTraitAdaptationPrecedence;
 
@@ -640,14 +751,18 @@ interface Builder extends IteratorAggregate
      * Builds a new trait reference node.
      *
      * @param string $qualifiedName The full qualified trait name.
+     * @api
      * @since  1.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstTraitReference(string $qualifiedName): ASTTraitReference;
 
     /**
      * Builds a new switch-statement-node.
      *
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstSwitchStatement(): ASTSwitchStatement;
 
@@ -655,7 +770,9 @@ interface Builder extends IteratorAggregate
      * Builds a new switch-label node.
      *
      * @param string $image The source image of this label.
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstSwitchLabel(string $image): ASTSwitchLabel;
 
@@ -663,14 +780,18 @@ interface Builder extends IteratorAggregate
      * Builds a new catch-statement node.
      *
      * @param string $image The source image of this statement.
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstCatchStatement(string $image): ASTCatchStatement;
 
     /**
      * Builds a new finally-statement node.
      *
+     * @api
      * @since  2.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstFinallyStatement(): ASTFinallyStatement;
 
@@ -678,7 +799,9 @@ interface Builder extends IteratorAggregate
      * Builds a new if statement node.
      *
      * @param string $image The source image of this statement.
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstIfStatement(string $image): ASTIfStatement;
 
@@ -686,7 +809,9 @@ interface Builder extends IteratorAggregate
      * Builds a new elseif-statement node.
      *
      * @param string $image The source image of this statement.
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstElseIfStatement(string $image): ASTElseIfStatement;
 
@@ -694,7 +819,9 @@ interface Builder extends IteratorAggregate
      * Builds a new for-statement node.
      *
      * @param string $image The source image of this statement.
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstForStatement(string $image): ASTForStatement;
 
@@ -707,7 +834,9 @@ interface Builder extends IteratorAggregate
      *      ------------------------
      * </code>
      *
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstForInit(): ASTForInit;
 
@@ -720,7 +849,9 @@ interface Builder extends IteratorAggregate
      *                                        -------------------------------
      * </code>
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstForUpdate(): ASTForUpdate;
 
@@ -728,7 +859,9 @@ interface Builder extends IteratorAggregate
      * Builds a new foreach-statement node.
      *
      * @param string $image The source image of this statement.
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstForeachStatement(string $image): ASTForeachStatement;
 
@@ -736,7 +869,9 @@ interface Builder extends IteratorAggregate
      * Builds a new while-statement node.
      *
      * @param string $image The source image of this statement.
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstWhileStatement(string $image): ASTWhileStatement;
 
@@ -744,7 +879,9 @@ interface Builder extends IteratorAggregate
      * Builds a new do/while-statement node.
      *
      * @param string $image The source image of this statement.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstDoWhileStatement(string $image): ASTDoWhileStatement;
 
@@ -769,7 +906,9 @@ interface Builder extends IteratorAggregate
      * -----------
      * </code>
      *
+     * @api
      * @since  0.10.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstDeclareStatement(): ASTDeclareStatement;
 
@@ -795,7 +934,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The source image of this expression.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstMemberPrimaryPrefix(string $image): ASTMemberPrimaryPrefix;
 
@@ -803,7 +944,9 @@ interface Builder extends IteratorAggregate
      * Builds a new identifier node.
      *
      * @param string $image The image of this identifier.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstIdentifier(string $image): ASTIdentifier;
 
@@ -821,7 +964,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The image of this node.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstFunctionPostfix(string $image): ASTFunctionPostfix;
 
@@ -839,7 +984,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The image of this node.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstMethodPostfix(string $image): ASTMethodPostfix;
 
@@ -853,7 +1000,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The image of this node.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstConstantPostfix(string $image): ASTConstantPostfix;
 
@@ -871,7 +1020,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The image of this node.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstPropertyPostfix(string $image): ASTPropertyPostfix;
 
@@ -888,7 +1039,9 @@ interface Builder extends IteratorAggregate
      * //       -----
      * </code>
      *
+     * @api
      * @since  2.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstClassFqnPostfix(): ASTClassFqnPostfix;
 
@@ -905,7 +1058,9 @@ interface Builder extends IteratorAggregate
      * //       ------------
      * </code>
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstArguments(): ASTArguments;
 
@@ -916,7 +1071,9 @@ interface Builder extends IteratorAggregate
      * match($x)
      * </code>
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstMatchArgument(): ASTMatchArgument;
 
@@ -929,7 +1086,9 @@ interface Builder extends IteratorAggregate
      * }
      * </code>
      *
+     * @api
      * @since  2.9.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstMatchBlock(): ASTMatchBlock;
 
@@ -940,7 +1099,9 @@ interface Builder extends IteratorAggregate
      * "foo" => "bar",
      * </code>
      *
+     * @api
      * @since  2.9.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstMatchEntry(): ASTMatchEntry;
 
@@ -951,47 +1112,62 @@ interface Builder extends IteratorAggregate
      * number_format(5623, thousands_separator: ' ')
      * </code>
      *
+     * @api
      * @since  2.9.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstNamedArgument(string $name, ASTNode $value): ASTNamedArgument;
 
     /**
      * Builds a new array type node.
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstTypeArray(): ASTTypeArray;
 
     /**
      * Builds a new node for the callable type.
      *
+     * @api
      * @since  1.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstTypeCallable(): ASTTypeCallable;
 
     /**
      * Builds a new node for the iterable type.
      *
+     * @api
      * @since  2.5.1
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstTypeIterable(): ASTTypeIterable;
 
     /**
      * Builds a new primitive type node.
      *
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstScalarType(string $image): ASTScalarType;
 
     /**
      * Builds a new node for the union type.
      *
+     * @api
      * @since  2.9.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstUnionType(): ASTUnionType;
 
     /**
      * Builds a new node for the intersection type.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstIntersectionType(): ASTIntersectionType;
 
@@ -999,7 +1175,9 @@ interface Builder extends IteratorAggregate
      * Builds a new literal node.
      *
      * @param string $image The source image for the literal node.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstLiteral(string $image): ASTLiteral;
 
@@ -1018,28 +1196,36 @@ interface Builder extends IteratorAggregate
      * // |-- ASTLiteral             -  ">"
      * </code>
      *
+     * @api
      * @since  0.9.10
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstString(): ASTString;
 
     /**
      * Builds a new php array node.
      *
+     * @api
      * @since  1.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstArray(): ASTArray;
 
     /**
      * Builds a new array element node.
      *
+     * @api
      * @since  1.0.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstArrayElement(): ASTArrayElement;
 
     /**
      * Builds a new heredoc node.
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstHeredoc(): ASTHeredoc;
 
@@ -1056,7 +1242,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstConstantDefinition(string $image): ASTConstantDefinition;
 
@@ -1092,7 +1280,9 @@ interface Builder extends IteratorAggregate
      * </code>
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.6
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstConstantDeclarator(string $image): ASTConstantDeclarator;
 
@@ -1100,7 +1290,9 @@ interface Builder extends IteratorAggregate
      * Builds a new comment node instance.
      *
      * @param string $cdata The comment text.
+     * @api
      * @since  0.9.8
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstComment(string $cdata): ASTComment;
 
@@ -1108,6 +1300,8 @@ interface Builder extends IteratorAggregate
      * Builds a new attribute node instance.
      *
      * @param string $image The attribute text.
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstAttribute(string $image): ASTAttribute;
 
@@ -1115,7 +1309,9 @@ interface Builder extends IteratorAggregate
      * Builds a new unary expression node instance.
      *
      * @param string $image The unary expression image/character.
+     * @api
      * @since  0.9.11
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstUnaryExpression(string $image): ASTUnaryExpression;
 
@@ -1123,7 +1319,9 @@ interface Builder extends IteratorAggregate
      * Builds a new cast-expression node instance.
      *
      * @param string $image The cast-expression image/character.
+     * @api
      * @since  0.10.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstCastExpression(string $image): ASTCastExpression;
 
@@ -1131,35 +1329,45 @@ interface Builder extends IteratorAggregate
      * Builds a new postfix-expression node instance.
      *
      * @param string $image The postfix-expression image/character.
+     * @api
      * @since  0.10.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstPostfixExpression(string $image): ASTPostfixExpression;
 
     /**
      * Builds a new pre-increment-expression node instance.
      *
+     * @api
      * @since  0.10.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstPreIncrementExpression(): ASTPreIncrementExpression;
 
     /**
      * Builds a new pre-decrement-expression node instance.
      *
+     * @api
      * @since  0.10.0
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstPreDecrementExpression(): ASTPreDecrementExpression;
 
     /**
      * Builds a new function/method scope instance.
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstScope(): ASTScope;
 
     /**
      * Builds a new statement instance.
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstStatement(): ASTStatement;
 
@@ -1167,7 +1375,9 @@ interface Builder extends IteratorAggregate
      * Builds a new return-statement node instance.
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstReturnStatement(string $image): ASTReturnStatement;
 
@@ -1175,7 +1385,9 @@ interface Builder extends IteratorAggregate
      * Builds a new break-statement node instance.
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstBreakStatement(string $image): ASTBreakStatement;
 
@@ -1183,14 +1395,18 @@ interface Builder extends IteratorAggregate
      * Builds a new continue-statement node instance.
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstContinueStatement(string $image): ASTContinueStatement;
 
     /**
      * Builds a new scope-statement instance.
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstScopeStatement(): ASTScopeStatement;
 
@@ -1198,7 +1414,9 @@ interface Builder extends IteratorAggregate
      * Builds a new try-statement instance.
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstTryStatement(string $image): ASTTryStatement;
 
@@ -1206,7 +1424,9 @@ interface Builder extends IteratorAggregate
      * Builds a new throw-statement instance.
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstThrowStatement(string $image): ASTThrowStatement;
 
@@ -1214,7 +1434,9 @@ interface Builder extends IteratorAggregate
      * Builds a new goto-statement instance.
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstGotoStatement(string $image): ASTGotoStatement;
 
@@ -1222,21 +1444,27 @@ interface Builder extends IteratorAggregate
      * Builds a new label-statement instance.
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstLabelStatement(string $image): ASTLabelStatement;
 
     /**
      * Builds a new global-statement instance.
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstGlobalStatement(): ASTGlobalStatement;
 
     /**
      * Builds a new unset-statement instance.
      *
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstUnsetStatement(): ASTUnsetStatement;
 
@@ -1244,7 +1472,9 @@ interface Builder extends IteratorAggregate
      * Builds a new exit-statement instance.
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  0.9.12
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstEchoStatement(string $image): ASTEchoStatement;
 
@@ -1252,7 +1482,9 @@ interface Builder extends IteratorAggregate
      * Builds a new yield-statement instance.
      *
      * @param string $image The source code image for this node.
+     * @api
      * @since  $version$
+     * @deprecated Will be removed from the interface in PDepend 4.0, use PHPBuilder directly.
      */
     public function buildAstYieldStatement(string $image): ASTYieldStatement;
 }

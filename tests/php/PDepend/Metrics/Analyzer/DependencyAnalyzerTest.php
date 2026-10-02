@@ -44,7 +44,6 @@
 namespace PDepend\Metrics\Analyzer;
 
 use PDepend\Metrics\AbstractMetricsTestCase;
-use PDepend\Source\Builder\Builder;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
@@ -58,9 +57,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('unittest')]
 class DependencyAnalyzerTest extends AbstractMetricsTestCase
 {
-    /** @var Builder<mixed> The used node builder. */
-    protected Builder $builder;
-
     /**
      * Input test data.
      *

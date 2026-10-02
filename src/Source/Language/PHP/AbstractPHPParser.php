@@ -8985,16 +8985,6 @@ abstract class AbstractPHPParser
     }
 
     /**
-     * @throws TokenStreamEndException
-     * @throws UnexpectedTokenException
-     * @internal
-     */
-    protected function checkEllipsisInExpressionSupport(): void
-    {
-        throw $this->getUnexpectedNextTokenException();
-    }
-
-    /**
      * Parses throw expression syntax. available since PHP 8.0. Ex.:
      *  $callable = fn() => throw new Exception();
      *  $value = $nullableValue ?? throw new InvalidArgumentException();
