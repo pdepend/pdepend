@@ -1,5 +1,6 @@
 includes:
 	- phpstan-baseline.neon.php
+	- vendor/shipmonk/dead-code-detector/rules.neon
 parameters:
     paths:
         - bin
@@ -14,6 +15,10 @@ parameters:
     universalObjectCratesClasses:
         - PDepend\Util\Configuration
     level: max
+    shipmonkDeadCode:
+        usageExcluders:
+            usageOverMixed:
+                enabled: true
     exceptions:
         reportUncheckedExceptionDeadCatch: true
         implicitThrows: false

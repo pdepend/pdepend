@@ -68,6 +68,7 @@ interface Tokenizer
      * Sets a new php source file.
      *
      * @param string $sourceFile A php source file.
+     * @api
      */
     public function setSourceFile(string $sourceFile): void;
 

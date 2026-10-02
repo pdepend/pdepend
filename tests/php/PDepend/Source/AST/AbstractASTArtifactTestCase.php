@@ -71,24 +71,6 @@ abstract class AbstractASTArtifactTestCase extends AbstractTestCase
     }
 
     /**
-     * Parses the given source file or directory with the default tokenizer
-     * and node builder implementations.
-     *
-     * @return ASTArtifactList<ASTNamespace>
-     */
-    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false): ASTArtifactList
-    {
-        [$class, $method] = explode('::', $testCase);
-
-        $fileName = substr($class, strrpos($class, '\\') + 1, -4);
-        $fileName = 'code/' . $fileName . '/' . $method;
-
-        $fileOrDirectory = self::createCodeResourceURI($fileName);
-
-        return $this->parseSource($fileOrDirectory, $ignoreAnnotations);
-    }
-
-    /**
      * Creates an abstract item instance.
      */
     abstract protected function createItem(): AbstractASTArtifact;

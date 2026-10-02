@@ -695,24 +695,4 @@ abstract class ASTNodeTestCase extends AbstractTestCase
 
         return $reflection->newInstanceArgs([__METHOD__]);
     }
-
-    /**
-     * Parses the given source file or directory with the default tokenizer
-     * and node builder implementations.
-     *
-     * @return ASTArtifactList<ASTNamespace>
-     */
-    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false): ASTArtifactList
-    {
-        [$class, $method] = explode('::', $testCase);
-
-        return parent::parseSource(
-            sprintf(
-                'code/%s/%s.php',
-                substr($class, strrpos($class, '_') + 1, -4),
-                $method
-            ),
-            $ignoreAnnotations
-        );
-    }
 }

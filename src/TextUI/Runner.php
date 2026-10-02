@@ -236,6 +236,10 @@ class Runner
         $this->engine->setMainScript($mainScript);
     }
 
+    /**
+     * @api
+     * @deprecated Will be removed in PDepend 4.0.
+     */
     public function setWorkerCommandName(string $workerCommandName): void
     {
         $this->engine->setWorkerCommandName($workerCommandName);

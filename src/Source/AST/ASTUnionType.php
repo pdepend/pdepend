@@ -57,6 +57,9 @@ class ASTUnionType extends AbstractASTCombinationType
     /**
      * This method will return <b>true</b> when this type use union pipe to specify multiple types.
      * For this concrete implementation the return value will be always true.
+     *
+     * @api
+     * @deprecated Will be removed in PDepend 4.0.
      */
     public function isUnion(): bool
     {

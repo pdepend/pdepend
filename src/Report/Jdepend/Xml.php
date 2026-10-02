@@ -80,6 +80,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * Set of all analyzed files.
      *
      * @var ASTCompilationUnit[]
+     * @api
+     * @deprecated Will be removed in PDepend 4.0.
      */
     protected array $fileSet = [];
 
@@ -87,6 +89,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * List of all generated project metrics.
      *
      * @var array<string, mixed>
+     * @api
+     * @deprecated Will be removed in PDepend 4.0.
      */
     protected array $projectMetrics = [];
 
@@ -94,6 +98,8 @@ class Xml extends AbstractASTVisitor implements CodeAwareGenerator, FileAwareGen
      * List of all collected node metrics.
      *
      * @var array<string, array<string, array<int, string>>>
+     * @api
+     * @deprecated Will be removed in PDepend 4.0.
      */
     protected array $nodeMetrics = [];
 

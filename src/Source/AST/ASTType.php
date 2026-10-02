@@ -72,6 +72,9 @@ class ASTType extends AbstractASTNode
 
     /**
      * This method will return <b>true</b> when this type use union pipe to specify multiple types.
+     *
+     * @api
+     * @deprecated Will be removed in PDepend 4.0.
      */
     public function isUnion(): bool
     {

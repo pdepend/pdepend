@@ -70,58 +70,84 @@ interface ASTVisitor
 
     /**
      * Visits a class node.
+     *
+     * @api
      */
     public function visitClass(ASTClass $class): void;
 
     /**
      * Visits an enum node.
+     *
+     * @api
      */
     public function visitEnum(ASTEnum $enum): void;
 
     /**
      * Visits a trait node.
      *
+     * @api
      * @since  1.0.0
      */
     public function visitTrait(ASTTrait $trait): void;
 
     /**
      * Visits a file node.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0.
      */
     public function visitCompilationUnit(ASTCompilationUnit $compilationUnit): void;
 
     /**
      * Visits a function node.
+     *
+     * @api
      */
     public function visitFunction(ASTFunction $function): void;
 
     /**
      * Visits a code interface object.
+     *
+     * @api
      */
     public function visitInterface(ASTInterface $interface): void;
 
     /**
      * Visits a method node.
+     *
+     * @api
      */
     public function visitMethod(ASTMethod $method): void;
 
     /**
      * Visits a namespace node.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0.
      */
     public function visitNamespace(ASTNamespace $namespace): void;
 
     /**
      * Visits a parameter node.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0.
      */
     public function visitParameter(ASTParameter $parameter): void;
 
     /**
      * Visits a property node.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0.
      */
     public function visitProperty(ASTProperty $property): void;
 
     /**
      * Visit child nodes of the given node.
+     *
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0.
      */
     public function visit(ASTNode $node): void;
 

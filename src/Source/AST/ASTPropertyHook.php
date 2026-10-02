@@ -73,6 +73,9 @@ class ASTPropertyHook extends AbstractASTCallable
     /**
      * This method returns a OR combined integer of the declared modifiers for
      * this hook.
+     *
+     * @api
+     * @deprecated Will be removed in PDepend 4.0.
      */
     public function getModifiers(): int
     {

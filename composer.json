@@ -27,6 +27,7 @@
         "gregwar/rst": "^1.0.6",
         "phpstan/phpstan": "~2.2.15",
         "phpunit/phpunit": "^10.5.20,<10.5.32 || ^11.0.0",
+        "shipmonk/dead-code-detector": "^1.4",
         "squizlabs/php_codesniffer": "^3.8.0"
     },
     "autoload": {
@@ -73,8 +74,11 @@
             "@test-coverage",
             "@analyse"
         ],
-        "cs-check": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src ./tests/php",
-        "cs-fix": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 ./src ./tests/php",
+        "cs-check": [
+            "php-cs-fixer fix --dry-run --diff",
+            "phpcs --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1"
+        ],
+        "cs-fix": "php-cs-fixer fix",
         "phpstan": "vendor/bin/phpstan",
         "test": "paratest --no-coverage",
         "test-coverage": "paratest"
@@ -84,8 +88,8 @@
         "analyze": "See analyse",
         "build-website": "Build the website",
         "check": "Runs @cs-fix, @test-coverage and @analyse.",
-        "cs-check": "Check the codestyle with phpcs.",
-        "cs-fix": "Check the codestyle with phpcbf and if possible fix the found issues.",
+        "cs-check": "Check the codestyle with php-cs-fixer, then report advisory phpcs findings.",
+        "cs-fix": "Fix the codestyle with php-cs-fixer.",
         "phpstan": "Analyse the code with PHPStan.",
         "test": "Run the tests without coverage.",
         "test-coverage": "Run the tests with coverage."

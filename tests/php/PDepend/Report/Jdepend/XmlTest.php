@@ -60,9 +60,6 @@ use PHPUnit\Framework\Attributes\Group;
 #[Group('unittest')]
 class XmlTest extends AbstractTestCase
 {
-    /** Test dependency analyzer. */
-    protected DependencyAnalyzer $analyzer;
-
     /** The temporary file name for the logger result. */
     protected string $resultFile;
 
@@ -124,25 +121,5 @@ class XmlTest extends AbstractTestCase
 
         static::assertFalse($logger->log(new DummyAnalyzer()));
         static::assertTrue($logger->log(new DependencyAnalyzer()));
-    }
-
-    /**
-     * Normalizes the file references within the expected result document.
-     *
-     * @param string $fileName File name of the expected result document.
-     * @return string The prepared xml document
-     */
-    protected function getNormalizedPathXml(string $fileName): string
-    {
-        $path = $this->createCodeResourceUriForTest();
-
-        $string = preg_replace(
-            '(sourceFile="[^"]+/([^/"]+)")',
-            'sourceFile="' . $path . '/\\1"',
-            file_get_contents($fileName) ?: ''
-        );
-        static::assertNotNull($string);
-
-        return $string;
     }
 }
