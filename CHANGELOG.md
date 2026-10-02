@@ -1,4 +1,4 @@
-pdepend-3.0.0 (unreleased)
+pdepend-3.0.0 (2026/10/01)
 ==========================
 
 New major release of PDepend. It requires PHP 8.1 or newer on a 64 bit build,

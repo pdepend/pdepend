@@ -103,7 +103,7 @@ return [
     'index' => 'news.html',
     'baseHref' => $env->getBaseHref(),
     'cname' => getenv('CNAME'),
-    'websiteDirectory' => __DIR__ . '/../../dist/website',
+    'websiteDirectory' => __DIR__ . '/../dist/website',
     'sourceDirectory' => __DIR__ . '/rst',
     'assetsDirectory' => __DIR__ . '/resources/web',
     'layout' => __DIR__ . '/resources/layout.php',

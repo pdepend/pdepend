@@ -18,3 +18,14 @@ on the command-line:
 ::
 
   ~ $ ./pdepend.phar --summary-xml=/tmp/sum.xml /path/to/code
+
+The latest PDepend 2 version is 2.16.2, you can download that phar file with:
+
+.. class:: shell
+
+::
+
+  ~ $ wget https://github.com/pdepend/pdepend/releases/download/2.16.2/pdepend.phar
+  ..
+  ~ $ chmod +x pdepend.phar
+
