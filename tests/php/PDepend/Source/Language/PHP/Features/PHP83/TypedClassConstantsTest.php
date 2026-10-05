@@ -221,4 +221,16 @@ class TypedClassConstantsTest extends PHPParserVersion83TestCase
 
         $this->getFirstInterfaceForTestCase();
     }
+
+    public function testTrueType(): void
+    {
+        $class = $this->getFirstClassForTestCase();
+
+        $constantDeclarator = $class->getChild(0)->getChild(0);
+        static::assertInstanceOf(ASTConstantDeclarator::class, $constantDeclarator);
+
+        $type = $constantDeclarator->getType();
+        static::assertInstanceOf(ASTScalarType::class, $type);
+        static::assertSame('true', $type->getImage());
+    }
 }

@@ -421,6 +421,7 @@ abstract class AbstractPHPParser
             'string',
             'void',
             'never' => $this->builder->buildAstScalarType($image),
+            'true' => $this->builder->buildAstScalarType($image),
             'callable' => $this->builder->buildAstTypeCallable(),
             'iterable' => $this->builder->buildAstTypeIterable(),
             default => throw new ParserException('Unsupported typehint'),
