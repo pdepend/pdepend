@@ -43,6 +43,7 @@ namespace PDepend\Source\Language\PHP\Features\PHP81;
 
 use PDepend\Source\AST\ASTAttribute;
 use PDepend\Source\AST\ASTClass;
+use PDepend\Source\AST\ASTClassFqnPostfix;
 use PDepend\Source\AST\ASTClosure;
 use PDepend\Source\AST\ASTConstantPostfix;
 use PDepend\Source\AST\ASTNamedArgument;
@@ -74,6 +75,14 @@ class AttributeTest extends PHPParserVersion81TestCase
 
         static::assertCount(1, $attribute->findChildrenOfType(ASTNamedArgument::class));
         static::assertCount(1, $attribute->findChildrenOfType(ASTConstantPostfix::class));
+    }
+
+    public function testAttributeArgumentAllowsSelfClassKeywordFetch(): void
+    {
+        $interface = $this->getFirstInterfaceForTestCase();
+        $attribute = $interface->findChildrenOfType(ASTAttribute::class)[0];
+
+        static::assertCount(1, $attribute->findChildrenOfType(ASTClassFqnPostfix::class));
     }
 
     public function testAttribute(): void
