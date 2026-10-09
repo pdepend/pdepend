@@ -45,7 +45,9 @@ use PDepend\Source\AST\ASTAttribute;
 use PDepend\Source\AST\ASTClass;
 use PDepend\Source\AST\ASTClassFqnPostfix;
 use PDepend\Source\AST\ASTClosure;
+use PDepend\Source\AST\ASTConstant;
 use PDepend\Source\AST\ASTConstantPostfix;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
 use PDepend\Source\AST\ASTNamedArgument;
 use PDepend\Source\Language\PHP\AbstractPHPParser;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -82,7 +84,16 @@ class AttributeTest extends PHPParserVersion81TestCase
         $interface = $this->getFirstInterfaceForTestCase();
         $attribute = $interface->findChildrenOfType(ASTAttribute::class)[0];
 
-        static::assertCount(1, $attribute->findChildrenOfType(ASTClassFqnPostfix::class));
+        $postfix = $attribute->findChildrenOfType(ASTClassFqnPostfix::class);
+        static::assertCount(1, $postfix);
+
+        $memberPrefix = $postfix[0]->getParent();
+        static::assertInstanceOf(ASTMemberPrimaryPrefix::class, $memberPrefix);
+        static::assertTrue($memberPrefix->isStatic());
+
+        $self = $memberPrefix->getChild(0);
+        static::assertInstanceOf(ASTConstant::class, $self);
+        static::assertSame('self', $self->getImage());
     }
 
     public function testAttribute(): void
