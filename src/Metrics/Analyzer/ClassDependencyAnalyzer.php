@@ -267,6 +267,9 @@ class ClassDependencyAnalyzer extends AbstractAnalyzer
      * @param AbstractASTArtifact[] $list
      * @return bool If this method detects a cycle the return value is <b>true</b>
      *              otherwise this method will return <b>false</b>.
+     *
+     * @api
+     * @deprecated Will be removed in PDepend 4.0.
      */
     protected function collectCycle(array &$list, AbstractASTArtifact $node): bool
     {

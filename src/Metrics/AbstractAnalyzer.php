@@ -102,7 +102,9 @@ abstract class AbstractAnalyzer extends AbstractASTVisitor implements Analyzer
      * By default all analyzers are enabled. Overwrite this method to provide
      * state based disabling/enabling.
      *
+     * @api
      * @since  0.9.10
+     * @deprecated Will be removed in PDepend 4.0.
      */
     public function isEnabled(): bool
     {

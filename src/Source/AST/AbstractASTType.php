@@ -322,6 +322,7 @@ abstract class AbstractASTType extends AbstractASTArtifact
      * Returns a list of all methods provided by this type or one of its parents.
      *
      * @return ASTMethod[]
+     * @api
      */
     abstract public function getAllMethods(): array;
 

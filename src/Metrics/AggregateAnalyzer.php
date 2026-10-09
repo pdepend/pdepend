@@ -57,6 +57,8 @@ interface AggregateAnalyzer extends Analyzer
      * analyzers.
      *
      * @return array<string>
+     * @api
+     * @deprecated Will be removed from the interface in PDepend 4.0.
      */
     public function getRequiredAnalyzers(): array;
 
@@ -64,6 +66,7 @@ interface AggregateAnalyzer extends Analyzer
      * Adds a required sub analyzer.
      *
      * @param Analyzer $analyzer The sub analyzer instance.
+     * @api
      */
     public function addAnalyzer(Analyzer $analyzer): void;
 }

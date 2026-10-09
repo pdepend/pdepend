@@ -322,6 +322,9 @@ abstract class AbstractASTClassOrInterface extends AbstractASTType
 
     /**
      * Returns the declared modifiers for this type.
+     *
+     * @api
+     * @deprecated Will be removed in PDepend 4.0.
      */
     abstract public function getModifiers(): int;
 

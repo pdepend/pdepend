@@ -114,6 +114,9 @@ class ASTClass extends AbstractASTClassOrInterface
     /**
      * Will return <b>true</b> if this class was declared anonymous in an
      * allocation expression.
+     *
+     * @api
+     * @deprecated Will be removed in PDepend 4.0.
      */
     public function isAnonymous(): bool
     {

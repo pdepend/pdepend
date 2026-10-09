@@ -68,7 +68,7 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      * @param array<string, array<int, string>|string> $options Global option array, every analyzer
      *                                      can extract the required options.
      */
-    public function __construct(private array $options = [])
+    public function __construct(array $options = [])
     {
     }
 
@@ -102,15 +102,6 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
     }
 
     /**
-     * Removes the listener from this analyzer.
-     *
-     * @param AnalyzerListener $listener The listener instance.
-     */
-    public function removeAnalyzeListener(AnalyzerListener $listener): void
-    {
-    }
-
-    /**
      * Processes all {@link \PDepend\Source\AST\ASTNamespace} code nodes.
      */
     public function analyze($namespaces): void
@@ -136,14 +127,5 @@ class DummyAnalyzer implements AnalyzerNodeAware, AnalyzerProjectAware
      */
     public function setOptions(array $options = []): void
     {
-        $this->options = $options;
-    }
-
-    /**
-     * @return array<string, array<int, string>|string>
-     */
-    public function getOptions(): array
-    {
-        return $this->options;
     }
 }

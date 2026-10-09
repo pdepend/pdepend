@@ -327,20 +327,6 @@ abstract class AbstractTestCase extends TestCase
     }
 
     /**
-     * Returns the first method that could be found in the source file
-     * associated with the calling test case.
-     */
-    protected function getFirstInterfaceMethodForTestCase(): ASTMethod
-    {
-        return $this->parseCodeResourceForTest()
-            ->current()
-            ->getInterfaces()
-            ->current()
-            ->getMethods()
-            ->current();
-    }
-
-    /**
      * Returns the first class or interface that could be found in the code under
      * test for the calling test case.
      */
@@ -698,28 +684,6 @@ abstract class AbstractTestCase extends TestCase
             $this->createCodeResourceUriForTest(),
             $ignoreAnnotations
         );
-    }
-
-    /**
-     * Parses the given source file or directory with the default tokenizer
-     * and node builder implementations.
-     *
-     * @return ASTArtifactList<ASTNamespace>
-     */
-    public function parseTestCaseSource(string $testCase, bool $ignoreAnnotations = false): ASTArtifactList
-    {
-        [$class, $method] = explode('::', $testCase);
-
-        $fileName = substr(strtolower($class), 8, strrpos($class, '\\') - 8);
-        $fileName = str_replace('\\', DIRECTORY_SEPARATOR, $fileName) . DIRECTORY_SEPARATOR . $method;
-
-        try {
-            $fileOrDirectory = self::createCodeResourceURI($fileName);
-        } catch (ErrorException) {
-            $fileOrDirectory = self::createCodeResourceURI($fileName . '.php');
-        }
-
-        return $this->parseSource($fileOrDirectory, $ignoreAnnotations);
     }
 
     /**

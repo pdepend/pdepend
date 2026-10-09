@@ -66,30 +66,11 @@ class StubASTVisitor implements ASTVisitor
     /** The last visited class instance. */
     public ASTClass $class;
 
-    /** The last visited class instance. */
-    public ASTEnum $enum;
-
-    /**
-     * The last visited trait instance.
-     *
-     * @since 1.0.0
-     */
-    public ASTTrait $trait;
-
-    /** The last visited interface instance. */
-    public ASTInterface $interface;
-
     /** The last visited method instance. */
     public ASTMethod $method;
 
     /** The last visited package instance. */
     public ASTNamespace $namespace;
-
-    /** The last visited parameter instance. */
-    public ASTParameter $parameter;
-
-    /** The last visited property instance. */
-    public ASTProperty $property;
 
     /** The last visited function instance. */
     public ASTFunction $function;
@@ -114,7 +95,6 @@ class StubASTVisitor implements ASTVisitor
      */
     public function visitEnum(ASTEnum $enum): void
     {
-        $this->enum = $enum;
     }
 
     /**
@@ -124,7 +104,6 @@ class StubASTVisitor implements ASTVisitor
      */
     public function visitTrait(ASTTrait $trait): void
     {
-        $this->trait = $trait;
     }
 
     /**
@@ -132,7 +111,6 @@ class StubASTVisitor implements ASTVisitor
      */
     public function visitInterface(ASTInterface $interface): void
     {
-        $this->interface = $interface;
     }
 
     /**
@@ -158,7 +136,6 @@ class StubASTVisitor implements ASTVisitor
      */
     public function visitParameter(ASTParameter $parameter): void
     {
-        $this->parameter = $parameter;
     }
 
     /**
@@ -166,7 +143,6 @@ class StubASTVisitor implements ASTVisitor
      */
     public function visitProperty(ASTProperty $property): void
     {
-        $this->property = $property;
     }
 
     /**
