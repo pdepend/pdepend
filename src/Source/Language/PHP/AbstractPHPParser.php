@@ -5538,6 +5538,7 @@ abstract class AbstractPHPParser
             [
                 Tokens::T_STRING,
                 Tokens::T_CLASS,
+                Tokens::T_CLASS_FQN,
             ],
             true,
         );
