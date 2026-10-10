@@ -84,7 +84,7 @@ abstract class PHPParserVersion82 extends AbstractPHPParser
      */
     protected function isScalarOrCallableTypeHint(string $image): bool
     {
-        if (strtolower($image) === 'true') {
+        if (in_array(strtolower($image), ['true', 'false', 'null'], true)) {
             return true;
         }
 
