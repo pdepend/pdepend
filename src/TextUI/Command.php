@@ -165,6 +165,14 @@ class Command
 
                 return self::CLI_ERROR;
             }
+
+            if (ConfigurationMigrator::getTargetFile($configurationFile) !== $configurationFile) {
+                echo 'XML configuration files are deprecated and will not be supported in PDepend 4.0.', PHP_EOL;
+                if (ConfigurationMigrator::isSupported()) {
+                    echo 'Run "pdepend --migrate-configuration" to convert it to YAML.', PHP_EOL;
+                }
+                echo PHP_EOL;
+            }
         }
 
         // Create a new text ui runner
@@ -581,7 +589,7 @@ class Command
         if (ConfigurationMigrator::isSupported()) {
             $this->printOption(
                 '--migrate-configuration',
-                'Convert an XML configuration file to YAML.',
+                'Convert an XML configuration file to YAML (deprecated).',
                 $length,
             );
         }

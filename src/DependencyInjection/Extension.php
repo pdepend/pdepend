@@ -92,6 +92,15 @@ abstract class Extension
 
         $locator = new FileLocator($path);
         if (class_exists(XmlFileLoader::class) && file_exists($path . DIRECTORY_SEPARATOR . ($file = $name . '.xml'))) {
+            trigger_error(
+                sprintf(
+                    'The XML service definitions "%s" are deprecated, PDepend 4.0 only loads %s.php and %s.yml.',
+                    $path . DIRECTORY_SEPARATOR . $file,
+                    $name,
+                    $name,
+                ),
+                E_USER_DEPRECATED,
+            );
             $loader = new XmlFileLoader($container, $locator);
             $loader->load($file);
         }

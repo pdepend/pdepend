@@ -55,6 +55,7 @@ use Symfony\Component\Yaml\Yaml;
  * Symfony 8, so it is only available with Symfony 7 or older.
  *
  * @internal
+ * @deprecated XML configuration files are deprecated, will be removed in PDepend 4.0.
  */
 final class ConfigurationMigrator
 {

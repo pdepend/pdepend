@@ -139,7 +139,10 @@ class PdependExtension extends SymfonyExtension
     }
 
     /**
+     * XML namespace of the pdepend settings in an XML configuration file.
+     *
      * @api
+     * @deprecated XML configuration files are deprecated, will be removed in PDepend 4.0.
      */
     public function getNamespace(): string
     {

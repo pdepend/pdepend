@@ -1,6 +1,23 @@
 # Upgrading
 
 
+## Deprecated in 3.x, removed in PDepend 4
+
+### XML configuration
+
+XML configuration files are deprecated. PDepend prints a notice and triggers an `E_USER_DEPRECATED` when it loads one, and PDepend 4 only reads YAML and PHP configuration files. With Symfony 7 or older, `pdepend --migrate-configuration` converts the file for you, see [Configuration file](#configuration-file). The option itself is deprecated and goes away together with XML support, so convert before upgrading.
+
+Extensions that ship their service definitions as `services.xml` trigger an `E_USER_DEPRECATED` as well, provide a `services.php` or `services.yml` instead. `PdependExtension::getNamespace()` only served the XML format and is deprecated.
+
+### Unused public API
+
+Members that nothing in PDepend or PHPMD calls are marked `@deprecated`, PHPStan with `phpstan-deprecation-rules` and Psalm report their use. Notable groups:
+
+- Most `build*()` methods of `Source\Builder\Builder` will be removed from the interface, use `PHPBuilder` directly.
+- `ASTVisitor::visit()`, `visitNamespace()`, `visitParameter()`, `visitProperty()` and `visitCompilationUnit()` will be removed from the interface, `AbstractASTVisitor` keeps them.
+- `Analyzer::__construct()` and `Analyzer::isEnabled()` will be removed from the interface, analyzers get their options through `setOptions()`. `AggregateAnalyzer::getRequiredAnalyzers()` goes as well.
+- `getModifiers()` on properties, property hooks, enums, classes and interfaces, `isAnonymous()` and `isUnion()`.
+
 ## From PDepend 2 to PDepend 3
 
 Here we try to provide the needed changes to upgrade from version 2 to version 3. Most of the breaking changes only affect projects that embed PDepend as a library (custom analyzers, visitors or report generators). For plain command line use the upgrade is mostly a matter of converting `pdepend.xml` to `pdepend.yml`.
@@ -24,7 +41,7 @@ The configuration file is now YAML by default. PDepend looks for the following f
 - `pdepend.php`
 - `pdepend.xml`, `pdepend.xml.dist`
 
-The loader is picked from the file extension, so an XML configuration still works, but only with Symfony 7 or older. Symfony 8 removed `XmlFileLoader`, and PDepend then fails with:
+The loader is picked from the file extension, so an XML configuration still works, but only with Symfony 7 or older, and it is deprecated, see [XML configuration](#xml-configuration). Symfony 8 removed `XmlFileLoader`, and PDepend then fails with:
 
 ```
 XML config is not supported when using Symfony 8+.
