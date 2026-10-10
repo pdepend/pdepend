@@ -167,6 +167,13 @@ class Application
                 if (!class_exists(XmlFileLoader::class)) {
                     throw new InvalidArgumentException('XML config is not supported when using Symfony 8+.');
                 }
+                trigger_error(
+                    sprintf(
+                        'The XML configuration file "%s" is deprecated, PDepend 4.0 only supports YAML and PHP.',
+                        $configFile,
+                    ),
+                    E_USER_DEPRECATED,
+                );
                 $loader = new XmlFileLoader($container, $locator);
                 $loader->load($configFile);
             } elseif (str_ends_with($configFile, '.php')) {
