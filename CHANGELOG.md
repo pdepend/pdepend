@@ -1,3 +1,15 @@
+pdepend-3.1.0 (unreleased)
+==========================
+
+Deprecated
+----------
+
+- Deprecated: XML configuration files (`pdepend.xml`, `pdepend.xml.dist` or an `.xml` file passed to `--configuration`). Loading one now prints a notice and triggers an `E_USER_DEPRECATED`, PDepend 4.0 only supports YAML and PHP configuration files.
+- Deprecated: `--migrate-configuration`, it is removed together with XML support in PDepend 4.0. Convert your configuration before upgrading.
+- Deprecated: Loading `services.xml` service definitions in extensions, use `services.php` or `services.yml` instead.
+- Deprecated: `PdependExtension::getNamespace()`, it only served XML configuration files.
+- Deprecated: Public members that nothing in PDepend or PHPMD uses. They are marked `@deprecated` and will be removed in PDepend 4.0, see [UPGRADE.md](UPGRADE.md).
+
 pdepend-3.0.0 (2026/10/01)
 ==========================
 

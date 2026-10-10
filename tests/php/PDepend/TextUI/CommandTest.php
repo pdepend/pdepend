@@ -602,6 +602,54 @@ class CommandTest extends AbstractTestCase
         static::assertSame("pdepend:\n  cache:\n    driver: memory\n", $yaml);
     }
 
+    public function testXmlConfigurationPrintsDeprecationNotice(): void
+    {
+        if (!ConfigurationMigrator::isSupported()) {
+            static::markTestSkipped('XML configuration requires Symfony 7 or older.');
+        }
+
+        $this->changeWorkingDirectory($this->createTemporaryDirectory());
+        file_put_contents('pdepend.xml.dist', '<?xml version="1.0"?>
+<symfony:container xmlns:symfony="http://symfony.com/schema/dic/services"
+    xmlns="http://pdepend.org/schema/dic/pdepend">
+    <config>
+        <cache>
+            <driver>memory</driver>
+        </cache>
+    </config>
+</symfony:container>');
+
+        $deprecations = [];
+        set_error_handler(
+            static function (int $errno, string $errstr) use (&$deprecations): bool {
+                // Symfony 7.4+ also deprecates its own XmlFileLoader; only collect ours.
+                if (str_contains($errstr, 'PDepend 4.0')) {
+                    $deprecations[] = $errstr;
+                }
+
+                return true;
+            },
+            E_USER_DEPRECATED,
+        );
+
+        try {
+            [$exitCode, $actual] = $this->executeCommand([
+                '--summary-xml=' . $this->createRunResourceURI(),
+                __FILE__,
+            ]);
+        } finally {
+            restore_error_handler();
+            unlink('pdepend.xml.dist');
+        }
+
+        static::assertSame(Runner::SUCCESS_EXIT, $exitCode);
+        static::assertIsString($actual);
+        static::assertStringContainsString('XML configuration files are deprecated', $actual);
+        static::assertStringContainsString('pdepend --migrate-configuration', $actual);
+        static::assertCount(1, $deprecations);
+        static::assertStringContainsString('pdepend.xml.dist" is deprecated', $deprecations[0]);
+    }
+
     public function testMigrateConfigurationIsUnknownOptionWithoutXmlSupport(): void
     {
         if (ConfigurationMigrator::isSupported()) {
