@@ -60,6 +60,7 @@ final class WorkerProtocol
     private const BODY_HEADER_LENGTH = 8;
     private const ALIAS_HEADER_LENGTH = 12;
     private const TOKEN_HEADER_LENGTH = 24;
+    private const ERROR_EXCERPT_LENGTH = 2000;
 
     /**
      * Wraps a payload in a frame.
@@ -83,8 +84,9 @@ final class WorkerProtocol
 
         if (!str_starts_with($buffer, self::MAGIC)) {
             throw new RuntimeException(sprintf(
-                'Corrupt worker stream, expected a frame header but got "%s".',
-                substr($buffer, 0, 32),
+                'Corrupt worker stream, expected a frame header but got "%s"%s.',
+                substr($buffer, 0, self::ERROR_EXCERPT_LENGTH),
+                strlen($buffer) > self::ERROR_EXCERPT_LENGTH ? ' (truncated)' : '',
             ));
         }
 
