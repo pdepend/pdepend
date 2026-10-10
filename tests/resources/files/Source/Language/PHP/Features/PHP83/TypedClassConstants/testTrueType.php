@@ -1,6 +1,6 @@
 <?php
 
-class Foo
+class testTrueType
 {
     public const true BAR = true;
 }
