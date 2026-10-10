@@ -609,6 +609,11 @@ class Engine
             $exception = array_pop($this->parseExceptions);
             $this->parseExceptions = [];
 
+            // Only send plain data, as a stack trace may hold arguments that can not be serialized, such as closures.
+            if ($exception !== null) {
+                $exception = ['message' => $exception->getMessage(), 'code' => $exception->getCode()];
+            }
+
             $namespaces = $this->builder->getNamespaces();
 
             $tokens = [];
@@ -748,8 +753,8 @@ class Engine
             ));
         }
 
-        if ($exception instanceof Throwable) {
-            $this->parseExceptions[] = $exception;
+        if (is_array($exception) && is_string($exception['message'] ?? null) && is_int($exception['code'] ?? null)) {
+            $this->parseExceptions[] = new RuntimeException($exception['message'], $exception['code']);
         }
 
         $cache->addPackedTokens($tokens);
