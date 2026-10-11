@@ -260,6 +260,11 @@ abstract class AbstractASTVisitor implements ASTVisitor
         $this->fireEndProperty($property);
     }
 
+    /**
+     * Visits the child nodes of the given node.
+     *
+     * @not-deprecated Only the declaration on the {@link ASTVisitor} interface is deprecated.
+     */
     public function visit(ASTNode $node): void
     {
         foreach ($node->getChildren() as $child) {

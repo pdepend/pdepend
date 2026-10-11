@@ -124,7 +124,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
             ]
         );
 
-        [$exitCode, $output] = $this->runTextUICommand();
+        [, $output] = $this->runTextUICommand();
         static::assertIsString($output);
 
         static::assertStringNotContainsString('Following errors occurred:', $output);
@@ -142,7 +142,7 @@ class PHPDependCatchesParsingErrorsIssue061Test extends AbstractFeatureTestCase
                 $this->createCodeResourceUriForTest(),
             ]
         );
-        [$exitCode, $output] = $this->runTextUICommand();
+        [, $output] = $this->runTextUICommand();
         static::assertIsString($output);
 
         static::assertStringContainsString('Unexpected token: ), line: 7, col: 49, file:', $output);

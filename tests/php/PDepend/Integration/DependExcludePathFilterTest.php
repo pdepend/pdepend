@@ -68,7 +68,7 @@ class DependExcludePathFilterTest extends AbstractTestCase
         $pattern = '*' . DIRECTORY_SEPARATOR . 'Integration' . DIRECTORY_SEPARATOR . '*';
 
         $pdepend = $this->createEngineFixture();
-        $pdepend->addFile($this->createCodeResourceUriForTest() . '/Integration/FilteredClass.php');
+        $pdepend->addFile($directory . '/Integration/FilteredClass.php');
         $pdepend->addFileFilter(
             new ExcludePathFilter([$pattern])
         );

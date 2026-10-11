@@ -398,7 +398,7 @@ class PHPBuilderTest extends AbstractTestCase
         $builder = $this->createBuilder();
 
         $namespace1 = $builder->buildNamespace('package1');
-        $namespace2 = $builder->buildNamespace('package2');
+        $builder->buildNamespace('package2');
 
         $class = $builder->buildClass('Parser');
         $namespace1->addType($class);
