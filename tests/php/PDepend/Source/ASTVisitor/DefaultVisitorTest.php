@@ -278,8 +278,8 @@ class DefaultVisitorTest extends AbstractTestCase
     {
         $trait = $this->createTraitFixture();
         $trait->setCompilationUnit(new ASTCompilationUnit(__FILE__));
-        $trait->addMethod($method0 = new ASTMethod('m0'));
-        $trait->addMethod($method1 = new ASTMethod('m1'));
+        $trait->addMethod(new ASTMethod('m0'));
+        $trait->addMethod(new ASTMethod('m1'));
 
         $visitor = $this->getMockBuilder(AbstractASTVisitor::class)
             ->onlyMethods(['visitMethod'])

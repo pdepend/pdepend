@@ -115,7 +115,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     {
         $node = $this->createNodeInstance();
         $node->prependChild($child0 = $this->getNodeMock());
-        $node->prependChild($child1 = $this->getNodeMock());
+        $node->prependChild($this->getNodeMock());
 
         static::assertSame($child0, $node->getChild(1));
     }
@@ -128,7 +128,7 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testPrependChildPrependsNewChild(): void
     {
         $node = $this->createNodeInstance();
-        $node->prependChild($child0 = $this->getNodeMock());
+        $node->prependChild($this->getNodeMock());
         $node->prependChild($child1 = $this->getNodeMock());
 
         static::assertSame($child1, $node->getChild(0));
@@ -232,8 +232,8 @@ abstract class ASTNodeTestCase extends AbstractTestCase
         $this->expectException(OutOfBoundsException::class);
 
         $node = $this->createNodeInstance();
-        $node->addChild($child0 = $this->getNodeMock());
-        $node->addChild($child1 = $this->getNodeMock());
+        $node->addChild($this->getNodeMock());
+        $node->addChild($this->getNodeMock());
 
         $node->getChild(2);
     }
@@ -246,9 +246,9 @@ abstract class ASTNodeTestCase extends AbstractTestCase
     public function testGetChildReturnsExpectedNodeInstance(): void
     {
         $node = $this->createNodeInstance();
-        $node->addChild($child0 = $this->getNodeMock());
+        $node->addChild($this->getNodeMock());
         $node->addChild($child1 = $this->getNodeMock());
-        $node->addChild($child2 = $this->getNodeMock());
+        $node->addChild($this->getNodeMock());
 
         static::assertSame($child1, $node->getChild(1));
     }

@@ -269,7 +269,7 @@ abstract class AbstractASTCallable extends AbstractASTArtifact implements ASTCal
         if ($this->returnClassReference) {
             return true;
         }
-        if (($node = $this->getReturnType()) instanceof ASTClassOrInterfaceReference) {
+        if ($this->getReturnType() instanceof ASTClassOrInterfaceReference) {
             return true;
         }
 

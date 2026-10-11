@@ -856,7 +856,6 @@ class PHPTokenizerInternal implements FullTokenizer
     private function substituteTokens(array $tokens): array
     {
         $result = [];
-        $brackets = 0;
         $skipTo = 0;
 
         foreach ($tokens as $index => $token) {

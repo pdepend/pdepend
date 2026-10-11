@@ -143,10 +143,7 @@ class ASTArtifactListTest extends AbstractTestCase
         $iterator = new ASTArtifactList($nodes);
 
         $expected = ['clazz', 'func', 'method', 'pkg'];
-        $actual = [];
-        foreach ($iterator as $codeNode) {
-            $actual[] = $iterator->key();
-        }
+        $actual = array_keys(iterator_to_array($iterator));
 
         static::assertEquals($expected, $actual);
     }
@@ -200,9 +197,9 @@ class ASTArtifactListTest extends AbstractTestCase
     {
         $iterator = new ASTArtifactList(
             [
-                $class = new ASTClass('Class'),
+                new ASTClass('Class'),
                 $interface = new ASTInterface('Interface'),
-                $trait = new ASTTrait('Trait'),
+                new ASTTrait('Trait'),
             ]
         );
         static::assertSame($interface, $iterator[1]);

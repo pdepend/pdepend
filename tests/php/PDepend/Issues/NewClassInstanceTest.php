@@ -81,7 +81,6 @@ class NewClassInstanceTest extends AbstractFeatureTestCase
         $instructions = $scope->getChildren();
 
         static::assertCount(5, $instructions);
-        $self = $this;
 
         $expressions = array_map(function (ASTNode $statement): AbstractASTNode {
             static::assertInstanceOf(ASTStatement::class, $statement);
