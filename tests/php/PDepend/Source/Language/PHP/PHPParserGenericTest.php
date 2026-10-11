@@ -978,13 +978,14 @@ class PHPParserGenericTest extends AbstractTestCase
     /**
      * testSpaceshipOperatorWithArrays
      */
-    public function testSpaceshipOperatorWithArrays(): \PDepend\Source\AST\ASTNode
+    public function testSpaceshipOperatorWithArrays(): ASTExpression
     {
         $expr = $this->getFirstClassMethodForTestCase()
             ->getFirstChildOfType('PDepend\\Source\\AST\\ASTExpression')
             ?->getChild(1);
 
-        static::assertSame('<=>', $expr?->getImage());
+        static::assertInstanceOf(ASTExpression::class, $expr);
+        static::assertSame('<=>', $expr->getImage());
 
         return $expr;
     }

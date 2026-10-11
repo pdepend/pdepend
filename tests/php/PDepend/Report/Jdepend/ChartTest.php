@@ -315,11 +315,10 @@ class ChartTest extends AbstractTestCase
     /**
      * @return ASTNamespace[]
      */
-    private function createPackages(): array
+    private function createPackages(bool ...$userDefinedFlags): array
     {
         $packages = [];
-        foreach (func_get_args() as $i => $userDefined) {
-            static::assertIsBool($userDefined);
+        foreach ($userDefinedFlags as $i => $userDefined) {
             $packages[] = $this->createPackage(
                 $userDefined,
                 'package' . $i

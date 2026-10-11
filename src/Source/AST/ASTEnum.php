@@ -171,12 +171,13 @@ class ASTEnum extends AbstractASTClassOrInterface
         if ($this->isBacked()) {
             $backedEnum = new ASTInterface('BackedEnum');
 
+            // Nullable types are represented by their inner type, so both return static.
             $methods = [
-                'from' => false, // from(int|string $value): static
-                'tryFrom' => true, // tryFrom(int|string $value): ?static
+                'from', // from(int|string $value): static
+                'tryFrom', // tryFrom(int|string $value): ?static
             ];
 
-            foreach ($methods as $name => $nullable) {
+            foreach ($methods as $name) {
                 $from = new ASTMethod($name);
                 $from->setModifiers(State::IS_STATIC | State::IS_PUBLIC);
                 $parameters = new ASTFormalParameters();

@@ -2287,7 +2287,6 @@ abstract class AbstractPHPParser
      */
     private function parseListSlotExpression(): ASTNode
     {
-        $startToken = $this->tokenizer->currentToken();
         $node = $this->parseOptionalExpression();
 
         if ($node && $this->tokenizer->peek() === Tokens::T_DOUBLE_ARROW) {
@@ -4221,7 +4220,7 @@ abstract class AbstractPHPParser
         $this->tokenStack->push();
         $this->consumeComments();
 
-        $token = $this->consumeToken(Tokens::T_FINALLY);
+        $this->consumeToken(Tokens::T_FINALLY);
 
         $finally = $this->builder->buildAstFinallyStatement();
         $finally->addChild($this->parseRegularScope());
@@ -8128,7 +8127,7 @@ abstract class AbstractPHPParser
 
         if ($this->isArrayStartDelimiter($this->tokenizer->peek())) {
             // TODO: Use default value as value!
-            $defaultValue = $this->doParseArray(true);
+            $this->doParseArray(true);
 
             $value = new ASTValue();
             $value->setValue([]);

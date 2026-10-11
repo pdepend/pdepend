@@ -67,8 +67,6 @@ class ExtensionManagerTest extends AbstractTestCase
 
         static::assertSame([], $extensionManager->getActivatedExtensions());
 
-        $message = null;
-
         $extensionManager->activateExtension(TestExtension::class);
         $extensions = $extensionManager->getActivatedExtensions();
 
