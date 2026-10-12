@@ -446,6 +446,251 @@ class NPathComplexityAnalyzerTest extends AbstractMetricsTestCase
     }
 
     /**
+     * 15 sequential if statements with a factor of 22 each (20 `&&` operators plus 2) exceed the int range.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForSequentialIfStatementsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * 14 of the same if statements give 22^14, which still fits into an int and must stay exact.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsExactForSequentialIfStatementsBelowIntLimitBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(22 ** 14);
+    }
+
+    /**
+     * Overflow in the foreach statement product.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForSequentialForeachStatementsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * Overflow in the for statement product.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForSequentialForStatementsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * Overflow in the while statement product.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForSequentialWhileStatementsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * Overflow in the do-while statement product.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForSequentialDoWhileStatementsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * Overflow in the conditional expression product.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForSequentialConditionalExpressionsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * Overflow in the switch statement product.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForSequentialSwitchStatementsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * Overflow in the try statement product.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForSequentialTryCatchStatementsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * Sequential if statements that each have an elseif branch; their product overflows.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForSequentialIfElseIfStatementsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * Overflow in the return statement product: 14 ifs (22^14, still an int) times the 20 of the return.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForReturnStatementThatOverflowsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * Two sequential loops that are each below the int limit (22^8 + 1) but whose product is not.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedWhenProductOfNestedLoopsOverflowsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * The if and else branches are 22^14 each, so their sum does not fit into an int.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedWhenSumOfBranchesOverflowsBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * A saturated branch plus the one path for the missing else branch must stay at the int limit.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedWhenSaturatedBranchIsIncrementedBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * A while statement whose body already holds 22^15 paths, which does not fit into an int.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForWhileStatementWithSaturatedBodyBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * A do-while statement whose body already holds 22^15 paths.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForDoWhileStatementWithSaturatedBodyBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * A for statement whose body already holds 22^15 paths.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForForStatementWithSaturatedBodyBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * A foreach statement whose body already holds 22^15 paths.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForForeachStatementWithSaturatedBodyBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * A switch case whose statements already hold 22^15 paths, followed by a default label.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForSwitchCaseWithSaturatedBodyBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * A try block that already holds 22^15 paths, followed by a catch block.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForTryStatementWithSaturatedBodyBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * An elseif branch that already holds 22^15 paths, followed by an else branch.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForElseIfBranchWithSaturatedBodyAndElseBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * An elseif branch that already holds 22^15 paths, without an else branch.
+     *
+     * @link https://github.com/pdepend/pdepend/issues/939
+     */
+    public function testNPathComplexityIsSaturatedForElseIfBranchWithSaturatedBodyWithoutElseBug939(): void
+    {
+        $this->assertMethodMetricWithoutPhpErrors(PHP_INT_MAX);
+    }
+
+    /**
+     * Asserts the NPath Complexity of the first method of the calling test
+     * case and that calculating it raised no PHP warning or notice.
+     */
+    private function assertMethodMetricWithoutPhpErrors(int $expected): void
+    {
+        $errors = [];
+        set_error_handler(static function (int $level, string $message) use (&$errors): bool {
+            $errors[] = $message;
+
+            return true;
+        });
+
+        try {
+            $npath = $this->calculateMethodMetric();
+        } finally {
+            restore_error_handler();
+        }
+
+        static::assertSame(
+            ['npath' => $expected, 'php errors' => []],
+            ['npath' => $npath, 'php errors' => $errors]
+        );
+    }
+
+    /**
      * Returns the NPath Complexity of the first function found in source file
      * associated with the calling test case.
      *
