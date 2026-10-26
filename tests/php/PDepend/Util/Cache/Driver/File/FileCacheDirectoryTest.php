@@ -168,6 +168,65 @@ class FileCacheDirectoryTest extends AbstractTestCase
         static::assertFileDoesNotExist("{$this->cacheDir}/test");
     }
 
+    public function testFlushRemovesLinkedFileEntry(): void
+    {
+        $target = $this->createRunResourceURI('target.file');
+        file_put_contents($target, __FUNCTION__);
+
+        mkdir($this->cacheDir, 0o755, true);
+        symlink($target, "{$this->cacheDir}/link");
+        file_put_contents($this->versionFile, '1234567890');
+
+        new FileCacheDirectory($this->cacheDir);
+
+        static::assertFalse(is_link("{$this->cacheDir}/link"));
+        static::assertFileExists($target);
+    }
+
+    public function testFlushRemovesLinkedDirectoryEntry(): void
+    {
+        $target = $this->createRunResourceURI('target.dir');
+        unlink($target);
+        mkdir($target);
+        file_put_contents("{$target}/keep.file", __FUNCTION__);
+
+        mkdir($this->cacheDir, 0o755, true);
+        symlink($target, "{$this->cacheDir}/ab");
+        file_put_contents($this->versionFile, '1234567890');
+
+        new FileCacheDirectory($this->cacheDir);
+
+        static::assertFalse(is_link("{$this->cacheDir}/ab"));
+        static::assertFileExists("{$target}/keep.file");
+    }
+
+    public function testDoesNotFlushDirectoryWithoutVersionFile(): void
+    {
+        $file = "{$this->cacheDir}/keep.file";
+
+        mkdir($this->cacheDir, 0o755, true);
+        file_put_contents($file, __FUNCTION__);
+
+        new FileCacheDirectory($this->cacheDir);
+
+        static::assertFileExists($file);
+        static::assertSame(CacheDriver::VERSION, file_get_contents($this->versionFile));
+    }
+
+    public function testFlushRemovesDanglingVersionLink(): void
+    {
+        $target = $this->createRunResourceURI('target.file');
+        unlink($target);
+
+        mkdir($this->cacheDir, 0o755, true);
+        symlink($target, $this->versionFile);
+
+        new FileCacheDirectory($this->cacheDir);
+
+        static::assertFalse(is_link($this->versionFile));
+        static::assertFileDoesNotExist($target);
+    }
+
     /**
      * testCreateCacheDirectoryReturnsExpectedSubDirectory
      */

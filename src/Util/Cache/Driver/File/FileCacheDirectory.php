@@ -73,7 +73,11 @@ class FileCacheDirectory
     {
         $this->cacheDir = $this->ensureExists($cacheDir);
 
-        if (false === $this->isValidVersion()) {
+        // Never flush a directory that wasn't created as a PDepend cache
+        $versionFile = $this->getVersionFile();
+        if (!file_exists($versionFile) && !is_link($versionFile)) {
+            $this->writeVersion();
+        } elseif (false === $this->isValidVersion()) {
             $this->flush();
         }
     }
@@ -199,11 +203,16 @@ class FileCacheDirectory
      */
     protected function flushEntry(DirectoryIterator $file): void
     {
-        $path = $file->getRealPath();
         if ($file->isDot()) {
             return;
         }
-        if ($file->isFile()) {
+        $path = $file->getPathname();
+        if ($file->isLink()) {
+            // Windows only removes directory links with rmdir()
+            if (!@unlink($path)) {
+                @rmdir($path);
+            }
+        } elseif (!$file->isDir()) {
             @unlink($path);
         } else {
             $this->flushDirectory($path);
