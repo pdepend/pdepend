@@ -574,6 +574,9 @@ interface Tokens
     /** Marks a setter restricted to public. */
     public const T_PUBLIC_SET = 329;
 
+    /** Marks a '(void)' cast token. */
+    public const T_VOID_CAST = 388;
+
     /** Marks an attribute token. */
     public const T_ATTRIBUTE = 355;
 

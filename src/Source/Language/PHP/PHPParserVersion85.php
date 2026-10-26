@@ -86,6 +86,20 @@ abstract class PHPParserVersion85 extends PHPParserVersion84
             return $expr;
         }
 
+        if ($nextTokenType === Tokens::T_VOID_CAST) {
+            $token = $this->consumeToken($nextTokenType);
+
+            $expr = $this->builder->buildAstCastExpression($token->image);
+            $expr->configureLinesAndColumns(
+                $token->startLine,
+                $token->endLine,
+                $token->startColumn,
+                $token->endColumn
+            );
+
+            return $expr;
+        }
+
         return null;
     }
 

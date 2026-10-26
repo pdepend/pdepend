@@ -1,6 +1,11 @@
 pdepend-3.1.0 (unreleased)
 ==========================
 
+Added
+-----
+
+- Added [#985](https://github.com/pdepend/pdepend/pull/985): PHP 8.5 support for the `(void)` cast, exposed as `ASTCastExpression`.
+
 Deprecated
 ----------
 

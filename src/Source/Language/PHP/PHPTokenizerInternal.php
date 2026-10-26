@@ -241,6 +241,13 @@ if (!defined('T_PUBLIC_SET')) {
     define('T_PUBLIC_SET', 42452);
 }
 
+/**
+ * Define PHP 8.5 tokens
+ */
+if (!defined('T_VOID_CAST')) {
+    define('T_VOID_CAST', 42388);
+}
+
 /** @codeCoverageIgnoreEnd */
 
 /**
@@ -405,6 +412,7 @@ class PHPTokenizerInternal implements FullTokenizer
         T_PRIVATE_SET => Tokens::T_PRIVATE_SET,
         T_PROTECTED_SET => Tokens::T_PROTECTED_SET,
         T_PUBLIC_SET => Tokens::T_PUBLIC_SET,
+        T_VOID_CAST => Tokens::T_VOID_CAST,
     ];
 
     /**
@@ -928,10 +936,53 @@ class PHPTokenizerInternal implements FullTokenizer
                 continue;
             }
 
+            if ($temp === '(') {
+                $voidCastEnd = $this->findVoidCastEnd($tokens, $index);
+                if ($voidCastEnd !== null) {
+                    $image = '';
+                    for ($i = $index; $i <= $voidCastEnd; ++$i) {
+                        $image .= is_array($tokens[$i]) ? $tokens[$i][1] : $tokens[$i];
+                    }
+                    $result[] = [T_VOID_CAST, $image, 1];
+                    $skipTo = $voidCastEnd + 1;
+
+                    continue;
+                }
+            }
+
             $result[] = $token;
         }
 
         return $result;
+    }
+
+    /**
+     * Detects a <b>(void)</b> cast in the token stream of PHP versions before 8.5,
+     * where it is tokenized as '(', 'void' and ')' with optional blanks in between.
+     *
+     * @param array<array{int, string, int}|string> $tokens
+     * @return ?int Index of the closing parenthesis, or null if it is not a void cast.
+     */
+    private function findVoidCastEnd(array $tokens, int $index): ?int
+    {
+        $expected = ['void', ')'];
+        for ($i = $index + 1; isset($tokens[$i]); ++$i) {
+            $token = $tokens[$i];
+            if (is_array($token) && $token[0] === T_WHITESPACE && !preg_match('/[^ \t]/', $token[1])) {
+                continue;
+            }
+
+            $value = is_array($token) ? strtolower($token[1]) : $token;
+            if ($value !== array_shift($expected)) {
+                return null;
+            }
+
+            if ($expected === []) {
+                return $i;
+            }
+        }
+
+        return null;
     }
 
     /**

@@ -3,7 +3,7 @@
 /**
  * This file is part of PDepend.
  *
- * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2026 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2026 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
@@ -44,15 +44,14 @@ namespace PDepend\Source\Language\PHP\Features\PHP85;
 use PDepend\Source\AST\ASTCastExpression;
 use PDepend\Source\AST\ASTExpression;
 use PDepend\Source\AST\ASTFunctionPostfix;
-use PDepend\Source\AST\ASTMethod;
 use PDepend\Source\AST\ASTScope;
 use PDepend\Source\AST\ASTStatement;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @covers \PDepend\Source\AST\ASTConstantDeclarator
- * @covers \PDepend\Source\Language\PHP\PHPParserVersion84
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @covers \PDepend\Source\AST\ASTCastExpression
+ * @covers \PDepend\Source\Language\PHP\PHPParserVersion85
+ * @copyright 2008-2026 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 #[Group('unittest')]
@@ -60,40 +59,40 @@ use PHPUnit\Framework\Attributes\Group;
 class VoidDiscardTokenTest extends PHPParserVersion85TestCase
 {
     /**
-     * testPipe
+     * testVoidDiscardToken
      */
     public function testVoidDiscardToken(): void
     {
-        /** @var ASTMethod $method */
-        $method = $this->getFirstMethodForTestCase()
+        $scope = $this->getFirstMethodForTestCase()
             ->getFirstChildOfType(ASTScope::class);
+        static::assertInstanceOf(ASTScope::class, $scope);
 
-        $children = $method->getChildren();
+        $children = $scope->getChildren();
 
-        self::assertCount(1, $children);
+        static::assertCount(1, $children);
 
         [$statement] = $children;
 
-        self::assertInstanceOf(ASTStatement::class, $statement);
+        static::assertInstanceOf(ASTStatement::class, $statement);
 
         $children = $statement->getChildren();
 
-        self::assertCount(1, $children);
+        static::assertCount(1, $children);
 
         [$expression] = $children;
 
-        self::assertInstanceOf(ASTExpression::class, $expression);
+        static::assertInstanceOf(ASTExpression::class, $expression);
 
         $children = $expression->getChildren();
 
-        self::assertCount(3, $children);
+        static::assertCount(3, $children);
 
         [$voidCast, $expression, $functionPostFix] = $children;
 
-        self::assertInstanceOf(ASTCastExpression::class, $voidCast);
-        self::assertSame('(void)', $voidCast->getImage());
+        static::assertInstanceOf(ASTCastExpression::class, $voidCast);
+        static::assertSame('(void)', $voidCast->getImage());
 
-        self::assertInstanceOf(ASTExpression::class, $expression);
-        self::assertInstanceOf(ASTFunctionPostfix::class, $functionPostFix);
+        static::assertInstanceOf(ASTExpression::class, $expression);
+        static::assertInstanceOf(ASTFunctionPostfix::class, $functionPostFix);
     }
 }
