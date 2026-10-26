@@ -3,7 +3,7 @@
 /**
  * This file is part of PDepend.
  *
- * Copyright (c) 2008-2017 Manuel Pichler <mapi@pdepend.org>.
+ * Copyright (c) 2008-2026 Manuel Pichler <mapi@pdepend.org>.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,26 +35,20 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  *
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2026 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 
 namespace PDepend\Source\Language\PHP\Features\PHP84;
 
-use PDepend\Source\AST\ASTConstantDeclarator;
-use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTMemberPrimaryPrefix;
-use PDepend\Source\AST\ASTPropertyHook;
 use PDepend\Source\AST\ASTPropertyPostfix;
 use PDepend\Source\AST\ASTReturnStatement;
 use PDepend\Source\AST\ASTScope;
-use PDepend\Source\Language\PHP\PHPBuilder;
-use PDepend\Source\Language\PHP\PHPParserVersion84;
-use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Group;
 
 /**
- * @copyright 2008-2017 Manuel Pichler. All rights reserved.
+ * @copyright 2008-2026 Manuel Pichler. All rights reserved.
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 #[Group('unittest')]

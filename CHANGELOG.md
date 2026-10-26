@@ -10,6 +10,11 @@ Deprecated
 - Deprecated: `PdependExtension::getNamespace()`, it only served XML configuration files.
 - Deprecated: Public members that nothing in PDepend or PHPMD uses. They are marked `@deprecated` and will be removed in PDepend 4.0, see [UPGRADE.md](UPGRADE.md).
 
+Fixed
+-----
+
+- Fixed [#984](https://github.com/pdepend/pdepend/pull/984): Parse PHP 8.4 static member access on a new expression without parentheses, like `new Foo()::$bar`.
+
 pdepend-3.0.0 (2026/10/01)
 ==========================
 

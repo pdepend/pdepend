@@ -47,6 +47,9 @@ namespace PDepend\Source\Language\PHP;
 
 use PDepend\Source\AST\AbstractASTClassOrInterface;
 use PDepend\Source\AST\AbstractASTNode;
+use PDepend\Source\AST\ASTAllocationExpression;
+use PDepend\Source\AST\ASTAnonymousClass;
+use PDepend\Source\AST\ASTArguments;
 use PDepend\Source\AST\ASTFieldDeclaration;
 use PDepend\Source\AST\ASTFormalParameter;
 use PDepend\Source\AST\ASTNode;
@@ -102,6 +105,26 @@ abstract class PHPParserVersion84 extends PHPParserVersion83
         }
 
         return null;
+    }
+
+    /**
+     * Parses member access, static member access or index directly following
+     * an allocation expression, like <b>new Foo()->bar</b> or
+     * <b>new Foo()::$bar</b>. This requires the allocation to either have an
+     * argument list or be an anonymous class.
+     */
+    protected function parseOptionalAllocationDereference(ASTAllocationExpression $allocation): AbstractASTNode
+    {
+        $children = $allocation->getChildren();
+        $last = end($children);
+
+        if (!$last instanceof ASTArguments && !$last instanceof ASTAnonymousClass) {
+            return $allocation;
+        }
+
+        return $this->parseOptionalMemberPrimaryPrefix(
+            $this->parseOptionalIndexExpression($allocation),
+        );
     }
 
     protected function parseConstructFormalParameterModifiers(): int
