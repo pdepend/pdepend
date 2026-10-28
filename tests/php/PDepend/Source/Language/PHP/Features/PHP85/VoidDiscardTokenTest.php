@@ -41,9 +41,10 @@
 
 namespace PDepend\Source\Language\PHP\Features\PHP85;
 
+use PDepend\Source\AST\ASTAllocationExpression;
 use PDepend\Source\AST\ASTCastExpression;
-use PDepend\Source\AST\ASTExpression;
-use PDepend\Source\AST\ASTFunctionPostfix;
+use PDepend\Source\AST\ASTMemberPrimaryPrefix;
+use PDepend\Source\AST\ASTMethodPostfix;
 use PDepend\Source\AST\ASTScope;
 use PDepend\Source\AST\ASTStatement;
 use PHPUnit\Framework\Attributes\Group;
@@ -79,20 +80,27 @@ class VoidDiscardTokenTest extends PHPParserVersion85TestCase
 
         static::assertCount(1, $children);
 
-        [$expression] = $children;
-
-        static::assertInstanceOf(ASTExpression::class, $expression);
-
-        $children = $expression->getChildren();
-
-        static::assertCount(3, $children);
-
-        [$voidCast, $expression, $functionPostFix] = $children;
+        [$voidCast] = $children;
 
         static::assertInstanceOf(ASTCastExpression::class, $voidCast);
         static::assertSame('(void)', $voidCast->getImage());
 
-        static::assertInstanceOf(ASTExpression::class, $expression);
-        static::assertInstanceOf(ASTFunctionPostfix::class, $functionPostFix);
+        $children = $voidCast->getChildren();
+
+        static::assertCount(1, $children);
+
+        [$prefix] = $children;
+
+        static::assertInstanceOf(ASTMemberPrimaryPrefix::class, $prefix);
+
+        $children = $prefix->getChildren();
+
+        static::assertCount(2, $children);
+
+        [$allocation, $methodPostfix] = $children;
+
+        static::assertInstanceOf(ASTAllocationExpression::class, $allocation);
+        static::assertInstanceOf(ASTMethodPostfix::class, $methodPostfix);
+        static::assertSame('setClosed', $methodPostfix->getImage());
     }
 }
