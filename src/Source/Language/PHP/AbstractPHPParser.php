@@ -2155,6 +2155,19 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * Parses an optional member access, static member access or index
+     * directly following an allocation expression without wrapping parentheses,
+     * like <b>new Foo()->bar</b>. Only supported since PHP 8.4.
+     *
+     * @throws ParserException
+     * @since 3.1
+     */
+    protected function parseOptionalAllocationDereference(ASTAllocationExpression $allocation): AbstractASTNode
+    {
+        return $allocation;
+    }
+
+    /**
      * Parses a eval-expression node.
      *
      * @since 0.9.12
@@ -2555,7 +2568,7 @@ abstract class AbstractPHPParser
      * @param AbstractASTNode $node The parent/context node instance.
      * @since 0.9.12
      */
-    private function parseOptionalIndexExpression(AbstractASTNode $node): AbstractASTNode
+    protected function parseOptionalIndexExpression(AbstractASTNode $node): AbstractASTNode
     {
         $this->consumeComments();
 
@@ -3381,7 +3394,9 @@ abstract class AbstractPHPParser
                     break;
 
                 case Tokens::T_NEW:
-                    $expressions[] = $this->parseAllocationExpression();
+                    $expressions[] = $this->parseOptionalAllocationDereference(
+                        $this->parseAllocationExpression(),
+                    );
 
                     break;
 
@@ -4966,7 +4981,7 @@ abstract class AbstractPHPParser
      * @throws ParserException
      * @since 0.9.6
      */
-    private function parseOptionalMemberPrimaryPrefix(AbstractASTNode $node): AbstractASTNode
+    protected function parseOptionalMemberPrimaryPrefix(AbstractASTNode $node): AbstractASTNode
     {
         $this->consumeComments();
 
