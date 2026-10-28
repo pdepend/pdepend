@@ -118,6 +118,27 @@ class FileCacheGarbageCollectorTest extends AbstractTestCase
         static::assertSame(1, $garbageCollector->garbageCollect());
     }
 
+    public function testHandlesLinkedEntries(): void
+    {
+        $time = time() - 31 * 86400;
+
+        $targetFile = $this->createRunResourceURI('target.file');
+        touch($targetFile, $time, $time);
+        symlink($targetFile, $this->cacheDir . 'file-link');
+
+        $targetDir = $this->createRunResourceURI('target.dir');
+        unlink($targetDir);
+        mkdir($targetDir);
+        touch("{$targetDir}/keep.file", $time, $time);
+        symlink($targetDir, $this->cacheDir . 'dir-link');
+
+        $garbageCollector = new FileCacheGarbageCollector($this->cacheDir, $this->cacheTtl);
+        $garbageCollector->garbageCollect();
+
+        static::assertFileExists($targetFile);
+        static::assertFileExists("{$targetDir}/keep.file");
+    }
+
     protected function createFile(int $mtime = 0, int $atime = 0): string
     {
         $time = time();
