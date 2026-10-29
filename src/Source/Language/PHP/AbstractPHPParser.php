@@ -742,7 +742,7 @@ abstract class AbstractPHPParser
 
                 case Tokens::T_CLOSE_TAG:
                     $this->parseNonePhpCode();
-                    $this->reset();
+                    $this->reset(0, $this->echoing);
 
                     break;
 
@@ -7384,6 +7384,7 @@ abstract class AbstractPHPParser
                 case Tokens::T_OPEN_TAG:
                 case Tokens::T_OPEN_TAG_WITH_ECHO:
                     $this->consumeToken($tokenType);
+                    $this->echoing = ($tokenType === Tokens::T_OPEN_TAG_WITH_ECHO);
                     $tokenType = $this->tokenizer->peek();
 
                     break 2;
