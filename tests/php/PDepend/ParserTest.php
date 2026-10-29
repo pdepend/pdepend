@@ -1446,6 +1446,15 @@ class ParserTest extends AbstractTestCase
     }
 
     /**
+     * Tests that the parser can parse echo short tags with commas inside.
+     */
+    public function testParserEchoShortTag(): void
+    {
+        $namespaces = $this->parseCodeResourceForTest();
+        static::assertEquals(0, $namespaces->count());
+    }
+
+    /**
      * Returns an interface instance from the mixed code test file.
      */
     protected function getInterfaceForTest(): ASTInterface
