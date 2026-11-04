@@ -4706,6 +4706,24 @@ abstract class AbstractPHPParser
     }
 
     /**
+     * This method parses the content of a short echo tag (<?= $a, $b ?>) as an
+     * echo-statement node, the same way as echo $a, $b; would be.
+     */
+    private function parseShortEchoStatement(): ASTEchoStatement
+    {
+        $this->tokenStack->push();
+        $this->echoing = false;
+
+        $stmt = $this->parseExpressionList(
+            $this->builder->buildAstEchoStatement('echo'),
+        );
+
+        $this->parseStatementTermination();
+
+        return $this->setNodePositionsAndReturn($stmt);
+    }
+
+    /**
      * Parses a simple parenthesis expression or a direct object access, which
      * was introduced with PHP 5.4.0:
      *
@@ -7204,6 +7222,10 @@ abstract class AbstractPHPParser
      */
     private function parseOptionalStatement(): ?ASTNode
     {
+        if ($this->echoing) {
+            return $this->parseShortEchoStatement();
+        }
+
         switch ($this->tokenizer->peek()) {
             case Tokens::T_ECHO:
                 return $this->parseEchoStatement();
@@ -7358,12 +7380,7 @@ abstract class AbstractPHPParser
             $stmt->addChild($expr);
         }
 
-        if ($this->echoing && $this->tokenizer->peek() === Tokens::T_COMMA) {
-            $this->consumeToken(Tokens::T_COMMA);
-            $this->parseOptionalStatement();
-        } else {
-            $this->parseStatementTermination();
-        }
+        $this->parseStatementTermination();
 
         return $this->setNodePositionsAndReturn($stmt);
     }
