@@ -95,6 +95,41 @@ class ASTEchoStatementTest extends ASTNodeTestCase
     }
 
     /**
+     * Tests that a short echo tag inside a function body is parsed as an echo
+     * statement, so the echoed variable is seen as a usage.
+     */
+    public function testShortEchoTagIsParsedAsEchoStatement(): void
+    {
+        $stmt = $this->getFirstEchoStatementInFunction();
+        $children = $stmt->getChildren();
+
+        static::assertCount(1, $children);
+        static::assertInstanceOf(ASTVariable::class, $children[0]);
+        static::assertSame('$x', $children[0]->getImage());
+    }
+
+    /**
+     * Tests that a short echo tag with commas inside a function body is parsed
+     * as a single echo statement with all expressions as children.
+     */
+    public function testShortEchoTagWithCommasIsParsedAsEchoStatement(): void
+    {
+        $function = $this->getFirstFunctionForTestCase();
+        $statements = $function->findChildrenOfType(ASTEchoStatement::class);
+
+        static::assertCount(2, $statements);
+
+        $images = array_map(
+            static fn (ASTNode $node) => $node->getImage(),
+            $statements[0]->getChildren(),
+        );
+        static::assertSame(['$a', '$b', "'!'"], $images);
+
+        $returns = $function->findChildrenOfType(ASTReturnStatement::class);
+        static::assertCount(1, $returns);
+    }
+
+    /**
      * Returns a node instance for the currently executed test case.
      */
     private function getFirstEchoStatementInFunction(): ASTEchoStatement
