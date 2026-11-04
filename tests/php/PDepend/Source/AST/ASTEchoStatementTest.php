@@ -120,7 +120,7 @@ class ASTEchoStatementTest extends ASTNodeTestCase
         static::assertCount(2, $statements);
 
         $images = array_map(
-            static fn (ASTNode $node) => $node->getImage(),
+            static fn(ASTNode $node) => $node->getImage(),
             $statements[0]->getChildren(),
         );
         static::assertSame(['$a', '$b', "'!'"], $images);
