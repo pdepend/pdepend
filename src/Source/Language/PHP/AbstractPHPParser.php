@@ -1648,6 +1648,8 @@ abstract class AbstractPHPParser
         }
 
         $docComment = $this->docComment;
+        // Declarations in the function body must not get the same doc comment
+        $this->docComment = null;
         $callable = $this->parseFunctionDeclaration();
         $this->compilationUnit->addChild($callable);
 
@@ -1767,6 +1769,8 @@ abstract class AbstractPHPParser
 
         $method = $this->builder->buildMethod($methodName);
         $method->setComment($this->docComment);
+        // Declarations in the method body must not get the same doc comment
+        $this->docComment = null;
         $this->attachAttributes($method);
         $method->setCompilationUnit($this->compilationUnit);
 
@@ -7306,9 +7310,12 @@ abstract class AbstractPHPParser
                 return $this->parseCommentWithOptionalInlineClassOrInterfaceReference();
 
             case Tokens::T_DOC_COMMENT:
-                return $this->builder->buildAstComment(
-                    $this->consumeToken(Tokens::T_DOC_COMMENT)->image,
-                );
+                $comment = $this->consumeToken(Tokens::T_DOC_COMMENT)->image;
+
+                // Keep it for a function or type declared in the next statement
+                $this->docComment = $comment;
+
+                return $this->builder->buildAstComment($comment);
 
             case Tokens::T_CURLY_BRACE_OPEN:
                 return $this->parseRegularScope();
