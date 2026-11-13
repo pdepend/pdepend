@@ -35,7 +35,7 @@ jobs:
 
       - name: Imagick SVG support
         continue-on-error: true
-        run: sudo apt-get install libmagickcore-6.q16-3-extra
+        run: sudo apt-get update && sudo apt-get install libmagickcore-7.q16-10-extra
 
       - name: Cache library packages
         id: composer-cache
