@@ -66,7 +66,7 @@ class ASTNamespaceTest extends AbstractTestCase
     public function testGetIdReturnsExpectedObjectHash(): void
     {
         $namespace = new ASTNamespace(__FUNCTION__);
-        static::assertEquals(spl_object_hash($namespace), $namespace->getId());
+        static::assertEquals(sprintf('%016x%016x', spl_object_id($namespace), 0), $namespace->getId());
     }
 
     /**

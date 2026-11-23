@@ -65,7 +65,7 @@ class ASTParameterTest extends AbstractTestCase
     public function testGetIdReturnsExpectedObjectHash(): void
     {
         $parameters = $this->getFirstMethodInClass()->getParameters();
-        static::assertEquals(spl_object_hash($parameters[0]), $parameters[0]->getId());
+        static::assertEquals(sprintf('%016x%016x', spl_object_id($parameters[0]), 0), $parameters[0]->getId());
     }
 
     /**
