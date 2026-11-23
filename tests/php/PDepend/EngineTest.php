@@ -123,6 +123,43 @@ class EngineTest extends AbstractTestCase
     }
 
     /**
+     * A PHP error that a parse worker displays, such as a deprecation in a newer PHP version, must not end up in the
+     * stream that carries its results.
+     */
+    public function testAnalyzeInWorkersSurvivesAPhpErrorThatAWorkerDisplays(): void
+    {
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceURI('Engine/testAnalyze'));
+        $engine->addFileFilter(new Input\ExtensionFilter(['php']));
+        $engine->setThreads(2);
+        $engine->setMainScript(self::createCodeResourceURI('Engine/workers/displays-a-php-error.php'));
+
+        $namespaces = [];
+        foreach ($engine->analyze() as $namespace) {
+            $namespaces[] = $namespace->getImage();
+        }
+
+        static::assertSame([], array_diff(['package1', 'package2', 'package3'], $namespaces));
+    }
+
+    /**
+     * A parse worker that stops before it answers, after a fatal error for instance, must fail the analysis instead
+     * of leaving its file out.
+     */
+    public function testAnalyzeInWorkersFailsWhenAWorkerStopsBeforeItAnswers(): void
+    {
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceURI('Engine/testAnalyze'));
+        $engine->addFileFilter(new Input\ExtensionFilter(['php']));
+        $engine->setThreads(2);
+        $engine->setMainScript(self::createCodeResourceURI('Engine/workers/stops-before-answering.php'));
+
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessageMatches('(^A parse worker exited with code 3 while parsing .+package\d\.php\.$)');
+        $engine->analyze();
+    }
+
+    /**
      * Tests that {@link \PDepend\Engine::analyze()} throws an exception
      * if no source directory was set.
      */
