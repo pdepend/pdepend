@@ -127,7 +127,9 @@ class IdBuilder
      */
     protected function hash(string $string): string
     {
-        return substr(base_convert(md5($string), 16, 36), 0, 11);
+        // 14 hex digits are 56 bits, which base_convert() handles as an exact integer and which always fit in 11
+        // base 36 digits. A whole md5 went through a float, lost its precision and raises a notice as of PHP 8.6.
+        return str_pad(base_convert(substr(md5($string), 0, 14), 16, 36), 11, '0', STR_PAD_LEFT);
     }
 
     /**
