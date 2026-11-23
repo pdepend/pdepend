@@ -78,7 +78,8 @@ class ASTNamespace extends AbstractASTArtifact
     public function __construct(string $name)
     {
         parent::__construct($name);
-        $this->id = spl_object_hash($this);
+        // The value spl_object_hash() returns since PHP 8.1, which deprecates the function as of PHP 8.6.
+        $this->id = sprintf('%016x%016x', spl_object_id($this), 0);
     }
 
     /**
