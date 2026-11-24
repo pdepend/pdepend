@@ -106,6 +106,16 @@ class Command
             return self::CLI_ERROR;
         }
 
+        // A worker's stdout carries its result frames, so a notice, warning or deprecation that PHP displays there
+        // corrupts the stream. Display them on stderr, which the parent process passes on to its own, and do so
+        // before anything that may trigger one, such as loading the configuration.
+        if (
+            isset($this->options['--worker'])
+            && filter_var(ini_get('display_errors'), FILTER_VALIDATE_BOOL, FILTER_NULL_ON_FAILURE) !== false
+        ) {
+            ini_set('display_errors', 'stderr');
+        }
+
         if (isset($this->options['--help'])) {
             $this->printHelp();
 

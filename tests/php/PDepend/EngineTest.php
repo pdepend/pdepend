@@ -48,6 +48,7 @@ use PDepend\Source\AST\ASTNamespace;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresFunction;
 
 /**
  * Test case for \PDepend\Engine facade.
@@ -56,6 +57,7 @@ use PHPUnit\Framework\Attributes\Group;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 #[CoversClass(Engine::class)]
+#[CoversClass(ProcessFactory::class)]
 #[Group('unittest')]
 class EngineTest extends AbstractTestCase
 {
@@ -120,6 +122,77 @@ class EngineTest extends AbstractTestCase
         }
 
         static::assertCount(0, $expected);
+    }
+
+    /**
+     * A PHP error that a parse worker displays, such as a deprecation in a newer PHP version, must not end up in the
+     * stream that carries its results.
+     */
+    public function testAnalyzeInWorkersSurvivesAPhpErrorThatAWorkerDisplays(): void
+    {
+        $this->skipWhereTheEngineParsesInProcess();
+
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceURI('Engine/testAnalyze'));
+        $engine->addFileFilter(new Input\ExtensionFilter(['php']));
+        $engine->setThreads(2);
+        $engine->setMainScript(self::createCodeResourceURI('Engine/workers/displays-a-php-error.php'));
+
+        $namespaces = [];
+        foreach ($engine->analyze() as $namespace) {
+            $namespaces[] = $namespace->getImage();
+        }
+
+        static::assertSame([], array_diff(['package1', 'package2', 'package3'], $namespaces));
+    }
+
+    /**
+     * A parse worker that stops before it answers, after a fatal error for instance, must fail the analysis instead
+     * of leaving its file out.
+     */
+    public function testAnalyzeInWorkersFailsWhenAWorkerStopsBeforeItAnswers(): void
+    {
+        $this->skipWhereTheEngineParsesInProcess();
+
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceURI('Engine/testAnalyze'));
+        $engine->addFileFilter(new Input\ExtensionFilter(['php']));
+        $engine->setThreads(2);
+        $engine->setMainScript(self::createCodeResourceURI('Engine/workers/stops-before-answering.php'));
+
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessageMatches('(^A parse worker exited with code 3 while parsing .+package\d\.php\.$)');
+        $engine->analyze();
+    }
+
+    /**
+     * A parse worker killed by a signal, by the out-of-memory killer for instance, must fail the analysis and name
+     * the signal, also where /bin/sh is a shell that would otherwise stay in between and report an exit code.
+     */
+    #[RequiresFunction('posix_kill')]
+    public function testAnalyzeInWorkersFailsWhenAWorkerIsKilled(): void
+    {
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceURI('Engine/testAnalyze'));
+        $engine->addFileFilter(new Input\ExtensionFilter(['php']));
+        $engine->setThreads(2);
+        $engine->setMainScript(self::createCodeResourceURI('Engine/workers/killed-by-a-signal.php'));
+
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessageMatches(
+            '(^A parse worker was terminated by signal 9 while parsing .+package\d\.php\.$)',
+        );
+        $engine->analyze();
+    }
+
+    /**
+     * The engine only starts parse workers on Windows when ext-sockets is loaded, and parses in-process otherwise.
+     */
+    private function skipWhereTheEngineParsesInProcess(): void
+    {
+        if (defined('PHP_WINDOWS_VERSION_BUILD') && !extension_loaded('sockets')) {
+            static::markTestSkipped('Parse workers need ext-sockets on Windows.');
+        }
     }
 
     /**

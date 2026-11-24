@@ -650,6 +650,7 @@ class Engine
 
     /**
      * @param ArrayIterator<int, string> $files
+     * @throws RuntimeException
      */
     private function runMultiProcessParse(ArrayIterator $files, int $fileCount, int $coreCount): bool
     {
@@ -663,13 +664,24 @@ class Engine
         /** @var array<int, int> */
         $inFlight = [];
 
+        /**
+         * The file each worker is parsing and has not answered for yet.
+         *
+         * @var array<int, string>
+         */
+        $parsing = [];
+
         /** @var array<int, string> */
         $pending = [];
         $sentFiles = 0;
         $appliedFiles = 0;
 
+        $processes = [];
+        $failure = null;
+
         for ($proccessNo = 0; $proccessNo < $proccessCount; $proccessNo++) {
             $process = $processFactory->create();
+            $processes[] = $process;
             $buffers[$proccessNo] = '';
             $process->start($loop);
 
@@ -681,9 +693,46 @@ class Engine
 
             $stdin = $process->stdin;
 
+            // Pass on what the worker reports on stderr, such as PHP errors, which would be lost otherwise.
+            if ($process->stderr instanceof ReadableStreamInterface) {
+                $process->stderr->on('data', static function (string $chunk): void {
+                    fwrite(STDERR, $chunk);
+                });
+            }
+
+            // A worker that stops before it answers, after a fatal error for instance, would leave its file out
+            // of the result without any sign. Rather than throw from the loop, which is shared and would keep the
+            // listeners of the other workers, stop those workers and let the loop run out.
+            $process->on('exit', static function (
+                ?int $exitCode,
+                ?int $termSignal,
+            ) use (
+                &$parsing,
+                &$failure,
+                &$processes,
+                $proccessNo,
+            ): void {
+                if (!isset($parsing[$proccessNo]) || $failure !== null) {
+                    return;
+                }
+
+                $failure = new RuntimeException(sprintf(
+                    'A parse worker %s while parsing %s.',
+                    $termSignal !== null
+                        ? sprintf('was terminated by signal %d', $termSignal)
+                        : sprintf('exited with code %s', $exitCode ?? 'unknown'),
+                    $parsing[$proccessNo],
+                ));
+
+                foreach ($processes as $worker) {
+                    $worker->terminate();
+                }
+            });
+
             $process->stdout->on('data', function (string $chunk) use (
                 &$buffers,
                 &$inFlight,
+                &$parsing,
                 &$pending,
                 &$sentFiles,
                 &$appliedFiles,
@@ -696,6 +745,7 @@ class Engine
 
                 while (($payload = WorkerProtocol::unframe($buffers[$proccessNo])) !== null) {
                     $pending[$inFlight[$proccessNo]] = $payload;
+                    unset($parsing[$proccessNo]);
 
                     while (isset($pending[$appliedFiles])) {
                         $this->applyResult($pending[$appliedFiles], $cache);
@@ -709,17 +759,23 @@ class Engine
                         continue;
                     }
 
+                    $parsing[$proccessNo] = $files->current();
                     $stdin->write($files->current() . "\n");
                     $files->next();
                     $inFlight[$proccessNo] = $sentFiles++;
                 }
             });
 
+            $parsing[$proccessNo] = $files->current();
             $stdin->write($files->current() . "\n");
             $files->next();
             $inFlight[$proccessNo] = $sentFiles++;
         }
         $loop->run();
+
+        if ($failure !== null) {
+            throw $failure;
+        }
 
         $this->builder->setCache($cache);
 

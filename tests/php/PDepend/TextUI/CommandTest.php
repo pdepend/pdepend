@@ -50,6 +50,7 @@ use PDepend\Source\AST\ASTNamespace;
 use PDepend\Util\ConfigurationInstance;
 use PDepend\Util\Log;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use ReflectionClass;
 use stdClass;
@@ -99,6 +100,38 @@ class CommandTest extends AbstractTestCase
     {
         [$exitCode] = $this->executeCommand(['--version']);
         static::assertEquals(Runner::SUCCESS_EXIT, $exitCode);
+    }
+
+    /**
+     * A worker's stdout carries its results, so a worker that displays PHP errors displays them on stderr. The
+     * version option only makes the command return before it starts to read files from stdin.
+     */
+    #[DataProvider('dataProviderWorkerDisplayErrors')]
+    public function testWorkerDisplaysPhpErrorsOnStderr(string $configured, string $expected): void
+    {
+        $displayErrors = (string) ini_get('display_errors');
+        ini_set('display_errors', $configured);
+
+        try {
+            $this->executeCommand(['--worker', '--version']);
+            $actual = ini_get('display_errors');
+        } finally {
+            ini_set('display_errors', $displayErrors);
+        }
+
+        static::assertSame($expected, $actual);
+    }
+
+    /**
+     * @return array<string, array{string, string}>
+     */
+    public static function dataProviderWorkerDisplayErrors(): array
+    {
+        return [
+            'displayed on stdout' => ['1', 'stderr'],
+            'displayed on stderr' => ['stderr', 'stderr'],
+            'not displayed' => ['0', '0'],
+        ];
     }
 
     /**
