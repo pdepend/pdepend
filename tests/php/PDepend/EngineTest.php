@@ -57,6 +57,7 @@ use PHPUnit\Framework\Attributes\RequiresFunction;
  * @license http://www.opensource.org/licenses/bsd-license.php BSD License
  */
 #[CoversClass(Engine::class)]
+#[CoversClass(ProcessFactory::class)]
 #[Group('unittest')]
 class EngineTest extends AbstractTestCase
 {
@@ -129,6 +130,8 @@ class EngineTest extends AbstractTestCase
      */
     public function testAnalyzeInWorkersSurvivesAPhpErrorThatAWorkerDisplays(): void
     {
+        $this->skipWhereTheEngineParsesInProcess();
+
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceURI('Engine/testAnalyze'));
         $engine->addFileFilter(new Input\ExtensionFilter(['php']));
@@ -149,6 +152,8 @@ class EngineTest extends AbstractTestCase
      */
     public function testAnalyzeInWorkersFailsWhenAWorkerStopsBeforeItAnswers(): void
     {
+        $this->skipWhereTheEngineParsesInProcess();
+
         $engine = $this->createEngineFixture();
         $engine->addDirectory(self::createCodeResourceURI('Engine/testAnalyze'));
         $engine->addFileFilter(new Input\ExtensionFilter(['php']));
@@ -174,8 +179,20 @@ class EngineTest extends AbstractTestCase
         $engine->setMainScript(self::createCodeResourceURI('Engine/workers/killed-by-a-signal.php'));
 
         $this->expectException('RuntimeException');
-        $this->expectExceptionMessageMatches('(^A parse worker was terminated by signal 9 while parsing .+package\d\.php\.$)');
+        $this->expectExceptionMessageMatches(
+            '(^A parse worker was terminated by signal 9 while parsing .+package\d\.php\.$)',
+        );
         $engine->analyze();
+    }
+
+    /**
+     * The engine only starts parse workers on Windows when ext-sockets is loaded, and parses in-process otherwise.
+     */
+    private function skipWhereTheEngineParsesInProcess(): void
+    {
+        if (defined('PHP_WINDOWS_VERSION_BUILD') && !extension_loaded('sockets')) {
+            static::markTestSkipped('Parse workers need ext-sockets on Windows.');
+        }
     }
 
     /**
