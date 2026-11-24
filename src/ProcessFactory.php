@@ -70,7 +70,16 @@ final class ProcessFactory
             ];
         }
 
-        return new Process(implode(' ', $commandArgs), null, null, $fds);
+        $command = implode(' ', $commandArgs);
+
+        // proc_open() runs the command through /bin/sh, and a shell such as dash stays in between as the parent of
+        // the worker. Let the worker replace it, so that terminating the process stops the worker, and a worker
+        // killed by a signal reports that signal instead of the shell's exit code.
+        if (!defined('PHP_WINDOWS_VERSION_BUILD')) {
+            $command = 'exec ' . $command;
+        }
+
+        return new Process($command, null, null, $fds);
     }
 
     /**

@@ -48,6 +48,7 @@ use PDepend\Source\AST\ASTNamespace;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\Depends;
 use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\RequiresFunction;
 
 /**
  * Test case for \PDepend\Engine facade.
@@ -156,6 +157,24 @@ class EngineTest extends AbstractTestCase
 
         $this->expectException('RuntimeException');
         $this->expectExceptionMessageMatches('(^A parse worker exited with code 3 while parsing .+package\d\.php\.$)');
+        $engine->analyze();
+    }
+
+    /**
+     * A parse worker killed by a signal, by the out-of-memory killer for instance, must fail the analysis and name
+     * the signal, also where /bin/sh is a shell that would otherwise stay in between and report an exit code.
+     */
+    #[RequiresFunction('posix_kill')]
+    public function testAnalyzeInWorkersFailsWhenAWorkerIsKilled(): void
+    {
+        $engine = $this->createEngineFixture();
+        $engine->addDirectory(self::createCodeResourceURI('Engine/testAnalyze'));
+        $engine->addFileFilter(new Input\ExtensionFilter(['php']));
+        $engine->setThreads(2);
+        $engine->setMainScript(self::createCodeResourceURI('Engine/workers/killed-by-a-signal.php'));
+
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessageMatches('(^A parse worker was terminated by signal 9 while parsing .+package\d\.php\.$)');
         $engine->analyze();
     }
 
